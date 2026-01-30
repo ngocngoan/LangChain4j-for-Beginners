@@ -2,64 +2,64 @@
 
 ### 🌐 Understøttelse af flere sprog
 
-#### Understøttet via GitHub Action (Automatiseret og altid opdateret)
+#### Understøttet via GitHub Action (Automatiseret & Altid Opdateret)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
 [Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](./README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
 > **Foretrækker du at klone lokalt?**
 
-> Dette depot indeholder 50+ sprogoversættelser, hvilket betydeligt øger downloadstørrelsen. For at klone uden oversættelser, brug spars checkout:
+> Dette depot indeholder over 50 sprogoversættelser, som øger download-størrelsen betydeligt. For at klone uden oversættelser skal du bruge sparse checkout:
 > ```bash
 > git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
 > cd LangChain4j-for-Beginners
 > git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
 > ```
-> Dette giver dig alt, hvad du behøver for at fuldføre kurset med en meget hurtigere download.
+> Dette giver dig alt, hvad du behøver for at gennemføre kurset med en meget hurtigere download.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 # LangChain4j for begyndere
 
-Et kursus i at bygge AI-applikationer med LangChain4j og Azure OpenAI GPT-5, fra grundlæggende chat til AI-agenter.
+Et kursus til at bygge AI-applikationer med LangChain4j og Azure OpenAI GPT-5, fra grundlæggende chat til AI-agenter.
 
-**Ny til LangChain4j?** Se [Glossaret](docs/GLOSSARY.md) for definitioner af nøglebegreber og termer.
+**Ny i LangChain4j?** Tjek [Glossaret](docs/GLOSSARY.md) for definitioner af nøglebegreber og koncepter.
 
 ## Indholdsfortegnelse
 
-1. [Hurtig start](00-quick-start/README.md) - Kom godt i gang med LangChain4j
-2. [Introduktion](01-introduction/README.md) - Lær det grundlæggende om LangChain4j
-3. [Prompt Engineering](02-prompt-engineering/README.md) - Bliv mester i effektiv prompt-design
+1. [Quick Start](00-quick-start/README.md) - Kom i gang med LangChain4j
+2. [Introduktion](01-introduction/README.md) - Lær det grundlæggende i LangChain4j
+3. [Prompt Engineering](02-prompt-engineering/README.md) - Mestring af effektiv prompt-design
 4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Byg intelligente vidensbaserede systemer
 5. [Værktøjer](04-tools/README.md) - Integrer eksterne værktøjer og simple assistenter
 6. [MCP (Model Context Protocol)](05-mcp/README.md) - Arbejd med Model Context Protocol (MCP) og Agentic-moduler
 ---
 
-## Læringssti
+## Læringsvej
 
-> **Hurtig start**
+> **Quick Start**
 
 1. Fork dette depot til din GitHub-konto
-2. Klik **Code** → **Codespaces** fanen → **...** → **Ny med muligheder...**
+2. Klik på **Code** → fanen **Codespaces** → **...** → **Ny med muligheder...**
 3. Brug standardindstillingerne – dette vælger udviklingscontaineren oprettet til dette kursus
-4. Klik **Opret codespace**
+4. Klik på **Create codespace**
 5. Vent 5-10 minutter på, at miljøet er klar
-6. Gå direkte til [Hurtig start](./00-quick-start/README.md) for at komme i gang!
+6. Gå direkte til [Quick Start](./00-quick-start/README.md) for at komme i gang!
 
-Efter at have gennemført modulerne, kan du udforske [Testvejledningen](docs/TESTING.md) for at se LangChain4j testkoncepters anvendelse.
+Efter at have gennemført modulerne, udforsk [Testvejledningen](docs/TESTING.md) for at se LangChain4j testkoncepter i praksis.
 
-> **Bemærk:** Denne træning bruger både GitHub Models og Azure OpenAI. [Hurtig start](00-quick-start/README.md) modulet bruger GitHub Models (ingen Azure abonnement krævet), mens modulerne 1-5 bruger Azure OpenAI.
+> **Bemærk:** Denne træning bruger både GitHub Models og Azure OpenAI. [Quick Start](00-quick-start/README.md)-modulet bruger GitHub Models (ingen Azure-abonnement kræves), mens moduler 1-5 bruger Azure OpenAI. Kom i gang med en [GRATIS Azure-konto](https://aka.ms/azure-free-account), hvis du ikke har en.
 
 
 ## Læring med GitHub Copilot
 
-For hurtigt at komme i gang med kodning, åbn dette projekt i en GitHub Codespace eller dit lokale IDE med den medfølgende devcontainer. Devcontaineren brugt i dette kursus kommer forudkonfigureret med GitHub Copilot til AI-parprogrammering.
+For hurtigt at komme i gang med kodning, åbn dette projekt i en GitHub Codespace eller din lokale IDE med den medfølgende devcontainer. Devcontaineren, der bruges i dette kursus, er forudkonfigureret med GitHub Copilot til AI-parprogrammering.
 
-Hvert kodeeksempel indeholder foreslåede spørgsmål, du kan stille GitHub Copilot for at uddybe din forståelse. Hold øje med 💡/🤖 prompts i:
+Hvert kodeeksempel indeholder foreslåede spørgsmål, som du kan stille GitHub Copilot for at uddybe din forståelse. Hold øje med 💡/🤖 prompts i:
 
-- **Java filoverskrifter** - Spørgsmål specifikke for hvert eksempel
-- **Module README'er** - Udforskningsspørgsmål efter kodeeksempler
+- **Java-filoverskrifter** - Spørgsmål specifikt til hvert eksempel
+- **Modul-READMEs** - Udforskningsspørgsmål efter kodeeksempler
 
-**Sådan bruger du:** Åbn en hvilken som helst kodefil og spørg Copilot de foreslåede spørgsmål. Den har fuld kontekst af kodebasen og kan forklare, udvide og foreslå alternativer.
+**Sådan bruges det:** Åbn en vilkårlig kodefil og spørg Copilot de foreslåede spørgsmål. Det har fuld kontekst af kodebasen og kan forklare, udvide og foreslå alternativer.
 
 Vil du lære mere? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
 
@@ -108,11 +108,11 @@ Vil du lære mere? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubC
 
 ## Få hjælp
 
-Hvis du sidder fast eller har spørgsmål om at bygge AI-apps, så deltag:
+Hvis du sidder fast eller har spørgsmål om at bygge AI-apps, så deltag i:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Hvis du har produktfeedback eller fejl under udvikling, besøg:
+Hvis du har produktfeedback eller oplever fejl under udviklingen, besøg:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
@@ -123,6 +123,6 @@ MIT-licens - Se [LICENSE](../../LICENSE) filen for detaljer.
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Ansvarsfraskrivelse**:  
-Dette dokument er blevet oversat ved hjælp af AI-oversættelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selvom vi bestræber os på nøjagtighed, skal du være opmærksom på, at automatiserede oversættelser kan indeholde fejl eller unøjagtigheder. Det oprindelige dokument på dets originalsprog bør betragtes som den autoritative kilde. For vigtig information anbefales professionel menneskelig oversættelse. Vi påtager os intet ansvar for misforståelser eller fejltolkninger, der opstår som følge af brugen af denne oversættelse.
+**Ansvarsfraskrivelse**:
+Dette dokument er blevet oversat ved hjælp af AI-oversættelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selvom vi stræber efter nøjagtighed, bedes du være opmærksom på, at automatiserede oversættelser kan indeholde fejl eller unøjagtigheder. Det oprindelige dokument på dets oprindelige sprog bør betragtes som den autoritative kilde. For kritisk information anbefales professionel menneskelig oversættelse. Vi påtager os intet ansvar for misforståelser eller fejltolkninger, der opstår som følge af brugen af denne oversættelse.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
