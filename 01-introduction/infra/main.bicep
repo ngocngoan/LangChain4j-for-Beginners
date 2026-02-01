@@ -11,7 +11,7 @@ param location string
 
 // OpenAI parameters
 @description('Location for Azure OpenAI resource')
-param openAiLocation string = 'eastus'
+param openAiLocation string = 'eastus2'
 
 @description('SKU name for Azure OpenAI')
 param openAiSkuName string = 'S0'
@@ -19,11 +19,11 @@ param openAiSkuName string = 'S0'
 @description('Model deployments for Azure OpenAI')
 param openAiDeployments array = [
   {
-    name: 'gpt-5'
+    name: 'gpt-5.2'
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'
+      name: 'gpt-5.2'
+      version: '2025-12-11'
     }
     sku: {
       name: 'GlobalStandard'
@@ -80,7 +80,7 @@ output AZURE_RESOURCE_GROUP_ID string = rg.id
 output AZURE_RESOURCE_GROUP_NAME string = rg.name
 
 output AZURE_OPENAI_ENDPOINT string = openAi.outputs.endpoint
-output AZURE_OPENAI_DEPLOYMENT string = 'gpt-5'
+output AZURE_OPENAI_DEPLOYMENT string = 'gpt-5.2'
 output AZURE_OPENAI_EMBEDDING_DEPLOYMENT string = 'text-embedding-3-small'
 output AZURE_OPENAI_NAME string = openAi.outputs.name
 output AZURE_OPENAI_KEY string = openAi.outputs.key
