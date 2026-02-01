@@ -9,60 +9,58 @@
 
 > **Preferi să clonezi local?**
 
-> Acest depozit include traduceri în peste 50 de limbi, ceea ce crește semnificativ dimensiunea descărcării. Pentru a clona fără traduceri, folosește sparse checkout:
+> Acest depozit include peste 50 de traduceri de limbă, ceea ce crește semnificativ dimensiunea descărcării. Pentru a clona fără traduceri, folosește sparse checkout:
 > ```bash
 > git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
 > cd LangChain4j-for-Beginners
 > git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
 > ```
-> Astfel primești tot ce ai nevoie pentru a finaliza cursul cu o descărcare mult mai rapidă.
+> Aceasta îți oferă tot ce ai nevoie pentru a finaliza cursul cu o descărcare mult mai rapidă.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 # LangChain4j pentru Începători
 
-Un curs pentru construirea de aplicații AI cu LangChain4j și Azure OpenAI GPT-5, de la chat de bază la agenți AI.
+Un curs pentru construirea aplicațiilor AI cu LangChain4j și Azure OpenAI GPT-5, de la chat de bază la agenți AI.
 
 **Ești nou cu LangChain4j?** Consultă [Glosarul](docs/GLOSSARY.md) pentru definiții ale termenilor și conceptelor cheie.
 
 ## Cuprins
 
-1. [Început Rapid](00-quick-start/README.md) - Începe cu LangChain4j
-2. [Introducere](01-introduction/README.md) - Învață elementele fundamentale ale LangChain4j
-3. [Ingineria Promptului](02-prompt-engineering/README.md) - Stăpânește proiectarea eficientă a prompturilor
-4. [RAG (Generare Augmentată cu Recuperare)](03-rag/README.md) - Construiește sisteme inteligente bazate pe cunoștințe
-5. [Instrumente](04-tools/README.md) - Integrează instrumente externe și asistenți simpli
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Lucrează cu Model Context Protocol (MCP) și module Agente
+1. [Pornire Rapidă](00-quick-start/README.md) - Începe cu LangChain4j
+2. [Introducere](01-introduction/README.md) - Învață fundamentele LangChain4j
+3. [Ingineria Prompt-ului](02-prompt-engineering/README.md) - Stăpânește crearea eficientă a prompt-urilor
+4. [RAG (Generare cu Recuperare Augmentată)](03-rag/README.md) - Construiește sisteme inteligente bazate pe cunoaștere
+5. [Unelte](04-tools/README.md) - Integrează unelte externe și asistenți simpli
+6. [MCP (Protocolul Contextului Modelului)](05-mcp/README.md) - Lucrează cu MCP și modulele Agentice
 ---
 
 ## Cale de Învățare
 
-> **Început Rapid**
+> **Pornire Rapidă**
 
 1. Fă fork la acest depozit în contul tău GitHub
-2. Apasă **Code** → fila **Codespaces** → **...** → **New with options...**
-3. Folosește setările implicite – aceasta va selecta containerul de dezvoltare creat pentru acest curs
-4. Apasă **Create codespace**
-5. Așteaptă 5-10 minute pentru ca mediul să fie gata
-6. Mergi direct la [Început Rapid](./00-quick-start/README.md) pentru a începe!
+2. Click pe **Code** → fila **Codespaces** → **...** → **New with options...**
+3. Folosește setările implicite – acestea vor selecta containerul de dezvoltare creat pentru acest curs
+4. Click pe **Create codespace**
+5. Așteaptă 5-10 minute pentru ca mediul să fie pregătit
+6. Mergi direct la [Pornire Rapidă](./00-quick-start/README.md) pentru a începe!
 
-După parcurgerea modulelor, explorează [Ghidul de Testare](docs/TESTING.md) pentru a vedea concepte de testare LangChain4j în acțiune.
+După ce parcurgi modulele, explorează [Ghidul de Testare](docs/TESTING.md) pentru a vedea conceptele de testare LangChain4j în practică.
 
-> **Notă:** Acest training folosește atât modelele GitHub cât și Azure OpenAI. Modulul [Început Rapid](00-quick-start/README.md) folosește modele GitHub (nu este necesar abonament Azure), în timp ce modulele 1-5 folosesc Azure OpenAI.
-
+> **Notă:** Această instruire folosește atât GitHub Models cât și Azure OpenAI. Modulul [Pornire Rapidă](00-quick-start/README.md) folosește GitHub Models (nu necesită abonament Azure), în timp ce modulele 1-5 utilizează Azure OpenAI. Începe cu un [cont Azure GRATUIT](https://aka.ms/azure-free-account) dacă nu ai încă unul.
 
 ## Învățare cu GitHub Copilot
 
-Pentru a începe rapid programarea, deschide acest proiect într-un GitHub Codespace sau în IDE-ul local cu devcontainer-ul oferit. Devcontainerul folosit în acest curs vine preconfigurat cu GitHub Copilot pentru programare AI în echipă.
+Pentru a începe rapid să scrii cod, deschide acest proiect într-un GitHub Codespace sau în IDE-ul tău local folosind devcontainer-ul oferit. Devcontainer-ul folosit în acest curs vine preconfigurat cu GitHub Copilot pentru programare AI în echipă.
 
-Fiecare exemplu de cod include întrebări sugerate pe care le poți adresa GitHub Copilot pentru a-ți aprofunda înțelegerea. Caută prompturile 💡/🤖 în:
+Fiecare exemplu de cod include întrebări sugerate pe care le poți adresa GitHub Copilot pentru a-ți adânci înțelegerea. Caută prompturile 💡/🤖 în:
 
-- **Headerele fișierelor Java** - Întrebări specifice fiecărui exemplu
-- **README-urile modulelor** - Prompturi pentru explorare după exemplele de cod
+- **Anteturile fișierelor Java** - Întrebări specifice fiecărui exemplu
+- **Fișele modulelor** - Prompturi de explorare după exemplele de cod
 
-**Cum să îl folosești:** Deschide orice fișier de cod și întreabă Copilot întrebările sugerate. Are context complet al bazei de cod și poate explica, extinde și sugera alternative.
+**Cum să folosești:** Deschide orice fișier de cod și întreabă Copilot întrebările sugerate. El are context complet al codului și poate explica, extinde și sugera alternative.
 
-Vrei să afli mai multe? Consultă [Copilot pentru programare AI în pereche](https://aka.ms/GitHubCopilotAI).
-
+Vrei să afli mai multe? Consultă [Copilot pentru Programare AI în Echipă](https://aka.ms/GitHubCopilotAI).
 
 ## Resurse Suplimentare
 
@@ -93,10 +91,10 @@ Vrei să afli mai multe? Consultă [Copilot pentru programare AI în pereche](ht
 [![ML pentru Începători](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Știința Datelor pentru Începători](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI pentru Începători](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
-[![Cibersecuritate pentru Începători](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
+[![Securitate Cibernetică pentru Începători](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
 [![Dezvoltare Web pentru Începători](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
 [![IoT pentru Începători](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
-[![Dezvoltare XR pentru Începători](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
@@ -108,21 +106,21 @@ Vrei să afli mai multe? Consultă [Copilot pentru programare AI în pereche](ht
 
 ## Obținerea Ajutorului
 
-Dacă întâmpinați dificultăți sau aveți întrebări despre construirea aplicațiilor AI, alăturați-vă:
+Dacă te blochezi sau ai întrebări despre construirea aplicațiilor AI, alătură-te:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Dacă aveți feedback despre produs sau erori în timpul dezvoltării, vizitați:
+Dacă ai feedback despre produs sau erori în timpul construirii, vizitează:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Licență
 
-Licență MIT - Consultați fișierul [LICENSE](../../LICENSE) pentru detalii.
+Licența MIT - Vezi fișierul [LICENSE](../../LICENSE) pentru detalii.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Declinare de responsabilitate**:  
-Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim să oferim o traducere cât mai exactă, vă rugăm să aveți în vedere că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă o traducere profesională realizată de un traducător uman. Nu ne asumăm responsabilitatea pentru eventualele neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
+**Declinare de responsabilitate**:
+Acest document a fost tradus folosind serviciul de traducere automată AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa oficială. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm responsabilitatea pentru orice neînțelegeri sau interpretări greșite care ar putea rezulta din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
