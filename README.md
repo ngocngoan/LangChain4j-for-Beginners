@@ -20,7 +20,7 @@
 
 # LangChain4j for Beginners
 
-A course for building AI applications with LangChain4j and Azure OpenAI GPT-5, from basic chat to AI agents.
+A course for building AI applications with LangChain4j and Azure OpenAI GPT-5.2, from basic chat to AI agents.
 
 **New to LangChain4j?** Check out the [Glossary](docs/GLOSSARY.md) for definitions of key terms and concepts.
 

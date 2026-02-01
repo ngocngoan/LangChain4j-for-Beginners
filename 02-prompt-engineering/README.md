@@ -1,4 +1,4 @@
-# Module 02: Prompt Engineering with GPT-5
+# Module 02: Prompt Engineering with GPT-5.2
 
 ## Table of Contents
 
@@ -22,9 +22,9 @@
 
 ## What You'll Learn
 
-In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions - the prompts themselves - using Azure OpenAI's GPT-5. The way you structure your prompts dramatically affects the quality of responses you get.
+In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions - the prompts themselves - using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get.
 
-We'll use GPT-5 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5 compared to GitHub Models.
+We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ This module demonstrates advanced prompting patterns using the same LangChain4j 
 
 <img src="images/langchain4j-flow.png" alt="LangChain4j Flow" width="800"/>
 
-*How LangChain4j connects your prompts to Azure OpenAI GPT-5*
+*How LangChain4j connects your prompts to Azure OpenAI GPT-5.2*
 
 **Dependencies** - Module 02 uses the following langchain4j dependencies defined in `pom.xml`:
 ```xml
@@ -87,7 +87,7 @@ String response = chatModel.chat(systemMsg, userMsg);
 
 **Prompt Templates** - The real focus here is prompt engineering, not new LangChain4j APIs. Each pattern (low eagerness, high eagerness, task execution, etc.) uses the same `chatModel.chat(prompt)` method but with carefully structured prompt strings. The XML tags, instructions, and formatting are all part of the prompt text, not LangChain4j features.
 
-**Reasoning Control** - GPT-5's reasoning effort is controlled through prompt instructions like "maximum 2 reasoning steps" or "explore thoroughly". These are prompt engineering techniques, not LangChain4j configurations. The library simply delivers your prompts to the model.
+**Reasoning Control** - GPT-5.2's reasoning effort is controlled through prompt instructions like "maximum 2 reasoning steps" or "explore thoroughly". These are prompt engineering techniques, not LangChain4j configurations. The library simply delivers your prompts to the model.
 
 The key takeaway: LangChain4j provides the infrastructure (model connection via [LangChainConfig.java](src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), memory, message handling via [Gpt5PromptService.java](src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), while this module teaches you how to craft effective prompts within that infrastructure.
 
@@ -431,7 +431,7 @@ When you need specific formats or word counts, this pattern enforces strict adhe
 
 **Reasoning Effort Changes Everything**
 
-GPT-5 lets you control computational effort through your prompts. Low effort means fast responses with minimal exploration. High effort means the model takes time to think deeply. You're learning to match effort to task complexity - don't waste time on simple questions, but don't rush complex decisions either.
+GPT-5.2 lets you control computational effort through your prompts. Low effort means fast responses with minimal exploration. High effort means the model takes time to think deeply. You're learning to match effort to task complexity - don't waste time on simple questions, but don't rush complex decisions either.
 
 **Structure Guides Behavior**
 
