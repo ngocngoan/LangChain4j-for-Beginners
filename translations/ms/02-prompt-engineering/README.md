@@ -1,6 +1,6 @@
-# Modul 02: Kejuruteraan Prompt dengan GPT-5
+# Modul 02: Kejuruteraan Prompt dengan GPT-5.2
 
-## Jadual Kandungan
+## Kandungan
 
 - [Apa yang Anda Akan Pelajari](../../../02-prompt-engineering)
 - [Prasyarat](../../../02-prompt-engineering)
@@ -10,42 +10,42 @@
 - [Menggunakan Sumber Azure Sedia Ada](../../../02-prompt-engineering)
 - [Tangkapan Skrin Aplikasi](../../../02-prompt-engineering)
 - [Meneroka Corak](../../../02-prompt-engineering)
-  - [Rendah vs Tinggi Keghairahan](../../../02-prompt-engineering)
+  - [Rendah vs Tinggi Semangat](../../../02-prompt-engineering)
   - [Pelaksanaan Tugas (Preambul Alat)](../../../02-prompt-engineering)
-  - [Kod Refleksi Diri](../../../02-prompt-engineering)
+  - [Kod Berfikir Sendiri](../../../02-prompt-engineering)
   - [Analisis Berstruktur](../../../02-prompt-engineering)
   - [Sembang Berbilang Giliran](../../../02-prompt-engineering)
-  - [Penalaran Langkah demi Langkah](../../../02-prompt-engineering)
+  - [Penalaran Langkah Demi Langkah](../../../02-prompt-engineering)
   - [Output Terhad](../../../02-prompt-engineering)
 - [Apa yang Anda Sebenarnya Pelajari](../../../02-prompt-engineering)
 - [Langkah Seterusnya](../../../02-prompt-engineering)
 
 ## Apa yang Anda Akan Pelajari
 
-Dalam modul sebelumnya, anda melihat bagaimana memori membolehkan AI perbualan dan menggunakan Model GitHub untuk interaksi asas. Kini kita akan fokus pada cara anda mengemukakan soalan - prompt itu sendiri - menggunakan GPT-5 Azure OpenAI. Cara anda menyusun prompt anda sangat mempengaruhi kualiti jawapan yang anda terima.
+Dalam modul sebelumnya, anda telah melihat bagaimana memori membolehkan AI perbualan dan menggunakan Model GitHub untuk interaksi asas. Kini kita akan memberi tumpuan kepada cara anda mengemukakan soalan - prompt itu sendiri - menggunakan GPT-5.2 Azure OpenAI. Cara anda menyusun prompt secara dramatik mempengaruhi kualiti jawapan yang anda peroleh.
 
-Kita akan menggunakan GPT-5 kerana ia memperkenalkan kawalan penalaran - anda boleh memberitahu model berapa banyak pemikiran yang perlu dilakukan sebelum menjawab. Ini menjadikan strategi prompt yang berbeza lebih jelas dan membantu anda memahami bila untuk menggunakan setiap pendekatan. Kita juga akan mendapat manfaat daripada had kadar yang lebih sedikit Azure untuk GPT-5 berbanding Model GitHub.
+Kita akan menggunakan GPT-5.2 kerana ia memperkenalkan kawalan penalaran – anda boleh memberitahu model berapa banyak pemikiran yang perlu dilakukan sebelum menjawab. Ini menjadikan pelbagai strategi prompt lebih jelas dan membantu anda memahami bila hendak menggunakan setiap pendekatan. Kita juga akan mendapat manfaat daripada had kadar Azure yang lebih sedikit untuk GPT-5.2 berbanding Model GitHub.
 
 ## Prasyarat
 
-- Menyelesaikan Modul 01 (sumber Azure OpenAI telah dikerahkan)
-- Fail `.env` di direktori akar dengan kelayakan Azure (dicipta oleh `azd up` dalam Modul 01)
+- Telah menamatkan Modul 01 (sumber Azure OpenAI telah diterapkan)
+- Fail `.env` dalam direktori root dengan kelayakan Azure (dicipta oleh `azd up` dalam Modul 01)
 
-> **Nota:** Jika anda belum menyelesaikan Modul 01, ikut arahan penyebaran di sana terlebih dahulu.
+> **Nota:** Jika anda belum menamatkan Modul 01, ikut arahan penerapan di sana terlebih dahulu.
 
 ## Memahami Kejuruteraan Prompt
 
-Kejuruteraan prompt adalah tentang mereka bentuk teks input yang secara konsisten memberikan hasil yang anda perlukan. Ia bukan sekadar bertanya soalan - ia tentang menyusun permintaan supaya model memahami dengan tepat apa yang anda mahu dan bagaimana untuk menyampaikannya.
+Kejuruteraan prompt adalah tentang mereka bentuk teks input yang konsisten mendapat hasil yang anda perlukan. Ia bukan sekadar bertanya soalan – ia adalah mengenai menyusun permintaan supaya model memahami dengan tepat apa yang anda mahu dan bagaimana untuk menyampaikannya.
 
-Fikirkan ia seperti memberi arahan kepada rakan sekerja. "Betulkan pepijat" adalah samar. "Betulkan pengecualian penunjuk null dalam UserService.java baris 45 dengan menambah pemeriksaan null" adalah spesifik. Model bahasa berfungsi dengan cara yang sama - ketepatan dan struktur penting.
+Fikirkan seperti memberi arahan kepada rakan sekerja. "Betulkan pepijat" adalah samar-samar. "Betulkan pengecualian penunjuk null dalam UserService.java baris 45 dengan menambah pemeriksaan null" adalah spesifik. Model bahasa juga berfungsi begitu – kekhususan dan struktur penting.
 
 ## Bagaimana Ini Menggunakan LangChain4j
 
-Modul ini menunjukkan corak prompt lanjutan menggunakan asas LangChain4j yang sama dari modul sebelumnya, dengan fokus pada struktur prompt dan kawalan penalaran.
+Modul ini menunjukkan corak lanjutan dalam prompt menggunakan asas LangChain4j yang sama dari modul sebelumnya, dengan fokus pada struktur prompt dan kawalan penalaran.
 
 <img src="../../../translated_images/ms/langchain4j-flow.48e534666213010b.webp" alt="Aliran LangChain4j" width="800"/>
 
-*Bagaimana LangChain4j menghubungkan prompt anda ke Azure OpenAI GPT-5*
+*Bagaimana LangChain4j menghubungkan prompt anda ke Azure OpenAI GPT-5.2*
 
 **Kebergantungan** - Modul 02 menggunakan kebergantungan langchain4j berikut yang ditakrifkan dalam `pom.xml`:
 ```xml
@@ -61,11 +61,11 @@ Modul ini menunjukkan corak prompt lanjutan menggunakan asas LangChain4j yang sa
 
 **Konfigurasi OpenAiOfficialChatModel** - [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java)
 
-Model sembang dikonfigurasi secara manual sebagai bean Spring menggunakan klien Rasmi OpenAI, yang menyokong titik akhir Azure OpenAI. Perbezaan utama dari Modul 01 adalah bagaimana kita menyusun prompt yang dihantar ke `chatModel.chat()`, bukan penyediaan model itu sendiri.
+Model sembang dikonfigurasi secara manual sebagai bean Spring menggunakan klien OpenAI Rasmi, yang menyokong titik akhir Azure OpenAI. Perbezaan utama dari Modul 01 adalah bagaimana kita menyusun prompt yang dihantar ke `chatModel.chat()`, bukan konfigurasi model itu sendiri.
 
 **Mesej Sistem dan Pengguna** - [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)
 
-LangChain4j memisahkan jenis mesej untuk kejelasan. `SystemMessage` menetapkan tingkah laku dan konteks AI (seperti "Anda adalah penilai kod"), manakala `UserMessage` mengandungi permintaan sebenar. Pemisahan ini membolehkan anda mengekalkan tingkah laku AI yang konsisten merentasi pelbagai pertanyaan pengguna.
+LangChain4j memisahkan jenis mesej untuk kejelasan. `SystemMessage` menetapkan tingkah laku dan konteks AI (seperti "Anda adalah penilai kod"), manakala `UserMessage` mengandungi permintaan sebenar. Pemisahan ini membolehkan anda mengekalkan tingkah laku AI yang konsisten merentasi pertanyaan pengguna yang berbeza.
 
 ```java
 SystemMessage systemMsg = SystemMessage.from(
@@ -79,31 +79,31 @@ UserMessage userMsg = UserMessage.from(
 String response = chatModel.chat(systemMsg, userMsg);
 ```
 
-<img src="../../../translated_images/ms/message-types.93e0779798a17c9d.webp" alt="Senibina Jenis Mesej" width="800"/>
+<img src="../../../translated_images/ms/message-types.93e0779798a17c9d.webp" alt="Seni Bina Jenis Mesej" width="800"/>
 
-*Mesej Sistem menyediakan konteks berterusan manakala Mesej Pengguna mengandungi permintaan individu*
+*Mesej Sistem menyediakan konteks berterusan sementara Mesej Pengguna mengandungi permintaan individu*
 
-**MessageWindowChatMemory untuk Multi-Giliran** - Untuk corak perbualan berbilang giliran, kita menggunakan semula `MessageWindowChatMemory` dari Modul 01. Setiap sesi mendapat instans memori sendiri yang disimpan dalam `Map<String, ChatMemory>`, membolehkan pelbagai perbualan serentak tanpa pencampuran konteks.
+**MessageWindowChatMemory untuk Berbilang Giliran** - Untuk corak perbualan berbilang giliran, kita menggunakan semula `MessageWindowChatMemory` dari Modul 01. Setiap sesi mendapat contoh memori sendiri yang disimpan dalam `Map<String, ChatMemory>`, membolehkan pelbagai perbualan serentak tanpa konteks bercampur.
 
-**Templat Prompt** - Fokus sebenar di sini adalah kejuruteraan prompt, bukan API LangChain4j baru. Setiap corak (keghairahan rendah, keghairahan tinggi, pelaksanaan tugas, dll.) menggunakan kaedah `chatModel.chat(prompt)` yang sama tetapi dengan rentetan prompt yang disusun dengan teliti. Tag XML, arahan, dan format adalah sebahagian daripada teks prompt, bukan ciri LangChain4j.
+**Templat Prompt** - Fokus sebenar di sini adalah kejuruteraan prompt, bukan API LangChain4j baru. Setiap corak (semangat rendah, semangat tinggi, pelaksanaan tugas, dsb.) menggunakan kaedah yang sama `chatModel.chat(prompt)` tetapi dengan rentetan prompt yang disusun dengan teliti. Tag XML, arahan, dan pemformatan adalah sebahagian daripada teks prompt, bukan ciri LangChain4j.
 
-**Kawalan Penalaran** - Usaha penalaran GPT-5 dikawal melalui arahan prompt seperti "maksimum 2 langkah penalaran" atau "terokai dengan teliti". Ini adalah teknik kejuruteraan prompt, bukan konfigurasi LangChain4j. Perpustakaan hanya menyampaikan prompt anda ke model.
+**Kawalan Penalaran** - Usaha penalaran GPT-5.2 dikawal melalui arahan prompt seperti "maksimum 2 langkah penalaran" atau "teroka secara menyeluruh". Ini adalah teknik kejuruteraan prompt, bukan konfigurasi LangChain4j. Perpustakaan hanya menyampaikan prompt anda ke model.
 
-Pengajaran utama: LangChain4j menyediakan infrastruktur (sambungan model melalui [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), memori, pengendalian mesej melalui [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), manakala modul ini mengajar anda cara mereka bentuk prompt yang berkesan dalam infrastruktur itu.
+Intipati penting: LangChain4j menyediakan infrastruktur (sambungan model melalui [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), memori, pengurusan mesej melalui [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), manakala modul ini mengajar anda cara mengarang prompt berkesan dalam infrastruktur itu.
 
 ## Corak Teras
 
-Tidak semua masalah memerlukan pendekatan yang sama. Sesetengah soalan memerlukan jawapan cepat, yang lain memerlukan pemikiran mendalam. Ada yang memerlukan penalaran yang kelihatan, ada yang hanya memerlukan hasil. Modul ini merangkumi lapan corak prompt - setiap satu dioptimumkan untuk senario berbeza. Anda akan mencuba kesemuanya untuk belajar bila setiap pendekatan paling sesuai.
+Tidak semua masalah memerlukan pendekatan yang sama. Ada soalan memerlukan jawapan cepat, ada yang memerlukan pemikiran mendalam. Ada yang memerlukan penalaran yang kelihatan, ada yang cuma perlu hasil. Modul ini merangkumi lapan corak prompt - setiap satu dioptimumkan untuk senario berbeza. Anda akan mencuba semua untuk belajar bila setiap pendekatan berkesan.
 
-<img src="../../../translated_images/ms/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Lapan Corak Kejuruteraan Prompt" width="800"/>
+<img src="../../../translated_images/ms/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Lapan Corak Prompt" width="800"/>
 
 *Gambaran keseluruhan lapan corak kejuruteraan prompt dan kes penggunaannya*
 
 <img src="../../../translated_images/ms/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Perbandingan Usaha Penalaran" width="800"/>
 
-*Keghairahan rendah (pantas, langsung) vs Keghairahan tinggi (teliti, eksploratori) pendekatan penalaran*
+*Pendekatan penalaran semangat rendah (pantas, langsung) vs semangat tinggi (teliti, eksploratori)*
 
-**Keghairahan Rendah (Cepat & Fokus)** - Untuk soalan mudah di mana anda mahukan jawapan pantas dan langsung. Model melakukan penalaran minimum - maksimum 2 langkah. Gunakan ini untuk pengiraan, carian, atau soalan mudah.
+**Semangat Rendah (Cepat & Fokus)** - Untuk soalan mudah di mana anda mahu jawapan pantas dan langsung. Model melakukan penalaran minimum - maksimum 2 langkah. Gunakan ini untuk pengiraan, carian, atau soalan mudah.
 
 ```java
 String prompt = """
@@ -117,11 +117,11 @@ String response = chatModel.chat(prompt);
 ```
 
 > 💡 **Terokai dengan GitHub Copilot:** Buka [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) dan tanya:
-> - "Apakah perbezaan antara corak prompt keghairahan rendah dan tinggi?"
+> - "Apa perbezaan antara corak prompt semangat rendah dan tinggi?"
 > - "Bagaimana tag XML dalam prompt membantu menyusun jawapan AI?"
-> - "Bila saya harus menggunakan corak refleksi diri berbanding arahan langsung?"
+> - "Bila saya harus gunakan corak refleksi sendiri vs arahan langsung?"
 
-**Keghairahan Tinggi (Mendalam & Teliti)** - Untuk masalah kompleks di mana anda mahukan analisis menyeluruh. Model meneroka dengan teliti dan menunjukkan penalaran terperinci. Gunakan ini untuk reka bentuk sistem, keputusan seni bina, atau penyelidikan kompleks.
+**Semangat Tinggi (Mendalam & Teliti)** - Untuk masalah kompleks di mana anda mahukan analisis menyeluruh. Model meneroka dengan teliti dan menunjukkan penalaran terperinci. Gunakan ini untuk reka bentuk sistem, keputusan seni bina, atau penyelidikan kompleks.
 
 ```java
 String prompt = """
@@ -134,7 +134,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Pelaksanaan Tugas (Kemajuan Langkah demi Langkah)** - Untuk aliran kerja berbilang langkah. Model menyediakan pelan awal, menceritakan setiap langkah semasa bekerja, kemudian memberi ringkasan. Gunakan ini untuk migrasi, pelaksanaan, atau sebarang proses berbilang langkah.
+**Pelaksanaan Tugas (Kemajuan Langkah demi Langkah)** - Untuk aliran kerja berbilang langkah. Model memberi pelan awal, menceritakan setiap langkah semasa ia berfungsi, kemudian memberikan ringkasan. Gunakan ini untuk migrasi, pelaksanaan, atau proses berbilang langkah lain.
 
 ```java
 String prompt = """
@@ -147,18 +147,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Prompt Chain-of-Thought secara eksplisit meminta model menunjukkan proses penalarannya, meningkatkan ketepatan untuk tugas kompleks. Pecahan langkah demi langkah membantu manusia dan AI memahami logik.
+Prompt Rantaian Pemikiran secara eksplisit meminta model menunjuk proses penalarannya, memperbaiki ketepatan untuk tugas kompleks. Pecahan langkah demi langkah membantu manusia dan AI memahami logik.
 
-> **🤖 Cuba dengan Sembang [GitHub Copilot](https://github.com/features/copilot):** Tanya tentang corak ini:
+> **🤖 Cuba dengan [GitHub Copilot](https://github.com/features/copilot) Sembang:** Tanya tentang corak ini:
 > - "Bagaimana saya menyesuaikan corak pelaksanaan tugas untuk operasi jangka panjang?"
-> - "Apakah amalan terbaik untuk menyusun preambul alat dalam aplikasi produksi?"
+> - "Apa amalan terbaik untuk menyusun preambul alat dalam aplikasi pengeluaran?"
 > - "Bagaimana saya boleh menangkap dan memaparkan kemas kini kemajuan pertengahan dalam UI?"
 
 <img src="../../../translated_images/ms/task-execution-pattern.9da3967750ab5c1e.webp" alt="Corak Pelaksanaan Tugas" width="800"/>
 
-*Rancang → Laksanakan → Ringkaskan aliran kerja untuk tugas berbilang langkah*
+*Rancang → Laksanakan → Rumuskan aliran kerja untuk tugas berbilang langkah*
 
-**Kod Refleksi Diri** - Untuk menjana kod berkualiti produksi. Model menjana kod, memeriksa mengikut kriteria kualiti, dan memperbaikinya secara berulang. Gunakan ini apabila membina ciri atau perkhidmatan baru.
+**Kod Berfikir Sendiri** - Untuk menjana kod berkualiti pengeluaran. Model menjana kod, memeriksa kriteria kualiti, dan menambah baik secara berulang. Gunakan ini semasa membina ciri atau perkhidmatan baru.
 
 ```java
 String prompt = """
@@ -177,9 +177,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/ms/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Kitaran Refleksi Diri" width="800"/>
 
-*Gelung penambahbaikan berulang - jana, nilai, kenal pasti isu, perbaiki, ulang*
+*Gelung penambahbaikan iteratif - jana, nilai, kenal pasti isu, perbaiki, ulang*
 
-**Analisis Berstruktur** - Untuk penilaian konsisten. Model mengkaji kod menggunakan rangka kerja tetap (ketepatan, amalan, prestasi, keselamatan). Gunakan ini untuk semakan kod atau penilaian kualiti.
+**Analisis Berstruktur** - Untuk penilaian konsisten. Model menyemak kod menggunakan rangka kerja tetap (ketepatan, amalan, prestasi, keselamatan). Gunakan ini untuk semakan kod atau penilaian kualiti.
 
 ```java
 String prompt = """
@@ -201,16 +201,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Cuba dengan Sembang [GitHub Copilot](https://github.com/features/copilot):** Tanya tentang analisis berstruktur:
+> **🤖 Cuba dengan [GitHub Copilot](https://github.com/features/copilot) Sembang:** Tanya tentang analisis berstruktur:
 > - "Bagaimana saya boleh sesuaikan rangka kerja analisis untuk jenis semakan kod yang berbeza?"
-> - "Apakah cara terbaik untuk mengurai dan bertindak atas output berstruktur secara programatik?"
-> - "Bagaimana saya memastikan tahap keterukan konsisten merentasi sesi semakan yang berbeza?"
+> - "Apakah cara terbaik untuk mengurai dan bertindak ke atas output berstruktur secara programatik?"
+> - "Bagaimana saya memastikan tahap keterukan konsisten merentasi sesi semakan berbeza?"
 
 <img src="../../../translated_images/ms/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Corak Analisis Berstruktur" width="800"/>
 
 *Rangka kerja empat kategori untuk semakan kod konsisten dengan tahap keterukan*
 
-**Sembang Berbilang Giliran** - Untuk perbualan yang memerlukan konteks. Model mengingati mesej sebelumnya dan membina daripadanya. Gunakan ini untuk sesi bantuan interaktif atau soal jawab kompleks.
+**Sembang Berbilang Giliran** - Untuk perbualan yang memerlukan konteks. Model mengingati mesej sebelumnya dan membina daripadanya. Gunakan ini untuk sesi bantuan interaktif atau soalan kompleks.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -228,7 +228,7 @@ memory.add(aiMessage2);
 
 *Bagaimana konteks perbualan terkumpul sepanjang beberapa giliran sehingga mencapai had token*
 
-**Penalaran Langkah demi Langkah** - Untuk masalah yang memerlukan logik yang kelihatan. Model menunjukkan penalaran eksplisit untuk setiap langkah. Gunakan ini untuk masalah matematik, teka-teki logik, atau apabila anda perlu memahami proses pemikiran.
+**Penalaran Langkah Demi Langkah** - Untuk masalah yang memerlukan logik yang kelihatan. Model menunjukkan penalaran eksplisit untuk setiap langkah. Gunakan ini untuk masalah matematik, teka-teki logik, atau apabila anda perlu memahami proses pemikiran.
 
 ```java
 String prompt = """
@@ -242,11 +242,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/ms/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Corak Langkah demi Langkah" width="800"/>
+<img src="../../../translated_images/ms/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Corak Langkah Demi Langkah" width="800"/>
 
-*Memecahkan masalah kepada langkah logik yang jelas*
+*Memecah masalah kepada langkah logik yang eksplisit*
 
-**Output Terhad** - Untuk jawapan dengan keperluan format tertentu. Model mematuhi dengan ketat peraturan format dan panjang. Gunakan ini untuk ringkasan atau apabila anda memerlukan struktur output yang tepat.
+**Output Terhad** - Untuk jawapan dengan syarat format tertentu. Model mematuhi peraturan format dan panjang dengan ketat. Gunakan ini untuk ringkasan atau apabila anda memerlukan struktur output yang tepat.
 
 ```java
 String prompt = """
@@ -264,38 +264,38 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/ms/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Corak Output Terhad" width="800"/>
 
-*Memaksa keperluan format, panjang, dan struktur tertentu*
+*Menguatkuasakan syarat format, panjang, dan struktur tertentu*
 
 ## Menggunakan Sumber Azure Sedia Ada
 
-**Sahkan penyebaran:**
+**Sahkan penerapan:**
 
-Pastikan fail `.env` wujud di direktori akar dengan kelayakan Azure (dicipta semasa Modul 01):
+Pastikan fail `.env` wujud dalam direktori root dengan kelayakan Azure (dicipta semasa Modul 01):
 ```bash
-cat ../.env  # Patut menunjukkan AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Harus menunjukkan AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Mulakan aplikasi:**
 
-> **Nota:** Jika anda sudah memulakan semua aplikasi menggunakan `./start-all.sh` dari Modul 01, modul ini sudah berjalan pada port 8083. Anda boleh langkau arahan mula di bawah dan terus ke http://localhost:8083.
+> **Nota:** Jika anda sudah memulakan semua aplikasi menggunakan `./start-all.sh` dari Modul 01, modul ini sudah berjalan di port 8083. Anda boleh abaikan arahan mula di bawah dan terus ke http://localhost:8083.
 
 **Pilihan 1: Menggunakan Spring Boot Dashboard (Disyorkan untuk pengguna VS Code)**
 
-Kontena dev termasuk sambungan Spring Boot Dashboard, yang menyediakan antara muka visual untuk mengurus semua aplikasi Spring Boot. Anda boleh menemuinya di Bar Aktiviti di sebelah kiri VS Code (cari ikon Spring Boot).
+Container pembangunan termasuk sambungan Spring Boot Dashboard, yang menyediakan antara muka visual untuk mengurus semua aplikasi Spring Boot. Anda boleh dapati di Bar Aktiviti di sebelah kiri VS Code (cari ikon Spring Boot).
 
-Dari Spring Boot Dashboard, anda boleh:
+Daripada Spring Boot Dashboard, anda boleh:
 - Melihat semua aplikasi Spring Boot yang tersedia dalam ruang kerja
 - Mula/hentikan aplikasi dengan satu klik
 - Melihat log aplikasi secara masa nyata
 - Memantau status aplikasi
 
-Klik butang main di sebelah "prompt-engineering" untuk memulakan modul ini, atau mulakan semua modul sekaligus.
+Cuma klik butang main di sebelah "prompt-engineering" untuk mulakan modul ini, atau mulakan semua modul sekaligus.
 
-<img src="../../../translated_images/ms/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
+<img src="../../../translated_images/ms/dashboard.da2c2130c904aaf0.webp" alt="Papan Pemuka Spring Boot" width="400"/>
 
 **Pilihan 2: Menggunakan skrip shell**
 
-Mulakan semua aplikasi web (modul 01-04):
+Mula semua aplikasi web (modul 01-04):
 
 **Bash:**
 ```bash
@@ -305,11 +305,11 @@ cd ..  # Dari direktori akar
 
 **PowerShell:**
 ```powershell
-cd ..  # Dari direktori akar
+cd ..  # Dari direktori root
 .\start-all.ps1
 ```
 
-Atau mulakan hanya modul ini:
+Atau mulakan modul ini sahaja:
 
 **Bash:**
 ```bash
@@ -323,9 +323,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Kedua-dua skrip secara automatik memuatkan pembolehubah persekitaran dari fail `.env` akar dan akan membina JAR jika ia tidak wujud.
+Kedua-dua skrip secara automatik memuat pembolehubah persekitaran dari fail `.env` root dan akan bina JAR jika belum ada.
 
-> **Nota:** Jika anda lebih suka membina semua modul secara manual sebelum memulakan:
+> **Nota:** Jika anda mahu bina semua modul secara manual sebelum memulakan:
 >
 > **Bash:**
 > ```bash
@@ -359,98 +359,98 @@ cd ..; .\stop-all.ps1  # Semua modul
 
 ## Tangkapan Skrin Aplikasi
 
-<img src="../../../translated_images/ms/dashboard-home.5444dbda4bc1f79d.webp" alt="Laman Utama Dashboard" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
+<img src="../../../translated_images/ms/dashboard-home.5444dbda4bc1f79d.webp" alt="Laman Utama Papan Pemuka" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Dashboard utama yang menunjukkan semua 8 corak kejuruteraan prompt dengan ciri dan kes penggunaannya*
+*Papan pemuka utama menunjukkan lapan corak kejuruteraan prompt dengan ciri dan kes penggunaannya*
 
 ## Meneroka Corak
 
-Antara muka web membolehkan anda mencuba pelbagai strategi prompt. Setiap corak menyelesaikan masalah yang berbeza - cuba mereka untuk melihat bila setiap pendekatan bersinar.
+Antara muka web membolehkan anda mencuba strategi prompt yang berbeza. Setiap corak menyelesaikan masalah berbeza – cuba untuk lihat bila setiap pendekatan menyerlah.
 
-### Rendah vs Tinggi Keghairahan
+### Rendah vs Tinggi Semangat
 
-Tanya soalan mudah seperti "Apakah 15% daripada 200?" menggunakan Keghairahan Rendah. Anda akan mendapat jawapan segera dan langsung. Kini tanya sesuatu yang kompleks seperti "Reka strategi caching untuk API trafik tinggi" menggunakan Keghairahan Tinggi. Perhatikan bagaimana model melambat dan memberikan penalaran terperinci. Model sama, struktur soalan sama - tetapi prompt memberitahu berapa banyak pemikiran yang perlu dilakukan.
+Tanya soalan mudah seperti "Apakah 15% dari 200?" menggunakan Semangat Rendah. Anda akan mendapat jawapan segera dan langsung. Kini tanya sesuatu yang kompleks seperti "Reka strategi caching untuk API trafik tinggi" menggunakan Semangat Tinggi. Perhatikan bagaimana model melambat dan memberikan penalaran terperinci. Model sama, struktur soalan sama – tetapi prompt memberitahu berapa banyak pemikiran yang perlu dilakukan.
+<img src="../../../translated_images/ms/low-eagerness-demo.898894591fb23aa0.webp" alt="Demo Keinginan Rendah" width="800"/>
 
-<img src="../../../translated_images/ms/low-eagerness-demo.898894591fb23aa0.webp" alt="Demo Keghairahan Rendah" width="800"/>
-*Pengiraan pantas dengan penalaran minimum*
+*Pengiraan pantas dengan pemikiran minimum*
 
-<img src="../../../translated_images/ms/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Demo Semangat Tinggi" width="800"/>
+<img src="../../../translated_images/ms/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Demo Keinginan Tinggi" width="800"/>
 
-*Strategi caching menyeluruh (2.8MB)*
+*Strategi cache menyeluruh (2.8MB)*
 
-### Pelaksanaan Tugas (Preambul Alat)
+### Pelaksanaan Tugasan (Pendahuluan Alat)
 
-Aliran kerja berbilang langkah mendapat manfaat daripada perancangan awal dan penceritaan kemajuan. Model menggariskan apa yang akan dilakukan, menceritakan setiap langkah, kemudian meringkaskan hasil.
+Aliran kerja berbilang langkah mendapat manfaat daripada perancangan awal dan narasi kemajuan. Model ini menggariskan apa yang akan dilakukan, menceritakan setiap langkah, kemudian merumuskan hasil.
 
-<img src="../../../translated_images/ms/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Demo Pelaksanaan Tugas" width="800"/>
+<img src="../../../translated_images/ms/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Demo Pelaksanaan Tugasan" width="800"/>
 
-*Mewujudkan titik akhir REST dengan penceritaan langkah demi langkah (3.9MB)*
+*Mewujudkan titik akhir REST dengan narasi langkah demi langkah (3.9MB)*
 
-### Kod Berfikir Sendiri
+### Kod Self-Reflecting
 
-Cuba "Cipta perkhidmatan pengesahan emel". Daripada hanya menjana kod dan berhenti, model menjana, menilai berdasarkan kriteria kualiti, mengenal pasti kelemahan, dan memperbaiki. Anda akan melihat ia mengulangi sehingga kod memenuhi piawaian pengeluaran.
+Cuba "Buat perkhidmatan pengesahan e-mel". Daripada hanya menjana kod dan berhenti, model ini menjana, menilai berdasarkan kriteria kualiti, mengenal pasti kelemahan, dan memperbaiki. Anda akan melihat ia berulang sehingga kod memenuhi piawaian pengeluaran.
 
-<img src="../../../translated_images/ms/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Demo Kod Berfikir Sendiri" width="800"/>
+<img src="../../../translated_images/ms/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Demo Kod Self-Reflecting" width="800"/>
 
-*Perkhidmatan pengesahan emel lengkap (5.2MB)*
+*Perkhidmatan pengesahan e-mel lengkap (5.2MB)*
 
 ### Analisis Berstruktur
 
-Semakan kod memerlukan rangka kerja penilaian yang konsisten. Model menganalisis kod menggunakan kategori tetap (ketepatan, amalan, prestasi, keselamatan) dengan tahap keterukan.
+Semakan kod memerlukan rangka kerja penilaian yang konsisten. Model ini menganalisis kod menggunakan kategori tetap (ketepatan, amalan, prestasi, keselamatan) dengan tahap keterukan.
 
 <img src="../../../translated_images/ms/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Demo Analisis Berstruktur" width="800"/>
 
-*Semakan kod berasaskan rangka kerja*
+*Semakan kod berdasarkan rangka kerja*
 
 ### Sembang Berbilang Giliran
 
-Tanya "Apa itu Spring Boot?" kemudian teruskan dengan "Tunjukkan saya contoh". Model mengingati soalan pertama anda dan memberikan contoh Spring Boot khusus. Tanpa memori, soalan kedua itu akan terlalu samar.
+Tanya "Apa itu Spring Boot?" kemudian teruskan dengan "Tunjukkan contoh". Model ingat soalan pertama anda dan memberikan contoh Spring Boot khusus. Tanpa memori, soalan kedua itu akan terlalu kabur.
 
 <img src="../../../translated_images/ms/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Demo Sembang Berbilang Giliran" width="800"/>
 
 *Pemeliharaan konteks merentasi soalan*
 
-### Penalaran Langkah demi Langkah
+### Pemikiran Langkah Demi Langkah
 
-Pilih masalah matematik dan cuba dengan Penalaran Langkah demi Langkah dan Semangat Rendah. Semangat rendah hanya memberikan jawapan - pantas tetapi tidak jelas. Langkah demi langkah menunjukkan setiap pengiraan dan keputusan.
+Pilih masalah matematik dan cuba dengan kedua-dua Pemikiran Langkah Demi Langkah dan Keinginan Rendah. Keinginan rendah hanya memberikan jawapan - pantas tetapi tidak telus. Langkah demi langkah menunjukkan setiap pengiraan dan keputusan.
 
-<img src="../../../translated_images/ms/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Demo Penalaran Langkah demi Langkah" width="800"/>
+<img src="../../../translated_images/ms/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Demo Pemikiran Langkah Demi Langkah" width="800"/>
 
-*Masalah matematik dengan langkah yang jelas*
+*Masalah matematik dengan langkah yang terperinci*
 
 ### Output Terhad
 
-Apabila anda memerlukan format atau bilangan perkataan tertentu, corak ini menguatkuasakan pematuhan ketat. Cuba jana ringkasan dengan tepat 100 perkataan dalam format titik peluru.
+Apabila anda memerlukan format spesifik atau bilangan perkataan, corak ini menguatkuasakan pematuhan yang ketat. Cuba menjana ringkasan dengan tepat 100 perkataan dalam format berbulet.
 
 <img src="../../../translated_images/ms/constrained-output-demo.567cc45b75da1633.webp" alt="Demo Output Terhad" width="800"/>
 
 *Ringkasan pembelajaran mesin dengan kawalan format*
 
-## Apa Yang Anda Sebenarnya Pelajari
+## Apa Yang Anda Sebenarnya Belajar
 
-**Usaha Penalaran Mengubah Segalanya**
+**Usaha Berfikir Mengubah Segalanya**
 
-GPT-5 membolehkan anda mengawal usaha pengiraan melalui arahan anda. Usaha rendah bermakna respons pantas dengan penerokaan minimum. Usaha tinggi bermakna model mengambil masa untuk berfikir dengan mendalam. Anda belajar untuk memadankan usaha dengan kerumitan tugas - jangan bazirkan masa pada soalan mudah, tetapi jangan tergesa-gesa membuat keputusan kompleks juga.
+GPT-5.2 membenarkan anda mengawal usaha pengiraan melalui prompt anda. Usaha rendah bermaksud respons cepat dengan penerokaan minimum. Usaha tinggi bermaksud model mengambil masa untuk berfikir secara mendalam. Anda belajar menyesuaikan usaha mengikut kerumitan tugasan - jangan bazir masa pada soalan mudah, tetapi jangan tergesa-gesa membuat keputusan kompleks juga.
 
 **Struktur Membimbing Tingkah Laku**
 
-Perasan tag XML dalam arahan? Ia bukan hiasan. Model mengikuti arahan berstruktur dengan lebih boleh dipercayai daripada teks bebas. Apabila anda memerlukan proses berbilang langkah atau logik kompleks, struktur membantu model mengesan di mana ia berada dan apa yang seterusnya.
+Perasan tag XML dalam prompt? Ia bukan hiasan. Model mengikuti arahan berstruktur dengan lebih boleh dipercayai berbanding teks bebas. Apabila anda memerlukan proses berbilang langkah atau logik kompleks, struktur membantu model menjejak di mana ia berada dan apa yang seterusnya.
 
-<img src="../../../translated_images/ms/prompt-structure.a77763d63f4e2f89.webp" alt="Struktur Arahan" width="800"/>
+<img src="../../../translated_images/ms/prompt-structure.a77763d63f4e2f89.webp" alt="Struktur Prompt" width="800"/>
 
-*Anatomi arahan yang berstruktur baik dengan bahagian jelas dan organisasi gaya XML*
+*Anatomi prompt berstruktur dengan bahagian jelas dan organisasi gaya XML*
 
 **Kualiti Melalui Penilaian Diri**
 
-Corak berfikir sendiri berfungsi dengan menjadikan kriteria kualiti jelas. Daripada berharap model "melakukannya dengan betul", anda memberitahunya dengan tepat apa maksud "betul": logik tepat, pengendalian ralat, prestasi, keselamatan. Model kemudian boleh menilai output sendiri dan memperbaiki. Ini menjadikan penjanaan kod dari loteri menjadi proses.
+Corak self-reflecting berfungsi dengan menjadikan kriteria kualiti jelas. Daripada berharap model "melakukannya dengan betul", anda memberitahunya tepat apa maksud "betul": logik tepat, pengendalian ralat, prestasi, keselamatan. Model kemudian boleh menilai hasilnya sendiri dan memperbaiki. Ini menjadikan penjanaan kod dari loteri menjadi proses.
 
 **Konteks Adalah Terhad**
 
-Perbualan berbilang giliran berfungsi dengan memasukkan sejarah mesej dengan setiap permintaan. Tetapi ada had - setiap model mempunyai jumlah token maksimum. Apabila perbualan berkembang, anda memerlukan strategi untuk mengekalkan konteks relevan tanpa mencapai had itu. Modul ini menunjukkan bagaimana memori berfungsi; kemudian anda akan belajar bila untuk meringkaskan, bila untuk melupakan, dan bila untuk mengambil semula.
+Perbualan berbilang giliran berfungsi dengan menyertakan sejarah mesej dengan setiap permintaan. Tetapi ada had - setiap model mempunyai bilangan token maksimum. Apabila perbualan berkembang, anda perlukan strategi untuk mengekalkan konteks relevan tanpa melebihi had itu. Modul ini menunjukkan bagaimana memori berfungsi; kemudian anda akan belajar bila untuk meringkaskan, bila untuk melupakan, dan bila untuk mengambil semula.
 
 ## Langkah Seterusnya
 
-**Modul Seterusnya:** [03-rag - RAG (Penjanaan Dipertingkatkan Pengambilan)](../03-rag/README.md)
+**Modul Seterusnya:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
 
 ---
 
@@ -459,6 +459,6 @@ Perbualan berbilang giliran berfungsi dengan memasukkan sejarah mesej dengan set
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Penafian**:  
-Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila ambil maklum bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya harus dianggap sebagai sumber yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disyorkan. Kami tidak bertanggungjawab atas sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
+**Penafian**:
+Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila ambil perhatian bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya hendaklah dianggap sebagai sumber yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disyorkan. Kami tidak bertanggungjawab atas sebarang salah faham atau tafsiran yang salah yang timbul daripada penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
