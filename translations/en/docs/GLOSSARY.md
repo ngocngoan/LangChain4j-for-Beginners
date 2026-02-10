@@ -24,7 +24,7 @@ Quick reference for terms and concepts used throughout the course.
 
 **Chunking** - Breaking documents into smaller pieces. Typical: 300-500 tokens with overlap. [Module 03](../03-rag/README.md)
 
-**Context Window** - Maximum tokens a model can process. GPT-5: 400K tokens.
+**Context Window** - Maximum tokens a model can process. GPT-5.2: 400K tokens.
 
 **Embeddings** - Numerical vectors representing text meaning. [Module 03](../03-rag/README.md)
 
@@ -78,7 +78,7 @@ Quick reference for terms and concepts used throughout the course.
 
 **Large Language Model (LLM)** - AI models trained on vast text data.
 
-**Reasoning Effort** - GPT-5 parameter controlling thinking depth. [Module 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - GPT-5.2 parameter controlling thinking depth. [Module 02](../02-prompt-engineering/README.md)
 
 **Temperature** - Controls output randomness. Low=deterministic, high=creative.
 
@@ -108,9 +108,9 @@ Quick reference for terms and concepts used throughout the course.
 
 **Constrained Output** - Enforcing specific format or structure.
 
-**High Eagerness** - GPT-5 pattern for thorough reasoning.
+**High Eagerness** - GPT-5.2 pattern for thorough reasoning.
 
-**Low Eagerness** - GPT-5 pattern for quick answers.
+**Low Eagerness** - GPT-5.2 pattern for quick answers.
 
 **Multi-Turn Conversation** - Maintaining context across exchanges.
 
@@ -206,7 +206,7 @@ Quick reference for terms and concepts used throughout the course.
 
 **Deployment Name** - Name for model deployment in Azure.
 
-**GPT-5** - Latest OpenAI model with reasoning control. [Module 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Latest OpenAI model with reasoning control. [Module 02](../02-prompt-engineering/README.md)
 
 ## Testing and Development - [Testing Guide](TESTING.md)
 

@@ -7,64 +7,64 @@
 - [AI/ML コンセプト](../../../docs)
 - [ガードレール](../../../docs)
 - [プロンプトエンジニアリング](../../../docs)
-- [RAG (Retrieval-Augmented Generation)](../../../docs)
+- [RAG（検索強化生成）](../../../docs)
 - [エージェントとツール](../../../docs)
-- [エージェンティックモジュール](../../../docs)
-- [モデルコンテキストプロトコル (MCP)](../../../docs)
+- [エージェントモジュール](../../../docs)
+- [モデルコンテキストプロトコル（MCP）](../../../docs)
 - [Azure サービス](../../../docs)
 - [テストと開発](../../../docs)
 
-コース全体で使用される用語と概念のクイックリファレンス。
+コース全体で使用される用語とコンセプトのクイックリファレンス。
 
-## Core Concepts
+## コアコンセプト
 
-**AI Agent** - AIを利用して自律的に推論し行動するシステム。[Module 04](../04-tools/README.md)
+**AI エージェント** - AI を用いて自律的に推論し行動するシステム。[モジュール 04](../04-tools/README.md)
 
-**Chain** - 出力が次のステップに入力される一連の処理。
+**チェーン** - 出力が次の処理に入力される操作の連続。
 
-**Chunking** - ドキュメントを小さな断片に分割すること。一般的に300～500トークンで重複あり。[Module 03](../03-rag/README.md)
+**チャンク化** - 文書を小さな部分に分割。一般的には300〜500トークン重複あり。[モジュール 03](../03-rag/README.md)
 
-**Context Window** - モデルが処理できる最大トークン数。GPT-5: 40万トークン。
+**コンテキストウィンドウ** - モデルが処理可能な最大トークン数。GPT-5.2：40万トークン。
 
-**Embeddings** - テキストの意味を表す数値ベクトル。[Module 03](../03-rag/README.md)
+**埋め込み** - テキストの意味を表す数値ベクトル。[モジュール 03](../03-rag/README.md)
 
-**Function Calling** - モデルが外部関数を呼び出す構造化されたリクエストを生成する。[Module 04](../04-tools/README.md)
+**関数呼び出し** - モデルが外部関数呼び出しのための構造化リクエストを生成。[モジュール 04](../04-tools/README.md)
 
-**Hallucination** - モデルが誤っているがもっともらしい情報を生成すること。
+**幻覚（ハルシネーション）** - モデルが誤りだがもっともらしい情報を生成すること。
 
-**Prompt** - 言語モデルへのテキスト入力。[Module 02](../02-prompt-engineering/README.md)
+**プロンプト** - 言語モデルへのテキスト入力。[モジュール 02](../02-prompt-engineering/README.md)
 
-**Semantic Search** - キーワードではなく意味による検索。Embeddingsを利用。[Module 03](../03-rag/README.md)
+**意味検索** - キーワードではなく埋め込みを使用した意味に基づく検索。[モジュール 03](../03-rag/README.md)
 
-**Stateful vs Stateless** - Stateless: メモリなし。Stateful: 会話履歴を保持。[Module 01](../01-introduction/README.md)
+**ステートフル vs ステートレス** - ステートレス：メモリなし。ステートフル：会話履歴を保持。[モジュール 01](../01-introduction/README.md)
 
-**Tokens** - モデルが処理する基本的なテキスト単位。コストや制限に影響。[Module 01](../01-introduction/README.md)
+**トークン** - モデルが処理する基本的テキスト単位。コストと制限に影響。[モジュール 01](../01-introduction/README.md)
 
-**Tool Chaining** - 複数ツールを順次実行し、出力を次の呼び出しに活用。[Module 04](../04-tools/README.md)
+**ツールチェイニング** - 出力が次の呼び出しに影響を与える連続的ツール実行。[モジュール 04](../04-tools/README.md)
 
-## LangChain4j Components
+## LangChain4j コンポーネント
 
 **AiServices** - 型安全なAIサービスインターフェースを作成。
 
 **OpenAiOfficialChatModel** - OpenAIおよびAzure OpenAIモデルの統一クライアント。
 
-**OpenAiOfficialEmbeddingModel** - OpenAI Officialクライアントを使い埋め込みを作成（OpenAIとAzure OpenAI両対応）。
+**OpenAiOfficialEmbeddingModel** - OpenAI公式クライアントを使用した埋め込み作成（OpenAI及びAzure OpenAI対応）。
 
 **ChatModel** - 言語モデルのコアインターフェース。
 
 **ChatMemory** - 会話履歴を保持。
 
-**ContentRetriever** - RAG用に関連するドキュメントチャンクを検索。
+**ContentRetriever** - RAG用に関連する文書チャンクを検索。
 
-**DocumentSplitter** - ドキュメントをチャンクに分割。
+**DocumentSplitter** - 文書をチャンクに分割。
 
 **EmbeddingModel** - テキストを数値ベクトルに変換。
 
-**EmbeddingStore** - 埋め込みを保存および取得。
+**EmbeddingStore** - 埋め込みを保存・取得。
 
-**MessageWindowChatMemory** - 最近のメッセージのスライディングウィンドウを保持。
+**MessageWindowChatMemory** - 最近のメッセージのスライディングウィンドウを管理。
 
-**PromptTemplate** - `{{variable}}` プレースホルダーを使った再利用可能なプロンプト作成。
+**PromptTemplate** - `{{variable}}` プレースホルダーを持つ再利用可能なプロンプトを作成。
 
 **TextSegment** - メタデータ付きテキストチャンク。RAGで使用。
 
@@ -72,161 +72,161 @@
 
 **UserMessage / AiMessage / SystemMessage** - 会話のメッセージタイプ。
 
-## AI/ML Concepts
+## AI/ML コンセプト
 
-**Few-Shot Learning** - プロンプト内に例を示す学習。[Module 02](../02-prompt-engineering/README.md)
+**少数ショット学習** - プロンプト内に例を提供。[モジュール 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** - 大量のテキストデータで訓練されたAIモデル。
+**大規模言語モデル（LLM）** - 膨大なテキストデータで訓練されたAIモデル。
 
-**Reasoning Effort** - GPT-5の思考深度制御パラメータ。[Module 02](../02-prompt-engineering/README.md)
+**推論努力** - GPT-5.2 のパラメータで思考の深さを制御。[モジュール 02](../02-prompt-engineering/README.md)
 
-**Temperature** - 出力のランダム性を制御。低いほど決定論的、高いほど創造的。
+**温度** - 出力の乱数度を制御。低＝決定論的、高＝創造的。
 
-**Vector Database** - 埋め込みベクトル用の専門データベース。[Module 03](../03-rag/README.md)
+**ベクターデータベース** - 埋め込み用に特化したデータベース。[モジュール 03](../03-rag/README.md)
 
-**Zero-Shot Learning** - 例なしでタスクを実行する学習。[Module 02](../02-prompt-engineering/README.md)
+**ゼロショット学習** - 例なくタスクを実行。[モジュール 02](../02-prompt-engineering/README.md)
 
-## Guardrails - [Module 00](../00-quick-start/README.md)
+## ガードレール - [モジュール 00](../00-quick-start/README.md)
 
-**Defense in Depth** - アプリケーションレベルのガードレールとプロバイダーの安全フィルターを組み合わせた多層セキュリティ。
+**多層防御** - アプリレベルのガードレールとプロバイダーの安全フィルターを組み合わせた多層セキュリティアプローチ。
 
-**Hard Block** - 重大な内容違反に対し、プロバイダーがHTTP 400エラーを返す。
+**ハードブロック** - 深刻な内容違反でプロバイダーがHTTP 400エラーを送出。
 
-**InputGuardrail** - ユーザー入力がLLMに届く前に検証するLangChain4jインターフェース。害悪なプロンプトを早期にブロックしてコストと遅延を削減。
+**InputGuardrail** - LangChain4jによるユーザー入力の検証インターフェース。LLM到達前に有害なプロンプトをブロックしコストと遅延を節約。
 
-**InputGuardrailResult** - ガードレール検証の戻り値タイプ：`success()` または `fatal("理由")`。
+**InputGuardrailResult** - ガードレール検証の返却型：`success()`または`fatal("理由")`。
 
-**OutputGuardrail** - AIの応答をユーザーに返す前に検証するインターフェース。
+**OutputGuardrail** - AI応答をユーザー返却前に検証するインターフェース。
 
-**Provider Safety Filters** - AIプロバイダー（例：GitHub Models）由来のAPIレベルの内蔵コンテンツフィルター。
+**プロバイダー安全フィルター** - AIプロバイダー（例：GitHub Models）によるAPIレベルでの内容フィルター。
 
-**Soft Refusal** - エラーを返さず、丁寧に回答を拒否するモデルの応答。
+**ソフト拒否** - モデルがエラーを返さず丁寧に回答拒否。
 
-## Prompt Engineering - [Module 02](../02-prompt-engineering/README.md)
+## プロンプトエンジニアリング - [モジュール 02](../02-prompt-engineering/README.md)
 
-**Chain-of-Thought** - 精度向上のための段階的推論。
+**思考連鎖（Chain-of-Thought）** - 精度向上のための段階的推論。
 
-**Constrained Output** - 特定のフォーマットや構造の強制。
+**制約付き出力** - 特定のフォーマットや構造の強制。
 
-**High Eagerness** - 徹底的な推論のためのGPT-5パターン。
+**高推論モード** - GPT-5.2での詳細な推論パターン。
 
-**Low Eagerness** - 迅速な回答のためのGPT-5パターン。
+**低推論モード** - GPT-5.2での迅速な回答パターン。
 
-**Multi-Turn Conversation** - 複数回のやりとりでコンテキストを維持。
+**マルチターン会話** - 複数回のやり取りでコンテキストを維持。
 
-**Role-Based Prompting** - システムメッセージを使いモデルのペルソナを設定。
+**役割ベースプロンプト** - システムメッセージでモデルの人格設定。
 
-**Self-Reflection** - モデルが自己評価し出力を改善。
+**自己反省** - モデルが自身の出力を評価し改善。
 
-**Structured Analysis** - 固定評価フレームワーク。
+**構造化分析** - 固定評価フレームワーク。
 
-**Task Execution Pattern** - 計画 → 実行 → 要約。
+**タスク実行パターン** - 計画 → 実行 → 要約。
 
-## RAG (Retrieval-Augmented Generation) - [Module 03](../03-rag/README.md)
+## RAG（検索強化生成）- [モジュール 03](../03-rag/README.md)
 
-**Document Processing Pipeline** - 読み込み → チャンク分割 → 埋め込み → 保存。
+**文書処理パイプライン** - ロード → チャンク化 → 埋め込み → 保存。
 
-**In-Memory Embedding Store** - テスト用の非永続的ストレージ。
+**メモリ内埋め込みストア** - テスト用の非永続ストレージ。
 
-**RAG** - 検索と生成を組み合わせて根拠のある応答を生成。
+**RAG** - 検索と生成を組み合わせて応答を根拠付け。
 
-**Similarity Score** - 意味的な類似度の尺度（0-1）。
+**類似度スコア** - 意味的類似度の指標（0〜1）。
 
-**Source Reference** - 取得したコンテンツのメタデータ。
+**ソース参照** - 取得コンテンツに関するメタデータ。
 
-## Agents and Tools - [Module 04](../04-tools/README.md)
+## エージェントとツール - [モジュール 04](../04-tools/README.md)
 
-**@Tool Annotation** - JavaのメソッドをAI呼び出し可能なツールとしてマーク。
+**@Tool アノテーション** - JavaメソッドをAI呼び出し可能なツールとしてマーク。
 
-**ReAct Pattern** - 推論 → 行動 → 観察 → 繰り返し。
+**ReAct パターン** - 推論 → 行動 → 観察 → 繰り返し。
 
-**Session Management** - ユーザーごとに別々のコンテキストを管理。
+**セッション管理** - ユーザーごとにコンテキストを分離。
 
-**Tool** - AIエージェントが呼び出せる関数。
+**ツール** - AIエージェントが呼び出せる機能。
 
-**Tool Description** - ツールの目的とパラメーターのドキュメント。
+**ツール説明** - ツールの目的とパラメータのドキュメント。
 
-## Agentic Module - [Module 05](../05-mcp/README.md)
+## エージェントモジュール - [モジュール 05](../05-mcp/README.md)
 
-**@Agent Annotation** - インターフェースをAIエージェントとしてマークし宣言的な振る舞い定義。
+**@Agent アノテーション** - インターフェースをエージェントとしてマークし宣言的振る舞い定義。
 
-**Agent Listener** - `beforeAgentInvocation()` と `afterAgentInvocation()` によるエージェント実行監視用フック。
+**Agent Listener** - `beforeAgentInvocation()` と `afterAgentInvocation()` を通じてエージェント実行を監視するフック。
 
-**Agentic Scope** - 複数のエージェントが `outputKey` を使って出力を保存し下流のエージェントが利用する共有メモリ。
+**エージェントスコープ** - エージェントが出力を `outputKey` で保存し、下流のエージェントが利用する共有メモリ。
 
-**AgenticServices** - `agentBuilder()` と `supervisorBuilder()` を使ったエージェント作成ファクトリー。
+**AgenticServices** - `agentBuilder()` と `supervisorBuilder()` を使ったエージェント作成ファクトリ。
 
-**Conditional Workflow** - 条件に応じて異なる専門エージェントへルーティング。
+**条件付きワークフロー** - 条件に基づき異なる専門エージェントにルーティング。
 
-**Human-in-the-Loop** - 承認または内容確認のための人間のチェックポイントを追加するワークフロー。
+**ヒューマンインザループ** - 人間の承認や内容確認を加えたワークフローパターン。
 
-**langchain4j-agentic** - 宣言的エージェント構築用のMaven依存関係（実験的）。
+**langchain4j-agentic** - 宣言的エージェント構築用 Maven 依存関係（実験的）。
 
-**Loop Workflow** - 条件が満たされるまでエージェント実行を繰り返す（例：品質スコア≥0.8）。
+**ループワークフロー** - 条件が満たされるまでエージェントを繰り返し実行（例：品質スコア ≥ 0.8）。
 
-**outputKey** - エージェントの注釈パラメーターで、結果をAgentic Scopeのどこに保存するか指定。
+**outputKey** - エージェントアノテーションパラメータ。結果をエージェントスコープのどこに格納するか指定。
 
-**Parallel Workflow** - 独立した複数のタスクを同時にエージェント実行。
+**並列ワークフロー** - 複数エージェントを同時に実行し独立タスクを処理。
 
-**Response Strategy** - 監督エージェントが最終回答を作る方法：LAST、SUMMARY、SCORED。
+**応答戦略** - スーパーバイザーが最終回答を形成する方法：LAST（最後の応答）、SUMMARY（要約）、SCORED（スコアに基づく）。
 
-**Sequential Workflow** - 出力が次のステップに流れる順番実行。
+**逐次ワークフロー** - エージェントを順次実行し出力を次のステップに渡す。
 
-**Supervisor Agent Pattern** - 監督役LLMが動的にサブエージェントを選択実行する高度なエージェンティックパターン。
+**スーパーバイザーエージェントパターン** - スーパーバイザー LLM がどのサブエージェントを呼び出すか動的に決定する高度なエージェントパターン。
 
-## Model Context Protocol (MCP) - [Module 05](../05-mcp/README.md)
+## モデルコンテキストプロトコル（MCP） - [モジュール 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - LangChain4jでのMCP統合用Maven依存関係。
+**langchain4j-mcp** - LangChain4jでMCP統合のためのMaven依存関係。
 
-**MCP** - Model Context Protocol：AIアプリを外部ツールに接続する標準。1度構築してどこでも使う。
+**MCP** - Model Context Protocol：AIアプリを外部ツールに接続するための標準。1度構築すればどこでも利用可能。
 
-**MCP Client** - MCPサーバーに接続してツールを検索・利用するアプリケーション。
+**MCP クライアント** - MCPサーバーに接続しツールを検出・利用するアプリケーション。
 
-**MCP Server** - MCP経由でツールを公開し、明確な説明とパラメータスキーマを提供。
+**MCP サーバー** - ツールをMCP経由で公開し明確な説明とパラメータスキーマを提供するサービス。
 
-**McpToolProvider** - MCPツールをLangChain4jのAIサービスやエージェントで使えるようにラップするコンポーネント。
+**McpToolProvider** - LangChain4jコンポーネントで、MCPツールをAIサービスやエージェントで使いやすくラップ。
 
-**McpTransport** - MCP通信のインターフェース。実装例にStdioとHTTP。
+**McpTransport** - MCP通信のインターフェース。実装にはStdioやHTTPがある。
 
-**Stdio Transport** - stdin/stdout経由のローカルプロセストランスポート。ファイルアクセスやコマンドラインツール利用時に便利。
+**Stdioトランスポート** - stdin/stdout経由のローカルプロセストランスポート。ファイルシステムアクセスやコマンドラインツールに有用。
 
-**StdioMcpTransport** - LangChain4jの実装で、MCPサーバーをサブプロセスとして起動。
+**StdioMcpTransport** - LangChain4j実装で、MCPサーバーをサブプロセスとして起動。
 
-**Tool Discovery** - クライアントが説明とスキーマ付きで利用可能ツールをサーバーに問い合わせ。
+**ツール検出** - クライアントがサーバーに利用可能ツールの説明とスキーマを問い合わせ。
 
-## Azure Services - [Module 01](../01-introduction/README.md)
+## Azure サービス - [モジュール 01](../01-introduction/README.md)
 
-**Azure AI Search** - ベクトル機能付きクラウド検索。[Module 03](../03-rag/README.md)
+**Azure AI Search** - ベクトル検索機能を備えたクラウド検索。[モジュール 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Azureリソースをデプロイ。
+**Azure Developer CLI (azd)** - Azureリソースのデプロイメントツール。
 
-**Azure OpenAI** - マイクロソフトの企業向けAIサービス。
+**Azure OpenAI** - MicrosoftのエンタープライズAIサービス。
 
-**Bicep** - Azureのインフラコード言語。[Infrastructure Guide](../01-introduction/infra/README.md)
+**Bicep** - Azureのインフラコード言語。[インフラガイド](../01-introduction/infra/README.md)
 
-**Deployment Name** - Azureでのモデルデプロイの名前。
+**デプロイメント名** - Azureでのモデルデプロイメント名。
 
-**GPT-5** - 推論制御機能を持つ最新のOpenAIモデル。[Module 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - 推論制御機能を備えた最新のOpenAIモデル。[モジュール 02](../02-prompt-engineering/README.md)
 
-## Testing and Development - [Testing Guide](TESTING.md)
+## テストと開発 - [テストガイド](TESTING.md)
 
-**Dev Container** - コンテナ化された開発環境。[Configuration](../../../.devcontainer/devcontainer.json)
+**Dev Container** - コンテナ化された開発環境。[設定](../../../.devcontainer/devcontainer.json)
 
-**GitHub Models** - 無料のAIモデルプレイグラウンド。[Module 00](../00-quick-start/README.md)
+**GitHub Models** - 無料のAIモデルプレイグラウンド。[モジュール 00](../00-quick-start/README.md)
 
-**In-Memory Testing** - メモリ内ストレージを使ったテスト。
+**インメモリテスト** - メモリ内ストレージを用いたテスト。
 
-**Integration Testing** - 実際のインフラを使った統合テスト。
+**統合テスト** - 実際のインフラを用いたテスト。
 
 **Maven** - Javaのビルド自動化ツール。
 
-**Mockito** - Javaモッキングフレームワーク。
+**Mockito** - Java用モッキングフレームワーク。
 
-**Spring Boot** - Javaアプリケーションフレームワーク。[Module 01](../01-introduction/README.md)
+**Spring Boot** - Javaアプリケーションフレームワーク。[モジュール 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **免責事項**：  
-本書類はAI翻訳サービス[Co-op Translator](https://github.com/Azure/co-op-translator)を使用して翻訳されました。正確性には努めておりますが、自動翻訳には誤りや不正確な箇所が含まれる可能性があることをご了承ください。原文のオリジナル文書が正式な情報源とみなされます。重要な情報については、専門の人間による翻訳を推奨します。本翻訳の利用によって生じたいかなる誤解や誤訳についても、当方は一切の責任を負いかねます。
+本書類はAI翻訳サービス[Co-op Translator](https://github.com/Azure/co-op-translator)を使用して翻訳されました。正確性には努めておりますが、自動翻訳には誤りや不正確な部分が含まれる可能性があります。正式な情報は原文（原言語による文書）を参照してください。重要な内容については、専門の人間による翻訳を推奨いたします。本翻訳の利用に起因する誤解や誤訳について、一切の責任を負いかねます。
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

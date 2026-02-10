@@ -1,52 +1,52 @@
-# LangChain4j Glossary
+# LangChain4j Talahulugan
 
-## Table of Contents
+## Talaan ng Nilalaman
 
-- [Core Concepts](../../../docs)
-- [LangChain4j Components](../../../docs)
-- [AI/ML Concepts](../../../docs)
+- [Pangunahing Konsepto](../../../docs)
+- [Mga Komponent ng LangChain4j](../../../docs)
+- [Mga Konsepto ng AI/ML](../../../docs)
 - [Guardrails](../../../docs)
 - [Prompt Engineering](../../../docs)
 - [RAG (Retrieval-Augmented Generation)](../../../docs)
-- [Agents and Tools](../../../docs)
+- [Mga Ahente at Mga Kasangkapan](../../../docs)
 - [Agentic Module](../../../docs)
 - [Model Context Protocol (MCP)](../../../docs)
-- [Azure Services](../../../docs)
-- [Testing and Development](../../../docs)
+- [Mga Serbisyo sa Azure](../../../docs)
+- [Pagsubok at Pagpapaunlad](../../../docs)
 
-Mabilis na sanggunian para sa mga termino at konsepto na ginagamit sa buong kurso.
+Mabilisang sanggunian para sa mga terminolohiya at konseptong ginamit sa buong kurso.
 
-## Core Concepts
+## Pangunahing Konsepto
 
-**AI Agent** - Sistema na gumagamit ng AI para mag-isip at kumilos ng autonomously. [Module 04](../04-tools/README.md)
+**AI Agent** - Sistema na gumagamit ng AI upang mag-isip at kumilos nang awtonomo. [Module 04](../04-tools/README.md)
 
-**Chain** - Sunod-sunod na mga operasyon kung saan ang output ay pinapasok sa susunod na hakbang.
+**Chain** - Sunod-sunod na mga operasyon kung saan ang output ay ipinasok sa susunod na hakbang.
 
-**Chunking** - Paghahati-hati ng mga dokumento sa mas maliliit na bahagi. Karaniwan: 300-500 tokens na may overlap. [Module 03](../03-rag/README.md)
+**Chunking** - Paghahati ng mga dokumento sa mas maliliit na bahagi. Karaniwan: 300-500 token na may overlap. [Module 03](../03-rag/README.md)
 
-**Context Window** - Pinakamalaking bilang ng tokens na kayang iproseso ng isang modelo. GPT-5: 400K tokens.
+**Context Window** - Pinakamaximum na bilang ng token na kayang iproseso ng modelo. GPT-5.2: 400K token.
 
 **Embeddings** - Numerikal na mga vector na kumakatawan sa kahulugan ng teksto. [Module 03](../03-rag/README.md)
 
-**Function Calling** - Ang modelo ay bumubuo ng estrukturadong mga kahilingan para tumawag sa mga panlabas na function. [Module 04](../04-tools/README.md)
+**Function Calling** - Ang modelo ay bumubuo ng istrakturadong kahilingan para tawagan ang mga external na function. [Module 04](../04-tools/README.md)
 
 **Hallucination** - Kapag ang mga modelo ay bumubuo ng maling ngunit kapani-paniwalang impormasyon.
 
-**Prompt** - Tekstong input sa isang language model. [Module 02](../02-prompt-engineering/README.md)
+**Prompt** - Tekstong input para sa isang language model. [Module 02](../02-prompt-engineering/README.md)
 
-**Semantic Search** - Paghahanap ayon sa kahulugan gamit ang embeddings, hindi keywords. [Module 03](../03-rag/README.md)
+**Semantic Search** - Paghahanap batay sa kahulugan gamit ang embeddings, hindi mga keyword. [Module 03](../03-rag/README.md)
 
-**Stateful vs Stateless** - Stateless: walang memorya. Stateful: nagtatalaga ng kasaysayan ng pag-uusap. [Module 01](../01-introduction/README.md)
+**Stateful vs Stateless** - Stateless: walang memorya. Stateful: nagtatago ng kasaysayan ng pag-uusap. [Module 01](../01-introduction/README.md)
 
-**Tokens** - Mga pangunahing yunit ng teksto na pinoproseso ng mga modelo. Nakakaapekto sa gastos at mga limitasyon. [Module 01](../01-introduction/README.md)
+**Tokens** - Pangunahing yunit ng teksto na pinoproseso ng mga modelo. Nakakaapekto sa gastos at limitasyon. [Module 01](../01-introduction/README.md)
 
-**Tool Chaining** - Sunud-sunod na pagpapatakbo ng mga tool kung saan ang output ay nag-iinform sa susunod na tawag. [Module 04](../04-tools/README.md)
+**Tool Chaining** - Sunud-sunod na pagpatupad ng mga kasangkapan kung saan ang output ay nagsisilbing input sa susunod na tawag. [Module 04](../04-tools/README.md)
 
-## LangChain4j Components
+## Mga Komponent ng LangChain4j
 
 **AiServices** - Lumilikha ng type-safe na mga interface para sa AI services.
 
-**OpenAiOfficialChatModel** - Pinag-isang client para sa mga modelo ng OpenAI at Azure OpenAI.
+**OpenAiOfficialChatModel** - Pinagsamang client para sa OpenAI at Azure OpenAI models.
 
 **OpenAiOfficialEmbeddingModel** - Lumilikha ng embeddings gamit ang OpenAI Official client (sumusuporta sa parehong OpenAI at Azure OpenAI).
 
@@ -54,91 +54,91 @@ Mabilis na sanggunian para sa mga termino at konsepto na ginagamit sa buong kurs
 
 **ChatMemory** - Nangangalaga ng kasaysayan ng pag-uusap.
 
-**ContentRetriever** - Naghahanap ng mga may kaugnayang bahagi ng dokumento para sa RAG.
+**ContentRetriever** - Naghahanap ng mga kaugnay na piraso ng dokumento para sa RAG.
 
-**DocumentSplitter** - Nagbubukas ng mga dokumento sa mga chunk.
+**DocumentSplitter** - Naghahati ng mga dokumento sa mga chunks.
 
 **EmbeddingModel** - Nagko-convert ng teksto sa numerikal na mga vector.
 
-**EmbeddingStore** - Nagtatabi at kumukuha ng mga embeddings.
+**EmbeddingStore** - Nag-iimbak at kumukuha ng mga embeddings.
 
 **MessageWindowChatMemory** - Nangangalaga ng sliding window ng mga kamakailang mensahe.
 
-**PromptTemplate** - Lumilikha ng mga reusable na prompt na may `{{variable}}` na placeholders.
+**PromptTemplate** - Lumilikha ng mga reusable na prompt na may `{{variable}}` placeholders.
 
-**TextSegment** - Bahagi ng teksto na may metadata. Ginagamit sa RAG.
+**TextSegment** - Piraso ng teksto na may metadata. Ginagamit sa RAG.
 
-**ToolExecutionRequest** - Nagrerepresenta ng kahilingan para sa pagpapatakbo ng tool.
+**ToolExecutionRequest** - Kumakatawan sa kahilingan para sa pagpatupad ng kasangkapan.
 
 **UserMessage / AiMessage / SystemMessage** - Mga uri ng mensahe sa pag-uusap.
 
-## AI/ML Concepts
+## Mga Konsepto ng AI/ML
 
-**Few-Shot Learning** - Nagbibigay ng mga halimbawa sa mga prompt. [Module 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - Pagbibigay ng mga halimbawa sa mga prompt. [Module 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** - Mga modelo ng AI na sinanay gamit ang napakalaking bilang ng datos ng teksto.
+**Large Language Model (LLM)** - AI models na sinanay sa malawak na datos ng teksto.
 
-**Reasoning Effort** - Parameter ng GPT-5 na kumokontrol sa lalim ng pag-iisip. [Module 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - Parameter ng GPT-5.2 na kumokontrol sa lalim ng pagiisip. [Module 02](../02-prompt-engineering/README.md)
 
-**Temperature** - Kumokontrol sa pagiging random ng output. Mababa=deteriministiko, mataas=malikhain.
+**Temperature** - Kumokontrol sa randomness ng output. Mababa = deterministic, mataas = malikhain.
 
-**Vector Database** - Espesyalisadong database para sa embeddings. [Module 03](../03-rag/README.md)
+**Vector Database** - Espesyal na database para sa embeddings. [Module 03](../03-rag/README.md)
 
 **Zero-Shot Learning** - Pagsasagawa ng mga gawain nang walang mga halimbawa. [Module 02](../02-prompt-engineering/README.md)
 
 ## Guardrails - [Module 00](../00-quick-start/README.md)
 
-**Defense in Depth** - Multi-layer na diskarte sa seguridad na pinagsasama ang application-level guardrails at mga safety filter ng provider.
+**Defense in Depth** - Multi-layer na seguridad na pinagsasama ang guardrails sa antas ng aplikasyon at mga provider safety filters.
 
-**Hard Block** - Ang provider ay bumabalik ng HTTP 400 error para sa malubhang paglabag sa nilalaman.
+**Hard Block** - Nagbibigay ang provider ng HTTP 400 error para sa matinding paglabag sa nilalaman.
 
-**InputGuardrail** - Interface ng LangChain4j para i-validate ang input ng user bago pa ito maipasa sa LLM. Nakakatipid ito sa gastos at latency sa pamamagitan ng pag-block ng mga mapanganib na prompt nang maaga.
+**InputGuardrail** - Interface ng LangChain4j para sa pag-validate ng input ng user bago ito makarating sa LLM. Nakakatipid ng gastos at latency sa pamamagitan ng pag-block ng mga mapanganib na prompt nang maaga.
 
-**InputGuardrailResult** - Uri ng return value para sa guardrail validation: `success()` o `fatal("dahilan")`.
+**InputGuardrailResult** - Uri ng return para sa pag-validate ng guardrail: `success()` o `fatal("reason")`.
 
-**OutputGuardrail** - Interface para i-validate ang mga sagot ng AI bago ibalik sa mga user.
+**OutputGuardrail** - Interface para sa pag-validate ng mga tugon ng AI bago ibalik sa mga gumagamit.
 
-**Provider Safety Filters** - Mga built-in na content filter mula sa mga AI provider (e.g., GitHub Models) na humuhuli ng mga paglabag sa API level.
+**Provider Safety Filters** - Built-in na mga filter ng nilalaman mula sa mga AI provider (hal., GitHub Models) na humuhuli ng paglabag sa antas ng API.
 
-**Soft Refusal** - Maingat na pagtanggi ng modelo na sagutin nang hindi nagbato ng error.
+**Soft Refusal** - Magalang na pagtanggi ng modelo na sagutin nang hindi nagbato ng error.
 
 ## Prompt Engineering - [Module 02](../02-prompt-engineering/README.md)
 
-**Chain-of-Thought** - Hakbang-hakbang na pangangatwiran para sa mas mahusay na katumpakan.
+**Chain-of-Thought** - Hakbang-hakbang na pagiisip para sa mas mahusay na katumpakan.
 
-**Constrained Output** - Pagpapatupad ng partikular na format o estruktura.
+**Constrained Output** - Pagpapatupad ng partikular na format o istraktura.
 
-**High Eagerness** - Pattern ng GPT-5 para sa masusing pangangatwiran.
+**High Eagerness** - Pattern ng GPT-5.2 para sa masusing reasoning.
 
-**Low Eagerness** - Pattern ng GPT-5 para sa mabilisang sagot.
+**Low Eagerness** - Pattern ng GPT-5.2 para sa mabilis na sagot.
 
-**Multi-Turn Conversation** - Pangangalaga sa konteksto sa buong palitan ng usapan.
+**Multi-Turn Conversation** - Pangangalaga ng konteksto sa mga palitan.
 
-**Role-Based Prompting** - Pagsasaayos ng persona ng modelo sa pamamagitan ng mga system message.
+**Role-Based Prompting** - Pagtatakda ng persona ng modelo sa pamamagitan ng mga system messages.
 
 **Self-Reflection** - Pagsusuri at pagpapabuti ng output ng modelo.
 
-**Structured Analysis** - Nakatakdang balangkas para sa pagsusuri.
+**Structured Analysis** - Nakapirming framework ng pagsusuri.
 
-**Task Execution Pattern** - Plano → Isagawa → Buodin.
+**Task Execution Pattern** - Plano → Isakatuparan → Buod.
 
 ## RAG (Retrieval-Augmented Generation) - [Module 03](../03-rag/README.md)
 
-**Document Processing Pipeline** - I-load → hatiin → i-embed → itabi.
+**Document Processing Pipeline** - Load → chunk → embed → store.
 
-**In-Memory Embedding Store** - Hindi-persistenteng imbakan para sa pagsusuri.
+**In-Memory Embedding Store** - Hindi permanenteng imbakan para sa pagsubok.
 
-**RAG** - Pinagsasama ang retrieval at generation upang magkaroon ng basehan ang mga sagot.
+**RAG** - Pinaghalong retrieval at generation upang maging grounded ang mga tugon.
 
-**Similarity Score** - Sukat (0-1) ng pangsemantikong pagkakatulad.
+**Similarity Score** - Sukat (0-1) ng semantic similarity.
 
 **Source Reference** - Metadata tungkol sa nakuha na nilalaman.
 
-## Agents and Tools - [Module 04](../04-tools/README.md)
+## Mga Ahente at Mga Kasangkapan - [Module 04](../04-tools/README.md)
 
-**@Tool Annotation** - Nagmamarka sa mga Java method bilang mga AI-callable na tool.
+**@Tool Annotation** - Nagmamarka ng mga Java method bilang mga tool na maaaring tawagin ng AI.
 
-**ReAct Pattern** - Mag-isip → Kumilos → Obserbahan → Uulitin.
+**ReAct Pattern** - Reason → Act → Observe → Repeat.
 
 **Session Management** - Hiwa-hiwalay na mga konteksto para sa iba't ibang user.
 
@@ -148,57 +148,57 @@ Mabilis na sanggunian para sa mga termino at konsepto na ginagamit sa buong kurs
 
 ## Agentic Module - [Module 05](../05-mcp/README.md)
 
-**@Agent Annotation** - Nagmamarka ng mga interface bilang AI agents na may deklaratibong depinisyon ng pag-uugali.
+**@Agent Annotation** - Nagmamarka ng mga interface bilang AI agent na may deklaratibong depinisyon ng pag-uugali.
 
-**Agent Listener** - Hook para sa pagmamanman ng pagpapatupad ng agent sa pamamagitan ng `beforeAgentInvocation()` at `afterAgentInvocation()`.
+**Agent Listener** - Hook para sa pagmamanman ng pagpatupad ng ahente gamit ang `beforeAgentInvocation()` at `afterAgentInvocation()`.
 
-**Agentic Scope** - Pinagsasaluhang memorya kung saan iniimbak ng mga agent ang mga output gamit ang `outputKey` para magamit ng mga downstream agent.
+**Agentic Scope** - Shared memory kung saan nag-iimbak ang mga ahente ng mga output gamit ang `outputKey` para magamit ng downstream agents.
 
-**AgenticServices** - Pabrika para sa paglikha ng mga agent gamit ang `agentBuilder()` at `supervisorBuilder()`.
+**AgenticServices** - Pabrika para sa paggawa ng mga ahente gamit ang `agentBuilder()` at `supervisorBuilder()`.
 
-**Conditional Workflow** - Rutin batay sa mga kondisyon patungo sa iba't ibang espesyalistang agent.
+**Conditional Workflow** - Ruta batay sa mga kundisyon patungo sa iba't ibang espesyalistang ahente.
 
-**Human-in-the-Loop** - Workflow pattern na naglalagay ng mga human checkpoint para sa pag-apruba o pagsusuri ng nilalaman.
+**Human-in-the-Loop** - Pattern ng workflow na nagdaragdag ng mga checkpoint ng tao para sa pag-apruba o pagrebisa ng nilalaman.
 
-**langchain4j-agentic** - Maven dependency para sa deklaratibong paggawa ng agent (eksperimento).
+**langchain4j-agentic** - Maven dependency para sa deklaratibong paggawa ng ahente (eksperimento).
 
-**Loop Workflow** - Uulitin ang pagpapatupad ng agent hanggang matugunan ang isang kondisyon (hal., quality score ≥ 0.8).
+**Loop Workflow** - Paulit-ulit na pagpapatupad ng agent hanggang matugunan ang isang kondisyon (hal., quality score ≥ 0.8).
 
-**outputKey** - Parameter ng agent annotation na nagsasaad kung saan itatabi ang mga resulta sa Agentic Scope.
+**outputKey** - Parameter ng annotation ng ahente na nagsasaad kung saan iniimbak ang mga resulta sa Agentic Scope.
 
-**Parallel Workflow** - Patakbuhin ang maraming agent nang sabay-sabay para sa mga independiyenteng gawain.
+**Parallel Workflow** - Sabayang pagpapatakbo ng maraming agent para sa magkakahiwalay na gawain.
 
-**Response Strategy** - Paano bumuo ang supervisor ng huling sagot: LAST, SUMMARY, o SCORED.
+**Response Strategy** - Paraan ng tagapamahala sa pagbuo ng huling sagot: LAST, SUMMARY, o SCORED.
 
-**Sequential Workflow** - Isakatuparan ang mga agent nang sunud-sunod kung saan ang output ay dumadaloy sa susunod na hakbang.
+**Sequential Workflow** - Sunud-sunod na pagpapatupad ng mga ahente kung saan ang output ay dumadaloy sa susunod na hakbang.
 
-**Supervisor Agent Pattern** - Advanced na pattern ng agentic kung saan ang supervisor LLM ang dinamiko na nagpasiya kung aling mga sub-agent ang tatawagin.
+**Supervisor Agent Pattern** - Advanced na pattern ng agentic kung saan ang supervisor LLM ay dinamiko na nagpapasya kung aling sub-agent ang tatawagin.
 
 ## Model Context Protocol (MCP) - [Module 05](../05-mcp/README.md)
 
 **langchain4j-mcp** - Maven dependency para sa integrasyon ng MCP sa LangChain4j.
 
-**MCP** - Model Context Protocol: pamantayan para sa pagkonekta ng AI apps sa mga panlabas na tool. Isang beses lang gamitin, saanman.
+**MCP** - Model Context Protocol: pamantayan para sa pagkonekta ng AI apps sa mga external na kasangkapan. Gumawa nang isang beses, gamitin saanman.
 
-**MCP Client** - Application na nakakonekta sa MCP server upang tuklasin at gamitin ang mga tool.
+**MCP Client** - Aplikasyon na kumokonekta sa MCP servers upang tuklasin at gamitin ang mga kasangkapan.
 
-**MCP Server** - Serbisyo na naglalantad ng mga tool sa pamamagitan ng MCP na may malinaw na paglalarawan at schema ng mga parameter.
+**MCP Server** - Serbisyo na naglalantad ng mga kasangkapan sa pamamagitan ng MCP na may malinaw na paglalarawan at parameter schemas.
 
-**McpToolProvider** - Bahagi ng LangChain4j na bumabalot sa MCP tools para magamit sa AI services at agents.
+**McpToolProvider** - Komponent ng LangChain4j na bumabalot sa MCP tools para gamitin sa AI services at mga ahente.
 
-**McpTransport** - Interface para sa komunikasyon ng MCP. Kasama sa implementasyon ang Stdio at HTTP.
+**McpTransport** - Interface para sa komunikasyon ng MCP. Kasama sa mga implementasyon ang Stdio at HTTP.
 
-**Stdio Transport** - Lokal na proseso na transportasyon gamit ang stdin/stdout. Kapaki-pakinabang para sa pag-access ng filesystem o command-line tools.
+**Stdio Transport** - Lokal na transport na proseso gamit ang stdin/stdout. Kapaki-pakinabang para sa access sa filesystem o mga command-line tool.
 
-**StdioMcpTransport** - Implementasyon ng LangChain4j na naglalabas ng MCP server bilang subprocess.
+**StdioMcpTransport** - Implementasyon ng LangChain4j na nagpapalabas ng MCP server bilang subprocess.
 
-**Tool Discovery** - Kinukuha ng client mula sa server ang mga magagamit na tool kasama ang mga paglalarawan at schema.
+**Tool Discovery** - Ang client ay nagtatanong sa server para sa mga magagamit na tool na may mga paglalarawan at schemas.
 
-## Azure Services - [Module 01](../01-introduction/README.md)
+## Mga Serbisyo sa Azure - [Module 01](../01-introduction/README.md)
 
-**Azure AI Search** - Cloud search na may kakayahan sa vector. [Module 03](../03-rag/README.md)
+**Azure AI Search** - Cloud search na may vector na kakayahan. [Module 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Nagde-deploy ng mga Azure resource.
+**Azure Developer CLI (azd)** - Nagde-deploy ng mga Azure resources.
 
 **Azure OpenAI** - Enterprise AI service ng Microsoft.
 
@@ -206,27 +206,27 @@ Mabilis na sanggunian para sa mga termino at konsepto na ginagamit sa buong kurs
 
 **Deployment Name** - Pangalan para sa deployment ng modelo sa Azure.
 
-**GPT-5** - Pinakabagong modelo ng OpenAI na may kontrol sa reasoning. [Module 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Pinakabagong model ng OpenAI na may kontrol sa reasoning. [Module 02](../02-prompt-engineering/README.md)
 
-## Testing and Development - [Testing Guide](TESTING.md)
+## Pagsubok at Pagpapaunlad - [Testing Guide](TESTING.md)
 
-**Dev Container** - Containerized na kapaligiran para sa pag-develop. [Configuration](../../../.devcontainer/devcontainer.json)
+**Dev Container** - Containerized na kapaligiran sa pagpapaunlad. [Configuration](../../../.devcontainer/devcontainer.json)
 
 **GitHub Models** - Libreng AI model playground. [Module 00](../00-quick-start/README.md)
 
-**In-Memory Testing** - Pagsusuri gamit ang in-memory na imbakan.
+**In-Memory Testing** - Pagsubok gamit ang in-memory na imbakan.
 
-**Integration Testing** - Pagsusuri gamit ang totoong imprastraktura.
+**Integration Testing** - Pagsubok gamit ang tunay na imprastruktura.
 
-**Maven** - Tool para sa automation ng Java build.
+**Maven** - Java build automation tool.
 
-**Mockito** - Framework para sa mocking sa Java.
+**Mockito** - Java mocking framework.
 
 **Spring Boot** - Java application framework. [Module 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Paunawa**:
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat aming pinagsisikapan ang katumpakan, mangyaring tandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o maling interpretasyon. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na pangunahing sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na dulot ng paggamit ng pagsasaling ito.
+**Paunawa**:  
+Ang dokumentong ito ay isinalin gamit ang AI na serbisyo sa pagsasalin na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagaman nagsusumikap kami para sa katumpakan, pakatandaan na ang automatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o di-tumpak na impormasyon. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na opisyal na sanggunian. Para sa mahahalagang impormasyon, ipinapayo ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaintindihan o maling interpretasyon na nagmula sa paggamit ng pagsasaling ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

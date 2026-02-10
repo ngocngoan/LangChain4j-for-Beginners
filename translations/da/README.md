@@ -1,6 +1,6 @@
 <img src="../../translated_images/da/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-### 🌐 Understøttelse af flere sprog
+### 🌐 Flersproget Support
 
 #### Understøttet via GitHub Action (Automatiseret & Altid Opdateret)
 
@@ -9,7 +9,7 @@
 
 > **Foretrækker du at klone lokalt?**
 
-> Dette depot indeholder over 50 sprogoversættelser, som øger download-størrelsen betydeligt. For at klone uden oversættelser skal du bruge sparse checkout:
+> Dette repository inkluderer over 50 sprogoversættelser, som betydeligt øger downloadstørrelsen. For at klone uden oversættelser, brug sparse checkout:
 > ```bash
 > git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
 > cd LangChain4j-for-Beginners
@@ -18,59 +18,59 @@
 > Dette giver dig alt, hvad du behøver for at gennemføre kurset med en meget hurtigere download.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
-# LangChain4j for begyndere
+# LangChain4j for Begyndere
 
-Et kursus til at bygge AI-applikationer med LangChain4j og Azure OpenAI GPT-5, fra grundlæggende chat til AI-agenter.
+Et kursus til at bygge AI-applikationer med LangChain4j og Azure OpenAI GPT-5.2, fra grundlæggende chat til AI-agenter.
 
-**Ny i LangChain4j?** Tjek [Glossaret](docs/GLOSSARY.md) for definitioner af nøglebegreber og koncepter.
+**Ny til LangChain4j?** Se [Glossaret](docs/GLOSSARY.md) for definitioner af nøglebegreber og koncepter.
 
 ## Indholdsfortegnelse
 
-1. [Quick Start](00-quick-start/README.md) - Kom i gang med LangChain4j
-2. [Introduktion](01-introduction/README.md) - Lær det grundlæggende i LangChain4j
-3. [Prompt Engineering](02-prompt-engineering/README.md) - Mestring af effektiv prompt-design
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Byg intelligente vidensbaserede systemer
-5. [Værktøjer](04-tools/README.md) - Integrer eksterne værktøjer og simple assistenter
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Arbejd med Model Context Protocol (MCP) og Agentic-moduler
+1. [Kom hurtigt i gang](00-quick-start/README.md) - Kom i gang med LangChain4j  
+2. [Introduktion](01-introduction/README.md) - Lær det grundlæggende i LangChain4j  
+3. [Prompt Engineering](02-prompt-engineering/README.md) - Mestér effektiv prompt-design  
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Byg intelligente vidensbaserede systemer  
+5. [Værktøjer](04-tools/README.md) - Integrér eksterne værktøjer og simple assistenter  
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Arbejd med Model Context Protocol (MCP) og Agentiske moduler  
 ---
 
 ## Læringsvej
 
-> **Quick Start**
+> **Kom hurtigt i gang**
 
-1. Fork dette depot til din GitHub-konto
-2. Klik på **Code** → fanen **Codespaces** → **...** → **Ny med muligheder...**
-3. Brug standardindstillingerne – dette vælger udviklingscontaineren oprettet til dette kursus
-4. Klik på **Create codespace**
-5. Vent 5-10 minutter på, at miljøet er klar
-6. Gå direkte til [Quick Start](./00-quick-start/README.md) for at komme i gang!
+1. Fork dette repository til din GitHub-konto  
+2. Klik på **Code** → fanen **Codespaces** → **...** → **Ny med muligheder...**  
+3. Brug standardindstillingerne – dette vælger Development containeren oprettet til dette kursus  
+4. Klik på **Opret codespace**  
+5. Vent 5-10 minutter på at miljøet er klar  
+6. Gå direkte til [Kom hurtigt i gang](./00-quick-start/README.md) for at komme i gang!
 
-Efter at have gennemført modulerne, udforsk [Testvejledningen](docs/TESTING.md) for at se LangChain4j testkoncepter i praksis.
+Efter at have gennemført modulerne, udforsk [Testguiden](docs/TESTING.md) for at se LangChain4j testkoncepter i praksis.
 
-> **Bemærk:** Denne træning bruger både GitHub Models og Azure OpenAI. [Quick Start](00-quick-start/README.md)-modulet bruger GitHub Models (ingen Azure-abonnement kræves), mens moduler 1-5 bruger Azure OpenAI. Kom i gang med en [GRATIS Azure-konto](https://aka.ms/azure-free-account), hvis du ikke har en.
+> **Bemærk:** Denne træning bruger både GitHub Models og Azure OpenAI. [Kom hurtigt i gang](00-quick-start/README.md) modulet bruger GitHub Models (ingen Azure-abonnement nødvendig), mens moduler 1-5 bruger Azure OpenAI. Kom i gang med en [GRATIS Azure-konto](https://aka.ms/azure-free-account), hvis du ikke allerede har en.
 
 
 ## Læring med GitHub Copilot
 
-For hurtigt at komme i gang med kodning, åbn dette projekt i en GitHub Codespace eller din lokale IDE med den medfølgende devcontainer. Devcontaineren, der bruges i dette kursus, er forudkonfigureret med GitHub Copilot til AI-parprogrammering.
+For hurtigt at komme i gang med kodning, åbner du dette projekt i en GitHub Codespace eller din lokale IDE med den medfølgende devcontainer. Devcontaineren brugt i dette kursus kommer forkonfigureret med GitHub Copilot til AI-paret programmering.
 
-Hvert kodeeksempel indeholder foreslåede spørgsmål, som du kan stille GitHub Copilot for at uddybe din forståelse. Hold øje med 💡/🤖 prompts i:
+Hvert kodeeksempel inkluderer foreslåede spørgsmål, du kan stille GitHub Copilot for at uddybe din forståelse. Kig efter 💡/🤖 prompts i:
 
-- **Java-filoverskrifter** - Spørgsmål specifikt til hvert eksempel
-- **Modul-READMEs** - Udforskningsspørgsmål efter kodeeksempler
+- **Java-filoverskrifter** – Spørgsmål specifikke for hvert eksempel  
+- **Modul READMEs** – Udforskningsprompter efter kodeeksempler
 
-**Sådan bruges det:** Åbn en vilkårlig kodefil og spørg Copilot de foreslåede spørgsmål. Det har fuld kontekst af kodebasen og kan forklare, udvide og foreslå alternativer.
+**Sådan bruger du det:** Åbn en vilkårlig kodefil og stil Copilot de foreslåede spørgsmål. Den har fuld kontekst for kodebasen og kan forklare, udvide og foreslå alternativer.
 
 Vil du lære mere? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
 
 
-## Yderligere ressourcer
+## Yderligere Ressourcer
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
 [![LangChain4j for Beginners](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
 [![LangChain.js for Beginners](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
-
+[![LangChain for Beginners](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
 ### Azure / Edge / MCP / Agenter
@@ -81,7 +81,7 @@ Vil du lære mere? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubC
 
 ---
  
-### Generativ AI-serie
+### Generativ AI Serie
 [![Generative AI for Beginners](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Generative AI (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
 [![Generative AI (Java)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
@@ -89,7 +89,7 @@ Vil du lære mere? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubC
 
 ---
  
-### Kerne-læring
+### Kerne Læring
 [![ML for Beginners](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -112,7 +112,7 @@ Hvis du sidder fast eller har spørgsmål om at bygge AI-apps, så deltag i:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Hvis du har produktfeedback eller oplever fejl under udviklingen, besøg:
+Hvis du har produktfeedback eller fejl under udviklingen, besøg:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
@@ -124,5 +124,5 @@ MIT-licens - Se [LICENSE](../../LICENSE) filen for detaljer.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Ansvarsfraskrivelse**:
-Dette dokument er blevet oversat ved hjælp af AI-oversættelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selvom vi stræber efter nøjagtighed, bedes du være opmærksom på, at automatiserede oversættelser kan indeholde fejl eller unøjagtigheder. Det oprindelige dokument på dets oprindelige sprog bør betragtes som den autoritative kilde. For kritisk information anbefales professionel menneskelig oversættelse. Vi påtager os intet ansvar for misforståelser eller fejltolkninger, der opstår som følge af brugen af denne oversættelse.
+Dette dokument er blevet oversat ved hjælp af AI-oversættelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selvom vi stræber efter nøjagtighed, bedes du være opmærksom på, at automatiserede oversættelser kan indeholde fejl eller unøjagtigheder. Det oprindelige dokument på dets modersmål skal betragtes som den autoritative kilde. For kritiske oplysninger anbefales professionel menneskelig oversættelse. Vi påtager os intet ansvar for misforståelser eller fejltolkninger, der måtte opstå som følge af brugen af denne oversættelse.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

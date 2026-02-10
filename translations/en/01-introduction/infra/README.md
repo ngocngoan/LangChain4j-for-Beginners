@@ -33,7 +33,7 @@ The infrastructure deploys the following Azure resources:
 
 ### AI Services
 - **Azure OpenAI**: Cognitive Services with two model deployments:
-  - **gpt-5**: Chat completion model (20K TPM capacity)
+  - **gpt-5.2**: Chat completion model (20K TPM capacity)
   - **text-embedding-3-small**: Embedding model for RAG (20K TPM capacity)
 
 ### Local Development
@@ -70,11 +70,11 @@ azd up
 
 When prompted:
 - Select your Azure subscription
-- Choose a location (recommended: `eastus2` or `swedencentral` for GPT-5 availability)
+- Choose a location (recommended: `eastus2` for GPT-5.2 availability)
 - Confirm the environment name (default: `langchain4j-dev`)
 
 This will create:
-- Azure OpenAI resource with GPT-5 and text-embedding-3-small
+- Azure OpenAI resource with GPT-5.2 and text-embedding-3-small
 - Output connection details
 
 ### 2. Get Connection Details
@@ -92,7 +92,7 @@ azd env get-values
 This displays:
 - `AZURE_OPENAI_ENDPOINT`: Your Azure OpenAI endpoint URL
 - `AZURE_OPENAI_KEY`: API key for authentication
-- `AZURE_OPENAI_DEPLOYMENT`: Chat model name (gpt-5)
+- `AZURE_OPENAI_DEPLOYMENT`: Chat model name (gpt-5.2)
 - `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Embedding model name
 
 ### 3. Run Applications Locally
@@ -142,14 +142,14 @@ To change model deployments, edit `infra/main.bicep` and modify the `openAiDeplo
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -164,10 +164,10 @@ Available models and versions: https://learn.microsoft.com/azure/ai-services/ope
 To deploy in a different region, edit `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Check GPT-5 availability: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Check GPT-5.2 availability: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
 To update the infrastructure after making changes to Bicep files:
 
@@ -237,7 +237,7 @@ For production:
 
 ### Cost Estimation
 - Azure OpenAI: Pay-per-token (input + output)
-- GPT-5: ~$3-5 per 1M tokens (check current pricing)
+- GPT-5.2: ~$3-5 per 1M tokens (check current pricing)
 - text-embedding-3-small: ~$0.02 per 1M tokens
 
 Pricing calculator: https://azure.microsoft.com/pricing/calculator/
@@ -285,7 +285,7 @@ The subdomain name generated from your subscription/environment is already in us
    - Go to Azure Portal → Create a resource → Azure OpenAI
    - Choose a unique name for your resource
    - Deploy the following models:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (for RAG modules)
    - **Important:** Note your deployment names - they must match `.env` configuration
    - After deployment, get your endpoint and API key from "Keys and Endpoint"
@@ -295,19 +295,19 @@ The subdomain name generated from your subscription/environment is already in us
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
 **Model Deployment Naming Guidelines:**
-- Use simple, consistent names: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
+- Use simple, consistent names: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
 - Deployment names must match exactly what you configure in `.env`
 - Common mistake: Creating model with one name but referencing different name in code
 
-### Issue: GPT-5 not available in selected region
+### Issue: GPT-5.2 not available in selected region
 
 **Solution:**
-- Choose a region with GPT-5 access (e.g., eastus, swedencentral)
+- Choose a region with GPT-5.2 access (e.g., eastus2)
 - Check availability: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
 
@@ -412,7 +412,7 @@ infra/
 ## Additional Resources
 
 - [Azure OpenAI Service Documentation](https://learn.microsoft.com/azure/ai-services/openai/)
-- [GPT-5 Model Documentation](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [GPT-5.2 Model Documentation](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Azure Developer CLI Documentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Bicep Documentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI Official Integration](https://docs.langchain4j.dev/integrations/language-models/open-ai)
