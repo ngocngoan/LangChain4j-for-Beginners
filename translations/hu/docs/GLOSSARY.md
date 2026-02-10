@@ -1,226 +1,226 @@
-# LangChain4j Szószedet
+# LangChain4j Szótár
 
 ## Tartalomjegyzék
 
-- [Alapfogalmak](../../../docs)
+- [Alapvető Fogalmak](../../../docs)
 - [LangChain4j Összetevők](../../../docs)
 - [AI/ML Fogalmak](../../../docs)
 - [Védőkorlátok](../../../docs)
 - [Prompt Tervezés](../../../docs)
-- [RAG (Retrieval-Augmented Generation)](../../../docs)
-- [Ügynökök és Eszközök](../../../docs)
+- [RAG (Keresésalapú Generálás)](../../../docs)
+- [Agensek és Eszközök](../../../docs)
 - [Agentikus Modul](../../../docs)
 - [Modell Kontextus Protokoll (MCP)](../../../docs)
 - [Azure Szolgáltatások](../../../docs)
 - [Tesztelés és Fejlesztés](../../../docs)
 
-Gyors hivatkozás a tanfolyamban használt kifejezésekre és fogalmakra.
+Gyors hivatkozás a kurzus során használt kifejezésekhez és fogalmakhoz.
 
-## Alapfogalmak
+## Alapvető Fogalmak
 
-**AI Ügynök** - Olyan rendszer, amely mesterséges intelligenciát használ önálló gondolkodásra és cselekvésre. [Modul 04](../04-tools/README.md)
+**AI Agent** - Olyan rendszer, amely mesterséges intelligenciát használ az önálló gondolkodásra és cselekvésre. [Modul 04](../04-tools/README.md)
 
-**Lánc** - Műveletsorozat, ahol az eredmény a következő lépés bemenete.
+**Chain (Lánc)** - Műveletsorozat, ahol az egyik lépés kimenete a következő bemenete.
 
-**Darabolás** - Dokumentumok kisebb részekre bontása. Jellemzően: 300-500 token átfedéssel. [Modul 03](../03-rag/README.md)
+**Chunking (Darabolás)** - Dokumentumok kisebb részekre bontása. Jellemző méret: 300-500 token átfedéssel. [Modul 03](../03-rag/README.md)
 
-**Kontextus Ablak** - Maximális tokenek száma, amit egy modell kezelni tud. GPT-5: 400K token.
+**Context Window (Kontextus Ablak)** - A modell által egyszerre feldolgozható maximális tokenek száma. GPT-5.2: 400 ezer token.
 
-**Beágyazások** - Szöveg jelentését numerikus vektorokkal ábrázoló alakzatok. [Modul 03](../03-rag/README.md)
+**Embeddings (Beágyazások)** - Numerikus vektorok, amelyek a szöveg jelentését képviselik. [Modul 03](../03-rag/README.md)
 
-**Függvényhívás** - A modell strukturált kéréseket generál külső függvények meghívására. [Modul 04](../04-tools/README.md)
+**Function Calling (Függvényhívás)** - A modell strukturált kéréseket generál külső függvények hívására. [Modul 04](../04-tools/README.md)
 
-**Hallucináció** - Amikor a modellek helytelen, de hihető információt állítanak elő.
+**Hallucination (Hamis információ)** - Amikor a modellek helytelen, de hihető információt generálnak.
 
-**Prompt** - Szöveges bemenet nyelvi modellhez. [Modul 02](../02-prompt-engineering/README.md)
+**Prompt** - Szöveges bemenet a nyelvi modellhez. [Modul 02](../02-prompt-engineering/README.md)
 
-**Szemantikus Keresés** - Jelentés alapú keresés beágyazások segítségével, nem kulcsszavak alapján. [Modul 03](../03-rag/README.md)
+**Semantic Search (Szemantikus keresés)** - Keresés a jelentés alapján, beágyazásokat használva, nem kulcsszavakat. [Modul 03](../03-rag/README.md)
 
-**Állapotfüggő vs Állapotmentes** - Állapotmentes: nincs memória. Állapotfüggő: megőrzi a beszélgetés előzményeit. [Modul 01](../01-introduction/README.md)
+**Stateful vs Stateless (Állapotfüggő vagy állapotmentes)** - Állapotmentes: nincs memória. Állapotfüggő: megőrzi a beszélgetés előzményeit. [Modul 01](../01-introduction/README.md)
 
-**Tokenek** - Alapszövegegységek, amelyeket a modellek feldolgoznak. Befolyásolják a költségeket és korlátokat. [Modul 01](../01-introduction/README.md)
+**Tokens (Tokenek)** - Alapvető szövegegységek, amelyeket a modellek feldolgoznak. Befolyásolják a költséget és korlátokat. [Modul 01](../01-introduction/README.md)
 
-**Eszközláncolás** - Olyan eszközök egymás utáni használata, ahol az előző kimenete a következő hívását tájékoztatja. [Modul 04](../04-tools/README.md)
+**Tool Chaining (Eszközláncolás)** - Eszközök egymás után futtatása, ahol a kimenet befolyásolja a következő hívást. [Modul 04](../04-tools/README.md)
 
 ## LangChain4j Összetevők
 
-**AiServices** - Típusszafety AI szolgáltatás interfészek létrehozása.
+**AiServices** - Típusbiztos AI szolgáltatás interfészek létrehozása.
 
-**OpenAiOfficialChatModel** - Egyesített kliens OpenAI és Azure OpenAI modellekhez.
+**OpenAiOfficialChatModel** - Egységes kliens az OpenAI és Azure OpenAI modellekhez.
 
-**OpenAiOfficialEmbeddingModel** - Beágyazások készítése OpenAI Official klienssel (OpenAI és Azure OpenAI támogatás).
+**OpenAiOfficialEmbeddingModel** - Beágyazásokat készít az OpenAI Official klienssel (támogatja az OpenAI-t és az Azure OpenAI-t).
 
-**ChatModel** - Alapértelmezett interfész nyelvi modellekhez.
+**ChatModel** - Alapvető interfész a nyelvi modellekhez.
 
-**ChatMemory** - Megőrzi a beszélgetés előzményeit.
+**ChatMemory** - A beszélgetés előzményeinek megőrzése.
 
-**ContentRetriever** - Megtalálja a releváns dokumentumdarabokat RAG-hez.
+**ContentRetriever** - Releváns dokumentumrészek keresése RAG-hez.
 
-**DocumentSplitter** - Dokumentumok részekre bontása.
+**DocumentSplitter** - Dokumentumok darabolása.
 
-**EmbeddingModel** - Átalakítja a szöveget numerikus vektorokká.
+**EmbeddingModel** - Szöveget numerikus vektorokká alakít.
 
 **EmbeddingStore** - Beágyazások tárolása és lekérése.
 
-**MessageWindowChatMemory** - Csúszóablakot tart fenn a legutóbbi üzenetekből.
+**MessageWindowChatMemory** - Csúszó ablakos memória az utóbbi üzenetekhez.
 
-**PromptTemplate** - Újrahasználható promptokat hoz létre `{{változó}}` helyőrzőkkel.
+**PromptTemplate** - Újrahasznosítható promptok létrehozása `{{variable}}` helyőrzőkkel.
 
-**TextSegment** - Metadátummal ellátott szövegrész. RAG-ben használatos.
+**TextSegment** - Metaadatokkal ellátott szövegrész. RAG-ben használatos.
 
-**ToolExecutionRequest** - Eszköz végrehajtási kérés reprezentálása.
+**ToolExecutionRequest** - Eszköz végrehajtási kérésének reprezentációja.
 
 **UserMessage / AiMessage / SystemMessage** - Beszélgetési üzenettípusok.
 
 ## AI/ML Fogalmak
 
-**Kevéspéldás Tanulás** - Példák megadása a promptokban. [Modul 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - Példák megadása a promptokban. [Modul 02](../02-prompt-engineering/README.md)
 
-**Nagy Nyelvi Modell (LLM)** - Nagy mennyiségű szövegen tanított AI modellek.
+**Large Language Model (LLM)** - Nagy adatállományokon tanított AI modellek.
 
-**Gondolkodási Erőfeszítés** - GPT-5 paraméter a gondolkodás mélységének szabályozására. [Modul 02](../02-prompt-engineering/README.md)
+**Reasoning Effort (Gondolkodási erőfeszítés)** - GPT-5.2 paraméter a gondolkodás mélységének szabályozására. [Modul 02](../02-prompt-engineering/README.md)
 
-**Hőmérséklet** - Az eredmény véletlenszerűségének szabályozása. Alacsony=determinált, magas=alkotó.
+**Temperature (Hőmérséklet)** - A kimenet véletlenszerűségének szabályozása. Alacsony=detereminisztikus, magas=alkotó.
 
-**Vektor Adatbázis** - Beágyazásokhoz specializált adatbázis. [Modul 03](../03-rag/README.md)
+**Vector Database (Vektor adatbázis)** - Beágyazások tárolására specializált adatbázis. [Modul 03](../03-rag/README.md)
 
-**Nullapéldás Tanulás** - Feladatok példák nélküli végrehajtása. [Modul 02](../02-prompt-engineering/README.md)
+**Zero-Shot Learning** - Feladat végrehajtása példa nélkül. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Védőkorlátok - [Modul 00](../00-quick-start/README.md)
 
-**Rétegzett Védelem** - Többrétegű biztonsági megközelítés, amely alkalmazásszintű védőkorlátokat kombinál szolgáltató biztonsági szűrőkkel.
+**Defense in Depth (Többrétegű védelem)** - Többrétegű biztonsági megközelítés, amely ötvözi az alkalmazás szintű védeket a szolgáltatói biztonsági szűrőkkel.
 
-**Kemény Tiltás** - Szolgáltató HTTP 400-es hibát dob súlyos tartalmi szabálysértés esetén.
+**Hard Block (Kemény tiltás)** - Szolgáltató HTTP 400 hibát dob súlyos tartalmi akadályok esetén.
 
-**InputGuardrail** - LangChain4j interfész a felhasználói bemenet ellenőrzésére még mielőtt az LLM-hez kerülne. Költség- és késleltetés-megtakarítást jelent, mert korán blokkolja a káros promptokat.
+**InputGuardrail** - LangChain4j interfész a felhasználói bemenet érvényesítésére, mielőtt eljutna az LLM-hez. Költség- és késleltetéscsökkentés a káros promptok korai blokkolásával.
 
-**InputGuardrailResult** - Védőkorlát érvényesítés visszatérési típusa: `success()` vagy `fatal("ok")`.
+**InputGuardrailResult** - Visszatérési típus védőkorlát érvényesítéséhez: `success()` vagy `fatal("ok")`.
 
-**OutputGuardrail** - Interfész az AI válaszok ellenőrzésére mielőtt a felhasználóknak visszaadnák.
+**OutputGuardrail** - Interfész a mesterséges intelligencia válaszainak ellenőrzésére, mielőtt visszaküldenék a felhasználónak.
 
-**Szolgáltató Biztonsági Szűrők** - Beépített tartalomszűrők AI szolgáltatóktól (pl. GitHub Models), melyek API szinten fogják el a szabálysértéseket.
+**Provider Safety Filters (Szolgáltatói biztonsági szűrők)** - Beépített tartalomszűrők AI szolgáltatóktól (pl. GitHub Models), amelyek az API szinten észlelik a szabálysértéseket.
 
-**Lágy Elutasítás** - A modell udvariasan megtagadja a válaszadást anélkül, hogy hibát dobna.
+**Soft Refusal (Enyhe elutasítás)** - A modell udvariasan visszautasítja a választ anélkül, hogy hibát dobna.
 
 ## Prompt Tervezés - [Modul 02](../02-prompt-engineering/README.md)
 
-**Gondolatmenet Lánc** - Lépésenkénti gondolkodás a nagyobb pontosságért.
+**Chain-of-Thought (Gondolatlánc)** - Lépésenkénti érvelés a jobb pontosság érdekében.
 
-**Korlátozott Kimenet** - Meghatározott formátum vagy struktúra kikényszerítése.
+**Constrained Output (Korlátozott kimenet)** - Speciális formátum vagy szerkezet előírása.
 
-**Nagy Lelkesedés** - GPT-5-minta alapos gondolkodáshoz.
+**High Eagerness (Magas lelkesedés)** - GPT-5.2 minta alapos érveléshez.
 
-**Alacsony Lelkesedés** - GPT-5-minta gyors válaszokhoz.
+**Low Eagerness (Alacsony lelkesedés)** - GPT-5.2 minta gyors válaszokhoz.
 
-**Többkörös Beszélgetés** - Kontextus megtartása az egymást követő váltások között.
+**Multi-Turn Conversation (Többfordulós beszélgetés)** - Kontextus megtartása a beszélgetés során.
 
-**Szerepalapú Prompt** - Modell szerepének beállítása rendszerüzeneteken keresztül.
+**Role-Based Prompting (Szerepalapú prompt)** - Modell személyiségének beállítása rendszerüzenetekkel.
 
-**Önreflexió** - A modell kiértékeli és javítja saját kimenetét.
+**Self-Reflection (Önreflexió)** - A modell értékeli és javítja saját kimenetét.
 
-**Strukturált Elemzés** - Rögzített kiértékelési keretrendszer.
+**Structured Analysis (Strukturált elemzés)** - Rögzített értékelési keretrendszer.
 
-**Feladat-végrehajtási Minta** - Tervezés → Végrehajtás → Összefoglalás.
+**Task Execution Pattern (Feladatvégrehajtási minta)** - Tervezés → Végrehajtás → Összefoglalás.
 
-## RAG (Retrieval-Augmented Generation) - [Modul 03](../03-rag/README.md)
+## RAG (Keresésalapú Generálás) - [Modul 03](../03-rag/README.md)
 
-**Dokumentumfeldolgozó Vonal** - Betöltés → darabolás → beágyazás → tárolás.
+**Document Processing Pipeline (Dokumentum feldolgozási folyamat)** - Betöltés → darabolás → beágyazás → tárolás.
 
-**Memóriabeli Beágyazás Tároló** - Nem tartós tároló teszteléshez.
+**In-Memory Embedding Store (Memóriában tárolt beágyazás)** - Nem tartós tároló teszteléshez.
 
-**RAG** - Lekérés és generálás kombinálása a válaszok megalapozására.
+**RAG** - Keresést és generálást egyesítő megoldás a megalapozott válaszokért.
 
-**Hasonlósági Pontszám** - 0-1 közötti mérőszám a szemantikus hasonlóságra.
+**Similarity Score (Hasonlósági pontszám)** - A szemantikai hasonlóság mértéke (0-1).
 
-**Forrás Hivatkozás** - Lekért tartalomról szóló metadátum.
+**Source Reference (Forrás hivatkozás)** - Lekért tartalom metaadatai.
 
-## Ügynökök és Eszközök - [Modul 04](../04-tools/README.md)
+## Agensek és Eszközök - [Modul 04](../04-tools/README.md)
 
-**@Tool Megjegyzés** - Java metódusokat jelöl AI-hívható eszközként.
+**@Tool Annotation** - Java metódusokat jelöl meg AI-hívható eszközként.
 
-**ReAct Minta** - Gondolkodás → Cselekvés → Megfigyelés → Ismétlés.
+**ReAct Pattern** - Érvelés → Cselekvés → Megfigyelés → Ismétlés.
 
-**Munkamenet Kezelés** - Különböző felhasználókhoz külön kontextusok.
+**Session Management (Munkamenet-kezelés)** - Különálló kontextusok különböző felhasználók számára.
 
-**Eszköz** - Funkció, amit egy AI ügynök hívhat.
+**Tool (Eszköz)** - Olyan függvény, amelyet az AI agent hívhat.
 
-**Eszköz Leírása** - Dokumentáció az eszköz céljáról és paramétereiről.
+**Tool Description (Eszköz leírása)** - Az eszköz célja és paraméterei dokumentációja.
 
 ## Agentikus Modul - [Modul 05](../05-mcp/README.md)
 
-**@Agent Megjegyzés** - Interfészek jelölése AI ügynökként deklaratív viselkedésdefinícióval.
+**@Agent Annotation** - Interfészeket jelöl AI ügynökökként deklaratív viselkedés meghatározással.
 
-**Agent Hallgatózó** - Horgony az ügynök végrehajtásának figyelésére `beforeAgentInvocation()` és `afterAgentInvocation()` metódusokkal.
+**Agent Listener (Ügynök figyelő)** - Hook az ügynök végrehajtásának figyelésére `beforeAgentInvocation()` és `afterAgentInvocation()` használatával.
 
-**Agentikus Hatókör** - Megosztott memória, ahol az ügynökök eltárolják eredményeiket az `outputKey` segítségével a további ügynökök számára.
+**Agentic Scope (Agentikus tartomány)** - Megosztott memória, ahová az ügynökök a kimeneteket tárolják `outputKey` használatával, hogy más ügynökök felhasználhassák.
 
-**AgentikusSzolgáltatások** - Ügynökök létrehozó gyára az `agentBuilder()` és `supervisorBuilder()` segítségével.
+**AgenticServices** - Ügynökök létrehozására szolgáló gyár `agentBuilder()` és `supervisorBuilder()` segítségével.
 
-**Feltételes Munkafolyamat** - Feltételek alapján különböző szakértői ügynökökhöz irányítás.
+**Conditional Workflow (Feltételes munkafolyamat)** - Feltételek alapján vezet különböző szakértői ügynökökhöz.
 
-**Ember a Hurokban** - Munkafolyamat-minta emberi ellenőrzési pontokkal jóváhagyáshoz vagy tartalmi felülvizsgálathoz.
+**Human-in-the-Loop (Ember a folyamatban)** - Munkafolyamat minta, amely emberi jóváhagyást vagy tartalmi áttekintést ad.
 
-**langchain4j-agentic** - Maven függőség deklaratív ügynökkészítéshez (kísérleti).
+**langchain4j-agentic** - Maven függőség deklaratív ügynöképítéshez (kísérleti).
 
-**Ciklus Munkafolyamat** - Ügynök végrehajtása ismétlődően, amíg egy feltétel teljesül (pl. minőségi pontszám ≥ 0,8).
+**Loop Workflow (Ciklusban futó munkafolyamat)** - Ügynök végrehajtás ismétlése, amíg teljesül egy feltétel (pl. minőségi pontszám ≥ 0.8).
 
-**outputKey** - Ügynök megjegyzés paramétere, amely megadja, hová tárolódnak az eredmények az Agentikus Hatókörben.
+**outputKey** - Az ügynök annotációs paramétere, amely megadja, hová kerülnek a kimenetek az Agentic Scope-ban.
 
-**Párhuzamos Munkafolyamat** - Több ügynök egyidejű futtatása független feladatokhoz.
+**Parallel Workflow (Párhuzamos munkafolyamat)** - Több ügynök egyidejű futtatása független feladatokra.
 
-**Válaszstratégia** - Hogyan fogalmazza meg a felügyelő a végső választ: UTOLSÓ, ÖSSZEFOGLALÓ vagy PONTSZÁMOZOTT.
+**Response Strategy (Válaszstratégia)** - Hogyan alakítja a supervisor a végső választ: UTOLSÓ, ÖSSZEFOGLALÓ vagy PONTSZÁMOZOTT.
 
-**Szekvenciális Munkafolyamat** - Ügynökök sorrendben történő végrehajtása, ahol a kimenet a következő lépést táplálja.
+**Sequential Workflow (Szekvenciális munkafolyamat)** - Ügynökök egymás utáni végrehajtása, ahol az eredmény áramlik a következő lépéshez.
 
-**Felügyelő Ügynök Minta** - Fejlett agentikus minta, ahol egy felügyelő LLM dinamikusan dönti el, mely al-ügynököket hívja meg.
+**Supervisor Agent Pattern (Felügyelő ügynök minta)** - Fejlett agentikus minta, ahol egy felügyelő LLM dinamikusan dönt a rész-ügynökök meghívásáról.
 
 ## Modell Kontextus Protokoll (MCP) - [Modul 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Maven függőség MCP integrációhoz LangChain4j-ben.
+**langchain4j-mcp** - Maven függőség az MCP integrációhoz LangChain4j-ben.
 
-**MCP** - Modell Kontextus Protokoll: szabvány AI alkalmazások külső eszközökhöz való csatlakoztatásához. Egyszer építsd, mindenhol használd.
+**MCP** - Modell Kontextus Protokoll: szabvány AI alkalmazások külső eszközökhöz való kapcsolódására. Egyszer kell megépíteni, bárhol használható.
 
-**MCP Ügyfél** - Alkalmazás, amely csatlakozik MCP szerverekhez eszközök felfedezéséhez és használatához.
+**MCP Client** - Alkalmazás, amely kapcsolódik MCP szerverekhez és eszközöket fedez fel, illetve használ.
 
-**MCP Szerver** - Szolgáltatás, amely MCP-n keresztül nyújt eszközöket egyértelmű leírásokkal és paraméter sémákkal.
+**MCP Server** - Szolgáltatás, amely eszközöket tesz elérhetővé MCP-n keresztül világos leírásokkal és paraméter sémákkal.
 
-**McpToolProvider** - LangChain4j összetevő, amely MCP eszközöket csomagol AI szolgáltatásokhoz és ügynökökhöz.
+**McpToolProvider** - LangChain4j komponens, amely MCP eszközöket csomagol AI szolgáltatásokhoz és ügynökökhöz.
 
-**McpTransport** - MCP kommunikáció interfész. Implementációk pl. Stdio és HTTP.
+**McpTransport** - Interfész az MCP kommunikációhoz. Megvalósítások: Stdio és HTTP.
 
-**Stdio Átvitel** - Lokális folyamat átvitel stdin/stdout-on keresztül. Hasznos fájlrendszerhez vagy parancssori eszközökhöz.
+**Stdio Transport** - Helyi folyamat kommunikáció stdin/stdout-on keresztül. Hasznos fájlrendszerhez vagy parancssori eszközökhöz.
 
-**StdioMcpTransport** - LangChain4j implementáció, amely MCP szervert alfolyamatként indítja.
+**StdioMcpTransport** - LangChain4j megvalósítás, amely MCP szervert indít alfolyamatként.
 
-**Eszköz Felfedezés** - Az ügyfél lekérdezi a szervert az elérhető eszközökről leírásokkal és sémákkal.
+**Tool Discovery (Eszközfelfedezés)** - A kliens lekérdezi a szervert az elérhető eszközökről leírásokkal és sémákkal.
 
 ## Azure Szolgáltatások - [Modul 01](../01-introduction/README.md)
 
-**Azure AI Search** - Felhő alapú keresés vektorteszt-támogatással. [Modul 03](../03-rag/README.md)
+**Azure AI Search** - Felhő-alapú keresés vektoros képességekkel. [Modul 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Azure erőforrások telepítésére.
+**Azure Developer CLI (azd)** - Azure erőforrások telepítése.
 
 **Azure OpenAI** - A Microsoft vállalati AI szolgáltatása.
 
 **Bicep** - Azure infrastruktúra-kód nyelv. [Infrastruktúra Útmutató](../01-introduction/infra/README.md)
 
-**Telepítés Neve** - Modell telepítésének neve Azure-ban.
+**Deployment Name (Telepítés neve)** - Modell telepítésének neve Azure-ben.
 
-**GPT-5** - Legújabb OpenAI modell gondolkodásvezérléssel. [Modul 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Legújabb OpenAI modell érvelésvezérléssel. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Tesztelés és Fejlesztés - [Tesztelési Útmutató](TESTING.md)
 
-**Dev Konténer** - Konténerizált fejlesztési környezet. [Konfiguráció](../../../.devcontainer/devcontainer.json)
+**Dev Container** - Konténeres fejlesztői környezet. [Konfiguráció](../../../.devcontainer/devcontainer.json)
 
-**GitHub Modellek** - Ingyenes AI modell játszótér. [Modul 00](../00-quick-start/README.md)
+**GitHub Models** - Ingyenes AI modell játszótere. [Modul 00](../00-quick-start/README.md)
 
-**Memória Tesztelés** - Tesztelés memóriaalapú tárolóval.
+**In-Memory Testing (Memóriatesztelés)** - Tesztelés memóriában tárolt adatokkal.
 
-**Integrációs Tesztelés** - Valódi infrastruktúrával történő tesztelés.
+**Integration Testing (Integrációs tesztelés)** - Tesztelés valós infrastruktúrával.
 
-**Maven** - Java build automatizációs eszköz.
+**Maven** - Java építési automatizáló eszköz.
 
-**Mockito** - Java tesztelési (mocking) könyvtár.
+**Mockito** - Java mocking keretrendszer.
 
 **Spring Boot** - Java alkalmazás keretrendszer. [Modul 01](../01-introduction/README.md)
 
@@ -228,5 +228,5 @@ Gyors hivatkozás a tanfolyamban használt kifejezésekre és fogalmakra.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Jogi nyilatkozat**:
-Ezt a dokumentumot az AI fordítási szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével fordítottuk le. Bár a pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum, az anyanyelvén, tekintendő hiteles forrásnak. Fontos információk esetén szakmai, emberi fordítást javaslunk. Nem vállalunk felelősséget az esetleges félreértésekért vagy félreértelmezésekért, amelyek ebből a fordításból adódhatnak.
+Ez a dokumentum az AI fordító szolgáltatás [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével készült. Bár igyekszünk a pontosságra, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum anyanyelvén tekintendő hivatalos forrásnak. Kritikus információk esetén professzionális emberi fordítást javaslunk. Nem vállalunk felelősséget az ebből az automatikus fordításból eredő félreértésekért vagy félreértelmezésekért.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

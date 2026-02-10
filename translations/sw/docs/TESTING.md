@@ -3,18 +3,18 @@
 ## Yaliyomo
 
 - [Anza Haraka](../../../docs)
-- [Nini Majaribio Yanayofunika](../../../docs)
-- [Kuendesha Majaribio](../../../docs)
-- [Kuendesha Majaribio katika VS Code](../../../docs)
+- [Kile Vipimo Vinavyogusa](../../../docs)
+- [Kuendesha Vipimo](../../../docs)
+- [Kuendesha Vipimo Katika VS Code](../../../docs)
 - [Mifumo ya Kupima](../../../docs)
 - [Falsafa ya Kupima](../../../docs)
-- [Hatua Zifuatazo](../../../docs)
+- [Hatua Zinazofuata](../../../docs)
 
-Mwongozo huu unakuongoza kupitia majaribio ambayo yanaonyesha jinsi ya kupima programu za AI bila kuhitaji funguo za API au huduma za nje.
+Mwongozo huu unakuongoza kupitia vipimo vinavyoonyesha jinsi ya kupima programu za AI bila kuhitaji funguo za API au huduma za nje.
 
-## Quick Start
+## Anza Haraka
 
-Endesha majaribio yote kwa amri moja:
+Endesha vipimo vyote kwa amri moja:
 
 **Bash:**
 ```bash
@@ -26,30 +26,30 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/sw/test-results.ea5c98d8f3642043.webp" alt="Matokeo ya Majaribio Yaliyofanikiwa" width="800"/>
+<img src="../../../translated_images/sw/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
 
-*Uendeshaji wa majaribio uliofanikiwa unaonyesha majaribio yote yamefaulu bila kushindwa*
+*Uendeshaji wa mafanikio wa vipimo unaoonyesha vipimo vyote vikiwa vinafaulu bila kushindwa*
 
-## Nini Majaribio Yanayofunika
+## Kile Vipimo Vinavyogusa
 
-Kozi hii inalenga kwenye **majaribio ya kitengo** yanayoendesha kwa ndani. Kila jaribio linaonyesha dhana maalum ya LangChain4j kwa upweke.
+Kozi hii inalenga katika **vipimo vya kitengo** vinavyotekelezwa mahali hapa. Kila kipimo kinaonyesha dhana maalum ya LangChain4j pekee.
 
-<img src="../../../translated_images/sw/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramidi ya Kupima" width="800"/>
+<img src="../../../translated_images/sw/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
-*Piramidi ya kupima ikionyesha uwiano kati ya majaribio ya kitengo (haraka, yaliyo pekee), majaribio ya kuunganisha (vifaa halisi), na majaribio ya mwisho-mwisho. Mafunzo haya yanashughulikia upimaji wa kitengo.*
+*Piramidi ya kupima ikionyesha uwiano kati ya vipimo vya kitengo (haraka, vipangwa), vipimo vya muunganiko (vipande halisi), na vipimo vya mwisho-mwisho. Mafunzo haya yanahusu kupima kitengo.*
 
-| Moduli | Majaribio | Lengo | Faili Muhimu |
+| Moduli | Vipimo | Lengo | Faili Muhimu |
 |--------|-------|-------|-----------|
-| **00 - Anza Haraka** | 6 | Mifano ya prompt na uingizaji wa vigezo | `SimpleQuickStartTest.java` |
-| **01 - Utangulizi** | 8 | Kumbukumbu za mazungumzo na chat zinazohifadhi hali | `SimpleConversationTest.java` |
-| **02 - Uhandisi wa Prompt** | 12 | Mifumo ya GPT-5, viwango vya utoaji, na matokeo yaliyopangwa | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Kuingiza nyaraka, embeddings, na utafutaji wa ufananisho | `DocumentServiceTest.java` |
-| **04 - Zana** | 12 | Kuitwa kwa kazi na kuunganisha zana | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Itifaki ya Muktadha wa Modeli kwa usafirishaji wa Stdio | `SimpleMcpTest.java` |
+| **00 - Anza Haraka** | 6 | Mifano ya maelekezo na kubadilisha vigezo | `SimpleQuickStartTest.java` |
+| **01 - Utangulizi** | 8 | Kumbukumbu ya mazungumzo na mazungumzo yenye hali | `SimpleConversationTest.java` |
+| **02 - Uhandisi wa Maelekezo** | 12 | Mifumo ya GPT-5.2, viwango vya hamu, matokeo yaliyopangwa | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Uingizaji wa hati, kuweka alama, utafutaji wa ufanano | `DocumentServiceTest.java` |
+| **04 - Zana** | 12 | Kupiga nyaraka na mfuatano wa zana | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Itifaki ya Muktadha wa Mfano na usafirishaji wa Stdio | `SimpleMcpTest.java` |
 
-## Kuendesha Majaribio
+## Kuendesha Vipimo
 
-**Endesha majaribio yote kutoka mzizi:**
+**Endesha vipimo vyote kutoka mzizi:**
 
 **Bash:**
 ```bash
@@ -61,12 +61,12 @@ mvn test
 mvn --% test
 ```
 
-**Endesha majaribio kwa moduli maalum:**
+**Endesha vipimo kwa moduli maalum:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Au kutoka kwenye mzizi
+# Au kutoka mzizi
 mvn test -pl 01-introduction
 ```
 
@@ -77,7 +77,7 @@ cd 01-introduction; mvn --% test
 mvn --% test -pl 01-introduction
 ```
 
-**Endesha darasa moja la majaribio:**
+**Endesha darasa moja la kipimo:**
 
 **Bash:**
 ```bash
@@ -89,45 +89,45 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Endesha njia maalum ya jaribio:**
+**Endesha njia moja ya kipimo:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#inapaswa kuhifadhi historia ya mazungumzo
+mvn test -Dtest=SimpleConversationTest#inapaswaKuwekaHifadhiYaMazungumzo
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#inapaswa kudumisha historia ya mazungumzo
+mvn --% test -Dtest=SimpleConversationTest#inapaswaKuendeleaKumbukaMaongezi
 ```
 
-## Kuendesha Majaribio katika VS Code
+## Kuendesha Vipimo Katika VS Code
 
-Ikiwa unatumia Visual Studio Code, Test Explorer hutoa kiolesura cha picha kwa kuendesha na kutatua majaribio.
+Ikiwa unatumia Visual Studio Code, Test Explorer hutoa kiolesura cha picha kwa ajili ya kuendesha na kufuatilia vipimo.
 
-<img src="../../../translated_images/sw/vscode-testing.f02dd5917289dced.webp" alt="Kichunguzi cha Majaribio cha VS Code" width="800"/>
+<img src="../../../translated_images/sw/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*Kichunguzi cha Majaribio cha VS Code kinachoonyesha muundo wa majaribio pamoja na madarasa yote ya majaribio ya Java na njia binafsi za majaribio*
+*Test Explorer ya VS Code ikionyesha mti wa vipimo pamoja na madarasa yote ya vipimo vya Java na njia binafsi za vipimo*
 
-**Ili kuendesha majaribio katika VS Code:**
+**Kuendesha vipimo katika VS Code:**
 
-1. Fungua Test Explorer kwa kubofya ikoni ya beaker kwenye Activity Bar
-2. Panua muundo wa majaribio kuona moduli zote na madarasa ya majaribio
-3. Bonyeza kitufe cha kucheza kando ya jaribio lolote ili kuliendesha kwa undani
-4. Bonyeza "Run All Tests" kuendesha seti nzima
-5. Bonyeza kulia jaribio lolote na chagua "Debug Test" kuweka breakpoints na kupita hatua kwa hatua kupitia msimbo
+1. Fungua Test Explorer kwa kubofya alama ya beka kwenye Ukanda wa Shughuli
+2. Panua mti wa vipimo kuona moduli zote na madarasa ya vipimo
+3. Bonyeza kitufe cha kucheza kando ya kipimo chochote kuikimbia pekee
+4. Bonyeza "Run All Tests" kuendesha seti yote
+5. Bofya kulia kipimo chochote na chagua "Debug Test" kuweka maeneo ya kusimamisha na hatua kwa hatua kupitia msimbo
 
-Test Explorer inaonyesha alama za tick za kijani kwa majaribio yaliyopita na inatoa ujumbe wa kina wa hitilafu wakati majaribio yanashindwa.
+Test Explorer inaonyesha alama za tik ya kijani kwa vipimo vinavyofaulu na hutoa ujumbe wa kina wa kushindwa wakati vipimo vinaanguka.
 
 ## Mifumo ya Kupima
 
-### Mfano 1: Kupima Mifano ya Prompt
+### Mfano 1: Kupima Mifano ya Maelekezo
 
-Mfano rahisi hujaribu mifano ya prompt bila kuita modeli yoyote ya AI. Unahakiki kwamba uingizaji wa vigezo unafanya kazi ipasavyo na prompts zimepangwa kama inavyotarajiwa.
+Mfano rahisi zaidi hupima mifano ya maelekezo bila kupiga simu kwa mfano wowote wa AI. Unahakikisha kuwa kubadilisha vigezo hufanya kazi sawasawa na maelekezo yameandaliwa kama inavyotarajiwa.
 
-<img src="../../../translated_images/sw/prompt-template-testing.b902758ddccc8dee.webp" alt="Kupima Mifano ya Prompt" width="800"/>
+<img src="../../../translated_images/sw/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*Kupima mifano ya prompt kuonyesha mchakato wa uingizaji wa vigezo: template yenye nafasi za vigezo → thamani zinawekwa → pato lililopangwa linaridhiwa*
+*Kupima mifano ya maelekezo ikionyesha mtiririko wa kubadilisha vigezo: kiolezo chenye sehemu za kujaza → thamani zimewekwa → matokeo yaliyopangwa yamehakikiwa*
 
 ```java
 @Test
@@ -146,27 +146,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-Jaribio hili lipo katika `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+Kipimo hiki kiko katika `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
-**Endesha:**
+**Kiendeshe:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#Uwekaji wa muundo wa kiolezo cha ombi la jaribio
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#jaribuUmbizoLaKiolezoChaKidokezo
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#Jaribio la ufomati wa kiolezo cha ombi
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#jaribuMpangilioWaKiolezoChaOmbi
 ```
 
-### Mfano 2: Kumocha Modeli za Lugha
+### Mfano 2: Kuiga Mifano ya Lugha
 
-Unapotumia mantiki ya mazungumzo, tumia Mockito kuunda modeli bandia ambazo zinarudisha majibu yaliyopangwa. Hii inafanya majaribio kuwa ya haraka, ya bure, na yasiyotabirika.
+Unapopima mantiki ya mazungumzo, tumia Mockito kuunda mifano bandia inayorudisha majibu yaliyopangwa. Hii hufanya vipimo kuwa vya haraka, bure, na vinavyotarajiwa.
 
-<img src="../../../translated_images/sw/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock dhidi ya API Halisi" width="800"/>
+<img src="../../../translated_images/sw/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*Ulinganisho unaoonyesha kwanini mocks zinapendekezwa kwa upimaji: ni haraka, haziitaji malipo, zina matokeo thabiti, na hazihitaji funguo za API*
+*Ulinganisho unaoonyesha kwanini kuiga ni bora kwa vipimo: ni haraka, bure, vinavyotarajiwa, na havihitaji funguo za API*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +211,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // Ujumbe 3 za mtumiaji + Ujumbe 3 za AI
+        assertThat(history).hasSize(6); // Ujumbe 3 za mtumiaji + 3 za AI
     }
 }
 ```
 
-Mfano huu unaonekana katika `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock inahakikisha tabia thabiti ili uweze kuthibitisha usimamizi wa kumbukumbu unafanya kazi ipasavyo.
+Mfano huu unaonekana katika `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Kuiga huhakikisha utendaji unaoendelea hivyo unaweza kuthibitisha usimamizi wa kumbukumbu unafanya kazi vizuri.
 
-### Mfano 3: Kupima Utofauti wa Mazungumzo
+### Mfano 3: Kupima Kutengwa kwa Mazungumzo
 
-Kumbukumbu za mazungumzo lazima ziweke watumiaji wengi kando. Jaribio hili linathibitisha kwamba mazungumzo hayachanganywi.
+Kumbukumbu za mazungumzo lazima zihifadhi watumiaji wengi kando. Kipimo hiki kinathibitisha kuwa mazungumzo hayajachanganywa muktadha.
 
-<img src="../../../translated_images/sw/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Kutengwa kwa Mazungumzo" width="800"/>
+<img src="../../../translated_images/sw/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*Kupima kutengwa kwa mazungumzo kuonyesha maduka ya kumbukumbu tofauti kwa watumiaji tofauti ili kuzuia kuchanganyika kwa muktadha*
+*Kupima kutengwa kwa mazungumzo kuonyesha hifadhi za kumbukumbu tofauti kwa watumiaji tofauti ili kuzuia mchanganyiko wa muktadha*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Kila mazungumzo yana historia yake huru. Katika mifumo ya uzalishaji, kutengwa huku ni muhimu kwa programu zinazotumika na watumiaji wengi.
+Kila mazungumzo huhifadhi historia yake huru. Katika mifumo ya utengenezaji, kutengwa hivi ni muhimu kwa programu zinazoendeshwa na watumiaji wengi.
 
-### Mfano 4: Kupima Zana Kwa Kujitegemea
+### Mfano 4: Kupima Zana Peke Yake
 
-Zana ni kazi ambazo AI inaweza kuita. Zipime moja kwa moja kuhakikisha zinafanya kazi kwa usahihi bila kujali maamuzi ya AI.
+Zana ni kazi ambazo AI inaweza kupiga simu. Zipime moja kwa moja kuhakikisha zinafanya kazi bila kujali maamuzi ya AI.
 
-<img src="../../../translated_images/sw/tools-testing.3e1706817b0b3924.webp" alt="Kupima Zana" width="800"/>
+<img src="../../../translated_images/sw/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*Kupima zana kwa kujitegemea kuonyesha utekelezaji wa zana za mock bila miito ya AI ili kuthibitisha mantiki ya biashara*
+*Kupima zana peke yake ikionyesha utekelezaji wa zana bandia bila simu za AI kuthibitisha mantiki ya biashara*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Majaribio haya kutoka `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` yanathibitisha mantiki ya zana bila ushiriki wa AI. Mfano wa kuunganisha unaonyesha jinsi pato la zana moja linavyoingia kama ingizo kwa nyingine.
+Vipimo hivi kutoka `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` vinathibitisha mantiki ya zana bila kujumuisha AI. Mfano wa mfuatano unaonyesha jinsi pato la zana moja linavyoingiza kwenye ingizo la nyingine.
 
 ### Mfano 5: Kupima RAG Ndani ya Kumbukumbu
 
-Mifumo ya RAG kawaida yanahitaji hifadhidata za vekta na huduma za embedding. Mfano wa ndani ya kumbukumbu unakuwezesha kupima mchakato mzima bila utegemezi wa nje.
+Mifumo ya RAG kawaida huhitaji hifadhidata za vekta na huduma za kuweka alama. Mfano wa ndani ya kumbukumbu hukuruhusu kupima mchakato mzima bila utegemezi wa nje.
 
-<img src="../../../translated_images/sw/rag-testing.ee7541b1e23934b1.webp" alt="Kupima RAG Ndani ya Kumbukumbu" width="800"/>
+<img src="../../../translated_images/sw/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*Mtiririko wa kazi wa kupima RAG ndani ya kumbukumbu unaonyesha kusomwa kwa nyaraka, uhifadhi wa embeddings, na utafutaji wa ufananisho bila kuhitaji hifadhidata*
+*Mtiririko wa kupima RAG ndani ya kumbukumbu unaonesha uchambuzi wa hati, uhifadhi wa kuweka alama, na utafutaji wa ufanano bila hitaji la hifadhidata*
 
 ```java
 @Test
@@ -304,15 +304,15 @@ void testProcessTextDocument() {
 }
 ```
 
-Jaribio hili kutoka `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` linaunda hati ndani ya kumbukumbu na kuthibitisha kugawanya sehemu na kushughulikia metadata.
+Kipimo hiki kutoka `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` kinaunda hati ndani ya kumbukumbu na kuthibitisha kugawanya na usimamizi wa metadata.
 
 ### Mfano 6: Kupima Muunganiko wa MCP
 
-Moduli ya MCP hupima muunganisho wa Itifaki ya Muktadha wa Modeli kwa kutumia usafirishaji wa stdio. Majaribio haya yanathibitisha kwamba programu yako inaweza kuzalisha na kuwasiliana na seva za MCP kama mchakato mdogo.
+Moduli ya MCP hupima muunganiko wa Itifaki ya Muktadha wa Mfano kwa kutumia usafirishaji wa stdio. Vipimo hivi vinathibitisha kuwa programu yako inaweza kuanzisha na kuwasiliana na seva za MCP kama mchakato mdogo.
 
-Majaribio katika `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` yanathibitisha tabia ya mteja wa MCP.
+Vipimo katika `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` vinathibitisha tabia ya mteja MCP.
 
-**Endesha:**
+**Viendeshe:**
 
 **Bash:**
 ```bash
@@ -326,36 +326,36 @@ cd 05-mcp; mvn --% test
 
 ## Falsafa ya Kupima
 
-Pima msimbo wako, sio AI. Majaribio yako yanapaswa kuthibitisha msimbo unaouandika kwa kuangalia jinsi prompts zinavyojengwa, jinsi kumbukumbu zinavyosimamiwa, na jinsi zana zinavyotekelezwa. Majibu ya AI yanatofautiana na hayapaswi kuwa sehemu ya uthibitisho wa majaribio. Jiulize ikiwa template ya prompt inabadilisha vigezo ipasavyo, si ikiwa AI inatoa jibu sahihi.
+Pima msimbo wako, si AI. Vipimo vyako vinapaswa kuthibitisha msimbo unaouandika kwa kuangalia jinsi maelekezo yanavyotengenezwa, jinsi kumbukumbu inavyosimamiwa, na jinsi zana zinavyotekelezwa. Majibu ya AI hubadilika na hayapaswi kuwa sehemu ya kuthibitisha kipimo. Jiulize kama kiolezo chako cha maelekezo kinabadilisha vigezo vya usahihi, si kama AI inatoa jibu sahihi.
 
-Tumia mocks kwa modeli za lugha. Ni utegemezi wa nje unaokuwa polepole, gharama, na usiotabirika. Kumocha kunafanya majaribio kuwa ya haraka kwa milisekunde badala ya sekunde, bila gharama za API, na yenye matokeo thabiti kila wakati.
+Tumia kuiga kwa mifano ya lugha. Ni utegemezi wa nje ambao ni polepole, gharama, na usiokuwa na utabiri. Kuiga hufanya vipimo kuwa haraka kwa muda mfupi badala ya sekunde, bure bila gharama za API, na vinavyotarajiwa na matokeo sawa kila wakati.
 
-Hifadhi majaribio kuwa ya kujitegemea. Kila jaribio linapaswa kuandaa data yake, lisitegeme matokeo ya majaribio mengine, na kusafisha baada ya kukamilika. Majaribio yanapaswa kupita bila kujali mpangilio wa utekelezaji.
+Hifadhi vipimo kuwa huru. Kila kipimo kinapaswa kuanzisha data yake yenyewe, kisitegemee vipimo vingine, na kusafisha baada yake. Vipimo vinapaswa kufaulu bila kujali mpangilio wa utekelezaji.
 
-Jaribu kesi za mipaka zaidi ya njia ya furaha. Jaribu ingizo tupu, ingizo kubwa sana, herufi maalum, vigezo batili, na hali za mipaka. Hizi mara nyingi huonyesha hitilafu ambazo matumizi ya kawaida hayaziibui.
+Pima kesi za mwisho zaidi za matumizi. Jaribu pembejeo zisizo na kitu, pembejeo kubwa sana, herufi maalum, vigezo batili, na vizingiti. Hivi mara nyingi huonyesha kasoro ambazo matumizi ya kawaida hayaionyeshi.
 
-Tumia majina ya kuelezea. Linganisha `shouldMaintainConversationHistoryAcrossMultipleMessages()` na `test1()`. La kwanza linakuambia hasa kinachopimwa, kufanya utambuaji wa hitilafu kuwa rahisi.
+Tumia majina ya kueleweka. Linganisha `shouldMaintainConversationHistoryAcrossMultipleMessages()` na `test1()`. Ya kwanza inakuambia hasa kinachopimwa, na kufanya ugunduzi wa hitilafu kuwa rahisi zaidi.
 
-## Hatua Zifuatazo
+## Hatua Zinazofuata
 
-Sasa kwa kuwa umeelewa mifumo ya kupima, chimba zaidi kila moduli:
+Sasa unapoelewa mifumo ya kupima, chimbukia ndani zaidi kila moduli:
 
-- **[00 - Anza Haraka](../00-quick-start/README.md)** - Anza na misingi ya mifano ya prompt
-- **[01 - Utangulizi](../01-introduction/README.md)** - Jifunze usimamizi wa kumbukumbu za mazungumzo
-- **[02 - Uhandisi wa Prompt](../02-prompt-engineering/README.md)** - Tambua mbinu za kuunda prompts za GPT-5
-- **[03 - RAG](../03-rag/README.md)** - Jenga mifumo ya utengenezaji iliyoongezwa kwa urejeshaji
-- **[04 - Zana](../04-tools/README.md)** - Tekeleza kuitwa kwa kazi na minyororo ya zana
-- **[05 - MCP](../05-mcp/README.md)** - Unganisha Itifaki ya Muktadha wa Modeli
+- **[00 - Anza Haraka](../00-quick-start/README.md)** - Anza na misingi ya mifano ya maelekezo
+- **[01 - Utangulizi](../01-introduction/README.md)** - Jifunze usimamizi wa kumbukumbu ya mazungumzo
+- **[02 - Uhandisi wa Maelekezo](../02-prompt-engineering/README.md)** - Zaidi kujifunza mifumo ya kuamsha GPT-5.2
+- **[03 - RAG](../03-rag/README.md)** - Tengeneza mifumo ya kizazi cha kuongeza urejesho
+- **[04 - Zana](../04-tools/README.md)** - Tekeleza upigia nyaraka na mfuatano wa zana
+- **[05 - MCP](../05-mcp/README.md)** - Unganisha Itifaki ya Muktadha wa Mfano
 
-README ya kila moduli inatoa maelezo ya kina ya dhana zinazopimwa hapa.
+Kila README ya moduli hutoa maelezo ya kina ya dhana zinazopimwa hapa.
 
 ---
 
-**Uvinjari:** [← Rudi kwa Mwongozo Mkuu](../README.md)
+**Uelekezaji:** [← Rudi Kwenye Kuu](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Taarifa ya kutokuwa na dhamana:
-Hati hii imetafsiriwa kwa kutumia huduma ya tafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kuhakikisha usahihi, tafadhali zingatia kuwa tafsiri za kiotomatiki zinaweza kuwa na makosa au kasoro. Nyaraka ya asili katika lugha yake ya asili inapaswa kuchukuliwa kama chanzo cha mamlaka. Kwa habari muhimu, inapendekezwa kutumia tafsiri ya kitaalamu ya kibinadamu. Hatuwajibiki kwa uelewa au tafsiri potofu zinazotokana na matumizi ya tafsiri hii.
+**Maelezo Muhimu**:  
+Hati hii imetafsiriwa kwa kutumia huduma ya tafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kufanikisha usahihi, tafadhali fahamu kwamba tafsiri za kiotomatiki zinaweza kuwa na makosa au kasoro. Hati ya asili katika lugha yake ya asili inapaswa kuchukuliwa kama chanzo cha kuaminika. Kwa habari muhimu, inashauriwa kutumia huduma za utafsiri wa kitaalamu wa binadamu. Hatuchukulii dhamana kwa kutoelewana au tafsiri potofu zinazotokana na matumizi ya tafsiri hii.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
