@@ -1,4 +1,4 @@
-# Azure-Infrastruktur für LangChain4j Erste Schritte
+# Azure-Infrastruktur für LangChain4j Einstieg
 
 ## Inhaltsverzeichnis
 
@@ -13,7 +13,7 @@
 - [Fehlerbehebung](../../../../01-introduction/infra)
 - [Infrastruktur aktualisieren](../../../../01-introduction/infra)
 - [Aufräumen](../../../../01-introduction/infra)
-- [Dateistruktur](../../../../01-introduction/infra)
+- [Verzeichnisstruktur](../../../../01-introduction/infra)
 - [Sicherheitsempfehlungen](../../../../01-introduction/infra)
 - [Zusätzliche Ressourcen](../../../../01-introduction/infra)
 
@@ -23,7 +23,7 @@ Dieses Verzeichnis enthält die Azure-Infrastruktur als Code (IaC) mit Bicep und
 
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (Version 2.50.0 oder höher)
 - [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (Version 1.5.0 oder höher)
-- Ein Azure-Abonnement mit Berechtigungen zum Erstellen von Ressourcen
+- Ein Azure-Abonnement mit Berechtigungen zur Erstellung von Ressourcen
 
 ## Architektur
 
@@ -33,8 +33,8 @@ Die Infrastruktur stellt folgende Azure-Ressourcen bereit:
 
 ### KI-Dienste
 - **Azure OpenAI**: Cognitive Services mit zwei Modellbereitstellungen:
-  - **gpt-5**: Chat-Completion-Modell (20K TPM Kapazität)
-  - **text-embedding-3-small**: Embedding-Modell für RAG (20K TPM Kapazität)
+  - **gpt-5.2**: Chat Completion-Modell (Kapazität 20K TPM)
+  - **text-embedding-3-small**: Embedding-Modell für RAG (Kapazität 20K TPM)
 
 ### Lokale Entwicklung
 Alle Spring Boot-Anwendungen laufen lokal auf Ihrem Rechner:
@@ -45,12 +45,12 @@ Alle Spring Boot-Anwendungen laufen lokal auf Ihrem Rechner:
 
 ## Erstellte Ressourcen
 
-| Ressourcentyp | Ressourcenname-Muster | Zweck |
-|--------------|----------------------|---------|
+| Ressourcentyp | Namensmuster der Ressource | Zweck |
+|--------------|----------------------------|-------|
 | Ressourcengruppe | `rg-{environmentName}` | Enthält alle Ressourcen |
 | Azure OpenAI | `aoai-{resourceToken}` | Hosting der KI-Modelle |
 
-> **Hinweis:** `{resourceToken}` ist ein eindeutiger String, der aus der Abonnement-ID, dem Umgebungsnamen und dem Standort generiert wird
+> **Hinweis:** `{resourceToken}` ist eine eindeutige Zeichenfolge, die aus der Abonnement-ID, dem Umgebungsnamen und dem Standort generiert wird
 
 ## Schnellstart
 
@@ -70,11 +70,11 @@ azd up
 
 Wenn Sie dazu aufgefordert werden:
 - Wählen Sie Ihr Azure-Abonnement aus
-- Wählen Sie einen Standort (empfohlen: `eastus2` oder `swedencentral` für GPT-5-Verfügbarkeit)
+- Wählen Sie einen Standort (empfohlen: `eastus2` für GPT-5.2 Verfügbarkeit)
 - Bestätigen Sie den Umgebungsnamen (Standard: `langchain4j-dev`)
 
 Dies erstellt:
-- Azure OpenAI-Ressource mit GPT-5 und text-embedding-3-small
+- Azure OpenAI-Ressource mit GPT-5.2 und text-embedding-3-small
 - Ausgabe der Verbindungsdetails
 
 ### 2. Verbindungsdetails abrufen
@@ -91,13 +91,13 @@ azd env get-values
 
 Dies zeigt an:
 - `AZURE_OPENAI_ENDPOINT`: Ihre Azure OpenAI-Endpunkt-URL
-- `AZURE_OPENAI_KEY`: API-Schlüssel zur Authentifizierung
-- `AZURE_OPENAI_DEPLOYMENT`: Chat-Modellname (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Embedding-Modellname
+- `AZURE_OPENAI_KEY`: API-Schlüssel für die Authentifizierung
+- `AZURE_OPENAI_DEPLOYMENT`: Name des Chat-Modells (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Name des Embedding-Modells
 
 ### 3. Anwendungen lokal ausführen
 
-Der Befehl `azd up` erstellt automatisch eine `.env`-Datei im Stammverzeichnis mit allen notwendigen Umgebungsvariablen.
+Der `azd up`-Befehl erstellt automatisch eine `.env`-Datei im Stammverzeichnis mit allen notwendigen Umgebungsvariablen.
 
 **Empfohlen:** Starten Sie alle Webanwendungen:
 
@@ -110,7 +110,7 @@ cd ../..
 
 **PowerShell:**
 ```powershell
-# Vom Stammverzeichnis aus
+# Vom Stammverzeichnis
 cd ../..
 .\start-all.ps1
 ```
@@ -119,7 +119,7 @@ Oder starten Sie ein einzelnes Modul:
 
 **Bash:**
 ```bash
-# Beispiel: Starte nur das Einführungsmodul
+# Beispiel: Nur das Einführungsmodul starten
 cd ../01-introduction
 ./start.sh
 ```
@@ -131,7 +131,7 @@ cd ../01-introduction
 .\start.ps1
 ```
 
-Beide Skripte laden automatisch die Umgebungsvariablen aus der vom `azd up` erstellten `.env`-Datei im Stammverzeichnis.
+Beide Skripte laden automatisch die Umgebungsvariablen aus der im Stammverzeichnis durch `azd up` erstellten `.env`-Datei.
 
 ## Konfiguration
 
@@ -142,14 +142,14 @@ Um Modellbereitstellungen zu ändern, bearbeiten Sie `infra/main.bicep` und pass
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -164,12 +164,12 @@ Verfügbare Modelle und Versionen: https://learn.microsoft.com/azure/ai-services
 Um in einer anderen Region bereitzustellen, bearbeiten Sie `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Verfügbarkeit von GPT-5 prüfen: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Verfügbarkeit von GPT-5.2 prüfen: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
-Um die Infrastruktur nach Änderungen an den Bicep-Dateien zu aktualisieren:
+Die Infrastruktur nach Änderungen an Bicep-Dateien aktualisieren:
 
 **Bash:**
 ```bash
@@ -188,12 +188,13 @@ azd provision
 # ARM-Vorlage neu erstellen
 az bicep build --file infra/main.bicep
 
-# Änderungen vorschau
+# Änderungen anzeigen
 azd provision --preview
 
 # Änderungen anwenden
 azd provision
 ```
+
 
 ## Aufräumen
 
@@ -204,7 +205,7 @@ Um alle Ressourcen zu löschen:
 # Alle Ressourcen löschen
 azd down
 
-# Alles einschließlich der Umgebung löschen
+# Alles löschen, einschließlich der Umgebung
 azd down --purge
 ```
 
@@ -213,31 +214,31 @@ azd down --purge
 # Alle Ressourcen löschen
 azd down
 
-# Alles einschließlich der Umgebung löschen
+# Alles löschen, einschließlich der Umgebung
 azd down --purge
 ```
 
-**Warnung**: Dies löscht alle Azure-Ressourcen dauerhaft.
+**Achtung**: Dies wird alle Azure-Ressourcen dauerhaft löschen.
 
-## Dateistruktur
+## Verzeichnisstruktur
 
 ## Kostenoptimierung
 
 ### Entwicklung/Test
-Für Entwicklungs-/Testumgebungen können Sie Kosten reduzieren:
+Für Dev/Test-Umgebungen können Sie Kosten reduzieren:
 - Verwenden Sie die Standardstufe (S0) für Azure OpenAI
 - Setzen Sie eine niedrigere Kapazität (10K TPM statt 20K) in `infra/core/ai/cognitiveservices.bicep`
-- Löschen Sie Ressourcen, wenn sie nicht verwendet werden: `azd down`
+- Löschen Sie Ressourcen, wenn nicht in Gebrauch: `azd down`
 
 ### Produktion
 Für die Produktion:
-- Erhöhen Sie die OpenAI-Kapazität basierend auf der Nutzung (50K+ TPM)
-- Aktivieren Sie Zonenausfallsicherheit für höhere Verfügbarkeit
-- Implementieren Sie ordnungsgemäße Überwachung und Kostenwarnungen
+- Erhöhen Sie die OpenAI-Kapazität basierend auf Nutzung (50K+ TPM)
+- Aktivieren Sie Zonendualität für höhere Verfügbarkeit
+- Implementieren Sie ordnungsgemäßes Monitoring und Kostenwarnungen
 
 ### Kostenschätzung
-- Azure OpenAI: Bezahlung pro Token (Eingabe + Ausgabe)
-- GPT-5: ca. 3-5 $ pro 1 Mio. Tokens (aktuellen Preis prüfen)
+- Azure OpenAI: Zahlung pro Token (Eingabe + Ausgabe)
+- GPT-5.2: ca. 3-5 $ pro 1 Mio. Tokens (aktuellen Preis prüfen)
 - text-embedding-3-small: ca. 0,02 $ pro 1 Mio. Tokens
 
 Preisrechner: https://azure.microsoft.com/pricing/calculator/
@@ -254,7 +255,7 @@ Gehen Sie im Azure-Portal zu Ihrer OpenAI-Ressource → Metriken:
 
 ## Fehlerbehebung
 
-### Problem: Azure OpenAI Subdomain-Name-Konflikt
+### Problem: Namenskonflikt des Azure OpenAI Subdomains
 
 **Fehlermeldung:**
 ```
@@ -264,10 +265,10 @@ is not available as it's already used by a resource."
 ```
 
 **Ursache:**
-Der aus Ihrem Abonnement/Umgebung generierte Subdomain-Name wird bereits verwendet, möglicherweise von einer vorherigen Bereitstellung, die nicht vollständig gelöscht wurde.
+Der aus Ihrem Abonnement/Umgebung generierte Subdomain-Name wird bereits verwendet, möglicherweise von einer vorherigen Bereitstellung, die nicht vollständig entfernt wurde.
 
 **Lösung:**
-1. **Option 1 – Verwenden Sie einen anderen Umgebungsnamen:**
+1. **Option 1 - Verwenden Sie einen anderen Umgebungsnamen:**
    
    **Bash:**
    ```bash
@@ -281,62 +282,62 @@ Der aus Ihrem Abonnement/Umgebung generierte Subdomain-Name wird bereits verwend
    azd up
    ```
 
-2. **Option 2 – Manuelle Bereitstellung über Azure-Portal:**
-   - Gehen Sie zum Azure-Portal → Ressource erstellen → Azure OpenAI
+2. **Option 2 - Manuelle Bereitstellung über Azure-Portal:**
+   - Gehen Sie zu Azure-Portal → Ressource erstellen → Azure OpenAI
    - Wählen Sie einen eindeutigen Namen für Ihre Ressource
-   - Stellen Sie folgende Modelle bereit:
-     - **GPT-5**
+   - Bereitstellen der folgenden Modelle:
+     - **GPT-5.2**
      - **text-embedding-3-small** (für RAG-Module)
-   - **Wichtig:** Notieren Sie Ihre Bereitstellungsnamen – sie müssen mit der `.env`-Konfiguration übereinstimmen
-   - Nach der Bereitstellung erhalten Sie Ihren Endpunkt und API-Schlüssel unter „Schlüssel und Endpunkt“
+   - **Wichtig:** Notieren Sie Ihre Bereitstellungsnamen – sie müssen mit `.env`-Konfiguration übereinstimmen
+   - Nach der Bereitstellung Endpoint und API-Schlüssel unter „Schlüssel und Endpunkt“ abrufen
    - Erstellen Sie eine `.env`-Datei im Projektstamm mit:
      
      **Beispiel `.env`-Datei:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
-**Richtlinien zur Benennung von Modellbereitstellungen:**
-- Verwenden Sie einfache, konsistente Namen: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Bereitstellungsnamen müssen genau mit der `.env`-Konfiguration übereinstimmen
-- Häufiger Fehler: Modell mit einem Namen erstellen, aber im Code einen anderen Namen referenzieren
+**Richtlinien zum Benennen der Modellbereitstellungen:**
+- Verwenden Sie einfache, konsistente Namen: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Die Bereitstellungsnamen müssen genau mit der `.env`-Konfiguration übereinstimmen
+- Häufiger Fehler: Modell unter einem Namen erstellen, aber im Code einen anderen Namen referenzieren
 
-### Problem: GPT-5 in ausgewählter Region nicht verfügbar
+### Problem: GPT-5.2 in der ausgewählten Region nicht verfügbar
 
 **Lösung:**
-- Wählen Sie eine Region mit GPT-5-Zugang (z. B. eastus, swedencentral)
+- Wählen Sie eine Region mit GPT-5.2-Zugang (z.B. eastus2)
 - Verfügbarkeit prüfen: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-### Problem: Unzureichendes Kontingent für Bereitstellung
+### Problem: Unzureichliches Kontingent für Bereitstellung
 
 **Lösung:**
-1. Beantragen Sie eine Kontingenterhöhung im Azure-Portal
-2. Oder verwenden Sie eine niedrigere Kapazität in `main.bicep` (z. B. capacity: 10)
+1. Kontingentserhöhung im Azure-Portal anfordern
+2. Oder niedrigere Kapazität in `main.bicep` verwenden (z.B. capacity: 10)
 
-### Problem: „Resource not found“ bei lokalem Ausführen
+### Problem: „Resource not found“ bei lokalem Betrieb
 
 **Lösung:**
-1. Überprüfen Sie die Bereitstellung: `azd env get-values`
-2. Prüfen Sie, ob Endpunkt und Schlüssel korrekt sind
-3. Stellen Sie sicher, dass die Ressourcengruppe im Azure-Portal existiert
+1. Bereitstellung überprüfen: `azd env get-values`
+2. Endpoint und Schlüssel auf Richtigkeit prüfen
+3. Sicherstellen, dass die Ressourcengruppe im Azure-Portal existiert
 
 ### Problem: Authentifizierung fehlgeschlagen
 
 **Lösung:**
-- Überprüfen Sie, ob `AZURE_OPENAI_API_KEY` korrekt gesetzt ist
-- Der Schlüssel sollte eine 32-stellige hexadezimale Zeichenfolge sein
-- Holen Sie bei Bedarf einen neuen Schlüssel im Azure-Portal
+- Prüfen, ob `AZURE_OPENAI_API_KEY` korrekt gesetzt ist
+- Schlüssel muss ein 32-stelliger Hexadezimalwert sein
+- Bei Bedarf neuen Schlüssel im Azure-Portal generieren
 
 ### Bereitstellung schlägt fehl
 
-**Problem**: `azd provision` schlägt mit Kontingent- oder Kapazitätsfehlern fehl
+**Problem**: `azd provision` schlägt mit Quoten- oder Kapazitätsfehlern fehl
 
 **Lösung**: 
-1. Versuchen Sie eine andere Region – siehe Abschnitt [Azure-Regionen ändern](../../../../01-introduction/infra) für Konfigurationshinweise
-2. Prüfen Sie, ob Ihr Abonnement Azure OpenAI-Kontingent hat:
+1. Versuchen Sie eine andere Region – siehe Abschnitt [Azure-Regionen ändern](../../../../01-introduction/infra)
+2. Prüfen Sie, ob Ihr Abonnement über Azure OpenAI-Kontingent verfügt:
    
    **Bash:**
    ```bash
@@ -348,12 +349,12 @@ Der aus Ihrem Abonnement/Umgebung generierte Subdomain-Name wird bereits verwend
    az cognitiveservices account list-skus --location <your-region>
    ```
 
-### Anwendung verbindet sich nicht
+### Anwendung verbindet nicht
 
 **Problem**: Java-Anwendung zeigt Verbindungsfehler
 
 **Lösung**:
-1. Überprüfen Sie, ob Umgebungsvariablen exportiert sind:
+1. Überprüfen, dass Umgebungsvariablen exportiert sind:
    
    **Bash:**
    ```bash
@@ -367,24 +368,24 @@ Der aus Ihrem Abonnement/Umgebung generierte Subdomain-Name wird bereits verwend
    Write-Host $env:AZURE_OPENAI_API_KEY
    ```
 
-2. Prüfen Sie, ob das Endpunktformat korrekt ist (sollte `https://xxx.openai.azure.com` sein)
-3. Vergewissern Sie sich, dass der API-Schlüssel der primäre oder sekundäre Schlüssel aus dem Azure-Portal ist
+2. Endpoint-Format prüfen (sollte `https://xxx.openai.azure.com` sein)
+3. Prüfen, ob der API-Schlüssel der primäre oder sekundäre Schlüssel aus Azure-Portal ist
 
 **Problem**: 401 Unauthorized von Azure OpenAI
 
 **Lösung**:
-1. Holen Sie einen neuen API-Schlüssel im Azure-Portal → Schlüssel und Endpunkt
-2. Exportieren Sie die Umgebungsvariable `AZURE_OPENAI_API_KEY` neu
-3. Stellen Sie sicher, dass die Modellbereitstellungen abgeschlossen sind (Azure-Portal prüfen)
+1. Neuen API-Schlüssel aus Azure Portal → Schlüssel und Endpunkt holen
+2. `AZURE_OPENAI_API_KEY` Umgebungsvariable erneut exportieren
+3. Sicherstellen, dass Modellbereitstellungen abgeschlossen sind (Azure-Portal prüfen)
 
-### Leistungsprobleme
+### Performance-Probleme
 
 **Problem**: Langsame Antwortzeiten
 
 **Lösung**:
-1. Prüfen Sie OpenAI-Token-Nutzung und Drosselung in Azure-Portal-Metriken
-2. Erhöhen Sie die TPM-Kapazität, wenn Limits erreicht werden
-3. Erwägen Sie die Verwendung eines höheren Reasoning-Effort-Levels (niedrig/mittel/hoch)
+1. Überprüfen Sie OpenAI-Token-Nutzung und Drosselung in Azure-Portal-Metriken
+2. Erhöhen Sie die TPM-Kapazität, wenn Sie Limits erreichen
+3. Erwägen Sie, einen höheren Reasoning-Consciousness-Level zu verwenden (niedrig/mittel/hoch)
 
 ## Infrastruktur aktualisieren
 
@@ -399,18 +400,19 @@ infra/
         └── cognitiveservices.bicep  # Azure OpenAI module
 ```
 
+
 ## Sicherheitsempfehlungen
 
-1. **API-Schlüssel niemals committen** – Verwenden Sie Umgebungsvariablen
+1. **API-Schlüssel niemals commiten** – Verwenden Sie Umgebungsvariablen
 2. **.env-Dateien lokal verwenden** – Fügen Sie `.env` zu `.gitignore` hinzu
-3. **Schlüssel regelmäßig rotieren** – Neue Schlüssel im Azure-Portal generieren
-4. **Zugriff beschränken** – Verwenden Sie Azure RBAC, um Zugriffsrechte zu steuern
+3. **Schlüssel regelmäßig rotieren** – Neue Schlüssel im Azure-Portal erzeugen
+4. **Zugriff beschränken** – Verwenden Sie Azure RBAC zur Zugriffskontrolle
 5. **Nutzung überwachen** – Richten Sie Kostenwarnungen im Azure-Portal ein
 
 ## Zusätzliche Ressourcen
 
 - [Azure OpenAI Service Dokumentation](https://learn.microsoft.com/azure/ai-services/openai/)
-- [GPT-5 Modell-Dokumentation](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [GPT-5.2 Modell-Dokumentation](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Azure Developer CLI Dokumentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Bicep Dokumentation](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI Offizielle Integration](https://docs.langchain4j.dev/integrations/language-models/open-ai)
@@ -418,17 +420,17 @@ infra/
 ## Support
 
 Bei Problemen:
-1. Prüfen Sie den [Fehlerbehebungsabschnitt](../../../../01-introduction/infra) oben
-2. Überprüfen Sie den Dienststatus von Azure OpenAI im Azure-Portal
+1. Prüfen Sie den Abschnitt [Fehlerbehebung](../../../../01-introduction/infra) oben
+2. Überwachen Sie die Azure OpenAI Service-Status im Azure-Portal
 3. Öffnen Sie ein Issue im Repository
 
 ## Lizenz
 
-Details finden Sie in der Root-[LICENSE](../../../../LICENSE)-Datei.
+Details im Root-[LICENSE](../../../../LICENSE)-Datei.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Haftungsausschluss**:  
-Dieses Dokument wurde mit dem KI-Übersetzungsdienst [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir uns um Genauigkeit bemühen, beachten Sie bitte, dass automatisierte Übersetzungen Fehler oder Ungenauigkeiten enthalten können. Das Originaldokument in seiner Ursprungssprache gilt als maßgebliche Quelle. Für wichtige Informationen wird eine professionelle menschliche Übersetzung empfohlen. Wir übernehmen keine Haftung für Missverständnisse oder Fehlinterpretationen, die aus der Nutzung dieser Übersetzung entstehen.
+**Haftungsausschluss**:
+Dieses Dokument wurde mithilfe des KI-Übersetzungsdienstes [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir uns um Genauigkeit bemühen, bitten wir zu beachten, dass automatisierte Übersetzungen Fehler oder Ungenauigkeiten enthalten können. Das Originaldokument in seiner Originalsprache ist als maßgebliche Quelle zu betrachten. Für wichtige Informationen wird eine professionelle menschliche Übersetzung empfohlen. Für Missverständnisse oder Fehlinterpretationen, die durch die Verwendung dieser Übersetzung entstehen, übernehmen wir keine Haftung.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
