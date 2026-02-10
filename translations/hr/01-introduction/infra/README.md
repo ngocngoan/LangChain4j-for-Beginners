@@ -1,21 +1,21 @@
-# Azure infrastruktura za LangChain4j Početak rada
+# Azure Infrastruktura za LangChain4j Početak Rada
 
 ## Sadržaj
 
 - [Preduvjeti](../../../../01-introduction/infra)
 - [Arhitektura](../../../../01-introduction/infra)
-- [Kreirani resursi](../../../../01-introduction/infra)
-- [Brzi početak](../../../../01-introduction/infra)
+- [Stvoreni Resursi](../../../../01-introduction/infra)
+- [Brzi Početak](../../../../01-introduction/infra)
 - [Konfiguracija](../../../../01-introduction/infra)
-- [Upravljačke naredbe](../../../../01-introduction/infra)
-- [Optimizacija troškova](../../../../01-introduction/infra)
+- [Upravljanje Naredbama](../../../../01-introduction/infra)
+- [Optimizacija Troškova](../../../../01-introduction/infra)
 - [Nadzor](../../../../01-introduction/infra)
-- [Rješavanje problema](../../../../01-introduction/infra)
-- [Ažuriranje infrastrukture](../../../../01-introduction/infra)
+- [Otklanjanje Problema](../../../../01-introduction/infra)
+- [Ažuriranje Infrastrukture](../../../../01-introduction/infra)
 - [Čišćenje](../../../../01-introduction/infra)
-- [Struktura datoteka](../../../../01-introduction/infra)
-- [Preporuke za sigurnost](../../../../01-introduction/infra)
-- [Dodatni resursi](../../../../01-introduction/infra)
+- [Struktura Datoteka](../../../../01-introduction/infra)
+- [Sigurnosne Preporuke](../../../../01-introduction/infra)
+- [Dodatni Resursi](../../../../01-introduction/infra)
 
 Ovaj direktorij sadrži Azure infrastrukturu kao kod (IaC) koristeći Bicep i Azure Developer CLI (azd) za implementaciju Azure OpenAI resursa.
 
@@ -23,36 +23,36 @@ Ovaj direktorij sadrži Azure infrastrukturu kao kod (IaC) koristeći Bicep i Az
 
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (verzija 2.50.0 ili novija)
 - [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (verzija 1.5.0 ili novija)
-- Pretplata na Azure s dopuštenjima za kreiranje resursa
+- Pretplata na Azure s dopuštenjima za stvaranje resursa
 
 ## Arhitektura
 
-**Pojednostavljeni lokalni razvojni setup** - Implementirajte samo Azure OpenAI, pokrenite sve aplikacije lokalno.
+**Pojednostavljeni Postav za Lokalni Razvoj** - Implementira samo Azure OpenAI, sve aplikacije se pokreću lokalno.
 
 Infrastruktura implementira sljedeće Azure resurse:
 
-### AI usluge
-- **Azure OpenAI**: Kognitivne usluge s dvije implementacije modela:
-  - **gpt-5**: Model za chat dovršavanje (kapacitet 20K TPM)
+### AI Usluge
+- **Azure OpenAI**: Kognitivne usluge sa dvije implementacije modela:
+  - **gpt-5.2**: Model za chat dovršavanje (kapacitet 20K TPM)
   - **text-embedding-3-small**: Model za ugradnju za RAG (kapacitet 20K TPM)
 
-### Lokalni razvoj
+### Lokalni Razvoj
 Sve Spring Boot aplikacije se pokreću lokalno na vašem računalu:
 - 01-introduction (port 8080)
 - 02-prompt-engineering (port 8083)
 - 03-rag (port 8081)
 - 04-tools (port 8084)
 
-## Kreirani resursi
+## Stvoreni Resursi
 
-| Tip resursa | Uzorak imena resursa | Svrha |
+| Tip Resursa | Uzorak Imena Resursa | Namjena |
 |--------------|----------------------|---------|
-| Resource Group | `rg-{environmentName}` | Sadrži sve resurse |
+| Grupa resursa | `rg-{environmentName}` | Sadrži sve resurse |
 | Azure OpenAI | `aoai-{resourceToken}` | Hosting AI modela |
 
-> **Napomena:** `{resourceToken}` je jedinstveni niz generiran iz ID pretplate, imena okruženja i lokacije
+> **Napomena:** `{resourceToken}` je jedinstveni niz generiran iz ID pretplate, imena okoline i lokacije
 
-## Brzi početak
+## Brzi Početak
 
 ### 1. Implementirajte Azure OpenAI
 
@@ -68,16 +68,16 @@ cd 01-introduction
 azd up
 ```
 
-Kad se zatraži:
+Kad vas se upita:
 - Odaberite svoju Azure pretplatu
-- Odaberite lokaciju (preporučeno: `eastus2` ili `swedencentral` za dostupnost GPT-5)
-- Potvrdite ime okruženja (zadano: `langchain4j-dev`)
+- Izaberite lokaciju (preporučeno: `eastus2` za dostupnost GPT-5.2)
+- Potvrdite ime okoline (zadano: `langchain4j-dev`)
 
-Ovo će kreirati:
-- Azure OpenAI resurs s GPT-5 i text-embedding-3-small
+Ovo će stvoriti:
+- Azure OpenAI resurs s GPT-5.2 i text-embedding-3-small
 - Izlazne detalje veze
 
-### 2. Dohvatite detalje veze
+### 2. Dohvatite Detalje Veze
 
 **Bash:**
 ```bash
@@ -92,12 +92,12 @@ azd env get-values
 Ovo prikazuje:
 - `AZURE_OPENAI_ENDPOINT`: URL vaše Azure OpenAI krajnje točke
 - `AZURE_OPENAI_KEY`: API ključ za autentifikaciju
-- `AZURE_OPENAI_DEPLOYMENT`: Ime chat modela (gpt-5)
+- `AZURE_OPENAI_DEPLOYMENT`: Ime chat modela (gpt-5.2)
 - `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Ime modela za ugradnju
 
-### 3. Pokrenite aplikacije lokalno
+### 3. Pokrenite Aplikacije Lokalno
 
-Naredba `azd up` automatski kreira `.env` datoteku u korijenskom direktoriju sa svim potrebnim varijablama okruženja.
+Naredba `azd up` automatski stvara `.env` datoteku u korijenskom direktoriju sa svim potrebnim varijablama okoline.
 
 **Preporučeno:** Pokrenite sve web aplikacije:
 
@@ -115,41 +115,41 @@ cd ../..
 .\start-all.ps1
 ```
 
-Ili pokrenite pojedinačni modul:
+Ili pokrenite jedan modul:
 
 **Bash:**
 ```bash
-# Primjer: Pokreni samo modul uvoda
+# Primjer: Pokrenite samo modul uvoda
 cd ../01-introduction
 ./start.sh
 ```
 
 **PowerShell:**
 ```powershell
-# Primjer: Pokreni samo modul uvoda
+# Primjer: Pokreni samo modul za uvod
 cd ../01-introduction
 .\start.ps1
 ```
 
-Oba skripta automatski učitavaju varijable okruženja iz `.env` datoteke u korijenu koju je kreirao `azd up`.
+Oba skripta automatski učitavaju varijable okoline iz kreirane `.env` datoteke u korijenu koju je stvorio `azd up`.
 
 ## Konfiguracija
 
-### Prilagodba implementacija modela
+### Prilagodba Implementacija Modela
 
 Za promjenu implementacija modela, uredite `infra/main.bicep` i izmijenite parametar `openAiDeployments`:
 
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -159,24 +159,24 @@ param openAiDeployments array = [
 
 Dostupni modeli i verzije: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-### Promjena Azure regija
+### Promjena Azure Regija
 
 Za implementaciju u drugoj regiji, uredite `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Provjerite dostupnost GPT-5: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Provjerite dostupnost GPT-5.2: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
 Za ažuriranje infrastrukture nakon promjena u Bicep datotekama:
 
 **Bash:**
 ```bash
-# Ponovno izgradi ARM predložak
+# Ponovno izgradite ARM predložak
 az bicep build --file infra/main.bicep
 
-# Pregledaj promjene
+# Pregled promjena
 azd provision --preview
 
 # Primijeni promjene
@@ -185,13 +185,13 @@ azd provision
 
 **PowerShell:**
 ```powershell
-# Ponovno izgradi ARM predložak
+# Ponovno izradite ARM predložak
 az bicep build --file infra/main.bicep
 
-# Pregledaj promjene
+# Pregledajte promjene
 azd provision --preview
 
-# Primijeni promjene
+# Primijenite promjene
 azd provision
 ```
 
@@ -217,42 +217,42 @@ azd down
 azd down --purge
 ```
 
-**Upozorenje**: Ovo će trajno izbrisati sve Azure resurse.
+**Upozorenje**: Ovo trajno briše sve Azure resurse.
 
-## Struktura datoteka
+## Struktura Datoteka
 
-## Optimizacija troškova
+## Optimizacija Troškova
 
 ### Razvoj/Testiranje
-Za razvojna/testna okruženja možete smanjiti troškove:
+Za razvojne/testne okoline možete smanjiti troškove:
 - Koristite Standardni sloj (S0) za Azure OpenAI
-- Postavite manji kapacitet (10K TPM umjesto 20K) u `infra/core/ai/cognitiveservices.bicep`
-- Izbrišite resurse kad nisu u upotrebi: `azd down`
+- Postavite niži kapacitet (10K TPM umjesto 20K) u `infra/core/ai/cognitiveservices.bicep`
+- Brišite resurse kada nisu u upotrebi: `azd down`
 
 ### Produkcija
 Za produkciju:
-- Povećajte OpenAI kapacitet prema upotrebi (50K+ TPM)
-- Omogućite zonalnu redundanciju za veću dostupnost
+- Povećajte kapacitet OpenAI-a ovisno o korištenju (50K+ TPM)
+- Omogućite zonu redundantnosti za veću dostupnost
 - Implementirajte odgovarajući nadzor i upozorenja o troškovima
 
-### Procjena troškova
+### Procjena Troškova
 - Azure OpenAI: Plaćanje po tokenu (ulaz + izlaz)
-- GPT-5: ~3-5 USD po 1M tokena (provjerite trenutne cijene)
-- text-embedding-3-small: ~0,02 USD po 1M tokena
+- GPT-5.2: ~$3-5 po 1M tokena (provjerite trenutačne cijene)
+- text-embedding-3-small: ~$0.02 po 1M tokena
 
 Kalkulator cijena: https://azure.microsoft.com/pricing/calculator/
 
 ## Nadzor
 
-### Pregled Azure OpenAI metrika
+### Pregled Metrika Azure OpenAI
 
 Idite na Azure Portal → Vaš OpenAI resurs → Metrike:
 - Korištenje po tokenima
-- Stopa HTTP zahtjeva
-- Vrijeme odgovora
+- Brzina HTTP zahtjeva
+- Vrijeme odziva
 - Aktivni tokeni
 
-## Rješavanje problema
+## Otklanjanje Problema
 
 ### Problem: Sukob imena poddomene Azure OpenAI
 
@@ -264,10 +264,10 @@ is not available as it's already used by a resource."
 ```
 
 **Uzrok:**
-Ime poddomene generirano iz vaše pretplate/okruženja već je u upotrebi, moguće od prethodne implementacije koja nije u potpunosti uklonjena.
+Ime poddomene generirano iz vaše pretplate/okoline već je u upotrebi, moguće od prethodne implementacije koja nije u potpunosti uklonjena.
 
 **Rješenje:**
-1. **Opcija 1 - Koristite drugo ime okruženja:**
+1. **Opcija 1 - Koristite drugo ime okoline:**
    
    **Bash:**
    ```bash
@@ -282,62 +282,60 @@ Ime poddomene generirano iz vaše pretplate/okruženja već je u upotrebi, mogu�
    ```
 
 2. **Opcija 2 - Ručna implementacija putem Azure Portala:**
-   - Idite na Azure Portal → Kreirajte resurs → Azure OpenAI
-   - Odaberite jedinstveno ime za vaš resurs
+   - Idite na Azure Portal → Stvori resurs → Azure OpenAI
+   - Odaberite jedinstveno ime za svoj resurs
    - Implementirajte sljedeće modele:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (za RAG module)
-   - **Važno:** Zabilježite imena implementacija - moraju odgovarati konfiguraciji u `.env`
-   - Nakon implementacije, dohvatite krajnju točku i API ključ iz "Keys and Endpoint"
+   - **Važno:** Zabilježite imena implementacija - moraju odgovarati konfiguraciji `.env`
+   - Nakon implementacije, dohvatite svoju krajnju točku i API ključ iz "Ključevi i Krajnje Točke"
    - Kreirajte `.env` datoteku u korijenu projekta sa:
      
      **Primjer `.env` datoteke:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
 **Smjernice za imenovanje implementacija modela:**
-- Koristite jednostavna, dosljedna imena: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
+- Koristite jednostavna, dosljedna imena: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
 - Imena implementacija moraju točno odgovarati onome što konfigurirate u `.env`
-- Česta pogreška: Kreiranje modela s jednim imenom, a referenciranje drugog u kodu
+- Česta greška: Kreiranje modela s jednim imenom ali referenciranje drugog u kodu
 
-### Problem: GPT-5 nije dostupan u odabranoj regiji
+### Problem: GPT-5.2 nije dostupan u odabranoj regiji
 
 **Rješenje:**
-- Odaberite regiju s pristupom GPT-5 (npr. eastus, swedencentral)
+- Izaberite regiju s pristupom GPT-5.2 (npr. eastus2)
 - Provjerite dostupnost: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
-
-
 
 ### Problem: Nedovoljna kvota za implementaciju
 
 **Rješenje:**
 1. Zatražite povećanje kvote u Azure Portalu
-2. Ili koristite manji kapacitet u `main.bicep` (npr. capacity: 10)
+2. Ili koristite manji kapacitet u `main.bicep` (npr. kapacitet: 10)
 
-### Problem: "Resource not found" pri lokalnom pokretanju
+### Problem: "Resource not found" kod lokalnog pokretanja
 
 **Rješenje:**
 1. Provjerite implementaciju: `azd env get-values`
-2. Provjerite jesu li endpoint i ključ ispravni
-3. Provjerite postoji li resource group u Azure Portalu
+2. Provjerite jesu li krajnja točka i ključ točni
+3. Provjerite postoji li grupa resursa u Azure Portalu
 
-### Problem: Neuspjela autentifikacija
+### Problem: Neuspjela autentikacija
 
 **Rješenje:**
 - Provjerite je li `AZURE_OPENAI_API_KEY` ispravno postavljen
 - Format ključa treba biti 32-znamenkasti heksadecimalni niz
-- Ako je potrebno, dohvatite novi ključ iz Azure Portala
+- Ako treba, dohvatite novi ključ iz Azure Portala
 
-### Neuspjela implementacija
+### Neuspjela Implementacija
 
-**Problem**: `azd provision` ne uspijeva zbog kvote ili kapaciteta
+**Problem**: `azd provision` ne uspijeva zbog problema s kvotom ili kapacitetom
 
 **Rješenje**: 
-1. Pokušajte drugu regiju - Pogledajte odjeljak [Promjena Azure regija](../../../../01-introduction/infra) za konfiguraciju regija
+1. Isprobajte drugu regiju - pogledajte odjeljak [Promjena Azure Regija](../../../../01-introduction/infra) za način konfiguracije regija
 2. Provjerite ima li vaša pretplata kvotu za Azure OpenAI:
    
    **Bash:**
@@ -350,12 +348,12 @@ Ime poddomene generirano iz vaše pretplate/okruženja već je u upotrebi, mogu�
    az cognitiveservices account list-skus --location <your-region>
    ```
 
-### Aplikacija se ne povezuje
+### Aplikacija se Ne Spoji
 
-**Problem**: Java aplikacija prikazuje pogreške veze
+**Problem**: Java aplikacija prikazuje greške povezivanja
 
 **Rješenje**:
-1. Provjerite jesu li varijable okruženja izvezene:
+1. Provjerite jesu li varijable okoline eksportirane:
    
    **Bash:**
    ```bash
@@ -369,26 +367,26 @@ Ime poddomene generirano iz vaše pretplate/okruženja već je u upotrebi, mogu�
    Write-Host $env:AZURE_OPENAI_API_KEY
    ```
 
-2. Provjerite je li format endpointa ispravan (trebao bi biti `https://xxx.openai.azure.com`)
+2. Provjerite je li format krajnje točke ispravan (trebalo bi biti `https://xxx.openai.azure.com`)
 3. Provjerite je li API ključ primarni ili sekundarni ključ iz Azure Portala
 
 **Problem**: 401 Unauthorized iz Azure OpenAI
 
 **Rješenje**:
-1. Dohvatite novi API ključ iz Azure Portala → Keys and Endpoint
-2. Ponovno izvezite varijablu okruženja `AZURE_OPENAI_API_KEY`
+1. Dohvatite novi API ključ iz Azure Portala → Ključevi i Krajnje Točke
+2. Ponovno eksportirajte varijablu okoline `AZURE_OPENAI_API_KEY`
 3. Provjerite jesu li implementacije modela dovršene (provjerite Azure Portal)
 
-### Problemi s performansama
+### Problemi s Performansama
 
-**Problem**: Spora vremena odziva
+**Problem**: Sporo vrijeme odziva
 
 **Rješenje**:
-1. Provjerite korištenje tokena i ograničenja u Azure Portal metrikama
+1. Provjerite korištenje tokena i ograničenja u metriku Azure Portala
 2. Povećajte TPM kapacitet ako dosežete limite
-3. Razmotrite korištenje višeg nivoa napora rezoniranja (low/medium/high)
+3. Razmislite o korištenju višeg nivoa napora rezoniranja (low/medium/high)
 
-## Ažuriranje infrastrukture
+## Ažuriranje Infrastrukture
 
 ```
 infra/
@@ -401,18 +399,18 @@ infra/
         └── cognitiveservices.bicep  # Azure OpenAI module
 ```
 
-## Preporuke za sigurnost
+## Sigurnosne Preporuke
 
-1. **Nikada ne pohranjujte API ključeve u repozitorij** - Koristite varijable okruženja
+1. **Nikad ne spremati API ključeve u repozitorij** - Koristite varijable okoline
 2. **Koristite .env datoteke lokalno** - Dodajte `.env` u `.gitignore`
 3. **Redovito rotirajte ključeve** - Generirajte nove ključeve u Azure Portalu
 4. **Ograničite pristup** - Koristite Azure RBAC za kontrolu pristupa resursima
-5. **Nadzor upotrebe** - Postavite upozorenja o troškovima u Azure Portalu
+5. **Nadzor korištenja** - Postavite upozorenja o troškovima u Azure Portalu
 
-## Dodatni resursi
+## Dodatni Resursi
 
-- [Dokumentacija Azure OpenAI usluge](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Dokumentacija GPT-5 modela](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [Dokumentacija Azure OpenAI servisa](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Dokumentacija GPT-5.2 modela](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Dokumentacija Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Dokumentacija Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI službena integracija](https://docs.langchain4j.dev/integrations/language-models/open-ai)
@@ -420,17 +418,17 @@ infra/
 ## Podrška
 
 Za probleme:
-1. Provjerite [odjeljak za rješavanje problema](../../../../01-introduction/infra) gore
-2. Pregledajte stanje Azure OpenAI usluge u Azure Portalu
+1. Provjerite [odjeljak za otklanjanje problema](../../../../01-introduction/infra) gore
+2. Pregledajte zdravlje Azure OpenAI servisa u Azure Portalu
 3. Otvorite issue u repozitoriju
 
 ## Licenca
 
-Pogledajte glavnu [LICENSE](../../../../LICENSE) datoteku za detalje.
+Pogledajte root [LICENSE](../../../../LICENSE) datoteku za detalje.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Odricanje od odgovornosti**:
-Ovaj dokument preveden je pomoću AI usluge za prevođenje [Co-op Translator](https://github.com/Azure/co-op-translator). Iako nastojimo postići točnost, imajte na umu da automatski prijevodi mogu sadržavati pogreške ili netočnosti. Izvorni dokument na izvornom jeziku treba smatrati autoritativnim izvorom. Za kritične informacije preporučuje se profesionalni ljudski prijevod. Ne snosimo odgovornost za bilo kakva nesporazuma ili pogrešna tumačenja koja proizlaze iz korištenja ovog prijevoda.
+Ovaj dokument preveden je korištenjem AI usluge prijevoda [Co-op Translator](https://github.com/Azure/co-op-translator). Iako težimo točnosti, imajte na umu da automatski prijevodi mogu sadržavati pogreške ili netočnosti. Izvorni dokument na izvornom jeziku treba se smatrati službenim izvorom. Za važne informacije preporučuje se profesionalni ljudski prijevod. Nismo odgovorni za bilo kakve nesporazume ili pogrešne interpretacije koje proizlaze iz korištenja ovog prijevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
