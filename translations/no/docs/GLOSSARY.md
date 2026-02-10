@@ -1,232 +1,232 @@
-# LangChain4j Ordliste
+# LangChain4j Ordlista
 
 ## Innholdsfortegnelse
 
-- [Kjernebegreper](../../../docs)
+- [Kjernkonsepter](../../../docs)
 - [LangChain4j-komponenter](../../../docs)
-- [AI/ML-begreper](../../../docs)
+- [AI/ML-konsepter](../../../docs)
 - [Guardrails](../../../docs)
 - [Prompt Engineering](../../../docs)
 - [RAG (Retrieval-Augmented Generation)](../../../docs)
-- [Agenter og verktøy](../../../docs)
-- [Agentmodul](../../../docs)
+- [Agenter og Verktøy](../../../docs)
+- [Agentisk Modul](../../../docs)
 - [Model Context Protocol (MCP)](../../../docs)
 - [Azure-tjenester](../../../docs)
-- [Testing og utvikling](../../../docs)
+- [Testing og Utvikling](../../../docs)
 
 Rask referanse for termer og konsepter brukt gjennom hele kurset.
 
-## Kjernebegreper
+## Kjernkonsepter
 
-**AI-agent** – System som bruker AI til å resonnere og handle autonomt. [Modul 04](../04-tools/README.md)
+**AI Agent** - System som bruker AI for å resonnere og handle autonomt. [Modul 04](../04-tools/README.md)
 
-**Kjede** – Sekvens av operasjoner hvor output mates inn i neste steg.
+**Chain** - Sekvens av operasjoner hvor output mates inn i neste steg.
 
-**Chunking** – Å dele dokumenter i mindre biter. Typisk: 300-500 token med overlapp. [Modul 03](../03-rag/README.md)
+**Chunking** - Dele dokumenter i mindre biter. Typisk: 300–500 tokens med overlapp. [Modul 03](../03-rag/README.md)
 
-**Kontekstvindu** – Maksimalt antall token en modell kan prosessere. GPT-5: 400K token.
+**Context Window** - Maksimalt antall tokens en modell kan behandle. GPT-5.2: 400K tokens.
 
-**Inbeddings** – Numeriske vektorer som representerer tekstens mening. [Modul 03](../03-rag/README.md)
+**Embeddings** - Numeriske vektorer som representerer tekstens betydning. [Modul 03](../03-rag/README.md)
 
-**Funksjonskall** – Modell genererer strukturerte forespørsler for å kalle eksterne funksjoner. [Modul 04](../04-tools/README.md)
+**Function Calling** - Modell genererer strukturerte forespørsler for å kalle eksterne funksjoner. [Modul 04](../04-tools/README.md)
 
-**Hallusinasjon** – Når modeller genererer feil men troverdig informasjon.
+**Hallucination** - Når modeller genererer feilaktig, men plausibel informasjon.
 
-**Prompt** – Tekstinnputt til en språkmodell. [Modul 02](../02-prompt-engineering/README.md)
+**Prompt** - Tekstinput til en språkmodell. [Modul 02](../02-prompt-engineering/README.md)
 
-**Semantisk søk** – Søking etter mening ved bruk av embeddings, ikke søkeord. [Modul 03](../03-rag/README.md)
+**Semantic Search** - Søk basert på mening ved bruk av embeddings, ikke søkeord. [Modul 03](../03-rag/README.md)
 
-**Tilstandsfull vs tilstands­løs** – Tilstands­løs: ingen hukommelse. Tilstandsfull: opprettholder samtalehistorikk. [Modul 01](../01-introduction/README.md)
+**Stateful vs Stateless** - Stateless: ingen hukommelse. Stateful: opprettholder samtalehistorikk. [Modul 01](../01-introduction/README.md)
 
-**Token** – Grunnenheter tekst modeller prosesserer. Påvirker kostnader og begrensninger. [Modul 01](../01-introduction/README.md)
+**Tokens** - Grunnleggende tekstenheter som modeller behandler. Påvirker kostnader og begrensninger. [Modul 01](../01-introduction/README.md)
 
-**Verktøykjedning** – Sekvensiell verktøyutførelse hvor output informerer neste kall. [Modul 04](../04-tools/README.md)
+**Tool Chaining** - Sekvensiell verktøyutførelse der output styrer neste kall. [Modul 04](../04-tools/README.md)
 
 ## LangChain4j-komponenter
 
-**AiServices** – Lager typesikre AI-tjenestegrensesnitt.
+**AiServices** - Lager typesikre AI tjenestegrensesnitt.
 
-**OpenAiOfficialChatModel** – Enhetlig klient for OpenAI og Azure OpenAI-modeller.
+**OpenAiOfficialChatModel** - Enhetlig klient for OpenAI og Azure OpenAI-modeller.
 
-**OpenAiOfficialEmbeddingModel** – Lager embeddings med OpenAI Official-klient (støtter både OpenAI og Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** - Lager embeddings ved bruk av OpenAI Official-klienten (støtter både OpenAI og Azure OpenAI).
 
-**ChatModel** – Kjernegrensesnitt for språkmodeller.
+**ChatModel** - Kjernegrensesnitt for språkmodeller.
 
-**ChatMemory** – Opprettholder samtalehistorikk.
+**ChatMemory** - Opprettholder samtalehistorikk.
 
-**ContentRetriever** – Finner relevante dokumentbiter for RAG.
+**ContentRetriever** - Finner relevante dokumentbiter for RAG.
 
-**DocumentSplitter** – Deler dokumenter i biter.
+**DocumentSplitter** - Deler dokumenter i biter.
 
-**EmbeddingModel** – Konverterer tekst til numeriske vektorer.
+**EmbeddingModel** - Konverterer tekst til numeriske vektorer.
 
-**EmbeddingStore** – Lagrer og henter embeddings.
+**EmbeddingStore** - Lagrer og henter embeddings.
 
-**MessageWindowChatMemory** – Opprettholder et glidende vindu med nylige meldinger.
+**MessageWindowChatMemory** - Opprettholder et glidende vindu av nylige meldinger.
 
-**PromptTemplate** – Lager gjenbrukbare prompts med `{{variable}}`-plassholdere.
+**PromptTemplate** - Lager gjenbrukbare prompts med `{{variable}}`-plassholdere.
 
-**TextSegment** – Tekstbit med metadata. Brukes i RAG.
+**TextSegment** - Tekstbit med metadata. Brukes i RAG.
 
-**ToolExecutionRequest** – Representerer verktøyutførelsesforespørsel.
+**ToolExecutionRequest** - Representerer verktøyutførelsesforespørsel.
 
-**UserMessage / AiMessage / SystemMessage** – Samtaletypemeldinger.
+**UserMessage / AiMessage / SystemMessage** - Samtaletypemeldinger.
 
-## AI/ML-begreper
+## AI/ML-konsepter
 
-**Few-Shot Learning** – Å gi eksempler i prompts. [Modul 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - Gir eksempler i prompts. [Modul 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** – AI-modeller trent på enorme tekstmengder.
+**Large Language Model (LLM)** - AI-modeller trent på store tekstmengder.
 
-**Reasoning Effort** – GPT-5 parameter som kontrollerer resonnementets dybde. [Modul 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - GPT-5.2-parameter som styrer tenkedybde. [Modul 02](../02-prompt-engineering/README.md)
 
-**Temperature** – Kontrollerer grad av tilfeldig variasjon i output. Lav=deterministisk, høy=kreativ.
+**Temperature** - Styrer utgangens tilfeldighet. Lav=deterministisk, høy=kreativ.
 
-**Vektordatabases** – Spesialisert database for embeddings. [Modul 03](../03-rag/README.md)
+**Vector Database** - Spesialisert database for embeddings. [Modul 03](../03-rag/README.md)
 
-**Zero-Shot Learning** – Utfør oppgaver uten eksempler. [Modul 02](../02-prompt-engineering/README.md)
+**Zero-Shot Learning** - Utføre oppgaver uten eksempler. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Guardrails - [Modul 00](../00-quick-start/README.md)
 
-**Defense in Depth** – Flere lag sikkerhets-tilnærming som kombinerer applikasjonsnivå-guardrails med leverandørsikkerhetsfiltre.
+**Defense in Depth** - Multi-lags sikkerhetstilnærming som kombinerer applikasjonsnivå-guardrails med providers sikkerhetsfiltre.
 
-**Hard Block** – Leverandør kaster HTTP 400-feil ved alvorlige innholdsbrudd.
+**Hard Block** - Provider kaster HTTP 400-feil for alvorlige innholdsbrudd.
 
-**InputGuardrail** – LangChain4j-grensesnitt for å validere brukerinput før den når LLM. Spar kostnad og ventetid ved å blokkere skadelige prompts tidlig.
+**InputGuardrail** - LangChain4j-grensesnitt for validering av brukerinput før det når LLM. Spar kostnad og ventetid ved å blokkere skadelige prompts tidlig.
 
-**InputGuardrailResult** – Returtype for guardrail-validering: `success()` eller `fatal("årsak")`.
+**InputGuardrailResult** - Returtype for guardrail-validering: `success()` eller `fatal("reason")`.
 
-**OutputGuardrail** – Grensesnitt for å validere AI-responser før de returneres til brukere.
+**OutputGuardrail** - Grensesnitt for validering av AI-responser før de returneres til brukere.
 
-**Provider Safety Filters** – Innebygde innholdsfiltre fra AI-leverandører (f.eks. GitHub Models) som fanger brudd på API-nivå.
+**Provider Safety Filters** - Innebygde innholdsfiltre fra AI-leverandører (f.eks. GitHub Models) som fanger brudd på API-nivå.
 
-**Soft Refusal** – Modell avslår høflig å svare uten å kaste feil.
+**Soft Refusal** - Modell nekter høflig å svare uten å kaste feil.
 
 ## Prompt Engineering - [Modul 02](../02-prompt-engineering/README.md)
 
-**Chain-of-Thought** – Trinnvis resonnement for bedre nøyaktighet.
+**Chain-of-Thought** - Trinnvis resonnering for bedre nøyaktighet.
 
-**Constrained Output** – Pålegger spesifikk format eller struktur.
+**Constrained Output** - Håndheve spesifikk format eller struktur.
 
-**High Eagerness** – GPT-5-mønster for grundig resonnement.
+**High Eagerness** - GPT-5.2-mønster for grundig resonnering.
 
-**Low Eagerness** – GPT-5-mønster for raske svar.
+**Low Eagerness** - GPT-5.2-mønster for raske svar.
 
-**Multi-Turn Conversation** – Opprettholder kontekst på tvers av utvekslinger.
+**Multi-Turn Conversation** - Opprettholde kontekst over flere utvekslinger.
 
-**Role-Based Prompting** – Setter modellpersona via systemmeldinger.
+**Role-Based Prompting** - Sette modellpersona via systemmeldinger.
 
-**Self-Reflection** – Modell vurderer og forbedrer eget output.
+**Self-Reflection** - Modell evaluerer og forbedrer sitt output.
 
-**Structured Analysis** – Fast evalueringsrammeverk.
+**Structured Analysis** - Fast evalueringsrammeverk.
 
-**Task Execution Pattern** – Planlegg → Utfør → Oppsummer.
+**Task Execution Pattern** - Planlegg → Utfør → Oppsummer.
 
 ## RAG (Retrieval-Augmented Generation) - [Modul 03](../03-rag/README.md)
 
-**Dokumentbehandlingspipelinen** – Last inn → del i biter → embed → lagre.
+**Document Processing Pipeline** - Last inn → del → embed → lagre.
 
-**In-Memory Embedding Store** – Ikke-persistent lagring for testing.
+**In-Memory Embedding Store** - Ikke-permanent lagring for testing.
 
-**RAG** – Kombinerer henting med generering for å forankre svar.
+**RAG** - Kombinerer søk med generering for å forankre svar.
 
-**Similarity Score** – Måling (0-1) av semantisk likhet.
+**Similarity Score** - Måling (0-1) av semantisk likhet.
 
-**Source Reference** – Metadata om hentet innhold.
+**Source Reference** - Metadata om hentet innhold.
 
-## Agenter og verktøy - [Modul 04](../04-tools/README.md)
+## Agenter og Verktøy - [Modul 04](../04-tools/README.md)
 
-**@Tool Annotation** – Marker Java-metoder som AI-anropbare verktøy.
+**@Tool Annotation** - Merker Java-metoder som AI-kallbare verktøy.
 
-**ReAct Pattern** – Resonner → Handle → Observer → Gjenta.
+**ReAct Pattern** - Resonner → Handle → Observer → Gjenta.
 
-**Session Management** – Separate kontekster for ulike brukere.
+**Session Management** - Separate kontekster for forskjellige brukere.
 
-**Tool** – Funksjon en AI-agent kan kalle.
+**Tool** - Funksjon en AI-agent kan kalle.
 
-**Tool Description** – Dokumentasjon av verktøyformål og parametre.
+**Tool Description** - Dokumentasjon av verktøyets formål og parametere.
 
-## Agentmodul - [Modul 05](../05-mcp/README.md)
+## Agentisk Modul - [Modul 05](../05-mcp/README.md)
 
-**@Agent Annotation** – Marker grensesnitt som AI-agenter med deklarativ atferdsdefinisjon.
+**@Agent Annotation** - Merker grensesnitt som AI-agenter med deklarativ atferdsdefinisjon.
 
-**Agent Listener** – Hook for overvåking av agentutførelse via `beforeAgentInvocation()` og `afterAgentInvocation()`.
+**Agent Listener** - Hook for overvåking av agentutførelse via `beforeAgentInvocation()` og `afterAgentInvocation()`.
 
-**Agentic Scope** – Delt minne hvor agenter lagrer output med `outputKey` for at påfølgende agenter skal konsumere.
+**Agentic Scope** - Delt minne hvor agenter lagrer output med `outputKey` for etterfølgende agenter å konsumere.
 
-**AgenticServices** – Fabrikk for å lage agenter med `agentBuilder()` og `supervisorBuilder()`.
+**AgenticServices** - Fabrikk for å lage agenter ved bruk av `agentBuilder()` og `supervisorBuilder()`.
 
-**Conditional Workflow** – Rute basert på betingelser til forskjellige spesialistagenter.
+**Conditional Workflow** - Rute basert på betingelser til forskjellige spesialist-agenter.
 
-**Human-in-the-Loop** – Arbeidsflytmønster som legger til menneskelige sjekkpunkter for godkjenning eller innholds­gjennomgang.
+**Human-in-the-Loop** - Arbeidsflytmønster som legger til menneskelige kontrollpunkter for godkjenning eller innholdsgransking.
 
-**langchain4j-agentic** – Maven-avhengighet for deklarativ agentbygging (eksperimentell).
+**langchain4j-agentic** - Maven-avhengighet for deklarativ agentbygging (eksperimentell).
 
-**Loop Workflow** – Iterer agentutførelse til en betingelse er møtt (f.eks. kvalitetspoeng ≥ 0.8).
+**Loop Workflow** - Iterer agentutførelse til en betingelse oppfylles (f.eks. kvalitetsvurdering ≥ 0.8).
 
-**outputKey** – Agentannotasjonsparameter som spesifiserer hvor resultater lagres i Agentic Scope.
+**outputKey** - Agentannotasjon-parameter som spesifiserer hvor resultater lagres i Agentic Scope.
 
-**Parallel Workflow** – Kjør flere agenter samtidig for uavhengige oppgaver.
+**Parallel Workflow** - Kjør flere agenter samtidig for uavhengige oppgaver.
 
-**Response Strategy** – Hvordan supervisor formar endelig svar: SISTE, SAMMENDRAG, eller SCORET.
+**Response Strategy** - Hvordan supervisor formulerer sluttresultat: LAST, SUMMARY, eller SCORED.
 
-**Sequential Workflow** – Utfør agenter i rekkefølge hvor output flyter til neste steg.
+**Sequential Workflow** - Utfør agenter i rekkefølge hvor output flyter til neste steg.
 
-**Supervisor Agent Pattern** – Avansert agentmønster hvor en supervisor-LLM dynamisk bestemmer hvilke sub-agenter som skal kalles.
+**Supervisor Agent Pattern** - Avansert agentisk mønster hvor en supervisor LLM dynamisk avgjør hvilke sub-agenter som skal kalles.
 
 ## Model Context Protocol (MCP) - [Modul 05](../05-mcp/README.md)
 
-**langchain4j-mcp** – Maven-avhengighet for MCP-integrasjon i LangChain4j.
+**langchain4j-mcp** - Maven-avhengighet for MCP-integrasjon i LangChain4j.
 
-**MCP** – Model Context Protocol: standard for å koble AI-apper til eksterne verktøy. Bygg én gang, bruk overalt.
+**MCP** - Model Context Protocol: standard for å koble AI-apper til eksterne verktøy. Bygg én gang, bruk overalt.
 
-**MCP Client** – Applikasjon som kobler til MCP-servere for å oppdage og bruke verktøy.
+**MCP Client** - Applikasjon som kobler til MCP-servere for å oppdage og bruke verktøy.
 
-**MCP Server** – Tjeneste som eksponerer verktøy via MCP med klare beskrivelser og parameterskjemaer.
+**MCP Server** - Tjeneste som eksponerer verktøy via MCP med klare beskrivelser og parameterskjemaer.
 
-**McpToolProvider** – LangChain4j-komponent som pakker MCP-verktøy for bruk i AI-tjenester og agenter.
+**McpToolProvider** - LangChain4j-komponent som pakker MCP-verktøy for bruk i AI-tjenester og agenter.
 
-**McpTransport** – Grensesnitt for MCP-kommunikasjon. Implementasjoner inkluderer Stdio og HTTP.
+**McpTransport** - Grensesnitt for MCP-kommunikasjon. Implementasjoner inkluderer Stdio og HTTP.
 
-**Stdio Transport** – Lokal prosess-transport via stdin/stdout. Nyttig for filsystemtilgang eller kommandolinjeverktøy.
+**Stdio Transport** - Lokal prosess-transport via stdin/stdout. Nyttig for filsystemtilgang eller kommandolinjeverktøy.
 
-**StdioMcpTransport** – LangChain4j-implementasjon som starter MCP-server som underprosess.
+**StdioMcpTransport** - LangChain4j-implementasjon som starter MCP-server som underprosess.
 
-**Tool Discovery** – Klient spør server om tilgjengelige verktøy med beskrivelser og skjemaer.
+**Tool Discovery** - Klient spør server om tilgjengelige verktøy med beskrivelser og skjemaer.
 
 ## Azure-tjenester - [Modul 01](../01-introduction/README.md)
 
-**Azure AI Search** – Skybasert søk med vektorfunksjoner. [Modul 03](../03-rag/README.md)
+**Azure AI Search** - Skybasert søk med vektorfunksjonalitet. [Modul 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** – Distribuerer Azure-ressurser.
+**Azure Developer CLI (azd)** - Distribuerer Azure-ressurser.
 
-**Azure OpenAI** – Microsofts bedrifts-AI-tjeneste.
+**Azure OpenAI** - Microsofts enterprise AI-tjeneste.
 
-**Bicep** – Azure-infrastruktur-som-kode-språk. [Infrastrukturguide](../01-introduction/infra/README.md)
+**Bicep** - Azure infrastruktur-som-kode språk. [Infrastrukturguide](../01-introduction/infra/README.md)
 
-**Deployment Name** – Navn for modelldistribusjon i Azure.
+**Deployment Name** - Navn for modellutrulling i Azure.
 
-**GPT-5** – Nyeste OpenAI-modell med styring av resonnement. [Modul 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Nyeste OpenAI-modell med resonneringskontroll. [Modul 02](../02-prompt-engineering/README.md)
 
-## Testing og utvikling - [Testing Guide](TESTING.md)
+## Testing og Utvikling - [Testguide](TESTING.md)
 
-**Dev Container** – Containerisert utviklingsmiljø. [Konfigurasjon](../../../.devcontainer/devcontainer.json)
+**Dev Container** - Containerisert utviklingsmiljø. [Konfigurasjon](../../../.devcontainer/devcontainer.json)
 
-**GitHub Models** – Gratis AI-modell-lekeplass. [Modul 00](../00-quick-start/README.md)
+**GitHub Models** - Gratis AI-modell lekeplass. [Modul 00](../00-quick-start/README.md)
 
-**In-Memory Testing** – Testing med in-memory lagring.
+**In-Memory Testing** - Testing med in-memory lagring.
 
-**Integration Testing** – Testing med ekte infrastruktur.
+**Integration Testing** - Testing med ekte infrastruktur.
 
-**Maven** – Java-byggeverktøy.
+**Maven** - Java byggautomatiseringsverktøy.
 
-**Mockito** – Java mocking-rammeverk.
+**Mockito** - Java mocking-rammeverk.
 
-**Spring Boot** – Java applikasjonsrammeverk. [Modul 01](../01-introduction/README.md)
+**Spring Boot** - Java applikasjonsrammeverk. [Modul 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Ansvarsfraskrivelse**:
-Dette dokumentet er oversatt ved hjelp av AI-oversettelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selv om vi streber etter nøyaktighet, vennligst vær oppmerksom på at automatiske oversettelser kan inneholde feil eller unøyaktigheter. Det opprinnelige dokumentet på dets opprinnelige språk skal anses som den autoritative kilden. For kritisk informasjon anbefales profesjonell menneskelig oversettelse. Vi er ikke ansvarlige for eventuelle misforståelser eller feiltolkninger som oppstår som følge av bruk av denne oversettelsen.
+Dette dokumentet er oversatt ved hjelp av AI-oversettelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selv om vi streber etter nøyaktighet, vennligst vær oppmerksom på at automatiske oversettelser kan inneholde feil eller unøyaktigheter. Det originale dokumentet på det opprinnelige språket skal anses som den autoritative kilden. For kritisk informasjon anbefales profesjonell menneskelig oversettelse. Vi er ikke ansvarlige for eventuelle misforståelser eller feiltolkninger som oppstår ved bruk av denne oversettelsen.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
