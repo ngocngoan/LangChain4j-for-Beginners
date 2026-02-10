@@ -42,7 +42,7 @@ This course focuses on **unit tests** that run locally. Each test demonstrates a
 |--------|-------|-------|-----------|
 | **00 - Quick Start** | 6 | Prompt templates and variable substitution | `SimpleQuickStartTest.java` |
 | **01 - Introduction** | 8 | Conversation memory and stateful chat | `SimpleConversationTest.java` |
-| **02 - Prompt Engineering** | 12 | GPT-5 patterns, eagerness levels, structured output | `SimpleGpt5PromptTest.java` |
+| **02 - Prompt Engineering** | 12 | GPT-5.2 patterns, eagerness levels, structured output | `SimpleGpt5PromptTest.java` |
 | **03 - RAG** | 10 | Document ingestion, embeddings, similarity search | `DocumentServiceTest.java` |
 | **04 - Tools** | 12 | Function calling and tool chaining | `SimpleToolsTest.java` |
 | **05 - MCP** | 8 | Model Context Protocol with Stdio transport | `SimpleMcpTest.java` |
@@ -93,12 +93,12 @@ mvn --% test -Dtest=SimpleConversationTest
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#should maintain conversation history
+mvn test -Dtest=SimpleConversationTest#shouldMaintainConversationHistory
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#should maintain conversation history
+mvn --% test -Dtest=SimpleConversationTest#shouldMaintainConversationHistory
 ```
 
 ## Running Tests in VS Code
@@ -152,7 +152,7 @@ This test lives in `00-quick-start/src/test/java/com/example/langchain4j/quickst
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#Test prompt template formatting
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testPromptTemplateFormatting
 ```
 
 **PowerShell:**
@@ -342,7 +342,7 @@ Now that you understand the testing patterns, dive deeper into each module:
 
 - **[00 - Quick Start](../00-quick-start/README.md)** - Start with prompt template basics
 - **[01 - Introduction](../01-introduction/README.md)** - Learn conversation memory management
-- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - Master GPT-5 prompting patterns
+- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - Master GPT-5.2 prompting patterns
 - **[03 - RAG](../03-rag/README.md)** - Build retrieval-augmented generation systems
 - **[04 - Tools](../04-tools/README.md)** - Implement function calling and tool chains
 - **[05 - MCP](../05-mcp/README.md)** - Integrate Model Context Protocol
@@ -356,6 +356,6 @@ Each module's README provides detailed explanations of the concepts tested here.
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Disclaimer:
-This document has been translated using AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
+**Disclaimer**:
+This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
