@@ -20,7 +20,7 @@
 
 # LangChain4j for Beginners
 
-A course for building AI applications with LangChain4j and Azure OpenAI GPT-5, from basic chat to AI agents.
+A course for building AI applications with LangChain4j and Azure OpenAI GPT-5.2, from basic chat to AI agents.
 
 **New to LangChain4j?** Check out the [Glossary](docs/GLOSSARY.md) for definitions of key terms and concepts.
 
@@ -70,7 +70,7 @@ Want to learn more? Check out [Copilot for AI Paired Programming](https://aka.ms
 ### LangChain
 [![LangChain4j for Beginners](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
 [![LangChain.js for Beginners](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
-
+[![LangChain for Beginners](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
 ### Azure / Edge / MCP / Agents

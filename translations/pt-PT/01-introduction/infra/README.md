@@ -17,7 +17,7 @@
 - [Recomendações de Segurança](../../../../01-introduction/infra)
 - [Recursos Adicionais](../../../../01-introduction/infra)
 
-Este diretório contém a infraestrutura Azure como código (IaC) usando Bicep e Azure Developer CLI (azd) para implementar recursos Azure OpenAI.
+Este directório contém a infraestrutura Azure como código (IaC) usando Bicep e Azure Developer CLI (azd) para implementar recursos Azure OpenAI.
 
 ## Pré-requisitos
 
@@ -27,14 +27,14 @@ Este diretório contém a infraestrutura Azure como código (IaC) usando Bicep e
 
 ## Arquitetura
 
-**Configuração Simplificada para Desenvolvimento Local** - Implementa apenas Azure OpenAI, executa todas as apps localmente.
+**Configuração Simplificada para Desenvolvimento Local** - Implanta apenas Azure OpenAI, execute todas as aplicações localmente.
 
 A infraestrutura implementa os seguintes recursos Azure:
 
 ### Serviços de IA
 - **Azure OpenAI**: Serviços Cognitivos com duas implementações de modelo:
-  - **gpt-5**: Modelo de chat para completions (capacidade 20K TPM)
-  - **text-embedding-3-small**: Modelo de embeddings para RAG (capacidade 20K TPM)
+  - **gpt-5.2**: Modelo de chat completions (capacidade 20K TPM)
+  - **text-embedding-3-small**: Modelo de embedding para RAG (capacidade 20K TPM)
 
 ### Desenvolvimento Local
 Todas as aplicações Spring Boot correm localmente na sua máquina:
@@ -45,8 +45,8 @@ Todas as aplicações Spring Boot correm localmente na sua máquina:
 
 ## Recursos Criados
 
-| Tipo de Recurso | Padrão do Nome do Recurso | Finalidade |
-|-----------------|---------------------------|------------|
+| Tipo de Recurso | Padrão de Nome do Recurso | Propósito |
+|-----------------|---------------------------|-----------|
 | Grupo de Recursos | `rg-{environmentName}` | Contém todos os recursos |
 | Azure OpenAI | `aoai-{resourceToken}` | Hospedagem do modelo IA |
 
@@ -70,12 +70,12 @@ azd up
 
 Quando solicitado:
 - Selecione a sua subscrição Azure
-- Escolha uma localização (recomendado: `eastus2` ou `swedencentral` para disponibilidade GPT-5)
+- Escolha uma localização (recomendado: `eastus2` para disponibilidade GPT-5.2)
 - Confirme o nome do ambiente (padrão: `langchain4j-dev`)
 
 Isto irá criar:
-- Recurso Azure OpenAI com GPT-5 e text-embedding-3-small
-- Detalhes de conexão de saída
+- Recurso Azure OpenAI com GPT-5.2 e text-embedding-3-small
+- Detalhes de conexão em output
 
 ### 2. Obter Detalhes de Conexão
 
@@ -90,16 +90,16 @@ azd env get-values
 ```
 
 Isto mostra:
-- `AZURE_OPENAI_ENDPOINT`: URL do endpoint Azure OpenAI
+- `AZURE_OPENAI_ENDPOINT`: URL do seu endpoint Azure OpenAI
 - `AZURE_OPENAI_KEY`: Chave API para autenticação
-- `AZURE_OPENAI_DEPLOYMENT`: Nome do modelo de chat (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Nome do modelo de embedding
+- `AZURE_OPENAI_DEPLOYMENT`: Nome do modelo de chat (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Nome do modelo embedding
 
 ### 3. Executar Aplicações Localmente
 
 O comando `azd up` cria automaticamente um ficheiro `.env` na raiz com todas as variáveis de ambiente necessárias.
 
-**Recomendado:** Inicie todas as aplicações web:
+**Recomendado:** Iniciar todas as aplicações web:
 
 **Bash:**
 ```bash
@@ -115,11 +115,11 @@ cd ../..
 .\start-all.ps1
 ```
 
-Ou inicie um único módulo:
+Ou iniciar um único módulo:
 
 **Bash:**
 ```bash
-# Exemplo: Iniciar apenas o módulo de introdução
+# Exemplo: Começar apenas o módulo de introdução
 cd ../01-introduction
 ./start.sh
 ```
@@ -142,14 +142,14 @@ Para alterar as implementações de modelo, edite `infra/main.bicep` e modifique
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -164,10 +164,10 @@ Modelos e versões disponíveis: https://learn.microsoft.com/azure/ai-services/o
 Para implementar numa região diferente, edite `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Verifique a disponibilidade do GPT-5: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Verifique a disponibilidade do GPT-5.2: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
 Para atualizar a infraestrutura após alterações nos ficheiros Bicep:
 
@@ -210,43 +210,43 @@ azd down --purge
 
 **PowerShell:**
 ```powershell
-# Eliminar todos os recursos
+# Apagar todos os recursos
 azd down
 
-# Eliminar tudo, incluindo o ambiente
+# Apagar tudo incluindo o ambiente
 azd down --purge
 ```
 
-**Aviso**: Isto irá eliminar permanentemente todos os recursos Azure.
+**Aviso**: Isto eliminará permanentemente todos os recursos Azure.
 
 ## Estrutura de Ficheiros
 
 ## Otimização de Custos
 
-### Desenvolvimento/Testes
-Para ambientes de dev/test pode reduzir custos:
+### Desenvolvimento/Teste
+Para ambientes de desenvolvimento/teste, pode reduzir custos:
 - Use o nível Standard (S0) para Azure OpenAI
 - Defina capacidade inferior (10K TPM em vez de 20K) em `infra/core/ai/cognitiveservices.bicep`
-- Apague recursos quando não estiverem em uso: `azd down`
+- Elimine recursos quando não estiver a usá-los: `azd down`
 
 ### Produção
 Para produção:
 - Aumente a capacidade OpenAI conforme uso (50K+ TPM)
-- Ative redundância de zona para maior disponibilidade
+- Active redundância de zona para maior disponibilidade
 - Implemente monitorização adequada e alertas de custo
 
 ### Estimativa de Custos
-- Azure OpenAI: Pague por token (entrada + saída)
-- GPT-5: ~3-5 USD por 1M tokens (verifique preços atuais)
-- text-embedding-3-small: ~0,02 USD por 1M tokens
+- Azure OpenAI: Pagamento por token (entrada + saída)
+- GPT-5.2: ~3-5$ por 1M tokens (verifique preços atuais)
+- text-embedding-3-small: ~0,02$ por 1M tokens
 
 Calculadora de preços: https://azure.microsoft.com/pricing/calculator/
 
 ## Monitorização
 
-### Ver Métricas Azure OpenAI
+### Visualizar Métricas Azure OpenAI
 
-Vá ao Portal Azure → Seu recurso OpenAI → Métricas:
+Aceda ao Portal Azure → O seu recurso OpenAI → Métricas:
 - Utilização baseada em tokens
 - Taxa de pedidos HTTP
 - Tempo de resposta
@@ -256,7 +256,7 @@ Vá ao Portal Azure → Seu recurso OpenAI → Métricas:
 
 ### Problema: Conflito no nome do subdomínio Azure OpenAI
 
-**Mensagem de Erro:**
+**Mensagem de erro:**
 ```
 ERROR CODE: CustomDomainInUse
 message: "Please pick a different name. The subdomain name 'aoai-xxxxx' 
@@ -264,7 +264,7 @@ is not available as it's already used by a resource."
 ```
 
 **Causa:**
-O nome do subdomínio gerado a partir da sua subscrição/ambiente já está em uso, possivelmente de uma implementação anterior não totalmente removida.
+O nome do subdomínio gerado a partir da sua subscrição/ambiente já está em uso, possivelmente por uma implementação anterior que não foi totalmente eliminada.
 
 **Solução:**
 1. **Opção 1 - Use um nome de ambiente diferente:**
@@ -283,62 +283,60 @@ O nome do subdomínio gerado a partir da sua subscrição/ambiente já está em 
 
 2. **Opção 2 - Implementação manual via Portal Azure:**
    - Vá ao Portal Azure → Criar um recurso → Azure OpenAI
-   - Escolha um nome único para o seu recurso
+   - Escolha um nome único para o recurso
    - Implemente os seguintes modelos:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (para módulos RAG)
-   - **Importante:** Anote os nomes das implementações - devem corresponder à configuração `.env`
-   - Após implementação, obtenha o endpoint e chave API em "Chaves e Endpoint"
+   - **Importante:** Anote os nomes das implementações — devem corresponder à configuração `.env`
+   - Após implementado, obtenha o endpoint e a chave API em "Keys and Endpoint"
    - Crie um ficheiro `.env` na raiz do projeto com:
      
      **Exemplo de ficheiro `.env`:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
-**Diretrizes para Nomeação de Implementações de Modelo:**
-- Use nomes simples e consistentes: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Os nomes das implementações devem corresponder exatamente ao que configurar no `.env`
-- Erro comum: Criar modelo com um nome mas referenciar nome diferente no código
+**Diretrizes para Nomes de Implementação dos Modelos:**
+- Use nomes simples e consistentes: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Os nomes das implementações devem corresponder exatamente ao que configura em `.env`
+- Erro comum: criar o modelo com um nome e referenciá-lo com outro diferente no código
 
-### Problema: GPT-5 não disponível na região selecionada
+### Problema: GPT-5.2 não disponível na região selecionada
 
 **Solução:**
-- Escolha uma região com acesso GPT-5 (ex.: eastus, swedencentral)
+- Escolha uma região com acesso a GPT-5.2 (ex: eastus2)
 - Verifique disponibilidade: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
-
-
 
 ### Problema: Quota insuficiente para implementação
 
 **Solução:**
 1. Solicite aumento de quota no Portal Azure
-2. Ou use capacidade inferior em `main.bicep` (ex.: capacity: 10)
+2. Ou use capacidade inferior em `main.bicep` (ex: capacity: 10)
 
-### Problema: "Recurso não encontrado" ao executar localmente
+### Problema: "Resource not found" quando corre localmente
 
 **Solução:**
-1. Verifique a implementação: `azd env get-values`
+1. Verifique implementação com: `azd env get-values`
 2. Confirme que endpoint e chave estão corretos
 3. Assegure que o grupo de recursos existe no Portal Azure
 
-### Problema: Autenticação falhou
+### Problema: Falha na autenticação
 
 **Solução:**
-- Verifique se `AZURE_OPENAI_API_KEY` está corretamente definido
-- O formato da chave deve ser uma string hexadecimal de 32 caracteres
-- Obtenha nova chave no Portal Azure se necessário
+- Verifique se `AZURE_OPENAI_API_KEY` está corretamente configurado
+- Formato da chave deve ser uma string hexadecimal de 32 caracteres
+- Obtenha uma nova chave no Portal Azure se necessário
 
-### Falha na Implementação
+### Implementação Falha
 
 **Problema**: `azd provision` falha com erros de quota ou capacidade
 
 **Solução**: 
-1. Tente uma região diferente - Veja a secção [Alterar Regiões Azure](../../../../01-introduction/infra) para configurar regiões
-2. Verifique se a sua subscrição tem quota Azure OpenAI:
+1. Experimente uma região diferente - Veja a secção [Alterar Regiões Azure](../../../../01-introduction/infra) para configurar regiões
+2. Verifique se a sua subscrição tem quota para Azure OpenAI:
    
    **Bash:**
    ```bash
@@ -355,7 +353,7 @@ O nome do subdomínio gerado a partir da sua subscrição/ambiente já está em 
 **Problema**: Aplicação Java mostra erros de conexão
 
 **Solução**:
-1. Verifique se as variáveis de ambiente estão exportadas:
+1. Verifique que as variáveis de ambiente foram exportadas:
    
    **Bash:**
    ```bash
@@ -370,23 +368,23 @@ O nome do subdomínio gerado a partir da sua subscrição/ambiente já está em 
    ```
 
 2. Confirme que o formato do endpoint está correto (deve ser `https://xxx.openai.azure.com`)
-3. Verifique se a chave API é a chave primária ou secundária do Portal Azure
+3. Confirme que a chave API é a chave primária ou secundária do Portal Azure
 
-**Problema**: 401 Não autorizado do Azure OpenAI
+**Problema**: 401 Unauthorized do Azure OpenAI
 
 **Solução**:
-1. Obtenha uma chave API nova no Portal Azure → Chaves e Endpoint
-2. Reexportar a variável de ambiente `AZURE_OPENAI_API_KEY`
-3. Assegure que as implementações dos modelos estão completas (verifique no Portal Azure)
+1. Obtenha uma nova chave API fresca no Portal Azure → Keys and Endpoint
+2. Re-exporte a variável de ambiente `AZURE_OPENAI_API_KEY`
+3. Garanta que as implementações dos modelos estão completas (verifique no Portal Azure)
 
 ### Problemas de Performance
 
 **Problema**: Tempos de resposta lentos
 
 **Solução**:
-1. Verifique uso de tokens OpenAI e throttling nas métricas do Portal Azure
+1. Consulte utilização de tokens e throttling no Portal Azure nas métricas OpenAI
 2. Aumente a capacidade TPM se estiver a atingir limites
-3. Considere usar um nível de esforço de raciocínio mais alto (baixo/médio/alto)
+3. Considere usar um nível de esforço de raciocínio mais elevado (baixo/médio/alto)
 
 ## Atualização da Infraestrutura
 
@@ -403,17 +401,17 @@ infra/
 
 ## Recomendações de Segurança
 
-1. **Nunca comite chaves API** - Use variáveis de ambiente
+1. **Nunca comprometa chaves API** - Use variáveis de ambiente
 2. **Use ficheiros .env localmente** - Adicione `.env` ao `.gitignore`
-3. **Rode chaves regularmente** - Gere novas chaves no Portal Azure
-4. **Limite o acesso** - Use Azure RBAC para controlar quem pode aceder aos recursos
+3. **Roteie chaves regularmente** - Gere novas chaves no Portal Azure
+4. **Limite o acesso** - Use Azure RBAC para controlar quem acede aos recursos
 5. **Monitorize o uso** - Configure alertas de custo no Portal Azure
 
 ## Recursos Adicionais
 
-- [Documentação do Serviço Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Documentação do Modelo GPT-5](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
-- [Documentação Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
+- [Documentação do Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Documentação do Modelo GPT-5.2](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [Documentação do Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Documentação Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [Integração Oficial LangChain4j OpenAI](https://docs.langchain4j.dev/integrations/language-models/open-ai)
 
@@ -421,8 +419,8 @@ infra/
 
 Para problemas:
 1. Verifique a [secção de resolução de problemas](../../../../01-introduction/infra) acima
-2. Revise o estado do serviço Azure OpenAI no Portal Azure
-3. Abra um issue no repositório
+2. Reveja o estado do serviço Azure OpenAI no Portal Azure
+3. Abra uma issue no repositório
 
 ## Licença
 
@@ -432,5 +430,5 @@ Consulte o ficheiro [LICENSE](../../../../LICENSE) na raiz para detalhes.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Aviso Legal**:
-Este documento foi traduzido utilizando o serviço de tradução por IA [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos para garantir a precisão, por favor tenha em conta que traduções automáticas podem conter erros ou imprecisões. O documento original na sua língua nativa deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se a tradução profissional humana. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações erradas decorrentes do uso desta tradução.
+Este documento foi traduzido utilizando o serviço de tradução por IA [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos por garantir a precisão, esteja ciente de que traduções automatizadas podem conter erros ou imprecisões. O documento original no seu idioma nativo deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se a tradução profissional humana. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações erradas decorrentes do uso desta tradução.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

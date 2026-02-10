@@ -1,72 +1,72 @@
-# Kamus Istilah LangChain4j
+# Kamus LangChain4j
 
-## Senarai Kandungan
+## Jadual Kandungan
 
 - [Konsep Teras](../../../docs)
 - [Komponen LangChain4j](../../../docs)
 - [Konsep AI/ML](../../../docs)
-- [Guardrails](../../../docs)
+- [Talian Penjaga](../../../docs)
 - [Kejuruteraan Prompt](../../../docs)
-- [RAG (Penjanaan Dengan Pengambilan)](../../../docs)
+- [RAG (Penjanaan Beraugmencarian)](../../../docs)
 - [Ejen dan Alat](../../../docs)
-- [Modul Agentic](../../../docs)
+- [Modul Agentik](../../../docs)
 - [Protokol Konteks Model (MCP)](../../../docs)
 - [Perkhidmatan Azure](../../../docs)
 - [Ujian dan Pembangunan](../../../docs)
 
-Rujukan pantas untuk terma dan konsep yang digunakan sepanjang kursus.
+Rujukan pantas untuk istilah dan konsep yang digunakan sepanjang kursus.
 
 ## Konsep Teras
 
 **Ejen AI** - Sistem yang menggunakan AI untuk berfikir dan bertindak secara autonomi. [Modul 04](../04-tools/README.md)
 
-**Rantai** - Urutan operasi di mana output menjadi input untuk langkah seterusnya.
+**Rantaian** - Urutan operasi di mana output menjadi input langkah seterusnya.
 
-**Chunking** - Memecah dokumen menjadi bahagian yang lebih kecil. Lazim: 300-500 token dengan lapisan. [Modul 03](../03-rag/README.md)
+**Pemecahan** - Memecahkan dokumen kepada bahagian lebih kecil. Lazim: 300-500 token dengan tumpang tindih. [Modul 03](../03-rag/README.md)
 
-**Tetingkap Konteks** - Maksimum token yang boleh diproses oleh model. GPT-5: 400K token.
+**Tetingkap Konteks** - Maksimum token yang model boleh proses. GPT-5.2: 400K token.
 
-**Embedding** - Vektor numerik yang mewakili makna teks. [Modul 03](../03-rag/README.md)
+**Penyalinan** - Vektor bernombor yang mewakili maksud teks. [Modul 03](../03-rag/README.md)
 
 **Panggilan Fungsi** - Model menjana permintaan berstruktur untuk memanggil fungsi luaran. [Modul 04](../04-tools/README.md)
 
-**Halusinasi** - Apabila model menghasilkan maklumat yang salah tetapi kelihatan munasabah.
+**Halusinasi** - Apabila model menjana maklumat salah tetapi kelihatan munasabah.
 
 **Prompt** - Input teks kepada model bahasa. [Modul 02](../02-prompt-engineering/README.md)
 
-**Carian Semantik** - Carian berdasarkan makna menggunakan embedding, bukan kata kunci. [Modul 03](../03-rag/README.md)
+**Carian Semantik** - Carian berdasarkan maksud menggunakan penyalinan, bukan kata kunci. [Modul 03](../03-rag/README.md)
 
-**Bersifat Stateful vs Stateless** - Stateless: tiada memori. Stateful: mengekalkan sejarah perbualan. [Modul 01](../01-introduction/README.md)
+**Berkeadaan vs Tidak Berkeadaan** - Tidak berkeadaan: tiada memori. Berkeadaan: menyimpan sejarah perbualan. [Modul 01](../01-introduction/README.md)
 
-**Token** - Unit teks asas yang diproses oleh model. Mempengaruhi kos dan had. [Modul 01](../01-introduction/README.md)
+**Token** - Unit teks asas yang model proses. Mempengaruhi kos dan had. [Modul 01](../01-introduction/README.md)
 
-**Rantai Alat** - Pelaksanaan berurutan alat di mana output memberi maklumat kepada panggilan seterusnya. [Modul 04](../04-tools/README.md)
+**Rantaian Alat** - Pelaksanaan alat secara berurutan di mana output memaklumkan panggilan seterusnya. [Modul 04](../04-tools/README.md)
 
 ## Komponen LangChain4j
 
-**AiServices** - Membuat antaramuka perkhidmatan AI yang selamat jenis.
+**AiServices** - Mencipta antara muka perkhidmatan AI yang selamat jenis.
 
-**OpenAiOfficialChatModel** - Klien bersatu untuk model OpenAI dan Azure OpenAI.
+**OpenAiOfficialChatModel** - Pelanggan bersatu untuk model OpenAI dan Azure OpenAI.
 
-**OpenAiOfficialEmbeddingModel** - Membuat embedding menggunakan klien OpenAI Rasmi (menyokong OpenAI dan Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** - Mencipta penyalinan menggunakan pelanggan rasmi OpenAI (menyokong OpenAI dan Azure OpenAI).
 
-**ChatModel** - Antaramuka teras untuk model bahasa.
+**ChatModel** - Antara muka teras untuk model bahasa.
 
-**ChatMemory** - Mengekalkan sejarah perbualan.
+**ChatMemory** - Menyimpan sejarah perbualan.
 
-**ContentRetriever** - Mencari bahagian dokumen yang relevan untuk RAG.
+**ContentRetriever** - Mencari bahagian dokumen relevan untuk RAG.
 
-**DocumentSplitter** - Memecah dokumen menjadi kepingan.
+**DocumentSplitter** - Memecahkan dokumen kepada bahagian.
 
-**EmbeddingModel** - Menukar teks kepada vektor numerik.
+**EmbeddingModel** - Menukar teks menjadi vektor bernombor.
 
-**EmbeddingStore** - Menyimpan dan mengambil embedding.
+**EmbeddingStore** - Menyimpan dan mengambil penyalinan.
 
-**MessageWindowChatMemory** - Mengekalkan tetingkap gelongsor mesej terkini.
+**MessageWindowChatMemory** - Menyimpan tetingkap luncur mesej terkini.
 
-**PromptTemplate** - Membuat prompt boleh guna semula dengan tempat letak `{{variable}}`.
+**PromptTemplate** - Mencipta prompt boleh guna semula dengan tempat letak `{{variable}}`.
 
-**TextSegment** - Kepingan teks dengan metadata. Digunakan dalam RAG.
+**TextSegment** - Bahagian teks dengan metadata. Digunakan dalam RAG.
 
 **ToolExecutionRequest** - Mewakili permintaan pelaksanaan alat.
 
@@ -74,145 +74,145 @@ Rujukan pantas untuk terma dan konsep yang digunakan sepanjang kursus.
 
 ## Konsep AI/ML
 
-**Pembelajaran Few-Shot** - Memberi contoh dalam prompt. [Modul 02](../02-prompt-engineering/README.md)
+**Pembelajaran Beberapa Contoh** - Memberi contoh dalam prompt. [Modul 02](../02-prompt-engineering/README.md)
 
-**Model Bahasa Besar (LLM)** - Model AI yang dilatih pada data teks yang luas.
+**Model Bahasa Besar (LLM)** - Model AI yang dilatih dengan data teks besar.
 
-**Usaha Penalaran** - Parameter GPT-5 yang mengawal kedalaman pemikiran. [Modul 02](../02-prompt-engineering/README.md)
+**Usaha Penalaran** - Parameter GPT-5.2 yang mengawal tahap pemikiran. [Modul 02](../02-prompt-engineering/README.md)
 
-**Temperatur** - Mengawal random output. Rendah=deterministik, tinggi=kreatif.
+**Suhu** - Mengawal kebebasan output. Rendah=deterministik, tinggi=kreatif.
 
-**Pangkalan Data Vektor** - Pangkalan data khas untuk embedding. [Modul 03](../03-rag/README.md)
+**Pangkalan Data Vektor** - Pangkalan data khusus untuk penyalinan. [Modul 03](../03-rag/README.md)
 
-**Pembelajaran Zero-Shot** - Melakukan tugasan tanpa contoh. [Modul 02](../02-prompt-engineering/README.md)
+**Pembelajaran Tanpa Contoh** - Melaksanakan tugas tanpa contoh. [Modul 02](../02-prompt-engineering/README.md)
 
-## Guardrails - [Modul 00](../00-quick-start/README.md)
+## Talian Penjaga - [Modul 00](../00-quick-start/README.md)
 
-**Pertahanan Bertingkat** - Pendekatan keselamatan berlapis yang menggabungkan guardrails tahap aplikasi dengan penapis keselamatan penyedia.
+**Pertahanan Bertingkat** - Pendekatan keselamatan berlapis menggabungkan talian penjaga peringkat aplikasi dengan penapis keselamatan penyedia.
 
-**Halangan Keras** - Penyedia memberi ralat HTTP 400 untuk pelanggaran kandungan serius.
+**Sekatan Keras** - Penyedia membuang ralat HTTP 400 untuk pelanggaran kandungan serius.
 
-**InputGuardrail** - Antaramuka LangChain4j untuk mengesahkan input pengguna sebelum sampai ke LLM. Menjimatkan kos dan kelewatan dengan menghalang prompt berbahaya awal.
+**InputGuardrail** - Antara muka LangChain4j untuk mengesahkan input pengguna sebelum sampai ke LLM. Menjimatkan kos dan masa lewat dengan menyekat prompt berbahaya lebih awal.
 
-**InputGuardrailResult** - Jenis pulangan untuk pengesahan guardrail: `success()` atau `fatal("reason")`.
+**InputGuardrailResult** - Jenis pulangan untuk pengesahan talian penjaga: `success()` atau `fatal("reason")`.
 
-**OutputGuardrail** - Antaramuka untuk mengesahkan respons AI sebelum dikembalikan kepada pengguna.
+**OutputGuardrail** - Antara muka untuk mengesahkan respons AI sebelum dikembalikan kepada pengguna.
 
-**Penapis Keselamatan Penyedia** - Penapis kandungan terbina dalam dari penyedia AI (contoh, Model GitHub) yang mengesan pelanggaran pada tahap API.
+**Penapis Keselamatan Penyedia** - Penapis kandungan terbina dalam daripada penyedia AI (contoh: Model GitHub) yang mengesan pelanggaran pada peringkat API.
 
-**Penolakan Lembut** - Model menolak menjawab dengan sopan tanpa memberi ralat.
+**Penolakan Lembut** - Model enggan menjawab dengan sopan tanpa membuang ralat.
 
 ## Kejuruteraan Prompt - [Modul 02](../02-prompt-engineering/README.md)
 
-**Rantai Pemikiran** - Penalaran langkah demi langkah untuk ketepatan lebih baik.
+**Rantaian Pemikiran** - Penalaran langkah demi langkah untuk ketepatan lebih baik.
 
-**Output Terhad** - Mewajibkan format atau struktur khusus.
+**Output Terhad** - Memastikan format atau struktur tertentu.
 
-**Keghairahan Tinggi** - Corak GPT-5 untuk penalaran mendalam.
+**Kesungguhan Tinggi** - Corak GPT-5.2 untuk penalaran menyeluruh.
 
-**Keghairahan Rendah** - Corak GPT-5 untuk jawapan cepat.
+**Kesungguhan Rendah** - Corak GPT-5.2 untuk jawapan cepat.
 
-**Perbualan Multi-Turn** - Mengekalkan konteks sepanjang pertukaran.
+**Perbualan Berbilang Pusingan** - Mengekalkan konteks merentas pertukaran.
 
-**Prompt Berdasarkan Peranan** - Menetapkan persona model melalui mesej sistem.
+**Prompt Berasaskan Peranan** - Menetapkan persona model melalui mesej sistem.
 
 **Refleksi Diri** - Model menilai dan memperbaiki outputnya.
 
-**Analisis Berstruktur** - Rangka kerja penilaian tetap.
+**Analisis Berstruktur** - Rangka penilaian tetap.
 
-**Corak Pelaksanaan Tugasan** - Rancang → Laksanakan → Rumuskan.
+**Corak Pelaksanaan Tugas** - Rancang → Laksanakan → Rumus.
 
-## RAG (Penjanaan Dengan Pengambilan) - [Modul 03](../03-rag/README.md)
+## RAG (Penjanaan Beraugmencarian) - [Modul 03](../03-rag/README.md)
 
-**Rangkaian Pemprosesan Dokumen** - Muat → pecah → membuat embedding → simpan.
+**Saluran Pemprosesan Dokumen** - Muat → pecah → salin → simpan.
 
-**Kedai Embedding Dalam Memori** - Penyimpanan tidak kekal untuk ujian.
+**Penyimpanan Penyalinan Dalam Memori** - Penyimpanan tidak kekal untuk ujian.
 
-**RAG** - Menggabungkan pengambilan dengan penjanaan untuk membumi respons.
+**RAG** - Menggabungkan pengecaman dengan penjanaan untuk asas respons.
 
-**Skor Kesamaan** - Ukuran (0-1) kesamaan semantik.
+**Skor Persamaan** - Ukuran (0-1) persamaan semantik.
 
-**Rujukan Sumber** - Metadata mengenai kandungan yang diambil.
+**Rujukan Sumber** - Metadata tentang kandungan yang diambil.
 
 ## Ejen dan Alat - [Modul 04](../04-tools/README.md)
 
 **@Tool Annotation** - Menandakan kaedah Java sebagai alat yang boleh dipanggil AI.
 
-**Corak ReAct** - Berfikir → Bertindak → Memerhati → Ulang.
+**Corak ReAct** - Berfikir → Bertindak → Perhatikan → Ulang.
 
 **Pengurusan Sesi** - Konteks berasingan untuk pengguna berbeza.
 
-**Alat** - Fungsi yang boleh dipanggil ejen AI.
+**Alat** - Fungsi yang boleh dipanggil oleh ejen AI.
 
 **Penerangan Alat** - Dokumentasi tujuan dan parameter alat.
 
-## Modul Agentic - [Modul 05](../05-mcp/README.md)
+## Modul Agentik - [Modul 05](../05-mcp/README.md)
 
-**@Agent Annotation** - Menandakan antaramuka sebagai ejen AI dengan definisi tingkah laku deklaratif.
+**@Agent Annotation** - Menandakan antara muka sebagai ejen AI dengan definisi tingkah laku deklaratif.
 
-**Pendengar Ejen** - Hook untuk memantau pelaksanaan ejen melalui `beforeAgentInvocation()` dan `afterAgentInvocation()`.
+**Pendengar Ejen** - Hook untuk memantau pelaksanaan agen melalui `beforeAgentInvocation()` dan `afterAgentInvocation()`.
 
-**Skop Agentic** - Memori bersama di mana ejen menyimpan output menggunakan `outputKey` untuk ejen seterusnya gunakan.
+**Skop Agentik** - Memori kongsi di mana ejen menyimpan output menggunakan `outputKey` untuk digunakan ejen hiliran.
 
-**AgenticServices** - Kilang untuk membuat ejen menggunakan `agentBuilder()` dan `supervisorBuilder()`.
+**AgenticServices** - Kilang untuk mencipta agen menggunakan `agentBuilder()` dan `supervisorBuilder()`.
 
-**Aliran Kerja Bersyarat** - Laluan berdasarkan syarat ke ejen pakar berbeza.
+**Aliran Kerja Bersyarat** - Laluan berdasarkan syarat ke agen pakar berbeza.
 
-**Manusia-dalam-Laluan** - Corak aliran kerja menambah titik pemeriksaan manusia untuk kelulusan atau semakan kandungan.
+**Manusia dalam Gelung** - Corak aliran kerja menambah titik pemeriksaan manusia untuk kelulusan atau semakan kandungan.
 
-**langchain4j-agentic** - Kebergantungan Maven untuk binaan ejen deklaratif (eksperimen).
+**langchain4j-agentic** - Pergantungan Maven untuk pembinaan agen deklaratif (eksperimen).
 
-**Aliran Kerja Gelung** - Ulang pelaksanaan ejen sehingga syarat tercapai (contoh: skor kualiti ≥ 0.8).
+**Aliran Kerja Kitaran** - Ulang pelaksanaan agen sehingga syarat dipenuhi (contoh: skor kualiti ≥ 0.8).
 
-**outputKey** - Parameter anotasi ejen yang menentukan tempat penyimpanan keputusan dalam Skop Agentic.
+**outputKey** - Parameter anotasi agen yang menentukan di mana keputusan disimpan dalam Skop Agentik.
 
-**Aliran Kerja Selari** - Jalankan beberapa ejen serentak untuk tugasan bebas.
+**Aliran Kerja Selari** - Jalankan banyak agen serentak untuk tugas bebas.
 
-**Strategi Respons** - Cara penyelia membentuk jawapan akhir: TERAKHIR, RUMUSAN, atau BERKEDUDUKAN.
+**Strategi Respons** - Bagaimana penyelia membentuk jawapan akhir: TERAKHIR, RINGKASAN, atau DISKOR.
 
-**Aliran Kerja Berurutan** - Laksanakan ejen mengikut susunan di mana output mengalir ke langkah seterusnya.
+**Aliran Kerja Bersiri** - Melaksanakan agen mengikut urutan di mana output mengalir ke langkah seterusnya.
 
-**Corak Ejen Penyelia** - Corak agentic lanjutan di mana LLM penyelia menentukan secara dinamik ejen sub yang dipanggil.
+**Corak Ejen Penyelia** - Corak agentik lanjutan di mana LLM penyelia memutuskan secara dinamik ejen sub mana akan dipanggil.
 
 ## Protokol Konteks Model (MCP) - [Modul 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Kebergantungan Maven untuk integrasi MCP dalam LangChain4j.
+**langchain4j-mcp** - Pergantungan Maven untuk integrasi MCP dalam LangChain4j.
 
-**MCP** - Protokol Konteks Model: standard untuk menyambungkan aplikasi AI kepada alat luaran. Bina sekali, guna di mana-mana.
+**MCP** - Protokol Konteks Model: standard untuk menghubungkan aplikasi AI ke alat luaran. Buat sekali, guna di mana-mana.
 
 **Klien MCP** - Aplikasi yang menyambung ke pelayan MCP untuk mencari dan menggunakan alat.
 
-**Pelayan MCP** - Perkhidmatan yang mendedahkan alat melalui MCP dengan penerangan jelas dan skema parameter.
+**Pelayan MCP** - Perkhidmatan yang mendedahkan alat melalui MCP dengan penerangan dan skema parameter jelas.
 
-**McpToolProvider** - Komponen LangChain4j yang membungkus alat MCP untuk digunakan dalam perkhidmatan AI dan ejen.
+**McpToolProvider** - Komponen LangChain4j yang membalut alat MCP untuk digunakan dalam perkhidmatan AI dan agen.
 
-**McpTransport** - Antaramuka untuk komunikasi MCP. Implementasi termasuk Stdio dan HTTP.
+**McpTransport** - Antara muka untuk komunikasi MCP. Pelaksanaan termasuk Stdio dan HTTP.
 
-**Pengangkutan Stdio** - Pengangkutan proses tempatan melalui stdin/stdout. Berguna untuk akses sistem fail atau alat baris perintah.
+**Pengangkutan Stdio** - Pengangkutan proses tempatan melalui stdin/stdout. Berguna untuk akses sistem fail atau alat baris arahan.
 
-**StdioMcpTransport** - Implementasi LangChain4j yang memulakan pelayan MCP sebagai subprocess.
+**StdioMcpTransport** - Pelaksanaan LangChain4j yang melancarkan pelayan MCP sebagai proses subprocess.
 
-**Penemuan Alat** - Klien bertanya kepada pelayan mengenai alat tersedia dengan penerangan dan skema.
+**Penemuan Alat** - Klien bertanya pelayan tentang alat tersedia dengan penerangan dan skema.
 
 ## Perkhidmatan Azure - [Modul 01](../01-introduction/README.md)
 
 **Azure AI Search** - Carian awan dengan keupayaan vektor. [Modul 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Menyebarkan sumber Azure.
+**Azure Developer CLI (azd)** - Mengurus sumber Azure.
 
 **Azure OpenAI** - Perkhidmatan AI perusahaan Microsoft.
 
-**Bicep** - Bahasa infrastruktur-sbg-kod Azure. [Panduan Infrastruktur](../01-introduction/infra/README.md)
+**Bicep** - Bahasa infrastruktur sebagai kod Azure. [Panduan Infrastruktur](../01-introduction/infra/README.md)
 
-**Nama Penyebaran** - Nama untuk penyebaran model di Azure.
+**Nama Penempatan** - Nama untuk penempatan model di Azure.
 
-**GPT-5** - Model OpenAI terkini dengan kawalan penalaran. [Modul 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Model OpenAI terkini dengan kawalan penalaran. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Ujian dan Pembangunan - [Panduan Ujian](TESTING.md)
 
-**Dev Container** - Persekitaran pembangunan berkontena. [Konfigurasi](../../../.devcontainer/devcontainer.json)
+**Dev Container** - Persekitaran pembangunan berbekas. [Konfigurasi](../../../.devcontainer/devcontainer.json)
 
-**Model GitHub** - Tapak ujian model AI percuma. [Modul 00](../00-quick-start/README.md)
+**Model GitHub** - Taman permainan model AI percuma. [Modul 00](../00-quick-start/README.md)
 
 **Ujian Dalam Memori** - Ujian dengan penyimpanan dalam memori.
 
@@ -220,7 +220,7 @@ Rujukan pantas untuk terma dan konsep yang digunakan sepanjang kursus.
 
 **Maven** - Alat automasi binaan Java.
 
-**Mockito** - Rangka kerja pemalsuan Java.
+**Mockito** - Rangka kerja memalsukan Java.
 
 **Spring Boot** - Rangka kerja aplikasi Java. [Modul 01](../01-introduction/README.md)
 
@@ -228,5 +228,5 @@ Rujukan pantas untuk terma dan konsep yang digunakan sepanjang kursus.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Penafian**:  
-Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila ambil perhatian bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya hendaklah dianggap sumber yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disyorkan. Kami tidak bertanggungjawab atas sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
+Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila ambil perhatian bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya hendaklah dianggap sebagai sumber yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disyorkan. Kami tidak bertanggungjawab terhadap sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

@@ -6,9 +6,9 @@
 - [Apa yang Dicakup oleh Tes](../../../docs)
 - [Menjalankan Tes](../../../docs)
 - [Menjalankan Tes di VS Code](../../../docs)
-- [Pola Pengujian](../../../docs)
+- [Polanya Pengujian](../../../docs)
 - [Filosofi Pengujian](../../../docs)
-- [Langkah Selanjutnya](../../../docs)
+- [Langkah Berikutnya](../../../docs)
 
 Panduan ini memandu Anda melalui tes yang menunjukkan cara menguji aplikasi AI tanpa memerlukan kunci API atau layanan eksternal.
 
@@ -28,23 +28,23 @@ mvn --% test
 
 <img src="../../../translated_images/id/test-results.ea5c98d8f3642043.webp" alt="Hasil Tes Berhasil" width="800"/>
 
-*Eksekusi tes yang berhasil menampilkan semua tes lulus tanpa kegagalan*
+*Eksekusi tes berhasil yang menunjukkan semua tes lulus tanpa kegagalan*
 
 ## Apa yang Dicakup oleh Tes
 
-Kursus ini berfokus pada **unit tests** yang dijalankan secara lokal. Setiap tes menunjukkan konsep LangChain4j tertentu secara terisolasi.
+Kursus ini fokus pada **unit tests** yang dijalankan secara lokal. Setiap tes menunjukkan konsep LangChain4j tertentu secara terpisah.
 
 <img src="../../../translated_images/id/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramida Pengujian" width="800"/>
 
-*piramida pengujian yang menunjukkan keseimbangan antara unit tests (cepat, terisolasi), integration tests (komponen nyata), dan end-to-end tests. Pelatihan ini mencakup unit testing.*
+*Piramida pengujian menunjukkan keseimbangan antara unit tests (cepat, terisolasi), integration tests (komponen nyata), dan end-to-end tests. Pelatihan ini mencakup pengujian unit.*
 
-| Modul | Tes | Fokus | Berkas Kunci |
+| Modul | Tes | Fokus | File Utama |
 |--------|-------|-------|-----------|
 | **00 - Mulai Cepat** | 6 | Template prompt dan substitusi variabel | `SimpleQuickStartTest.java` |
-| **01 - Pengenalan** | 8 | Memori percakapan dan obrolan yang menyimpan status | `SimpleConversationTest.java` |
-| **02 - Rekayasa Prompt** | 12 | Pola GPT-5, tingkat antusiasme, output terstruktur | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Ingest dokumen, embeddings, pencarian kesamaan | `DocumentServiceTest.java` |
-| **04 - Tools** | 12 | Pemanggilan fungsi dan penggabungan tools | `SimpleToolsTest.java` |
+| **01 - Pengantar** | 8 | Memori percakapan dan chat berstatus | `SimpleConversationTest.java` |
+| **02 - Rekayasa Prompt** | 12 | Pola GPT-5.2, tingkat antusiasme, output terstruktur | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Pengambilan dokumen, embeddings, pencarian kemiripan | `DocumentServiceTest.java` |
+| **04 - Alat** | 12 | Pemanggilan fungsi dan pengaitan alat | `SimpleToolsTest.java` |
 | **05 - MCP** | 8 | Model Context Protocol dengan transport stdio | `SimpleMcpTest.java` |
 
 ## Menjalankan Tes
@@ -93,41 +93,41 @@ mvn --% test -Dtest=SimpleConversationTest
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#harus mempertahankan riwayat percakapan
+mvn test -Dtest=SimpleConversationTest#harusMempertahankanRiwayatPercakapan
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#harus mempertahankan riwayat percakapan
+mvn --% test -Dtest=SimpleConversationTest#harusMempertahankanRiwayatPercakapan
 ```
 
 ## Menjalankan Tes di VS Code
 
-Jika Anda menggunakan Visual Studio Code, Test Explorer menyediakan antarmuka grafis untuk menjalankan dan men-debug tes.
+Jika Anda menggunakan Visual Studio Code, Test Explorer menyediakan antarmuka grafis untuk menjalankan dan debug tes.
 
-<img src="../../../translated_images/id/vscode-testing.f02dd5917289dced.webp" alt="Penjelajah Tes VS Code" width="800"/>
+<img src="../../../translated_images/id/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*Penjelajah Tes VS Code yang menampilkan pohon tes dengan semua kelas tes Java dan metode tes individu*
+*VS Code Test Explorer menampilkan pohon tes dengan semua kelas tes Java dan metode tes individual*
 
 **Untuk menjalankan tes di VS Code:**
 
-1. Buka Test Explorer dengan mengklik ikon labu percobaan di Activity Bar
+1. Buka Test Explorer dengan mengklik ikon tabung reaksi di Activity Bar
 2. Perluas pohon tes untuk melihat semua modul dan kelas tes
-3. Klik tombol putar di samping tes mana pun untuk menjalankannya secara individual
-4. Klik "Run All Tests" untuk mengeksekusi seluruh rangkaian
-5. Klik kanan pada tes mana pun dan pilih "Debug Test" untuk mengatur breakpoint dan langkah melalui kode
+3. Klik tombol play di samping tes mana pun untuk menjalankannya secara individual
+4. Klik "Run All Tests" untuk menjalankan seluruh suite
+5. Klik kanan tes mana pun dan pilih "Debug Test" untuk menempatkan breakpoint dan menelusuri kode
 
-Test Explorer menunjukkan tanda centang hijau untuk tes yang lulus dan memberikan pesan kegagalan terperinci saat tes gagal.
+Test Explorer menampilkan tanda centang hijau untuk tes yang lulus dan menyediakan pesan kegagalan rinci saat tes gagal.
 
-## Pola Pengujian
+## Polanya Pengujian
 
 ### Pola 1: Menguji Template Prompt
 
-Pola paling sederhana menguji template prompt tanpa memanggil model AI apa pun. Anda memverifikasi bahwa substitusi variabel bekerja dengan benar dan prompt diformat seperti yang diharapkan.
+Pola paling sederhana menguji template prompt tanpa memanggil model AI apa pun. Anda memverifikasi bahwa substitusi variabel bekerja dengan benar dan prompt diformat sesuai harapan.
 
 <img src="../../../translated_images/id/prompt-template-testing.b902758ddccc8dee.webp" alt="Pengujian Template Prompt" width="800"/>
 
-*Pengujian template prompt yang menunjukkan alur substitusi variabel: template dengan placeholder → nilai diterapkan → output terformat diverifikasi*
+*Pengujian template prompt menunjukkan alur substitusi variabel: template dengan placeholder → nilai diterapkan → output format diverifikasi*
 
 ```java
 @Test
@@ -146,27 +146,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-Tes ini berada di `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+Tes ini ada di `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
 **Jalankan:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#pengujian pemformatan template prompt
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#mengujiFormatTemplatePrompt
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#Pengujian pemformatan template prompt
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#pengujianFormatTemplatePrompt
 ```
 
 ### Pola 2: Memalsukan Model Bahasa
 
-Saat menguji logika percakapan, gunakan Mockito untuk membuat model palsu yang mengembalikan respons yang telah ditentukan. Ini membuat tes cepat, gratis, dan deterministik.
+Saat menguji logika percakapan, gunakan Mockito untuk membuat model palsu yang mengembalikan respons yang sudah ditentukan sebelumnya. Ini membuat tes cepat, gratis, dan deterministik.
 
-<img src="../../../translated_images/id/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Perbandingan Mock vs API Nyata" width="800"/>
+<img src="../../../translated_images/id/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Perbandingan Mock vs API Asli" width="800"/>
 
-*Perbandingan yang menunjukkan mengapa mock lebih disukai untuk pengujian: mereka cepat, gratis, deterministik, dan tidak memerlukan kunci API*
+*Perbandingan menunjukkan mengapa mock lebih dipilih untuk pengujian: mereka cepat, gratis, deterministik, dan tidak memerlukan kunci API*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -216,15 +216,15 @@ class SimpleConversationTest {
 }
 ```
 
-Pola ini muncul di `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock memastikan perilaku yang konsisten sehingga Anda dapat memverifikasi pengelolaan memori bekerja dengan benar.
+Pola ini muncul di `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock memastikan perilaku konsisten sehingga Anda bisa memverifikasi manajemen memori bekerja dengan benar.
 
 ### Pola 3: Menguji Isolasi Percakapan
 
-Memori percakapan harus menjaga pengguna ganda terpisah. Tes ini memverifikasi bahwa percakapan tidak mencampur konteks.
+Memori percakapan harus menjaga beberapa pengguna tetap terpisah. Tes ini memverifikasi bahwa percakapan tidak mencampur konteks.
 
 <img src="../../../translated_images/id/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Isolasi Percakapan" width="800"/>
 
-*Pengujian isolasi percakapan yang menunjukkan penyimpanan memori terpisah untuk pengguna berbeda untuk mencegah pencampuran konteks*
+*Pengujian isolasi percakapan menunjukkan penyimpanan memori terpisah untuk pengguna berbeda guna mencegah pencampuran konteks*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Setiap percakapan mempertahankan riwayat independennya sendiri. Di sistem produksi, isolasi ini penting untuk aplikasi multi-pengguna.
+Setiap percakapan mempertahankan riwayatnya sendiri secara independen. Dalam sistem produksi, isolasi ini penting untuk aplikasi multi-pengguna.
 
-### Pola 4: Menguji Tools Secara Mandiri
+### Pola 4: Menguji Alat Secara Mandiri
 
-Tools adalah fungsi yang dapat dipanggil oleh AI. Uji mereka langsung untuk memastikan mereka bekerja dengan benar terlepas dari keputusan AI.
+Alat adalah fungsi yang dapat dipanggil AI. Uji langsung untuk memastikan alat bekerja dengan benar terlepas dari keputusan AI.
 
-<img src="../../../translated_images/id/tools-testing.3e1706817b0b3924.webp" alt="Pengujian Tools" width="800"/>
+<img src="../../../translated_images/id/tools-testing.3e1706817b0b3924.webp" alt="Pengujian Alat" width="800"/>
 
-*Pengujian tools secara mandiri yang menunjukkan eksekusi tool palsu tanpa panggilan AI untuk memverifikasi logika bisnis*
+*Pengujian alat secara mandiri menunjukkan eksekusi alat mock tanpa pemanggilan AI untuk memverifikasi logika bisnis*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Tes-tes ini dari `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` memvalidasi logika tool tanpa keterlibatan AI. Contoh chaining menunjukkan bagaimana output satu tool menjadi input bagi tool lain.
+Tes ini dari `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` memvalidasi logika alat tanpa keterlibatan AI. Contoh pengaitan menunjukkan bagaimana output alat satu masuk ke input alat lain.
 
 ### Pola 5: Pengujian RAG Dalam Memori
 
-Sistem RAG biasanya memerlukan basis data vektor dan layanan embedding. Pola dalam-memori memungkinkan Anda menguji seluruh pipeline tanpa ketergantungan eksternal.
+Sistem RAG biasanya membutuhkan database vektor dan layanan embedding. Pola in-memory memungkinkan Anda menguji seluruh pipeline tanpa ketergantungan eksternal.
 
 <img src="../../../translated_images/id/rag-testing.ee7541b1e23934b1.webp" alt="Pengujian RAG Dalam Memori" width="800"/>
 
-*Alur kerja pengujian RAG dalam memori yang menunjukkan parsing dokumen, penyimpanan embedding, dan pencarian kesamaan tanpa memerlukan database*
+*Alur kerja pengujian RAG dalam memori menunjukkan penguraian dokumen, penyimpanan embedding, dan pencarian kemiripan tanpa perlu database*
 
 ```java
 @Test
@@ -304,15 +304,15 @@ void testProcessTextDocument() {
 }
 ```
 
-Tes ini dari `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` membuat dokumen di memori dan memverifikasi chunking serta penanganan metadata.
+Tes ini dari `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` membuat dokumen di memori dan memverifikasi pemecahan serta penanganan metadata.
 
 ### Pola 6: Pengujian Integrasi MCP
 
-Modul MCP menguji integrasi Model Context Protocol menggunakan transport stdio. Tes-tes ini memverifikasi bahwa aplikasi Anda dapat memanggil dan berkomunikasi dengan server MCP sebagai subprocess.
+Modul MCP menguji integrasi Model Context Protocol menggunakan transport stdio. Tes ini memverifikasi aplikasi Anda bisa memulai dan berkomunikasi dengan server MCP sebagai subprocess.
 
 Tes di `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` memvalidasi perilaku klien MCP.
 
-**Jalankan mereka:**
+**Jalankan:**
 
 **Bash:**
 ```bash
@@ -326,28 +326,28 @@ cd 05-mcp; mvn --% test
 
 ## Filosofi Pengujian
 
-Ujilah kode Anda, bukan AI. Tes Anda harus memvalidasi kode yang Anda tulis dengan memeriksa bagaimana prompt dibuat, bagaimana memori dikelola, dan bagaimana tools dieksekusi. Respons AI bervariasi dan seharusnya bukan bagian dari assertion tes. Tanyakan pada diri Anda apakah template prompt Anda menggantikan variabel dengan benar, bukan apakah AI memberikan jawaban yang benar.
+Uji kode Anda, bukan AI. Tes Anda harus memvalidasi kode yang Anda tulis dengan memeriksa bagaimana prompt dibuat, bagaimana memori dikelola, dan bagaimana alat dijalankan. Respons AI bervariasi dan tidak harus menjadi bagian dari asersi tes. Tanyakan pada diri sendiri apakah template prompt Anda benar melakukan substitusi variabel, bukan apakah AI memberikan jawaban yang benar.
 
-Gunakan mock untuk model bahasa. Mereka adalah dependensi eksternal yang lambat, mahal, dan tidak deterministik. Memalsukan membuat tes cepat dengan milidetik alih-alih detik, gratis tanpa biaya API, dan deterministik dengan hasil yang sama setiap kali.
+Gunakan mock untuk model bahasa. Mereka adalah ketergantungan eksternal yang lambat, mahal, dan tidak deterministik. Memalsukan membuat tes cepat dengan hitungan milidetik dibanding detik, gratis tanpa biaya API, dan deterministik dengan hasil yang sama setiap saat.
 
-Jaga agar tes independen. Setiap tes harus menyiapkan datanya sendiri, tidak bergantung pada tes lain, dan membersihkan setelah dirinya sendiri. Tes harus lulus terlepas dari urutan eksekusi.
+Jaga agar tes tetap independen. Setiap tes harus menyiapkan data sendiri, tidak bergantung pada tes lain, dan membersihkan setelah selesai. Tes harus lulus tanpa memperhatikan urutan eksekusi.
 
-Uji kasus tepi di luar jalur bahagia. Coba input kosong, input sangat besar, karakter khusus, parameter tidak valid, dan kondisi batas. Ini sering mengungkap bug yang tidak terlihat pada penggunaan normal.
+Uji kasus tepi selain jalur utama. Coba input kosong, input sangat besar, karakter khusus, parameter tidak valid, dan kondisi batas. Ini sering mengungkap bug yang tidak terdeteksi dengan penggunaan normal.
 
-Gunakan nama yang deskriptif. Bandingkan `shouldMaintainConversationHistoryAcrossMultipleMessages()` dengan `test1()`. Yang pertama memberi tahu Anda persis apa yang diuji, membuat debug kegagalan jauh lebih mudah.
+Gunakan nama yang deskriptif. Bandingkan `shouldMaintainConversationHistoryAcrossMultipleMessages()` dengan `test1()`. Yang pertama memberi tahu Anda dengan tepat apa yang diuji, sehingga memudahkan debug jika gagal.
 
-## Langkah Selanjutnya
+## Langkah Berikutnya
 
-Sekarang setelah Anda memahami pola pengujian, selami lebih dalam setiap modul:
+Sekarang Anda memahami pola pengujian, jelajahi lebih dalam setiap modul:
 
-- **[00 - Mulai Cepat](../00-quick-start/README.md)** - Mulai dengan dasar-dasar template prompt
-- **[01 - Pengenalan](../01-introduction/README.md)** - Pelajari pengelolaan memori percakapan
-- **[02 - Rekayasa Prompt](../02-prompt-engineering/README.md)** - Kuasai pola prompting GPT-5
+- **[00 - Mulai Cepat](../00-quick-start/README.md)** - Mulai dengan dasar template prompt
+- **[01 - Pengantar](../01-introduction/README.md)** - Pelajari manajemen memori percakapan
+- **[02 - Rekayasa Prompt](../02/prompt-engineering/README.md)** - Kuasai pola pemanggilan GPT-5.2
 - **[03 - RAG](../03-rag/README.md)** - Bangun sistem retrieval-augmented generation
-- **[04 - Tools](../04-tools/README.md)** - Terapkan pemanggilan fungsi dan rantai tools
+- **[04 - Alat](../04-tools/README.md)** - Implementasikan pemanggilan fungsi dan rantai alat
 - **[05 - MCP](../05-mcp/README.md)** - Integrasikan Model Context Protocol
 
-README masing-masing modul menyediakan penjelasan rinci tentang konsep yang diuji di sini.
+README setiap modul menyediakan penjelasan rinci konsep yang diuji di sini.
 
 ---
 
@@ -356,6 +356,6 @@ README masing-masing modul menyediakan penjelasan rinci tentang konsep yang diuj
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Penafian:
-Dokumen ini telah diterjemahkan menggunakan layanan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Meskipun kami berupaya mencapai ketepatan, harap diketahui bahwa terjemahan otomatis mungkin mengandung kesalahan atau ketidakakuratan. Dokumen asli dalam bahasa aslinya harus dianggap sebagai sumber otoritatif. Untuk informasi yang bersifat kritis, disarankan menggunakan terjemahan profesional oleh penerjemah manusia. Kami tidak bertanggung jawab atas kesalahpahaman atau salah tafsir yang timbul dari penggunaan terjemahan ini.
+**Penafian**:  
+Dokumen ini telah diterjemahkan menggunakan layanan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Meskipun kami berusaha untuk ketepatan, harap diingat bahwa terjemahan otomatis mungkin mengandung kesalahan atau ketidakakuratan. Dokumen asli dalam bahasa aslinya harus dianggap sebagai sumber yang sah. Untuk informasi penting, disarankan menggunakan terjemahan profesional oleh manusia. Kami tidak bertanggung jawab atas kesalahpahaman atau salah tafsir yang timbul dari penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

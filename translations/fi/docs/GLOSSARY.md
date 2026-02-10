@@ -1,232 +1,232 @@
 # LangChain4j Sanasto
 
-## Sisällysluettelo
+## Sisältö
 
 - [Keskeiset käsitteet](../../../docs)
 - [LangChain4j-komponentit](../../../docs)
 - [AI/ML-käsitteet](../../../docs)
-- [Suojamekanismit](../../../docs)
-- [Prompt-suunnittelu](../../../docs)
+- [Suojakeinot](../../../docs)
+- [Promptin suunnittelu](../../../docs)
 - [RAG (Retrieval-Augmented Generation)](../../../docs)
 - [Agentit ja työkalut](../../../docs)
-- [Agenttinen moduuli](../../../docs)
+- [Agenttimoduuli](../../../docs)
 - [Mallin kontekstiprotokolla (MCP)](../../../docs)
 - [Azure-palvelut](../../../docs)
 - [Testaus ja kehitys](../../../docs)
 
-Nopea hakemisto kurssilla käytetyille termeille ja käsitteille.
+Nopea viite kurssilla käytetyille termeille ja käsitteille.
 
 ## Keskeiset käsitteet
 
-**AI Agentti** - Järjestelmä, joka käyttää tekoälyä järkeilyyn ja itsenäiseen toimintaan. [Moduuli 04](../04-tools/README.md)
+**AI Agentti** – Järjestelmä, joka käyttää tekoälyä päättelyyn ja itsenäiseen toimintaan. [Moduuli 04](../04-tools/README.md)
 
-**Ketju** - Toimintojen sarja, jossa tulos syötetään seuraavaan vaiheeseen.
+**Ketju** – Toimintojen sarja, jossa yksi vaihe syöttää seuraavalle.
 
-**Paloittelu** - Asiakirjojen jakaminen pienempiin osiin. Tyypillinen: 300–500 tokenia päällekkäisyydellä. [Moduuli 03](../03-rag/README.md)
+**Palastelu** – Asiakirjojen jakaminen pienempiin osiin. Tyypillisesti 300–500 tokenia päällekkäisyydellä. [Moduuli 03](../03-rag/README.md)
 
-**Kontekstin ikkuna** - Suurin tokenien määrä, jonka malli pystyy käsittelemään. GPT-5: 400 000 tokenia.
+**Kontekstiaukkko** – Maksimimäärä tokeneita, jonka malli pystyy käsittelemään. GPT-5.2: 400 000 tokenia.
 
-**Upotukset (Embeddings)** - Numeraalisia vektoreita, jotka kuvaavat tekstin merkitystä. [Moduuli 03](../03-rag/README.md)
+**Empattat** – Numeraaliset vektorit, jotka kuvaavat tekstin merkitystä. [Moduuli 03](../03-rag/README.md)
 
-**Funktiokutsu** - Malli tuottaa rakenteellisia pyyntöjä ulkoisten toimintojen kutsumiseen. [Moduuli 04](../04-tools/README.md)
+**Funktiokutsu** – Malli muodostaa rakenteellisia pyyntöjä ulkoisten toimintojen kutsumiseksi. [Moduuli 04](../04-tools/README.md)
 
-**Hallusinaatio** - Kun mallit tuottavat virheellistä mutta uskottavaa tietoa.
+**Hallusinaatio** – Kun mallit tuottavat virheellistä mutta uskottavaa tietoa.
 
-**Prompt** - Tekstisyöte kielimallille. [Moduuli 02](../02-prompt-engineering/README.md)
+**Prompt** – Tekstisyöte kielimallille. [Moduuli 02](../02-prompt-engineering/README.md)
 
-**Semanttinen haku** - Hakua merkityksen perusteella upotuksia käyttäen, ei avainsanoilla. [Moduuli 03](../03-rag/README.md)
+**Semanttinen haku** – Merkitykseen perustuva haku käyttäen empattiota, ei avainsanoja. [Moduuli 03](../03-rag/README.md)
 
-**Tila vs. tilaton** - Tilaton: ei muistia. Tila: säilyttää keskusteluhistorian. [Moduuli 01](../01-introduction/README.md)
+**Tilan säilyttäminen vs. tilaton** – Tilaton: ei muistia. Tilallinen: säilyttää keskusteluhistorian. [Moduuli 01](../01-introduction/README.md)
 
-**Tokenit** - Perusyksiköt, joita mallit käsittelevät. Vaikuttavat kustannuksiin ja rajoituksiin. [Moduuli 01](../01-introduction/README.md)
+**Tokenit** – Perusyksiköt, joita mallit käsittelevät. Vaikuttaa kustannuksiin ja rajoihin. [Moduuli 01](../01-introduction/README.md)
 
-**Työkaluketjutus** - Työkalujen peräkkäinen suoritus, jossa tulos vaikuttaa seuraavaan kutsuun. [Moduuli 04](../04-tools/README.md)
+**Työkaluketjuttaminen** – Työkalujen peräkkäinen suoritus, jossa tulos ohjaa seuraavaa kutsua. [Moduuli 04](../04-tools/README.md)
 
 ## LangChain4j-komponentit
 
-**AiServices** - Luo tyypiltään turvalliset tekoälypalvelurajapinnat.
+**AiServices** – Luo tyyppiturvallisia tekoälypalvelujen rajapintoja.
 
-**OpenAiOfficialChatModel** - Yhtenäinen asiakasrajapinta OpenAI:n ja Azure OpenAI:n malleille.
+**OpenAiOfficialChatModel** – Yhdistetty asiakas OpenAI- ja Azure OpenAI -malleille.
 
-**OpenAiOfficialEmbeddingModel** - Luo upotuksia OpenAI Official -asiakkaalla (tukee sekä OpenAI:ta että Azure OpenAI:ta).
+**OpenAiOfficialEmbeddingModel** – Luo empattatoita OpenAI Official -asiakkaalla (tukee sekä OpenAI että Azure OpenAI).
 
-**ChatModel** - Ydinkäyttöliittymä kielimalleille.
+**ChatModel** – Keskeinen rajapinta kielimalleille.
 
-**ChatMemory** - Säilyttää keskusteluhistorian.
+**ChatMemory** – Säilyttää keskusteluhistorian.
 
-**ContentRetriever** - Löytää relevantit asiakirjapalat RAG:ia varten.
+**ContentRetriever** – Löytää relevantteja asiakasosioita RAG:ille.
 
-**DocumentSplitter** - Jakaa asiakirjat paloihin.
+**DocumentSplitter** – Jakaa asiakirjat osioihin.
 
-**EmbeddingModel** - Muuntaa tekstin numeerisiksi vektoreiksi.
+**EmbeddingModel** – Muuntaa tekstin numeraaliseksi vektoriksi.
 
-**EmbeddingStore** - Tallentaa ja noutaa upotuksia.
+**EmbeddingStore** – Tallentaa ja hakee empattatoita.
 
-**MessageWindowChatMemory** - Säilyttää liukuvan ikkunan viimeisimmistä viesteistä.
+**MessageWindowChatMemory** – Säilyttää liukuvaa ikkuna viimeisimmistä viesteistä.
 
-**PromptTemplate** - Luo uudelleenkäytettäviä kehote-malleja `{{variable}}`-paikkamerkkeineen.
+**PromptTemplate** – Luo uudelleenkäytettäviä promptteja `{{variable}}`-paikkamerkkeillä.
 
-**TextSegment** - Tekstipala metatietoineen. Käytetään RAG:ssa.
+**TextSegment** – Tekstipalanen metadatalla. Käytetään RAG:issa.
 
-**ToolExecutionRequest** - Edustaa työkalun suorituspyyntöä.
+**ToolExecutionRequest** – Edustaa työkalun suorituspyyntöä.
 
-**UserMessage / AiMessage / SystemMessage** - Keskusteluviestien tyypit.
+**UserMessage / AiMessage / SystemMessage** – Keskustelun viestityypit.
 
 ## AI/ML-käsitteet
 
-**Few-Shot Learning** - Esimerkkien antaminen promteissa. [Moduuli 02](../02-prompt-engineering/README.md)
+**Few-Shot-opetus** – Esimerkkien antaminen promteissa. [Moduuli 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** - Suuret kielimallit, jotka on koulutettu mittavalla tekstidatalla.
+**Suurten kielimallien (LLM) mallit** – Tekoälymalleja, joita on koulutettu valtavilla tekstidatoilla.
 
-**Reasoning Effort** - GPT-5:n parametri, joka ohjaa ajattelun syvyyttä. [Moduuli 02](../02-prompt-engineering/README.md)
+**Päättelyponnistus** – GPT-5.2-parametri, joka ohjaa ajattelun syvyyttä. [Moduuli 02](../02-prompt-engineering/README.md)
 
-**Temperature** - Ohjaa tuloksen satunnaisuutta. Matala = deterministinen, korkea = luova.
+**Lämpötila** – Ohjaa satunnaisuutta vastauksissa. Matala = deterministinen, korkea = luova.
 
-**Vektoritietokanta** - Erikoistunut tietokanta upotuksia varten. [Moduuli 03](../03-rag/README.md)
+**Vektoripohjainen tietokanta** – Erityinen tietokanta empattatoille. [Moduuli 03](../03-rag/README.md)
 
-**Zero-Shot Learning** - Suorittaa tehtäviä ilman esimerkkejä. [Moduuli 02](../02-prompt-engineering/README.md)
+**Zero-Shot-opetus** – Tehtävien suorittaminen ilman esimerkkejä. [Moduuli 02](../02-prompt-engineering/README.md)
 
-## Suojamekanismit - [Moduuli 00](../00-quick-start/README.md)
+## Suojakeinot - [Moduuli 00](../00-quick-start/README.md)
 
-**Defense in Depth** - Monikerroksinen suojaus, joka yhdistää sovellustason suojarakenteet ja tarjoajan turvasuodattimet.
+**Suojaus kerroksittain** – Monikerroksinen turvallisuus, jossa yhdistetään sovellustason suojakeinot tarjoajien turvasuodattimiin.
 
-**Hard Block** - Tarjoaja antaa HTTP 400 -virheen vakavista sisältörikkomuksista.
+**Kova esto** – Tarjoaja palauttaa HTTP 400 -virheen vakavista sisältörikkomuksista.
 
-**InputGuardrail** - LangChain4j-rajapinta käyttäjän syötteen tarkistukseen ennen kuin se saavuttaa LLM:n. Säästää kustannuksia ja latenssia estämällä haitalliset promptit varhaisessa vaiheessa.
+**InputGuardrail** – LangChain4j-rajapinta käyttäjän syötteen validointiin ennen LLM:ää. Säästää kustannuksia ja viivettä estämällä haitalliset promptit varhaisessa vaiheessa.
 
-**InputGuardrailResult** - Palautustyyppi suojamekanismin validoinnille: `success()` tai `fatal("peruste")`.
+**InputGuardrailResult** – Palautustyyppi suojakeinon validoinnista: `success()` tai `fatal("reason")`.
 
-**OutputGuardrail** - Rajapinta tekoälyn vastausten validointiin ennen niiden palauttamista käyttäjälle.
+**OutputGuardrail** – Rajapinta AI-vastausten validointiin ennen käyttäjille palauttamista.
 
-**Provider Safety Filters** - Tekoälypalveluntarjoajien (esim. GitHub Models) sisäänrakennetut sisältösuodattimet, jotka havaitsevat rikkomukset API-tasolla.
+**Tarjoajan turvasuodattimet** – Sisäänrakennetut sisältösuodattimet AI-tarjoajilta (esim. GitHubin mallit), jotka havaitsevat loukkaukset API-tasolla.
 
-**Soft Refusal** - Malli kieltäytyy kohteliaasti vastaamasta heittämättä virhettä.
+**Pehmeä kieltäytyminen** – Malli kohteliaasti kieltäytyy vastaamasta ilman virheilmoitusta.
 
-## Prompt-suunnittelu - [Moduuli 02](../02-prompt-engineering/README.md)
+## Promptin suunnittelu - [Moduuli 02](../02-prompt-engineering/README.md)
 
-**Chain-of-Thought** - Askeltainen päättely parantaakseen tarkkuutta.
+**Ajatusketju** – Vaiheittainen päättely paremman tarkkuuden saavuttamiseksi.
 
-**Rajoitettu tuloste** - Tarkasti määritellyn muodon tai rakenteen pakottaminen.
+**Rajoitettu vastaus** – Tietyn muodon tai rakenteen vaatiminen.
 
-**Korkea halukkuus** - GPT-5-kuvio perusteelliseen päättelyyn.
+**Korkea innokkuus** – GPT-5.2-malli perusteelliselle päättelylle.
 
-**Matala halukkuus** - GPT-5-kuvio nopeisiin vastauksiin.
+**Matala innokkuus** – GPT-5.2-malli nopeille vastauksille.
 
-**Monivaiheinen keskustelu** - Kontekstin ylläpito vaihtojen yli.
+**Monikierroksinen keskustelu** – Kontekstin ylläpito vuorovaikutusten välillä.
 
-**Rooliperusteinen kehotus** - Mallipersonan asettaminen järjestelmäviestien avulla.
+**Roolipohjainen prompttaus** – Mallin persoonan asettaminen järjestelmäviestillä.
 
-**Itsearviointi** - Malli arvioi ja parantaa omaa tulostaan.
+**Itsearviointi** – Malli arvioi ja parantaa tuottamaansa sisältöä.
 
-**Rakenteellinen analyysi** - Kiinteä arviointikehys.
+**Rakenteellinen analyysi** – Kiinteä arviointikehys.
 
-**Tehtävän suoritusmalli** - Suunnittele → Suorita → Tiivistä.
+**Tehtävän suoritusmalli** – Suunnittele → Suorita → Tiivistä.
 
 ## RAG (Retrieval-Augmented Generation) - [Moduuli 03](../03-rag/README.md)
 
-**Asiakirjaprosessointiputki** - Lataa → paloittelu → upotus → tallennus.
+**Asiakirjankäsittelyputki** – Lataa → palastele → upota → tallenna.
 
-**Muistissa toimiva upotusvarasto** - Ei-pysyvä tallennus testiä varten.
+**Muistipohjainen empattiovarasto** – Ei-pysyvä tallennus testaukseen.
 
-**RAG** - Yhdistää hakemisen ja generoinnin vastauksien pohjaksi.
+**RAG** – Yhdistää haun ja generoinnin maadoittaakseen vastaukset.
 
-**Samanlaisuuspisteet** - Mitta (0–1) semanttisesta samankaltaisuudesta.
+**Vastaavuuspistemäärä** – Semanttisen samankaltaisuuden mitta (0–1).
 
-**Lähdeviite** - Metatiedot haetusta sisällöstä.
+**Lähdeviite** – Metatiedot haetusta sisällöstä.
 
 ## Agentit ja työkalut - [Moduuli 04](../04-tools/README.md)
 
-**@Tool-annotaatio** - Merkitsee Java-metodit tekoälyn kutsuttaviksi työkaluiksi.
+**@Tool-merkintä** – Merkitsee Java-metodit AI-kutsuttaviksi työkaluiksi.
 
-**ReAct-kuvio** - Päättely → Toiminta → Havainnointi → Toisto.
+**ReAct-kuvio** – Päättely → Toiminta → Havainnointi → Toisto.
 
-**Istunnon hallinta** - Erilliset kontekstit eri käyttäjille.
+**Istunnon hallinta** – Eri käyttäjille omat kontekstit.
 
-**Työkalu** - Toiminto, jota AI-agentti voi kutsua.
+**Työkalu** – Toiminto, jota AI-agentti voi kutsua.
 
-**Työkalun kuvaus** - Dokumentaatio työkalun tarkoituksesta ja parametreista.
+**Työkalun kuvaus** – Dokumentaatio työkalun tarkoituksesta ja parametreista.
 
-## Agenttinen moduuli - [Moduuli 05](../05-mcp/README.md)
+## Agenttimoduuli - [Moduuli 05](../05-mcp/README.md)
 
-**@Agent-annotaatio** - Merkitsee rajapinnat tekoälyagenteiksi deklaratiivisella käyttäytymismäärittelyllä.
+**@Agent-merkintä** – Merkitsee rajapinnat AI-agenteiksi, joissa käytetään deklaratiivista käyttäytymismäärittelyä.
 
-**Agent Listener** - Koukku agentin suorituksen valvontaan `beforeAgentInvocation()` ja `afterAgentInvocation()` kautta.
+**Agenttikuuntelija** – Koukku agentin suorituksen seurannalle `beforeAgentInvocation()`- ja `afterAgentInvocation()`-kutsujen kautta.
 
-**Agenttinen scope** - Jaettu muisti, johon agentit tallentavat tuloksia `outputKey`-avainsanalla muiden agenttien käytettäväksi.
+**Agenttinen konteksti** – Jaettu muisti, johon agentit tallentavat tuloksia `outputKey`:n avulla muiden agenttien käytettäväksi.
 
-**AgenticServices** - Tehdas agenttien luomiseen `agentBuilder()` ja `supervisorBuilder()` -menetelmillä.
+**AgenticServices** – Tehdas agenttien luomiseen `agentBuilder()` ja `supervisorBuilder()` avulla.
 
-**Ehdollinen työnkulku** - Reititys eri asiantuntija-agenttien välillä ehtojen mukaan.
+**Ehdollinen työnkulku** – Reititys tilanneperusteisesti eri erikoistuneille agenteille.
 
-**Ihmisen osallistuminen** - Työnkulku, jossa ihmiskäyttäjä tarkastaa ja hyväksyy sisällön vaiheittain.
+**Ihminen silmukassa** – Työnkulku, joka lisää ihmisen tarkastuspisteitä hyväksyntää tai sisällön tarkistusta varten.
 
-**langchain4j-agentic** - Maven-riippuvuus deklaratiiviseen agenttien rakentamiseen (kokeellinen).
+**langchain4j-agentic** – Maven-riippuvuus deklaratiiviseen agenttien rakentamiseen (kokeellinen).
 
-**Toistolohko** - Agentin suoritus toistetaan kunnes ehto täyttyy (esim. laatu ≥ 0,8).
+**Toistuva työnkulku** – Toistaa agentin suorituksen, kunnes ehto täyttyy (esim. laatupistemäärä ≥ 0.8).
 
-**outputKey** - Agenttiannotaation parametri, joka määrittää tulosten tallennuspaikan Agentic Scopeen.
+**outputKey** – Agenttimerkinnän parametri, joka määrittää, mihin Agentic Scope:n tulokset tallennetaan.
 
-**Rinnakkainen työnkulku** - Useiden agenttien samanaikainen suoritus itsenäisiin tehtäviin.
+**Rinnakkainen työnkulku** – Suorittaa useita agenteja samanaikaisesti riippumattomissa tehtävissä.
 
-**Vastausstrategia** - Tapa, jolla ohjaava agentti muodostaa lopullisen vastauksen: VIIMAINEN, YHTEENVETO tai PISTEYTETTY.
+**Vastausstrategia** – Miten valvoja muotoilee lopullisen vastauksen: LAST, SUMMARY tai SCORED.
 
-**Peräkkäinen työnkulku** - Agenttien suoritus järjestyksessä, tulosten kulkiessa seuraavaan vaiheeseen.
+**Peräkkäinen työnkulku** – Suorittaa agentit järjestyksessä, jossa tulos siirtyy seuraavaan vaiheeseen.
 
-**Ohjaava agenttipatterni** - Edistynyt agenttikuva, jossa ohjaava LLM päättää dynaamisesti, mitä apu-agentteja kutsutaan.
+**Valvojaagenttikuva** – Edistynyt agenttikuva, jossa valvoja-LLM päättää dynaamisesti, mitä alianteja kutsutaan.
 
 ## Mallin kontekstiprotokolla (MCP) - [Moduuli 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Maven-riippuvuus MCP-integraatioon LangChain4j:ssa.
+**langchain4j-mcp** – Maven-riippuvuus MCP-integraatiolle LangChain4j:ssa.
 
-**MCP** - Model Context Protocol: standardi tekoälysovellusten liittämiseen ulkoisiin työkaluihin. Rakennetaan kerran, käytetään kaikkialla.
+**MCP** – Mallin kontekstiprotokolla: standardi tekoälysovellusten liittämiseen ulkoisiin työkaluihin. Luo kerran, käytä kaikkialla.
 
-**MCP Client** - Sovellus, joka yhdistyy MCP-palvelimiin työkaluja löytääkseen ja käyttäen.
+**MCP-asiakas** – Sovellus, joka yhdistyy MCP-palvelimiin löytääkseen ja käyttäen työkaluja.
 
-**MCP Server** - Palvelu, joka tarjoaa työkalut MCP:n kautta selkeästi kuvattuina ja parametritskeemoineen.
+**MCP-palvelin** – Palvelu, joka tarjoaa työkaluja MCP:n kautta selkeillä kuvauksilla ja parametrikaavoilla.
 
-**McpToolProvider** - LangChain4j-komponentti, joka käärii MCP-työkalut tekoälypalveluiden ja agenttien käyttöön.
+**McpToolProvider** – LangChain4j-komponentti, joka käärii MCP-työkalut tekoälypalveluihin ja agenteille.
 
-**McpTransport** - Rajapinta MCP-kommunikointiin. Toteutuksia ovat Stdio ja HTTP.
+**McpTransport** – Rajapinta MCP-yhteydelle. Toteutuksia ovat mm. Stdio ja HTTP.
 
-**Stdio Transport** - Paikallinen prosessikuljetus stdin/stdoutin kautta. Hyödyllinen tiedostojärjestelmän tai komentorivityökalujen käytössä.
+**Stdio Transport** – Paikallinen prosessin kuljetus stdin/stdout:n kautta. Hyödyllinen tiedostojärjestelmään pääsyyn tai komentorivityökaluihin.
 
-**StdioMcpTransport** - LangChain4j:n toteutus, joka käynnistää MCP-palvelimen aliprosessina.
+**StdioMcpTransport** – LangChain4j-toteutus, joka käynnistää MCP-palvelimen aliprosessina.
 
-**Työkalujen löytäminen** - Asiakas kysyy palvelimelta saatavilla olevat työkalut kuvauksineen ja skeemoineen.
+**Työkalujen löytäminen** – Asiakas kysyy palvelimelta käytettävissä olevat työkalut kuvauksineen ja kaavoineen.
 
 ## Azure-palvelut - [Moduuli 01](../01-introduction/README.md)
 
-**Azure AI Search** - Pilvipohjainen haku, jossa vektoriominaisuudet. [Moduuli 03](../03-rag/README.md)
+**Azure AI Search** – Pilvipohjainen haku vektorikapasiteeteilla. [Moduuli 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Azure-resurssien käyttöönotto.
+**Azure Developer CLI (azd)** – Ottaa käyttöön Azure-resursseja.
 
-**Azure OpenAI** - Microsoftin yritystason tekoälypalvelu.
+**Azure OpenAI** – Microsoftin yritystason tekoälypalvelu.
 
-**Bicep** - Azure-infrastruktuurin koodikieli. [Infrastruktuuriohje](../01-introduction/infra/README.md)
+**Bicep** – Azure infrastruktuurikoodi-kieli. [Infrastruktuuriohje](../01-introduction/infra/README.md)
 
-**Deployment Name** - Mallin käyttöönoton nimi Azure:ssa.
+**Käyttöönoton nimi** – Nimi mallin käyttöönotolle Azure:ssa.
 
-**GPT-5** - Uusin OpenAI-malli päättelyohjauksella. [Moduuli 02](../02-prompt-engineering/README.md)
+**GPT-5.2** – Uusin OpenAI-malli päättelyn ohjauksella. [Moduuli 02](../02-prompt-engineering/README.md)
 
 ## Testaus ja kehitys - [Testausopas](TESTING.md)
 
-**Dev Container** - Konttimuotoinen kehitysympäristö. [Konfiguraatio](../../../.devcontainer/devcontainer.json)
+**Dev Container** – Konttisoitu kehitysympäristö. [Konfiguraatio](../../../.devcontainer/devcontainer.json)
 
-**GitHub Models** - Ilmainen tekoälymallien leikkikenttä. [Moduuli 00](../00-quick-start/README.md)
+**GitHubin mallit** – Ilmainen tekoälymallien leikkikenttä. [Moduuli 00](../00-quick-start/README.md)
 
-**Muistissa testaus** - Testaus muistipohjaisella tallennuksella.
+**Muistipohjainen testaus** – Testaus muistivarastolla.
 
-**Integraatiotestaus** - Testaus aidolla infrastruktuurilla.
+**Integraatiotestaus** – Testaus todellisella infrastruktuurilla.
 
-**Maven** - Java-käännöstuki ja automatisointi.
+**Maven** – Java-rakennusautomaatiotyökalu.
 
-**Mockito** - Java-mokkausevälineistö.
+**Mockito** – Java-mokkauksien kirjasto.
 
-**Spring Boot** - Java-sovelluskehys. [Moduuli 01](../01-introduction/README.md)
+**Spring Boot** – Java-sovelluskehys. [Moduuli 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty tekoälykäännöspalvelulla [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta ole hyvä ja huomioi, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa omalla kielellään tulee pitää virallisena lähteenä. Tärkeissä tiedoissa suositellaan ammattilaisen tekemää ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, huomioithan, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäisellä kielellä tulee pitää auktoritatiivisena lähteenä. Tärkeissä tiedoissa suosittelemme ammattimaisen ihmiskääntäjän käyttämistä. Emme ole vastuussa mahdollisista väärinymmärryksistä tai tulkinnoista, jotka johtuvat tämän käännöksen käytöstä.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

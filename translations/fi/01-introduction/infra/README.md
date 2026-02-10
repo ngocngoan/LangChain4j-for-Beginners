@@ -17,27 +17,27 @@
 - [Turvasuositukset](../../../../01-introduction/infra)
 - [Lisäresurssit](../../../../01-introduction/infra)
 
-Tämä hakemisto sisältää Azure-infrastruktuurin koodina (IaC) käyttäen Bicep:iä ja Azure Developer CLI:tä (azd) Azure OpenAI -resurssien käyttöönottoa varten.
+Tämä hakemisto sisältää Azure-infrastruktuurin koodina (IaC) Bicepin ja Azure Developer CLI:n (azd) avulla Azure OpenAI -resurssien käyttöönottoa varten.
 
 ## Esivaatimukset
 
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (versio 2.50.0 tai uudempi)
 - [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (versio 1.5.0 tai uudempi)
-- Azure-tilaus, jolla on oikeudet luoda resursseja
+- Azure-tilaus, jolla on oikeudet resurssien luomiseen
 
 ## Arkkitehtuuri
 
-**Yksinkertaistettu paikallinen kehitysympäristö** - Ota käyttöön vain Azure OpenAI, aja kaikki sovellukset paikallisesti.
+**Yksinkertaistettu paikallinen kehitysympäristö** – Käytetään vain Azure OpenAI:ta, kaikki sovellukset ajetaan paikallisesti.
 
 Infrastruktuuri ottaa käyttöön seuraavat Azure-resurssit:
 
 ### AI-palvelut
-- **Azure OpenAI**: Kognitiiviset palvelut kahdella mallin käyttöönotolla:
-  - **gpt-5**: Chat-vastausmalli (20K TPM kapasiteetti)
-  - **text-embedding-3-small**: Upotemalli RAG:lle (20K TPM kapasiteetti)
+- **Azure OpenAI**: Tietojenkäsittelypalvelu, jossa kaksi mallin käyttöönottoa:
+  - **gpt-5.2**: Chat-vastausten malli (20K TPM kapasiteetti)
+  - **text-embedding-3-small**: RAG-käyttöön upotusten malli (20K TPM kapasiteetti)
 
 ### Paikallinen kehitys
-Kaikki Spring Boot -sovellukset ajetaan paikallisesti koneellasi:
+Kaikki Spring Boot -sovellukset ajetaan koneellasi paikallisesti:
 - 01-introduction (portti 8080)
 - 02-prompt-engineering (portti 8083)
 - 03-rag (portti 8081)
@@ -45,10 +45,10 @@ Kaikki Spring Boot -sovellukset ajetaan paikallisesti koneellasi:
 
 ## Luodut resurssit
 
-| Resurssityyppi | Resurssin nimen kaava | Tarkoitus |
+| Resurssityyppi | Resurssin nimi | Tarkoitus |
 |--------------|----------------------|---------|
 | Resurssiryhmä | `rg-{environmentName}` | Sisältää kaikki resurssit |
-| Azure OpenAI | `aoai-{resourceToken}` | AI-mallin isännöinti |
+| Azure OpenAI | `aoai-{resourceToken}` | AI-mallin hosting |
 
 > **Huom:** `{resourceToken}` on uniikki merkkijono, joka muodostetaan tilaus-ID:stä, ympäristön nimestä ja sijainnista
 
@@ -68,16 +68,16 @@ cd 01-introduction
 azd up
 ```
 
-Kun sinulta kysytään:
+Kun sinua kehotetaan:
 - Valitse Azure-tilauksesi
-- Valitse sijainti (suositus: `eastus2` tai `swedencentral` GPT-5:n saatavuuden vuoksi)
+- Valitse sijainti (suositus: `eastus2` GPT-5.2 saatavuuden vuoksi)
 - Vahvista ympäristön nimi (oletus: `langchain4j-dev`)
 
 Tämä luo:
-- Azure OpenAI -resurssin GPT-5:llä ja text-embedding-3-small:lla
-- Tulostaa yhteystiedot
+- Azure OpenAI -resurssin GPT-5.2:lla ja text-embedding-3-small -malleilla
+- Näyttää liitettävyystiedot
 
-### 2. Hanki yhteystiedot
+### 2. Hanki liitetyiedot
 
 **Bash:**
 ```bash
@@ -89,15 +89,15 @@ azd env get-values
 azd env get-values
 ```
 
-Tämä näyttää:
-- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI -päätepisteesi URL
+Näyttää:
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI -rajapinnan URL-osoite
 - `AZURE_OPENAI_KEY`: API-avain autentikointiin
-- `AZURE_OPENAI_DEPLOYMENT`: Chat-mallin nimi (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Upotemallin nimi
+- `AZURE_OPENAI_DEPLOYMENT`: Chat-mallin nimi (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Upotusmallin nimi
 
-### 3. Aja sovellukset paikallisesti
+### 3. Käynnistä sovellukset paikallisesti
 
-`azd up` -komento luo automaattisesti `.env`-tiedoston juurihakemistoon kaikilla tarvittavilla ympäristömuuttujilla.
+`azd up` -komento luo automaattisesti `.env`-tiedoston juurihakemistoon kaikki tarvittavat ympäristömuuttujat sisältäen.
 
 **Suositus:** Käynnistä kaikki web-sovellukset:
 
@@ -110,7 +110,7 @@ cd ../..
 
 **PowerShell:**
 ```powershell
-# Juurikansiosta
+# Juurihakemistosta
 cd ../..
 .\start-all.ps1
 ```
@@ -119,7 +119,7 @@ Tai käynnistä yksittäinen moduuli:
 
 **Bash:**
 ```bash
-# Esimerkki: Käynnistä vain johdantomoduuli
+# Esimerkki: Käynnistä vain esittelymoduuli
 cd ../01-introduction
 ./start.sh
 ```
@@ -131,25 +131,25 @@ cd ../01-introduction
 .\start.ps1
 ```
 
-Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juurihakemistossa olevasta `.env`-tiedostosta, jonka `azd up` loi.
+Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juurihakemistossa olevasta `azd up` -komennolla luodusta `.env`-tiedostosta.
 
 ## Konfigurointi
 
-### Mallien käyttöönoton mukauttaminen
+### Mallien käyttöönoton räätälöinti
 
-Muuta mallien käyttöönottoja muokkaamalla `infra/main.bicep`-tiedostoa ja muokkaa `openAiDeployments`-parametria:
+Mallien käyttöönoton muuttamiseksi muokkaa `infra/main.bicep` -tiedostoa ja muuta `openAiDeployments`-parametria:
 
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -161,15 +161,15 @@ Saatavilla olevat mallit ja versiot: https://learn.microsoft.com/azure/ai-servic
 
 ### Azure-alueen vaihtaminen
 
-Ota käyttöön eri alueella muokkaamalla `infra/main.bicep`-tiedostoa:
+Jos haluat ottaa infrastruktuurin käyttöön eri alueella, muokkaa `infra/main.bicep` -tiedostoa:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Tarkista GPT-5:n saatavuus: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Tarkista GPT-5.2 saatavuus: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
-Päivitä infrastruktuuri Bicep-tiedostojen muutosten jälkeen:
+Infrastruktuurin päivitys Bicep-tiedostoihin tehtyjen muutosten jälkeen:
 
 **Bash:**
 ```bash
@@ -185,10 +185,10 @@ azd provision
 
 **PowerShell:**
 ```powershell
-# Rakenna ARM-malli uudelleen
+# Kokoa ARM-malli uudelleen
 az bicep build --file infra/main.bicep
 
-# Esikatsele muutokset
+# Tarkastele muutoksia
 azd provision --preview
 
 # Käytä muutokset
@@ -197,7 +197,7 @@ azd provision
 
 ## Siivous
 
-Poista kaikki resurssit:
+Poistaaksesi kaikki resurssit:
 
 **Bash:**
 ```bash
@@ -217,44 +217,44 @@ azd down
 azd down --purge
 ```
 
-**Varoitus**: Tämä poistaa kaikki Azure-resurssit pysyvästi.
+**Varoitus:** Tämä poistaa pysyvästi kaikki Azure-resurssit.
 
 ## Tiedostorakenne
 
 ## Kustannusten optimointi
 
 ### Kehitys/Testaus
-Kehitys- ja testausympäristöissä voit vähentää kustannuksia:
-- Käytä Standard-tasoa (S0) Azure OpenAI:ssa
+Kehitys- ja testausympäristöissä kustannuksia voi alentaa:
+- Käytetään Standard-tasoa (S0) Azure OpenAI:ssa
 - Aseta pienempi kapasiteetti (10K TPM 20K sijaan) tiedostossa `infra/core/ai/cognitiveservices.bicep`
 - Poista resurssit käytön ulkopuolella: `azd down`
 
 ### Tuotanto
-Tuotantoon:
-- Lisää OpenAI-kapasiteettia käytön mukaan (50K+ TPM)
-- Ota käyttöön vyöhyketason redundanssi paremman saatavuuden takaamiseksi
-- Toteuta asianmukainen valvonta ja kustannusvaroitukset
+Tuotannossa:
+- Nosta OpenAI-kapasiteettia käytön mukaan (50K+ TPM)
+- Ota käyttöön aluetuki saavutettavuuden parantamiseksi
+- Toteuta asianmukainen valvonta ja kustannushälytykset
 
 ### Kustannusarvio
-- Azure OpenAI: Maksu per token (syöte + tuloste)
-- GPT-5: noin 3-5 dollaria per miljoona tokenia (tarkista ajantasainen hinnoittelu)
-- text-embedding-3-small: noin 0,02 dollaria per miljoona tokenia
+- Azure OpenAI: Maksu token-pohjaisesti (syöte + tuloste)
+- GPT-5.2: n. $3-5 per 1M tokenia (tarkista ajantasainen hinnoittelu)
+- text-embedding-3-small: n. $0.02 per 1M tokenia
 
 Hinnoittelulaskuri: https://azure.microsoft.com/pricing/calculator/
 
 ## Valvonta
 
-### Katso Azure OpenAI -mittarit
+### Azure OpenAI -mittareiden tarkastelu
 
-Siirry Azure-portaaliin → OpenAI-resurssisi → Mittarit:
-- Token-pohjainen käyttö
+Siirry Azure-portaaliin → OpenAI-resurssi → Mittarit:
+- Tokenien käyttö
 - HTTP-pyyntöjen määrä
 - Vastausaika
 - Aktiiviset tokenit
 
 ## Vianmääritys
 
-### Ongelma: Azure OpenAI -aliverkkotunnuksen nimi on jo käytössä
+### Ongelma: Azure OpenAI aliavain-nimen konflikti
 
 **Virheilmoitus:**
 ```
@@ -264,11 +264,11 @@ is not available as it's already used by a resource."
 ```
 
 **Syy:**
-Aliverkkotunnuksen nimi, joka muodostetaan tilauksestasi/ympäristöstäsi, on jo käytössä, mahdollisesti aiemmasta käyttöönotosta, jota ei ole täysin poistettu.
+Aliavaimen nimi, joka generoidaan tilauksen/ympäristön perusteella, on jo käytössä, mahdollisesti aiemmasta käyttöönotosta, jota ei ole kokonaan poistettu.
 
 **Ratkaisu:**
-1. **Vaihtoehto 1 - Käytä eri ympäristön nimeä:**
-   
+1. **Vaihtoehto 1 – Käytä eri ympäristön nimeä:**
+
    **Bash:**
    ```bash
    azd env new my-unique-env-name
@@ -281,65 +281,63 @@ Aliverkkotunnuksen nimi, joka muodostetaan tilauksestasi/ympäristöstäsi, on j
    azd up
    ```
 
-2. **Vaihtoehto 2 - Manuaalinen käyttöönotto Azure-portaalin kautta:**
-   - Mene Azure-portaaliin → Luo resurssi → Azure OpenAI
+2. **Vaihtoehto 2 – Manuaalinen käyttöönotto Azure-portaalin kautta:**
+   - Siirry Azure-portaaliin → Luo resurssi → Azure OpenAI
    - Valitse resurssillesi uniikki nimi
    - Ota käyttöön seuraavat mallit:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (RAG-moduuleille)
-   - **Tärkeää:** Muista käyttöönoton nimet - niiden on vastattava `.env`-konfiguraatiota
-   - Käyttöönoton jälkeen hae päätepiste ja API-avain "Keys and Endpoint" -osiosta
+   - **Tärkeää:** Merkitse ylös käyttöönoton nimet – niiden on vastattava `.env`-konfiguraatiota
+   - Käyttöönoton jälkeen hae päätepiste ja API-avain kohdasta "Keys and Endpoint"
    - Luo projektin juureen `.env`-tiedosto, jossa on:
-     
+
      **Esimerkki `.env`-tiedostosta:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
-**Mallin käyttöönoton nimeämisohjeet:**
-- Käytä yksinkertaisia, johdonmukaisia nimiä: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Käyttöönoton nimien on täsmättävä täsmälleen `.env`-asetuksiin
-- Yleinen virhe: Mallin luominen yhdellä nimellä, mutta viittaus eri nimeen koodissa
+**Mallin käyttöönoton nimeämiskäytännöt:**
+- Käytä yksinkertaisia, johdonmukaisia nimiä: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Käyttöönoton nimien on vastattava tarkalleen `.env`-tiedostoa
+- Yleinen virhe: luodaan malli yhdellä nimellä, mutta viitataan koodissa toiseen nimeen
 
-### Ongelma: GPT-5 ei ole saatavilla valitussa alueessa
+### Ongelma: GPT-5.2 ei ole käytettävissä valitulla alueella
 
 **Ratkaisu:**
-- Valitse alue, jolla on GPT-5:n käyttöoikeus (esim. eastus, swedencentral)
+- Valitse alue, jolla on GPT-5.2-tuki (esim. eastus2)
 - Tarkista saatavuus: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-
-
-### Ongelma: Riittämätön käyttökiintiö käyttöönotolle
+### Ongelma: Ei riittävästi quota-kapasiteettia käyttöönottoon
 
 **Ratkaisu:**
-1. Pyydä kiintiön korotusta Azure-portaalissa
-2. Tai käytä pienempää kapasiteettia `main.bicep`-tiedostossa (esim. capacity: 10)
+1. Pyydä quotalisäystä Azure-portalissa
+2. Tai käytä pienempää kapasiteettia `main.bicep` tiedostossa (esim. capacity: 10)
 
 ### Ongelma: "Resource not found" paikallisesti ajettaessa
 
 **Ratkaisu:**
-1. Tarkista käyttöönotto: `azd env get-values`
-2. Varmista, että päätepiste ja avain ovat oikein
+1. Varmista käyttöönotto: `azd env get-values`
+2. Tarkista, että päätepiste ja avain ovat oikein
 3. Varmista, että resurssiryhmä on olemassa Azure-portaalissa
 
-### Ongelma: Autentikointi epäonnistui
+### Ongelma: Todennus epäonnistui
 
 **Ratkaisu:**
 - Varmista, että `AZURE_OPENAI_API_KEY` on asetettu oikein
-- Avainmuodon tulee olla 32-merkkinen heksadesimaalinen merkkijono
-- Hanki uusi avain Azure-portaalista tarvittaessa
+- Avain on 32-merkkinen heksadesimaalijono
+- Hanki uusi avain tarvittaessa Azure-portaalista
 
 ### Käyttöönotto epäonnistuu
 
-**Ongelma**: `azd provision` epäonnistuu kiintiö- tai kapasiteettivirheillä
+**Ongelma:** `azd provision` epäonnistuu quota- tai kapasiteettivirheen takia
 
-**Ratkaisu**: 
-1. Kokeile eri aluetta - Katso [Azure-alueiden vaihtaminen](../../../../01-introduction/infra) -osio alueiden konfiguroinnista
-2. Tarkista, että tilauksellasi on Azure OpenAI -kiintiö:
-   
+**Ratkaisu:** 
+1. Kokeile eri aluetta – Katso [Azure-alueen vaihtaminen](../../../../01-introduction/infra) -osio
+2. Tarkista, että tilauksellasi on Azure OpenAI -quota:
+
    **Bash:**
    ```bash
    az cognitiveservices account list-skus --location <your-region>
@@ -352,11 +350,11 @@ Aliverkkotunnuksen nimi, joka muodostetaan tilauksestasi/ympäristöstäsi, on j
 
 ### Sovellus ei yhdistä
 
-**Ongelma**: Java-sovellus näyttää yhteysvirheitä
+**Ongelma:** Java-sovellus näyttää yhteysvirheitä
 
-**Ratkaisu**:
-1. Varmista, että ympäristömuuttujat on viety:
-   
+**Ratkaisu:**
+1. Varmista ympäristömuuttujien vienti:
+
    **Bash:**
    ```bash
    echo $AZURE_OPENAI_ENDPOINT
@@ -369,24 +367,24 @@ Aliverkkotunnuksen nimi, joka muodostetaan tilauksestasi/ympäristöstäsi, on j
    Write-Host $env:AZURE_OPENAI_API_KEY
    ```
 
-2. Tarkista, että päätepisteen muoto on oikea (pitäisi olla `https://xxx.openai.azure.com`)
-3. Varmista, että API-avain on Azure-portaalin ensisijainen tai toissijainen avain
+2. Tarkista päätepisteen muoto (pitää olla `https://xxx.openai.azure.com`)
+3. Varmista, että käytössä on Azure-portaalin ensisijainen tai toissijainen API-avain
 
-**Ongelma**: 401 Unauthorized Azure OpenAI:lta
+**Ongelma:** 401 Unauthorized Azure OpenAI:lta
 
-**Ratkaisu**:
+**Ratkaisu:**
 1. Hanki uusi API-avain Azure-portaalista → Keys and Endpoint
-2. Vie uudelleen `AZURE_OPENAI_API_KEY` -ympäristömuuttuja
-3. Varmista, että mallien käyttöönotot ovat valmiit (tarkista Azure-portaalista)
+2. Vie uudelleen `AZURE_OPENAI_API_KEY` ympäristömuuttuja
+3. Varmista, että mallien käyttöönotto on valmis (tarkista Azure-portaalista)
 
 ### Suorituskykyongelmat
 
-**Ongelma**: Hitaat vastausajat
+**Ongelma:** Hitaat vastausajat
 
-**Ratkaisu**:
+**Ratkaisu:**
 1. Tarkista OpenAI-tokenien käyttö ja rajoitukset Azure-portaalin mittareista
-2. Lisää TPM-kapasiteettia, jos saavut rajoihin
-3. Harkitse korkeamman päättelytason käyttöä (matala/keskitaso/korkea)
+2. Nosta TPM-kapasiteettia, jos saavutat rajoja
+3. Käytä korkeampaa päättelytason asetusta (low/medium/high)
 
 ## Infrastruktuurin päivittäminen
 
@@ -403,16 +401,16 @@ infra/
 
 ## Turvasuositukset
 
-1. **Älä koskaan tallenna API-avaimia versionhallintaan** - Käytä ympäristömuuttujia
-2. **Käytä .env-tiedostoja paikallisesti** - Lisää `.env` `.gitignore`-tiedostoon
-3. **Kierrätä avaimia säännöllisesti** - Luo uusia avaimia Azure-portaalissa
-4. **Rajoita pääsyä** - Käytä Azure RBAC:ia resurssien käyttöoikeuksien hallintaan
-5. **Valvo käyttöä** - Aseta kustannusvaroitukset Azure-portaalissa
+1. **Älä koskaan tallenna API-avaimia versionhallintaan** – Käytä ympäristömuuttujia
+2. **Käytä .env-tiedostoja paikallisesti** – Lisää `.env` `.gitignore`-tiedostoon
+3. **Kierrätä avaimia säännöllisesti** – Luo uudet avaimet Azure-portaalissa
+4. **Rajoita pääsyä** – Käytä Azure RBAC:ia resurssien käyttöoikeuksien hallintaan
+5. **Valvo käyttöä** – Luo kustannushälytyksiä Azure-portaaliin
 
 ## Lisäresurssit
 
 - [Azure OpenAI -palvelun dokumentaatio](https://learn.microsoft.com/azure/ai-services/openai/)
-- [GPT-5 mallin dokumentaatio](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [GPT-5.2 mallin dokumentaatio](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Azure Developer CLI:n dokumentaatio](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Bicep-dokumentaatio](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI virallinen integraatio](https://docs.langchain4j.dev/integrations/language-models/open-ai)
@@ -420,17 +418,17 @@ infra/
 ## Tuki
 
 Ongelmatilanteissa:
-1. Tarkista yllä oleva [vianmäärityksen osio](../../../../01-introduction/infra)
+1. Tarkista yllä oleva [vianmäärityskohdasta](../../../../01-introduction/infra)
 2. Tarkista Azure OpenAI -palvelun tila Azure-portaalissa
-3. Avaa issue repositoriossa
+3. Avaa tiketti tässä repositoriossa
 
 ## Lisenssi
 
-Katso juurihakemistosta [LICENSE](../../../../LICENSE) tiedosto lisätietoja varten.
+Katso juurikansion [LICENSE](../../../../LICENSE) tiedosto lisätietoja varten.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, otathan huomioon, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäinen asiakirja sen alkuperäiskielellä on virallinen lähde. Tärkeissä asioissa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, on hyvä huomioida, että automaattikäännöksissä voi esiintyä virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäisellä kielellä tulee pitää virallisena lähteenä. Tärkeissä asioissa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

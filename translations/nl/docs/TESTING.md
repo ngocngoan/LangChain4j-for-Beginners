@@ -10,7 +10,7 @@
 - [Testfilosofie](../../../docs)
 - [Volgende stappen](../../../docs)
 
-Deze handleiding loodst je door de tests die laten zien hoe je AI-toepassingen test zonder API-sleutels of externe services.
+Deze gids leidt je door de tests die laten zien hoe je AI-applicaties test zonder API-sleutels of externe services.
 
 ## Snel aan de slag
 
@@ -26,30 +26,30 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/nl/test-results.ea5c98d8f3642043.webp" alt="Succesvolle testresultaten" width="800"/>
+<img src="../../../translated_images/nl/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
 
-*Succesvolle testuitvoering waarbij alle tests slagen zonder fouten*
+*Succesvolle tests met alle tests geslaagd zonder fouten*
 
 ## Wat de tests behandelen
 
 Deze cursus richt zich op **unittests** die lokaal worden uitgevoerd. Elke test demonstreert een specifiek LangChain4j-concept in isolatie.
 
-<img src="../../../translated_images/nl/testing-pyramid.2dd1079a0481e53e.webp" alt="Testpiramide" width="800"/>
+<img src="../../../translated_images/nl/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
-*Testpiramide die de balans toont tussen unittests (snel, geïsoleerd), integratietests (echte componenten) en end-to-end-tests. Deze training behandelt unittests.*
+*Testpiramide die de balans toont tussen unittests (snel, geïsoleerd), integratietests (echte componenten) en end-to-end tests. Deze training gaat over unittesten.*
 
-| Module | Tests | Focus | Key Files |
-|--------|-------|-------|-----------|
-| **00 - Snel aan de slag** | 6 | Promptsjablonen en variabelensubstitutie | `SimpleQuickStartTest.java` |
-| **01 - Inleiding** | 8 | Gespreksgeheugen en toestandsgestuurde chat | `SimpleConversationTest.java` |
-| **02 - Prompt-engineering** | 12 | GPT-5-patronen, eagerness-niveaus, gestructureerde uitvoer | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Documentinname, embeddings, gelijkeniszoekopdracht | `DocumentServiceTest.java` |
-| **04 - Hulpmiddelen** | 12 | Functieaanroepen en toolketens | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Model Context Protocol met stdio-transport | `SimpleMcpTest.java` |
+| Module | Tests | Focus | Belangrijke bestanden |
+|--------|-------|-------|----------------------|
+| **00 - Snel aan de slag** | 6 | Promptsjablonen en variabele substitutie | `SimpleQuickStartTest.java` |
+| **01 - Introductie** | 8 | Gespreksgeheugen en stateful chat | `SimpleConversationTest.java` |
+| **02 - Prompt Engineering** | 12 | GPT-5.2 patronen, eagerness-niveaus, gestructureerde output | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Documentinvoer, embeddings, gelijkeniszoektocht | `DocumentServiceTest.java` |
+| **04 - Tools** | 12 | Functieaanroepen en ketening van tools | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Model Context Protocol met Stdio-transport | `SimpleMcpTest.java` |
 
 ## Tests uitvoeren
 
-**Voer alle tests vanuit de root uit:**
+**Alle tests uitvoeren vanaf root:**
 
 **Bash:**
 ```bash
@@ -61,12 +61,12 @@ mvn test
 mvn --% test
 ```
 
-**Voer tests uit voor een specifieke module:**
+**Tests uitvoeren voor een specifieke module:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Of vanuit root
+# Of vanaf root
 mvn test -pl 01-introduction
 ```
 
@@ -77,7 +77,7 @@ cd 01-introduction; mvn --% test
 mvn --% test -pl 01-introduction
 ```
 
-**Voer een enkele testklasse uit:**
+**Een enkele testklasse uitvoeren:**
 
 **Bash:**
 ```bash
@@ -89,45 +89,45 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Voer een specifieke testmethode uit:**
+**Een specifieke testmethode uitvoeren:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#moet de gespreksgeschiedenis behouden
+mvn test -Dtest=SimpleConversationTest#moetGespreksgeschiedenisBewaren
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#moet de gespreksgeschiedenis bijhouden
+mvn --% test -Dtest=SimpleConversationTest#conversatiegeschiedenis behouden
 ```
 
 ## Tests uitvoeren in VS Code
 
 Als je Visual Studio Code gebruikt, biedt de Test Explorer een grafische interface voor het uitvoeren en debuggen van tests.
 
-<img src="../../../translated_images/nl/vscode-testing.f02dd5917289dced.webp" alt="VS Code Testverkenner" width="800"/>
+<img src="../../../translated_images/nl/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*VS Code Testverkenner die de testboom toont met alle Java-testklassen en individuele testmethoden*
+*VS Code Test Explorer die de testboom toont met alle Java-testklassen en individuele testmethoden*
 
 **Tests uitvoeren in VS Code:**
 
-1. Open de Test Explorer door op het bekerpictogram in de Activiteitenbalk te klikken
+1. Open de Test Explorer door op het bekervormige icoon in de Activiteitenbalk te klikken
 2. Vouw de testboom uit om alle modules en testklassen te zien
 3. Klik op de afspeelknop naast een test om deze afzonderlijk uit te voeren
 4. Klik op "Run All Tests" om de hele suite uit te voeren
-5. Klik met de rechtermuisknop op een test en selecteer "Debug Test" om breakpoints te zetten en stap voor stap door de code te gaan
+5. Klik met de rechtermuisknop op een test en selecteer "Debug Test" om breakpoints te zetten en door de code te stappen
 
-De Test Explorer toont groene vinkjes voor geslaagde tests en geeft gedetailleerde foutmeldingen wanneer tests mislukken.
+De Test Explorer toont groene vinkjes bij geslaagde tests en geeft gedetailleerde foutmeldingen wanneer tests mislukken.
 
 ## Testpatronen
 
 ### Patroon 1: Testen van promptsjablonen
 
-Het eenvoudigste patroon test promptsjablonen zonder een AI-model aan te roepen. Je controleert of het vervangen van variabelen correct werkt en of prompts correct zijn opgemaakt.
+Het eenvoudigste patroon test promptsjablonen zonder een AI-model aan te roepen. Je verifieert dat variabele substitutie correct werkt en dat prompts correct zijn opgemaakt.
 
-<img src="../../../translated_images/nl/prompt-template-testing.b902758ddccc8dee.webp" alt="Testen van promptsjablonen" width="800"/>
+<img src="../../../translated_images/nl/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*Testen van promptsjablonen die de stroom van variabelensubstitutie laten zien: sjabloon met plaatsaanduidingen → waarden toegepast → geformatteerde uitvoer geverifieerd*
+*Testen van promptsjablonen die de variabele substitutiestroom tonen: sjabloon met tijdelijke aanduidingen → waarden toegepast → geformatteerde output gecontroleerd*
 
 ```java
 @Test
@@ -148,25 +148,25 @@ void testPromptTemplateFormatting() {
 
 Deze test bevindt zich in `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
-**Voer het uit:**
+**Uitvoeren:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testPromptSjabloonOpmaak
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testPromptTemplateOpmaak
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#test prompt-sjabloonopmaak
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testPromptTemplateOpmaak
 ```
 
-### Patroon 2: Het mocken van taalmodellen
+### Patroon 2: Mocking van taalmodellen
 
-Bij het testen van conversatielogica, gebruik Mockito om nepmodellen te maken die vooraf bepaalde antwoorden teruggeven. Dit maakt tests snel, gratis en deterministisch.
+Bij het testen van gesprekslogica gebruik je Mockito om nepmodellen te maken die vooraf bepaalde antwoorden teruggeven. Dit maakt tests snel, gratis en deterministisch.
 
-<img src="../../../translated_images/nl/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs echte API-vergelijking" width="800"/>
+<img src="../../../translated_images/nl/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*Vergelijking die laat zien waarom mocks de voorkeur hebben voor testen: ze zijn snel, gratis, deterministisch en vereisen geen API-sleutels*
+*Vergelijking die laat zien waarom mocks de voorkeur hebben voor testen: snel, gratis, deterministisch en geen API-sleutels nodig*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +211,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 gebruikersberichten + 3 AI-berichten
+        assertThat(history).hasSize(6); // 3 gebruikers + 3 AI-berichten
     }
 }
 ```
 
-Dit patroon verschijnt in `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. De mock zorgt voor consistent gedrag zodat je kunt verifiëren dat geheugenbeheer correct werkt.
+Dit patroon verschijnt in `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. De mock zorgt voor consistente gedrag zodat je kunt verifiëren dat geheugengebruik correct werkt.
 
-### Patroon 3: Testen van conversatie-isolatie
+### Patroon 3: Testen van gespreksisolatie
 
-Het gespreksgeheugen moet meerdere gebruikers gescheiden houden. Deze test verifieert dat conversaties geen contexten door elkaar halen.
+Het gespreksgeheugen moet meerdere gebruikers gescheiden houden. Deze test verifieert dat gesprekken geen context mengen.
 
-<img src="../../../translated_images/nl/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversatie-isolatie" width="800"/>
+<img src="../../../translated_images/nl/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*Testen van conversatie-isolatie die aparte geheugenopslag voor verschillende gebruikers toont om contextvermenging te voorkomen*
+*Testen van gespreksisolatie met afzonderlijke geheugens voor verschillende gebruikers om contextvermenging te voorkomen*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Elke conversatie onderhoudt zijn eigen onafhankelijke geschiedenis. In productiesystemen is deze isolatie cruciaal voor multi-user applicaties.
+Elk gesprek onderhoudt zijn eigen onafhankelijke geschiedenis. In productiesystemen is deze isolatie cruciaal voor multi-user applicaties.
 
-### Patroon 4: Testen van tools onafhankelijk
+### Patroon 4: Tools onafhankelijk testen
 
-Tools zijn functies die de AI kan aanroepen. Test ze direct om te verzekeren dat ze correct werken ongeacht AI-beslissingen.
+Tools zijn functies die de AI kan aanroepen. Test ze rechtstreeks om te verzekeren dat ze correct werken, ongeacht AI-beslissingen.
 
-<img src="../../../translated_images/nl/tools-testing.3e1706817b0b3924.webp" alt="Testen van tools" width="800"/>
+<img src="../../../translated_images/nl/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*Onafhankelijk testen van tools waarbij mock-uitvoering van tools zonder AI-aanroepen wordt getoond om de bedrijfslogica te verifiëren*
+*Tools onafhankelijk testen, waarbij mock-uitvoering van tools wordt getoond zonder AI-aanroepen om de bedrijfslogica te verifiëren*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Deze tests uit `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` valideren de toollogica zonder AI-betrokkenheid. Het kettingsvoorbeeld toont hoe de uitvoer van de ene tool als invoer voor een andere dient.
+Deze tests uit `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` valideren de logica van tools zonder AI-betrokkenheid. Het kettingvoorbeeld laat zien hoe de output van de ene tool de input voor een andere voedt.
 
-### Patroon 5: In-memory RAG-testen
+### Patroon 5: In-memory RAG testen
 
-RAG-systemen vereisen traditioneel vector-databases en embedding-services. Het in-memory-patroon stelt je in staat om de hele pijplijn te testen zonder externe afhankelijkheden.
+RAG-systemen vereisen traditioneel vectordatabases en embeddingdiensten. Het in-memory patroon laat je de hele pijplijn testen zonder externe afhankelijkheden.
 
-<img src="../../../translated_images/nl/rag-testing.ee7541b1e23934b1.webp" alt="In-memory RAG-testen" width="800"/>
+<img src="../../../translated_images/nl/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*In-memory RAG-testworkflow die document parsing, embedding-opslag en gelijkeniszoeking toont zonder een database te vereisen*
+*In-memory RAG testworkflow die documentparsering, embeddingopslag en gelijkeniszoektocht toont zonder een database te vereisen*
 
 ```java
 @Test
@@ -304,15 +304,15 @@ void testProcessTextDocument() {
 }
 ```
 
-Deze test uit `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` creëert een document in het geheugen en verifieert chunking en metadata-afhandeling.
+Deze test uit `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` maakt een document in het geheugen en verifieert chunking en metadata-afhandeling.
 
-### Patroon 6: MCP-integratietesten
+### Patroon 6: MCP integratietesten
 
-De MCP-module test de integratie van het Model Context Protocol met behulp van stdio-transport. Deze tests verifiëren dat je applicatie MCP-servers als subprocessen kan starten en ermee kan communiceren.
+De MCP-module test de Model Context Protocol-integratie met stdio transport. Deze tests verifiëren dat je applicatie MCP-servers als subprocessen kan opstarten en ermee communiceren.
 
 De tests in `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` valideren het gedrag van de MCP-client.
 
-**Voer ze uit:**
+**Uitvoeren:**
 
 **Bash:**
 ```bash
@@ -326,36 +326,36 @@ cd 05-mcp; mvn --% test
 
 ## Testfilosofie
 
-Test je code, niet de AI. Je tests zouden de code die je schrijft moeten valideren door te controleren hoe prompts worden opgebouwd, hoe geheugen wordt beheerd en hoe tools worden uitgevoerd. AI-antwoorden variëren en zouden geen deel van testasserties moeten uitmaken. Vraag jezelf of je promptsjabloon variabelen correct vervangt, niet of de AI het juiste antwoord geeft.
+Test je code, niet de AI. Je tests moeten de code die je schrijft valideren door te controleren hoe prompts worden opgebouwd, hoe geheugen wordt beheerd en hoe tools worden uitgevoerd. AI-reacties variëren en mogen geen onderdeel zijn van testasserties. Vraag jezelf af of je promptsjabloon variabelen correct vervangt, niet of de AI het juiste antwoord geeft.
 
-Gebruik mocks voor taalmodellen. Het zijn externe afhankelijkheden die traag, duur en niet-deterministisch zijn. Mocken maakt tests snel (milliseconden in plaats van seconden), gratis zonder API-kosten, en deterministisch met elke keer hetzelfde resultaat.
+Gebruik mocks voor taalmodellen. Dit zijn externe afhankelijkheden die traag, duur en niet-deterministisch zijn. Mocking maakt tests snel (milliseconden in plaats van seconden), gratis (geen API-kosten) en deterministisch (altijd hetzelfde resultaat).
 
-Houd tests onafhankelijk. Elke test moet zijn eigen gegevens opzetten, niet van andere tests afhankelijk zijn, en zichzelf opruimen. Tests moeten slagen ongeacht de uitvoeringsvolgorde.
+Houd tests onafhankelijk. Elke test moet zijn eigen gegevens opzetten, niet afhangen van andere tests, en zichzelf opruimen. Tests moeten slagen ongeacht de uitvoeringsvolgorde.
 
-Test randgevallen buiten het 'happy path'. Probeer lege invoer, zeer grote invoer, speciale tekens, ongeldige parameters en grenswaarden. Deze onthullen vaak bugs die normaal gebruik niet blootlegt.
+Test randgevallen voorbij het 'happy path'. Probeer lege invoer, zeer grote invoer, speciale tekens, ongeldige parameters en grensvoorwaarden. Deze onthullen vaak bugs die normaal gebruik niet exposeert.
 
-Gebruik beschrijvende namen. Vergelijk `shouldMaintainConversationHistoryAcrossMultipleMessages()` met `test1()`. De eerste vertelt precies wat er getest wordt, wat het debuggen van fouten veel eenvoudiger maakt.
+Gebruik beschrijvende namen. Vergelijk `shouldMaintainConversationHistoryAcrossMultipleMessages()` met `test1()`. De eerste vertelt precies wat getest wordt, wat het debuggen van fouten veel makkelijker maakt.
 
 ## Volgende stappen
 
-Nu je de testpatronen begrijpt, duik dieper in elk module:
+Nu je de testpatronen begrijpt, duik dieper in elke module:
 
 - **[00 - Snel aan de slag](../00-quick-start/README.md)** - Begin met de basis van promptsjablonen
-- **[01 - Inleiding](../01-introduction/README.md)** - Leer gespreksgeheugenbeheer
-- **[02 - Prompt-engineering](../02-prompt-engineering/README.md)** - Beheers GPT-5 promptpatronen
-- **[03 - RAG](../03-rag/README.md)** - Bouw retrieval-augmented generation-systemen
+- **[01 - Introductie](../01-introduction/README.md)** - Leer gespreksgeheugenbeheer
+- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - Beheers GPT-5.2 promptingpatronen
+- **[03 - RAG](../03-rag/README.md)** - Bouw retrieval-augmented generatie systemen
 - **[04 - Tools](../04-tools/README.md)** - Implementeer functieaanroepen en toolketens
 - **[05 - MCP](../05-mcp/README.md)** - Integreer Model Context Protocol
 
-De README van elke module geeft gedetailleerde uitleg over de hier geteste concepten.
+De README van elke module biedt gedetailleerde uitleg over de hier geteste concepten.
 
 ---
 
-**Navigatie:** [← Terug naar hoofd](../README.md)
+**Navigatie:** [← Terug naar hoofdmenu](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de oorspronkelijke taal moet als de gezaghebbende bron worden beschouwd. Voor kritieke informatie wordt een professionele, menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+Dit document is vertaald met behulp van de AI vertaaldienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de originele taal moet als de gezaghebbende bron worden beschouwd. Voor kritieke informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

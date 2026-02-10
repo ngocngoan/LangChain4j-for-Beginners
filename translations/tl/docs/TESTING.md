@@ -1,20 +1,20 @@
-# Pagsubok ng Mga Aplikasyon ng LangChain4j
+# Pagsusuri ng mga LangChain4j Application
 
 ## Talaan ng Nilalaman
 
-- [Mabilis na Pagsisimula](../../../docs)
-- [Saklaw ng mga Pagsubok](../../../docs)
-- [Pagpapatakbo ng mga Pagsubok](../../../docs)
-- [Pagpapatakbo ng mga Pagsubok sa VS Code](../../../docs)
-- [Mga Pattern ng Pagsubok](../../../docs)
+- [Mabilisang Pagsisimula](../../../docs)
+- [Saklaw ng mga Pagsusuri](../../../docs)
+- [Pagsasagawa ng mga Pagsusuri](../../../docs)
+- [Pagsasagawa ng mga Pagsusuri sa VS Code](../../../docs)
+- [Mga Pattern ng Pagsusuri](../../../docs)
 - [Pilosopiya ng Pagsusuri](../../../docs)
 - [Mga Susunod na Hakbang](../../../docs)
 
-Ang gabay na ito ay naglalakad sa iyo sa mga pagsubok na nagpapakita kung paano subukan ang mga AI na aplikasyon nang hindi nangangailangan ng mga API key o external na serbisyo.
+Ang gabay na ito ay dadalhin ka sa mga pagsusuri na nagpapakita kung paano magsuri ng mga AI application nang hindi nangangailangan ng mga API key o panlabas na serbisyo.
 
-## Mabilis na Pagsisimula
+## Mabilisang Pagsisimula
 
-Patakbuhin ang lahat ng pagsubok sa isang utos lamang:
+Patakbuhin lahat ng pagsusuri gamit ang isang utos:
 
 **Bash:**
 ```bash
@@ -26,30 +26,30 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/tl/test-results.ea5c98d8f3642043.webp" alt="Matagumpay na Resulta ng Pagsubok" width="800"/>
+<img src="../../../translated_images/tl/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
 
-*Matagumpay na pagpapatakbo ng mga pagsubok na nagpapakita na lahat ng pagsubok ay pumasa nang walang pagkabigo*
+*Matagumpay na pagsasagawa ng pagsusuri na nagpapakita ng lahat ng pagsusuri ay pumasa na walang pagkabigo*
 
-## Saklaw ng mga Pagsubok
+## Saklaw ng mga Pagsusuri
 
-Ang kurso na ito ay nakatuon sa **unit tests** na tumatakbo nang lokal. Bawat pagsubok ay nagpapakita ng isang partikular na konsepto ng LangChain4j nang hiwalay.
+Ang kursong ito ay nakatuon sa **unit tests** na tumatakbo nang lokal. Bawat pagsusuri ay nagpapakita ng isang partikular na konsepto ng LangChain4j nang hiwalay.
 
-<img src="../../../translated_images/tl/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramide ng Pagsubok" width="800"/>
+<img src="../../../translated_images/tl/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
-*Piramide ng pagsusuri na nagpapakita ng balanse sa pagitan ng unit tests (mabilis, hiwalay), integration tests (mga tunay na bahagi), at end-to-end tests. Sinasaklaw ng pagsasanay na ito ang unit testing.*
+*Piramide ng pagsusuri na nagpapakita ng balanse sa pagitan ng unit tests (mabilis, hiwalay), integration tests (mga totoong bahagi), at end-to-end tests. Ang pagsasanay na ito ay sumasaklaw sa unit testing.*
 
-| Modul | Mga Pagsubok | Pokus | Pangunahing Mga File |
-|--------|-------|-------|-----------|
-| **00 - Mabilis na Pagsisimula** | 6 | Prompt templates at substitution ng variable | `SimpleQuickStartTest.java` |
-| **01 - Panimula** | 8 | Memorya ng pag-uusap at stateful na chat | `SimpleConversationTest.java` |
-| **02 - Prompt Engineering** | 12 | Mga pattern ng GPT-5, antas ng eagerness, nakaayos na output | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Pag-ingest ng dokumento, embeddings, similarity search | `DocumentServiceTest.java` |
-| **04 - Tools** | 12 | Function calling at tool chaining | `SimpleToolsTest.java` |
+| Module | Mga Pagsusuri | Pagtutok | Pangunahing Files |
+|--------|--------------|----------|-------------------|
+| **00 - Quick Start** | 6 | Mga prompt template at pagpapalit ng variable | `SimpleQuickStartTest.java` |
+| **01 - Introduction** | 8 | Memorya ng pag-uusap at stateful chat | `SimpleConversationTest.java` |
+| **02 - Prompt Engineering** | 12 | Mga pattern ng GPT-5.2, antas ng kasigasigan, istrakturadong output | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Pagkain ng dokumento, embeddings, paghahanap ng pagkakatulad | `DocumentServiceTest.java` |
+| **04 - Tools** | 12 | Pagtawag ng function at pag-chain ng mga tool | `SimpleToolsTest.java` |
 | **05 - MCP** | 8 | Model Context Protocol gamit ang Stdio transport | `SimpleMcpTest.java` |
 
-## Pagpapatakbo ng mga Pagsubok
+## Pagsasagawa ng mga Pagsusuri
 
-**Patakbuhin ang lahat ng pagsubok mula sa root:**
+**Patakbuhin lahat ng pagsusuri mula sa root:**
 
 **Bash:**
 ```bash
@@ -61,23 +61,23 @@ mvn test
 mvn --% test
 ```
 
-**Patakbuhin ang mga pagsubok para sa isang partikular na modul:**
+**Patakbuhin ang mga pagsusuri para sa isang partikular na module:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# O mula sa root
+# O mula sa ugat
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# O mula sa root
+# O mula sa ugat
 mvn --% test -pl 01-introduction
 ```
 
-**Patakbuhin ang isang solong test class:**
+**Patakbuhin ang isang klase ng pagsusuri lamang:**
 
 **Bash:**
 ```bash
@@ -89,45 +89,45 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Patakbuhin ang isang partikular na test method:**
+**Patakbuhin ang isang partikular na method ng pagsusuri:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#dapat panatilihin ang kasaysayan ng pag-uusap
+mvn test -Dtest=SimpleConversationTest#dapatPanatilihinAngKasaysayanNgPag-uusap
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#dapatPanatilihinAngKasaysayanNgPagUusap
+mvn --% test -Dtest=SimpleConversationTest#dapatPanatilihinAngKasaysayanNgUsapan
 ```
 
-## Pagpapatakbo ng mga Pagsubok sa VS Code
+## Pagsasagawa ng Mga Pagsusuri sa VS Code
 
-Kung gumagamit ka ng Visual Studio Code, nagbibigay ang Test Explorer ng graphical na interface para sa pagpapatakbo at pag-debug ng mga pagsubok.
+Kung gumagamit ka ng Visual Studio Code, nagbibigay ang Test Explorer ng grapikal na interface para sa pagpapatakbo at pag-debug ng mga pagsusuri.
 
 <img src="../../../translated_images/tl/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*Ipinapakita ng VS Code Test Explorer ang puno ng mga pagsubok na may lahat ng Java test classes at mga indibidwal na test methods*
+*VS Code Test Explorer na nagpapakita ng puno ng pagsusuri na may lahat ng Java test classes at indibidwal na mga test methods*
 
-**Para patakbuhin ang mga pagsubok sa VS Code:**
+**Para magpatakbo ng mga pagsusuri sa VS Code:**
 
 1. Buksan ang Test Explorer sa pamamagitan ng pag-click sa beaker icon sa Activity Bar
-2. Palawakin ang puno ng mga pagsubok upang makita ang lahat ng mga modul at test classes
-3. I-click ang play button sa tabi ng anumang pagsubok upang patakbuhin ito nang paisa-isa
-4. I-click ang "Run All Tests" upang isagawa ang buong suite
-5. I-right-click ang anumang pagsubok at piliin ang "Debug Test" upang mag-set ng breakpoints at i-step through ang code
+2. Palawakin ang puno ng pagsusuri upang makita lahat ng mga module at test classes
+3. I-click ang play button sa tabi ng anumang pagsusuri upang patakbuhin ito nang paisa-isa
+4. I-click ang "Run All Tests" upang isakatuparan ang buong suite
+5. I-right-click ang anumang pagsusuri at piliin ang "Debug Test" para mag-set ng breakpoints at mag-step sa code
 
-Ipinapakita ng Test Explorer ang berdeng checkmarks para sa mga pumapasang pagsubok at nagbibigay ng detalyadong mga mensahe ng pagkabigo kapag may mga pumapalpak na pagsubok.
+Ipinapakita ng Test Explorer ang mga berdeng tsekmark para sa mga pumasa at nagbibigay ng detalyadong mensahe ng pagkabigo kapag may pumalya.
 
-## Mga Pattern ng Pagsubok
+## Mga Pattern ng Pagsusuri
 
 ### Pattern 1: Pagsusuri ng Prompt Templates
 
-Ang pinakamadaling pattern ay sinusuri ang prompt templates nang hindi tumatawag sa anumang AI model. Kinukumpirma mo na ang substitution ng variable ay gumagana nang tama at ang mga prompt ay naka-format ayon sa inaasahan.
+Ang pinakasimpleng pattern ay sumusuri sa mga prompt template nang hindi tinatawagan ang anumang AI model. Tinitiyak mo na gumagana nang tama ang pagpapalit ng variable at ang mga prompt ay naka-format ayon sa inaasahan.
 
-<img src="../../../translated_images/tl/prompt-template-testing.b902758ddccc8dee.webp" alt="Pagsusuri ng Prompt Template" width="800"/>
+<img src="../../../translated_images/tl/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*Pagsusuri ng prompt templates na nagpapakita ng daloy ng substitution ng variable: template na may placeholders → inilapat na mga halaga → na-verify ang formatted output*
+*Pagsusuri ng mga prompt template na nagpapakita ng daloy ng pagpapalit ng variable: template na may placeholder → inilapat na mga halaga → beripikadong naka-format na output*
 
 ```java
 @Test
@@ -146,27 +146,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-Ang pagsubok na ito ay nasa `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+Ang pagsusuring ito ay nasa `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
 **Patakbuhin ito:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#pagsubok sa pag-format ng template ng prompt
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#pagsubokSaPormatNgPromptTemplate
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#pagsubok ng pag-format ng template ng prompt
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#pagsubokSaPag-formatNgTemplateNgPrompt
 ```
 
-### Pattern 2: Mocking ng Language Models
+### Pattern 2: Pagmomock ng mga Language Model
 
-Kapag sinusuri ang logic ng pag-uusap, gumamit ng Mockito upang lumikha ng mga pekeng modelo na nagbabalik ng mga predetermined na tugon. Ginagawa nitong mabilis, libre, at deterministic ang mga pagsubok.
+Kapag sinusuri ang logic ng pag-uusap, gumamit ng Mockito para gumawa ng pekeng modelo na nagbibigay ng mga naunang response. Ginagawa nitong mabilis, libre, at deterministic ang mga pagsusuri.
 
-<img src="../../../translated_images/tl/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock kumpara sa Real API" width="800"/>
+<img src="../../../translated_images/tl/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*Pagkukumpara na nagpapakita kung bakit mas pinipili ang mga mock para sa pagsusuri: mabilis, libre, deterministic, at hindi nangangailangan ng mga API key*
+*Paghahambing na nagpapakita kung bakit mas gusto ang mga mock para sa pagsusuri: mabilis sila, libre, deterministic, at hindi nangangailangan ng API key*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -216,15 +216,15 @@ class SimpleConversationTest {
 }
 ```
 
-Lumilitaw ang pattern na ito sa `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Tinitiyak ng mock ang pare-parehong pag-uugali upang ma-verify mong gumagana nang tama ang pamamahala ng memorya.
+Ang pattern na ito ay makikita sa `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Tinitiyak ng mock ang consistent na pag-uugali upang ma-verify mong gumagana nang tama ang memory management.
 
-### Pattern 3: Pagsusuri ng Isolasyon ng Pag-uusap
+### Pattern 3: Pagsusuri ng Pag-iisa ng Pag-uusap
 
-Dapat panatilihin ng memorya ng pag-uusap ang hiwalay na mga user. Tinutukoy ng pagsubok na ito na hindi naghalo-halo ang mga konteksto ng mga pag-uusap.
+Dapat mapanatili ng conversation memory na hiwalay ang maraming gumagamit. Tinutiyak ng pagsusuring ito na hindi nagtatagpo ang mga konteksto ng mga pag-uusap.
 
-<img src="../../../translated_images/tl/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Isolasyon ng Pag-uusap" width="800"/>
+<img src="../../../translated_images/tl/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*Pagsusuri ng isolasyon ng pag-uusap na nagpapakita ng magkahiwalay na mga tindahan ng memorya para sa iba't ibang user upang maiwasan ang paghahalo ng konteksto*
+*Pagsusuri ng pag-iisa ng pag-uusap na nagpapakita ng magkahiwalay na memory store para sa iba't ibang gumagamit upang maiwasan ang pagsasama ng konteksto*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Bawat pag-uusap ay nagpapanatili ng sariling independiyenteng kasaysayan. Sa mga production system, kritikal ang isolasyong ito para sa mga multi-user na aplikasyon.
+Bawat pag-uusap ay nagpapanatili ng sarili nitong independiyenteng kasaysayan. Sa mga production system, mahalaga ang pag-iisang ito para sa mga multi-user na aplikasyon.
 
-### Pattern 4: Pagsusuri ng Mga Tool nang Hiwalay
+### Pattern 4: Pagsusuri ng Mga Tool nang Hiwa-hiwalay
 
-Ang mga tool ay mga function na maaaring tawagin ng AI. Subukin ang mga ito nang direkta upang matiyak na gumagana ang mga ito nang tama kahit na hindi pinipili ng AI ang mga ito.
+Ang mga tool ay mga function na maaaring tawagan ng AI. Suriin sila nang diretso upang matiyak na gumagana nang tama kahit ano pa man ang desisyon ng AI.
 
-<img src="../../../translated_images/tl/tools-testing.3e1706817b0b3924.webp" alt="Pagsusuri ng Mga Tool" width="800"/>
+<img src="../../../translated_images/tl/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*Pagsusuri ng mga tool nang hiwalay na nagpapakita ng mock tool execution nang walang AI calls upang i-verify ang business logic*
+*Pagsusuri ng mga tool nang hiwalay na nagpapakita ng pagtakbo ng mock tool nang walang tawag sa AI upang beripikahin ang business logic*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Ang mga pagsubok na ito mula sa `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` ay nagva-validate ng tool logic nang walang pakikialam ng AI. Ipinapakita ng chaining example kung paano ang output ng isang tool ay nagsisilbing input sa isa pa.
+Ang mga pagsusuring ito mula sa `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` ay nagpapatunay ng logic ng tool nang walang involvement ng AI. Ang halimbawa ng pag-chain ay nagpapakita kung paano ang output ng isang tool ay nagiging input ng iba.
 
 ### Pattern 5: In-Memory RAG Testing
 
-Kadalasan nangangailangan ang mga RAG system ng vector databases at embedding services. Pinapayagan ka ng in-memory pattern na suriin ang buong pipeline nang walang external na dependencies.
+Tradisyonal na nangangailangan ang RAG systems ng vector databases at embedding services. Pinapayagan ka ng in-memory pattern na suriin ang buong pipeline nang walang panlabas na dependency.
 
 <img src="../../../translated_images/tl/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*In-memory RAG testing workflow na nagpapakita ng pag-parse ng dokumento, pag-iimbak ng embedding, at similarity search nang hindi nangangailangan ng database*
+*In-memory RAG testing workflow na nagpapakita ng pag-parse ng dokumento, pag-imbak ng embedding, at paghahanap ng pagkakatulad nang hindi nangangailangan ng database*
 
 ```java
 @Test
@@ -304,13 +304,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Ang pagsubok na ito mula sa `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` ay lumilikha ng dokumento sa memorya at tinitiyak ang chunking at paghawak ng metadata.
+Ang pagsusuring ito mula sa `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` ay lumilikha ng dokumento sa memorya at tinitiyak ang chunking at paghawak ng metadata.
 
 ### Pattern 6: MCP Integration Testing
 
-Tinutest ng MCP modul ang integrasyon ng Model Context Protocol gamit ang stdio transport. Tinitiyak ng mga pagsubok na ito na kaya ng iyong aplikasyon na mag-spawn at makipag-komunikasyon sa MCP servers bilang mga subprocess.
+Sinusuri ng MCP module ang integrasyon ng Model Context Protocol gamit ang stdio transport. Tinitiyak ng mga pagsusuring ito na kaya ng iyong application na mag-spawn at makipag-komunikasyon sa mga MCP server bilang subprocess.
 
-Ang mga pagsubok sa `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` ay nagva-validate ng pag-uugali ng MCP client.
+Ang mga pagsusuri sa `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` ay nagpapatunay ng pag-uugali ng MCP client.
 
 **Patakbuhin ang mga ito:**
 
@@ -326,36 +326,36 @@ cd 05-mcp; mvn --% test
 
 ## Pilosopiya ng Pagsusuri
 
-Subukan ang iyong code, hindi ang AI. Dapat i-validate ng iyong mga pagsubok ang code na sinusulat mo sa pamamagitan ng pagsuri kung paano binubuo ang mga prompt, kung paano pinamamahalaan ang memorya, at kung paano nagpapatupad ang mga tool. Nag-iiba-iba ang mga tugon ng AI at hindi dapat maging bahagi ng mga assertion ng pagsubok. Tanungin ang iyong sarili kung tama bang nagsasubstitute ng mga variable ang iyong prompt template, hindi kung nagbibigay ba ang AI ng tamang sagot.
+Suriin ang iyong code, hindi ang AI. Dapat patotohanan ng iyong mga pagsusuri ang code na sinusulat mo sa pamamagitan ng pagsuri kung paano itinatayo ang mga prompt, kung paano pinangangasiwaan ang memorya, at kung paano gumagana ang mga tool. Nag-iiba-iba ang mga sagot ng AI kaya hindi ito dapat bahagi ng mga assertion sa pagsusuri. Tanungin ang iyong sarili kung tama bang napapalitan ang mga variable sa prompt template, hindi kung tama ang sagot ng AI.
 
-Gumamit ng mocks para sa language models. Sila ang mga external na dependency na mabagal, magastos, at hindi deterministic. Ginagawang mabilis ng mocking ang mga pagsubok na may millisecond sa halip na segundo, libre nang walang gastos sa API, at deterministic na may pare-parehong resulta sa bawat oras.
+Gumamit ng mocks para sa mga language model. Sila ay panlabas na dependency na mabagal, mahal, at hindi deterministic. Ginagawang mabilis ng mocking ang mga pagsusuri na nasa milliseconds sa halip na segundo, libre nang walang gastos sa API, at deterministic na palaging pareho ang resulta.
 
-Panatilihing independyente ang mga pagsubok. Bawat pagsubok ay dapat mag-set up ng sarili nitong data, hindi umasa sa ibang pagsubok, at maglinis pagkatapos nito. Dapat pumasa ang mga pagsubok anuman ang pagkakasunod-sunod ng pagpapatupad.
+Panatilihin ang pagiging malaya ng mga pagsusuri. Dapat ang bawat pagsusuri ay naghahanda ng sarili nitong data, hindi umaasa sa ibang pagsusuri, at naglilinis pagkatapos gawin. Dapat pumasa ang mga pagsusuri kahit ano pa man ang pagkakasunod-sunod ng pagpapatakbo.
 
-Subukan ang mga edge case lampas sa happy path. Subukan ang mga walang laman na input, napakalaking input, espesyal na mga character, invalid na mga parameter, at mga boundary condition. Madalas nilang natutuklasan ang mga bug na hindi ipinapakita ng normal na paggamit.
+Suriin ang mga edge case lampas sa masayang daan. Subukan ang mga walang laman na input, napakalalaking input, espesyal na mga karakter, hindi wastong mga parameter, at mga boundary condition. Madalas nitong naipapakita ang mga bug na hindi lumalabas sa normal na gamit.
 
-Gumamit ng mga deskriptibong pangalan. Ihambing ang `shouldMaintainConversationHistoryAcrossMultipleMessages()` sa `test1()`. Sinasabi ng una nang eksakto kung ano ang sinusubok, na nagpapadali sa pag-debug ng mga pagkabigong mas madali.
+Gumamit ng mga mapanglarawang pangalan. Ihambing ang `shouldMaintainConversationHistoryAcrossMultipleMessages()` sa `test1()`. Ang una ay nagsasabi nang eksakto kung ano ang sinusuri, ginagawang mas madali ang pag-debug ng mga pagkabigo.
 
 ## Mga Susunod na Hakbang
 
-Ngayon na nauunawaan mo ang mga pattern ng pagsusuri, sumisid pa nang mas malalim sa bawat modul:
+Ngayon na nauunawaan mo na ang mga pattern ng pagsusuri, sumisid nang mas malalim sa bawat module:
 
-- **[00 - Mabilis na Pagsisimula](../00-quick-start/README.md)** - Magsimula sa mga pangunahing prompt template
-- **[01 - Panimula](../01-introduction/README.md)** - Matutunan ang pamamahala ng memorya ng pag-uusap
-- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - Masterin ang mga pattern ng prompting para sa GPT-5
-- **[03 - RAG](../03-rag/README.md)** - Bumuo ng mga retrieval-augmented generation system
-- **[04 - Tools](../04-tools/README.md)** - Ipatupad ang function calling at tool chains
-- **[05 - MCP](../05-mcp/README.md)** - I-integrate ang Model Context Protocol
+- **[00 - Quick Start](../00-quick-start/README.md)** - Magsimula sa mga batayan ng prompt template
+- **[01 - Introduction](../01-introduction/README.md)** - Matutunan ang pamamahala ng memorya ng pag-uusap
+- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - Maging bihasa sa mga pattern ng GPT-5.2 prompting
+- **[03 - RAG](../03-rag/README.md)** - Bumuo ng retrieval-augmented generation systems
+- **[04 - Tools](../04-tools/README.md)** - Ipatupad ang pagtawag ng function at pag-chain ng mga tool
+- **[05 - MCP](../05-mcp/README.md)** - Isama ang Model Context Protocol
 
-Nagbibigay ang bawat README ng modul ng mga detalyadong paliwanag ng mga konseptong sinusubok dito.
+Ang README ng bawat module ay nagbibigay ng detalyadong paliwanag ng mga konseptong nasusuri dito.
 
 ---
 
-**Navigasyon:** [← Bumalik sa Pangunahing](../README.md)
+**Navigation:** [← Bumalik sa Pangunahing Pahina](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Paunawa:
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagaman sinisikap naming maging tumpak, pakitandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o di-tumpak na impormasyon. Ang orihinal na dokumento sa kanyang orihinal na wika ang dapat ituring na pinagmumulan ng otoridad. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasaling-tao na isinagawa ng isang tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na nagmula sa paggamit ng pagsasaling ito.
+**Pagtatanggi**:
+Ang dokumentong ito ay isinalin gamit ang AI na serbisyo sa pagsasalin na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat nagsusumikap kami para sa katumpakan, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o kamalian. Ang orihinal na dokumento sa sariling wika nito ang dapat ituring na pangunahing sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaintindihan o maling interpretasyon na nagmumula sa paggamit ng pagsasaling ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

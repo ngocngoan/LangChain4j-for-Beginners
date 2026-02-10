@@ -1,13 +1,13 @@
-# Azure-infrastructuur voor LangChain4j Aan de slag
+# Azure-infrastructuur voor LangChain4j Aan de Slag
 
 ## Inhoudsopgave
 
 - [Vereisten](../../../../01-introduction/infra)
 - [Architectuur](../../../../01-introduction/infra)
-- [Gemaakte bronnen](../../../../01-introduction/infra)
-- [Snel aan de slag](../../../../01-introduction/infra)
+- [Gemaakte resources](../../../../01-introduction/infra)
+- [Quick Start](../../../../01-introduction/infra)
 - [Configuratie](../../../../01-introduction/infra)
-- [Beheeropdrachten](../../../../01-introduction/infra)
+- [Beheercommando's](../../../../01-introduction/infra)
 - [Kostenoptimalisatie](../../../../01-introduction/infra)
 - [Monitoring](../../../../01-introduction/infra)
 - [Probleemoplossing](../../../../01-introduction/infra)
@@ -17,24 +17,24 @@
 - [Beveiligingsaanbevelingen](../../../../01-introduction/infra)
 - [Aanvullende bronnen](../../../../01-introduction/infra)
 
-Deze map bevat de Azure-infrastructuur als code (IaC) met Bicep en Azure Developer CLI (azd) voor het implementeren van Azure OpenAI-resources.
+Deze map bevat de Azure infrastructuur als code (IaC) met Bicep en Azure Developer CLI (azd) voor het uitrollen van Azure OpenAI-resources.
 
 ## Vereisten
 
-- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (versie 2.50.0 of later)
-- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (versie 1.5.0 of later)
-- Een Azure-abonnement met rechten om resources te maken
+- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (versie 2.50.0 of hoger)
+- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (versie 1.5.0 of hoger)
+- Een Azure-abonnement met permissies om resources aan te maken
 
 ## Architectuur
 
-**Vereenvoudigde lokale ontwikkelopstelling** - Alleen Azure OpenAI implementeren, alle apps lokaal uitvoeren.
+**Vereenvoudigde lokale ontwikkelomgeving** – Alleen Azure OpenAI uitrollen, alle apps lokaal draaien.
 
-De infrastructuur implementeert de volgende Azure-resources:
+De infrastructuur zet de volgende Azure-resources op:
 
 ### AI-diensten
-- **Azure OpenAI**: Cognitive Services met twee modelimplementaties:
-  - **gpt-5**: Chat completion model (20K TPM capaciteit)
-  - **text-embedding-3-small**: Embedding model voor RAG (20K TPM capaciteit)
+- **Azure OpenAI**: Cognitive Services met twee model-uitrols:
+  - **gpt-5.2**: Chat completion-model (20K TPM capaciteit)
+  - **text-embedding-3-small**: Embedding-model voor RAG (20K TPM capaciteit)
 
 ### Lokale ontwikkeling
 Alle Spring Boot-applicaties draaien lokaal op je machine:
@@ -43,18 +43,18 @@ Alle Spring Boot-applicaties draaien lokaal op je machine:
 - 03-rag (poort 8081)
 - 04-tools (poort 8084)
 
-## Gemaakte bronnen
+## Gemaakte resources
 
-| Type resource | Naam patroon resource | Doel |
+| Resource Type | Resource Naam Patroon | Doel |
 |--------------|----------------------|---------|
 | Resourcegroep | `rg-{environmentName}` | Bevat alle resources |
 | Azure OpenAI | `aoai-{resourceToken}` | Hosting AI-model |
 
-> **Opmerking:** `{resourceToken}` is een unieke string gegenereerd uit abonnement-ID, omgevingsnaam en locatie
+> **Opmerking:** `{resourceToken}` is een unieke string die wordt gegenereerd uit het abonnement-ID, omgevingsnaam en locatie
 
-## Snel aan de slag
+## Quick Start
 
-### 1. Azure OpenAI implementeren
+### 1. Azure OpenAI uitrollen
 
 **Bash:**
 ```bash
@@ -68,16 +68,16 @@ cd 01-introduction
 azd up
 ```
 
-Wanneer daarom wordt gevraagd:
+Bij de vraag:
 - Selecteer je Azure-abonnement
-- Kies een locatie (aanbevolen: `eastus2` of `swedencentral` voor GPT-5 beschikbaarheid)
+- Kies een locatie (aanbevolen: `eastus2` voor GPT-5.2 beschikbaarheid)
 - Bevestig de omgevingsnaam (standaard: `langchain4j-dev`)
 
 Dit maakt aan:
-- Azure OpenAI-resource met GPT-5 en text-embedding-3-small
-- Uitvoer met verbindingsgegevens
+- Azure OpenAI-resource met GPT-5.2 en text-embedding-3-small
+- Geeft verbindingsgegevens weer
 
-### 2. Verbindingsgegevens ophalen
+### 2. Verkrijg verbindingsgegevens
 
 **Bash:**
 ```bash
@@ -90,20 +90,20 @@ azd env get-values
 ```
 
 Dit toont:
-- `AZURE_OPENAI_ENDPOINT`: jouw Azure OpenAI eindpunt-URL
+- `AZURE_OPENAI_ENDPOINT`: Jouw Azure OpenAI eindpunt-URL
 - `AZURE_OPENAI_KEY`: API-sleutel voor authenticatie
-- `AZURE_OPENAI_DEPLOYMENT`: Chat modelnaam (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Embedding modelnaam
+- `AZURE_OPENAI_DEPLOYMENT`: Naam chat-model (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Naam embedding-model
 
 ### 3. Applicaties lokaal uitvoeren
 
-Het `azd up` commando maakt automatisch een `.env` bestand aan in de hoofdmap met alle benodigde omgevingsvariabelen.
+Het `azd up`-commando maakt automatisch een `.env`-bestand aan in de hoofdmap met alle benodigde omgevingsvariabelen.
 
 **Aanbevolen:** Start alle webapplicaties:
 
 **Bash:**
 ```bash
-# Vanuit de hoofdmap
+# Vanaf de hoofdmap
 cd ../..
 ./start-all.sh
 ```
@@ -126,30 +126,30 @@ cd ../01-introduction
 
 **PowerShell:**
 ```powershell
-# Voorbeeld: Start alleen de introductiemodule
+# Voorbeeld: Begin alleen met de introductiemodule
 cd ../01-introduction
 .\start.ps1
 ```
 
-Beide scripts laden automatisch omgevingsvariabelen uit het root `.env` bestand dat door `azd up` is aangemaakt.
+Beide scripts laden automatisch omgevingsvariabelen uit het hoofdbestand `.env` dat door `azd up` is aangemaakt.
 
 ## Configuratie
 
-### Modelimplementaties aanpassen
+### Aanpassen model-implementaties
 
-Om modelimplementaties te wijzigen, bewerk `infra/main.bicep` en pas de parameter `openAiDeployments` aan:
+Om modelimplementaties te wijzigen, bewerk je `infra/main.bicep` en pas je de parameter `openAiDeployments` aan:
 
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -159,17 +159,17 @@ param openAiDeployments array = [
 
 Beschikbare modellen en versies: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-### Azure-regio's wijzigen
+### Azure-regio’s wijzigen
 
-Om in een andere regio te implementeren, bewerk `infra/main.bicep`:
+Om in een andere regio uit te rollen, bewerk je `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Controleer GPT-5 beschikbaarheid: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Controleer GPT-5.2 beschikbaarheid: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
-Om de infrastructuur bij te werken na wijzigingen in Bicep-bestanden:
+Om infrastructuur bij te werken na aanpassingen aan Bicep-bestanden:
 
 **Bash:**
 ```bash
@@ -217,36 +217,36 @@ azd down
 azd down --purge
 ```
 
-**Waarschuwing**: Dit verwijdert permanent alle Azure-resources.
+**Waarschuwing**: Dit verwijdert definitief alle Azure-resources.
 
 ## Bestandsstructuur
 
 ## Kostenoptimalisatie
 
 ### Ontwikkeling/Testen
-Voor dev/test omgevingen kun je kosten verlagen:
-- Gebruik Standard tier (S0) voor Azure OpenAI
+Voor dev/test-omgevingen kun je kosten verlagen:
+- Gebruik Standard-tier (S0) voor Azure OpenAI
 - Stel lagere capaciteit in (10K TPM in plaats van 20K) in `infra/core/ai/cognitiveservices.bicep`
-- Verwijder resources wanneer niet in gebruik: `azd down`
+- Verwijder resources als je ze niet gebruikt: `azd down`
 
 ### Productie
 Voor productie:
-- Verhoog OpenAI capaciteit op basis van gebruik (50K+ TPM)
+- Verhoog OpenAI-capaciteit op basis van gebruik (50K+ TPM)
 - Schakel zone-redundantie in voor hogere beschikbaarheid
-- Implementeer goede monitoring en kostenwaarschuwingen
+- Implementeer goede monitoring en kostenalerts
 
 ### Kostenraming
 - Azure OpenAI: betalen per token (invoer + uitvoer)
-- GPT-5: ~$3-5 per 1M tokens (controleer actuele prijzen)
-- text-embedding-3-small: ~$0.02 per 1M tokens
+- GPT-5.2: ongeveer $3-5 per 1M tokens (controleer actuele prijzen)
+- text-embedding-3-small: ongeveer $0,02 per 1M tokens
 
 Prijscalculator: https://azure.microsoft.com/pricing/calculator/
 
 ## Monitoring
 
-### Azure OpenAI-metrics bekijken
+### Bekijk Azure OpenAI-metrics
 
-Ga naar Azure Portal → jouw OpenAI-resource → Metrics:
+Ga naar Azure Portal → Je OpenAI-resource → Metrics:
 - Token-gebaseerd gebruik
 - HTTP-verzoekfrequentie
 - Reactietijd
@@ -264,7 +264,7 @@ is not available as it's already used by a resource."
 ```
 
 **Oorzaak:**
-De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik, mogelijk van een eerdere implementatie die niet volledig is verwijderd.
+De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik, mogelijk van een eerdere uitrol die niet volledig is verwijderd.
 
 **Oplossing:**
 1. **Optie 1 - Gebruik een andere omgevingsnaam:**
@@ -281,47 +281,47 @@ De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik,
    azd up
    ```
 
-2. **Optie 2 - Handmatige implementatie via Azure Portal:**
+2. **Optie 2 - Handmatige uitrol via Azure Portal:**
    - Ga naar Azure Portal → Maak een resource → Azure OpenAI
    - Kies een unieke naam voor je resource
-   - Implementeer de volgende modellen:
-     - **GPT-5**
+   - Rol de volgende modellen uit:
+     - **GPT-5.2**
      - **text-embedding-3-small** (voor RAG-modules)
-   - **Belangrijk:** Noteer je implementatienamen - deze moeten overeenkomen met de `.env` configuratie
-   - Na implementatie, haal je eindpunt en API-sleutel op via "Keys and Endpoint"
-   - Maak een `.env` bestand aan in de projectroot met:
+   - **Belangrijk:** Noteer je uitrolnamen – deze moeten overeenkomen met de `.env` configuratie
+   - Na uitrol, haal je je eindpunt en API-sleutel op bij "Keys and Endpoint"
+   - Maak een `.env`-bestand aan in de projectroot met:
      
      **Voorbeeld `.env` bestand:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
-**Richtlijnen voor modelimplementatienamen:**
-- Gebruik eenvoudige, consistente namen: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Implementatienamen moeten exact overeenkomen met wat je in `.env` configureert
-- Veelgemaakte fout: model aanmaken met één naam maar in code een andere naam gebruiken
+**Model Uitrol Naamgevingsrichtlijnen:**
+- Gebruik eenvoudige, consistente namen: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Uitrolnamen moeten exact overeenkomen met de configuratie in `.env`
+- Veelvoorkomende fout: model aanmaken met één naam maar in code een andere naam gebruiken
 
-### Probleem: GPT-5 niet beschikbaar in geselecteerde regio
+### Probleem: GPT-5.2 niet beschikbaar in geselecteerde regio
 
 **Oplossing:**
-- Kies een regio met GPT-5 toegang (bijv. eastus, swedencentral)
+- Kies een regio met GPT-5.2 toegang (bijv. eastus2)
 - Controleer beschikbaarheid: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
 
 
-### Probleem: Onvoldoende quotum voor implementatie
+### Probleem: Onvoldoende quota voor uitrol
 
 **Oplossing:**
-1. Vraag quotumverhoging aan in Azure Portal
+1. Vraag een quota-verhoging aan in Azure Portal
 2. Of gebruik lagere capaciteit in `main.bicep` (bijv. capaciteit: 10)
 
-### Probleem: "Resource niet gevonden" bij lokaal draaien
+### Probleem: "Resource niet gevonden" bij lokaal uitvoeren
 
 **Oplossing:**
-1. Controleer implementatie: `azd env get-values`
+1. Controleer uitrol: `azd env get-values`
 2. Controleer of eindpunt en sleutel correct zijn
 3. Zorg dat resourcegroep bestaat in Azure Portal
 
@@ -329,16 +329,16 @@ De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik,
 
 **Oplossing:**
 - Controleer of `AZURE_OPENAI_API_KEY` correct is ingesteld
-- Sleutel moet een 32-teken hexadecimale string zijn
-- Haal een nieuwe sleutel op in Azure Portal indien nodig
+- Sleutel heeft 32-karakter hexadecimale formaat
+- Vraag nieuwe sleutel aan in Azure Portal indien nodig
 
-### Implementatie mislukt
+### Uitrol mislukt
 
-**Probleem**: `azd provision` faalt met quotum- of capaciteitsfouten
+**Probleem**: `azd provision` mislukt met quota- of capaciteitsfouten
 
 **Oplossing**: 
-1. Probeer een andere regio - zie sectie [Azure-regio's wijzigen](../../../../01-introduction/infra) voor configuratie
-2. Controleer of je abonnement Azure OpenAI-quotum heeft:
+1. Probeer een andere regio - zie [Azure-regio's wijzigen](../../../../01-introduction/infra) sectie voor configuratie
+2. Controleer of abonnement OpenAI-quota heeft:
    
    **Bash:**
    ```bash
@@ -352,7 +352,7 @@ De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik,
 
 ### Applicatie maakt geen verbinding
 
-**Probleem**: Java-applicatie toont verbindingsfouten
+**Probleem**: Java-applicatie geeft verbindingsfouten
 
 **Oplossing**:
 1. Controleer of omgevingsvariabelen zijn geëxporteerd:
@@ -369,24 +369,24 @@ De subdomeinnaam die is gegenereerd uit je abonnement/omgeving is al in gebruik,
    Write-Host $env:AZURE_OPENAI_API_KEY
    ```
 
-2. Controleer of eindpuntformaat correct is (moet zijn `https://xxx.openai.azure.com`)
-3. Controleer of API-sleutel de primaire of secundaire sleutel uit Azure Portal is
+2. Controleer of eindpunt juist is (moet `https://xxx.openai.azure.com` zijn)
+3. Controleer of API-sleutel de primaire of secundaire sleutel van Azure Portal is
 
 **Probleem**: 401 Unauthorized van Azure OpenAI
 
 **Oplossing**:
-1. Haal een nieuwe API-sleutel op via Azure Portal → Keys and Endpoint
+1. Vraag een nieuwe API-sleutel aan in Azure Portal → Keys and Endpoint
 2. Exporteer de `AZURE_OPENAI_API_KEY` omgevingsvariabele opnieuw
-3. Zorg dat modelimplementaties voltooid zijn (controleer Azure Portal)
+3. Zorg dat model-uitrollen compleet zijn (controleer Azure Portal)
 
 ### Prestatieproblemen
 
-**Probleem**: Trage responstijden
+**Probleem**: Trage reactietijden
 
 **Oplossing**:
-1. Controleer OpenAI tokengebruik en throttling in Azure Portal metrics
+1. Controleer OpenAI token gebruik en throttling in Azure Portal-metrics
 2. Verhoog TPM-capaciteit als je limieten bereikt
-3. Overweeg een hoger reasoning-effort niveau (laag/middel/hoog)
+3. Overweeg gebruik te maken van een hoger redeneerniveau (laag/midden/hoog)
 
 ## Infrastructuur bijwerken
 
@@ -403,34 +403,34 @@ infra/
 
 ## Beveiligingsaanbevelingen
 
-1. **Nooit API-sleutels committen** - Gebruik omgevingsvariabelen
-2. **Gebruik .env-bestanden lokaal** - Voeg `.env` toe aan `.gitignore`
-3. **Draai sleutels regelmatig** - Genereer nieuwe sleutels in Azure Portal
-4. **Beperk toegang** - Gebruik Azure RBAC om toegang tot resources te beheren
-5. **Monitor gebruik** - Stel kostenwaarschuwingen in Azure Portal in
+1. **Nooit API-sleutels committen** – Gebruik omgevingsvariabelen
+2. **Gebruik lokaal .env-bestanden** – Voeg `.env` toe aan `.gitignore`
+3. **Draai sleutels regelmatig** – Genereer nieuwe sleutels in Azure Portal
+4. **Beperk toegang** – Gebruik Azure RBAC om toegang te beheren
+5. **Monitor gebruik** – Stel kostenalerts in Azure Portal in
 
 ## Aanvullende bronnen
 
 - [Azure OpenAI Service Documentatie](https://learn.microsoft.com/azure/ai-services/openai/)
-- [GPT-5 Model Documentatie](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [GPT-5.2 Model Documentatie](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Azure Developer CLI Documentatie](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Bicep Documentatie](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI Officiële Integratie](https://docs.langchain4j.dev/integrations/language-models/open-ai)
 
 ## Ondersteuning
 
-Voor problemen:
+Bij problemen:
 1. Bekijk de [probleemoplossingssectie](../../../../01-introduction/infra) hierboven
-2. Controleer de status van Azure OpenAI-service in Azure Portal
+2. Controleer de gezondheid van de Azure OpenAI-service in Azure Portal
 3. Open een issue in de repository
 
 ## Licentie
 
-Zie het root [LICENSE](../../../../LICENSE) bestand voor details.
+Bekijk het hoofdbestand [LICENSE](../../../../LICENSE) voor details.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:  
-Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal moet als de gezaghebbende bron worden beschouwd. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de oorspronkelijke taal moet worden beschouwd als de gezaghebbende bron. Voor cruciale informatie wordt een professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

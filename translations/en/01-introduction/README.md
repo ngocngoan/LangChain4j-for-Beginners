@@ -19,7 +19,7 @@
 
 If you completed the quick start, you saw how to send prompts and get responses. That's the foundation, but real applications need more. This module teaches you how to build conversational AI that remembers context and maintains state - the difference between a one-off demo and a production-ready application.
 
-We'll use Azure OpenAI's GPT-5 throughout this guide because its advanced reasoning capabilities make the behavior of different patterns more apparent. When you add memory, you'll clearly see the difference. This makes it easier to understand what each component brings to your application.
+We'll use Azure OpenAI's GPT-5.2 throughout this guide because its advanced reasoning capabilities make the behavior of different patterns more apparent. When you add memory, you'll clearly see the difference. This makes it easier to understand what each component brings to your application.
 
 You'll build one application that demonstrates both patterns:
 
@@ -36,7 +36,7 @@ You'll build one application that demonstrates both patterns:
 
 > **Note:** Java, Maven, Azure CLI and Azure Developer CLI (azd) are pre-installed in the provided devcontainer.
 
-> **Note:** This module uses GPT-5 on Azure OpenAI. The deployment is configured automatically via `azd up` - do not modify the model name in the code.
+> **Note:** This module uses GPT-5.2 on Azure OpenAI. The deployment is configured automatically via `azd up` - do not modify the model name in the code.
 
 ## Understanding the Core Problem
 
@@ -56,7 +56,7 @@ Before diving into conversations, it's important to understand tokens - the basi
 
 *Example of how text is broken into tokens - "I love AI!" becomes 4 separate processing units*
 
-Tokens are how AI models measure and process text. Words, punctuation, and even spaces can be tokens. Your model has a limit of how many tokens it can process at once (400,000 for GPT-5, with up to 272,000 input tokens and 128,000 output tokens). Understanding tokens helps you manage conversation length and costs.
+Tokens are how AI models measure and process text. Words, punctuation, and even spaces can be tokens. Your model has a limit of how many tokens it can process at once (400,000 for GPT-5.2, with up to 272,000 input tokens and 128,000 output tokens). Understanding tokens helps you manage conversation length and costs.
 
 ## How Memory Works
 
@@ -141,7 +141,7 @@ azd up  # Select subscription and location (eastus2 recommended)
 > **Note:** If you encounter a timeout error (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), simply run `azd up` again. Azure resources may still be provisioning in the background, and retrying allows the deployment to complete once resources reach a terminal state.
 
 This will:
-1. Deploy Azure OpenAI resource with GPT-5 and text-embedding-3-small models
+1. Deploy Azure OpenAI resource with GPT-5.2 and text-embedding-3-small models
 2. Automatically generate `.env` file in project root with credentials
 3. Set up all required environment variables
 
@@ -264,7 +264,7 @@ cd .. && ./stop-all.sh  # All modules
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # This module only
+.\stop.ps1  # Only this module
 # Or
 cd ..; .\stop-all.ps1  # All modules
 ```
@@ -293,11 +293,11 @@ Now try the same sequence here. Ask "My name is John" and then "What's my name?"
 
 *AI remembers your name from earlier in the conversation*
 
-Both panels use the same GPT-5 model. The only difference is memory. This makes it clear what memory brings to your application and why it's essential for real use cases.
+Both panels use the same GPT-5.2 model. The only difference is memory. This makes it clear what memory brings to your application and why it's essential for real use cases.
 
 ## Next Steps
 
-**Next Module:** [02-prompt-engineering - Prompt Engineering with GPT-5](../02-prompt-engineering/README.md)
+**Next Module:** [02-prompt-engineering - Prompt Engineering with GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 

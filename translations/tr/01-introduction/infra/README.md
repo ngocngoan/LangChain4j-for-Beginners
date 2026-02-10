@@ -1,8 +1,8 @@
-# LangChain4j için Azure Altyapısına Başlarken
+# LangChain4j için Azure Altyapısına Başlangıç
 
 ## İçindekiler
 
-- [Önkoşullar](../../../../01-introduction/infra)
+- [Ön Koşullar](../../../../01-introduction/infra)
 - [Mimari](../../../../01-introduction/infra)
 - [Oluşturulan Kaynaklar](../../../../01-introduction/infra)
 - [Hızlı Başlangıç](../../../../01-introduction/infra)
@@ -17,12 +17,12 @@
 - [Güvenlik Önerileri](../../../../01-introduction/infra)
 - [Ek Kaynaklar](../../../../01-introduction/infra)
 
-Bu dizin, Azure OpenAI kaynaklarını dağıtmak için Bicep ve Azure Developer CLI (azd) kullanarak Azure altyapısını kod olarak (IaC) içerir.
+Bu dizin, Azure OpenAI kaynaklarının dağıtımı için Bicep ve Azure Developer CLI (azd) kullanarak altyapıyı kod olarak (IaC) içerir.
 
-## Önkoşullar
+## Ön Koşullar
 
-- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (sürüm 2.50.0 veya sonrası)
-- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (sürüm 1.5.0 veya sonrası)
+- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (sürüm 2.50.0 veya daha yenisi)
+- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (sürüm 1.5.0 veya daha yenisi)
 - Kaynak oluşturma izinlerine sahip bir Azure aboneliği
 
 ## Mimari
@@ -31,10 +31,10 @@ Bu dizin, Azure OpenAI kaynaklarını dağıtmak için Bicep ve Azure Developer 
 
 Altyapı aşağıdaki Azure kaynaklarını dağıtır:
 
-### AI Hizmetleri
+### AI Servisleri
 - **Azure OpenAI**: İki model dağıtımı ile Bilişsel Hizmetler:
-  - **gpt-5**: Sohbet tamamlama modeli (20K TPM kapasitesi)
-  - **text-embedding-3-small**: RAG için gömme modeli (20K TPM kapasitesi)
+  - **gpt-5.2**: Sohbet tamamlama modeli (20K TPM kapasitesi)
+  - **text-embedding-3-small**: RAG için yerleştirme modeli (20K TPM kapasitesi)
 
 ### Yerel Geliştirme
 Tüm Spring Boot uygulamaları makinenizde yerel olarak çalışır:
@@ -45,16 +45,16 @@ Tüm Spring Boot uygulamaları makinenizde yerel olarak çalışır:
 
 ## Oluşturulan Kaynaklar
 
-| Kaynak Türü | Kaynak Adı Deseni | Amaç |
-|--------------|----------------------|---------|
-| Kaynak Grubu | `rg-{environmentName}` | Tüm kaynakları içerir |
-| Azure OpenAI | `aoai-{resourceToken}` | AI model barındırma |
+| Kaynak Türü    | Kaynak Adı Deseni         | Amaç                   |
+|----------------|---------------------------|------------------------|
+| Kaynak Grubu   | `rg-{environmentName}`    | Tüm kaynakları içerir  |
+| Azure OpenAI   | `aoai-{resourceToken}`    | AI model barındırma    |
 
-> **Not:** `{resourceToken}`, abonelik kimliği, ortam adı ve konumdan oluşturulan benzersiz bir dizgedir
+> **Not:** `{resourceToken}` abonelik kimliği, ortam adı ve konumdan türetilmiş benzersiz bir dizgedir
 
 ## Hızlı Başlangıç
 
-### 1. Azure OpenAI Dağıtımı
+### 1. Azure OpenAI Dağıtın
 
 **Bash:**
 ```bash
@@ -70,11 +70,11 @@ azd up
 
 İstendiğinde:
 - Azure aboneliğinizi seçin
-- Bir konum seçin (önerilen: GPT-5 erişimi için `eastus2` veya `swedencentral`)
+- Bir konum seçin (önerilen: `eastus2`, GPT-5.2 erişimi için)
 - Ortam adını onaylayın (varsayılan: `langchain4j-dev`)
 
-Bu işlemler şunları oluşturur:
-- GPT-5 ve text-embedding-3-small içeren Azure OpenAI kaynağı
+Bu işlem şunları oluşturacak:
+- GPT-5.2 ve text-embedding-3-small içeren Azure OpenAI kaynağı
 - Bağlantı detaylarının çıktısı
 
 ### 2. Bağlantı Detaylarını Alın
@@ -90,14 +90,14 @@ azd env get-values
 ```
 
 Şunları gösterir:
-- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI uç noktası URL'niz
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI uç nokta URL'niz
 - `AZURE_OPENAI_KEY`: Kimlik doğrulama için API anahtarı
-- `AZURE_OPENAI_DEPLOYMENT`: Sohbet modeli adı (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Gömme modeli adı
+- `AZURE_OPENAI_DEPLOYMENT`: Sohbet modeli adı (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Yerleştirme modeli adı
 
 ### 3. Uygulamaları Yerel Olarak Çalıştırın
 
-`azd up` komutu, kök dizinde gerekli tüm ortam değişkenleriyle `.env` dosyasını otomatik oluşturur.
+`azd up` komutu, kök dizinde gerekli tüm ortam değişkenlerini içeren bir `.env` dosyası otomatik olarak oluşturur.
 
 **Önerilen:** Tüm web uygulamalarını başlatın:
 
@@ -115,23 +115,23 @@ cd ../..
 .\start-all.ps1
 ```
 
-Ya da tek bir modülü başlatın:
+Ya da tek bir modül başlatın:
 
 **Bash:**
 ```bash
-# Örnek: Sadece giriş modülünü başlat
+# Örnek: Yalnızca giriş modülünü başlatın
 cd ../01-introduction
 ./start.sh
 ```
 
 **PowerShell:**
 ```powershell
-# Örnek: Sadece giriş modülünü başlat
+# Örnek: Sadece giriş modülünü başlatın
 cd ../01-introduction
 .\start.ps1
 ```
 
-Her iki betik de `azd up` tarafından oluşturulan kök `.env` dosyasından ortam değişkenlerini otomatik yükler.
+Her iki betik de `azd up` tarafından oluşturulan kök `.env` dosyasından ortam değişkenlerini otomatik olarak yükler.
 
 ## Yapılandırma
 
@@ -142,14 +142,14 @@ Model dağıtımlarını değiştirmek için `infra/main.bicep` dosyasını düz
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -157,17 +157,17 @@ param openAiDeployments array = [
 ]
 ```
 
-Mevcut modeller ve sürümler: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
+Kullanılabilir modeller ve sürümler: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
 ### Azure Bölgelerini Değiştirme
 
 Farklı bir bölgede dağıtım yapmak için `infra/main.bicep` dosyasını düzenleyin:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-GPT-5 kullanılabilirliğini kontrol edin: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+GPT-5.2 erişimini kontrol edin: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
 Bicep dosyalarında değişiklik yaptıktan sonra altyapıyı güncellemek için:
 
@@ -217,28 +217,28 @@ azd down
 azd down --purge
 ```
 
-**Uyarı**: Bu işlem tüm Azure kaynaklarını kalıcı olarak siler.
+**Uyarı**: Bu, Azure’daki tüm kaynakları kalıcı olarak silecektir.
 
 ## Dosya Yapısı
 
 ## Maliyet Optimizasyonu
 
 ### Geliştirme/Test
-Geliştirme/test ortamları için maliyetleri azaltabilirsiniz:
+Geliştirme/test ortamları için maliyetleri düşürebilirsiniz:
 - Azure OpenAI için Standart katman (S0) kullanın
-- `infra/core/ai/cognitiveservices.bicep` dosyasında kapasiteyi 20K yerine 10K TPM olarak ayarlayın
+- `infra/core/ai/cognitiveservices.bicep`’de kapasiteyi 20K yerine 10K TPM olarak ayarlayın
 - Kullanılmadığında kaynakları silin: `azd down`
 
-### Üretim
-Üretim için:
+### Prodüksiyon
+Prodüksiyon için:
 - Kullanıma göre OpenAI kapasitesini artırın (50K+ TPM)
-- Daha yüksek kullanılabilirlik için bölge yedekliliğini etkinleştirin
-- Uygun izleme ve maliyet uyarıları uygulayın
+- Daha yüksek kullanılabilirlik için bölge(yer) çoğaltmayı etkinleştirin
+- Doğru izleme ve maliyet uyarıları kurun
 
 ### Maliyet Tahmini
-- Azure OpenAI: Token başına ödeme (girdi + çıktı)
-- GPT-5: 1M token başına yaklaşık 3-5 USD (güncel fiyatları kontrol edin)
-- text-embedding-3-small: 1M token başına yaklaşık 0.02 USD
+- Azure OpenAI: Token başına ödeme (giriş + çıkış)
+- GPT-5.2: 1M token başına yaklaşık 3-5$
+- text-embedding-3-small: 1M token başına yaklaşık 0.02$
 
 Fiyat hesaplayıcı: https://azure.microsoft.com/pricing/calculator/
 
@@ -254,7 +254,7 @@ Azure Portal → OpenAI kaynağınız → Metrikler:
 
 ## Sorun Giderme
 
-### Sorun: Azure OpenAI alt alan adı çakışması
+### Sorun: Azure OpenAI alt etki alanı adı çakışması
 
 **Hata Mesajı:**
 ```
@@ -263,8 +263,8 @@ message: "Please pick a different name. The subdomain name 'aoai-xxxxx'
 is not available as it's already used by a resource."
 ```
 
-**Neden:**
-Abonelik/ortamınızdan oluşturulan alt alan adı zaten kullanımda, muhtemelen tam temizlenmemiş önceki bir dağıtımdan.
+**Nedeni:**
+Abonelik/ortamdan türetilen alt etki alanı adı zaten kullanılıyor olabilir, muhtemelen tam silinmemiş önceki bir dağıtımdan dolayı.
 
 **Çözüm:**
 1. **Seçenek 1 - Farklı bir ortam adı kullanın:**
@@ -285,9 +285,9 @@ Abonelik/ortamınızdan oluşturulan alt alan adı zaten kullanımda, muhtemelen
    - Azure Portal → Kaynak oluştur → Azure OpenAI
    - Kaynağınız için benzersiz bir ad seçin
    - Aşağıdaki modelleri dağıtın:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (RAG modülleri için)
-   - **Önemli:** Dağıtım adlarınızı not edin - `.env` yapılandırmasıyla eşleşmelidir
+   - **Önemli:** Dağıtım adlarınız `.env` yapılandırmasıyla eşleşmelidir
    - Dağıtımdan sonra "Anahtarlar ve Uç Nokta" bölümünden uç noktanızı ve API anahtarınızı alın
    - Proje kökünde aşağıdaki gibi bir `.env` dosyası oluşturun:
      
@@ -295,48 +295,48 @@ Abonelik/ortamınızdan oluşturulan alt alan adı zaten kullanımda, muhtemelen
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
 **Model Dağıtım Adlandırma Kuralları:**
-- Basit, tutarlı adlar kullanın: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Dağıtım adları `.env` dosyasındaki ile tam eşleşmelidir
-- Yaygın hata: Modeli bir adla oluşturup kodda farklı adla referans vermek
+- Basit ve tutarlı adlar kullanın: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Dağıtım adları `.env` dosyasındaki konfigürasyonla tam uyuşmalıdır
+- Yaygın hata: Modeli bir adla oluşturup kodda farklı adlarla referans verme
 
-### Sorun: Seçilen bölgede GPT-5 mevcut değil
+### Sorun: Seçilen bölgede GPT-5.2 kullanılamıyor
 
 **Çözüm:**
-- GPT-5 erişimi olan bir bölge seçin (örneğin eastus, swedencentral)
-- Kullanılabilirliği kontrol edin: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
+- GPT-5.2 erişimi olan bir bölge seçin (ör. eastus2)
+- Erişilebilirliği kontrol edin: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
 ### Sorun: Dağıtım için yetersiz kota
 
 **Çözüm:**
-1. Azure Portal'dan kota artışı talep edin
+1. Azure Portal üzerinden kota artışı isteyin
 2. Ya da `main.bicep` dosyasında daha düşük kapasite kullanın (örneğin kapasite: 10)
 
-### Sorun: Yerelde çalıştırırken "Kaynak bulunamadı"
+### Sorun: Yerel çalıştırmada "Kaynak bulunamadı"
 
 **Çözüm:**
 1. Dağıtımı doğrulayın: `azd env get-values`
 2. Uç nokta ve anahtarın doğru olduğundan emin olun
-3. Kaynak grubunun Azure Portal'da var olduğundan emin olun
+3. Azure Portal’da kaynak grubunun varlığını kontrol edin
 
-### Sorun: Kimlik doğrulama başarısız
+### Sorun: Kimlik doğrulama başarısız oldu
 
 **Çözüm:**
-- `AZURE_OPENAI_API_KEY` değişkeninin doğru ayarlandığını kontrol edin
-- Anahtar formatı 32 karakterli onaltılık dize olmalıdır
-- Gerekirse Azure Portal'dan yeni anahtar alın
+- `AZURE_OPENAI_API_KEY` ortam değişkeninin doğru ayarlandığını kontrol edin
+- Anahtar 32 karakterlik onaltılık bir dizgi olmalıdır
+- Gerekirse Azure Portal’dan yeni anahtar alın
 
-### Dağıtım Başarısız Oluyor
+### Dağıtım Hataları
 
-**Sorun**: `azd provision` kota veya kapasite hataları ile başarısız oluyor
+**Sorun**: `azd provision` kota veya kapasite hataları veriyor
 
-**Çözüm**: 
-1. Farklı bir bölge deneyin - Bölge yapılandırması için [Azure Bölgelerini Değiştirme](../../../../01-introduction/infra) bölümüne bakın
-2. Aboneliğinizin Azure OpenAI kotası olduğundan emin olun:
+**Çözüm:** 
+1. Farklı bir bölge deneyin - Bölgeleri yapılandırmak için [Azure Bölgelerini Değiştirme](../../../../01-introduction/infra) bölümüne bakın
+2. Azure OpenAI kotanızın olduğundan emin olun:
    
    **Bash:**
    ```bash
@@ -350,7 +350,7 @@ Abonelik/ortamınızdan oluşturulan alt alan adı zaten kullanımda, muhtemelen
 
 ### Uygulama Bağlanmıyor
 
-**Sorun**: Java uygulaması bağlantı hataları gösteriyor
+**Sorun**: Java uygulaması bağlantı hataları veriyor
 
 **Çözüm**:
 1. Ortam değişkenlerinin dışa aktarıldığını doğrulayın:
@@ -368,23 +368,23 @@ Abonelik/ortamınızdan oluşturulan alt alan adı zaten kullanımda, muhtemelen
    ```
 
 2. Uç nokta formatının doğru olduğundan emin olun (`https://xxx.openai.azure.com` olmalı)
-3. API anahtarının Azure Portal'dan alınan birincil veya ikincil anahtar olduğundan emin olun
+3. Azure Portal’dan alınan birincil veya ikincil API anahtarını kullandığınızdan emin olun
 
-**Sorun**: Azure OpenAI'den 401 Yetkisiz hatası
+**Sorun**: Azure OpenAI’den 401 Yetkisiz hatası
 
 **Çözüm**:
-1. Azure Portal → Anahtarlar ve Uç Nokta bölümünden yeni bir API anahtarı alın
-2. `AZURE_OPENAI_API_KEY` ortam değişkenini yeniden dışa aktarın
-3. Model dağıtımlarının tamamlandığını doğrulayın (Azure Portal'da kontrol edin)
+1. Azure Portal → Anahtarlar ve Uç Nokta'dan yeni bir API anahtarı alın
+2. `AZURE_OPENAI_API_KEY` ortam değişkenini tekrar dışa aktarın
+3. Model dağıtımlarının tamamlandığını doğrulayın (Azure Portal kontrolü)
 
 ### Performans Sorunları
 
 **Sorun**: Yavaş yanıt süreleri
 
 **Çözüm**:
-1. Azure Portal metriklerinde OpenAI token kullanımı ve kısıtlamaları kontrol edin
+1. Azure Portal metriklerinde OpenAI token kullanımı ve kısıtlamayı kontrol edin
 2. Limitlere ulaşıyorsanız TPM kapasitesini artırın
-3. Daha yüksek mantık seviyesi (düşük/orta/yüksek) kullanmayı düşünün
+3. Daha yüksek mantık çalışma seviyesi (düşük/orta/yüksek) kullanmayı düşünebilirsiniz
 
 ## Altyapıyı Güncelleme
 
@@ -403,23 +403,23 @@ infra/
 
 1. **API anahtarlarını asla commit etmeyin** - Ortam değişkenleri kullanın
 2. **Yerelde .env dosyaları kullanın** - `.env` dosyasını `.gitignore`a ekleyin
-3. **Anahtarları düzenli döndürün** - Azure Portal'dan yeni anahtarlar oluşturun
-4. **Erişimi sınırlandırın** - Kaynaklara erişimi Azure RBAC ile kontrol edin
-5. **Kullanımı izleyin** - Azure Portal'da maliyet uyarıları kurun
+3. **Anahtarları düzenli döndürün** - Azure Portal’dan yeni anahtarlar oluşturun
+4. **Erişimi sınırlandırın** - Azure RBAC kullanarak kaynak erişimini yönetin
+5. **Kullanımı izleyin** - Azure Portal’da maliyet uyarıları kurun
 
 ## Ek Kaynaklar
 
-- [Azure OpenAI Hizmeti Belgeleri](https://learn.microsoft.com/azure/ai-services/openai/)
-- [GPT-5 Model Belgeleri](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
-- [Azure Developer CLI Belgeleri](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
-- [Bicep Belgeleri](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
+- [Azure OpenAI Servis Dokümantasyonu](https://learn.microsoft.com/azure/ai-services/openai/)
+- [GPT-5.2 Model Dokümantasyonu](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [Azure Developer CLI Dokümantasyonu](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
+- [Bicep Dokümantasyonu](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [LangChain4j OpenAI Resmi Entegrasyonu](https://docs.langchain4j.dev/integrations/language-models/open-ai)
 
 ## Destek
 
 Sorunlar için:
 1. Yukarıdaki [sorun giderme bölümü](../../../../01-introduction/infra) kontrol edin
-2. Azure Portal'da Azure OpenAI hizmet durumu inceleyin
+2. Azure Portal’da Azure OpenAI hizmet durumu inceleyin
 3. Depoda bir sorun açın
 
 ## Lisans
@@ -430,5 +430,5 @@ Detaylar için kök dizindeki [LICENSE](../../../../LICENSE) dosyasına bakını
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Feragatname**:  
-Bu belge, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba gösterilse de, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal belge, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucu oluşabilecek yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
+Bu belge, yapay zeka çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de, otomatik çevirilerin hata veya yanlışlık içerebileceğini lütfen unutmayın. Orijinal belge, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanılması sonucu doğabilecek herhangi bir yanlış anlama veya yorum hatasından sorumlu tutulamayız.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

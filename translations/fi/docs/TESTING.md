@@ -2,7 +2,7 @@
 
 ## Sisällysluettelo
 
-- [Nopea aloitus](../../../docs)
+- [Nopea alku](../../../docs)
 - [Mitä testit kattavat](../../../docs)
 - [Testien suorittaminen](../../../docs)
 - [Testien suorittaminen VS Codessa](../../../docs)
@@ -10,9 +10,9 @@
 - [Testausfilosofia](../../../docs)
 - [Seuraavat askeleet](../../../docs)
 
-Tämä opas opastaa läpi testit, jotka osoittavat, miten testata tekoälysovelluksia ilman API-avaimia tai ulkopuolisia palveluja.
+Tämä opas ohjaa sinua testien läpi, jotka osoittavat, miten AI-sovelluksia testataan ilman API-avaimia tai ulkopuolisia palveluita.
 
-## Nopea aloitus
+## Nopea alku
 
 Suorita kaikki testit yhdellä komennolla:
 
@@ -28,28 +28,28 @@ mvn --% test
 
 <img src="../../../translated_images/fi/test-results.ea5c98d8f3642043.webp" alt="Onnistuneet testitulokset" width="800"/>
 
-*Onnistunut testisuoritus: kaikki testit läpäisevät ilman virheitä*
+*Onnistuneen testisuorituksen näyttö, jossa kaikki testit menevät läpi ilman virheitä*
 
 ## Mitä testit kattavat
 
-Tämä kurssi keskittyy paikallisesti suoritettaviin **yksikkötestauksiin**. Jokainen testi esittelee erillisen LangChain4j-käsitteen itsenäisesti.
+Tämä kurssi keskittyy **yksikkötesteihin**, jotka ajetaan paikallisesti. Jokainen testi demonstroi tiettyä LangChain4j-konseptia erillään.
 
-<img src="../../../translated_images/fi/testing-pyramid.2dd1079a0481e53e.webp" alt="Testauskolmio" width="800"/>
+<img src="../../../translated_images/fi/testing-pyramid.2dd1079a0481e53e.webp" alt="Testauspyramidi" width="800"/>
 
-*Testauskolmio, joka kuvastaa tasapainoa yksikkötestien (nopeat, eristetyt), integraatiotestien (todelliset komponentit) ja loppukäyttäjätestien välillä. Tämä opetus kattaa yksikkötestauksen.*
+*Testauspyramidi esittää tasapainoa yksikkötestien (nopeat, eristetyt), integraatiotestien (todelliset komponentit) ja end-to-end-testien välillä. Tämä koulutus kattaa yksikkötestauksen.*
 
 | Moduuli | Testit | Painopiste | Keskeiset tiedostot |
 |--------|-------|-------|-----------|
-| **00 - Nopea aloitus** | 6 | Prompt-mallit ja muuttujien korvaaminen | `SimpleQuickStartTest.java` |
-| **01 - Johdanto** | 8 | Keskustelun muisti ja tilallinen keskustelu | `SimpleConversationTest.java` |
-| **02 - Kehotesuunnittelu** | 12 | GPT-5-mallit, innokkuustasot, jäsennelty tulostus | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Dokumenttien tuonti, upotukset, samankaltaisuushaku | `DocumentServiceTest.java` |
-| **04 - Työkalut** | 12 | Funktiokutsut ja työkaluketjuttaminen | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Model Context Protocol stdio-siirrolla | `SimpleMcpTest.java` |
+| **00 - Nopea alku** | 6 | Kehote-pohjat ja muuttujien korvaaminen | `SimpleQuickStartTest.java` |
+| **01 - Johdanto** | 8 | Keskustelumuisti ja tilallinen chat | `SimpleConversationTest.java` |
+| **02 - Kehotteiden suunnittelu** | 12 | GPT-5.2 -mallit, innokkuustasot, jäsennelty ulostulo | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Dokumenttien syöttö, upotukset, samankaltaisten haku | `DocumentServiceTest.java` |
+| **04 - Työkalut** | 12 | Funktiokutsut ja työkaluketjut | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Mallikontekstiprotokolla Stdio-siirrolla | `SimpleMcpTest.java` |
 
 ## Testien suorittaminen
 
-**Suorita kaikki testit juurihakemistosta:**
+**Suorita kaikki testit juuri-kansiosta:**
 
 **Bash:**
 ```bash
@@ -66,18 +66,18 @@ mvn --% test
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Tai root-käyttäjänä
+# Tai juurihakemistosta
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Tai root-käyttäjänä
+# Tai juurihakemistosta
 mvn --% test -pl 01-introduction
 ```
 
-**Suorita yksittäinen testiluokka:**
+**Suorita yksi testiluokka:**
 
 **Bash:**
 ```bash
@@ -93,12 +93,12 @@ mvn --% test -Dtest=SimpleConversationTest
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#pitäisikö säilyttää keskusteluhistoria
+mvn test -Dtest=SimpleConversationTest#tulisi ylläpitää keskusteluhistoriaa
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#pitäisi säilyttää keskusteluhistoria
+mvn --% test -Dtest=SimpleConversationTest#tulisiYlläpitääKeskusteluhistoriaa
 ```
 
 ## Testien suorittaminen VS Codessa
@@ -107,27 +107,27 @@ Jos käytät Visual Studio Codea, Test Explorer tarjoaa graafisen käyttöliitty
 
 <img src="../../../translated_images/fi/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*VS Code Test Explorer näyttää testipuun kaikilla Java-testiluokilla ja yksittäisillä testimetodeilla*
+*VS Code Test Explorer näyttää testipuun kaikista Java-testiluokista ja yksittäisistä testimetodeista*
 
 **Testien suorittaminen VS Codessa:**
 
-1. Avaa Test Explorer napsauttamalla koeputki-ikonia Activity Barissa
-2. Laajenna testipuuta nähdäksesi kaikki moduulit ja testiluokat
-3. Napsauta testin vieressä olevaa toisto-painiketta suorittaaksesi sen yksitellen
-4. Napsauta "Run All Tests" suorittaaksesi koko testisarjan
-5. Napsauta hiiren oikealla mitä tahansa testiä ja valitse "Debug Test" asettaaksesi breakpointteja ja ajaaksesi koodia vaiheittain
+1. Avaa Test Explorer klikkaamalla koeputki-kuvaketta Activity Barissa
+2. Pura testipuu nähdäksesi kaikki moduulit ja testiluokat
+3. Klikkaa play-painiketta minkä tahansa testin vieressä suorittaaksesi sen erikseen
+4. Klikkaa "Run All Tests" suorittaaksesi koko testipaketin
+5. Klikkaa testin päällä hiiren oikealla ja valitse "Debug Test" asettaaksesi breakpointteja ja askeltaaksesi koodin läpi
 
-Test Explorer näyttää vihreät valintamerkit läpäistyistä testeistä ja tarjoaa yksityiskohtaiset virheilmoitukset, kun testit epäonnistuvat.
+Test Explorer näyttää vihreät rastit läpimenneistä testeistä ja tarjoaa yksityiskohtaiset epäonnistumisviestit, kun testit epäonnistuvat.
 
 ## Testausmallit
 
-### Malli 1: Kehotepohjien testaaminen
+### Malli 1: Kehote-pohjien testaus
 
-Yksinkertaisin malli testaa kehotepohjia kutsumatta mitään tekoälymallia. Varmistat, että muuttujien korvaaminen toimii oikein ja kehotteet muotoillaan odotetulla tavalla.
+Yksinkertaisin malli testaa kehotepohjia kutsumatta mitään AI-mallia. Varmistat, että muuttujien korvaus toimii oikein ja kehotteet ovat odotetussa muodossa.
 
-<img src="../../../translated_images/fi/prompt-template-testing.b902758ddccc8dee.webp" alt="Kehotepohjien testaus" width="800"/>
+<img src="../../../translated_images/fi/prompt-template-testing.b902758ddccc8dee.webp" alt="Kehotepohjan testaus" width="800"/>
 
-*Kehotepohjien testaaminen, joka näyttää muuttujien korvausketjun: malli paikkamerkkeineen → arvot käytetty → muotoiltu tulos varmennettu*
+*Kehotepohjien testaus, jossa muuttujien korvausvirtaus: pohja paikkamerkkien kanssa → arvot sovelletaan → muotoiltu ulostulo varmistetaan*
 
 ```java
 @Test
@@ -152,21 +152,21 @@ Tämä testi sijaitsee tiedostossa `00-quick-start/src/test/java/com/example/lan
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#kehotepohjan muotoilun testi
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testaaKehyspohjanMuotoilu
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testi kehotemallin muotoilu
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testaaPromptinMallipohjanMuotoilu
 ```
 
-### Malli 2: Kielimallien mockkaaminen
+### Malli 2: Kielen mallien mokkaus
 
-Keskustelulogiikkaa testatessa käytä Mockitoa luodaksesi väärennettyjä malleja, jotka palauttavat ennalta määrätyt vastaukset. Tämä tekee testeistä nopeita, ilmaisia ja deterministisiä.
+Keskustelulogiiikkaa testatessa käytä Mockitoa luomaan väärennettyjä malleja, jotka palauttavat ennalta määrättyjä vastauksia. Tämä tekee testeistä nopeita, ilmaisia ja deterministisiä.
 
-<img src="../../../translated_images/fi/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API -vertailu" width="800"/>
+<img src="../../../translated_images/fi/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Vertailu mokin ja oikean API:n välillä" width="800"/>
 
-*Vertailu, joka selittää miksi mockkeja suositaan testeissä: ne ovat nopeita, ilmaisia, deterministisiä eivätkä vaadi API-avaimia*
+*Vertailu, joka näyttää, miksi mokkaus on suositeltavaa testauksessa: ne ovat nopeita, ilmaisia, deterministisiä eivätkä vaadi API-avaimia*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +211,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 käyttäjäviestiä + 3 tekoälyviestiä
+        assertThat(history).hasSize(6); // 3 käyttäjä- + 3 tekoälyviestiä
     }
 }
 ```
 
-Tämä malli esiintyy tiedostossa `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mockki varmistaa johdonmukaisen käyttäytymisen, jotta voit tarkistaa, että muistin hallinta toimii oikein.
+Tätä mallia käytetään tiedostossa `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mokki varmistaa johdonmukaisen käyttäytymisen, jotta muistin hallintaa voi tarkistaa oikein.
 
-### Malli 3: Keskustelujen eristyksen testaaminen
+### Malli 3: Keskustelun eristäminen
 
-Keskustelumuistin on pidettävä useiden käyttäjien kontekstit erillisinä. Tämä testi varmistaa, ettei keskustelujen konteksti sekoitu.
+Keskustelumuistin täytyy pitää useat käyttäjät erillään. Tämä testi varmistaa, etteivät keskustelut sekoita konteksteja keskenään.
 
-<img src="../../../translated_images/fi/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Keskustelujen eristys" width="800"/>
+<img src="../../../translated_images/fi/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Keskustelun eristäminen" width="800"/>
 
-*Keskustelueristyksen testaus, joka näyttää erilliset muistivarastot eri käyttäjille kontekstin sekoittumisen estämiseksi*
+*Keskustelun eristämisen testaus, jossa eri käyttäjillä on omat muistinsa kontekstien sekoittamisen estämiseksi*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Jokainen keskustelu ylläpitää omaa itsenäistä historiaansa. Tuotantojärjestelmissä tämä eristys on kriittinen monikäyttäjäisissä sovelluksissa.
+Jokainen keskustelu ylläpitää omaa itsenäistä historiaansa. Tuotantojärjestelmissä tämä eristys on elintärkeä monen käyttäjän sovelluksissa.
 
-### Malli 4: Työkalujen testaaminen itsenäisesti
+### Malli 4: Työkalujen testaaminen erikseen
 
-Työkalut ovat funktioita, joita tekoäly voi kutsua. Testaa niitä suoraan varmistaaksesi, että ne toimivat oikein riippumatta tekoälyn päätöksistä.
+Työkalut ovat funktioita, joita AI voi kutsua. Testaa niitä suoraan varmistaaksesi, että ne toimivat oikein riippumatta AI:n päätöksistä.
 
 <img src="../../../translated_images/fi/tools-testing.3e1706817b0b3924.webp" alt="Työkalujen testaus" width="800"/>
 
-*Työkalujen itsenäinen testaus, joka näyttää mock-työkalun suorituksen ilman tekoälykutsuja liiketoimintalogiikan varmistamiseksi*
+*Työkalujen testaus erikseen, jossa mokkaustyökaluja käytetään ilman AI-kutsuja liiketoimintalogiikan tarkistamiseen*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Nämä testit tiedostosta `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validoivat työkalulogiiikan ilman tekoälyä. Ketjutusesimerkki osoittaa, miten yhden työkalun tulos syötetään toisen syötteeksi.
+Nämä testit tiedostosta `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validoivat työkalulogiiikan ilman AI:n osallistumista. Ketjutusesimerkki näyttää, miten yhden työkalun ulostulo syötetään toisen työkalun sisääntuloon.
 
 ### Malli 5: Muistissa tapahtuva RAG-testaus
 
-RAG-järjestelmät tarvitsevat perinteisesti vektorikannat ja upotuspalvelut. Muistissa tapahtuva malli sallii koko putken testaamisen ilman ulkopuolisia riippuvuuksia.
+RAG-järjestelmät vaativat perinteisesti vektorikantoja ja upotupalveluita. Muistissa tapahtuva malli antaa testata koko putken ilman ulkopuolisia riippuvuuksia.
 
 <img src="../../../translated_images/fi/rag-testing.ee7541b1e23934b1.webp" alt="Muistissa tapahtuva RAG-testaus" width="800"/>
 
-*Muistissa tapahtuvan RAG-testauksen työnkulku, joka näyttää dokumentin jäsennyksen, upotusten tallennuksen ja samankaltaisuushaun ilman tietokantaa*
+*Muistissa tapahtuva RAG-testaus työnkulku, jossa dokumentti jäsennetään, upotukset tallennetaan ja samankaltaisten haku tehdään ilman tietokantaa*
 
 ```java
 @Test
@@ -304,13 +304,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Tämä testi tiedostosta `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` luo dokumentin muistiin ja tarkistaa pilkkomisen ja metatietojen käsittelyn.
+Tämä testi tiedostosta `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` luo muistissa dokumentin ja varmistaa pilkkomisen ja metatietojen käsittelyn.
 
 ### Malli 6: MCP-integraatiotestaus
 
-MCP-moduuli testaa Model Context Protocol -integraatiota käyttäen stdio-siirtokerrointa. Nämä testit varmistavat, että sovelluksesi pystyy käynnistämään ja kommunikoimaan MCP-palvelimien kanssa aliprosesseina.
+MCP-moduuli testaa Model Context Protocol -integraatiota stdio-siirron avulla. Nämä testit varmistavat, että sovellus voi käynnistää ja kommunikoida MCP-palvelimien kanssa aliohjelmina.
 
-Tiedoston `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` testit validoivat MCP-asiakkaan käyttäytymistä.
+Testit tiedostossa `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` validoivat MCP-asiakasohjelman käyttäytymistä.
 
 **Suorita ne:**
 
@@ -326,28 +326,28 @@ cd 05-mcp; mvn --% test
 
 ## Testausfilosofia
 
-Testaa koodiasi, älä tekoälyä. Testiesi tulisi validoida kirjoittamasi koodin toiminta tarkistamalla, miten kehotteet muodostetaan, miten muistia hallitaan ja miten työkalut suoritetaan. Tekoälyn vastaukset vaihtelevat eivätkä niiden pitäisi olla osa testien väittämiä. Kysy itseltäsi, korvaako kehotepohjasi muuttujat oikein, älä sitä, antaaako tekoäly oikeaa vastausta.
+Testaa koodiasi, ei AI:ta. Testiesi tulisi validoida kirjoittamasi koodi tarkistamalla, miten kehotteet rakennetaan, miten muisti hallitaan ja miten työkalut suoritetaan. AI-vastaukset vaihtelevat, eikä niitä pitäisi käyttää testiväitteiden osana. Kysy itseltäsi, korvaako kehote-pohjasi muuttujat oikein, ei tarjoaanko AI oikeaa vastausta.
 
-Käytä mockkeja kielimalleille. Ne ovat ulkoisia riippuvuuksia, jotka ovat hitaita, kalliita ja epä-deterministisiä. Mockkaus tekee testeistä nopeita (millisekunteja verrattuna sekunteihin), ilmaisia ilman API-kustannuksia ja deterministisiä, jolloin tulos on sama joka kerta.
+Käytä mokkeja kielimalleille. Ne ovat ulkoisia riippuvuuksia, jotka ovat hitaita, kalliita ja epädeterministisiä. Mokkaus tekee testeistä nopeita, millisekunneissa sekuntien sijaan, ilmaisia ilman API-kustannuksia ja deterministisiä aina samaan tulokseen johtavia.
 
-Pidä testit riippumattomina. Jokaisen testin tulisi luoda omat tietonsa, ei luottaa muihin testeihin, ja siivota jälkensä. Testien tulisi läpäistä järjestyksestä riippumatta.
+Pidä testit itsenäisinä. Jokaisen testin tulee luoda omat lähtötietonsa, olla riippumaton muista testeistä ja siivota jälkensä. Testien tulee mennä läpi riippumatta suoritusjärjestyksestä.
 
-Testaa reunatapauksia onnellisen polun lisäksi. Kokeile tyhjiä syötteitä, erittäin suuria syötteitä, erikoismerkkejä, virheellisiä parametreja ja rajatapauksia. Nämä paljastavat usein bugeja, joita normaali käyttö ei paljasta.
+Testaa reunatapaukset ilon polun ulkopuolella. Kokeile tyhjiä syötteitä, hyvin suuria syötteitä, erikoismerkkejä, virheellisiä parametreja ja rajaehdotuksia. Nämä usein paljastavat virheitä, joita normaali käyttö ei paljasta.
 
-Käytä kuvailevia nimiä. Vertaa `shouldMaintainConversationHistoryAcrossMultipleMessages()` ja `test1()`. Ensimmäinen kertoo täsmälleen, mitä testataan, mikä helpottaa vikojen selvittämistä huomattavasti.
+Käytä kuvaavia nimiä. Vertaa `shouldMaintainConversationHistoryAcrossMultipleMessages()` ja `test1()`. Ensimmäinen kertoo täsmälleen, mitä testataan, mikä helpottaa vikojen korjausta huomattavasti.
 
 ## Seuraavat askeleet
 
-Kun ymmärrät testausmallit, sukella syvemmälle jokaiseen moduuliin:
+Nyt kun ymmärrät testausmallit, tutustu syvällisemmin kuhunkin moduuliin:
 
-- **[00 - Nopea aloitus](../00-quick-start/README.md)** - Aloita kehotepohjien perusteista
+- **[00 - Nopea alku](../00-quick-start/README.md)** - Aloita kehotepohjien perusteista
 - **[01 - Johdanto](../01-introduction/README.md)** - Opi keskustelumuistin hallinta
-- **[02 - Kehotesuunnittelu](../02-prompt-engineering/README.md)** - Hallitse GPT-5-kehotemallit
-- **[03 - RAG](../03-rag/README.md)** - Rakenna retrieval-augmented generation -järjestelmiä
+- **[02 - Kehotteiden suunnittelu](../02/prompt-engineering/README.md)** - Hallitse GPT-5.2-kehotesuunnittelumallit
+- **[03 - RAG](../03-rag/README.md)** - Rakenna hakuja parannettuja generointijärjestelmiä
 - **[04 - Työkalut](../04-tools/README.md)** - Toteuta funktiokutsut ja työkaluketjut
-- **[05 - MCP](../05-mcp/README.md)** - Integroi Model Context Protocol
+- **[05 - MCP](../05-mcp/README.md)** - Integroidu Mallikontekstiprotokollaan
 
-Jokaisen moduulin README tarjoaa yksityiskohtaiset selitykset täällä testatuista käsitteistä.
+Jokaisen moduulin README tarjoaa yksityiskohtaiset selitykset tässä testatuista konsepteista.
 
 ---
 
@@ -356,6 +356,6 @@ Jokaisen moduulin README tarjoaa yksityiskohtaiset selitykset täällä testatui
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Vastuuvapauslauseke:
-Tämä asiakirja on käännetty tekoälykäännöspalvelulla [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, huomioithan, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäiskielellä tulee pitää määräävänä lähteenä. Tärkeää tietoa varten suositellaan ammattimaista ihmiskäännöstä. Emme vastaa mahdollisista väärinkäsityksistä tai virhetulkinnoista, jotka johtuvat tämän käännöksen käytöstä.
+**Vastuuvapauslauseke**:
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, huomioithan, että automaattiset käännökset saattavat sisältää virheitä tai epätarkkuuksia. Alkuperäinen asiakirja sen alkuperäiskielellä on virallinen lähde. Tärkeiden tietojen osalta suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinkäsityksistä tai virhetulkinnoista.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
