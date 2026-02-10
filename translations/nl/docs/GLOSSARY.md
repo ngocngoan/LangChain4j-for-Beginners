@@ -1,58 +1,58 @@
-# LangChain4j Glossarium
+# LangChain4j Woordenlijst
 
 ## Inhoudsopgave
 
-- [Kernconcepten](../../../docs)
-- [LangChain4j Componenten](../../../docs)
-- [AI/ML Concepten](../../../docs)
+- [Kernbegrippen](../../../docs)
+- [LangChain4j-componenten](../../../docs)
+- [AI/ML-begrippen](../../../docs)
 - [Guardrails](../../../docs)
 - [Prompt Engineering](../../../docs)
 - [RAG (Retrieval-Augmented Generation)](../../../docs)
-- [Agenten en Hulpmiddelen](../../../docs)
+- [Agenten en Tools](../../../docs)
 - [Agentic Module](../../../docs)
 - [Model Context Protocol (MCP)](../../../docs)
 - [Azure Services](../../../docs)
 - [Testen en Ontwikkeling](../../../docs)
 
-Snelle referentie voor termen en concepten die door de hele cursus worden gebruikt.
+Snelle referentie voor termen en begrippen die door de cursus worden gebruikt.
 
-## Kernconcepten
+## Kernbegrippen
 
-**AI Agent** - Systeem dat AI gebruikt om autonoom te redeneren en handelen. [Module 04](../04-tools/README.md)
+**AI-agent** - Systeem dat AI gebruikt om autonoom te redeneren en te handelen. [Module 04](../04-tools/README.md)
 
-**Chain** - Reeks van bewerkingen waarbij output wordt doorgegeven aan de volgende stap.
+**Keten** - Reeks operaties waarbij output naar de volgende stap gaat.
 
-**Chunking** - Documenten opsplitsen in kleinere delen. Typisch: 300-500 tokens met overlap. [Module 03](../03-rag/README.md)
+**Chunking** - Documenten opsplitsen in kleinere stukken. Typisch: 300-500 tokens met overlap. [Module 03](../03-rag/README.md)
 
-**Context Window** - Maximale tokens die een model kan verwerken. GPT-5: 400K tokens.
+**Contextvenster** - Maximale tokens die een model kan verwerken. GPT-5.2: 400K tokens.
 
-**Embeddings** - Numerieke vectoren die de betekenis van tekst vertegenwoordigen. [Module 03](../03-rag/README.md)
+**Embeddings** - Numerieke vectoren die tekstbetekenis representeren. [Module 03](../03-rag/README.md)
 
 **Function Calling** - Model genereert gestructureerde verzoeken om externe functies aan te roepen. [Module 04](../04-tools/README.md)
 
-**Hallucination** - Wanneer modellen onjuiste maar plausibele informatie genereren.
+**Hallucinatie** - Wanneer modellen onjuiste maar plausibele informatie genereren.
 
 **Prompt** - Tekstinvoer voor een taalmodel. [Module 02](../02-prompt-engineering/README.md)
 
-**Semantic Search** - Zoeken op betekenis met behulp van embeddings, niet op sleutelwoorden. [Module 03](../03-rag/README.md)
+**Semantisch zoeken** - Zoeken op betekenis met embeddings, niet zoekwoorden. [Module 03](../03-rag/README.md)
 
-**Stateful vs Stateless** - Stateless: geen geheugen. Stateful: behoudt gesprekshistorie. [Module 01](../01-introduction/README.md)
+**Stateful vs Stateless** - Stateless: zonder geheugen. Stateful: onderhoudt gespreksgeschiedenis. [Module 01](../01-introduction/README.md)
 
-**Tokens** - Basis tekstunits die modellen verwerken. Beïnvloedt kosten en limieten. [Module 01](../01-introduction/README.md)
+**Tokens** - Basis tekst-eenheden die modellen verwerken. Beïnvloedt kosten en limieten. [Module 01](../01-introduction/README.md)
 
-**Tool Chaining** - Opeenvolgende uitvoering van tools waarbij output de volgende aanroep informeert. [Module 04](../04-tools/README.md)
+**Tool Chaining** - Opeenvolgende tool-uitvoering waarbij output de volgende oproep beïnvloedt. [Module 04](../04-tools/README.md)
 
-## LangChain4j Componenten
+## LangChain4j-componenten
 
-**AiServices** - Maakt type-veilige AI service interfaces.
+**AiServices** - Maakt type-veilige AI-service interfaces.
 
 **OpenAiOfficialChatModel** - Geünificeerde client voor OpenAI en Azure OpenAI modellen.
 
-**OpenAiOfficialEmbeddingModel** - Maakt embeddings met OpenAI Official client (ondersteunt zowel OpenAI als Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** - Maakt embeddings met OpenAI Official client (ondersteunt OpenAI en Azure OpenAI).
 
 **ChatModel** - Kerninterface voor taalmodellen.
 
-**ChatMemory** - Houdt gespreksgeschiedenis bij.
+**ChatMemory** - Onderhoudt gespreksgeschiedenis.
 
 **ContentRetriever** - Vindt relevante documentstukken voor RAG.
 
@@ -62,25 +62,25 @@ Snelle referentie voor termen en concepten die door de hele cursus worden gebrui
 
 **EmbeddingStore** - Slaat embeddings op en haalt ze op.
 
-**MessageWindowChatMemory** - Houdt een sliding window van recente berichten bij.
+**MessageWindowChatMemory** - Onderhoudt schuifvenster van recente berichten.
 
 **PromptTemplate** - Maakt herbruikbare prompts met `{{variable}}` placeholders.
 
 **TextSegment** - Tekststuk met metadata. Gebruikt in RAG.
 
-**ToolExecutionRequest** - Vertegenwoordigt een tooluitvoeringsverzoek.
+**ToolExecutionRequest** - Vertegenwoordigt tool-uitvoeringsverzoek.
 
-**UserMessage / AiMessage / SystemMessage** - Gesprek berichttypes.
+**UserMessage / AiMessage / SystemMessage** - Soorten gesprekberichten.
 
-## AI/ML Concepten
+## AI/ML-begrippen
 
-**Few-Shot Learning** - Voorzien van voorbeelden in prompts. [Module 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - Voorbeelden geven in prompts. [Module 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** - AI modellen getraind op enorme tekstdata.
+**Large Language Model (LLM)** - AI-modellen getraind op enorme tekstdata.
 
-**Reasoning Effort** - GPT-5 parameter die de diepgang van denken aanstuurt. [Module 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - GPT-5.2 parameter die de denkdiepte aanstuurt. [Module 02](../02-prompt-engineering/README.md)
 
-**Temperature** - Regelt de willekeurigheid van output. Laag=deterministisch, hoog=creatief.
+**Temperature** - Regelt willekeurigheid in output. Laag=deterministisch, hoog=creatief.
 
 **Vector Database** - Gespecialiseerde database voor embeddings. [Module 03](../03-rag/README.md)
 
@@ -88,35 +88,35 @@ Snelle referentie voor termen en concepten die door de hele cursus worden gebrui
 
 ## Guardrails - [Module 00](../00-quick-start/README.md)
 
-**Defense in Depth** - Meervoudige beveiligingslaag die guardrails op applicatieniveau combineert met veiligheidfilters van providers.
+**Defense in Depth** - Meerlaagse beveiligingsaanpak die applicatie-level guardrails met provider veiligheidfilters combineert.
 
-**Hard Block** - Provider geeft HTTP 400 fout voor ernstige content overtredingen.
+**Hard Block** - Provider gooit HTTP 400 fout bij ernstige content overtredingen.
 
-**InputGuardrail** - LangChain4j interface om gebruikersinvoer te valideren voordat deze het LLM bereikt. Bespaart kosten en latency door schadelijke prompts vroeg te blokkeren.
+**InputGuardrail** - LangChain4j interface om gebruikersinput te valideren voordat het de LLM bereikt. Bespaart kosten en latency door schadelijke prompts vroeg te blokkeren.
 
-**InputGuardrailResult** - Retourtype voor guardrail validatie: `success()` of `fatal("reden")`.
+**InputGuardrailResult** - Returntype voor guardrail validatie: `success()` of `fatal("reden")`.
 
-**OutputGuardrail** - Interface om AI reacties te valideren voordat ze aan gebruikers worden geretourneerd.
+**OutputGuardrail** - Interface om AI-antwoorden te valideren voordat ze aan gebruikers worden teruggegeven.
 
-**Provider Safety Filters** - Ingebouwde contentfilters van AI providers (bijv. GitHub Models) die overtredingen op API-niveau detecteren.
+**Provider Safety Filters** - Ingebouwde contentfilters van AI-providers (bv. GitHub Models) die overtredingen op API-niveau detecteren.
 
-**Soft Refusal** - Model weigert beleefd te antwoorden zonder een fout te geven.
+**Soft Refusal** - Model weigert beleefd te antwoorden zonder foutmelding.
 
 ## Prompt Engineering - [Module 02](../02-prompt-engineering/README.md)
 
 **Chain-of-Thought** - Stapsgewijze redenering voor betere nauwkeurigheid.
 
-**Constrained Output** - Handhaven van specifieke format of structuur.
+**Constrained Output** - Vastgestelde specifieke format of structuur afdwingen.
 
-**High Eagerness** - GPT-5 patroon voor grondige redenering.
+**High Eagerness** - GPT-5.2 patroon voor grondige redenering.
 
-**Low Eagerness** - GPT-5 patroon voor snelle antwoorden.
+**Low Eagerness** - GPT-5.2 patroon voor snelle antwoorden.
 
-**Multi-Turn Conversation** - Context bewaren over uitwisselingen heen.
+**Multi-Turn Conversation** - Context over meerdere uitwisselingen behouden.
 
-**Role-Based Prompting** - Modelpersoon instellen via systeemberichten.
+**Role-Based Prompting** - Modelpersoon instellen via system messages.
 
-**Self-Reflection** - Model evalueert en verbetert zijn output.
+**Self-Reflection** - Model evalueert en verbetert eigen output.
 
 **Structured Analysis** - Vaste evaluatiekader.
 
@@ -124,109 +124,109 @@ Snelle referentie voor termen en concepten die door de hele cursus worden gebrui
 
 ## RAG (Retrieval-Augmented Generation) - [Module 03](../03-rag/README.md)
 
-**Document Processing Pipeline** - Laden → chunking → embedden → opslaan.
+**Document Processing Pipeline** - Laden → opdelen → embedden → opslaan.
 
-**In-Memory Embedding Store** - Niet-persistente opslag voor testen.
+**In-Memory Embedding Store** - Niet-persistent opslag voor testen.
 
-**RAG** - Combineert ophalen met generatie om antwoorden te funderen.
+**RAG** - Combineert ophalen met generatie voor gefundeerde antwoorden.
 
-**Similarity Score** - Maat (0-1) van semantische gelijkenis.
+**Similarity Score** - Maat (0-1) voor semantische gelijkenis.
 
-**Source Reference** - Metadata over opgehaalde inhoud.
+**Source Reference** - Metadata over opgehaalde content.
 
-## Agenten en Hulpmiddelen - [Module 04](../04-tools/README.md)
+## Agenten en Tools - [Module 04](../04-tools/README.md)
 
-**@Tool Annotation** - Markeert Java-methoden als AI-oproepbare hulpmiddelen.
+**@Tool Annotatie** - Markeert Java-methoden als AI-aanroepbare tools.
 
-**ReAct Pattern** - Redeneren → Handelen → Observeren → Herhalen.
+**ReAct Patroon** - Redeneren → Handelen → Observeren → Herhalen.
 
 **Session Management** - Gescheiden contexten voor verschillende gebruikers.
 
 **Tool** - Functie die een AI-agent kan aanroepen.
 
-**Tool Description** - Documentatie van doel en parameters van hulpmiddel.
+**Tool Description** - Documentatie van tooldoel en parameters.
 
 ## Agentic Module - [Module 05](../05-mcp/README.md)
 
-**@Agent Annotation** - Markeert interfaces als AI-agenten met declaratieve gedragsdefinitie.
+**@Agent Annotatie** - Markeert interfaces als AI-agenten met declaratieve gedragsdefinitie.
 
-**Agent Listener** - Hook voor het monitoren van agentuitvoering via `beforeAgentInvocation()` en `afterAgentInvocation()`.
+**Agent Listener** - Hook om agent-uitvoering te monitoren via `beforeAgentInvocation()` en `afterAgentInvocation()`.
 
-**Agentic Scope** - Gedeeld geheugen waarin agenten outputs opslaan met `outputKey` voor downstream agents.
+**Agentic Scope** - Gedeeld geheugen waar agenten uitvoer opslaan met `outputKey` voor downstream agenten om te gebruiken.
 
-**AgenticServices** - Factory voor het maken van agenten via `agentBuilder()` en `supervisorBuilder()`.
+**AgenticServices** - Factory om agenten te maken via `agentBuilder()` en `supervisorBuilder()`.
 
-**Conditional Workflow** - Routeer op basis van condities naar verschillende specialistische agenten.
+**Conditional Workflow** - Route afhankelijk van condities naar verschillende specialist-agenten.
 
-**Human-in-the-Loop** - Workflowpatroon met menselijke checkpoints voor goedkeuring of inhoudscontrole.
+**Human-in-the-Loop** - Workflow patroon met menselijke checkpoints voor goedkeuring of contentreview.
 
-**langchain4j-agentic** - Maven dependency voor declaratief agentbouwen (experimenteel).
+**langchain4j-agentic** - Maven-dependency voor declaratief agent bouwen (experimenteel).
 
-**Loop Workflow** - Itereer agentuitvoering totdat een voorwaarde is voldaan (bijv. kwaliteitscore ≥ 0.8).
+**Loop Workflow** - Iteratieve agent-uitvoering totdat conditie is voldaan (bv. kwaliteitsscore ≥ 0.8).
 
-**outputKey** - Agent annotatieparameter die specificeert waar resultaten worden opgeslagen in Agentic Scope.
+**outputKey** - Agentannotatieparameter die specificeert waar resultaten in Agentic Scope worden opgeslagen.
 
-**Parallel Workflow** - Meerdere agenten gelijktijdig laten draaien voor onafhankelijke taken.
+**Parallel Workflow** - Meerdere agenten gelijktijdig uitvoeren voor onafhankelijke taken.
 
-**Response Strategy** - Hoe supervisor het definitieve antwoord formuleert: LAST, SUMMARY, of SCORED.
+**Response Strategy** - Hoe supervisor het eindantwoord formuleert: LAST, SUMMARY, of SCORED.
 
-**Sequential Workflow** - Agenten achtereenvolgens uitvoeren waarbij output naar volgende stap stroomt.
+**Sequential Workflow** - Agenten in volgorde uitvoeren waarbij output naar de volgende stap gaat.
 
-**Supervisor Agent Pattern** - Geavanceerd agentpatroon waarbij een supervisor LLM dynamisch bepaalt welke sub-agenten worden aangeroepen.
+**Supervisor Agent Pattern** - Geavanceerd agentic patroon waarbij een supervisor LLM dynamisch bepaalt welke sub-agenten worden opgeroepen.
 
 ## Model Context Protocol (MCP) - [Module 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Maven dependency voor MCP integratie in LangChain4j.
+**langchain4j-mcp** - Maven-dependency voor MCP-integratie in LangChain4j.
 
-**MCP** - Model Context Protocol: standaard voor het koppelen van AI-apps aan externe tools. Één keer bouwen, overal gebruiken.
+**MCP** - Model Context Protocol: standaard om AI-apps te verbinden met externe tools. Eenmalig bouwen, overal gebruiken.
 
-**MCP Client** - Applicatie die verbinding maakt met MCP-servers om tools te ontdekken en te gebruiken.
+**MCP Client** - Applicatie die verbindt met MCP-servers om tools te ontdekken en te gebruiken.
 
-**MCP Server** - Dienst die tools via MCP aanbiedt met duidelijke beschrijvingen en parameterschema's.
+**MCP Server** - Service die tools aanbiedt via MCP met duidelijke omschrijvingen en parameterschema’s.
 
-**McpToolProvider** - LangChain4j component dat MCP tools verpakt voor gebruik in AI services en agenten.
+**McpToolProvider** - LangChain4j-component die MCP-tools verpakt voor gebruik in AI-services en agenten.
 
 **McpTransport** - Interface voor MCP-communicatie. Implementaties zijn o.a. Stdio en HTTP.
 
-**Stdio Transport** - Lokale proces transport via stdin/stdout. Handig voor toegang tot bestandssysteem of commandline tools.
+**Stdio Transport** - Lokale procestransport via stdin/stdout. Handig voor toegang tot bestandssysteem of command-line tools.
 
-**StdioMcpTransport** - LangChain4j implementatie die MCP server als subprocess opstart.
+**StdioMcpTransport** - LangChain4j-implementatie die MCP-server als subprocess start.
 
-**Tool Discovery** - Client vraagt server naar beschikbare tools met beschrijvingen en schema's.
+**Tool Discovery** - Client vraagt server om beschikbare tools met omschrijvingen en schema’s.
 
 ## Azure Services - [Module 01](../01-introduction/README.md)
 
-**Azure AI Search** - Cloudzoekdienst met vector functionaliteit. [Module 03](../03-rag/README.md)
+**Azure AI Search** - Cloud-zoekdienst met vectormogelijkheden. [Module 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Zet Azure resources uit.
+**Azure Developer CLI (azd)** - Zet Azure-resources uit.
 
-**Azure OpenAI** - Enterprise AI-service van Microsoft.
+**Azure OpenAI** - Microsofts enterprise AI-dienst.
 
-**Bicep** - Azure infrastructuur-als-code taal. [Infrastructuurhandleiding](../01-introduction/infra/README.md)
+**Bicep** - Azure infrastructuur-als-code taal. [Infrastructure Guide](../01-introduction/infra/README.md)
 
-**Deployment Name** - Naam voor modeldeployment in Azure.
+**Deployment Name** - Naam voor modeluitrol in Azure.
 
-**GPT-5** - Nieuwste OpenAI-model met redeneervariabele. [Module 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Laatste OpenAI-model met redeneringscontrole. [Module 02](../02-prompt-engineering/README.md)
 
 ## Testen en Ontwikkeling - [Testing Guide](TESTING.md)
 
 **Dev Container** - Gecontaineriseerde ontwikkelomgeving. [Configuratie](../../../.devcontainer/devcontainer.json)
 
-**GitHub Models** - Gratis AI-model speelplatform. [Module 00](../00-quick-start/README.md)
+**GitHub Models** - Gratis AI model speelveld. [Module 00](../00-quick-start/README.md)
 
 **In-Memory Testing** - Testen met in-memory opslag.
 
 **Integration Testing** - Testen met echte infrastructuur.
 
-**Maven** - Java build automation tool.
+**Maven** - Java build-automatiseringstool.
 
 **Mockito** - Java mocking framework.
 
-**Spring Boot** - Java applicatie framework. [Module 01](../01-introduction/README.md)
+**Spring Boot** - Java applicatieframework. [Module 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Vrijwaring**:
-Dit document is vertaald met behulp van de AI-vertalingsservice [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal moet als de gezaghebbende bron worden beschouwd. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+**Disclaimer**:  
+Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de oorspronkelijke taal geldt als de gezaghebbende bron. Voor belangrijke informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortkomen uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

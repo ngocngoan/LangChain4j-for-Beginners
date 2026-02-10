@@ -4,28 +4,28 @@
 
 - [Wat je zult leren](../../../01-introduction)
 - [Vereisten](../../../01-introduction)
-- [Het kernprobleem begrijpen](../../../01-introduction)
-- [Tokens begrijpen](../../../01-introduction)
+- [Begrip van het kernprobleem](../../../01-introduction)
+- [Begrip van tokens](../../../01-introduction)
 - [Hoe geheugen werkt](../../../01-introduction)
 - [Hoe dit LangChain4j gebruikt](../../../01-introduction)
 - [Azure OpenAI-infrastructuur implementeren](../../../01-introduction)
 - [De applicatie lokaal uitvoeren](../../../01-introduction)
 - [De applicatie gebruiken](../../../01-introduction)
-  - [Stateless Chat (linkerpaneel)](../../../01-introduction)
-  - [Stateful Chat (rechterpaneel)](../../../01-introduction)
+  - [Toestandsloze chat (linkerpaneel)](../../../01-introduction)
+  - [Toestandsgebonden chat (rechterpaneel)](../../../01-introduction)
 - [Volgende stappen](../../../01-introduction)
 
 ## Wat je zult leren
 
-Als je de quick start hebt voltooid, heb je gezien hoe je prompts kunt verzenden en reacties kunt ontvangen. Dat is de basis, maar echte applicaties hebben meer nodig. Deze module leert je hoe je conversatie-AI bouwt die context onthoudt en de status bijhoudt - het verschil tussen een eenmalige demo en een productieklare applicatie.
+Als je de snelle start hebt voltooid, heb je gezien hoe je prompts verzendt en antwoorden krijgt. Dat is de basis, maar echte toepassingen hebben meer nodig. Deze module leert je hoe je conversatie-AI bouwt die context onthoudt en de status behoudt - het verschil tussen een eenmalige demo en een productieklare applicatie.
 
-We gebruiken Azure OpenAI's GPT-5 door deze gids heen omdat de geavanceerde redeneercapaciteiten het gedrag van verschillende patronen duidelijker maken. Wanneer je geheugen toevoegt, zie je het verschil duidelijk. Dit maakt het makkelijker te begrijpen wat elk onderdeel aan je applicatie toevoegt.
+We gebruiken door deze handleiding Azure OpenAI’s GPT-5.2 omdat de geavanceerde redeneercapaciteiten het gedrag van verschillende patronen duidelijker maken. Wanneer je geheugen toevoegt, zie je het verschil duidelijk. Dit maakt het gemakkelijker te begrijpen wat elk onderdeel aan je applicatie toevoegt.
 
 Je bouwt één applicatie die beide patronen demonstreert:
 
-**Stateless Chat** - Elke aanvraag is onafhankelijk. Het model heeft geen geheugen van eerdere berichten. Dit is het patroon dat je in de quick start gebruikte.
+**Toestandsloze chat** - Elke aanvraag is onafhankelijk. Het model onthoudt geen eerdere berichten. Dit is het patroon dat je in de snelle start gebruikte.
 
-**Stateful Conversation** - Elke aanvraag bevat de gespreksgeschiedenis. Het model behoudt context over meerdere beurten. Dit is wat productieapplicaties vereisen.
+**Toestandsgebonden gesprek** - Elke aanvraag bevat de gespreksgeschiedenis. Het model behoudt context over meerdere beurten. Dit is wat productieapplicaties vereisen.
 
 ## Vereisten
 
@@ -36,43 +36,43 @@ Je bouwt één applicatie die beide patronen demonstreert:
 
 > **Opmerking:** Java, Maven, Azure CLI en Azure Developer CLI (azd) zijn vooraf geïnstalleerd in de meegeleverde devcontainer.
 
-> **Opmerking:** Deze module gebruikt GPT-5 op Azure OpenAI. De implementatie wordt automatisch geconfigureerd via `azd up` - wijzig de modelnaam in de code niet.
+> **Opmerking:** Deze module gebruikt GPT-5.2 op Azure OpenAI. De implementatie wordt automatisch geconfigureerd via `azd up` - wijzig de modelnaam niet in de code.
 
-## Het kernprobleem begrijpen
+## Begrip van het kernprobleem
 
-Taalmodellen zijn stateless. Elke API-aanroep is onafhankelijk. Als je "Mijn naam is John" stuurt en daarna vraagt "Wat is mijn naam?", heeft het model geen idee dat je jezelf net hebt voorgesteld. Het behandelt elke aanvraag alsof het de eerste conversatie ooit is.
+Taalmodellen zijn toestandsloos. Elke API-aanroep is onafhankelijk. Als je "Mijn naam is John" stuurt en daarna vraagt "Wat is mijn naam?", heeft het model geen idee dat je jezelf net hebt voorgesteld. Het behandelt elke aanvraag alsof het het eerste gesprek is dat je ooit hebt gehad.
 
-Dit is prima voor eenvoudige Q&A, maar nutteloos voor echte applicaties. Klantenservicebots moeten onthouden wat je ze vertelde. Persoonlijke assistenten hebben context nodig. Elke multi-turn conversatie vereist geheugen.
+Dit is prima voor eenvoudige Q&A, maar nutteloos voor echte toepassingen. Klantenservicebots moeten onthouden wat je vertelde. Persoonlijke assistenten hebben context nodig. Elk gesprek met meerdere beurten vereist geheugen.
 
-<img src="../../../translated_images/nl/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
+<img src="../../../translated_images/nl/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Toestandsloze versus toestandsgebonden gesprekken" width="800"/>
 
-*Het verschil tussen stateless (onafhankelijke oproepen) en stateful (contextbewuste) gesprekken*
+*Het verschil tussen toestandsloze (onafhankelijke oproepen) en toestandsgebonden (contextbewuste) gesprekken*
 
-## Tokens begrijpen
+## Begrip van tokens
 
-Voordat je in gesprekken duikt, is het belangrijk tokens te begrijpen - de basiseenheden van tekst die taalmodellen verwerken:
+Voordat je in gesprekken duikt, is het belangrijk om tokens te begrijpen - de basiseenheden van tekst die taalmodellen verwerken:
 
-<img src="../../../translated_images/nl/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
+<img src="../../../translated_images/nl/token-explanation.c39760d8ec650181.webp" alt="Uitleg token" width="800"/>
 
-*Voorbeeld van hoe tekst wordt opgedeeld in tokens - "I love AI!" wordt 4 aparte verwerkingsunits*
+*Voorbeeld van hoe tekst wordt opgesplitst in tokens - "I love AI!" wordt 4 afzonderlijke verwerkingsunits*
 
-Tokens zijn hoe AI-modellen tekst meten en verwerken. Woorden, leestekens en zelfs spaties kunnen tokens zijn. Je model heeft een limiet aan hoeveel tokens het tegelijk kan verwerken (400.000 voor GPT-5, met tot 272.000 inputtokens en 128.000 outputtokens). Tokens begrijpen helpt je de lengte van gesprekken en kosten te beheren.
+Tokens zijn hoe AI-modellen tekst meten en verwerken. Woorden, interpunctie en zelfs spaties kunnen tokens zijn. Je model heeft een limiet voor hoeveel tokens het tegelijk kan verwerken (400.000 voor GPT-5.2, met tot 272.000 inputtokens en 128.000 outputtokens). Het begrijpen van tokens helpt je gesprekslengte en kosten te beheren.
 
 ## Hoe geheugen werkt
 
-Chatgeheugen lost het stateless probleem op door de gespreksgeschiedenis bij te houden. Voordat je je verzoek naar het model stuurt, voegt het framework relevante eerdere berichten toe. Wanneer je vraagt "Wat is mijn naam?", stuurt het systeem eigenlijk de hele gespreksgeschiedenis mee, waardoor het model kan zien dat je eerder zei "Mijn naam is John."
+Chatgeheugen lost het toestandsloze probleem op door gespreksgeschiedenis te bewaren. Voordat je je aanvraag naar het model stuurt, plaatst het framework relevante eerdere berichten ervoor. Als je vraagt "Wat is mijn naam?", stuurt het systeem eigenlijk de hele gespreksgeschiedenis mee, zodat het model kan zien dat je eerder zei "Mijn naam is John."
 
 LangChain4j biedt geheugenimplementaties die dit automatisch afhandelen. Je kiest hoeveel berichten je wilt bewaren en het framework beheert het contextvenster.
 
-<img src="../../../translated_images/nl/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
+<img src="../../../translated_images/nl/memory-window.bbe67f597eadabb3.webp" alt="Concept geheugenvenster" width="800"/>
 
-*MessageWindowChatMemory houdt een schuivend venster van recente berichten bij en verwijdert automatisch oude*
+*MessageWindowChatMemory behoudt een schuivend venster van recente berichten, waarbij oude automatisch worden verwijderd*
 
 ## Hoe dit LangChain4j gebruikt
 
-Deze module breidt de quick start uit door Spring Boot te integreren en gespreksgeheugen toe te voegen. Zo passen de onderdelen samen:
+Deze module breidt de snelle start uit door Spring Boot te integreren en conversatiegeheugen toe te voegen. Zo passen de onderdelen samen:
 
-**Dependencies** - Voeg twee LangChain4j-bibliotheken toe:
+**Afhankelijkheden** - Voeg twee LangChain4j-bibliotheken toe:
 
 ```xml
 <dependency>
@@ -85,7 +85,7 @@ Deze module breidt de quick start uit door Spring Boot te integreren en gespreks
 </dependency>
 ```
 
-**Chat Model** - Configureer Azure OpenAI als een Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Chatmodel** - Configureer Azure OpenAI als een Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -100,7 +100,7 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-De builder leest referenties uit omgevingsvariabelen die door `azd up` zijn ingesteld. Het instellen van `baseUrl` op je Azure-eindpunt zorgt dat de OpenAI-client met Azure OpenAI werkt.
+De builder leest referenties uit omgevingsvariabelen die door `azd up` zijn ingesteld. Het instellen van `baseUrl` op je Azure-eindpunt laat de OpenAI-client werken met Azure OpenAI.
 
 **Gespreksgeheugen** - Houd chatgeschiedenis bij met MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
@@ -115,14 +115,14 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Maak geheugen aan met `withMaxMessages(10)` om de laatste 10 berichten te bewaren. Voeg gebruikers- en AI-berichten toe met getypte wrappers: `UserMessage.from(text)` en `AiMessage.from(text)`. Haal geschiedenis op met `memory.messages()` en stuur die naar het model. De service slaat aparte geheugeninstanties per gesprek-ID op, zodat meerdere gebruikers tegelijk kunnen chatten.
+Maak geheugen aan met `withMaxMessages(10)` om de laatste 10 berichten te behouden. Voeg gebruikers- en AI-berichten toe met getypte wrappers: `UserMessage.from(text)` en `AiMessage.from(text)`. Haal geschiedenis op met `memory.messages()` en stuur die naar het model. De service slaat aparte geheugeninstanties per gesprek-ID op, zodat meerdere gebruikers tegelijk kunnen chatten.
 
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) en vraag:
-> - "Hoe bepaalt MessageWindowChatMemory welke berichten worden verwijderd als het venster vol is?"
-> - "Kan ik aangepaste geheugenopslag implementeren met een database in plaats van in-memory?"
-> - "Hoe zou ik samenvatting toevoegen om oude gespreksgeschiedenis te comprimeren?"
+> - "Hoe bepaalt MessageWindowChatMemory welke berichten worden verwijderd wanneer het venster vol is?"
+> - "Kan ik aangepaste geheugenopslag implementeren met een database in plaats van in het geheugen?"
+> - "Hoe voeg ik samenvatting toe om oude gespreksgeschiedenis te comprimeren?"
 
-De stateless chat endpoint slaat geheugen volledig over - gewoon `chatModel.chat(prompt)` zoals in de quick start. De stateful endpoint voegt berichten toe aan geheugen, haalt geschiedenis op en voegt die context toe aan elke aanvraag. Zelfde modelconfiguratie, verschillende patronen.
+De toestandsloze chat-endpoint slaat geheugen volledig over - gewoon `chatModel.chat(prompt)` zoals in de snelle start. De toestandsgebonden endpoint voegt berichten toe aan het geheugen, haalt geschiedenis op en voegt die context toe aan elke aanvraag. Zelfde modelconfiguratie, verschillende patronen.
 
 ## Azure OpenAI-infrastructuur implementeren
 
@@ -138,28 +138,28 @@ cd 01-introduction
 azd up  # Selecteer abonnement en locatie (eastus2 aanbevolen)
 ```
 
-> **Opmerking:** Als je een time-out fout krijgt (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), voer dan gewoon `azd up` opnieuw uit. Azure-resources kunnen nog steeds worden ingericht op de achtergrond, en opnieuw proberen laat de implementatie voltooien zodra resources een terminale status bereiken.
+> **Opmerking:** Als je een time-outfout krijgt (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), voer dan gewoon nogmaals `azd up` uit. Azure-resources worden mogelijk nog ingericht op de achtergrond, en het opnieuw proberen laat de implementatie voltooien zodra de resources een finale status bereiken.
 
 Dit zal:
-1. Azure OpenAI-resource implementeren met GPT-5 en text-embedding-3-small modellen
-2. Automatisch een `.env`-bestand genereren in de projectroot met referenties
-3. Alle vereiste omgevingsvariabelen instellen
+1. Azure OpenAI-resource implementeren met GPT-5.2 en text-embedding-3-small modellen
+2. Automatisch een `.env` bestand genereren in de projectroot met referenties
+3. Alle benodigde omgevingsvariabelen instellen
 
-**Problemen met implementatie?** Zie de [Infrastructure README](infra/README.md) voor gedetailleerde probleemoplossing inclusief subdomeinnaamconflicten, handmatige Azure Portal-implementatiestappen en modelconfiguratieadvies.
+**Implementatieproblemen?** Zie de [Infrastructure README](infra/README.md) voor gedetailleerde probleemoplossing zoals conflicten met subdomeinnamen, handmatige Azure Portal-implementatiestappen en modelconfiguratieadvies.
 
-**Controleer of implementatie geslaagd is:**
+**Controleer of de implementatie gelukt is:**
 
 **Bash:**
 ```bash
-cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, enz. tonen.
+cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_SLEUTEL, enz. tonen.
 ```
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, enz. tonen.
+Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, enz. weergeven.
 ```
 
-> **Opmerking:** Het `azd up`-commando genereert automatisch het `.env`-bestand. Als je het later moet bijwerken, kun je het `.env`-bestand handmatig bewerken of opnieuw genereren door:
+> **Opmerking:** Het `azd up` commando genereert automatisch het `.env` bestand. Als je het later moet bijwerken, kun je het `.env` bestand handmatig bewerken of opnieuw genereren door uit te voeren:
 >
 > **Bash:**
 > ```bash
@@ -175,9 +175,9 @@ Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, enz. tonen.
 
 ## De applicatie lokaal uitvoeren
 
-**Controleer implementatie:**
+**Controleer de implementatie:**
 
-Zorg dat het `.env`-bestand in de hoofdmap bestaat met Azure-referenties:
+Zorg dat het `.env` bestand zich in de hoofdmap bevindt met Azure-gegevens:
 
 **Bash:**
 ```bash
@@ -186,14 +186,14 @@ cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT tonen
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT tonen
+Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT weergeven
 ```
 
 **Start de applicaties:**
 
-**Optie 1: Gebruik Spring Boot Dashboard (aanbevolen voor VS Code-gebruikers)**
+**Optie 1: Gebruik maken van Spring Boot Dashboard (Aanbevolen voor VS Code gebruikers)**
 
-De devcontainer bevat de Spring Boot Dashboard-extensie, die een visuele interface biedt om alle Spring Boot-applicaties te beheren. Je vindt het in de Activiteitenbalk aan de linkerkant van VS Code (zoek naar het Spring Boot-pictogram).
+De dev container bevat de Spring Boot Dashboard-extensie, die een visuele interface biedt om alle Spring Boot-applicaties te beheren. Je vindt deze in de Activiteitenbalk aan de linkerkant van VS Code (zoek naar het Spring Boot-icoon).
 
 Vanaf het Spring Boot Dashboard kun je:
 - Alle beschikbare Spring Boot-applicaties in de werkruimte zien
@@ -205,13 +205,13 @@ Klik simpelweg op de afspeelknop naast "introduction" om deze module te starten,
 
 <img src="../../../translated_images/nl/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Optie 2: Gebruik shell-scripts**
+**Optie 2: Gebruik maken van shell-scripts**
 
 Start alle webapplicaties (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Vanuit de hoofdmap
+cd ..  # Vanaf de hoofdmap
 ./start-all.sh
 ```
 
@@ -235,9 +235,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Beide scripts laden automatisch omgevingsvariabelen uit het root `.env`-bestand en bouwen de JAR's als die nog niet bestaan.
+Beide scripts laden automatisch omgevingsvariabelen uit het hoofd `.env` bestand en bouwen de JARs als die nog niet bestaan.
 
-> **Opmerking:** Als je alle modules handmatig wilt bouwen voordat je start:
+> **Opmerking:** Als je liever alle modules handmatig bouwt voordat je start:
 >
 > **Bash:**
 > ```bash
@@ -273,39 +273,39 @@ cd ..; .\stop-all.ps1  # Alle modules
 
 De applicatie biedt een webinterface met twee chatimplementaties naast elkaar.
 
-<img src="../../../translated_images/nl/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
+<img src="../../../translated_images/nl/home-screen.121a03206ab910c0.webp" alt="Startscherm van applicatie" width="800"/>
 
-*Dashboard toont zowel Simple Chat (stateless) als Conversational Chat (stateful) opties*
+*Dashboard met zowel Simple Chat (toestandsloos) als Conversational Chat (toestandsgebonden) opties*
 
-### Stateless Chat (linkerpaneel)
+### Toestandsloze chat (linkerpaneel)
 
-Probeer dit eerst. Vraag "Mijn naam is John" en vraag dan direct "Wat is mijn naam?" Het model zal het niet onthouden omdat elk bericht onafhankelijk is. Dit toont het kernprobleem van basisintegratie van taalmodellen - geen gesprekcontext.
+Probeer dit eerst. Vraag "Mijn naam is John" en vraag dan meteen "Wat is mijn naam?" Het model zal het niet onthouden omdat elk bericht onafhankelijk is. Dit demonstreert het kernprobleem van basis taalmodelintegratie - geen gesprekscontext.
 
-<img src="../../../translated_images/nl/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
+<img src="../../../translated_images/nl/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Demo toestandsloze chat" width="800"/>
 
-*AI herinnert zich je naam niet van het vorige bericht*
+*AI onthoudt je naam niet van het vorige bericht*
 
-### Stateful Chat (rechterpaneel)
+### Toestandsgebonden chat (rechterpaneel)
 
-Probeer nu dezelfde volgorde hier. Vraag "Mijn naam is John" en dan "Wat is mijn naam?" Deze keer onthoudt het. Het verschil is MessageWindowChatMemory - het houdt de gespreksgeschiedenis bij en voegt die toe aan elke aanvraag. Zo werkt productieconversatie-AI.
+Probeer nu hier dezelfde reeks. Vraag "Mijn naam is John" en daarna "Wat is mijn naam?" Deze keer onthoudt het. Het verschil is MessageWindowChatMemory - het behoudt gespreksgeschiedenis en voegt die met elke aanvraag toe. Zo werkt productie-gespreks-AI.
 
-<img src="../../../translated_images/nl/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
+<img src="../../../translated_images/nl/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Demo toestandsgebonden chat" width="800"/>
 
-*AI herinnert zich je naam van eerder in het gesprek*
+*AI onthoudt je naam van eerder in het gesprek*
 
-Beide panelen gebruiken hetzelfde GPT-5-model. Het enige verschil is geheugen. Dit maakt duidelijk wat geheugen aan je applicatie toevoegt en waarom het essentieel is voor echte gebruikssituaties.
+Beide panelen gebruiken hetzelfde GPT-5.2 model. Het enige verschil is geheugen. Dit maakt het duidelijk wat geheugen aan je applicatie toevoegt en waarom het essentieel is voor echte gebruikssituaties.
 
 ## Volgende stappen
 
-**Volgende module:** [02-prompt-engineering - Prompt Engineering met GPT-5](../02-prompt-engineering/README.md)
+**Volgende module:** [02-prompt-engineering - Prompt Engineering met GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigatie:** [← Vorige: Module 00 - Quick Start](../00-quick-start/README.md) | [Terug naar hoofdmenu](../README.md) | [Volgende: Module 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
+**Navigatie:** [← Vorige: Module 00 - Snelle Start](../00-quick-start/README.md) | [Terug naar hoofdmenu](../README.md) | [Volgende: Module 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:  
-Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal moet als de gezaghebbende bron worden beschouwd. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+**Disclaimer**:
+Dit document is vertaald met behulp van de AI-vertalingsservice [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de oorspronkelijke taal dient als het gezaghebbende referentiepunt. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

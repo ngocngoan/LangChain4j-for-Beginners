@@ -3,18 +3,18 @@
 ## Mục lục
 
 - [Bắt đầu nhanh](../../../docs)
-- [Những nội dung các bài kiểm thử bao gồm](../../../docs)
-- [Chạy các bài kiểm thử](../../../docs)
-- [Chạy các bài kiểm thử trong VS Code](../../../docs)
+- [Những gì các kiểm thử bao gồm](../../../docs)
+- [Chạy kiểm thử](../../../docs)
+- [Chạy kiểm thử trong VS Code](../../../docs)
 - [Mẫu kiểm thử](../../../docs)
 - [Triết lý kiểm thử](../../../docs)
 - [Bước tiếp theo](../../../docs)
 
-Hướng dẫn này hướng dẫn bạn qua các bài kiểm thử minh họa cách kiểm thử ứng dụng AI mà không cần khóa API hoặc dịch vụ bên ngoài.
+Hướng dẫn này đưa bạn qua các bài kiểm thử minh họa cách kiểm thử ứng dụng AI mà không cần khóa API hay dịch vụ bên ngoài.
 
 ## Bắt đầu nhanh
 
-Chạy tất cả các bài kiểm thử bằng một lệnh duy nhất:
+Chạy tất cả các kiểm thử với một lệnh duy nhất:
 
 **Bash:**
 ```bash
@@ -26,30 +26,30 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/vi/test-results.ea5c98d8f3642043.webp" alt="Kết quả kiểm thử thành công" width="800"/>
+<img src="../../../translated_images/vi/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
 
-*Thực thi kiểm thử thành công cho thấy tất cả các bài kiểm thử đều vượt qua mà không có lỗi nào*
+*Thực thi kiểm thử thành công cho thấy tất cả các kiểm thử đều đậu với số lỗi bằng không*
 
-## Những nội dung các bài kiểm thử bao gồm
+## Những gì các kiểm thử bao gồm
 
-Khóa học này tập trung vào **kiểm thử đơn vị** chạy cục bộ. Mỗi bài kiểm thử minh họa một khái niệm cụ thể của LangChain4j một cách độc lập.
+Khóa học này tập trung vào **kiểm thử đơn vị** chạy cục bộ. Mỗi kiểm thử minh họa một khái niệm LangChain4j cụ thể một cách độc lập.
 
-<img src="../../../translated_images/vi/testing-pyramid.2dd1079a0481e53e.webp" alt="Kim tự tháp kiểm thử" width="800"/>
+<img src="../../../translated_images/vi/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
-*Kim tự tháp kiểm thử cho thấy cân bằng giữa kiểm thử đơn vị (nhanh, độc lập), kiểm thử tích hợp (các thành phần thực tế), và kiểm thử đầu-cuối. Khóa đào tạo này đề cập kiểm thử đơn vị.*
+*Kim tự tháp kiểm thử thể hiện sự cân bằng giữa kiểm thử đơn vị (nhanh, tách biệt), kiểm thử tích hợp (các thành phần thực) và kiểm thử đầu-cuối. Khóa đào tạo này bao gồm kiểm thử đơn vị.*
 
-| Module | Tests | Focus | Key Files |
-|--------|-------|-------|-----------|
-| **00 - Bắt đầu nhanh** | 6 | Mẫu prompt và thay thế biến | `SimpleQuickStartTest.java` |
-| **01 - Giới thiệu** | 8 | Bộ nhớ cuộc trò chuyện và chat có trạng thái | `SimpleConversationTest.java` |
-| **02 - Kỹ thuật prompt** | 12 | Mẫu GPT-5, mức độ nhiệt tình, đầu ra có cấu trúc | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Nhập tài liệu, embedding, tìm kiếm tương đồng | `DocumentServiceTest.java` |
-| **04 - Công cụ** | 12 | Gọi hàm và xâu chuỗi công cụ | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Giao thức Ngữ cảnh Mô hình với truyền stdio | `SimpleMcpTest.java` |
+| Module | Kiểm thử | Tập trung | File chính |
+|--------|---------|----------|------------|
+| **00 - Bắt đầu nhanh** | 6 | Mẫu lời nhắc và thay thế biến | `SimpleQuickStartTest.java` |
+| **01 - Giới thiệu** | 8 | Bộ nhớ hội thoại và chat trạng thái | `SimpleConversationTest.java`` |
+| **02 - Kỹ thuật Prompt** | 12 | Mẫu GPT-5.2, mức độ háo hức, đầu ra có cấu trúc | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Tiếp nhận tài liệu, embeddings, tìm kiếm tương đồng | `DocumentServiceTest.java` |
+| **04 - Công cụ** | 12 | Gọi hàm và chuỗi công cụ | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Giao thức Model Context với giao tiếp Stdio | `SimpleMcpTest.java` |
 
-## Chạy các bài kiểm thử
+## Chạy kiểm thử
 
-**Chạy tất cả các bài kiểm thử từ thư mục gốc:**
+**Chạy tất cả kiểm thử từ thư mục gốc:**
 
 **Bash:**
 ```bash
@@ -61,12 +61,12 @@ mvn test
 mvn --% test
 ```
 
-**Chạy các bài kiểm thử cho một mô-đun cụ thể:**
+**Chạy kiểm thử cho một module cụ thể:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Hoặc từ tài khoản root
+# Hoặc từ root
 mvn test -pl 01-introduction
 ```
 
@@ -77,7 +77,7 @@ cd 01-introduction; mvn --% test
 mvn --% test -pl 01-introduction
 ```
 
-**Chạy một lớp kiểm thử riêng lẻ:**
+**Chạy một lớp kiểm thử duy nhất:**
 
 **Bash:**
 ```bash
@@ -98,36 +98,36 @@ mvn test -Dtest=SimpleConversationTest#nên duy trì lịch sử hội thoại
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#nên duy trì lịch sử hội thoại
+mvn --% test -Dtest=SimpleConversationTest#nên duy trì lịch sử cuộc trò chuyện
 ```
 
-## Chạy các bài kiểm thử trong VS Code
+## Chạy kiểm thử trong VS Code
 
-Nếu bạn đang sử dụng Visual Studio Code, Test Explorer cung cấp giao diện đồ họa để chạy và gỡ lỗi các bài kiểm thử.
+Nếu bạn dùng Visual Studio Code, Test Explorer cung cấp giao diện đồ họa để chạy và gỡ lỗi các kiểm thử.
 
-<img src="../../../translated_images/vi/vscode-testing.f02dd5917289dced.webp" alt="Test Explorer của VS Code" width="800"/>
+<img src="../../../translated_images/vi/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*Test Explorer của VS Code hiển thị cây kiểm thử với tất cả các lớp kiểm thử Java và các phương thức kiểm thử riêng lẻ*
+*VS Code Test Explorer thể hiện cây kiểm thử với tất cả các lớp kiểm thử Java và các phương thức kiểm thử riêng lẻ*
 
-**Để chạy các bài kiểm thử trong VS Code:**
+**Để chạy kiểm thử trong VS Code:**
 
-1. Mở Test Explorer bằng cách nhấp vào biểu tượng bình thí nghiệm trên Thanh Hoạt động
-2. Mở rộng cây kiểm thử để xem tất cả các mô-đun và lớp kiểm thử
-3. Nhấp nút chạy bên cạnh bất kỳ bài kiểm thử nào để chạy riêng
-4. Nhấp "Run All Tests" để thực thi toàn bộ bộ kiểm thử
-5. Nhấp chuột phải vào bất kỳ bài kiểm thử nào và chọn "Debug Test" để thiết lập breakpoint và thực thi từng bước qua mã
+1. Mở Test Explorer bằng cách bấm biểu tượng bình thí nghiệm trên Thanh hoạt động
+2. Mở rộng cây kiểm thử để xem các module và lớp kiểm thử
+3. Bấm nút chạy cạnh bất kỳ kiểm thử nào để chạy riêng lẻ
+4. Bấm "Run All Tests" để chạy toàn bộ bộ kiểm thử
+5. Nhấp chuột phải vào kiểm thử và chọn "Debug Test" để đặt breakpoints và bước qua mã
 
-Test Explorer hiển thị dấu tích màu xanh cho các bài kiểm thử vượt qua và cung cấp thông báo lỗi chi tiết khi bài kiểm thử thất bại.
+Test Explorer hiện dấu kiểm màu xanh khi kiểm thử thành công và cung cấp thông báo lỗi chi tiết khi kiểm thử thất bại.
 
 ## Mẫu kiểm thử
 
-### Mẫu 1: Kiểm thử mẫu prompt
+### Mẫu 1: Kiểm thử mẫu lời nhắc
 
-Mẫu đơn giản nhất kiểm thử các mẫu prompt mà không gọi bất kỳ mô hình AI nào. Bạn xác minh rằng việc thay thế biến hoạt động chính xác và các prompt được định dạng như mong đợi.
+Mẫu đơn giản nhất kiểm thử các mẫu lời nhắc mà không gọi bất kỳ mô hình AI nào. Bạn xác thực rằng thay thế biến hoạt động chính xác và lời nhắc được định dạng như mong đợi.
 
-<img src="../../../translated_images/vi/prompt-template-testing.b902758ddccc8dee.webp" alt="Kiểm thử mẫu prompt" width="800"/>
+<img src="../../../translated_images/vi/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*Kiểm thử mẫu prompt thể hiện luồng thay thế biến: mẫu với các chỗ giữ chỗ → áp dụng giá trị → xác minh đầu ra đã được định dạng*
+*Kiểm thử mẫu lời nhắc thể hiện luồng thay thế biến: mẫu với các chỗ giữ chỗ → giá trị được áp dụng → đầu ra được kiểm tra định dạng*
 
 ```java
 @Test
@@ -146,27 +146,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-This test lives in `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+Kiểm thử này nằm trong `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
-**Run it:**
+**Chạy nó:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#Kiểm tra định dạng mẫu lời nhắc
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#định dạng mẫu nhắc thử nghiệm
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#kiểm tra định dạng mẫu lời nhắc
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#kiểm traĐịnhDạngMẫuNhắcNhở
 ```
 
-### Mẫu 2: Giả lập mô hình ngôn ngữ (mocking)
+### Mẫu 2: Mô phỏng mô hình ngôn ngữ
 
-Khi kiểm thử logic cuộc trò chuyện, sử dụng Mockito để tạo mô hình giả trả về các phản hồi đã định trước. Điều này khiến các bài kiểm thử nhanh, miễn phí và có tính quyết định.
+Khi kiểm thử logic hội thoại, sử dụng Mockito để tạo mô hình giả trả về câu trả lời định sẵn. Điều này khiến kiểm thử nhanh, miễn phí và có kết quả nhất quán.
 
-<img src="../../../translated_images/vi/mock-vs-real.3b8b1f85bfe6845e.webp" alt="So sánh mock và API thực" width="800"/>
+<img src="../../../translated_images/vi/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*So sánh cho thấy lý do tại sao mock được ưu tiên cho kiểm thử: chúng nhanh, miễn phí, có tính quyết định và không yêu cầu khóa API*
+*So sánh cho thấy vì sao mô hình giả được ưu tiên cho kiểm thử: nhanh, miễn phí, xác định trước và không cần khóa API*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -216,15 +216,15 @@ class SimpleConversationTest {
 }
 ```
 
-Mẫu này xuất hiện trong `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock đảm bảo hành vi nhất quán để bạn có thể xác minh việc quản lý bộ nhớ hoạt động chính xác.
+Mẫu này xuất hiện trong `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mô phỏng đảm bảo hành vi nhất quán để bạn có thể xác nhận việc quản lý bộ nhớ hoạt động đúng.
 
-### Mẫu 3: Kiểm thử cách ly cuộc trò chuyện
+### Mẫu 3: Kiểm thử tách biệt hội thoại
 
-Bộ nhớ cuộc trò chuyện phải giữ riêng biệt nhiều người dùng. Bài kiểm thử này xác minh rằng các cuộc trò chuyện không trộn lẫn ngữ cảnh.
+Bộ nhớ hội thoại phải giữ các người dùng riêng biệt. Kiểm thử này xác nhận hội thoại không bị trộn lẫn bối cảnh.
 
-<img src="../../../translated_images/vi/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Cách ly cuộc trò chuyện" width="800"/>
+<img src="../../../translated_images/vi/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*Kiểm thử cách ly cuộc trò chuyện thể hiện lưu trữ bộ nhớ riêng cho các người dùng khác nhau để ngăn chặn trộn lẫn ngữ cảnh*
+*Kiểm thử tách biệt hội thoại thể hiện bộ nhớ riêng cho từng người dùng khác nhau để tránh trộn bối cảnh*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Mỗi cuộc trò chuyện duy trì lịch sử riêng độc lập. Trong hệ thống sản xuất, sự cách ly này là rất quan trọng cho các ứng dụng đa người dùng.
+Mỗi hội thoại duy trì lịch sử riêng biệt của nó. Trong hệ thống sản xuất, sự tách biệt này rất quan trọng cho ứng dụng đa người dùng.
 
-### Mẫu 4: Kiểm thử công cụ một cách độc lập
+### Mẫu 4: Kiểm thử Công cụ độc lập
 
-Công cụ là các hàm mà AI có thể gọi. Kiểm thử trực tiếp chúng để đảm bảo chúng hoạt động chính xác bất kể quyết định của AI.
+Công cụ là các hàm AI có thể gọi. Kiểm thử trực tiếp để đảm bảo chúng hoạt động đúng mà không phụ thuộc quyết định AI.
 
-<img src="../../../translated_images/vi/tools-testing.3e1706817b0b3924.webp" alt="Kiểm thử công cụ" width="800"/>
+<img src="../../../translated_images/vi/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*Kiểm thử công cụ độc lập mô tả việc thực thi công cụ giả mà không gọi AI để xác minh logic nghiệp vụ*
+*Kiểm thử công cụ độc lập thể hiện thực thi công cụ mô phỏng không gọi AI để xác nhận logic nghiệp vụ*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-These tests from `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validate tool logic without AI involvement. The chaining example shows how one tool's output feeds into another's input.
+Các kiểm thử này từ `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` xác thực logic công cụ không liên quan đến AI. Ví dụ chuỗi thể hiện làm thế nào đầu ra của một công cụ làm đầu vào cho công cụ khác.
 
 ### Mẫu 5: Kiểm thử RAG trong bộ nhớ
 
-Hệ thống RAG truyền thống yêu cầu cơ sở dữ liệu vector và dịch vụ embedding. Mẫu chạy trong bộ nhớ cho phép bạn kiểm thử toàn bộ quy trình mà không cần phụ thuộc bên ngoài.
+Hệ thống RAG truyền thống yêu cầu cơ sở dữ liệu vector và dịch vụ embedding. Mẫu bộ nhớ cho phép kiểm thử toàn bộ quy trình mà không cần phụ thuộc bên ngoài.
 
-<img src="../../../translated_images/vi/rag-testing.ee7541b1e23934b1.webp" alt="Kiểm thử RAG trong bộ nhớ" width="800"/>
+<img src="../../../translated_images/vi/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*Quy trình kiểm thử RAG trong bộ nhớ cho thấy phân tích tài liệu, lưu trữ embedding, và tìm kiếm tương đồng mà không cần cơ sở dữ liệu*
+*Luồng kiểm thử RAG trong bộ nhớ thể hiện phân tích tài liệu, lưu trữ embedding, và tìm kiếm tương đồng mà không cần cơ sở dữ liệu*
 
 ```java
 @Test
@@ -304,15 +304,15 @@ void testProcessTextDocument() {
 }
 ```
 
-This test from `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` creates a document in memory and verifies chunking and metadata handling.
+Kiểm thử này từ `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` tạo tài liệu trong bộ nhớ và xác nhận phân đoạn cũng như xử lý siêu dữ liệu.
 
 ### Mẫu 6: Kiểm thử tích hợp MCP
 
-Module MCP kiểm thử tích hợp Model Context Protocol sử dụng truyền stdio. Các bài kiểm thử này xác minh rằng ứng dụng của bạn có thể khởi tạo và giao tiếp với các máy chủ MCP như các tiến trình con.
+Module MCP kiểm thử giao thức Model Context với truyền thông stdio. Các kiểm thử này xác nhận ứng dụng của bạn có thể khởi tạo và giao tiếp với máy chủ MCP như các tiến trình con.
 
-The tests in `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` validate MCP client behavior.
+Các kiểm thử trong `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` xác thực hành vi client MCP.
 
-**Run them:**
+**Chạy chúng:**
 
 **Bash:**
 ```bash
@@ -326,36 +326,36 @@ cd 05-mcp; mvn --% test
 
 ## Triết lý kiểm thử
 
-Kiểm thử mã của bạn, không phải AI. Các bài kiểm thử của bạn nên xác minh mã bạn viết bằng cách kiểm tra cách xây dựng prompt, cách quản lý bộ nhớ và cách thực thi công cụ. Phản hồi của AI thay đổi và không nên là một phần của khẳng định kiểm thử. Hãy tự hỏi liệu mẫu prompt của bạn có thay thế biến đúng cách hay không, chứ không phải liệu AI có trả lời đúng hay không.
+Kiểm thử mã của bạn, không phải AI. Các kiểm thử nên xác nhận mã bạn viết bằng cách kiểm tra cách dựng lời nhắc, cách quản lý bộ nhớ, và cách các công cụ thực thi. Phản hồi AI rất khác nhau và không nên là phần của khẳng định kiểm thử. Hãy tự hỏi mẫu lời nhắc có thay thế biến chính xác không, chứ không phải AI có đáp án đúng hay không.
 
-Sử dụng mock cho các mô hình ngôn ngữ. Chúng là các phụ thuộc bên ngoài chậm, tốn kém và không quyết định. Việc mock làm cho các bài kiểm thử nhanh với mili giây thay vì giây, miễn phí không tốn chi phí API, và quyết định với cùng một kết quả mỗi lần.
+Dùng mô phỏng cho mô hình ngôn ngữ. Chúng là phụ thuộc bên ngoài chậm, tốn kém, và không xác định. Mô phỏng làm cho kiểm thử nhanh với mili giây thay vì vài giây, miễn phí không tốn phí API, và xác định với kết quả giống nhau mỗi lần.
 
-Giữ cho các bài kiểm thử độc lập. Mỗi bài kiểm thử nên thiết lập dữ liệu của riêng nó, không phụ thuộc vào các bài kiểm thử khác, và dọn dẹp sau khi chạy. Các bài kiểm thử nên vượt qua bất kể thứ tự thực thi.
+Giữ kiểm thử độc lập. Mỗi kiểm thử nên tự chuẩn bị dữ liệu, không phụ thuộc kiểm thử khác, và dọn dẹp sau khi chạy. Kiểm thử nên đậu bất kể thứ tự thực thi.
 
-Kiểm thử các trường hợp biên vượt ra ngoài đường vui vẻ. Thử các đầu vào rỗng, đầu vào rất lớn, ký tự đặc biệt, tham số không hợp lệ và các điều kiện biên. Những điều này thường tiết lộ lỗi mà việc sử dụng thông thường không bộc lộ.
+Kiểm thử các trường hợp biên ngoài đường đi lý tưởng. Thử đầu vào rỗng, đầu vào rất lớn, ký tự đặc biệt, tham số không hợp lệ, và điều kiện biên. Những điều này thường phát hiện lỗi không thấy khi dùng bình thường.
 
-Sử dụng tên mô tả. So sánh `shouldMaintainConversationHistoryAcrossMultipleMessages()` với `test1()`. Tên đầu tiên nói chính xác điều gì đang được kiểm thử, giúp việc gỡ lỗi khi thất bại dễ dàng hơn nhiều.
+Dùng tên mô tả. So sánh `shouldMaintainConversationHistoryAcrossMultipleMessages()` với `test1()`. Tên đầu tiên cho bạn biết chính xác điều đang được kiểm thử, giúp dễ gỡ lỗi khi thất bại hơn nhiều.
 
 ## Bước tiếp theo
 
-Bây giờ bạn đã hiểu các mẫu kiểm thử, hãy tìm hiểu sâu hơn từng mô-đun:
+Giờ bạn đã hiểu các mẫu kiểm thử, hãy đi sâu hơn vào từng module:
 
-- **[00 - Bắt đầu nhanh](../00-quick-start/README.md)** - Bắt đầu với những điều cơ bản về mẫu prompt
-- **[01 - Giới thiệu](../01-introduction/README.md)** - Tìm hiểu quản lý bộ nhớ cuộc trò chuyện
-- **[02 - Kỹ thuật prompt](../02-prompt-engineering/README.md)** - Nắm vững các mẫu prompting cho GPT-5
-- **[03 - RAG](../03-rag/README.md)** - Xây dựng hệ thống RAG (retrieval-augmented generation)
-- **[04 - Công cụ](../04-tools/README.md)** - Triển khai gọi hàm và chuỗi công cụ
-- **[05 - MCP](../05-mcp/README.md)** - Tích hợp Giao thức Ngữ cảnh Mô hình
+- **[00 - Bắt đầu nhanh](../00-quick-start/README.md)** - Bắt đầu với cơ bản về mẫu lời nhắc
+- **[01 - Giới thiệu](../01-introduction/README.md)** - Tìm hiểu quản lý bộ nhớ hội thoại
+- **[02 - Kỹ thuật Prompt](../02-prompt-engineering/README.md)** - Làm chủ các mẫu prompt GPT-5.2
+- **[03 - RAG](../03-rag/README.md)** - Xây dựng hệ thống tăng cường truy xuất
+- **[04 - Công cụ](../04-tools/README.md)** - Thực thi gọi hàm và chuỗi công cụ
+- **[05 - MCP](../05-mcp/README.md)** - Tích hợp Giao thức Model Context
 
-README của từng mô-đun cung cấp giải thích chi tiết về các khái niệm được kiểm thử ở đây.
+README mỗi module cung cấp giải thích chi tiết về các khái niệm được kiểm thử ở đây.
 
 ---
 
-**Điều hướng:** [← Quay lại Trang chính](../README.md)
+**Điều hướng:** [← Quay lại Chính](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-Tuyên bố miễn trừ trách nhiệm:
-Tài liệu này đã được dịch bằng dịch vụ dịch AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo độ chính xác, xin lưu ý rằng các bản dịch tự động có thể chứa lỗi hoặc sai sót. Tài liệu gốc bằng ngôn ngữ ban đầu nên được coi là nguồn có thẩm quyền. Đối với những thông tin quan trọng, nên sử dụng dịch vụ dịch thuật chuyên nghiệp do người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu lầm hoặc giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
+**Tuyên bố từ chối trách nhiệm**:  
+Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo độ chính xác, xin lưu ý rằng các bản dịch tự động có thể chứa lỗi hoặc sai sót. Tài liệu gốc bằng ngôn ngữ nguyên bản nên được xem là nguồn tham khảo chính xác. Đối với các thông tin quan trọng, khuyến nghị sử dụng dịch vụ dịch thuật chuyên nghiệp bởi con người. Chúng tôi không chịu trách nhiệm về bất kỳ hiểu lầm hoặc giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
