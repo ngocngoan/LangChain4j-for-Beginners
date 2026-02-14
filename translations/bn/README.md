@@ -1,15 +1,15 @@
 <img src="../../translated_images/bn/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-### 🌐 বহুভাষিক সমর্থন
+### 🌐 বহু-ভাষা সমর্থন
 
-#### GitHub Action এর মাধ্যমে সমর্থিত (স্বয়ংক্রিয় ও সর্বদা আপ-টু-ডেট)
+#### GitHub Action এর মাধ্যমে সমর্থিত (স্বয়ংক্রিয় ও সর্বদা হালনাগাদ)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
 [Arabic](../ar/README.md) | [Bengali](./README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
 > **স্থানীয়ভাবে ক্লোন করতে চান?**
 >
-> এই রিপোজিটরিতে ৫০+ ভাষার অনুবাদ রয়েছে যা ডাউনলোডের পরিমাণ উল্লেখযোগ্যভাবে বৃদ্ধি করে। অনুবাদ ছাড়া ক্লোন করতে sparse checkout ব্যবহার করুন:
+> এই রিপোজিটরিটি ৫০+ ভাষার অনুবাদ অন্তর্ভুক্ত করে যা ডাউনলোড আকার উল্লেখযোগ্যভাবে বৃদ্ধি করে। অনুবাদগুলো ছাড়া ক্লোন করতে sparse checkout ব্যবহার করুন:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -25,22 +25,42 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> এটি আপনাকে দ্রুত ডাউনলোড সহ কোর্স সম্পন্ন করার জন্য প্রয়োজনীয় সবকিছু দিবে।
+> এটি আপনাকে দ্রুত ডাউনলোডে কোর্স সম্পূর্ণ করার জন্য প্রয়োজনীয় সব কিছু সরবরাহ করবে।
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
-# LangChain4j নবীনদের জন্য
+> **স্থানীয়ভাবে ক্লোন করতে চান?**
+>
+> এই রিপোজিটরিটি ৫০+ ভাষার অনুবাদ অন্তর্ভুক্ত করে যা ডাউনলোড আকার উল্লেখযোগ্যভাবে বৃদ্ধি করে। অনুবাদগুলো ছাড়া ক্লোন করতে sparse checkout ব্যবহার করুন:
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> এটি আপনাকে দ্রুত ডাউনলোডে কোর্স সম্পূর্ণ করার জন্য প্রয়োজনীয় সব কিছু সরবরাহ করবে।
 
-LangChain4j ও Azure OpenAI GPT-5.2 দিয়ে AI অ্যাপ্লিকেশন তৈরির একটি কোর্স, মৌলিক চ্যাট থেকে AI এজেন্ট পর্যন্ত।
+# LangChain4j শুরু করার জন্য
 
-**LangChain4j তে নতুন?** মূল শব্দ ও ধারণাগুলোর সংজ্ঞার জন্য [Glossary](docs/GLOSSARY.md) দেখুন।
+LangChain4j এবং Azure OpenAI GPT-5.2 ব্যবহার করে AI অ্যাপ্লিকেশন তৈরি করার একটি কোর্স, মৌলিক চ্যাট থেকে AI এজেন্ট পর্যন্ত।
+
+**LangChain4j এ নতুন?** মূল শব্দ এবং ধারণাগুলোর সংজ্ঞার জন্য [Glossary](docs/GLOSSARY.md) দেখুন।
 
 ## বিষয়সূচি
 
 1. [দ্রুত শুরু](00-quick-start/README.md) - LangChain4j দিয়ে শুরু করুন
-2. [পরিচয়](01-introduction/README.md) - LangChain4j এর মৌলিক বিষয় শিখুন
-3. [প্রম্পট ইঞ্জিনিয়ারিং](02-prompt-engineering/README.md) - কার্যকর প্রম্পট ডিজাইন আয়ত্ত করুন
+2. [ভূমিকা](01-introduction/README.md) - LangChain4j এর মৌলিক বিষয় শিখুন
+3. [প্রম্পট ইঞ্জিনিয়ারিং](02-prompt-engineering/README.md) - কার্যকর প্রম্পট ডিজাইনে দক্ষতা অর্জন করুন
 4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - বুদ্ধিমান জ্ঞানভিত্তিক সিস্টেম তৈরি করুন
-5. [টুলস](04-tools/README.md) - বাহ্যিক টুল এবং সাধারণ সহায়ক একীভূত করুন
+5. [টুলস](04-tools/README.md) - বাহ্যিক টুল এবং সহজ সহকারী সংহত করুন
 6. [MCP (Model Context Protocol)](05-mcp/README.md) - Model Context Protocol (MCP) এবং Agentic মডিউল নিয়ে কাজ করুন
 ---
 
@@ -48,30 +68,30 @@ LangChain4j ও Azure OpenAI GPT-5.2 দিয়ে AI অ্যাপ্লি
 
 > **দ্রুত শুরু**
 
-1. এই রিপোজিটরিটি আপনার GitHub একাউন্টে fork করুন
+1. এই রিপোজিটরিটি আপনার GitHub অ্যাকাউন্টে fork করুন
 2. ক্লিক করুন **Code** → **Codespaces** ট্যাব → **...** → **New with options...**
-3. ডিফল্ট ব্যবহার করুন – এটি কোর্সের জন্য তৈরি ডেভেলপমেন্ট কনটেইনার নির্বাচন করবে
+3. ডিফল্ট সেটিংস ব্যবহার করুন – এটি এই কোর্সের জন্য তৈরি Development container নির্বাচন করবে
 4. ক্লিক করুন **Create codespace**
-5. পরিবেশ প্রস্তুতির জন্য ৫-১০ মিনিট অপেক্ষা করুন
-6. সরাসরি [দ্রুত শুরু](./00-quick-start/README.md) তে যান শুরু করতে!
+5. পরিবেশ প্রস্তুত হতে ৫-১০ মিনিট অপেক্ষা করুন
+6. সরাসরি [দ্রুত শুরু](./00-quick-start/README.md) এ যান এবং শুরু করুন!
 
-মডিউল সম্পন্ন করার পর, LangChain4j পরীক্ষার ধারণাগুলো দেখতে [Testing Guide](docs/TESTING.md) অন্বেষণ করুন।
+মডিউলগুলো শেষ করার পরে, LangChain4j টেস্টিং ধারণাগুলো কার্যকরভাবে দেখতে [Testing Guide](docs/TESTING.md) এক্সপ্লোর করুন।
 
-> **নোট:** এই প্রশিক্ষণে GitHub Models এবং Azure OpenAI উভয়ই ব্যবহৃত হয়। [দ্রুত শুরু](00-quick-start/README.md) মডিউল GitHub Models ব্যবহার করে (Azure সাবস্ক্রিপশন দরকার নেই), যখন ১-৫ মডিউল Azure OpenAI ব্যবহার করে। আপনার যদি না থাকে তবে একটি [বিনামূল্যের Azure অ্যাকাউন্ট](https://aka.ms/azure-free-account) দিয়ে শুরু করুন।
+> **দ্রুত নোট:** এই প্রশিক্ষণ GitHub Models এবং Azure OpenAI উভয়ই ব্যবহার করে। [দ্রুত শুরু](00-quick-start/README.md) মডিউল GitHub Models ব্যবহার করে (Azure সাবস্ক্রিপশন প্রয়োজন নেই), এবং মডিউল ১ থেকে ৫ Azure OpenAI ব্যবহার করে। আপনার যদি না থাকে তাহলে [FREE Azure account](https://aka.ms/azure-free-account) দিয়ে শুরু করুন।
 
 
-## GitHub Copilot নিয়ে শেখা
+## GitHub Copilot এর সাথে শেখা
 
-দ্রুত কোড লিখতে, GitHub Codespace বা স্থানীয় IDE এ devcontainer সহ এই প্রকল্পটি খুলুন। এই কোর্সে ব্যবহৃত devcontainer পূর্বে GitHub Copilot দিয়ে কনফিগার করা হয়েছে AI যুগল প্রোগ্রামিংয়ের জন্য।
+দ্রুত কোডিং শুরু করতে, এই প্রকল্প GitHub Codespace বা আপনার লোকাল IDE এ devcontainer সহ খুলুন। এই কোর্সে ব্যবহৃত devcontainer পূর্বে GitHub Copilot এর জন্য কনফিগার করা আছে যা AI জোড়া প্রোগ্রামিং সহজ করে তোলে।
 
-প্রতিটি কোড উদাহরণে GitHub Copilot কে জিজ্ঞাসা করার জন্য প্রস্তাবিত প্রশ্ন রয়েছে যা আপনার বুঝ আরও গভীর করবে। 💡/🤖 প্রম্পটগুলো অনুসন্ধান করুন:
+প্রতি কোড উদাহরণে আপনাকে GitHub Copilot কে জিজ্ঞাসা করার জন্য প্রস্তাবিত প্রশ্ন আছে যা আপনার বুঝ উন্নত করবে। 💡/🤖 প্রম্পট গুলো খুঁজুন:
 
-- **Java ফাইলের হেডার** - প্রতিটি উদাহরণের জন্য নির্দিষ্ট প্রশ্ন
-- **মডিউল README** - কোড উদাহরণের পরে অনুসন্ধান প্রম্পট
+- **Java ফাইল হেডার** - প্রতিটি উদাহরণের নির্দিষ্ট প্রশ্ন
+- **মডিউল README** - কোড উদাহরণের পর অনুসন্ধানমূলক প্রম্পট
 
-**কিভাবে ব্যবহার করবেন:** যেকোনো কোড ফাইল খুলুন এবং Copilot কে প্রস্তাবিত প্রশ্ন করুন। এটি সম্পূর্ণ কোডবেসের প্রসঙ্গ ধারণ করে এবং ব্যাখ্যা, সম্প্রসারণ ও বিকল্প প্রস্তাব করতে পারে।
+**কিভাবে ব্যবহার করবেন:** যেকোনো কোড ফাইল খুলুন এবং Copilot কে প্রস্তাবিত প্রশ্ন করুন। Copilot সম্পূর্ণ কোডবেস এর প্রসঙ্গ জানে এবং ব্যাখ্যা, সম্প্রসারণ এবং বিকল্প পরামর্শ দিতে পারে।
 
-আরও জানতে চান? দেখুন [AI যুগল প্রোগ্রামিংয়ের জন্য Copilot](https://aka.ms/GitHubCopilotAI)।
+আরো জানতে চান? দেখুন [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI)।
 
 ## অতিরিক্ত সম্পদ
 
@@ -98,40 +118,40 @@ LangChain4j ও Azure OpenAI GPT-5.2 দিয়ে AI অ্যাপ্লি
 
 ---
  
-### মূল শেখা
+### Core Learning
 [![ML for Beginners](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
 [![Cybersecurity for Beginners](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
 [![Web Dev for Beginners](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
-[![শিক্ষানবিসদের জন্য IoT](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
-[![শিক্ষানবিসদের জন্য XR ডেভেলপমেন্ট](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![IoT for Beginners](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
+[![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
 ### কপাইলট সিরিজ
-[![এআই পেয়ারড প্রোগ্রামিংয়ের জন্য কপাইলট](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
-[![C#/.NET এর জন্য কপাইলট](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
-[![কপাইলট অ্যাডভেঞ্চার](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
+[![Copilot for AI Paired Programming](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
+[![Copilot for C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
+[![Copilot Adventure](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
 <!-- CO-OP TRANSLATOR OTHER COURSES END -->
 
-## সাহায্য পান
+## সাহায্য পাওয়া
 
-আপনি যদি আটকে যান বা AI অ্যাপ তৈরি করার বিষয়ে কোনও প্রশ্ন থাকে, তাহলে যোগ দিন:
+যদি আপনি আটকে যান বা AI অ্যাপ তৈরির বিষয়ে কোনো প্রশ্ন থাকে, তাহলে যোগ দিন:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-পণ্য প্রতিক্রিয়া বা ত্রুটি থাকলে নিম্নলিখিত স্থানটি পরিদর্শন করুন:
+যদি আপনার পণ্যের প্রতিক্রিয়া বা নির্মাণের সময় কোনো ত্রুটি থাকে, তাহলে দেখুন:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## লাইসেন্স
 
-MIT লাইসেন্স - বিস্তারিত দেখুন [LICENSE](../../LICENSE) ফাইলে।
+MIT লাইসেন্স - বিস্তারিত জানার জন্য [LICENSE](../../LICENSE) ফাইলটি দেখুন।
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**অস্বীকার**:  
-এই নথিটি AI অনুবাদ সেবা [Co-op Translator](https://github.com/Azure/co-op-translator) ব্যবহার করে অনূদিত হয়েছে। যদিও আমরা যথাসাধ্য সঠিকতার চেষ্টা করি, তবুও স্বয়ংক্রিয় অনুবাদে ভুল বা অসঙ্গতি থাকতে পারে। মূল নথিটি এর মূল ভাষায়ই কর্তৃত্বপূর্ণ উৎস হিসাবে বিবেচিত হওয়া উচিত। গুরুত্বপূর্ণ তথ্যের জন্য পেশাদার মানব অনুবাদের পরামর্শ দেওয়া হয়। এই অনুবাদের ব্যবহারে সৃষ্ট কোনো ভুলবোঝাবুঝি বা ভুল ব্যাখ্যার জন্য আমরা দায়বদ্ধ নই।
+**দায়িত্ব থেকে অব্যাহতি**:  
+এই নথিটি AI অনুবাদ সেবা [Co-op Translator](https://github.com/Azure/co-op-translator) ব্যবহার করে অনুবাদ করা হয়েছে। আমরা যথাসাধ্য সঠিকতার চেষ্টা করি, তবে স্বয়ংক্রিয় অনুবাদে ত্রুটিপূর্ণতা বা অসত্যতা থাকতে পারে তা অনুগ্রহ করে বিবেচনা করুন। মূল নথিটি তার নিজ ভাষায়ই সর্বোত্তম এবং কর্তৃত্বপূর্ণ উৎস হিসেবে বিবেচিত হওয়া উচিত। গুরুত্বপূর্ণ তথ্যের জন্য, পেশাদার মানব অনুবাদ সুপারিশ করা হয়। এই অনুবাদের ব্যবহার থেকে উদ্ভূত যেকোনো ভুল বোঝাবুঝি বা ভুল ব্যাখ্যার জন্য আমরা দায়ী নই।
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
