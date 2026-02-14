@@ -9,7 +9,7 @@
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 > **Prefer to Clone Locally?**
-
+>
 > This repository includes 50+ language translations which significantly increases the download size. To clone without translations, use sparse checkout:
 >
 > **Bash / macOS / Linux:**
