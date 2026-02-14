@@ -39,6 +39,8 @@ Prompt engineering is about designing input text that consistently gets you the 
 
 Think of it like giving instructions to a colleague. "Fix the bug" is vague. "Fix the null pointer exception in UserService.java line 45 by adding a null check" is specific. Language models work the same way - specificity and structure matter.
 
+> **Tip:** If you'd like a quick demo of the basics of prompt engineering (zero-shot, few-shot, chain-of-thought, and role-based prompting), check out the [Prompt Patterns example in the Quick Start module](../00-quick-start/README.md#2-prompt-patterns).
+
 ## How This Uses LangChain4j
 
 This module demonstrates advanced prompting patterns using the same LangChain4j foundation from previous modules, with a focus on prompt structure and reasoning control.
