@@ -1,232 +1,232 @@
-# LangChain4j Slovarček
+# LangChain4j Slovar
 
-## Vsebina
+## Kazalo
 
-- [Osnovni pojmi](../../../docs)
+- [Osnovni koncepti](../../../docs)
 - [Komponente LangChain4j](../../../docs)
-- [Pojmi AI/ML](../../../docs)
+- [AI/ML koncepti](../../../docs)
 - [Varovalke](../../../docs)
 - [Inženiring pozivov](../../../docs)
-- [RAG (generiranje z nadgradnjo z iskanjem)](../../../docs)
-- [Agent in orodja](../../../docs)
+- [RAG (generacija z iskanjem)](../../../docs)
+- [Agenti in orodja](../../../docs)
 - [Agentni modul](../../../docs)
 - [Protokol konteksta modela (MCP)](../../../docs)
 - [Azure storitve](../../../docs)
 - [Testiranje in razvoj](../../../docs)
 
-Hiter pregled pojmov in konceptov, uporabljenih v celotnem tečaju.
+Hitri pregled terminov in konceptov, ki se uporabljajo skozi celoten tečaj.
 
-## Osnovni pojmi
+## Osnovni koncepti
 
-**AI agent** - Sistem, ki uporablja umetno inteligenco za samostojno razmišljanje in ukrepanje. [Modul 04](../04-tools/README.md)
+**AI agent** - Sistem, ki uporablja AI za razmišljanje in samostojno delovanje. [Modul 04](../04-tools/README.md)
 
-**Veriga** - Zaporedje operacij, kjer izhod vpliva na naslednji korak.
+**Veriga** - Zaporedje operacij, kjer izhod služi kot vhod v naslednji korak.
 
-**Razbijanje na kose (Chunking)** - Razdeljevanje dokumentov na manjše dele. Običajno: 300–500 tokenov z prekrivanjem. [Modul 03](../03-rag/README.md)
+**Deljenje na kose (chunking)** - Razbijanje dokumentov na manjše dele. Običajno: 300-500 žetonov s prekrivanjem. [Modul 03](../03-rag/README.md)
 
-**Okno konteksta** - Največje število tokenov, ki jih model lahko obdela. GPT-5: 400 tisoč tokenov.
+**Kontekstno okno** - Največje število žetonov, ki jih model lahko obdela. GPT-5.2: 400K žetonov.
 
-**Vdelave (Embeddings)** - Numerične vektorje, ki predstavljajo pomen besedila. [Modul 03](../03-rag/README.md)
+**Vdelave (embeddings)** - Numerične vektorje, ki predstavljajo pomen besedila. [Modul 03](../03-rag/README.md)
 
-**Klic funkcije** - Model generira strukturirane zahteve za klic zunanjih funkcij. [Modul 04](../04-tools/README.md)
+**Klic funkcij** - Model generira strukturirane zahteve za klic zunanjih funkcij. [Modul 04](../04-tools/README.md)
 
-**Halucinacija** - Ko modeli ustvarijo netočne, a verjetne informacije.
+**Halucinacija** - Ko modeli generirajo napačne, a verjetne informacije.
 
-**Poziv (Prompt)** - Besedilni vnos za jezikovni model. [Modul 02](../02-prompt-engineering/README.md)
+**Poziv (prompt)** - Besedilni vhod v jezikovni model. [Modul 02](../02-prompt-engineering/README.md)
 
 **Semantično iskanje** - Iskanje po pomenu z uporabo vdelav, ne ključnih besed. [Modul 03](../03-rag/README.md)
 
-**Stanje z ohranitvijo / brez ohranitve stanja (Stateful vs Stateless)** - Brez ohranitve: brez spomina. Z ohranitvijo: ohranja zgodovino pogovora. [Modul 01](../01-introduction/README.md)
+**Stanje z zgodovino vs brez** - Brez stanja: brez spomina. S stanjem: hrani zgodovino pogovora. [Modul 01](../01-introduction/README.md)
 
-**Tokeni** - Osnovne enote besedila, ki jih modeli obdelujejo. Vplivajo na stroške in omejitve. [Modul 01](../01-introduction/README.md)
+**Žetoni (tokens)** - Osnovne enote besedila, ki jih model obdela. Vplivajo na stroške in omejitve. [Modul 01](../01-introduction/README.md)
 
-**Verižna uporaba orodij (Tool Chaining)** - Zaporedno izvajanje orodij, kjer izhod obvešča naslednji klic. [Modul 04](../04-tools/README.md)
+**Zaporedno uporabo orodij (tool chaining)** - Zaporedno izvajanje orodij, kjer izhod vpliva na naslednji klic. [Modul 04](../04-tools/README.md)
 
 ## Komponente LangChain4j
 
 **AiServices** - Ustvarja tipno varne vmesnike za AI storitve.
 
-**OpenAiOfficialChatModel** - Enoten odjemalec za OpenAI in Azure OpenAI modele.
+**OpenAiOfficialChatModel** - Združeni odjemalec za OpenAI in Azure OpenAI modele.
 
-**OpenAiOfficialEmbeddingModel** - Ustvarja vdelave z uporabo uradnega OpenAI odjemalca (podpira tako OpenAI kot Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** - Ustvarja vdelave z uporabo uradnega OpenAI odjemalca (podpira OpenAI in Azure OpenAI).
 
-**ChatModel** - Glavni vmesnik za jezikovne modele.
+**ChatModel** - Osnovni vmesnik za jezikovne modele.
 
 **ChatMemory** - Ohranja zgodovino pogovora.
 
-**ContentRetriever** - Najde relevantne dele dokumentov za RAG.
+**ContentRetriever** - Najde ustrezne dele dokumentov za RAG.
 
-**DocumentSplitter** - Razdeli dokumente na kose.
+**DocumentSplitter** - Razbije dokumente na kose.
 
 **EmbeddingModel** - Pretvori besedilo v numerične vektorje.
 
-**EmbeddingStore** - Shrani in pridobi vdelave.
+**EmbeddingStore** - Shranjuje in pridobiva vdelave.
 
-**MessageWindowChatMemory** - Ohranja drsno okno zadnjih sporočil.
+**MessageWindowChatMemory** - Ohranja pomikajoče se okno zadnjih sporočil.
 
-**PromptTemplate** - Ustvari ponovno uporabne pozive z zastavico `{{variable}}`.
+**PromptTemplate** - Ustvari ponovno uporabne pozive z `{{variable}}` mestniki.
 
-**TextSegment** - Kos besedila z metapodatki. Uporablja se v RAG.
+**TextSegment** - Besedilni kos z metapodatki. Uporablja se v RAG.
 
 **ToolExecutionRequest** - Predstavlja zahtevo za izvajanje orodja.
 
-**UserMessage / AiMessage / SystemMessage** - Tipi sporočil v pogovoru.
+**UserMessage / AiMessage / SystemMessage** - Vrste sporočil v pogovoru.
 
-## Pojmi AI/ML
+## AI/ML koncepti
 
-**Few-Shot Learning** - Podajanje primerov v pozivih. [Modul 02](../02-prompt-engineering/README.md)
+**Few-Shot učenje** - Zagotavljanje primerov v pozivih. [Modul 02](../02-prompt-engineering/README.md)
 
-**Velik jezikovni model (LLM)** - AI modeli, usposobljeni na velikanskih količinah besedilnih podatkov.
+**Veliki jezikovni model (LLM)** - AI modeli, usposobljeni na ogromnih besedilnih podatkih.
 
-**Napor razmišljanja (Reasoning Effort)** - Parameter GPT-5, ki nadzoruje globino razmišljanja. [Modul 02](../02-prompt-engineering/README.md)
+**Prizadevanje za razmišljanje** - Parameter GPT-5.2, ki nadzoruje globino razmišljanja. [Modul 02](../02-prompt-engineering/README.md)
 
-**Temperatura** - Nadzira naključnost izhoda. Nizka=deterministična, visoka=kreativna.
+**Temperatura** - Nadzor naključnosti izhoda. Nizka=deterministična, visoka=ustvarjalna.
 
-**Vektorska baza podatkov** - Specializirana baza podatkov za vdelave. [Modul 03](../03-rag/README.md)
+**Vektorska baza podatkov** - Specializirana baza za vdelave. [Modul 03](../03-rag/README.md)
 
-**Zero-Shot Learning** - Izvajanje nalog brez primerov. [Modul 02](../02-prompt-engineering/README.md)
+**Zero-Shot učenje** - Izvajanje nalog brez primerov. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Varovalke - [Modul 00](../00-quick-start/README.md)
 
-**Obramba v globino** - Večplastni varnostni pristop, ki združuje varovalke na nivoju aplikacije s filtri ponudnikov.
+**Obramba v globini** - Večplastni varnostni pristop, ki združuje varovalke na nivoju aplikacije z varnostnimi filtri ponudnika.
 
-**Trdi blok** - Ponudnik vrže HTTP 400 napako pri resnih kršitvah vsebine.
+**Trda blokada** - Ponudnik vrne napako HTTP 400 za hude vsebinske kršitve.
 
-**InputGuardrail** - Vmesnik LangChain4j za preverjanje uporabniškega vnosa pred posredovanjem LLM-u. Prihrani stroške in zamude z zgodnjim blokiranjem škodljivih pozivov.
+**InputGuardrail** - Vmesnik LangChain4j za preverjanje uporabniškega vnosa, preden doseže LLM. Prihrani stroške in zakasnitev z zgodnjim blokiranjem škodljivih pozivov.
 
-**InputGuardrailResult** - Vrnjena vrednost preverjanja varovalk: `success()` ali `fatal("reason")`.
+**InputGuardrailResult** - Tip vrnitve za preverjanje varovalk: `success()` ali `fatal("razlog")`.
 
-**OutputGuardrail** - Vmesnik za preverjanje odzivov AI pred vračanjem uporabnikom.
+**OutputGuardrail** - Vmesnik za preverjanje AI odgovorov pred vrnitvijo uporabnikom.
 
-**Provider Safety Filters** - Vgrajeni filtri vsebine pri AI ponudnikih (npr. GitHub modeli), ki zaznavajo kršitve na ravni API-ja.
+**Varnostni filtri ponudnika** - Vgrajeni filtri vsebine AI ponudnikov (npr. GitHub modeli), ki ujamejo kršitve na ravni API.
 
-**Mehka zavrnitev** - Model vljudno zavrne odgovor brez napake.
+**Nežna zavrnitev** - Model vljudno zavrne odgovor, ne da bi vrgel napako.
 
 ## Inženiring pozivov - [Modul 02](../02-prompt-engineering/README.md)
 
-**Veriga misli (Chain-of-Thought)** - Korak po koraku razmišljanje za boljšo natančnost.
+**Veriga razmišljanja (Chain-of-Thought)** - Korak za korakom razmišljanje za večjo natančnost.
 
-**Omejen izhod** - Zagotovitev določenega formata ali strukture.
+**Omejen izhod** - Uveljavljanje določenega formata ali strukture.
 
-**Visoka angažiranost** - Vzorec GPT-5 za temeljito razmišljanje.
+**Visoka prizadetost** - Vzorec GPT-5.2 za temeljito razmišljanje.
 
-**Nizka angažiranost** - Vzorec GPT-5 za hitre odgovore.
+**Nizka prizadetost** - Vzorec GPT-5.2 za hitre odgovore.
 
-**Večkratni pogovor (Multi-Turn Conversation)** - Ohranjanje konteksta med izmenjavami.
+**Večbesedilni pogovor** - Ohranjanje konteksta skozi izmenjave.
 
-**Pozivanje glede na vlogo** - Nastavljanje osebnosti modela preko sistemskih sporočil.
+**Pozivanje po vlogah** - Nastavitev osebnosti modela preko sistemskih sporočil.
 
-**Samorefleksija** - Model oceni in izboljša svoj izhod.
+**Samorefleksija** - Model ovrednoti in izboljša svoj izhod.
 
-**Strukturirana analiza** - Fiksni okvir za ocenjevanje.
+**Strukturirana analiza** - Fiksiran okvir za ocenjevanje.
 
-**Vzorec izvajanja nalog** - Načrtuj → Izvrši → Povzemi.
+**Vzorec izvajanja nalog** - Načrtuj → Izvajaj → Povzemi.
 
-## RAG (generiranje z nadgradnjo z iskanjem) - [Modul 03](../03-rag/README.md)
+## RAG (generacija z iskanjem) - [Modul 03](../03-rag/README.md)
 
-**Predelovalna veriga dokumentov** - Nalaganje → razbijanje → vdelava → shranjevanje.
+**Procesna veriga obdelave dokumentov** - Naloži → razdeli → vdelaj → shrani.
 
-**Shramba vdelav v pomnilniku** - Neperzistentna shramba za testiranje.
+**Vdelave v pomnilniku** - Nepersistentno shranjevanje za testiranje.
 
-**RAG** - Kombinira iskanje z generiranjem za utemeljitev odgovorov.
+**RAG** - Kombinacija iskanja z generacijo za utemeljitev odgovorov.
 
-**Ocena podobnosti** - Merilo (0–1) semantične podobnosti.
+**Stopnja podobnosti** - Merilo (0-1) semantične podobnosti.
 
-**Sklic na vir** - Metapodatki o pridobljeni vsebini.
+**Referenca vira** - Metapodatki o najdeni vsebini.
 
-## Agent in orodja - [Modul 04](../04-tools/README.md)
+## Agenti in orodja - [Modul 04](../04-tools/README.md)
 
-**@Tool oznaka** - Označi Java metode kot orodja, ki jih lahko kliče AI.
+**@Tool označba** - Označuje Java metode kot orodja, ki jih lahko kliče AI.
 
-**ReAct vzorec** - Razmisliti → Ukrepati → Opazovati → Ponoviti.
+**ReAct vzorec** - Razmišljaj → Ukrepaj → Opazuj → Ponovi.
 
 **Upravljanje sej** - Ločeni konteksti za različne uporabnike.
 
 **Orodje** - Funkcija, ki jo lahko kliče AI agent.
 
-**Opis orodja** - Dokumentacija namena orodja in njegovih parametrov.
+**Opis orodja** - Dokumentacija namena orodja in parametrov.
 
 ## Agentni modul - [Modul 05](../05-mcp/README.md)
 
-**@Agent oznaka** - Označi vmesnike kot AI agente z deklarativno definicijo vedenja.
+**@Agent označba** - Označuje vmesnike kot AI agente z deklarativno definicijo vedenja.
 
-**Agent Listener** - Priključek za spremljanje izvajanja agenta preko `beforeAgentInvocation()` in `afterAgentInvocation()`.
+**Poslušalec agenta** - Hook za spremljanje izvajanja agenta prek `beforeAgentInvocation()` in `afterAgentInvocation()`.
 
-**Agentni obseg (Agentic Scope)** - Skupni pomnilnik, kjer agenti shranjujejo izhode z uporabo `outputKey` za nadaljnjo uporabo drugih agentov.
+**Agentni obseg** - Deljeni pomnilnik, kjer agenti shranjujejo izhode z uporabo `outputKey` za uporabo s strani drugih agentov.
 
-**AgenticServices** - Tovarna za ustvarjanje agentov z `agentBuilder()` in `supervisorBuilder()`.
+**AgenticServices** - Tovor za ustvarjanje agentov z `agentBuilder()` in `supervisorBuilder()`.
 
-**Pogojni potek dela** - Usmerjanje glede na pogoje k različnim specializiranim agentom.
+**Pogojno potek dela** - Usmerjanje na podlagi pogojev do različnih specializiranih agentov.
 
-**Človek v zanki (Human-in-the-Loop)** - Vzorec poteka dodajanja človeških kontrolnih točk za odobritev ali pregled vsebine.
+**Človek v zanki** - Vzorec poteka dela, ki vključuje človeške kontrolne točke za odobritev ali pregled vsebine.
 
 **langchain4j-agentic** - Maven odvisnost za deklarativno gradnjo agentov (eksperimentalno).
 
-**Zankasti potek dela (Loop Workflow)** - Ponavljanje izvajanja agenta, dokler pogoj ni izpolnjen (npr. ocena kakovosti ≥ 0,8).
+**Petlja potek dela** - Ponovni zagon izvajanja agenta dokler ni izpolnjen pogoj (npr. ocena kakovosti ≥ 0,8).
 
-**outputKey** - Parameter oznake agenta, ki določa, kam se rezultati shranjujejo v agentnem obsegu.
+**outputKey** - Parameter agentne oznake, ki določa, kje so rezultati shranjeni v agentnem obsegu.
 
 **Vzporedni potek dela** - Hkratno izvajanje več agentov za neodvisne naloge.
 
-**Strategija odgovora** - Kako nadzornik oblikuje končni odgovor: ZADNJI, POVZEMEK ali OCENA.
+**Strategija odgovora** - Kako nadzornik oblikuje končni odgovor: ZADNJI, POVZETEK ali OCENJENO.
 
-**Zaporedni potek dela** - Izvajanje agentov v zaporedju, kjer izhod teče v naslednji korak.
+**Zaporedni potek dela** - Izvajanje agentov po vrsti, kjer izhod teče v naslednji korak.
 
-**Vzorec nadzornega agenta (Supervisor Agent Pattern)** - Napreden agentni vzorec, kjer nadzornik LLM dinamično odloča, katere podagente povabi.
+**Vzorec nadzornega agenta** - Napreden agentni vzorec, kjer nadzornik LLM dinamično odloča, katere podagente izvajati.
 
 ## Protokol konteksta modela (MCP) - [Modul 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Maven odvisnost za integracijo MCP v LangChain4j.
+**langchain4j-mcp** - Maven odvisnost za MCP integracijo v LangChain4j.
 
-**MCP** - Protokol konteksta modela: standard za povezovanje AI aplikacij z zunanjimi orodji. Zgradi enkrat, uporabi povsod.
+**MCP** - Protokol konteksta modela: standard za povezovanje AI aplikacij z zunanjimi orodji. Naredi enkrat, uporabi povsod.
 
-**MCP odjemalec** - Aplikacija, ki se povezuje s MCP strežniki za odkrivanje in uporabo orodij.
+**MCP odjemalec** - Aplikacija, ki se poveže na MCP strežnike za odkrivanje in uporabo orodij.
 
-**MCP strežnik** - Storitev, ki razkriva orodja preko MCP z jasnimi opisi in shemami parametrov.
+**MCP strežnik** - Storitev, ki preko MCP razkriva orodja z jasnimi opisi in shemami parametrov.
 
-**McpToolProvider** - Komponenta LangChain4j, ki ovije MCP orodja za uporabo v AI storitvah in agentih.
+**McpToolProvider** - Komponenta LangChain4j, ki ovojnica MCP orodja za uporabo v AI storitvah in agentih.
 
-**McpTransport** - Vmesnik za komunikacijo MCP. Implementacije vključujejo Stdio in HTTP.
+**McpTransport** - Vmesnik za MCP komunikacijo. Implementacije vključujejo Stdio in HTTP.
 
-**Stdio Transport** - Lokalna procesna povezava preko stdin/stdout. Uporabno za dostop do datotečnega sistema ali ukazne vrstice.
+**Stdio Transport** - Lokalni prenos procesov prek stdin/stdout. Uporaben za dostop do datotečnega sistema ali ukazne vrstice.
 
-**StdioMcpTransport** - Implementacija LangChain4j, ki požene MCP strežnik kot podproces.
+**StdioMcpTransport** - LangChain4j implementacija, ki zažene MCP strežnik kot podproces.
 
-**Odkritje orodij** - Odjemalec poizveduje strežnik o razpoložljivih orodjih z opisi in shemami.
+**Iskanje orodij** - Odjemalec poizveduje strežnik o razpoložljivih orodjih z opisi in shemami.
 
 ## Azure storitve - [Modul 01](../01-introduction/README.md)
 
-**Azure AI Search** - Oblačno iskanje z vektorskimi zmožnostmi. [Modul 03](../03-rag/README.md)
+**Azure AI Search** - Oblačno iskanje z vektorskimi zmogljivostmi. [Modul 03](../03-rag/README.md)
 
-**Azure Developer CLI (azd)** - Uporablja se za nameščanje Azure virov.
+**Azure Developer CLI (azd)** - Namesti Azure vire.
 
-**Azure OpenAI** - Microsoftova podjetniška AI storitev.
+**Azure OpenAI** - Microsoftova enterprise AI storitev.
 
 **Bicep** - Azure jezik za infrastrukturo kot kodo. [Vodnik za infrastrukturo](../01-introduction/infra/README.md)
 
-**Ime nameščanja** - Ime za nameščanje modela v Azure.
+**Ime nameščanja** - Ime za namestitev modela v Azure.
 
-**GPT-5** - Najnovejši OpenAI model z nadzorom razmišljanja. [Modul 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Najnovejši OpenAI model z nadzorom razmišljanja. [Modul 02](../02-prompt-engineering/README.md)
 
 ## Testiranje in razvoj - [Vodnik za testiranje](TESTING.md)
 
-**Dev Container** - Razvojno okolje v vsebniku. [Konfiguracija](../../../.devcontainer/devcontainer.json)
+**Razvojni vsebnik (Dev Container)** - Kontejnerizirano razvojno okolje. [Konfiguracija](../../../.devcontainer/devcontainer.json)
 
 **GitHub modeli** - Brezplačno igrišče za AI modele. [Modul 00](../00-quick-start/README.md)
 
-**Testiranje v pomnilniku** - Testiranje z uporabo pomnilniške shrambnike.
+**Testiranje v pomnilniku** - Testiranje z neperzistentnim shranjevanjem.
 
-**Integracijsko testiranje** - Testiranje s pravo infrastrukturo.
+**Integracijsko testiranje** - Testiranje z dejansko infrastrukturo.
 
-**Maven** - Java orodje za avtomatizacijo gradnje.
+**Maven** - Orodje za avtomatizacijo gradnje Java.
 
-**Mockito** - Java ogrodje za simulacijo.
+**Mockito** - Okvir za poniževanje v Javi.
 
-**Spring Boot** - Java ogrodje za aplikacije. [Modul 01](../01-introduction/README.md)
+**Spring Boot** - Java aplikacijski okvir. [Modul 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Omejitev odgovornosti**:
-Ta dokument je bil preveden z uporabo AI prevajalske storitve [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, vas opozarjamo, da lahko avtomatizirani prevodi vsebujejo napake ali netočnosti. Izvirni dokument v njegovem izvorno jeziku naj se smatra za avtoritativni vir. Za pomembne informacije priporočamo strokovni človeški prevod. Za morebitna nesporazume ali napačne interpretacije, ki izhajajo iz uporabe tega prevoda, ne odgovarjamo.
+Ta dokument je bil preveden z uporabo storitve za strojno prevajanje [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, vas opozarjamo, da avtomatski prevodi lahko vsebujejo napake ali netočnosti. Izvirni dokument v izvorni jeziku velja za avtoritativni vir. Za ključne informacije priporočamo strokovni prevod, opravljen s strani človeka. Za kakršne koli nesporazume ali napačne interpretacije, ki izhajajo iz uporabe tega prevoda, ne odgovarjamo.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

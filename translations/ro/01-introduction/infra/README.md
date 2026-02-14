@@ -1,58 +1,58 @@
-# Infrastructura Azure pentru LangChain4j Început Rapid
+# Infrastructura Azure pentru LangChain4j Începători
 
 ## Cuprins
 
-- [Prerechizite](../../../../01-introduction/infra)
+- [Cerințe preliminare](../../../../01-introduction/infra)
 - [Arhitectură](../../../../01-introduction/infra)
-- [Resurse Create](../../../../01-introduction/infra)
-- [Început Rapid](../../../../01-introduction/infra)
+- [Resurse create](../../../../01-introduction/infra)
+- [Pornire rapidă](../../../../01-introduction/infra)
 - [Configurare](../../../../01-introduction/infra)
-- [Comenzi de Administrare](../../../../01-introduction/infra)
-- [Optimizarea Costurilor](../../../../01-introduction/infra)
+- [Comenzi de administrare](../../../../01-introduction/infra)
+- [Optimizarea costurilor](../../../../01-introduction/infra)
 - [Monitorizare](../../../../01-introduction/infra)
 - [Depanare](../../../../01-introduction/infra)
-- [Actualizarea Infrastructurii](../../../../01-introduction/infra)
+- [Actualizarea infrastructurii](../../../../01-introduction/infra)
 - [Curățare](../../../../01-introduction/infra)
-- [Structura Fișierelor](../../../../01-introduction/infra)
-- [Recomandări de Securitate](../../../../01-introduction/infra)
-- [Resurse Suplimentare](../../../../01-introduction/infra)
+- [Structura fișierelor](../../../../01-introduction/infra)
+- [Recomandări de securitate](../../../../01-introduction/infra)
+- [Resurse suplimentare](../../../../01-introduction/infra)
 
 Acest director conține infrastructura Azure ca cod (IaC) folosind Bicep și Azure Developer CLI (azd) pentru implementarea resurselor Azure OpenAI.
 
-## Prerechizite
+## Cerințe preliminare
 
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (versiunea 2.50.0 sau mai recentă)
 - [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (versiunea 1.5.0 sau mai recentă)
-- Un abonament Azure cu permisiuni pentru crearea resurselor
+- Un abonament Azure cu permisiuni pentru a crea resurse
 
 ## Arhitectură
 
-**Configurare Simplificată pentru Dezvoltare Locală** - Se implementează doar Azure OpenAI, toate aplicațiile rulează local.
+**Configurație simplificată pentru dezvoltare locală** - Se implementează doar Azure OpenAI, toate aplicațiile rulează local.
 
 Infrastructura implementează următoarele resurse Azure:
 
 ### Servicii AI
-- **Azure OpenAI**: Servicii Cognitive cu două implementări de modele:
-  - **gpt-5**: Model de completare chat (capacitate 20K TPM)
-  - **text-embedding-3-small**: Model de embedding pentru RAG (capacitate 20K TPM)
+- **Azure OpenAI**: Servicii cognitive cu două implementări model:
+  - **gpt-5.2**: Model pentru completare chat (capacitate 20K TPM)
+  - **text-embedding-3-small**: Model embedding pentru RAG (capacitate 20K TPM)
 
-### Dezvoltare Locală
-Toate aplicațiile Spring Boot rulează local pe mașina ta:
+### Dezvoltare locală
+Toate aplicațiile Spring Boot rulează local pe calculatorul tău:
 - 01-introduction (port 8080)
 - 02-prompt-engineering (port 8083)
 - 03-rag (port 8081)
 - 04-tools (port 8084)
 
-## Resurse Create
+## Resurse create
 
-| Tip Resursă | Model Nume Resursă | Scop |
+| Tip resursă | Model nume resursă | Scop |
 |--------------|----------------------|---------|
-| Grup de Resurse | `rg-{environmentName}` | Conține toate resursele |
+| Grupă de resurse | `rg-{environmentName}` | Conține toate resursele |
 | Azure OpenAI | `aoai-{resourceToken}` | Găzduire model AI |
 
-> **Notă:** `{resourceToken}` este un șir unic generat din ID-ul abonamentului, numele mediului și locație
+> **Notă:** `{resourceToken}` este un șir unic generat din ID-ul de abonament, numele mediului și locație
 
-## Început Rapid
+## Pornire rapidă
 
 ### 1. Implementați Azure OpenAI
 
@@ -68,16 +68,16 @@ cd 01-introduction
 azd up
 ```
 
-La solicitare:
+Când vi se solicită:
 - Selectați abonamentul Azure
-- Alegeți o locație (recomandat: `eastus2` sau `swedencentral` pentru disponibilitate GPT-5)
+- Alegeți o locație (recomandat: `eastus2` pentru disponibilitatea GPT-5.2)
 - Confirmați numele mediului (implicit: `langchain4j-dev`)
 
 Aceasta va crea:
-- Resursa Azure OpenAI cu GPT-5 și text-embedding-3-small
-- Detalii de conexiune afișate
+- Resursa Azure OpenAI cu GPT-5.2 și text-embedding-3-small
+- Va afișa detaliile de conectare
 
-### 2. Obțineți Detaliile de Conexiune
+### 2. Obțineți detaliile de conectare
 
 **Bash:**
 ```bash
@@ -91,11 +91,11 @@ azd env get-values
 
 Aceasta afișează:
 - `AZURE_OPENAI_ENDPOINT`: URL-ul endpoint-ului Azure OpenAI
-- `AZURE_OPENAI_KEY`: Cheia API pentru autentificare
-- `AZURE_OPENAI_DEPLOYMENT`: Numele modelului chat (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Numele modelului embedding
+- `AZURE_OPENAI_KEY`: cheia API pentru autentificare
+- `AZURE_OPENAI_DEPLOYMENT`: numele modelului chat (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: numele modelului embedding
 
-### 3. Rulați Aplicațiile Local
+### 3. Rulați aplicațiile local
 
 Comanda `azd up` creează automat un fișier `.env` în directorul rădăcină cu toate variabilele de mediu necesare.
 
@@ -115,7 +115,7 @@ cd ../..
 .\start-all.ps1
 ```
 
-Sau porniți un singur modul:
+Sau porniți un modul individual:
 
 **Bash:**
 ```bash
@@ -126,30 +126,30 @@ cd ../01-introduction
 
 **PowerShell:**
 ```powershell
-# Exemplu: Porniți doar modulul de introducere
+# Exemplu: Pornește doar modulul de introducere
 cd ../01-introduction
 .\start.ps1
 ```
 
-Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` creat de `azd up`.
+Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` rădăcină creat de `azd up`.
 
 ## Configurare
 
-### Personalizarea Implementărilor de Model
+### Personalizarea implementărilor modelului
 
-Pentru a schimba implementările modelelor, editați `infra/main.bicep` și modificați parametrul `openAiDeployments`:
+Pentru a schimba implementările modelului, editați `infra/main.bicep` și modificați parametrul `openAiDeployments`:
 
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -159,15 +159,15 @@ param openAiDeployments array = [
 
 Modele și versiuni disponibile: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-### Schimbarea Regiunilor Azure
+### Schimbarea regiunilor Azure
 
 Pentru a implementa într-o regiune diferită, editați `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Verificați disponibilitatea GPT-5: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Verificați disponibilitatea GPT-5.2: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
 Pentru a actualiza infrastructura după modificarea fișierelor Bicep:
 
@@ -188,7 +188,7 @@ azd provision
 # Reconstruiește șablonul ARM
 az bicep build --file infra/main.bicep
 
-# Previzualizează modificările
+# Previzuare modificări
 azd provision --preview
 
 # Aplică modificările
@@ -204,7 +204,7 @@ Pentru a șterge toate resursele:
 # Șterge toate resursele
 azd down
 
-# Șterge totul inclusiv mediul de lucru
+# Șterge totul, inclusiv mediul
 azd down --purge
 ```
 
@@ -213,43 +213,43 @@ azd down --purge
 # Șterge toate resursele
 azd down
 
-# Șterge totul inclusiv mediul de lucru
+# Șterge totul, inclusiv mediul de lucru
 azd down --purge
 ```
 
-**Atenție**: Aceasta va șterge definitiv toate resursele Azure.
+**Atenție**: Aceasta va șterge permanent toate resursele Azure.
 
-## Structura Fișierelor
+## Structura fișierelor
 
-## Optimizarea Costurilor
+## Optimizarea costurilor
 
 ### Dezvoltare/Testare
-Pentru medii de dev/test puteți reduce costurile:
+Pentru mediile de dezvoltare/test puteți reduce costurile:
 - Folosiți nivelul Standard (S0) pentru Azure OpenAI
-- Setați o capacitate mai mică (10K TPM în loc de 20K) în `infra/core/ai/cognitiveservices.bicep`
-- Ștergeți resursele când nu sunt folosite: `azd down`
+- Setați capacitate mai mică (10K TPM în loc de 20K) în `infra/core/ai/cognitiveservices.bicep`
+- Ștergeți resursele când nu sunt în uz: `azd down`
 
 ### Producție
 Pentru producție:
-- Măriți capacitatea OpenAI în funcție de utilizare (50K+ TPM)
-- Activați redundanța pe zone pentru disponibilitate mai mare
-- Implementați monitorizare și alerte de cost
+- Creșteți capacitatea OpenAI bazat pe utilizare (50K+ TPM)
+- Activați redundanța zonală pentru disponibilitate sporită
+- Implementați monitorizare adecvată și alerte de cost
 
-### Estimare Costuri
-- Azure OpenAI: Plată per token (input + output)
-- GPT-5: ~3-5$ per 1M tokeni (verificați prețurile curente)
-- text-embedding-3-small: ~0.02$ per 1M tokeni
+### Estimarea costurilor
+- Azure OpenAI: Plata per token (input + output)
+- GPT-5.2: aproximativ 3–5 USD per 1M tokeni (verificați prețurile curente)
+- text-embedding-3-small: aproximativ 0,02 USD per 1M tokeni
 
-Calculator prețuri: https://azure.microsoft.com/pricing/calculator/
+Calculator de prețuri: https://azure.microsoft.com/pricing/calculator/
 
 ## Monitorizare
 
-### Vizualizați Metricile Azure OpenAI
+### Vizualizați metricele Azure OpenAI
 
-Accesați Portalul Azure → Resursa dvs. OpenAI → Metrici:
+Accesați Portalul Azure → Resursa dvs. OpenAI → Metrice:
 - Utilizare bazată pe tokeni
 - Rata cererilor HTTP
-- Timpul de răspuns
+- Timp de răspuns
 - Tokeni activi
 
 ## Depanare
@@ -264,7 +264,7 @@ is not available as it's already used by a resource."
 ```
 
 **Cauză:**
-Numele subdomeniului generat din abonament/mediu este deja folosit, posibil de o implementare anterioară care nu a fost complet ștearsă.
+Numele subdomeniului generat din abonament/mediu este deja folosit, posibil dintr-o implementare anterioară neterminată complet.
 
 **Soluție:**
 1. **Opțiunea 1 - Folosiți un nume de mediu diferit:**
@@ -282,60 +282,62 @@ Numele subdomeniului generat din abonament/mediu este deja folosit, posibil de o
    ```
 
 2. **Opțiunea 2 - Implementare manuală prin Portalul Azure:**
-   - Accesați Portalul Azure → Creați o resursă → Azure OpenAI
+   - Mergeți în Portal Azure → Creați o resursă → Azure OpenAI
    - Alegeți un nume unic pentru resursa dvs.
    - Implementați următoarele modele:
-     - **GPT-5**
+     - **GPT-5.2**
      - **text-embedding-3-small** (pentru modulele RAG)
-   - **Important:** Notați numele implementărilor - trebuie să corespundă configurației `.env`
-   - După implementare, obțineți endpoint-ul și cheia API din "Chei și Endpoint"
+   - **Important:** Notați numele implementărilor - trebuie să coincidă cu configurația din `.env`
+   - După implementare, obțineți endpoint și cheia API din „Keys and Endpoint”
    - Creați un fișier `.env` în rădăcina proiectului cu:
      
      **Exemplu fișier `.env`:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
-**Ghid pentru denumirea implementărilor de modele:**
-- Folosiți nume simple și consistente: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Numele implementărilor trebuie să corespundă exact cu ce configurați în `.env`
-- Greșeală comună: Crearea modelului cu un nume, dar referirea unui alt nume în cod
+**Ghid pentru denumirea implementărilor modelelor:**
+- Folosiți nume simple și consistente: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Numele implementărilor trebuie să corespundă exact cu configurarea în `.env`
+- Greșeală comună: Crearea unui model cu un nume, dar referirea altui nume în cod
 
-### Problemă: GPT-5 nu este disponibil în regiunea selectată
+### Problemă: GPT-5.2 nu este disponibil în regiunea selectată
 
 **Soluție:**
-- Alegeți o regiune cu acces GPT-5 (ex: eastus, swedencentral)
+- Alegeți o regiune cu acces GPT-5.2 (ex. eastus2)
 - Verificați disponibilitatea: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
+
+
 
 ### Problemă: Cota insuficientă pentru implementare
 
 **Soluție:**
-1. Solicitați creșterea cotei în Portalul Azure
-2. Sau folosiți o capacitate mai mică în `main.bicep` (ex: capacity: 10)
+1. Cereți creșterea cotei în Portalul Azure
+2. Sau folosiți capacitate mai mică în `main.bicep` (ex. capacity: 10)
 
 ### Problemă: "Resource not found" la rularea locală
 
 **Soluție:**
 1. Verificați implementarea: `azd env get-values`
 2. Verificați dacă endpoint-ul și cheia sunt corecte
-3. Asigurați-vă că grupul de resurse există în Portalul Azure
+3. Asigurați-vă că grupa de resurse există în Portal Azure
 
 ### Problemă: Autentificare eșuată
 
 **Soluție:**
 - Verificați dacă `AZURE_OPENAI_API_KEY` este setat corect
-- Formatul cheii trebuie să fie un șir hexazecimal de 32 de caractere
-- Obțineți o cheie nouă din Portalul Azure dacă este necesar
+- Formatul cheii trebuie să fie un șir hexazecimal de 32 caractere
+- Obțineți o cheie nouă din Portal Azure dacă este necesar
 
-### Implementare Eșuată
+### Implementarea eșuează
 
-**Problemă**: `azd provision` eșuează cu erori de cotă sau capacitate
+**Problemă**: `azd provision` eșuează cu erori legate de cotă sau capacitate
 
 **Soluție**: 
-1. Încercați o regiune diferită - Consultați secțiunea [Schimbarea Regiunilor Azure](../../../../01-introduction/infra) pentru configurare
+1. Încercați o regiune diferită - Consultați secțiunea [Schimbarea regiunilor Azure](../../../../01-introduction/infra) pentru configurarea regiunilor
 2. Verificați dacă abonamentul are cotă Azure OpenAI:
    
    **Bash:**
@@ -348,9 +350,9 @@ Numele subdomeniului generat din abonament/mediu este deja folosit, posibil de o
    az cognitiveservices account list-skus --location <your-region>
    ```
 
-### Aplicația Nu Se Conectează
+### Aplicația nu se conectează
 
-**Problemă**: Aplicația Java afișează erori de conexiune
+**Problemă**: Aplicația Java afișează erori de conectare
 
 **Soluție**:
 1. Verificați dacă variabilele de mediu sunt exportate:
@@ -367,26 +369,26 @@ Numele subdomeniului generat din abonament/mediu este deja folosit, posibil de o
    Write-Host $env:AZURE_OPENAI_API_KEY
    ```
 
-2. Verificați dacă formatul endpoint-ului este corect (ar trebui să fie `https://xxx.openai.azure.com`)
-3. Verificați dacă cheia API este cheia primară sau secundară din Portalul Azure
+2. Verificați corectitudinea formatului endpoint-ului (trebuie să fie `https://xxx.openai.azure.com`)
+3. Verificați dacă cheia API este cheia primară sau secundară din Portal Azure
 
 **Problemă**: 401 Unauthorized de la Azure OpenAI
 
 **Soluție**:
-1. Obțineți o cheie API nouă din Portalul Azure → Chei și Endpoint
+1. Obțineți o cheie API nouă din Portal Azure → Keys and Endpoint
 2. Re-exportați variabila de mediu `AZURE_OPENAI_API_KEY`
-3. Asigurați-vă că implementările modelelor sunt complete (verificați în Portalul Azure)
+3. Asigurați-vă că implementările modelelor sunt finalizate (verificați în Portal Azure)
 
-### Probleme de Performanță
+### Probleme de performanță
 
 **Problemă**: Timpuri de răspuns lente
 
 **Soluție**:
-1. Verificați utilizarea tokenilor OpenAI și limitările în metricile Portalului Azure
-2. Măriți capacitatea TPM dacă atingeți limitele
-3. Luați în considerare folosirea unui nivel mai mare de efort de raționament (low/medium/high)
+1. Verificați utilizarea tokenilor și limitările în metricele Portalului Azure
+2. Creșteți capacitatea TPM dacă atingeți limitele
+3. Luați în considerare folosirea unui nivel mai ridicat de efort de raționare (low/medium/high)
 
-## Actualizarea Infrastructurii
+## Actualizarea infrastructurii
 
 ```
 infra/
@@ -399,36 +401,36 @@ infra/
         └── cognitiveservices.bicep  # Azure OpenAI module
 ```
 
-## Recomandări de Securitate
+## Recomandări de securitate
 
 1. **Nu comiteți niciodată cheile API** - Folosiți variabile de mediu
 2. **Folosiți fișiere .env local** - Adăugați `.env` în `.gitignore`
-3. **Rotiți cheile regulat** - Generați chei noi în Portalul Azure
-4. **Limitați accesul** - Folosiți Azure RBAC pentru controlul accesului la resurse
-5. **Monitorizați utilizarea** - Configurați alerte de cost în Portalul Azure
+3. **Rotiți cheile regulat** - Generați chei noi în Portal Azure
+4. **Limitați accesul** - Folosiți RBAC Azure pentru control acces resurse
+5. **Monitorizați utilizarea** - Configurați alerte de cost în Portal Azure
 
-## Resurse Suplimentare
+## Resurse suplimentare
 
-- [Documentația Serviciului Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Documentația Modelului GPT-5](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [Documentația serviciului Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Documentația modelului GPT-5.2](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Documentația Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Documentația Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
-- [Integrarea Oficială LangChain4j OpenAI](https://docs.langchain4j.dev/integrations/language-models/open-ai)
+- [Integrarea oficială LangChain4j OpenAI](https://docs.langchain4j.dev/integrations/language-models/open-ai)
 
 ## Suport
 
 Pentru probleme:
-1. Verificați [secțiunea de depanare](../../../../01-introduction/infra) de mai sus
-2. Revizuiți starea serviciului Azure OpenAI în Portalul Azure
-3. Deschideți un issue în repository
+1. Consultați [secțiunea de depanare](../../../../01-introduction/infra) de mai sus
+2. Verificați starea serviciului Azure OpenAI în Portal Azure
+3. Deschideți un issue în depozit
 
 ## Licență
 
-Consultați fișierul [LICENSE](../../../../LICENSE) din rădăcină pentru detalii.
+Consultați fișierul rădăcină [LICENSE](../../../../LICENSE) pentru detalii.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Declinare de responsabilitate**:  
-Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original în limba sa nativă trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm răspunderea pentru eventualele neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
+Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să aveți în vedere că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autoritară. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm responsabilitatea pentru orice neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

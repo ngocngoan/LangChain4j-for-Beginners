@@ -2,19 +2,29 @@
 
 ### 🌐 Støtte for flere språk
 
-#### Støttet via GitHub Action (Automatisert og alltid oppdatert)
+#### Støttet via GitHub Action (Automatisk og alltid oppdatert)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](./README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
+[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarsk](../bg/README.md) | [Burmesisk (Myanmar)](../my/README.md) | [Kinesisk (forenklet)](../zh-CN/README.md) | [Kinesisk (tradisjonell, Hong Kong)](../zh-HK/README.md) | [Kinesisk (tradisjonell, Macau)](../zh-MO/README.md) | [Kinesisk (tradisjonell, Taiwan)](../zh-TW/README.md) | [Kroatisk](../hr/README.md) | [Tsjekkisk](../cs/README.md) | [Dansk](../da/README.md) | [Nederlandsk](../nl/README.md) | [Estisk](../et/README.md) | [Finsk](../fi/README.md) | [Fransk](../fr/README.md) | [Tysk](../de/README.md) | [Gresk](../el/README.md) | [Hebraisk](../he/README.md) | [Hindi](../hi/README.md) | [Ungarsk](../hu/README.md) | [Indonesisk](../id/README.md) | [Italiensk](../it/README.md) | [Japansk](../ja/README.md) | [Kannada](../kn/README.md) | [Koreansk](../ko/README.md) | [Litauisk](../lt/README.md) | [Malayisk](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepalsk](../ne/README.md) | [Nigeriansk pidgin](../pcm/README.md) | [Norsk](./README.md) | [Persisk (Farsi)](../fa/README.md) | [Polsk](../pl/README.md) | [Portugisisk (Brasil)](../pt-BR/README.md) | [Portugisisk (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Rumensk](../ro/README.md) | [Russisk](../ru/README.md) | [Serbisk (kyrillisk)](../sr/README.md) | [Slovakisk](../sk/README.md) | [Slovensk](../sl/README.md) | [Spansk](../es/README.md) | [Swahili](../sw/README.md) | [Svensk](../sv/README.md) | [Tagalog (Filippinsk)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Tyrkisk](../tr/README.md) | [Ukrainsk](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamesisk](../vi/README.md)
 
 > **Foretrekker du å klone lokalt?**
-
-> Dette depotet inkluderer over 50 språkoversettelser som betydelig øker nedlastningsstørrelsen. For å klone uten oversettelser, bruk sparse checkout:
+>
+> Dette depotet inkluderer over 50 språköversettelser som øker nedlastingsstørrelsen betydelig. For å klone uten oversettelser, bruk sparse checkout:
+>
+> **Bash / macOS / Linux:**
 > ```bash
 > git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
 > cd LangChain4j-for-Beginners
 > git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
 > ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
 > Dette gir deg alt du trenger for å fullføre kurset med en mye raskere nedlasting.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
@@ -22,46 +32,46 @@
 
 Et kurs for å bygge AI-applikasjoner med LangChain4j og Azure OpenAI GPT-5.2, fra grunnleggende chat til AI-agenter.
 
-**Ny til LangChain4j?** Se gjennom [Ordlisten](docs/GLOSSARY.md) for definisjoner av nøkkelbegreper og konsepter.
+**Ny med LangChain4j?** Se [Glossar](docs/GLOSSARY.md) for definisjoner av viktige begreper og konsepter.
 
 ## Innholdsfortegnelse
 
-1. [Kom i gang raskt](00-quick-start/README.md) - Kom i gang med LangChain4j
-2. [Introduksjon](01-introduction/README.md) - Lær det grunnleggende om LangChain4j
+1. [Rask start](00-quick-start/README.md) - Kom i gang med LangChain4j
+2. [Introduksjon](01-introduction/README.md) - Lær grunnleggende om LangChain4j
 3. [Prompt Engineering](02-prompt-engineering/README.md) - Mestre effektiv promptdesign
 4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Bygg intelligente kunnskapsbaserte systemer
 5. [Verktøy](04-tools/README.md) - Integrer eksterne verktøy og enkle assistenter
 6. [MCP (Model Context Protocol)](05-mcp/README.md) - Arbeid med Model Context Protocol (MCP) og Agentiske moduler
 ---
 
-## Læringsløp
+## Læringssti
 
-> **Kom i gang raskt**
+> **Rask start**
 
 1. Fork dette depotet til din GitHub-konto
-2. Klikk **Code** → **Codespaces**-fanen → **...** → **New with options...**
-3. Bruk standardinnstillingene – dette velger utviklingscontaineren laget for dette kurset
+2. Klikk **Code** → fanen **Codespaces** → **...** → **New with options...**
+3. Bruk standardinnstillingene – dette velger utviklingscontaineren opprettet for dette kurset
 4. Klikk **Create codespace**
-5. Vent 5-10 minutter til miljøet er klart
-6. Gå rett til [Kom i gang raskt](./00-quick-start/README.md) for å komme i gang!
+5. Vent 5-10 minutter for at miljøet skal være klart
+6. Gå rett til [Rask start](./00-quick-start/README.md) for å komme i gang!
 
-Etter å ha fullført modulene, utforsk [Testveiledningen](docs/TESTING.md) for å se testing med LangChain4j i praksis.
+Etter å ha fullført modulene, utforsk [Testing Guide](docs/TESTING.md) for å se LangChain4j-testkonsepter i praksis.
 
-> **Merk:** Denne opplæringen bruker både GitHub Models og Azure OpenAI. Modulen [Kom i gang raskt](00-quick-start/README.md) bruker GitHub Models (ingen Azure-abonnement kreves), mens modulene 1-5 bruker Azure OpenAI. Kom i gang med en [GRATIS Azure-konto](https://aka.ms/azure-free-account) hvis du ikke har en.
+> **Merk:** Denne opplæringen benytter både GitHub-modeller og Azure OpenAI. Modulen [Rask start](00-quick-start/README.md) bruker GitHub-modeller (ingen Azure-abonnement nødvendig), mens modulene 1-5 bruker Azure OpenAI. Kom i gang med en [GRATIS Azure-konto](https://aka.ms/azure-free-account) hvis du ikke har en.
 
 
 ## Læring med GitHub Copilot
 
-For å raskt komme i gang med koding, åpne dette prosjektet i en GitHub Codespace eller din lokale IDE med den medfølgende devcontaineren. Devcontaineren som brukes i dette kurset er forhåndskonfigurert med GitHub Copilot for AI-parprogrammering.
+For å raskt starte koding, åpne dette prosjektet i en GitHub Codespace eller din lokale IDE med den medfølgende devcontaineren. Devcontaineren brukt i dette kurset er forhåndskonfigurert med GitHub Copilot for AI-parprogrammering.
 
-Hvert kodeeksempel inkluderer foreslåtte spørsmål du kan stille GitHub Copilot for å utdype forståelsen din. Se etter 💡/🤖-promptene i:
+Hver kodeeksempel inkluderer foreslåtte spørsmål du kan stille GitHub Copilot for å utdype din forståelse. Let etter 💡/🤖-promptene i:
 
-- **Java-filoverskrifter** - Spørsmål spesifikke for hvert eksempel
-- **Modul-README-filer** - Utforskingsprompt etter kodeeksempler
+- **Java-filoverskrifter** - Spesifikke spørsmål for hvert eksempel
+- **Modul-READMEer** - Utforskingsspørsmål etter kodeeksempler
 
-**Hvordan bruke:** Åpne en vilkårlig kodefil og still Copilot de foreslåtte spørsmålene. Den har full kontekst til kodebasen og kan forklare, utvide og foreslå alternativer.
+**Hvordan bruke:** Åpne en hvilken som helst kodefil og spør Copilot de foreslåtte spørsmålene. Den har full kontekst av kodebasen og kan forklare, utvide og foreslå alternativer.
 
-Vil du lære mer? Sjekk ut [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
+Vil du lære mer? Se [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
 
 
 ## Ekstra ressurser
@@ -73,7 +83,7 @@ Vil du lære mer? Sjekk ut [Copilot for AI Paired Programming](https://aka.ms/Gi
 [![LangChain for Beginners](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
-### Azure / Edge / MCP / Agents
+### Azure / Edge / MCP / Agenter
 [![AZD for Beginners](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Edge AI for Beginners](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![MCP for Beginners](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
@@ -89,7 +99,7 @@ Vil du lære mer? Sjekk ut [Copilot for AI Paired Programming](https://aka.ms/Gi
 
 ---
  
-### Grunnleggende læring
+### Kjernelæring
 [![ML for Beginners](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -108,21 +118,21 @@ Vil du lære mer? Sjekk ut [Copilot for AI Paired Programming](https://aka.ms/Gi
 
 ## Få hjelp
 
-Hvis du står fast eller har spørsmål om å bygge AI-apper, bli med:
+Hvis du sitter fast eller har noen spørsmål om å bygge AI-apper, bli med i:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Hvis du har produktinnspill eller feil mens du bygger, besøk:
+Hvis du har tilbakemeldinger eller feil under byggingen, besøk:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Lisens
 
-MIT-lisens – Se [LICENSE](../../LICENSE) filen for detaljer.
+MIT-lisens - Se [LICENSE](../../LICENSE) fil for detaljer.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Ansvarsfraskrivelse**:
-Dette dokumentet er oversatt ved hjelp av AI-oversettelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selv om vi streber etter nøyaktighet, vennligst vær oppmerksom på at automatiserte oversettelser kan inneholde feil eller unøyaktigheter. Det opprinnelige dokumentet på originalspråket skal anses som den autoritative kilden. For kritisk informasjon anbefales profesjonell menneskelig oversettelse. Vi er ikke ansvarlige for misforståelser eller feiltolkninger som oppstår ved bruk av denne oversettelsen.
+Dette dokumentet er oversatt ved hjelp av AI-oversettelsestjenesten [Co-op Translator](https://github.com/Azure/co-op-translator). Selv om vi streber etter nøyaktighet, vennligst vær oppmerksom på at automatiske oversettelser kan inneholde feil eller unøyaktigheter. Det originale dokumentet på sitt opprinnelige språk skal anses som den autoritative kilden. For kritisk informasjon anbefales profesjonell menneskelig oversettelse. Vi er ikke ansvarlige for eventuelle misforståelser eller feiltolkninger som oppstår ved bruk av denne oversettelsen.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

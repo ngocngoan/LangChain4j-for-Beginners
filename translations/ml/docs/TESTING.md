@@ -1,55 +1,20 @@
-# LangChain4j അപ്ലിക്കേഷനുകൾ ടെസ്റ്റിംഗ്
+# LangChain4j ആപ്ലിക്കേഷനുകൾ ടെസ്റ്റുചെയ്യൽ
 
-## ഉള്ളടക്ക പട്ടിക
+## ഉള്ളടക്കങ്ങളുടെ പട്ടിക
 
-- [ക്ഷിപ്രാരംഭം](../../../docs)
-- [ടെസ്റ്റുകൾ എന്താണ് ഉൾക്കൊള്ളുന്നത്](../../../docs)
-- [ടെസ്റ്റുകൾ എങ്ങനെ ഓടിപ്പിക്കുക](../../../docs)
-- [VS Code ൽ ടെസ്റ്റുകൾ ഓടിക്കല്‍](../../../docs)
-- [ടെസ്റ്റിംഗ് രീതികൾ](../../../docs)
-- [ടെസ്റ്റിംഗ് തത്വശാഖ്യം](../../../docs)
-- [അടുത്ത ნაბიჯങ്ങൾ](../../../docs)
+- [ക്വിക്ക് സ്റ്റാർട്ട്](../../../docs)
+- [ടെസ്റ്റുകൾ 무엇് കവരുന്നു](../../../docs)
+- [ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കൽ](../../../docs)
+- [VS കോഡിൽ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കൽ](../../../docs)
+- [ടെസ്റ്റിംഗ് പാറ്റേൺസ്](../../../docs)
+- [ടെസ്റ്റിംഗ് തത്ത്വം](../../../docs)
+- [അടുത്ത ഘട്ടങ്ങൾ](../../../docs)
 
-ഈ ഗൈഡ് API കീകൾ അല്ലെങ്കിൽ ബാഹ്യ സേവനങ്ങൾ ആവശ്യമില്ലാതെ എഐ അപ്ലിക്കേഷനുകൾ എങ്ങനെ ടെസ്റ്റ് ചെയ്യാമെന്ന് തെളിയിക്കുന്ന ടെസ്റ്റുകൾ വഴി നിങ്ങളെ നയിക്കുന്നു.
+API കീകൾ അല്ലെങ്കിൽ ബാഹ്യ സേവനങ്ങൾ ആവശ്യമില്ലാതെ AI ആപ്ലിക്കേഷനുകൾ എങ്ങിനെ ടെസ്റ്റ് ചെയ്യാമെന്നും കാണിക്കുന്ന ടെസ്റ്റുകൾ വഴി ഈ ഗൈഡ് നിങ്ങളെ നടത്തുന്നു.
 
-## Quick Start
+## ക്വിക്ക് സ്റ്റാർട്ട്
 
-Run all tests with a single command:
-
-**Bash:**
-```bash
-mvn test
-```
-
-**PowerShell:**
-```powershell
-mvn --% test
-```
-
-<img src="../../../translated_images/ml/test-results.ea5c98d8f3642043.webp" alt="വിജയകരമായ ടെസ്റ്റ് ഫലങ്ങൾ" width="800"/>
-
-*എല്ലാ ടെസ്റ്റുകളും വിഫലതകളില്ലാതെ വിജയകരമായി ഓടിവരുന്ന ടെസ്റ്റ് നിർവഹണത്തിന്റെ ദൃശ്യം*
-
-## What the Tests Cover
-
-This course focuses on **unit tests** that run locally. Each test demonstrates a specific LangChain4j concept in isolation.
-
-<img src="../../../translated_images/ml/testing-pyramid.2dd1079a0481e53e.webp" alt="ടെസ്റ്റിംഗ് പിരമിഡ്" width="800"/>
-
-*യൂണിറ്റ് ടെസ്റ്റുകൾ (വേഗം, വേര്‍പെടുത്തിയ), ഇന്റഗ്രേഷൻ ടെസ്റ്റുകൾ (യഥാർത്ഥ ഘടകങ്ങൾ), end-to-end ടെസ്റ്റുകൾ എന്നിവയിലെ തുല്യഭാരം കാണിക്കുന്ന ടെസ്റ്റിംഗ് പിരമിഡ്. ഈ പരിശീലനം യൂണിറ്റ് ടെസ്റ്റിങ്ങിനാണ് കേന്ദ്രീകരിക്കുന്നത്.*
-
-| Module | Tests | Focus | Key Files |
-|--------|-------|-------|-----------|
-| **00 - Quick Start** | 6 | Prompt templates and variable substitution | `SimpleQuickStartTest.java` |
-| **01 - Introduction** | 8 | Conversation memory and stateful chat | `SimpleConversationTest.java` |
-| **02 - Prompt Engineering** | 12 | GPT-5 patterns, eagerness levels, structured output | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Document ingestion, embeddings, similarity search | `DocumentServiceTest.java` |
-| **04 - Tools** | 12 | Function calling and tool chaining | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Model Context Protocol with Stdio transport | `SimpleMcpTest.java` |
-
-## Running the Tests
-
-**Run all tests from root:**
+ഏറ്റവും ലളിതമായ കമാൻഡുമായി എല്ലാ ടെസ്റ്റുകളും റൺ ചെയ്യുക:
 
 **Bash:**
 ```bash
@@ -61,23 +26,58 @@ mvn test
 mvn --% test
 ```
 
-**Run tests for a specific module:**
+<img src="../../../translated_images/ml/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
+
+*എല്ലാ ടെസ്റ്റുകളും പരാജയമില്ലാതെ വിജയകരമായി പ്രവർത്തിക്കുന്ന ഫലം*
+
+## ടെസ്റ്റുകൾ 무엇് കവരുന്നു
+
+ഈ കോഴ്‌സ് പ്രാദേശികമായി പ്രവർത്തിക്കുന്ന **യുണിറ്റ് ടെസ്റ്റുകൾ**-ൽ ശ്രദ്ധ കേന്ദ്രീകരിക്കുന്നു. ഓരോ ടെസ്റ്റും ഒരു പ്രത്യേക LangChain4j ആശയം വേർതിരിച്ച് കാണിക്കുന്നു.
+
+<img src="../../../translated_images/ml/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
+
+*ഉയർന്ന വേഗതയിൽ, വേർതിരിച്ചുള്ള, യുണിറ്റ് ടെസ്റ്റുകളും യഥാർത്ഥ ഘടകങ്ങളോടുള്ള ഇൻറഗ്രേഷൻ ടെസ്റ്റുകളും, അവസാനഭാഗം വരെ ടെസ്റ്റുകളും തമ്മിലുള്ള സമത്വം കാണിക്കുന്ന ടെസ്റ്റിംഗ് പിരമിഡ്. ഈ പരിശീലനം യുണിറ്റ് ടെസ്റ്റിംഗിനെയാണ് ഉൾക്കൊള്ളുന്നത്.*
+
+| മോഡ്യൂൾ | ടെസ്റ്റുകൾ | പ്രധാന ശ്രദ്ധ | പ്രധാന ഫയലുകൾ |
+|--------|-------|-------------|-----------|
+| **00 - ക്വിക്ക് സ്റ്റാർട്ട്** | 6 | പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റുകളും വേരിയബിൾ പ്രതിസന്ധി | `SimpleQuickStartTest.java` |
+| **01 - ആമുഖം** | 8 | സംവാദ മെമ്മറി, അവസ്ഥാപരമായ ചാറ്റ് | `SimpleConversationTest.java` |
+| **02 - പ്രോംപ്റ്റ് എഞ്ചിനീയറിംഗ്** | 12 | GPT-5.2 പാറ്റേൺസ്, ആവേശനില, ഘടിത ഔട്ട്പുട്ട് | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | ഡോക്യുമെന്റ് ഇൻജെക്ഷൻ, എംബെഡ്ഡിംഗ്, സമാനതാന്വേഷണം | `DocumentServiceTest.java` |
+| **04 - ടൂൾസ്** | 12 | ഫംഗ്ഷൻ കോളിംഗ്, ടൂൾ ചെയിനിംഗ് | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | മോഡൽ കോൺടെക്സ് പ്രോട്ടോക്കോൾ stdio ട്രാൻസ്പോർട്ടോടുകൂടെ | `SimpleMcpTest.java` |
+
+## ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കൽ
+
+**റൂട്ട് ഡയറക്ടറിയിൽ നിന്ന് എല്ലാ ടെസ്റ്റുകളും പ്രവർത്തിപ്പിക്കുക:**
+
+**Bash:**
+```bash
+mvn test
+```
+
+**PowerShell:**
+```powershell
+mvn --% test
+```
+
+**ഒരു പ്രത്യേക മോഡ്യൂളിന്റെ ടെസ്റ്റുകൾ റൺ ചെയ്യുക:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# അതവാ റൂട്ടിൽ നിന്ന്
+# അല്ലെങ്കിൽ റൂട്ട് മുതൽ
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# അഥവാ റൂട്ട് മുതൽ
+# അല്ലെങ്കില്‍ റൂട്ട് നിന്ന്
 mvn --% test -pl 01-introduction
 ```
 
-**Run a single test class:**
+**ഒരു പ്രത്യേക ടെസ്റ്റ് ക്ലാസ് റൺ ചെയ്യുക:**
 
 **Bash:**
 ```bash
@@ -89,11 +89,11 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Run a specific test method:**
+**ഒരു പ്രത്യേക ടെസ്റ്റ് മെത്തഡ് റൺ ചെയ്യുക:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#സംഭാഷണ ചരിത്രം നിലനിർത്തണോ
+mvn test -Dtest=SimpleConversationTest#സംഭാഷണ ചരിത്രം നിലനിർത്തേണ്ടതാണ്
 ```
 
 **PowerShell:**
@@ -101,33 +101,33 @@ mvn test -Dtest=SimpleConversationTest#സംഭാഷണ ചരിത്രം 
 mvn --% test -Dtest=SimpleConversationTest#സംഭാഷണ ചരിത്രം നിലനിർത്തണം
 ```
 
-## Running Tests in VS Code
+## VS കോഡിൽ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കൽ
 
-If you're using Visual Studio Code, the Test Explorer provides a graphical interface for running and debugging tests.
+Visual Studio Code ഉപയോഗിക്കുന്നുവെങ്കിൽ, Test Explorer ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കുന്നതിനും ഡീബഗ് ചെയ്യുന്നതിനും ഗ്രാഫിക്കൽ ഇന്റർഫേസ് നൽകുന്നു.
 
-<img src="../../../translated_images/ml/vscode-testing.f02dd5917289dced.webp" alt="VS Code ടെസ്റ്റ് എക്‍സ്പ്ലോറർ" width="800"/>
+<img src="../../../translated_images/ml/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*VS Code Test Explorer-ൽ എല്ലാ ജാവ ടെസ്റ്റ് ക്ലാസുകളും വ്യക്തിഗത ടെസ്റ്റ് മേതഡുകളും അടങ്ങിയ ടെസ്റ്റ് ട്രീ കാണിക്കുന്ന ദൃശ്യം*
+*VS കോഡ് ടെസ്റ്റ് എക്സ്പ്ലോറർ, എല്ലാ ജാവ ടെസ്റ്റ് ക്ലാസ്സുകളും വ്യക്തിഗത ടെസ്റ്റ് മെത്തഡുകളുമായ ട്രീ കാണിക്കുന്നു*
 
-**To run tests in VS Code:**
+**VS കോഡിൽ ടെസ്റ്റുകൾ പ്രവർത്തിപ്പിക്കാൻ:**
 
-1. Open the Test Explorer by clicking the beaker icon in the Activity Bar
-2. Expand the test tree to see all modules and test classes
-3. Click the play button next to any test to run it individually
-4. Click "Run All Tests" to execute the entire suite
-5. Right-click any test and select "Debug Test" to set breakpoints and step through code
+1. ആക്ടിവിറ്റി ബാറിൽ ബീക്കർ ഐക്കൺ ക്ലിക്ക് ചെയ്ത് Test Explorer തുറക്കുക
+2. എല്ലാ മോഡ്യൂളുകളും ടെസ്റ്റ് ക്ലാസ്സുകളും കാണാനായി ടെസ്റ്റ് ട്രീ വലുതാക്കുക
+3. ഒരു ടെസ്റ്റ് കൂടെ പ്ലേ ബട്ടൺ ക്ലിക്ക് ചെയ്ത് അതിനെ വ്യത്യസ്തമായി റൺ ചെയ്യുക
+4. "Run All Tests" ക്ലിക്ക് ചെയ്ത് മുഴുവൻ സ്യൂട്ട് പ്രവർത്തിപ്പിക്കുക
+5. ഏതെങ്കിലും ടെസ്റ്റ് റൈറ്റ് ക്ലിക്ക് ചെയ്ത് "Debug Test" തിരഞ്ഞെടുക്കുക, ബ്രേക്ക്‌പോയിന്റുകൾ സെറ്റ് ചെയ്ത് കോഡ് ഘട്ടം ഘട്ടം പരിശോധിക്കാം
 
-The Test Explorer shows green checkmarks for passing tests and provides detailed failure messages when tests fail.
+ടെസ്റ്റ് എക്സ്പ്ലോറർ പാസായ ടെസ്റ്റുകൾക്കായി പച്ച ടിക്ക് കാണിക്കുന്നു, പരാജയപ്പെട്ടപ്പോൾ വിശദമായ പരാജയ സന്ദേശങ്ങൾ നൽകുന്നു.
 
-## Testing Patterns
+## ടെസ്റ്റിംഗ് പാറ്റേൺസ്
 
-### Pattern 1: Testing Prompt Templates
+### പാറ്റേൺ 1: പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റുകൾ ടെസ്റ്റുചെയ്യൽ
 
-The simplest pattern tests prompt templates without calling any AI model. You verify that variable substitution works correctly and prompts are formatted as expected.
+ഏറ്റവും ലളിതമായ പാറ്റേൺ AI മോഡൽ വിളിക്കാതെ പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റുകൾ ടെസ്റ്റ് ചെയ്യുകയാണ്. വേരിയബിൾ പ്രതിസന്ധി ശരിയായി പ്രവർത്തിക്കുന്നുണ്ടോ എന്നും, പ്രൊംപ്റ്റുകൾ പ്രതീക്ഷിച്ച ഫോർമാറ്റിൽ ആണോ എന്നും നിങ്ങൾ പരിശോധിക്കുന്നു.
 
-<img src="../../../translated_images/ml/prompt-template-testing.b902758ddccc8dee.webp" alt="പ്രോംപ്റ്റ് ടെംപ്ലേറ്റ് ടെസ്റ്റിംഗ്" width="800"/>
+<img src="../../../translated_images/ml/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*വിവർത്തന സ്ഥലാധിഷ്ഠിതങ്ങളുള്ള ടെംപ്ലേറ്റ് → മൂല്യങ്ങൾ പ്രയോഗിച്ചു → ഫോര്മാറ്റുചെയ്‍ത ഔട്ട്‌പുട്ട് പരിശോധന ചെയ്‍തതെന്ന പ്രോംപ്റ്റ് ടെംപ്ലേറ്റ് ടെസ്റ്റിംഗിന്റെ പ്രവാഹം*
+*പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റുകൾ ടെസ്റ്റുചെയ്യുന്നത് variable substitution ഘട്ടം → മൂല്യങ്ങൾ പ്രയോഗിക്കൽ → ഫോർമാറ്റ് ചെയ്ത ഔട്ട്‌പുട്ട് സ്ഥിരീകരിക്കൽ*
 
 ```java
 @Test
@@ -146,27 +146,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-This test lives in `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+ഈ ടെസ്റ്റ് `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`-ൽ ഉണ്ട്.
 
-**Run it:**
+**ഇത് റൺ ചെയ്യുക:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#ടെസ്റ്റ് പ്രോംപ്ലേറ്റ് പ്രോംപ്റ്റ് ഫോർമാറ്റിംഗ്
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#ടെസ്റ്റ് പ്രോംപ്റ്റ് ട ем്പ്‌ലെറ്റ് ഫോർമാറ്റിംഗ്
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#പ്രോംപ്റ്റ് ടെംപ്ലേറ്റ് ഫോർമാറ്റിംഗ് പരിശോധന
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#ടെസ്റ്റ് പ്രോംപ്റ്റ് ടെംപ്ലേറ്റിന്റെ രൂപരേഖ
 ```
 
-### Pattern 2: Mocking Language Models
+### പാറ്റേൺ 2: ഭാഷാ മോഡലുകൾ മോക്കിംഗ്
 
-When testing conversation logic, use Mockito to create fake models that return predetermined responses. This makes tests fast, free, and deterministic.
+സംവാദ ലാജിക് ടെസ്റ്റ് ചെയ്യുമ്പോൾ, Mockito ഉപയോഗിച്ച് നിശ്ചിത പ്രതികരണങ്ങൾ നൽകുന്ന മോഷ്ടിച്ച മോഡലുകൾ സൃഷ്ടിക്കുക. ഇത് ടെസ്റ്റുകൾ വേഗത്തിലുള്ളതും സൗജന്യവും നിർണായകവുമാക്കി മാറ്റുന്നു.
 
-<img src="../../../translated_images/ml/mock-vs-real.3b8b1f85bfe6845e.webp" alt="മോക്കുകൾ vs യഥാർത്ഥ API താരതമ്യം" width="800"/>
+<img src="../../../translated_images/ml/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*മോക്കുകൾ ടെസ്റ്റിംഗിന് എന്തുകൊണ്ട് പ്രാധാന്യമുള്ളവയെന്നത് കാണിക്കുന്ന താരതമ്യം: വേഗം, സൗജന്യം, നിർണ്ണായകമായ ഫലങ്ങൾ, API കീകൾ不要*
+*ടെസ്റ്റിംഗിന് മോകുകൾ മുൻഗണന ലഭിക്കുന്നതു എന്തെന്ന വിശദീകരണം: വേഗം, സൗജന്യം, നിർണായകത, API കീകൾ ആവശ്യമില്ല*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +211,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 ഉപയോക്താക്കൾ + 3 എഐ സന്ദേശങ്ങൾ
+        assertThat(history).hasSize(6); // 3 ഉപയോക്തൃ + 3 AI സന്ദേശങ്ങൾ
     }
 }
 ```
 
-This pattern appears in `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. The mock ensures consistent behavior so you can verify memory management works correctly.
+ഈ പാറ്റേൺ `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`-ൽ കാണാം. മോക്ക് സ്ഥിരതയുള്ള പെരുമാറ്റം ഉറപ്പാക്കുന്നു, അതിനാൽ മെമ്മറി മാനേജ്മെന്റ് ശരിയായി പ്രവർത്തിക്കുന്നുവെന്ന് നിങ്ങൾ പരിശോധിക്കാം.
 
-### Pattern 3: Testing Conversation Isolation
+### പാറ്റേൺ 3: Conversation Isolation ടെസ്റ്റുചെയ്യൽ
 
-Conversation memory must keep multiple users separate. This test verifies that conversations don't mix contexts.
+സംവാദ മെമ്മറി പല ഉപഭോക്താക്കളെ വേർതിരിച്ച് സൂക്ഷിക്കണം. ഈ ടെസ്റ്റ് സംവാദങ്ങൾ പരസ്പരം	context മിശ്രിതമാകാതെ വച്ചിരിക്കുന്നുവോ എന്ന് പരിശോധിക്കുന്നു.
 
-<img src="../../../translated_images/ml/conversation-isolation.e00336cf8f7a3e3f.webp" alt="സംവാദ വ്യതിർത്തൃതി" width="800"/>
+<img src="../../../translated_images/ml/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*വിവിധ ഉപഭോക്താക്കൾക്കുള്ള വേർതിരിച്ച മെമ്മറി സ്റ്റോറുകൾ സംവാദങ്ങളുടെ കോൺടെക്സ്‌ക്ട് മിശ്രിതമാകാതിരിക്കാൻ പരിശോധിക്കുന്ന ടെസ്റ്റിംഗ് ദൃശ്യം*
+*Conversation isolation ടെസ്റ്റിംഗ്, വിവിധ ഉപയോക്താക്കൾക്കായി വേറിട്ട മെമ്മറി സ്റ്റോറുകൾ context മിശ്രിതം തടയാൻ*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Each conversation maintains its own independent history. In production systems, this isolation is critical for multi-user applications.
+ഓരോ സംവാദത്തിനും സ്വതന്ത്രമായ ചരിത്രം ഉണ്ട്. പ്രൊഡക്ഷൻ സിസ്റ്റങ്ങളിൽ, ഇത് മൾട്ടി-ഉപയോക്തൃ ആപ്ലിക്കേഷനുകൾക്കായും വളരെ പ്രധാനമാണ്.
 
-### Pattern 4: Testing Tools Independently
+### പാറ്റേൺ 4: ടൂളുകൾ സ്വതന്ത്രമായി ടെസ്റ്റ് ചെയ്യൽ
 
-Tools are functions the AI can call. Test them directly to ensure they work correctly regardless of AI decisions.
+ടൂളുകൾ AI വിളിക്കാൻ ഉപയോഗിക്കുന്ന ഫംഗ്ഷനുകളാണ്. AI തീരുമാനം ഇല്ലാതെയുള്ള ബിസിനസ് ലാജിക്ക് ശരിയായി പ്രവർത്തിക്കുന്നുണ്ടോ എന്ന് നേരിട്ട് ടെസ്റ്റ് ചെയ്യുക.
 
-<img src="../../../translated_images/ml/tools-testing.3e1706817b0b3924.webp" alt="ഉപകരണങ്ങൾ സ്വതന്ത്രമായി ടെസ്റ്റ് ചെയ്യുക" width="800"/>
+<img src="../../../translated_images/ml/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*AI കോളുകളോ തീരുമാനങ്ങളോ ഇല്ലാതെ മോക്ക് ടൂൾ നിർവഹണം കാണിക്കുന്ന ഉപകരണങ്ങൾ സ്വതന്ത്രമായി ടെസ്റ്റ് ചെയ്യുന്നതിന്റെ ദൃശ്യം: ബിസിനസ് ലജിക് പരിശോധിക്കുക*
+*AI കോൾ ഇല്ലാതെ മോക് ടൂൾ പ്രവർത്തനം ടെസ്റ്റ് ചെയ്തത് ബിസിനസ് ലാജിക്ക് പരിശോധിക്കുന്നതിന്*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-These tests from `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validate tool logic without AI involvement. The chaining example shows how one tool's output feeds into another's input.
+`04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java`-ൽ വരുന്ന ഈ ടെസ്റ്റുകൾ AI പങ്കാളിത്തമില്ലാതെ ടൂൾ ലാജിക്ക് ശരിയാണെന്ന് എളുപ്പത്തിൽ പരിശോധിക്കുന്നു. ചെയിനിംഗ് ഉദാഹരണം ഒരു ടൂളിന്റെ ഔട്ട്പുട്ട് മറ്റൊരാളുടെ ഇന്‍പുട്ട് ആകുന്നു എന്നുതന്നെയാണ്.
 
-### Pattern 5: In-Memory RAG Testing
+### പാറ്റേൺ 5: ഇൻ-മെമ്മറി RAG ടെസ്റ്റിംഗ്
 
-RAG systems traditionally require vector databases and embedding services. The in-memory pattern lets you test the entire pipeline without external dependencies.
+RAG സിസ്റ്റങ്ങൾ സാധാരണയായി വെക്ടർ ഡാറ്റാബേസും എംബെഡ്ഡിംഗ് സേവനങ്ങളും ആവശ്യമാണ്. ഇൻ-മെമ്മറി പാറ്റേൺ മാർഗ്ഗത്തിൽ, നിങ്ങൾ പൈപ്പ്ലൈൻ മുഴുവനും ബാഹ്യ ആശ്രിതത്വങ്ങളില്ലാതെ ടെസ്റ്റ് ചെയ്യാം.
 
-<img src="../../../translated_images/ml/rag-testing.ee7541b1e23934b1.webp" alt="ഇൻ-മെമെറി RAG ടെസ്റ്റിംഗ്" width="800"/>
+<img src="../../../translated_images/ml/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*ഡോക്ക്യുമെന്റ് പാർസിങ്, എമ്പഡ്ഡിംഗ് സംഭരണം, സമാനതാ തിരയൽ എന്നിവ ഡാറ്റാബേസ് ആവശ്യമില്ലാതെ കാണിക്കുന്ന ഇന്-മെമ്മറി RAG ടെസ്റ്റിംഗ് പ്രവാഹം*
+*ഡാറ്റാബേസ് ആവശ്യമില്ലാതെ ഡോക്യുമെന്റ് പാർസിംഗ്, എംബെഡ്ഡിംഗ് സ്ടോറേജ്, സമാനതാന്വേഷണം Workflow*
 
 ```java
 @Test
@@ -304,15 +304,15 @@ void testProcessTextDocument() {
 }
 ```
 
-This test from `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` creates a document in memory and verifies chunking and metadata handling.
+`03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java`-ിൽ നിന്നുള്ള ഈ ടെസ്റ്റ്, മെമ്മറിയിൽ ഡോക്യുമെന്റ് സൃഷ്ടിക്കുകയും ചങ്കിംഗ് മെറ്റാഡാറ്റ കൈകാര്യം ചെയ്യുന്നതിനും സാധിക്കുന്നു എന്ന് പരിശോധിക്കുന്നു.
 
-### Pattern 6: MCP Integration Testing
+### പാറ്റേൺ 6: MCP ഇൻറഗ്രേഷൻ ടെസ്റ്റിംഗ്
 
-The MCP module tests the Model Context Protocol integration using stdio transport. These tests verify that your application can spawn and communicate with MCP servers as subprocesses.
+MCP മോഡ്യൂൾ മോഡൽ കോൺടെക്സ് പ്രോട്ടോക്കോൾ stdio ട്രാൻസ്പോർട്ടിനോടൊപ്പം ഇൻറഗ്രേറ്റ് ചെയ്യുന്നതായി ടെസ്റ്റു ചെയ്യുന്നു. ഈ ടെസ്റ്റുകൾ subprocess ആയി MCP സർവറുകളുമായി ആശയവിനിമയം നടത്തുന്നതും സ്പോൺ ചെയ്ത് പ്രവർത്തിപ്പിക്കുന്നതും പരിശോധിക്കുന്നു.
 
-The tests in `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` validate MCP client behavior.
+`05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java`-ലെ ടെസ്റ്റുകൾ MCP ക്ലയന്റ് പെരുമാറ്റം സ്ഥിരീകരിക്കുന്നു.
 
-**Run them:**
+**ഇവ പ്രവർത്തിപ്പിക്കുക:**
 
 **Bash:**
 ```bash
@@ -324,38 +324,38 @@ cd 05-mcp && mvn test
 cd 05-mcp; mvn --% test
 ```
 
-## Testing Philosophy
+## ടെസ്റ്റിംഗ് തത്ത്വം
 
-Test your code, not the AI. Your tests should validate the code you write by checking how prompts are constructed, how memory is managed, and how tools execute. AI responses vary and shouldn't be part of test assertions. Ask yourself whether your prompt template correctly substitutes variables, not whether the AI gives the right answer.
+നിങ്ങളുടെ കോഡ് ടെസ്റ്റ് ചെയ്യുക, AI അല്ല. പ്രൊംപ്റ്റുകൾ എങ്ങിനെ നിർമ്മിക്കപ്പെടുന്നു, മെമ്മറി എങ്ങിനെയാണ് കൈകാര്യം ചെയ്യുന്നത്, ടൂളുകൾ എങ്ങിനെ പ്രവർത്തിക്കുന്നു എന്നതിൽ നിങ്ങളുടെ ടെസ്റ്റുകൾ ഉറപ്പു വരുത്തണം. AI അവബോധങ്ങൾ വ്യത്യാസമുള്ളവയാണ്, അതുകൊണ്ട് ടെസ്റ്റ് അസർഷനുകളിൽ അവ ഉൾപ്പെടുത്തൽ വേണ്ടത് അല്ല. നിങ്ങളുടെ പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റ് വേരിയബിൾസ് ശരിയായി പതിപ്പിത്യമാണോ എന്നറിയുക, AI ശരിയായ ഉത്തരമാണ് നൽകുന്നതോ എന്ന് മാത്രം നോക്കാതെ.
 
-Use mocks for language models. They're external dependencies that are slow, expensive, and non-deterministic. Mocking makes tests fast with milliseconds instead of seconds, free with no API costs, and deterministic with the same result every time.
+ഭാഷാ മോഡലുകൾക്ക് മോകുകൾ ഉപയോഗിക്കുക. അവ ബാഹ്യ ആശ്രിതങ്ങൾ ആണ്, മോശം വേഗം, ചെലവേറിയതും നിർണായകമല്ലാത്തതും ആണ്. മോകിംഗ് മില്ലിസെക്കന്റുകളിൽ വേഗതകളും സൗജന്യവും നിർണായകവും ആക്കുന്നു.
 
-Keep tests independent. Each test should set up its own data, not rely on other tests, and clean up after itself. Tests should pass regardless of execution order.
+ടെസ്റ്റുകൾ സ്വതന്ത്രമാക്കുക. ഓരോ ടെസ്റ്റും തന്നെ സ്വന്തം ഡാറ്റ ഒരുക്കണം, മറ്റ് ടെസ്റ്റുകൾ ആശ്രയിക്കാതെ, പ്രവർത്തനക്രമം മാറ്റിയാലും പാസാകണം.
 
-Test edge cases beyond the happy path. Try empty inputs, very large inputs, special characters, invalid parameters, and boundary conditions. These often reveal bugs that normal usage doesn't expose.
+സന്തോഷകരമായ പാതയ്ക്ക് പുറമേ എഡ്ജ് കേസുകളും ടെസ്റ്റ് ചെയ്യുക. ശൂന്യ ഇൻപുട്ടുകൾ, വലുതായ ഇൻപുട്ടുകൾ, പ്രത്യേക അക്ഷരം, അസാധുവായ പാരാമീറ്ററുകൾ, അതിരുകൾ എന്നിവ പരീക്ഷിക്കുക. സാധാരണ ഉപയോഗത്തിൽ കണ്ടെത്താനാകാത്ത ബഗുകൾ ഇതോടെ കണ്ടെത്താനാകും.
 
-Use descriptive names. Compare `shouldMaintainConversationHistoryAcrossMultipleMessages()` with `test1()`. The first tells you exactly what's being tested, making debugging failures much easier.
+വിവരണാത്മക പേരുകൾ ഉപയോഗിക്കുക. `shouldMaintainConversationHistoryAcrossMultipleMessages()` എന്നത് `test1()` നെക്കാള്‍ സ്പষ্টമാണ്. ഇതോടെ തെറ്റുകൾ കണ്ടെത്തലും സുഷ്ടമാണാവും.
 
-## Next Steps
+## അടുത്ത ഘട്ടങ്ങൾ
 
-Now that you understand the testing patterns, dive deeper into each module:
+ഇപ്പോൾ ടെസ്റ്റിംഗ് പാറ്റേണുകളും മനസ്സിലാക്കിയതിനാൽ, ഓരോ മോഡ്യൂളിനും കൂടുതൽ ആഴത്തിൽ പ്രവേശിക്കുക:
 
-- **[00 - Quick Start](../00-quick-start/README.md)** - പ്രോംപ്റ്റ് ടെംപ്ലേറ്റ് അടിസ്ഥാനങ്ങളുമായി ആരംഭിക്കുക
-- **[01 - Introduction](../01-introduction/README.md)** - സംവാദ മെമ്മറി മാനേജ്മെന്റ് പഠിക്കുക
-- **[02 - Prompt Engineering](../02-prompt-engineering/README.md)** - GPT-5 പ്രോംപ്റ്റിംഗ് രീതികൾ കൈകഴിക്കുക
-- **[03 - RAG](../03-rag/README.md)** - Retrieval-augmented generation സംവിധാനം നിർമ്മിക്കുക
-- **[04 - Tools](../04-tools/README.md)** - ഫംഗ്ഷൻ കോല്ലിംഗ് এবং ടൂൾ ചെയിനുകൾ നടപ്പിലാക്കുക
-- **[05 - MCP](../05-mcp/README.md)** - Model Context Protocol സംയോജിപ്പിക്കുക
+- **[00 - ക്വിക്ക് സ്റ്റാർട്ട്](../00-quick-start/README.md)** - പ്രൊംപ്റ്റ് ടെംപ്ലേറ്റ് അടിസ്ഥാനങ്ങൾ ആരംഭിക്കുക
+- **[01 - ആമുഖം](../01-introduction/README.md)** - സംവാദ മെമ്മറി മാനേജ്മെന്റ് പഠിക്കുക
+- **[02 - പ്രോംപ്റ്റ് എഞ്ചിനീയറിംഗ്](../02-prompt-engineering/README.md)** - GPT-5.2 പ്രൊംപ്റ്റിംഗ് പാറ്റേണുകൾ പഠിക്കുക
+- **[03 - RAG](../03-rag/README.md)** - റിട്രീവൽ-ഓഗ്‌മെന്റഡ് ജനറേഷൻ സിസ്റ്റങ്ങൾ നിർമ്മിക്കുക
+- **[04 - ടൂൾസ്](../04-tools/README.md)** - ഫംഗ്ഷൻ കോൾ ചെയ്യലും ടൂൾ ചെയിനുകളും നടപ്പിലാക്കുക
+- **[05 - MCP](../05-mcp/README.md)** - മോഡൽ കോൺടെക്സ് പ്രോട്ടോക്കോൾ ഇൻറഗ്രേറ്റ് ചെയ്യുക
 
-Each module's README provides detailed explanations of the concepts tested here.
+ഓരോ മോഡ്യൂളിന്റെയും README ഇവിടെ ടെസ്റ്റ് ചെയ്ത ആശയങ്ങളുടെ വിശദമായ വിശദീകരണങ്ങൾ നൽകുന്നു.
 
 ---
 
-**Navigation:** [← പ്രധാന താളിലേക്ക് തിരികെ](../README.md)
+**നവിഗേഷൻ:** [← പ്രധാനത്തിലേക്ക് മടങ്ങുക](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-അസ്വീകരണ കുറിപ്പ്:
-ഈ രേഖ AI വിവർത്തന സേവനമായ [Co-op Translator](https://github.com/Azure/co-op-translator) ഉപയോഗിച്ച് പരിഭാഷപ്പെടുത്തിയതാണ്. ഞങ്ങൾ സൂക്ഷ്മതയ്ക്ക് ശ്രമിച്ചെങ്കിലും, ഓട്ടോമേറ്റഡ് വിവർത്തനങ്ങളില്‍ പിശകുകള്‍ അല്ലെങ്കില്‍ അശുദ്ധതകള്‍ ഉണ്ടാകാമെന്ന് ദയവായി മനസിലാക്കി കൊള്ളുക. മൂലഭാഷയില്‍ ഉള്ള രേഖയാണ് അതിന്റെ സർവസ്വീകരണമുള്ള പ്രാധാന്യമായ ഉറവിടം എന്ന് കരുതേണ്ടതാണ്. നിര്‍ണായകമായ വിവരങ്ങൾക്ക് വിദഗ്ധ മാനവ വിവർത്തനമാണ് ശിപാർശ ചെയ്യപ്പെടുന്നത്. ഈ വിവർത്തനം ഉപയോഗിച്ചതില്‍ നിന്നുണ്ടാകുന്ന ഏതെങ്കിലും തെറ്റിദ്ധാരണകള്‍ക്കും തെറ്റായ വ്യാഖ്യാനങ്ങള്‍ക്കും ഞങ്ങള്‍ ഉത്തരവാദികളല്ല.
+**നിഷേധം**:  
+ഈ രേഖ AI വിവർത്തന സേവനം [Co-op Translator](https://github.com/Azure/co-op-translator) ഉപയോഗിച്ച് വിവർത്തനം ചെയ്‍തതാണ്. നാം തുൽത്യതയ്ക്ക് ശ്രമിച്ചിട്ടുള്ളതെങ്കിലും, സ്വയംചാലിത വിവർത്തനങ്ങളിൽ പിഴവുകൾ അല്ലെങ്കിൽ തെറ്റായ വിവരങ്ങൾ ഉണ്ടായിരിക്കാം എന്ന് ദയവായി ശ്രദ്ധിക്കുക. അതിന്റെ പോലെയുള്ള ഉറവിട ഭാഷയിലെ യഥാർത്ഥ രേഖയെ ഔദ്യോഗിക ഉറവിടമായി കണക്കാക്കണമെന്ന് അഭ്യർഥിക്കുന്നു. നിർണായക വിവരങ്ങൾക്ക് പ്രൊഫഷണൽ മാനുഷിക വിവർത്തനം ശിപാർശ ചെയ്യപ്പെടുന്നു. ഈ വിവർത്തനത്തിന്‍റെ ഉപയോഗത്തിൽ നിന്നുണ്ടാകാവുന്ന ബോധക്കുറവുകൾക്കും തെറ്റിദ്ധാരണകൾക്കും ഞങ്ങൾ ഉത്തരവാദികളല്ല.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
