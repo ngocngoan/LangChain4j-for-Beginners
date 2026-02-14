@@ -6,20 +6,20 @@
     "language_code": "bg"
   },
   "01-introduction/README.md": {
-    "original_hash": "c3e07ca58d0b8a3f47d3bf5728541e0a",
-    "translation_date": "2025-12-13T14:03:46+00:00",
+    "original_hash": "48650a76d6620c09dfd70a113fa1502b",
+    "translation_date": "2026-02-10T13:30:56+00:00",
     "source_file": "01-introduction/README.md",
     "language_code": "bg"
   },
   "01-introduction/infra/README.md": {
-    "original_hash": "bb15d54593663fb75ef1302f3dd1bb1a",
-    "translation_date": "2025-12-13T22:21:51+00:00",
+    "original_hash": "538053d010dea21073532e9915f1b6a2",
+    "translation_date": "2026-02-10T13:35:24+00:00",
     "source_file": "01-introduction/infra/README.md",
     "language_code": "bg"
   },
   "02-prompt-engineering/README.md": {
-    "original_hash": "8d787826cad7e92bf5cdbd116b1e6116",
-    "translation_date": "2025-12-13T16:26:08+00:00",
+    "original_hash": "0f54f3d1a10712a331dc8b7acc47c144",
+    "translation_date": "2026-02-10T13:32:27+00:00",
     "source_file": "02-prompt-engineering/README.md",
     "language_code": "bg"
   },
@@ -54,8 +54,8 @@
     "language_code": "bg"
   },
   "README.md": {
-    "original_hash": "1033eea45b926ac0b315e29a6ffaa8bd",
-    "translation_date": "2026-01-30T07:04:30+00:00",
+    "original_hash": "9e990515b89f2af1a3b7bd5e006488ea",
+    "translation_date": "2026-02-11T09:49:49+00:00",
     "source_file": "README.md",
     "language_code": "bg"
   },
@@ -72,14 +72,14 @@
     "language_code": "bg"
   },
   "docs/GLOSSARY.md": {
-    "original_hash": "0c4ed0dd4b9db1aa5d6ac7cfd0c79ca4",
-    "translation_date": "2026-01-06T08:33:00+00:00",
+    "original_hash": "6c2c1a7c0031f05cb3a895bcb888d1c6",
+    "translation_date": "2026-02-10T13:33:21+00:00",
     "source_file": "docs/GLOSSARY.md",
     "language_code": "bg"
   },
   "docs/TESTING.md": {
-    "original_hash": "ed93b3c14d58734ac10162967da958c1",
-    "translation_date": "2025-12-31T05:11:20+00:00",
+    "original_hash": "f995b470278adfca321ca988b42e0c56",
+    "translation_date": "2026-02-10T13:34:18+00:00",
     "source_file": "docs/TESTING.md",
     "language_code": "bg"
   }

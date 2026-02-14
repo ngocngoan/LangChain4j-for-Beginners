@@ -10,9 +10,9 @@
 - [Filosofia testării](../../../docs)
 - [Pașii următori](../../../docs)
 
-Acest ghid te parcurge prin testele care demonstrează cum să testezi aplicații AI fără a necesita chei API sau servicii externe.
+Acest ghid te poartă prin testele care demonstrează cum să testezi aplicațiile AI fără a necesita chei API sau servicii externe.
 
-## Quick Start
+## Pornire rapidă
 
 Rulează toate testele cu o singură comandă:
 
@@ -26,30 +26,30 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/ro/test-results.ea5c98d8f3642043.webp" alt="Rezultate reușite ale testelor" width="800"/>
+<img src="../../../translated_images/ro/test-results.ea5c98d8f3642043.webp" alt="Rezultate test reușit" width="800"/>
 
-*Execuție reușită a testelor arătând toate testele trecute fără niciun eșec*
+*Executare de test reușită arătând toate testele trecute fără eșecuri*
 
 ## Ce acoperă testele
 
-Acursul se concentrează pe **teste unitare** care rulează local. Fiecare test demonstrează un concept specific LangChain4j izolat.
+Acest curs se concentrează pe **teste unitare** care rulează local. Fiecare test demonstrează un concept specific LangChain4j izolat.
 
 <img src="../../../translated_images/ro/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramida testării" width="800"/>
 
-*Piramida testării arătând echilibrul între teste unitare (rapide, izolate), teste de integrare (componente reale) și teste end-to-end. Această instruire acoperă testarea unitară.*
+*Piramida testării arătând echilibrul dintre testele unitare (rapide, izolate), testele de integrare (componente reale) și testele end-to-end. Acest training acoperă testarea unitară.*
 
-| Modul | Teste | Scop | Fișiere cheie |
+| Modul | Teste | Focus | Fișiere cheie |
 |--------|-------|-------|-----------|
 | **00 - Pornire rapidă** | 6 | Șabloane de prompt și substituirea variabilelor | `SimpleQuickStartTest.java` |
-| **01 - Introducere** | 8 | Memoria conversației și chat cu stare | `SimpleConversationTest.java` |
-| **02 - Ingineria prompturilor** | 12 | Modele GPT-5, niveluri de entuziasm, ieșire structurată | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Ingestia documentelor, embeddings, căutare prin similaritate | `DocumentServiceTest.java` |
-| **04 - Instrumente** | 12 | Apelarea funcțiilor și concatenarea instrumentelor | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Model Context Protocol cu transport stdio | `SimpleMcpTest.java` |
+| **01 - Introducere** | 8 | Memorie conversațională și chat cu stare | `SimpleConversationTest.java` |
+| **02 - Ingineria promptului** | 12 | Modele GPT-5.2, niveluri de entuziasm, output structurat | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Ingestie documente, încorporări, căutare similaritate | `DocumentServiceTest.java` |
+| **04 - Unelte** | 12 | Apelare funcții și concatenarea uneltelor | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Protocol Model Context cu transport stdio | `SimpleMcpTest.java` |
 
 ## Rularea testelor
 
-**Rulează toate testele din directorul root:**
+**Rulează toate testele din rădăcină:**
 
 **Bash:**
 ```bash
@@ -66,14 +66,14 @@ mvn --% test
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Sau ca root
+# Sau din rădăcină
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Sau din root
+# Sau din rădăcină
 mvn --% test -pl 01-introduction
 ```
 
@@ -89,11 +89,11 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Rulează o metodă de test specifică:**
+**Rulează o metodă specifică de test:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#ar trebui să mențină istoricul conversației
+mvn test -Dtest=SimpleConversationTest#ar trebui să păstreze istoricul conversației
 ```
 
 **PowerShell:**
@@ -105,29 +105,29 @@ mvn --% test -Dtest=SimpleConversationTest#ar trebui să păstreze istoricul con
 
 Dacă folosești Visual Studio Code, Test Explorer oferă o interfață grafică pentru rularea și depanarea testelor.
 
-<img src="../../../translated_images/ro/vscode-testing.f02dd5917289dced.webp" alt="Exploratorul de teste VS Code" width="800"/>
+<img src="../../../translated_images/ro/vscode-testing.f02dd5917289dced.webp" alt="Explorator Teste VS Code" width="800"/>
 
-*VS Code Test Explorer arătând arborele de teste cu toate clasele de test Java și metodele individuale de test*
+*Exploratorul de teste VS Code arătând arborele testelor cu toate clasele și metodele de test Java*
 
 **Pentru a rula testele în VS Code:**
 
-1. Deschide Test Explorer făcând clic pe pictograma cu eprubetă din Activity Bar
-2. Extinde arborele de teste pentru a vedea toate modulele și clasele de test
-3. Fă clic pe butonul de redare de lângă orice test pentru a-l rula individual
-4. Fă clic pe "Run All Tests" pentru a executa întreaga suită
-5. Fă clic dreapta pe orice test și selectează "Debug Test" pentru a seta puncte de întrerupere și a parcurge codul pas cu pas
+1. Deschide Test Explorer făcând clic pe pictograma de eprubetă din bara de activități
+2. Extinde arborele testelor pentru a vedea toate modulele și clasele de test
+3. Apasă butonul de redare lângă orice test pentru a-l rula individual
+4. Apasă „Run All Tests” pentru a executa întreaga suită
+5. Click dreapta pe orice test și selectează „Debug Test” pentru a seta puncte de întrerupere și a parcurge codul
 
-Test Explorer afișează bifele verzi pentru testele trecute și oferă mesaje detaliate la eșec.
+Exploratorul de teste afișează bifa verde pentru testele trecute și oferă mesaje detaliate pentru eșecuri când acestea apar.
 
 ## Modele de testare
 
 ### Model 1: Testarea șabloanelor de prompt
 
-Cel mai simplu model testează șabloanele de prompt fără a apela vreun model AI. Verifici că substituirea variabilelor funcționează corect și că prompturile sunt formatate conform așteptărilor.
+Cel mai simplu model testează șabloanele de prompt fără a apela vreun model AI. Verifici că substituția variabilelor funcționează corect și că prompturile sunt formatate corespunzător.
 
 <img src="../../../translated_images/ro/prompt-template-testing.b902758ddccc8dee.webp" alt="Testarea șabloanelor de prompt" width="800"/>
 
-*Testarea șabloanelor de prompt arătând fluxul de substituție a variabilelor: șablon cu locuri rezervate → valori aplicate → ieșire formatată verificată*
+*Testarea șabloanelor de prompt arătând fluxul substituției variabilelor: șablon cu locuri rezervate → valori aplicate → output formatat verificat*
 
 ```java
 @Test
@@ -152,19 +152,19 @@ Acest test se află în `00-quick-start/src/test/java/com/example/langchain4j/qu
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testarea formatării șablonului de prompt
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testareaFormatariiSabloanelorPrompt
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testare a formatării șablonului de prompt
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testareFormatTemplatePrompt
 ```
 
-### Model 2: Simularea modelelor de limbaj (mocking)
+### Model 2: Simularea modelelor lingvistice
 
-Când testezi logica conversațiilor, folosește Mockito pentru a crea modele false care returnează răspunsuri predeterminate. Acest lucru face testele rapide, gratuite și deterministe.
+Când testezi logica conversațională, folosește Mockito pentru a crea modele false care returnează răspunsuri prestabilite. Acest lucru face testele rapide, gratuite și deterministe.
 
-<img src="../../../translated_images/ro/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Comparație mock vs API real" width="800"/>
+<img src="../../../translated_images/ro/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Comparație între mock și API real" width="800"/>
 
 *Comparație care arată de ce mock-urile sunt preferate pentru testare: sunt rapide, gratuite, deterministe și nu necesită chei API*
 
@@ -211,20 +211,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 mesaje de utilizator + 3 mesaje AI
+        assertThat(history).hasSize(6); // 3 mesaje de la utilizator + 3 mesaje AI
     }
 }
 ```
 
-Acest model apare în `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock-ul asigură un comportament consecvent astfel încât poți verifica corect gestionarea memoriei.
+Acest model apare în `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock-ul asigură comportament consistent pentru a putea verifica managementul memoriei corect.
 
 ### Model 3: Testarea izolării conversațiilor
 
-Memoria conversației trebuie să păstreze utilizatorii separați. Acest test verifică că conversațiile nu amestecă contexte.
+Memoria conversațională trebuie să păstreze utilizatorii separați. Acest test verifică că conversațiile nu amestecă contexte.
 
-<img src="../../../translated_images/ro/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Izolarea conversațiilor" width="800"/>
+<img src="../../../translated_images/ro/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Izolarea conversației" width="800"/>
 
-*Testarea izolării conversațiilor care arată magazine de memorie separate pentru utilizatori diferiți pentru a preveni amestecarea contextelor*
+*Testarea izolării conversației arătând stocări de memorie separate pentru diferiți utilizatori pentru a preveni amestecul contextelor*
 
 ```java
 @Test
@@ -248,15 +248,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Fiecare conversație își menține propria istorie independentă. În sistemele de producție, această izolare este critică pentru aplicațiile multi-utilizator.
+Fiecare conversație își menține propria istorie independentă. În sistemele de producție această izolare este critica pentru aplicațiile multi-utilizator.
 
-### Model 4: Testarea instrumentelor în mod independent
+### Model 4: Testarea uneltelor independent
 
-Instrumentele sunt funcții pe care AI le poate apela. Testează-le direct pentru a te asigura că funcționează corect indiferent de deciziile AI-ului.
+Uneltele sunt funcții pe care AI le poate apela. Testează-le direct pentru a te asigura că funcționează corect indiferent de deciziile AI.
 
-<img src="../../../translated_images/ro/tools-testing.3e1706817b0b3924.webp" alt="Testarea instrumentelor" width="800"/>
+<img src="../../../translated_images/ro/tools-testing.3e1706817b0b3924.webp" alt="Testarea uneltelor" width="800"/>
 
-*Testarea instrumentelor în mod independent arătând executarea mock a instrumentelor fără apeluri AI pentru a verifica logica de business*
+*Testarea uneltelor independent arătând executarea uneltei simulată fără apeluri AI pentru a verifica logica de business*
 
 ```java
 @Test
@@ -279,15 +279,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Aceste teste din `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validează logica instrumentelor fără implicarea AI. Exemplul de chaining arată cum ieșirea unui instrument alimentează intrarea altuia.
+Aceste teste din `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` validează logica uneltelor fără implicarea AI. Exemplul de concatenare arată cum outputul unei unelte intră ca input la alta.
 
 ### Model 5: Testarea RAG în memorie
 
-Sistemele RAG necesită în mod tradițional baze de date vectoriale și servicii de embedding. Modelul în memorie îți permite să testezi întregul pipeline fără dependențe externe.
+Sistemele RAG tradițional necesită baze de date vectoriale și servicii de încorporare. Modelul în memorie îți permite să testezi întregul flux fără dependențe externe.
 
 <img src="../../../translated_images/ro/rag-testing.ee7541b1e23934b1.webp" alt="Testarea RAG în memorie" width="800"/>
 
-*Fluxul de testare RAG în memorie arătând parsarea documentelor, stocarea embedding-urilor și căutarea prin similaritate fără a necesita o bază de date*
+*Fluxul de testare RAG în memorie arătând parsarea documentelor, stocarea încorporărilor și căutarea similarității fără a necesita o bază de date*
 
 ```java
 @Test
@@ -304,13 +304,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Acest test din `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` creează un document în memorie și verifică chunking-ul și gestionarea metadata.
+Acest test din `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` creează un document în memorie și verifică fragmentarea și gestionarea metadatelor.
 
 ### Model 6: Testarea integrării MCP
 
-Modulul MCP testează integrarea Model Context Protocol folosind transportul stdio. Aceste teste verifică că aplicația ta poate porni și comunica cu servere MCP ca subprocessuri.
+Modulul MCP testează integrarea Model Context Protocol folosind transport stdio. Aceste teste verifică că aplicația ta poate porni și comunica cu serverele MCP ca procese secundare.
 
-Teste din `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` validează comportamentul clientului MCP.
+Testele din `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` validează comportamentul clientului MCP.
 
 **Rulează-le:**
 
@@ -326,36 +326,36 @@ cd 05-mcp; mvn --% test
 
 ## Filosofia testării
 
-Testează codul tău, nu AI-ul. Testele tale ar trebui să valideze codul pe care îl scrii verificând cum sunt construite prompturile, cum este gestionată memoria și cum execută instrumentele. Răspunsurile AI variază și nu ar trebui să facă parte din aserțiuni. Întreabă-te dacă șablonul tău de prompt substituie corect variabilele, nu dacă AI oferă răspunsul corect.
+Testează codul tău, nu AI-ul. Testele tale ar trebui să valideze codul pe care îl scrii verificând cum sunt construite prompturile, cum se gestionează memoria și cum se execută uneltele. Răspunsurile AI variază și nu ar trebui să facă parte din aserțiunile testelor. Întreabă-te dacă șablonul de prompt substituie corect variabilele, nu dacă AI oferă răspunsul corect.
 
-Folosește mock-uri pentru modelele de limbaj. Sunt dependențe externe care sunt lente, costisitoare și nedeterministe. Mockarea face testele rapide în milisecunde în loc de secunde, gratuite fără costuri API și deterministe cu același rezultat de fiecare dată.
+Folosește mocks pentru modelele lingvistice. Sunt dependențe externe lente, costisitoare și nedeterministe. Mock-urile fac testele rapide în milisecunde în loc de secunde, gratuite fără costuri API și deterministe cu același rezultat de fiecare dată.
 
-Păstrează testele independente. Fiecare test ar trebui să își configureze propriile date, să nu se bazeze pe alte teste și să curețe după sine. Testele ar trebui să treacă indiferent de ordinea de execuție.
+Păstrează testele independente. Fiecare test ar trebui să seteze propriile date, să nu depindă de alte teste și să curețe după sine. Testele ar trebui să treacă indiferent de ordinea execuției.
 
-Testează cazurile limită dincolo de căile fericite. Încearcă intrări goale, intrări foarte mari, caractere speciale, parametri invalizi și condiții de margine. Acestea adesea dezvăluie bug-uri pe care utilizarea normală nu le expune.
+Testează cazurile-limită dincolo de calea fericită. Încearcă intrări goale, foarte mari, caractere speciale, parametri invalizi și condiții-limită. Acestea dezvăluie adesea bug-uri pe care utilizarea normală nu le expune.
 
-Folosește nume descriptive. Compară `shouldMaintainConversationHistoryAcrossMultipleMessages()` cu `test1()`. Primul îți spune exact ce se testează, făcând mult mai ușoară depanarea eșecurilor.
+Folosește nume descriptive. Compară `shouldMaintainConversationHistoryAcrossMultipleMessages()` cu `test1()`. Primul îți spune exact ce se testează, ceea ce face depanarea eșecurilor mult mai ușoară.
 
 ## Pașii următori
 
-Acum că ai înțeles modelele de testare, aprofundează fiecare modul:
+Acum că înțelegi modelele de testare, aprofundează fiecare modul:
 
 - **[00 - Pornire rapidă](../00-quick-start/README.md)** - Începe cu elementele de bază ale șabloanelor de prompt
-- **[01 - Introducere](../01-introduction/README.md)** - Învață gestionarea memoriei conversației
-- **[02 - Ingineria prompturilor](../02-prompt-engineering/README.md)** - Stăpânește modelele de prompting GPT-5
+- **[01 - Introducere](../01-introduction/README.md)** - Învață gestionarea memoriei conversaționale
+- **[02 - Ingineria promptului](../02-prompt-engineering/README.md)** - Stăpânește modelele de prompting GPT-5.2
 - **[03 - RAG](../03-rag/README.md)** - Construiește sisteme de generare augmentată prin recuperare
-- **[04 - Instrumente](../04-tools/README.md)** - Implementează apelarea funcțiilor și lanțuri de instrumente
-- **[05 - MCP](../05-mcp/README.md)** - Integrează Model Context Protocol
+- **[04 - Unelte](../04-tools/README.md)** - Implementează apelarea funcțiilor și lanțurile de unelte
+- **[05 - MCP](../05-mcp/README.md)** - Integrează Protocolul Model Context
 
-README-ul fiecărui modul oferă explicații detaliate ale conceptelor testate aici.
+Fiecare modul are un README care oferă explicații detaliate ale conceptelor testate aici.
 
 ---
 
-**Navigation:** [← Înapoi la principal](../README.md)
+**Navigare:** [← Înapoi la Principal](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Declinare de responsabilitate**:
-Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși depunem eforturi pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa originală, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă o traducere profesională realizată de un traducător uman. Nu ne asumăm responsabilitatea pentru eventuale neînțelegeri sau interpretări greșite care decurg din utilizarea acestei traduceri.
+Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original în limba sa nativă trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm răspunderea pentru eventualele neînțelegeri sau interpretări greșite care pot rezulta din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

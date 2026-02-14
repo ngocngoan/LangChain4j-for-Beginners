@@ -1,60 +1,60 @@
-# Azure Infrastructure for LangChain4j Getting Started
+# Azure Інфраструктура для LangChain4j Початок роботи
 
-## Table of Contents
+## Зміст
 
-- [Prerequisites](../../../../01-introduction/infra)
-- [Architecture](../../../../01-introduction/infra)
-- [Resources Created](../../../../01-introduction/infra)
-- [Quick Start](../../../../01-introduction/infra)
-- [Configuration](../../../../01-introduction/infra)
-- [Management Commands](../../../../01-introduction/infra)
-- [Cost Optimization](../../../../01-introduction/infra)
-- [Monitoring](../../../../01-introduction/infra)
-- [Troubleshooting](../../../../01-introduction/infra)
-- [Updating Infrastructure](../../../../01-introduction/infra)
-- [Clean Up](../../../../01-introduction/infra)
-- [File Structure](../../../../01-introduction/infra)
-- [Security Recommendations](../../../../01-introduction/infra)
-- [Additional Resources](../../../../01-introduction/infra)
+- [Попередні умови](../../../../01-introduction/infra)
+- [Архітектура](../../../../01-introduction/infra)
+- [Створені ресурси](../../../../01-introduction/infra)
+- [Швидкий старт](../../../../01-introduction/infra)
+- [Конфігурація](../../../../01-introduction/infra)
+- [Команди управління](../../../../01-introduction/infra)
+- [Оптимізація витрат](../../../../01-introduction/infra)
+- [Моніторинг](../../../../01-introduction/infra)
+- [Вирішення проблем](../../../../01-introduction/infra)
+- [Оновлення інфраструктури](../../../../01-introduction/infra)
+- [Прибирання](../../../../01-introduction/infra)
+- [Структура файлів](../../../../01-introduction/infra)
+- [Рекомендації з безпеки](../../../../01-introduction/infra)
+- [Додаткові ресурси](../../../../01-introduction/infra)
 
-Цей каталог містить інфраструктуру Azure як код (IaC) з використанням Bicep та Azure Developer CLI (azd) для розгортання ресурсів Azure OpenAI.
+Цей каталог містить інфраструктуру Azure як код (IaC) за допомогою Bicep та Azure Developer CLI (azd) для розгортання ресурсів Azure OpenAI.
 
-## Prerequisites
+## Попередні умови
 
-- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (версія 2.50.0 або новіша)
-- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (версія 1.5.0 або новіша)
-- Підписка Azure з правами на створення ресурсів
+- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (версія 2.50.0 або вище)
+- [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (версія 1.5.0 або вище)
+- Підписка Azure з правами створення ресурсів
 
-## Architecture
+## Архітектура
 
-**Спрощене локальне середовище розробки** – розгорнути лише Azure OpenAI, запускати всі додатки локально.
+**Спрощена локальна розробка** - розгортається лише Azure OpenAI, всі додатки працюють локально.
 
-Інфраструктура розгортає такі ресурси Azure:
+Інфраструктура розгортає наступні ресурси Azure:
 
-### AI Services
+### AI сервіси
 - **Azure OpenAI**: Cognitive Services з двома розгортаннями моделей:
-  - **gpt-5**: модель для чат-комплітів (ємність 20K TPM)
-  - **text-embedding-3-small**: модель для вбудовування для RAG (ємність 20K TPM)
+  - **gpt-5.2**: Модель чат-компліції (пропускна здатність 20K TPM)
+  - **text-embedding-3-small**: Модель для ембедингів для RAG (пропускна здатність 20K TPM)
 
-### Local Development
-Всі додатки Spring Boot запускаються локально на вашому комп’ютері:
+### Локальна розробка
+Усі Spring Boot додатки запускаються локально на вашому комп’ютері:
 - 01-introduction (порт 8080)
 - 02-prompt-engineering (порт 8083)
 - 03-rag (порт 8081)
 - 04-tools (порт 8084)
 
-## Resources Created
+## Створені ресурси
 
-| Resource Type | Resource Name Pattern | Purpose |
-|--------------|----------------------|---------|
-| Resource Group | `rg-{environmentName}` | Містить усі ресурси |
+| Тип ресурсу | Шаблон імені ресурсу | Призначення |
+|--------------|----------------------|-------------|
+| Resource Group | `rg-{environmentName}` | Містить всі ресурси |
 | Azure OpenAI | `aoai-{resourceToken}` | Хостинг AI моделей |
 
-> **Примітка:** `{resourceToken}` — унікальний рядок, згенерований із ID підписки, назви середовища та розташування
+> **Примітка:** `{resourceToken}` — унікальний рядок, який генерується з ID підписки, імені середовища та розташування
 
-## Quick Start
+## Швидкий старт
 
-### 1. Deploy Azure OpenAI
+### 1. Розгорніть Azure OpenAI
 
 **Bash:**
 ```bash
@@ -69,15 +69,15 @@ azd up
 ```
 
 Під час запиту:
-- Виберіть вашу підписку Azure
-- Оберіть регіон (рекомендовано: `eastus2` або `swedencentral` для доступності GPT-5)
-- Підтвердіть назву середовища (за замовчуванням: `langchain4j-dev`)
+- Оберіть вашу підписку Azure
+- Оберіть регіон (рекомендовано: `eastus2` для доступності GPT-5.2)
+- Підтвердіть ім'я оточення (за замовчуванням: `langchain4j-dev`)
 
 Це створить:
-- Ресурс Azure OpenAI з GPT-5 та text-embedding-3-small
-- Виведе деталі підключення
+- Ресурс Azure OpenAI з GPT-5.2 та text-embedding-3-small
+- Вивід деталей підключення
 
-### 2. Get Connection Details
+### 2. Отримайте деталі з’єднання
 
 **Bash:**
 ```bash
@@ -89,17 +89,17 @@ azd env get-values
 azd env get-values
 ```
 
-Це відобразить:
-- `AZURE_OPENAI_ENDPOINT`: URL вашої кінцевої точки Azure OpenAI
-- `AZURE_OPENAI_KEY`: API ключ для автентифікації
-- `AZURE_OPENAI_DEPLOYMENT`: Назва чат-моделі (gpt-5)
-- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Назва моделі вбудовування
+Це покаже:
+- `AZURE_OPENAI_ENDPOINT`: URL вашої точки доступу Azure OpenAI
+- `AZURE_OPENAI_KEY`: Ключ API для автентифікації
+- `AZURE_OPENAI_DEPLOYMENT`: Назва чат-моделі (gpt-5.2)
+- `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`: Назва моделі ембедингів
 
-### 3. Run Applications Locally
+### 3. Запустіть додатки локально
 
-Команда `azd up` автоматично створює файл `.env` у кореневому каталозі з усіма необхідними змінними середовища.
+Команда `azd up` автоматично створює файл `.env` у кореневому каталозі з усіма необхідними змінними оточення.
 
-**Рекомендовано:** Запустіть усі веб-додатки:
+**Рекомендовано:** Запустити всі веб-додатки:
 
 **Bash:**
 ```bash
@@ -119,37 +119,37 @@ cd ../..
 
 **Bash:**
 ```bash
-# Приклад: Запустіть лише модуль вступу
+# Приклад: Запустіть лише модуль введення
 cd ../01-introduction
 ./start.sh
 ```
 
 **PowerShell:**
 ```powershell
-# Приклад: Запустіть лише модуль введення
+# Приклад: Запустіть лише модуль вступу
 cd ../01-introduction
 .\start.ps1
 ```
 
-Обидва скрипти автоматично завантажують змінні середовища з кореневого файлу `.env`, створеного `azd up`.
+Обидва скрипти автоматично завантажують змінні оточення з кореневого файлу `.env`, створеного `azd up`.
 
-## Configuration
+## Конфігурація
 
-### Customizing Model Deployments
+### Налаштування розгортання моделей
 
 Щоб змінити розгортання моделей, відредагуйте `infra/main.bicep` і змініть параметр `openAiDeployments`:
 
 ```bicep
 param openAiDeployments array = [
   {
-    name: 'gpt-5'  // Model deployment name
+    name: 'gpt-5.2'  // Model deployment name
     model: {
       format: 'OpenAI'
-      name: 'gpt-5'
-      version: '2025-08-07'  // Model version
+      name: 'gpt-5.2'
+      version: '2025-12-11'  // Model version
     }
     sku: {
-      name: 'Standard'
+      name: 'GlobalStandard'
       capacity: 20  // TPM in thousands
     }
   }
@@ -159,21 +159,21 @@ param openAiDeployments array = [
 
 Доступні моделі та версії: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
-### Changing Azure Regions
+### Зміна регіонів Azure
 
 Щоб розгорнути в іншому регіоні, відредагуйте `infra/main.bicep`:
 
 ```bicep
-param openAiLocation string = 'swedencentral'  // or other GPT-5 region
+param openAiLocation string = 'eastus2'  // or other GPT-5.2 region
 ```
 
-Перевірте доступність GPT-5: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
+Перевірте доступність GPT-5.2: https://learn.microsoft.com/azure/ai-services/openai/concepts/models#model-summary-table-and-region-availability
 
-Щоб оновити інфраструктуру після внесення змін у файли Bicep:
+Щоб оновити інфраструктуру після змін у Bicep файлах:
 
 **Bash:**
 ```bash
-# Перебудувати ARM шаблон
+# Перебудувати ARM-шаблон
 az bicep build --file infra/main.bicep
 
 # Попередній перегляд змін
@@ -195,7 +195,7 @@ azd provision --preview
 azd provision
 ```
 
-## Clean Up
+## Прибирання
 
 Щоб видалити всі ресурси:
 
@@ -213,61 +213,61 @@ azd down --purge
 # Видалити всі ресурси
 azd down
 
-# Видалити все, включно з оточенням
+# Видалити все, включно з середовищем
 azd down --purge
 ```
 
-**Увага**: Це назавжди видалить усі ресурси Azure.
+**Попередження**: Це остаточно видалить усі ресурси Azure.
 
-## File Structure
+## Структура файлів
 
-## Cost Optimization
+## Оптимізація витрат
 
-### Development/Testing
-Для середовищ розробки/тестування можна знизити витрати:
+### Розробка/Тестування
+Для оточень розробки/тестування можна зменшити витрати:
 - Використовуйте стандартний рівень (S0) для Azure OpenAI
-- Встановіть нижчу ємність (10K TPM замість 20K) у `infra/core/ai/cognitiveservices.bicep`
-- Видаляйте ресурси, коли вони не використовуються: `azd down`
+- Встановіть нижчу пропускну здатність (10K TPM замість 20K) у `infra/core/ai/cognitiveservices.bicep`
+- Видаляйте ресурси, коли не використовуєте: `azd down`
 
-### Production
-Для продакшн:
-- Збільшуйте ємність OpenAI відповідно до використання (50K+ TPM)
-- Увімкніть зональну надлишковість для вищої доступності
-- Реалізуйте належний моніторинг і сповіщення про витрати
+### Продакшн
+Для продакшну:
+- Збільшіть пропускну здатність OpenAI залежно від використання (50K+ TPM)
+- Увімкніть зону з резервуванням для більшої доступності
+- Впровадьте моніторинг і оповіщення про витрати
 
-### Cost Estimation
-- Azure OpenAI: оплата за токен (вхідні + вихідні)
-- GPT-5: приблизно $3-5 за 1 млн токенів (перевірте актуальні ціни)
+### Оцінка вартості
+- Azure OpenAI: Оплата за токен (вхідні + вихідні)
+- GPT-5.2: приблизно $3–5 за 1 млн токенів (перевірте актуальні тарифи)
 - text-embedding-3-small: приблизно $0.02 за 1 млн токенів
 
 Калькулятор цін: https://azure.microsoft.com/pricing/calculator/
 
-## Monitoring
+## Моніторинг
 
-### View Azure OpenAI Metrics
+### Перегляд метрик Azure OpenAI
 
-Перейдіть у Azure Portal → Ваш ресурс OpenAI → Метрики:
+Зайдіть в Azure Portal → Ваш ресурс OpenAI → Метрики:
 - Використання за токенами
 - Частота HTTP-запитів
 - Час відповіді
 - Активні токени
 
-## Troubleshooting
+## Вирішення проблем
 
-### Issue: Azure OpenAI subdomain name conflict
+### Проблема: Конфлікт імені піддомену Azure OpenAI
 
-**Error Message:**
+**Повідомлення про помилку:**
 ```
 ERROR CODE: CustomDomainInUse
 message: "Please pick a different name. The subdomain name 'aoai-xxxxx' 
 is not available as it's already used by a resource."
 ```
 
-**Cause:**
-Ім’я піддомену, згенероване з вашої підписки/середовища, вже використовується, можливо, через попереднє розгортання, яке не було повністю видалене.
+**Причина:**
+Ім'я піддомену, згенероване з підписки/оточення, вже використовується, можливо, через попереднє розгортання, яке не було повністю вилучено.
 
-**Solution:**
-1. **Варіант 1 - Використати іншу назву середовища:**
+**Рішення:**
+1. **Варіант 1 - Використовуйте інше ім’я оточення:**
    
    **Bash:**
    ```bash
@@ -282,63 +282,63 @@ is not available as it's already used by a resource."
    ```
 
 2. **Варіант 2 - Ручне розгортання через Azure Portal:**
-   - Перейдіть у Azure Portal → Створити ресурс → Azure OpenAI
-   - Оберіть унікальну назву для вашого ресурсу
+   - Зайдіть в Azure Portal → Створити ресурс → Azure OpenAI
+   - Оберіть унікальне ім’я для ресурсу
    - Розгорніть такі моделі:
-     - **GPT-5**
-     - **text-embedding-3-small** (для модулів RAG)
-   - **Важливо:** Запам’ятайте назви розгортань — вони мають відповідати конфігурації `.env`
-   - Після розгортання отримайте кінцеву точку та API ключ у розділі "Keys and Endpoint"
-   - Створіть файл `.env` у корені проекту з таким вмістом:
+     - **GPT-5.2**
+     - **text-embedding-3-small** (для RAG модулів)
+   - **Важливо:** Запам'ятайте імена розгортання – вони мають відповідати конфігурації `.env`
+   - Після розгортання отримайте endpoint та API ключ у "Keys and Endpoint"
+   - Створіть `.env` файл у корені проєкту з таким вмістом:
      
      **Приклад файлу `.env`:**
      ```bash
      AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
      AZURE_OPENAI_API_KEY=your-api-key-here
-     AZURE_OPENAI_DEPLOYMENT=gpt-5
+     AZURE_OPENAI_DEPLOYMENT=gpt-5.2
      AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
      ```
 
 **Рекомендації щодо іменування розгортань моделей:**
-- Використовуйте прості, послідовні назви: `gpt-5`, `gpt-4o`, `text-embedding-3-small`
-- Назви розгортань мають точно відповідати тим, що ви вказуєте у `.env`
-- Поширена помилка: створити модель з однією назвою, а в коді посилатися на іншу
+- Використовуйте прості, узгоджені імена: `gpt-5.2`, `gpt-4o`, `text-embedding-3-small`
+- Імена розгортань мають точно відповідати тим, що вказані у `.env`
+- Часте помилкове використання: створення моделі з одним іменем, а у коді посилання на інше
 
-### Issue: GPT-5 not available in selected region
+### Проблема: GPT-5.2 недоступна у вибраному регіоні
 
-**Solution:**
-- Оберіть регіон з доступом до GPT-5 (наприклад, eastus, swedencentral)
+**Рішення:**
+- Оберіть регіон із доступом до GPT-5.2 (наприклад, eastus2)
 - Перевірте доступність: https://learn.microsoft.com/azure/ai-services/openai/concepts/models
 
 
 
-### Issue: Insufficient quota for deployment
+### Проблема: Недостатньо квоти для розгортання
 
-**Solution:**
-1. Запросіть збільшення квоти в Azure Portal
-2. Або використайте нижчу ємність у `main.bicep` (наприклад, capacity: 10)
+**Рішення:**
+1. Зробіть запит на збільшення квоти у Azure Portal
+2. Або використайте нижчу пропускну здатність у `main.bicep` (наприклад, capacity: 10)
 
-### Issue: "Resource not found" when running locally
+### Проблема: "Resource not found" при запуску локально
 
-**Solution:**
+**Рішення:**
 1. Перевірте розгортання: `azd env get-values`
 2. Переконайтеся, що endpoint і ключ правильні
-3. Переконайтеся, що група ресурсів існує в Azure Portal
+3. Перевірте існування Resource Group в Azure Portal
 
-### Issue: Authentication failed
+### Проблема: Помилка автентифікації
 
-**Solution:**
-- Перевірте, що `AZURE_OPENAI_API_KEY` встановлено правильно
-- Формат ключа має бути 32-символьним шістнадцятковим рядком
-- За потреби отримайте новий ключ у Azure Portal
+**Рішення:**
+- Переконайтеся, що змінна `AZURE_OPENAI_API_KEY` встановлена правильно
+- Формат ключа повинен бути 32-значним шістнадцятковим рядком
+- Якщо потрібно, отримайте новий ключ в Azure Portal
 
-### Deployment Fails
+### Помилка розгортання
 
-**Issue**: `azd provision` не вдається через помилки квоти або ємності
+**Проблема**: `azd provision` не вдається через помилки квоти або пропускної здатності
 
-**Solution**: 
-1. Спробуйте інший регіон — див. розділ [Changing Azure Regions](../../../../01-introduction/infra) для налаштування регіонів
-2. Перевірте, чи має ваша підписка квоту Azure OpenAI:
+**Рішення**: 
+1. Спробуйте інший регіон - див. розділ [Зміна регіонів Azure](../../../../01-introduction/infra)
+2. Перевірте, чи є у вашій підписці квота Azure OpenAI:
    
    **Bash:**
    ```bash
@@ -350,12 +350,12 @@ is not available as it's already used by a resource."
    az cognitiveservices account list-skus --location <your-region>
    ```
 
-### Application Not Connecting
+### Додаток не підключається
 
-**Issue**: Java-додаток показує помилки підключення
+**Проблема**: У Java-додатку помилки підключення
 
-**Solution**:
-1. Переконайтеся, що змінні середовища експортовані:
+**Рішення**:
+1. Переконайтеся, що змінні оточення експортуються:
    
    **Bash:**
    ```bash
@@ -370,25 +370,25 @@ is not available as it's already used by a resource."
    ```
 
 2. Перевірте правильність формату endpoint (має бути `https://xxx.openai.azure.com`)
-3. Переконайтеся, що API ключ є основним або вторинним ключем з Azure Portal
+3. Переконайтеся, що ключ API є основним або вторинним з Azure Portal
 
-**Issue**: 401 Unauthorized від Azure OpenAI
+**Проблема**: 401 Unauthorized від Azure OpenAI
 
-**Solution**:
-1. Отримайте новий API ключ у Azure Portal → Keys and Endpoint
-2. Повторно експортуйте змінну середовища `AZURE_OPENAI_API_KEY`
+**Рішення**:
+1. Отримайте новий ключ API з Azure Portal → Keys and Endpoint
+2. Заново експортуйте змінну оточення `AZURE_OPENAI_API_KEY`
 3. Переконайтеся, що розгортання моделей завершено (перевірте Azure Portal)
 
-### Performance Issues
+### Проблеми з продуктивністю
 
-**Issue**: Повільний час відповіді
+**Проблема**: Повільна відповідь
 
-**Solution**:
-1. Перевірте використання токенів OpenAI та обмеження в метриках Azure Portal
-2. Збільшіть ємність TPM, якщо досягаєте лімітів
-3. Розгляньте використання вищого рівня зусиль для розуміння (low/medium/high)
+**Рішення**:
+1. Перевірте використання токенів і обмеження в метриках Azure Portal
+2. Збільшіть пропускну здатність TPM, якщо досягли лімітів
+3. Розгляньте можливість використання вищого рівня зусиль міркування (низький/середній/високий)
 
-## Updating Infrastructure
+## Оновлення інфраструктури
 
 ```
 infra/
@@ -401,36 +401,36 @@ infra/
         └── cognitiveservices.bicep  # Azure OpenAI module
 ```
 
-## Security Recommendations
+## Рекомендації з безпеки
 
-1. **Ніколи не комітьте API ключі** – використовуйте змінні середовища
-2. **Використовуйте файли .env локально** – додайте `.env` до `.gitignore`
-3. **Регулярно оновлюйте ключі** – генеруйте нові ключі в Azure Portal
+1. **Ніколи не комітьте ключі API** – використовуйте змінні оточення
+2. **Використовуйте .env файли локально** – додайте `.env` до `.gitignore`
+3. **Регулярно змінюйте ключі** – генеруйте нові у Azure Portal
 4. **Обмежуйте доступ** – використовуйте Azure RBAC для контролю доступу до ресурсів
-5. **Моніторьте використання** – налаштуйте сповіщення про витрати в Azure Portal
+5. **Моніторте використання** – налаштуйте оповіщення про витрати у Azure Portal
 
-## Additional Resources
+## Додаткові ресурси
 
 - [Документація Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Документація моделі GPT-5](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
+- [Документація моделі GPT-5.2](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-5)
 - [Документація Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/)
 - [Документація Bicep](https://learn.microsoft.com/azure/azure-resource-manager/bicep/)
 - [Офіційна інтеграція LangChain4j OpenAI](https://docs.langchain4j.dev/integrations/language-models/open-ai)
 
-## Support
+## Підтримка
 
 Для вирішення проблем:
-1. Перевірте [розділ усунення несправностей](../../../../01-introduction/infra) вище
+1. Перевірте [розділ вирішення проблем](../../../../01-introduction/infra) вище
 2. Перегляньте стан служби Azure OpenAI в Azure Portal
 3. Відкрийте issue у репозиторії
 
-## License
+## Ліцензія
 
-Див. файл [LICENSE](../../../../LICENSE) у корені проекту для деталей.
+Деталі дивіться у файлі [LICENSE](../../../../LICENSE) у корені.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Відмова від відповідальності**:  
-Цей документ було перекладено за допомогою сервісу автоматичного перекладу [Co-op Translator](https://github.com/Azure/co-op-translator). Хоча ми прагнемо до точності, будь ласка, майте на увазі, що автоматичні переклади можуть містити помилки або неточності. Оригінальний документ рідною мовою слід вважати авторитетним джерелом. Для критично важливої інформації рекомендується звертатися до професійного людського перекладу. Ми не несемо відповідальності за будь-які непорозуміння або неправильні тлумачення, що виникли внаслідок використання цього перекладу.
+**Відмова від відповідальності**:
+Цей документ було перекладено за допомогою сервісу автоматичного перекладу [Co-op Translator](https://github.com/Azure/co-op-translator). Хоча ми прагнемо до точності, будь ласка, майте на увазі, що автоматичні переклади можуть містити помилки або неточності. Оригінальний документ рідною мовою слід вважати авторитетним джерелом. Для критично важливої інформації рекомендується професійний переклад людиною. Ми не несемо відповідальності за будь-які непорозуміння чи неправильні тлумачення, що виникли внаслідок використання цього перекладу.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

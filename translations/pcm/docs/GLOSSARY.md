@@ -14,33 +14,33 @@
 - [Azure Services](../../../docs)
 - [Testing and Development](../../../docs)
 
-Quick reference for terms and concepts wey dem dey use throughout di course.
+Quick reference for terms and concepts wey dem dey use all through di course.
 
 ## Core Concepts
 
-**AI Agent** - System wey use AI to reason and dey act on im own. [Module 04](../04-tools/README.md)
+**AI Agent** - System wey dey use AI reason and act on im own. [Module 04](../04-tools/README.md)
 
-**Chain** - Sequence of operations wey output dey enter next step.
+**Chain** - Sequence of operations wey output dey feed into di next step.
 
-**Chunking** - To break documents into smaller pieces dem. Normal: 300-500 tokens wit overlap. [Module 03](../03-rag/README.md)
+**Chunking** - To break documents into small small pieces dem. Normal: 300-500 tokens with overlap. [Module 03](../03-rag/README.md)
 
-**Context Window** - Maximum tokens wey model fit process. GPT-5: 400K tokens.
+**Context Window** - Maximum tokens wey model fit process. GPT-5.2: 400K tokens.
 
-**Embeddings** - Number vectors wey represent text meaning. [Module 03](../03-rag/README.md)
+**Embeddings** - Number vectors wey represent di meaning of text. [Module 03](../03-rag/README.md)
 
-**Function Calling** - Model dey generate structured requests to call external functions. [Module 04](../04-tools/README.md)
+**Function Calling** - Model dey generate structured requests to call outside functions. [Module 04](../04-tools/README.md)
 
-**Hallucination** - When model dem go generate wrong but believable info.
+**Hallucination** - When models dey generate wrong but plausible info.
 
-**Prompt** - Text input wey you give one language model. [Module 02](../02-prompt-engineering/README.md)
+**Prompt** - Text wey dem input give language model. [Module 02](../02-prompt-engineering/README.md)
 
-**Semantic Search** - Search by meaning use embeddings, no be keywords. [Module 03](../03-rag/README.md)
+**Semantic Search** - Search based on meaning by using embeddings, no be keywords. [Module 03](../03-rag/README.md)
 
 **Stateful vs Stateless** - Stateless: no memory. Stateful: e dey keep conversation history. [Module 01](../01-introduction/README.md)
 
-**Tokens** - Basic text unit wey model dem dey process. E dey affect cost and limits. [Module 01](../01-introduction/README.md)
+**Tokens** - Basic text units wey models dey process. E dey affect cost and limits. [Module 01](../01-introduction/README.md)
 
-**Tool Chaining** - Sequence wey tools de run where the output dey guide the next call. [Module 04](../04-tools/README.md)
+**Tool Chaining** - Tool dey run one after another where output dey inform next call. [Module 04](../04-tools/README.md)
 
 ## LangChain4j Components
 
@@ -48,7 +48,7 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 **OpenAiOfficialChatModel** - Unified client for OpenAI and Azure OpenAI models.
 
-**OpenAiOfficialEmbeddingModel** - E dey create embeddings use OpenAI Official client (e fit support both OpenAI and Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** - E dey create embeddings by using OpenAI Official client (e support both OpenAI and Azure OpenAI).
 
 **ChatModel** - Core interface for language models.
 
@@ -58,65 +58,65 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 **DocumentSplitter** - E dey break documents into chunks.
 
-**EmbeddingModel** - E dey convert text to number vectors.
+**EmbeddingModel** - E dey convert text into number vectors.
 
-**EmbeddingStore** - For store and retrieve embeddings.
+**EmbeddingStore** - E store and retrieve embeddings.
 
-**MessageWindowChatMemory** - E dey keep sliding window of recent messages.
+**MessageWindowChatMemory** - E dey maintain sliding window of recent messages.
 
-**PromptTemplate** - E dey create reusable prompts wit `{{variable}}` placeholders.
+**PromptTemplate** - E dey create reusable prompts with `{{variable}}` placeholders.
 
-**TextSegment** - Text chunk wey get metadata. E dey used in RAG.
+**TextSegment** - Text chunk wey get metadata. E dey used for RAG.
 
 **ToolExecutionRequest** - E represent tool execution request.
 
-**UserMessage / AiMessage / SystemMessage** - Different conversation message types.
+**UserMessage / AiMessage / SystemMessage** - Types of conversation message.
 
 ## AI/ML Concepts
 
-**Few-Shot Learning** - To give examples in prompts. [Module 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - E mean say you provide examples for prompts. [Module 02](../02-prompt-engineering/README.md)
 
-**Large Language Model (LLM)** - AI models wey dem train on plenty text data.
+**Large Language Model (LLM)** - AI models wey dem train for plenty text data.
 
-**Reasoning Effort** - GPT-5 parameter wey dey control how deep e go reason. [Module 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - GPT-5.2 parameter wey dey control how deep e go reason. [Module 02](../02-prompt-engineering/README.md)
 
-**Temperature** - E dey control how random the output go be. Low=deterministic, high=creative.
+**Temperature** - E dey control how random output go be. Low=deterministic, high=creative.
 
-**Vector Database** - Special database wey dem dey use for embeddings. [Module 03](../03-rag/README.md)
+**Vector Database** - Special database for embeddings. [Module 03](../03-rag/README.md)
 
-**Zero-Shot Learning** - To perform task without example. [Module 02](../02-prompt-engineering/README.md)
+**Zero-Shot Learning** - E mean say e fit do task without example. [Module 02](../02-prompt-engineering/README.md)
 
 ## Guardrails - [Module 00](../00-quick-start/README.md)
 
-**Defense in Depth** - Multi-layer security approach wey combine application-level guardrails wit provider safety filters.
+**Defense in Depth** - Multi-layer security approach wey combine application-level guardrails with provider safety filters.
 
-**Hard Block** - Provider go throw HTTP 400 error if content violation serious.
+**Hard Block** - Provider go throw HTTP 400 error for bad bad content violation.
 
-**InputGuardrail** - LangChain4j interface wey dey validate user input before e enter LLM. E dey save cost and latency by blocking harmful prompts early.
+**InputGuardrail** - LangChain4j interface wey dey validate user input before e reach LLM. E save cost and reduce latency by blocking harmful prompts early.
 
 **InputGuardrailResult** - Return type for guardrail validation: `success()` or `fatal("reason")`.
 
-**OutputGuardrail** - Interface to validate AI responses before e return to users.
+**OutputGuardrail** - Interface wey dey validate AI responses before e go users.
 
-**Provider Safety Filters** - Content filters wey AI providers like GitHub Models build inside wey dey catch violation for API level.
+**Provider Safety Filters** - Built-in content filters from AI providers (e.g., GitHub Models) wey dey catch violations for API level.
 
-**Soft Refusal** - Model go polite decline to answer without throw error.
+**Soft Refusal** - Model dey politely refuse to answer without throwing error.
 
 ## Prompt Engineering - [Module 02](../02-prompt-engineering/README.md)
 
-**Chain-of-Thought** - Step-by-step reasoning to get better accuracy.
+**Chain-of-Thought** - Step by step reasoning for better accuracy.
 
-**Constrained Output** - To enforce specific format or structure.
+**Constrained Output** - Enforce specific format or structure.
 
-**High Eagerness** - GPT-5 pattern for thorough reasoning.
+**High Eagerness** - GPT-5.2 pattern for thorough reasoning.
 
-**Low Eagerness** - GPT-5 pattern for quick answers.
+**Low Eagerness** - GPT-5.2 pattern for quick answers.
 
-**Multi-Turn Conversation** - E dey maintain context across exchanges.
+**Multi-Turn Conversation** - E mean say e dey keep context across exchanges.
 
-**Role-Based Prompting** - To set model persona wit system messages.
+**Role-Based Prompting** - E mean say you set model persona through system messages.
 
-**Self-Reflection** - Model go evaluate and improve im output.
+**Self-Reflection** - Model dey evaluate and improve im own output.
 
 **Structured Analysis** - Fixed evaluation framework.
 
@@ -126,73 +126,73 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 **Document Processing Pipeline** - Load → chunk → embed → store.
 
-**In-Memory Embedding Store** - Non-persistent storage wey dem dey use for testing.
+**In-Memory Embedding Store** - Storage wey no dey permanent for testing.
 
-**RAG** - E dey combine retrieval wit generation to ground responses.
+**RAG** - E mean say e combine retrieval with generation to ground responses.
 
-**Similarity Score** - Measure (0-1) of semantic similarity.
+**Similarity Score** - Measure (0-1) wey show semantic similarity.
 
 **Source Reference** - Metadata about retrieved content.
 
 ## Agents and Tools - [Module 04](../04-tools/README.md)
 
-**@Tool Annotation** - E dey mark Java methods as AI-callable tools.
+**@Tool Annotation** - Marks Java methods as AI-callable tools.
 
 **ReAct Pattern** - Reason → Act → Observe → Repeat.
 
 **Session Management** - Separate contexts for different users.
 
-**Tool** - Function wey AI agent fit call.
+**Tool** - Function an AI agent fit call.
 
 **Tool Description** - Documentation of tool purpose and parameters.
 
 ## Agentic Module - [Module 05](../05-mcp/README.md)
 
-**@Agent Annotation** - E mark interfaces as AI agents wit declarative behavior definition.
+**@Agent Annotation** - Marks interfaces as AI agents with declarative behavior definition.
 
-**Agent Listener** - Hook to monitor agent execution via `beforeAgentInvocation()` and `afterAgentInvocation()`.
+**Agent Listener** - Hook for monitoring agent execution through `beforeAgentInvocation()` and `afterAgentInvocation()`.
 
-**Agentic Scope** - Shared memory wey agents dey store outputs wit `outputKey` so downstream agents fit use am.
+**Agentic Scope** - Shared memory where agents dey store outputs using `outputKey` for other agents wey follow to use.
 
-**AgenticServices** - Factory wey dey create agents use `agentBuilder()` and `supervisorBuilder()`.
+**AgenticServices** - Factory for creating agents by using `agentBuilder()` and `supervisorBuilder()`.
 
-**Conditional Workflow** - Route wey depend on condition go different specialist agents.
+**Conditional Workflow** - Route based on condition to different specialist agents.
 
-**Human-in-the-Loop** - Workflow pattern wey add human checkpoints for approval or content review.
+**Human-in-the-Loop** - Workflow pattern wey add human checkpoint for approval or content review.
 
-**langchain4j-agentic** - Maven dependency for declarative agent building (e still dey experimental).
+**langchain4j-agentic** - Maven dependency for declarative agent building (experimental).
 
-**Loop Workflow** - E dey run agent execution again and again until condition meet (e.g., quality score ≥ 0.8).
+**Loop Workflow** - Make agent run repeat until condition meet (e.g., quality score ≥ 0.8).
 
-**outputKey** - Agent annotation parameter wey tell where results dey store for Agentic Scope.
+**outputKey** - Agent annotation parameter wey dey specify where results go store for Agentic Scope.
 
-**Parallel Workflow** - Run plenty agents at once for independent tasks.
+**Parallel Workflow** - Run multiple agents at di same time for independent tasks.
 
-**Response Strategy** - How supervisor dey form final answer: LAST, SUMMARY, or SCORED.
+**Response Strategy** - How supervisor go formulate final answer: LAST, SUMMARY, or SCORED.
 
-**Sequential Workflow** - Run agents one after another where output flow enter the next step.
+**Sequential Workflow** - Run agents one by one where output dey flow go next step.
 
-**Supervisor Agent Pattern** - Advanced agentic pattern wey supervisor LLM fit dynamically decide which sub-agents to invoke.
+**Supervisor Agent Pattern** - Advanced agentic pattern wey supervisor LLM dey dynamically decide which sub-agents to use.
 
 ## Model Context Protocol (MCP) - [Module 05](../05-mcp/README.md)
 
-**langchain4j-mcp** - Maven dependency for MCP integration for LangChain4j.
+**langchain4j-mcp** - Maven dependency for MCP integration inside LangChain4j.
 
-**MCP** - Model Context Protocol: standard wey dey connect AI apps to external tools. Build once, use everywhere.
+**MCP** - Model Context Protocol: standard way to connect AI apps to outside tools. Build once, use everywhere.
 
-**MCP Client** - Application wey dey connect to MCP servers to find and use tools.
+**MCP Client** - Application wey connect to MCP servers to find and use tools.
 
-**MCP Server** - Service wey expose tools via MCP wit clear descriptions and parameter schemas.
+**MCP Server** - Service wey expose tools via MCP with clear descriptions and parameter schemas.
 
-**McpToolProvider** - LangChain4j component wey dey wrap MCP tools for use in AI services and agents.
+**McpToolProvider** - LangChain4j component wey wrap MCP tools for AI services and agents use.
 
 **McpTransport** - Interface for MCP communication. Implementations include Stdio and HTTP.
 
-**Stdio Transport** - Local process transport wey use stdin/stdout. E good for filesystem access or command-line tools.
+**Stdio Transport** - Local process transport wey use stdin/stdout. Good for filesystem access or command-line tools.
 
-**StdioMcpTransport** - LangChain4j implementation wey go spawn MCP server as subprocess.
+**StdioMcpTransport** - LangChain4j implementation wey run MCP server as subprocess.
 
-**Tool Discovery** - Client dey ask server for tools wey dey available wit descriptions and schemas.
+**Tool Discovery** - Client dey ask server for tools wey dey available with descriptions and schemas.
 
 ## Azure Services - [Module 01](../01-introduction/README.md)
 
@@ -204,9 +204,9 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 **Bicep** - Azure infrastructure-as-code language. [Infrastructure Guide](../01-introduction/infra/README.md)
 
-**Deployment Name** - Name for model deployment for Azure.
+**Deployment Name** - Name wey you go use for model deployment inside Azure.
 
-**GPT-5** - Latest OpenAI model with reasoning control. [Module 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - Di latest OpenAI model wey get reasoning control. [Module 02](../02-prompt-engineering/README.md)
 
 ## Testing and Development - [Testing Guide](TESTING.md)
 
@@ -214,9 +214,9 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 **GitHub Models** - Free AI model playground. [Module 00](../00-quick-start/README.md)
 
-**In-Memory Testing** - Testing wit in-memory storage.
+**In-Memory Testing** - Testing wey use in-memory storage.
 
-**Integration Testing** - Testing wit real infrastructure.
+**Integration Testing** - Testing wey use real infrastructure.
 
 **Maven** - Java build automation tool.
 
@@ -228,5 +228,5 @@ Quick reference for terms and concepts wey dem dey use throughout di course.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-Dis document dem don translate am wit AI translation service wey dem dey call [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we try make sure say e correct well, abeg make you sabi say automated translations fit get some mistakes or wrong parts. Di original document wey e dey for e own language na im be di real correct one. If na serious matter, e good make human professional translate am. We nor go take any blame if person misunderstand or misinterpret from dis translation.
+Dis document na translation wey AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator) help do. Even though we dey try make am correct well well, make you still sabi say automated translation fit get some mistakes or no too correct. Di original document wey e dey for im own language na di correct one. If na serious matter, e better make professional human translator do am. We no go take responsibility if person no understand well or interpret am wrong because of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
