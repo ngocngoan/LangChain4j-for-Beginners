@@ -217,19 +217,6 @@ System.out.println(response);
 
 Now that you know how to talk to a model, let's explore what you say to it. This demo uses the same model setup but shows four different prompting patterns. Try zero-shot prompts for direct instructions, few-shot prompts that learn from examples, chain-of-thought prompts that reveal reasoning steps, and role-based prompts that set context. You'll see how the same model gives dramatically different results based on how you frame your request.
 
-```java
-PromptTemplate template = PromptTemplate.from(
-    "What's the best time to visit {{destination}} for {{activity}}?"
-);
-
-Prompt prompt = template.apply(Map.of(
-    "destination", "Paris",
-    "activity", "sightseeing"
-));
-
-String response = model.chat(prompt.text());
-```
-
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`PromptEngineeringDemo.java`](src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) and ask:
 > - "What's the difference between zero-shot and few-shot prompting, and when should I use each?"
 > - "How does the temperature parameter affect the model's responses?"
