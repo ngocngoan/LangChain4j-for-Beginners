@@ -215,7 +215,10 @@ System.out.println(response);
 
 **Prompt Engineering** - [PromptEngineeringDemo.java](src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Now that you know how to talk to a model, let's explore what you say to it. This demo uses the same model setup but shows four different prompting patterns. Try zero-shot prompts for direct instructions, few-shot prompts that learn from examples, chain-of-thought prompts that reveal reasoning steps, and role-based prompts that set context. You'll see how the same model gives dramatically different results based on how you frame your request.
+Now that you know how to talk to a model, let's explore what you say to it. This demo uses the same model setup but shows five different prompting patterns. Try zero-shot prompts for direct instructions, few-shot prompts that learn from examples, chain-of-thought prompts that reveal reasoning steps, and role-based prompts that set context. You'll see how the same model gives dramatically different results based on how you frame your request.
+
+The demo also demonstrates prompt templates, which are a powerful way to create reusable prompts with variables.
+The below example shows a prompt using the LangChain4j `PromptTemplate` to fill in variables. The AI will answer based on the provided destination and activity.
 
 ```java
 PromptTemplate template = PromptTemplate.from(

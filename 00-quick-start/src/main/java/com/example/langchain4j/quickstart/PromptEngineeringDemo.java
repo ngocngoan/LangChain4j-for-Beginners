@@ -1,6 +1,10 @@
 package com.example.langchain4j.quickstart;
 
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.openaiofficial.OpenAiOfficialChatModel;
+
+import java.util.Map;
 
 /**
  * PromptEngineeringDemo - Basic Prompt Engineering Patterns
@@ -59,6 +63,9 @@ public class PromptEngineeringDemo {
         
         // Pattern 4: Role-based - Setting context
         demonstrateRoleBased(model);
+
+        // Pattern 5: Prompt Templates - Reusable prompts with variables
+        demonstratePromptTemplates(model);
     }
 
     /**
@@ -161,6 +168,49 @@ public class PromptEngineeringDemo {
         
         String response = model.chat(prompt);
         System.out.println("Response: " + response);
+    }
+
+    /**
+     * Pattern 5: Prompt Templates
+     * Create reusable prompts with variable placeholders
+     */
+    private static void demonstratePromptTemplates(OpenAiOfficialChatModel model) {
+        System.out.println("\n" + "=".repeat(60));
+        System.out.println("PATTERN 5: Prompt Templates");
+        System.out.println("=".repeat(60));
+        System.out.println("Reusable prompts with variable placeholders");
+        System.out.println();
+
+        PromptTemplate template = PromptTemplate.from(
+            "What's the best time to visit {{destination}} for {{activity}}?"
+        );
+
+        Prompt prompt = template.apply(Map.of(
+            "destination", "Paris",
+            "activity", "sightseeing"
+        ));
+
+        System.out.println("Template: What's the best time to visit {{destination}} for {{activity}}?");
+        System.out.println("Variables: destination=Paris, activity=sightseeing");
+        System.out.println("Resolved prompt: " + prompt.text());
+        System.out.println();
+
+        String response = model.chat(prompt.text());
+        System.out.println("Response: " + response);
+
+        // Second example with different variables
+        System.out.println();
+        Prompt prompt2 = template.apply(Map.of(
+            "destination", "Tokyo",
+            "activity", "cherry blossom viewing"
+        ));
+
+        System.out.println("Same template, different variables: destination=Tokyo, activity=cherry blossom viewing");
+        System.out.println("Resolved prompt: " + prompt2.text());
+        System.out.println();
+
+        String response2 = model.chat(prompt2.text());
+        System.out.println("Response: " + response2);
     }
 
     private static void displayHeader(String title) {
