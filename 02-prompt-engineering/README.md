@@ -22,6 +22,8 @@
 
 ## What You'll Learn
 
+> **Tip:** New to prompt engineering? The [Prompt Patterns example in the Quick Start module](../00-quick-start/README.md#2-prompt-patterns) covers the basics — zero-shot, few-shot, chain-of-thought, and role-based prompting. This module builds on those foundations with more advanced patterns like reasoning control, self-reflection, and structured analysis.
+
 In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions - the prompts themselves - using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get.
 
 We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
@@ -39,11 +41,10 @@ Prompt engineering is about designing input text that consistently gets you the 
 
 Think of it like giving instructions to a colleague. "Fix the bug" is vague. "Fix the null pointer exception in UserService.java line 45 by adding a null check" is specific. Language models work the same way - specificity and structure matter.
 
-> **Tip:** If you'd like a quick demo of the basics of prompt engineering (zero-shot, few-shot, chain-of-thought, and role-based prompting), check out the [Prompt Patterns example in the Quick Start module](../00-quick-start/README.md#2-prompt-patterns).
 
 ## How This Uses LangChain4j
 
-This module demonstrates advanced prompting patterns using the same LangChain4j foundation from previous modules, with a focus on prompt structure and reasoning control.
+This module uses the same LangChain4j foundation from previous modules. The LangChain4j APIs stay the same — what changes is how we structure the prompts we send through them, with a focus on prompt design and GPT-5.2's reasoning control.
 
 <img src="images/langchain4j-flow.png" alt="LangChain4j Flow" width="800"/>
 
