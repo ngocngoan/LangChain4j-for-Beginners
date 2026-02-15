@@ -27,6 +27,8 @@
 
 ## What You'll Learn
 
+<img src="images/what-youll-learn.png" alt="What You'll Learn" width="800"/>
+
 In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
 
 We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
@@ -40,34 +42,21 @@ We'll use GPT-5.2 because it introduces reasoning control - you can tell the mod
 
 ## Understanding Prompt Engineering
 
+<img src="images/what-is-prompt-engineering.png" alt="What is Prompt Engineering?" width="800"/>
+
 Prompt engineering is about designing input text that consistently gets you the results you need. It's not just about asking questions - it's about structuring requests so the model understands exactly what you want and how to deliver it.
 
 Think of it like giving instructions to a colleague. "Fix the bug" is vague. "Fix the null pointer exception in UserService.java line 45 by adding a null check" is specific. Language models work the same way - specificity and structure matter.
 
+<img src="images/how-langchain4j-fits.png" alt="How LangChain4j Fits" width="800"/>
+
+LangChain4j provides the infrastructure — model connections, memory, and message types — while prompt patterns are just carefully structured text you send through that infrastructure. The key building blocks are `SystemMessage` (which sets the AI's behavior and role) and `UserMessage` (which carries your actual request).
+
 ## Prompt Engineering Fundamentals
 
+<img src="images/five-patterns-overview.png" alt="Five Prompt Engineering Patterns Overview" width="800"/>
+
 Before diving into the advanced patterns in this module, let's review five foundational prompting techniques. These are the building blocks that every prompt engineer should know. If you've already worked through the [Quick Start module](../00-quick-start/README.md#2-prompt-patterns), you've seen these in action — here's the conceptual framework behind them.
-
-**Source Code** - [PromptEngineeringDemo.java](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
-
-All five patterns below are implemented in this runnable demo from the Quick Start module. You can run it directly to see each pattern in action:
-
-**Bash:**
-```bash
-cd 00-quick-start
-mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
-```
-
-**PowerShell:**
-```powershell
-cd 00-quick-start
-mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
-```
-
-> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`PromptEngineeringDemo.java`](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) and ask:
-> - "What's the difference between zero-shot and few-shot prompting, and when should I use each?"
-> - "How does the temperature parameter affect the model's responses?"
-> - "How can I create reusable PromptTemplate objects for common patterns?"
 
 ### Zero-Shot Prompting
 
@@ -189,6 +178,10 @@ With the fundamentals covered, let's move to the eight advanced patterns that ma
 <img src="images/eight-patterns.png" alt="Eight Prompting Patterns" width="800"/>
 
 *Overview of the eight prompt engineering patterns and their use cases*
+
+<img src="images/reasoning-control.png" alt="Reasoning Control with GPT-5.2" width="800"/>
+
+*GPT-5.2's reasoning control lets you specify how much thinking the model should do — from fast direct answers to deep exploration*
 
 <img src="images/reasoning-effort.png" alt="Reasoning Effort Comparison" width="800"/>
 
