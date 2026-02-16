@@ -2,108 +2,192 @@
 
 ## Cuprins
 
-- [Ce vei învăța](../../../02-prompt-engineering)
-- [Prerechizite](../../../02-prompt-engineering)
-- [Înțelegerea ingineriei prompturilor](../../../02-prompt-engineering)
-- [Cum se folosește LangChain4j](../../../02-prompt-engineering)
-- [Modelele de bază](../../../02-prompt-engineering)
-- [Utilizarea resurselor Azure existente](../../../02-prompt-engineering)
-- [Capturi de ecran ale aplicației](../../../02-prompt-engineering)
-- [Explorarea modelelor](../../../02-prompt-engineering)
-  - [Anticipare scăzută vs anticipare ridicată](../../../02-prompt-engineering)
-  - [Executarea sarcinilor (preludii instrumente)](../../../02-prompt-engineering)
-  - [Cod autoreflexiv](../../../02-prompt-engineering)
-  - [Analiză structurată](../../../02-prompt-engineering)
-  - [Chat multi-tur](../../../02-prompt-engineering)
-  - [Raționament pas cu pas](../../../02-prompt-engineering)
-  - [Ieșire restricționată](../../../02-prompt-engineering)
-- [Ce înveți cu adevărat](../../../02-prompt-engineering)
-- [Pașii următori](../../../02-prompt-engineering)
+- [Ce Vei Învăța](../../../02-prompt-engineering)
+- [Condiții Prealabile](../../../02-prompt-engineering)
+- [Înțelegerea Ingineriei Prompturilor](../../../02-prompt-engineering)
+- [Fundamentele Ingineriei Prompturilor](../../../02-prompt-engineering)
+  - [Promptarea Zero-Shot](../../../02-prompt-engineering)
+  - [Promptarea Few-Shot](../../../02-prompt-engineering)
+  - [Lanțul de Gândire](../../../02-prompt-engineering)
+  - [Promptarea Bazată pe Rol](../../../02-prompt-engineering)
+  - [Șabloane de Prompturi](../../../02-prompt-engineering)
+- [Modele Avansate](../../../02-prompt-engineering)
+- [Utilizarea Resurselor Azure Existente](../../../02-prompt-engineering)
+- [Capturi de Ecran ale Aplicației](../../../02-prompt-engineering)
+- [Explorarea Modelelor](../../../02-prompt-engineering)
+  - [Entuziasm Scăzut vs Ridicat](../../../02-prompt-engineering)
+  - [Executarea Sarcinilor (Preludii pentru Unelte)](../../../02-prompt-engineering)
+  - [Cod Auto-Reflectiv](../../../02-prompt-engineering)
+  - [Analiză Structurată](../../../02-prompt-engineering)
+  - [Chat Multi-Turn](../../../02-prompt-engineering)
+  - [Raționament Pas cu Pas](../../../02-prompt-engineering)
+  - [Ieșire Constrânsă](../../../02-prompt-engineering)
+- [Ce Învăț De Fapt](../../../02-prompt-engineering)
+- [Pașii Următori](../../../02-prompt-engineering)
 
-## Ce vei învăța
+## Ce Vei Învăța
 
-În modulul anterior, ai văzut cum memoria permite AI conversațional și ai folosit modelele GitHub pentru interacțiuni de bază. Acum ne vom concentra pe modul în care pui întrebările - prompturile în sine - folosind GPT-5.2 de la Azure OpenAI. Modul în care structurezi prompturile influențează dramatic calitatea răspunsurilor pe care le primești.
+<img src="../../../translated_images/ro/what-youll-learn.c68269ac048503b2.webp" alt="Ce Vei Învăța" width="800"/>
 
-Vom folosi GPT-5.2 deoarece introduce controlul raționamentului - poți spune modelului cât să gândească înainte să răspundă. Acest lucru face strategiile de promptare mai clare și te ajută să înțelegi când să folosești fiecare abordare. De asemenea, vom beneficia de limitele mai puține de rată ale Azure pentru GPT-5.2 comparativ cu modelele GitHub.
+În modulul precedent, ai văzut cum memoria permite AI conversațional și ai folosit Modelele GitHub pentru interacțiuni de bază. Acum ne vom concentra pe cum pui întrebări — prompturile în sine — folosind GPT-5.2 de la Azure OpenAI. Modul în care structurezi prompturile influențează dramatic calitatea răspunsurilor pe care le primești. Începem cu o revizuire a tehnicilor fundamentale de promptare, apoi trecem la opt modele avansate care valorifică pe deplin capabilitățile GPT-5.2.
 
-## Prerechizite
+Vom folosi GPT-5.2 deoarece introduce controlul raționamentului - poți spune modelului cât să gândească înainte de a răspunde. Aceasta face strategiile diferite de promptare mai evidente și te ajută să înțelegi când să folosești fiecare abordare. De asemenea, beneficiem de limite de rată mai puține în Azure pentru GPT-5.2 comparativ cu Modelele GitHub.
+
+## Condiții Prealabile
 
 - Modulul 01 finalizat (resurse Azure OpenAI implementate)
-- Fișier `.env` în directorul rădăcină cu credențialele Azure (creat de `azd up` în Modulul 01)
+- Fișier `.env` în directorul rădăcină cu acreditări Azure (creat de `azd up` în Modulul 01)
 
-> **Notă:** Dacă nu ai finalizat Modulul 01, urmează mai întâi instrucțiunile de implementare de acolo.
+> **Notă:** Dacă nu ai finalizat Modulul 01, parcurge mai întâi instrucțiunile de implementare de acolo.
 
-## Înțelegerea ingineriei prompturilor
+## Înțelegerea Ingineriei Prompturilor
 
-Ingineria prompturilor înseamnă proiectarea textului de intrare care obține în mod consecvent rezultatele de care ai nevoie. Nu este doar despre a pune întrebări - este despre structurarea cererilor astfel încât modelul să înțeleagă exact ce vrei și cum să ofere răspunsul.
+<img src="../../../translated_images/ro/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Ce este Ingineria Prompturilor?" width="800"/>
 
-Gândește-te la asta ca la darea de instrucțiuni unui coleg. „Remediază bug-ul” e vag. „Remediază excepția de pointer nul în UserService.java linia 45 prin adăugarea unei verificări null” e specific. Modelele de limbaj funcționează la fel - specificitatea și structura contează.
+Ingineria prompturilor înseamnă să proiectezi un text de intrare care să-ți ofere constant rezultatele de care ai nevoie. Nu este doar despre a pune întrebări - este vorba despre structurarea cererilor astfel încât modelul să înțeleagă exact ce vrei și cum să livreze.
 
-## Cum se folosește LangChain4j
+Gândește-te la asta ca la a da instrucțiuni unui coleg. „Remediază bug-ul” este vag. „Remediază excepția de referință nulă în UserService.java linia 45 prin adăugarea unei verificări nul” este specific. Modelele de limbaj funcționează la fel - specificitatea și structura contează.
 
-Acest modul demonstrează modele avansate de promptare folosind aceeași fundație LangChain4j din modulele anterioare, cu accent pe structura prompturilor și controlul raționamentului.
+<img src="../../../translated_images/ro/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Cum se Potrivește LangChain4j" width="800"/>
 
-<img src="../../../translated_images/ro/langchain4j-flow.48e534666213010b.webp" alt="LangChain4j Flow" width="800"/>
+LangChain4j oferă infrastructura — conexiunile cu modelele, memoria și tipurile de mesaje — în timp ce modelele de prompt sunt doar texte atent structurate pe care le trimiți prin acea infrastructură. Blocurile de bază importante sunt `SystemMessage` (care setează comportamentul și rolul AI) și `UserMessage` (care conține cererea ta efectivă).
 
-*Cum LangChain4j leagă prompturile tale la Azure OpenAI GPT-5.2*
+## Fundamentele Ingineriei Prompturilor
 
-**Dependențe** – Modulul 02 folosește următoarele dependențe langchain4j definite în `pom.xml`:
-```xml
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-```
+<img src="../../../translated_images/ro/five-patterns-overview.160f35045ffd2a94.webp" alt="Prezentare Generală a Cinci Modele de Inginerie a Prompturilor" width="800"/>
 
-**Configurația OpenAiOfficialChatModel** – [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java)
+Înainte de a intra în modelele avansate din acest modul, să revizuim cinci tehnici fundamentale de promptare. Acestea sunt blocurile de bază pe care orice inginer de prompturi ar trebui să le cunoască. Dacă ai parcurs deja [modulul Quick Start](../00-quick-start/README.md#2-prompt-patterns), le-ai văzut în acțiune — iată cadrul conceptual din spatele lor.
 
-Modelul chat este configurat manual ca bean Spring folosind clientul oficial OpenAI, care suportă endpoint-urile Azure OpenAI. Diferența cheie față de Modulul 01 este modul în care structurăm prompturile trimise către `chatModel.chat()`, nu configurarea modelului în sine.
+### Promptarea Zero-Shot
 
-**Mesaje sistem și utilizator** – [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)
+Cea mai simplă abordare: dă modelului o instrucțiune directă fără exemple. Modelul se bazează complet pe antrenamentul său pentru a înțelege și executa sarcina. Aceasta funcționează bine pentru cereri simple unde comportamentul așteptat este evident.
 
-LangChain4j separă tipurile de mesaje pentru claritate. `SystemMessage` setează comportamentul și contextul AI-ului (de exemplu: „Ești un recenzor de cod”), iar `UserMessage` conține cererea reală. Această separare permite menținerea unui comportament AI consistent pentru diferite întrebări ale utilizatorului.
+<img src="../../../translated_images/ro/zero-shot-prompting.7abc24228be84e6c.webp" alt="Promptare Zero-Shot" width="800"/>
+
+*Instrucțiune directă fără exemple — modelul deduce sarcina doar din instrucțiune*
 
 ```java
-SystemMessage systemMsg = SystemMessage.from(
-    "You are a helpful Java programming expert."
-);
-
-UserMessage userMsg = UserMessage.from(
-    "Explain what a List is in Java"
-);
-
-String response = chatModel.chat(systemMsg, userMsg);
+String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
+String response = model.chat(prompt);
+// Răspuns: „Pozitiv”
 ```
+  
+**Când să folosești:** Clasificări simple, întrebări directe, traduceri sau orice sarcină pe care modelul o poate gestiona fără ghidare suplimentară.
 
-<img src="../../../translated_images/ro/message-types.93e0779798a17c9d.webp" alt="Message Types Architecture" width="800"/>
+### Promptarea Few-Shot
 
-*SystemMessage oferă context persistent, în timp ce UserMessages conțin cereri individuale*
+Oferă exemple care demonstrează modelului tiparul pe care vrei să-l urmeze. Modelul învață formatul așteptat input-output din exemplele tale și îl aplică la intrări noi. Aceasta îmbunătățește dramatic consistența pentru sarcini unde formatul sau comportamentul dorit nu sunt evidente.
 
-**MessageWindowChatMemory pentru conversații multi-tur** – Pentru modelele de conversație multi-tur, reutilizăm `MessageWindowChatMemory` din Modulul 01. Fiecare sesiune primește propria instanță de memorie stocată într-un `Map<String, ChatMemory>`, permițând conversații multiple simultane fără amestec de context.
+<img src="../../../translated_images/ro/few-shot-prompting.9d9eace1da88989a.webp" alt="Promptare Few-Shot" width="800"/>
 
-**Template-uri de prompt** – Concentrarea reală aici este ingineria prompturilor, nu noile API-uri LangChain4j. Fiecare model (anticipare scăzută, anticipare ridicată, executarea sarcinilor etc.) folosește aceeași metodă `chatModel.chat(prompt)`, dar cu stringuri de prompt atent structurate. Etichetele XML, instrucțiunile și formatarea fac parte din textul promptului, nu din funcționalitățile LangChain4j.
+*Învățând din exemple — modelul identifică tiparul și îl aplică la intrări noi*
 
-**Controlul raționamentului** – Efortul de raționament al GPT-5.2 este controlat prin instrucțiuni de prompt de tipul „maximum 2 pași de raționament” sau „explorează temeinic”. Acestea sunt tehnici de inginerie a prompturilor, nu configurații LangChain4j. Biblioteca doar livrează prompturile către model.
+```java
+String prompt = """
+    Classify the sentiment as positive, negative, or neutral.
+    
+    Examples:
+    Text: "This product exceeded my expectations!" → Positive
+    Text: "It's okay, nothing special." → Neutral
+    Text: "Waste of money, very disappointed." → Negative
+    
+    Now classify this:
+    Text: "Best purchase I've made all year!"
+    """;
+String response = model.chat(prompt);
+```
+  
+**Când să folosești:** Clasificări personalizate, formatare consecventă, sarcini specifice domeniului, sau când rezultatele zero-shot sunt inconsistente.
 
-Concluzia principală: LangChain4j oferă infrastructura (conexiunea la model prin [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), memoria, gestionarea mesajelor prin [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), iar acest modul te învață cum să creezi prompturi eficiente în cadrul acelei infrastructuri.
+### Lanțul de Gândire
 
-## Modelele de bază
+Cere modelului să-și arate raționamentul pas cu pas. În loc să sară direct la un răspuns, modelul descompune problema și parcurge fiecare parte explicit. Aceasta îmbunătățește acuratețea la sarcini matematice, logice și de raționament în mai mulți pași.
 
-Nu toate problemele necesită aceeași abordare. Unele întrebări cer răspunsuri rapide, altele gândire profundă. Unele cer raționament vizibil, altele doar rezultatele. Acest modul acoperă opt modele de promptare - fiecare optimizat pentru scenarii diferite. Te vei juca cu toate pentru a învăța când funcționează cel mai bine fiecare.
+<img src="../../../translated_images/ro/chain-of-thought.5cff6630e2657e2a.webp" alt="Promptare Lanț de Gândire" width="800"/>
 
-<img src="../../../translated_images/ro/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
+*Raționament pas cu pas — descompunerea problemelor complexe în pași logici expliciți*
 
-*Prezentarea celor opt modele de inginerie a prompturilor și cazurile lor de utilizare*
+```java
+String prompt = """
+    Problem: A store has 15 apples. They sell 8 apples and then 
+    receive a shipment of 12 more apples. How many apples do they have now?
+    
+    Let's solve this step-by-step:
+    """;
+String response = model.chat(prompt);
+// Modelul arată: 15 - 8 = 7, apoi 7 + 12 = 19 mere
+```
+  
+**Când să folosești:** Probleme de matematică, puzzle-uri logice, depanare sau orice sarcină unde arătarea procesului de raționament îmbunătățește acuratețea și încrederea.
 
-<img src="../../../translated_images/ro/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
+### Promptarea Bazată pe Rol
 
-*Anticipare scăzută (rapid, direct) vs anticipare ridicată (temeinic, exploratoriu) la raționament*
+Setează o persoană sau un rol pentru AI înainte de a pune întrebarea. Aceasta oferă context care modelează tonul, profunzimea și focalizarea răspunsului. Un „arhitect software” oferă sfaturi diferite față de un „dezvoltator junior” sau un „auditor de securitate”.
 
-**Anticipare scăzută (rapid și concentrat)** – Pentru întrebări simple unde dorești răspunsuri rapide și directe. Modelul face raționament minim - maximum 2 pași. Folosește-l pentru calcule, căutări sau întrebări directe.
+<img src="../../../translated_images/ro/role-based-prompting.a806e1a73de6e3a4.webp" alt="Promptare Bazată pe Rol" width="800"/>
+
+*Setează context și persoană — aceeași întrebare primește un răspuns diferit în funcție de rolul atribuit*
+
+```java
+String prompt = """
+    You are an experienced software architect reviewing code.
+    Provide a brief code review for this function:
+    
+    def calculate_total(items):
+        total = 0
+        for item in items:
+            total = total + item['price']
+        return total
+    """;
+String response = model.chat(prompt);
+```
+  
+**Când să folosești:** Reviste de cod, meditații, analize specifice domeniului, sau când ai nevoie de răspunsuri adaptate unui anumit nivel de expertiză sau perspectivă.
+
+### Șabloane de Prompturi
+
+Creează prompturi reutilizabile cu plasatoare variabile. În loc să scrii un prompt nou de fiecare dată, definește un șablon o dată și completează cu valori diferite. Clasa `PromptTemplate` din LangChain4j face asta ușor cu sintaxa `{{variable}}`.
+
+<img src="../../../translated_images/ro/prompt-templates.14bfc37d45f1a933.webp" alt="Șabloane de Prompturi" width="800"/>
+
+*Prompturi reutilizabile cu plasatoare variabile — un șablon, multe utilizări*
+
+```java
+PromptTemplate template = PromptTemplate.from(
+    "What's the best time to visit {{destination}} for {{activity}}?"
+);
+
+Prompt prompt = template.apply(Map.of(
+    "destination", "Paris",
+    "activity", "sightseeing"
+));
+
+String response = model.chat(prompt.text());
+```
+  
+**Când să folosești:** Interogări repetitive cu intrări diferite, procesare în lot, construire de fluxuri AI reutilizabile, sau orice scenariu unde structura promptului rămâne aceeași dar datele se schimbă.
+
+---
+
+Aceste cinci fundamente îți oferă un set solid de instrumente pentru majoritatea sarcinilor de promptare. Restul acestui modul construiește pe ele cu **opt modele avansate** care valorifică controlul raționamentului GPT-5.2, auto-evaluarea și capacitățile de ieșire structurată.
+
+## Modele Avansate
+
+Odată acoperite fundamentele, să trecem la cele opt modele avansate care fac acest modul unic. Nu toate problemele au nevoie de aceeași abordare. Unele întrebări cer răspunsuri rapide, altele necesită gândire profundă. Unele cer raționament vizibil, altele doar rezultate. Fiecare model de mai jos este optimizat pentru un scenariu diferit — iar controlul raționamentului GPT-5.2 accentuează diferențele.
+
+<img src="../../../translated_images/ro/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Opt Modele de Promptare" width="800"/>
+
+*Prezentare generală a celor opt modele de inginerie a prompturilor și cazurile lor de utilizare*
+
+<img src="../../../translated_images/ro/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Controlul Raționamentului cu GPT-5.2" width="800"/>
+
+*Controlul raționamentului GPT-5.2 îți permite să specifici cât de mult să gândească modelul — de la răspunsuri rapide și directe la explorare profundă*
+
+<img src="../../../translated_images/ro/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Compararea Efortului de Raționament" width="800"/>
+
+*Entuziasm scăzut (rapid, direct) vs entuziasm ridicat (temeinic, exploratoriu)*
+
+**Entuziasm Scăzut (Rapid & Focalizat)** - Pentru întrebări simple unde vrei răspunsuri rapide, directe. Modelul face raționament minim - maxim 2 pași. Folosește-l pentru calcul, căutări sau întrebări simple.
 
 ```java
 String prompt = """
@@ -115,13 +199,13 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
-
+  
 > 💡 **Explorează cu GitHub Copilot:** Deschide [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) și întreabă:
-> - „Care este diferența dintre modelele de promptare cu anticipare scăzută și cele cu anticipare ridicată?”
-> - „Cum ajută etichetele XML în prompturi la structura răspunsului AI?”
-> - „Când ar trebui să folosesc modelele autoreflexive și când instrucțiunea directă?”
+> - „Care este diferența dintre modelele de promptare cu entuziasm scăzut și cel cu entuziasm ridicat?”
+> - „Cum ajută etichetele XML din prompturi la structurarea răspunsului AI?”
+> - „Când ar trebui să folosesc modelele de auto-reflecție vs instrucțiunea directă?”
 
-**Anticipare ridicată (profund și temeinic)** – Pentru probleme complexe unde vrei o analiză cuprinzătoare. Modelul explorează temeinic și arată raționamentul detaliat. Folosește-l pentru design de sisteme, decizii de arhitectură sau cercetare complexă.
+**Entuziasm Ridicat (Profund & Temeinic)** - Pentru probleme complexe unde vrei o analiză cuprinzătoare. Modelul explorează temeinic și arată raționamentul detaliat. Folosește-l pentru design de sistem, decizii arhitecturale sau cercetare complexă.
 
 ```java
 String prompt = """
@@ -133,8 +217,8 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
-
-**Executarea sarcinilor (progres pas cu pas)** – Pentru fluxuri de lucru în mai mulți pași. Modelul oferă un plan inițial, povestește fiecare pas în timp ce lucrează, apoi oferă un rezumat. Folosește-l pentru migrații, implementări sau orice proces în mai mulți pași.
+  
+**Executarea Sarcinii (Progres Pas cu Pas)** - Pentru fluxuri multi-pas. Modelul oferă un plan inițial, povestește fiecare pas pe măsură ce lucrează, apoi dă un rezumat. Folosește-l pentru migrații, implementări sau orice proces multi-pas.
 
 ```java
 String prompt = """
@@ -146,19 +230,19 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+Promptarea Lanț de Gândire cere explicit modelului să arate procesul său de raționament, îmbunătățind acuratețea pentru sarcini complexe. Descompunerea pas cu pas ajută atât oamenii, cât și AI să înțeleagă logica.
 
-Promptarea Chain-of-Thought cere explicit modelului să arate procesul său de raționament, îmbunătățind acuratețea pentru sarcini complexe. Defalcarea pas cu pas ajută atât oamenii, cât și AI-ul să înțeleagă logica.
+> **🤖 Încearcă cu Chat [GitHub Copilot](https://github.com/features/copilot):** Întreabă despre acest model:
+> - „Cum aș adapta modelul de executare a sarcinii pentru operațiuni de lungă durată?”
+> - „Care sunt cele mai bune practici pentru structurarea preludiilor pentru unelte în aplicațiile de producție?”
+> - „Cum pot captura și afișa actualizări intermediare ale progresului într-o interfață UI?”
 
-> **🤖 Încearcă cu chatul [GitHub Copilot](https://github.com/features/copilot):** Întreabă despre acest model:
-> - „Cum aș adapta modelul de execuție a sarcinii pentru operațiuni de durată lungă?”
-> - „Care sunt bunele practici pentru structurarea preludiilor instrumentelor în aplicații de producție?”
-> - „Cum pot captura și afișa actualizări intermediare de progres în UI?”
+<img src="../../../translated_images/ro/task-execution-pattern.9da3967750ab5c1e.webp" alt="Modelul Executării Sarcinii" width="800"/>
 
-<img src="../../../translated_images/ro/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
+*Flux de lucru Planifică → Execută → Rezumă pentru sarcini multi-pas*
 
-*Planificare → Execuție → Rezumat pentru sarcini în mai mulți pași*
-
-**Cod autoreflexiv** – Pentru generarea de cod de calitate de producție. Modelul generează cod, îl verifică față de criterii de calitate și îl îmbunătățește iterativ. Folosește-l când construiești funcționalități sau servicii noi.
+**Cod Auto-Reflectiv** - Pentru generarea de cod de calitate de producție. Modelul generează cod, îl verifică după criterii de calitate și îl îmbunătățește iterativ. Folosește-l când construiești funcționalități noi sau servicii.
 
 ```java
 String prompt = """
@@ -174,12 +258,12 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+<img src="../../../translated_images/ro/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Ciclul de Auto-Reflecție" width="800"/>
 
-<img src="../../../translated_images/ro/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
+*Buclă iterativă de îmbunătățire - generează, evaluează, identifică probleme, îmbunătățește, repetă*
 
-*Buclă de îmbunătățire iterativă – generează, evaluează, identifică probleme, îmbunătățește, repetă*
-
-**Analiză structurată** – Pentru evaluări consecvente. Modelul revizuiește codul folosind un cadru fix (corectitudine, practici, performanță, securitate). Folosește-l pentru recenzii de cod sau evaluări de calitate.
+**Analiză Structurată** - Pentru evaluare consistentă. Modelul revizuiește codul folosind un cadru fix (corectitudine, practici, performanță, securitate). Folosește-l pentru revizii de cod sau evaluări de calitate.
 
 ```java
 String prompt = """
@@ -200,17 +284,17 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+> **🤖 Încearcă cu Chat [GitHub Copilot](https://github.com/features/copilot):** Întreabă despre analiza structurată:
+> - „Cum pot personaliza cadrul de analiză pentru diferite tipuri de revizii de cod?”
+> - „Care este cea mai bună metodă de a parsa și acționa pe baza ieșirii structurate programatic?”
+> - „Cum asigur consistența nivelurilor de severitate între sesiuni diferite de revizuire?”
 
-> **🤖 Încearcă cu chatul [GitHub Copilot](https://github.com/features/copilot):** Întreabă despre analiza structurată:
-> - „Cum pot personaliza cadrul de analiză pentru tipuri diferite de recenzii de cod?”
-> - „Care este cea mai bună metodă de a analiza și acționa programatic pe baza ieșirii structurate?”
-> - „Cum asigur niveluri consecvente de severitate în sesiuni diferite de recenzii?”
+<img src="../../../translated_images/ro/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Modelul Analizei Structurate" width="800"/>
 
-<img src="../../../translated_images/ro/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
+*Cadrul în patru categorii pentru revizuiri consistente cu niveluri de severitate*
 
-*Cadrul cu patru categorii pentru recenzii de cod consecvente cu niveluri de severitate*
-
-**Chat multi-tur** – Pentru conversații care necesită context. Modelul își amintește mesajele anterioare și le construiește pe ele. Folosește-l pentru sesiuni interactive de ajutor sau întrebări complexe.
+**Chat Multi-Turn** - Pentru conversații care au nevoie de context. Modelul își amintește mesajele anterioare și construiește pe baza lor. Folosește-l pentru sesiuni interactive de ajutor sau Q&A complexe.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -223,12 +307,12 @@ memory.add(UserMessage.from("Show me an example"));
 AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
+  
+<img src="../../../translated_images/ro/context-memory.dff30ad9fa78832a.webp" alt="Memoria Contextului" width="800"/>
 
-<img src="../../../translated_images/ro/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
+*Cum se acumulează contextul conversației pe mai multe runde până la atingerea limitei de tokeni*
 
-*Cum se acumulează contextul conversației pe mai multe tururi până la limita de tokeni*
-
-**Raționament pas cu pas** – Pentru probleme care necesită logică vizibilă. Modelul arată un raționament explicit pentru fiecare pas. Folosește-l pentru probleme de matematică, puzzle-uri logice sau când vrei să înțelegi procesul de gândire.
+**Raționament Pas cu Pas** - Pentru probleme care necesită logică vizibilă. Modelul arată raționamentul explicit pentru fiecare pas. Folosește-l pentru probleme de matematică, puzzle-uri logice sau când trebuie să înțelegi procesul de gândire.
 
 ```java
 String prompt = """
@@ -241,12 +325,12 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
-
-<img src="../../../translated_images/ro/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
+  
+<img src="../../../translated_images/ro/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Modelul Pas cu Pas" width="800"/>
 
 *Descompunerea problemelor în pași logici expliciți*
 
-**Ieșire restricționată** – Pentru răspunsuri cu cerințe specifice de format. Modelul respectă strict regulile de format și lungime. Folosește-l pentru rezumate sau când ai nevoie de o structură precisă a rezultatului.
+**Ieșire Constrânsă** - Pentru răspunsuri cu cerințe specifice de format. Modelul respectă strict regulile de format și lungime. Folosește-l pentru rezumate sau când ai nevoie de o structură exactă a ieșirii.
 
 ```java
 String prompt = """
@@ -261,41 +345,40 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+<img src="../../../translated_images/ro/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Modelul de Ieșire Constrânsă" width="800"/>
 
-<img src="../../../translated_images/ro/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
+*Aplicarea cerințelor specifice de format, lungime și structură*
 
-*Impunerea cerințelor specifice de format, lungime și structură*
-
-## Utilizarea resurselor Azure existente
+## Utilizarea Resurselor Azure Existente
 
 **Verifică implementarea:**
 
-Asigură-te că fișierul `.env` există în directorul rădăcină cu credențialele Azure (creat în timpul Modulului 01):
+Asigură-te că fișierul `.env` există în directorul rădăcină cu acreditările Azure (creat în timpul Modulului 01):  
 ```bash
 cat ../.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-
+  
 **Pornește aplicația:**
 
-> **Notă:** Dacă ai pornit deja toate aplicațiile folosind `./start-all.sh` din Modulul 01, acest modul rulează deja pe portul 8083. Poți sări peste comenzile de pornire de mai jos și să accesezi direct http://localhost:8083.
+> **Notă:** Dacă ai pornit deja toate aplicațiile folosind `./start-all.sh` din Modulul 01, acest modul rulează deja pe portul 8083. Poți sări peste comenzile de pornire de mai jos și să mergi direct la http://localhost:8083.
 
-**Opțiunea 1: Folosind Spring Boot Dashboard (recomandat utilizatorilor VS Code)**
+**Opțiunea 1: Folosind Spring Boot Dashboard (Recomandat pentru utilizatorii VS Code)**
 
-Containerul de dezvoltare include extensia Spring Boot Dashboard, care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O găsești în bara de activitate din stânga VS Code (caută iconița Spring Boot).
-
-Din Spring Boot Dashboard, poți:
-- Vizualiza toate aplicațiile Spring Boot disponibile în workspace
-- Porni/opri aplicații cu un singur clic
+Containerul de dezvoltare include extensia Spring Boot Dashboard, care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O poți găsi în Bara de Activități din partea stângă a VS Code (caută pictograma Spring Boot).
+Din Spring Boot Dashboard, puteți:
+- Vedea toate aplicațiile Spring Boot disponibile în spațiul de lucru
+- Porni/opri aplicațiile cu un singur clic
 - Vizualiza jurnalele aplicațiilor în timp real
 - Monitoriza starea aplicațiilor
 
-Pur și simplu apasă butonul de play lângă „prompt-engineering” pentru a porni acest modul, sau pornește toate modulele odată.
+Pur și simplu faceți clic pe butonul de redare de lângă „prompt-engineering” pentru a porni acest modul, sau porniți toate modulele odată.
 
 <img src="../../../translated_images/ro/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Opțiunea 2: Folosind scripturi shell**
+**Opțiunea 2: Utilizarea scripturilor shell**
 
-Pornește toate aplicațiile web (modulele 01-04):
+Porniți toate aplicațiile web (modulele 01-04):
 
 **Bash:**
 ```bash
@@ -309,7 +392,7 @@ cd ..  # Din directorul rădăcină
 .\start-all.ps1
 ```
 
-Sau pornește doar acest modul:
+Sau porniți doar acest modul:
 
 **Bash:**
 ```bash
@@ -325,7 +408,7 @@ cd 02-prompt-engineering
 
 Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` din rădăcină și vor construi JAR-urile dacă nu există.
 
-> **Notă:** Dacă preferi să construiești manual toate modulele înainte de pornire:
+> **Notă:** Dacă preferați să construiți manual toate modulele înainte de pornire:
 >
 > **Bash:**
 > ```bash
@@ -339,9 +422,9 @@ Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` din
 > mvn clean package -DskipTests
 > ```
 
-Deschide http://localhost:8083 în browserul tău.
+Deschideți http://localhost:8083 în browser.
 
-**Pentru oprire:**
+**Pentru a opri:**
 
 **Bash:**
 ```bash
@@ -361,104 +444,105 @@ cd ..; .\stop-all.ps1  # Toate modulele
 
 <img src="../../../translated_images/ro/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Panoul principal care arată toate cele 8 modele de inginerie a prompturilor cu caracteristicile și cazurile de utilizare*
+*Dashboard-ul principal care arată toate cele 8 modele de inginerie a prompturilor cu caracteristicile și cazurile lor de utilizare*
 
 ## Explorarea modelelor
 
-Interfața web îți permite să experimentezi cu diferite strategii de promptare. Fiecare model rezolvă probleme diferite – încearcă-le ca să vezi când strălucește fiecare abordare.
+Interfața web vă permite să experimentați diferite strategii de prompting. Fiecare model rezolvă probleme diferite - încercați-le să vedeți când strălucește fiecare abordare.
 
-### Anticipare scăzută vs anticipare ridicată
+### Efort scăzut vs ridicat
 
-Pune o întrebare simplă, precum „Cât este 15% din 200?” folosind anticipare scăzută. Vei primi un răspuns instant, direct. Acum pune ceva complex, de exemplu „Proiectează o strategie de caching pentru o API cu trafic ridicat” folosind anticipare ridicată. Privește cum modelul încetinește și oferă un raționament detaliat. Același model, aceeași structură a întrebării - dar promptul îi spune cât să gândească.
-<img src="../../../translated_images/ro/low-eagerness-demo.898894591fb23aa0.webp" alt="Demo de entuziasm redus" width="800"/>
+Puneți o întrebare simplă precum „Care este 15% din 200?” folosind Efort Scăzut. Veți primi un răspuns direct și instantaneu. Acum puneți ceva complex ca „Proiectați o strategie de caching pentru un API cu trafic intens” folosind Efort Ridicat. Observați cum modelul încetinește și oferă o raționare detaliată. Același model, aceeași structură a întrebării - dar promptul îi spune cât să gândească.
 
-*Calcul rapid cu raționament minim*
+<img src="../../../translated_images/ro/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
-<img src="../../../translated_images/ro/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Demo de entuziasm ridicat" width="800"/>
+*Calcul rapid cu raționare minimă*
 
-*Strategie complexă de caching (2.8MB)*
+<img src="../../../translated_images/ro/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
 
-### Executarea Sarcinilor (Prezentări pentru Unelte)
+*Strategie de caching detaliată (2.8MB)*
 
-Fluxurile de lucru multi-pas beneficiază de planificare anticipată și narare a progresului. Modelul schițează ce va face, povestește fiecare pas, apoi rezumă rezultatele.
+### Executarea sarcinilor (Prefațele uneltelor)
 
-<img src="../../../translated_images/ro/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Demo Executarea Sarcinilor" width="800"/>
+Fluxurile de lucru cu mai mulți pași beneficiază de o planificare prealabilă și de o narațiune a progresului. Modelul conturează ce va face, povestește fiecare pas, apoi rezumă rezultatele.
 
-*Crearea unui endpoint REST cu narare pas-cu-pas (3.9MB)*
+<img src="../../../translated_images/ro/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
 
-### Cod care se Auto-Reflectă
+*Crearea unui endpoint REST cu narațiune pas cu pas (3.9MB)*
 
-Încearcă „Creează un serviciu de validare email”. În loc să genereze doar cod și să se oprească, modelul generează, evaluează după criterii de calitate, identifică slăbiciunile și îmbunătățește. Vei vedea cum iterează până când codul atinge standardele de producție.
+### Cod cu auto-reflecție
 
-<img src="../../../translated_images/ro/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Demo Cod care se Auto-Reflectă" width="800"/>
+Încercați „Creați un serviciu de validare a email-urilor”. În loc să genereze doar cod și să se oprească, modelul generează, evaluează pe baza criteriilor de calitate, identifică slăbiciuni și îmbunătățește. Veți vedea cum iterează până când codul îndeplinește standardele de producție.
 
-*Serviciu complet de validare email (5.2MB)*
+<img src="../../../translated_images/ro/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
 
-### Analiză Structurată
+*Serviciu complet de validare a emailului (5.2MB)*
 
-Recenziile de cod necesită cadre consistente de evaluare. Modelul analizează codul folosind categorii fixe (corectitudine, practici, performanță, securitate) cu niveluri de severitate.
+### Analiză structurată
 
-<img src="../../../translated_images/ro/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Demo Analiză Structurată" width="800"/>
+Review-urile de cod necesită cadre de evaluare consecvente. Modelul analizează codul folosind categorii fixe (corectitudine, practici, performanță, securitate) cu niveluri de severitate.
 
-*Recenzie a codului bazată pe cadru*
+<img src="../../../translated_images/ro/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
 
-### Conversații Multi-Rundă
+*Review de cod bazat pe cadrul de evaluare*
 
-Întreabă „Ce este Spring Boot?” apoi imediat continuă cu „Arată-mi un exemplu”. Modelul își amintește prima întrebare și îți oferă un exemplu specific Spring Boot. Fără memorie, a doua întrebare ar fi prea vagă.
+### Chat multi-turn
 
-<img src="../../../translated_images/ro/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Demo Conversații Multi-Rundă" width="800"/>
+Întrebați „Ce este Spring Boot?” apoi imediat adăugați „Arată-mi un exemplu”. Modelul își amintește prima întrebare și vă oferă un exemplu de Spring Boot specific. Fără memorie, a doua întrebare ar fi prea vagă.
 
-*Păstrarea contextului între întrebări*
+<img src="../../../translated_images/ro/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
 
-### Raționament Pas-cu-Pas
+*Păstrarea contextului prin întrebări*
 
-Alege o problemă de matematică și încearcă atât raționamentul pas-cu-pas cât și entuziasmul redus. Entuziasmul redus îți oferă doar răspunsul — rapid, dar opac. Raționamentul pas-cu-pas îți arată fiecare calcul și decizie.
+### Raționament pas cu pas
 
-<img src="../../../translated_images/ro/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Demo Raționament Pas-cu-Pas" width="800"/>
+Alegeți o problemă matematică și încercați atât cu Raționament pas cu pas, cât și cu Efort scăzut. Efort scăzut vă oferă doar răspunsul - rapid, dar opac. Raționamentul pas cu pas vă arată fiecare calcul și decizie.
 
-*Problemă de matematică cu pași clari*
+<img src="../../../translated_images/ro/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
 
-### Ieșire Restricționată
+*Problemă matematică cu pași expliciți*
 
-Când ai nevoie de formate sau număr fix de cuvinte, acest tipar impune respectarea strictă. Încearcă să generezi un rezumat cu exact 100 de cuvinte în format listă cu puncte.
+### Output constrâns
 
-<img src="../../../translated_images/ro/constrained-output-demo.567cc45b75da1633.webp" alt="Demo Ieșire Restricționată" width="800"/>
+Când aveți nevoie de formate specifice sau număr fix de cuvinte, acest model impune o respectare strictă. Încercați să generați un rezumat cu exact 100 de cuvinte în format punctat.
 
-*Rezumat de machine learning cu control de format*
+<img src="../../../translated_images/ro/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
 
-## Ce Înveți Cu Adevărat
+*Rezumat de machine learning cu control al formatului*
 
-**Efortul de Raționament Schimbă Totul**
+## Ce învățați cu adevărat
 
-GPT-5.2 îți permite să controlezi efortul computațional prin prompturi. Efort redus înseamnă răspunsuri rapide cu explorare minimă. Efort ridicat înseamnă că modelul ia timp să gândească profund. Înveți să potrivești efortul cu complexitatea sarcinii — să nu pierzi vremea pe întrebări simple, dar nici să nu te grăbești în decizii complexe.
+**Efortul de raționare schimbă totul**
 
-**Structura Ghidează Comportamentul**
+GPT-5.2 vă permite să controlați efortul computațional prin prompturile dvs. Efortul scăzut înseamnă răspunsuri rapide cu explorare minimă. Efortul ridicat înseamnă că modelul ia timp să gândească profund. Învațați să potriviți efortul cu complexitatea sarcinii - nu pierdeți timp cu întrebări simple, dar nici nu vă grăbiți la deciziile complexe.
 
-Observi tagurile XML din prompturi? Nu sunt decorative. Modelele urmează instrucțiuni structurate mai fiabil decât text liber. Când ai nevoie de procese multi-pas sau logică complexă, structura ajută modelul să știe unde se află și ce urmează.
+**Structura ghidează comportamentul**
 
-<img src="../../../translated_images/ro/prompt-structure.a77763d63f4e2f89.webp" alt="Structura Promptului" width="800"/>
+Observați etichetele XML din prompturi? Nu sunt decorative. Modelele urmează instrucțiuni structurate mult mai fiabil decât textul liber. Când aveți nevoie de procese cu mai mulți pași sau logică complexă, structura ajută modelul să știe unde este și ce urmează.
+
+<img src="../../../translated_images/ro/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
 *Anatomia unui prompt bine structurat cu secțiuni clare și organizare în stil XML*
 
-**Calitatea Prin Auto-Evaluare**
+**Calitatea prin auto-evaluare**
 
-Tiparele care se auto-reflectă funcționează prin explicarea clară a criteriilor de calitate. În loc să speri că modelul „face bine”, îi spui exact ce înseamnă „bine”: logică corectă, gestionare a erorilor, performanță, securitate. Modelul poate apoi să-și evalueze propriul output și să-l îmbunătățească. Astfel, generarea codului devine un proces, nu o loterie.
+Modelele cu auto-reflecție funcționează făcând criteriile de calitate explicite. În loc să sperați că modelul „face bine”, îi spuneți exact ce înseamnă „bine”: logică corectă, tratare erori, performanță, securitate. Modelul poate apoi să își evalueze propria ieșire și să se îmbunătățească. Astfel generarea de cod devine un proces, nu o loterie.
 
-**Contextul Este Finite**
+**Contextul este finit**
 
-Conversațiile multi-rundă funcționează prin includerea istoriei mesajelor în fiecare cerere. Dar există o limită — fiecare model are un număr maxim de tokeni. Pe măsură ce conversațiile cresc, vei avea nevoie de strategii pentru a păstra context relevant fără să atingi plafonul. Acest modul îți arată cum funcționează memoria; mai târziu vei învăța când să rezumi, când să uiți și când să recuperezi.
+Conversațiile multi-turn funcționează prin includerea istoricului mesajelor cu fiecare cerere. Dar există o limită - fiecare model are un număr maxim de tokeni. Pe măsură ce conversațiile cresc, veți avea nevoie de strategii pentru a păstra contextul relevant fără să atingeți această limită. Acest modul vă arată cum funcționează memoria; mai târziu veți învăța când să rezumați, când să uitați și când să recuperați.
 
-## Pașii Următori
+## Pașii următori
 
-**Următorul Modul:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
+**Următorul modul:** [03-rag - RAG (Generare augmentată cu recuperare)](../03-rag/README.md)
 
 ---
 
-**Navigare:** [← Anterior: Modul 01 - Introducere](../01-introduction/README.md) | [Înapoi la Principal](../README.md) | [Următorul: Modul 03 - RAG →](../03-rag/README.md)
+**Navigare:** [← Anterior: Modul 01 - Introducere](../01-introduction/README.md) | [Înapoi la principal](../README.md) | [Următor: Modul 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Declinare de responsabilitate**:  
-Acest document a fost tradus folosind serviciul de traducere automată AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim să asigurăm acuratețea, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm răspunderea pentru eventualele neînțelegeri sau interpretări eronate rezultate din utilizarea acestei traduceri.
+**Declinare de responsabilitate**:
+Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original în limba sa nativă trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm responsabilitatea pentru eventualele neînțelegeri sau interpretări greșite care pot rezulta din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
