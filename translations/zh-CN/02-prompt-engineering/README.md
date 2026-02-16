@@ -1,86 +1,86 @@
-# 模块 02：使用 GPT-5.2 的提示工程
+# Module 02：使用 GPT-5.2 进行提示工程
 
 ## 目录
 
-- [你将学到什么](../../../02-prompt-engineering)
+- [你将学习什么](../../../02-prompt-engineering)
 - [先决条件](../../../02-prompt-engineering)
 - [理解提示工程](../../../02-prompt-engineering)
 - [提示工程基础](../../../02-prompt-engineering)
   - [零样本提示](../../../02-prompt-engineering)
   - [少样本提示](../../../02-prompt-engineering)
-  - [思路链](../../../02-prompt-engineering)
+  - [思维链](../../../02-prompt-engineering)
   - [基于角色的提示](../../../02-prompt-engineering)
   - [提示模板](../../../02-prompt-engineering)
 - [高级模式](../../../02-prompt-engineering)
 - [使用现有 Azure 资源](../../../02-prompt-engineering)
 - [应用程序截图](../../../02-prompt-engineering)
 - [探索模式](../../../02-prompt-engineering)
-  - [低渴望 vs 高渴望](../../../02-prompt-engineering)
+  - [低热情 vs 高热情](../../../02-prompt-engineering)
   - [任务执行（工具前言）](../../../02-prompt-engineering)
   - [自我反思代码](../../../02-prompt-engineering)
   - [结构化分析](../../../02-prompt-engineering)
   - [多轮聊天](../../../02-prompt-engineering)
   - [逐步推理](../../../02-prompt-engineering)
   - [受限输出](../../../02-prompt-engineering)
-- [你真正学到的](../../../02-prompt-engineering)
+- [你真正学到的是什么](../../../02-prompt-engineering)
 - [下一步](../../../02-prompt-engineering)
 
-## 你将学到什么
+## 你将学习什么
 
-<img src="../../../translated_images/zh-CN/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
+<img src="../../../translated_images/zh-CN/what-youll-learn.c68269ac048503b2.webp" alt="你将学习什么" width="800"/>
 
-在上一模块中，你了解了记忆如何支持对话式 AI，并使用 GitHub 模型进行基本交互。现在我们将重点关注如何提问——即提示本身——使用 Azure OpenAI 的 GPT-5.2。你构建提示的方式会极大影响获得的回复质量。我们从基础的提示技术回顾开始，然后进入利用 GPT-5.2 功能的八种高级模式。
+在上一个模块中，你了解了记忆如何支持对话式 AI，并使用 GitHub 模型进行基本交互。现在，我们将重点放在如何提问——提示本身——使用 Azure OpenAI 的 GPT-5.2。你构造提示的方式会极大地影响你获得的回答质量。我们从回顾基础提示技术开始，接着进入八种充分利用 GPT-5.2 功能的高级模式。
 
-我们之所以使用 GPT-5.2，是因为它引入了推理控制——你可以告诉模型回答前应思考多少。这使得不同的提示策略更清晰易见，帮助你理解何时使用哪种方法。相比 GitHub 模型，我们还能享受 Azure 对 GPT-5.2 更少的速率限制。
+我们使用 GPT-5.2 是因为它引入了推理控制——你可以告诉模型在回答前需要思考多少。这使得不同的提示策略更加明显，并帮助你理解何时使用哪种方法。相比 GitHub 模型，我们还将受益于 Azure 对 GPT-5.2 更少的速率限制。
 
 ## 先决条件
 
 - 完成模块 01（部署了 Azure OpenAI 资源）
-- 根目录下有 `.env` 文件，包含 Azure 凭证（由模块 01 的 `azd up` 创建）
+- 根目录下有包含 Azure 凭据的 `.env` 文件（由模块 01 中的 `azd up` 创建）
 
-> **注意：**如果尚未完成模块 01，请先按照那里的部署说明操作。
+> **注意：** 如果还没有完成模块 01，请先按照那里的部署说明操作。
 
 ## 理解提示工程
 
-<img src="../../../translated_images/zh-CN/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
+<img src="../../../translated_images/zh-CN/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="什么是提示工程？" width="800"/>
 
-提示工程是设计输入文本以持续获得所需结果的技术。它不仅仅是问问题——而是构建请求，使模型能准确理解你的需求以及如何实现。
+提示工程是设计输入文本，使你持续获得所需结果的过程。它不仅仅是提问——而是结构化请求，让模型准确理解你想要什么以及如何提供。
 
-把它想象成给同事下达指令。“修复 bug”很模糊。“通过添加空检查修复 UserService.java 第 45 行的空指针异常”则具体。语言模型也是如此——具体性和结构同样重要。
+你可以把它想象成给同事下指令。“修复这个Bug”含糊不清。“通过添加空指针检查修复 UserService.java 第 45 行的空指针异常”非常具体。语言模型也一样——具体和结构化非常重要。
 
-<img src="../../../translated_images/zh-CN/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
+<img src="../../../translated_images/zh-CN/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="LangChain4j 的作用" width="800"/>
 
-LangChain4j 提供基础架构——模型连接、记忆和消息类型——而提示模式则是通过该架构发送的精心结构化文本。主要构建块是 `SystemMessage`（设置 AI 的行为和角色）和 `UserMessage`（承载你的实际请求）。
+LangChain4j 提供基础设施——模型连接、记忆和消息类型——而提示模式则是通过该基础设施发送的精心结构化文本。关键构建块是 `SystemMessage`（设置 AI 的行为和角色）和 `UserMessage`（承载你的实际请求）。
 
 ## 提示工程基础
 
-<img src="../../../translated_images/zh-CN/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
+<img src="../../../translated_images/zh-CN/five-patterns-overview.160f35045ffd2a94.webp" alt="五种提示工程模式概览" width="800"/>
 
-在深入本模块的高级模式之前，让我们回顾五种基础提示技术。这些是每个提示工程师应该掌握的构建块。如果你已学习过[快速入门模块](../00-quick-start/README.md#2-prompt-patterns)，你已经见过它们的应用——这里是它们背后的概念框架。
+在深入本模块的高级模式之前，我们先回顾五种基础提示技术。这些是每个提示工程师都应了解的构建块。如果你已经完成了[快速入门模块](../00-quick-start/README.md#2-prompt-patterns)，你就见过它们的实际应用——以下是背后的概念框架。
 
 ### 零样本提示
 
-最简单的方法：直接给模型指令而不提供示例。模型完全依赖训练理解和执行任务。适用于对预期行为显而易见的简单请求。
+最简单的方法：直接给模型指令，无需示例。模型完全依赖其训练理解并执行任务。这适用于预期行为明显的简单请求。
 
-<img src="../../../translated_images/zh-CN/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
+<img src="../../../translated_images/zh-CN/zero-shot-prompting.7abc24228be84e6c.webp" alt="零样本提示" width="800"/>
 
-*无示例的直接指令——模型仅从指令推断任务*
+*不带示例的直接指令——模型仅从指令推断任务*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// 响应：“正面”
+// 回复：“积极的”
 ```
 
-**使用时机：** 简单分类、直接提问、翻译或任何模型无需额外指导即可处理的任务。
+**适用场景：** 简单分类、直接提问、翻译，或任何模型无需额外指导即可完成的任务。
 
 ### 少样本提示
 
-提供示例演示你希望模型遵循的模式。模型从示例学习预期的输入输出格式，并应用于新输入。极大改善目标格式或行为不明显任务的一致性。
+提供示例展示你希望模型遵循的模式。模型从示例中学习预期的输入输出格式，并将其应用于新输入。这显著提高了在所需格式或行为不明显的任务中的一致性。
 
-<img src="../../../translated_images/zh-CN/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
+<img src="../../../translated_images/zh-CN/few-shot-prompting.9d9eace1da88989a.webp" alt="少样本提示" width="800"/>
 
-*通过示例学习——模型识别模式并应用于新输入*
+*从示例学习——模型识别模式并应用于新输入*
 
 ```java
 String prompt = """
@@ -97,15 +97,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**使用时机：** 自定义分类、一致格式化、特定领域任务，或零样本结果不稳定时。
+**适用场景：** 定制分类、一致格式、特定领域任务，或零样本结果不稳定时。
 
-### 思路链
+### 思维链
 
-要求模型逐步展示推理过程。模型不跳过直接给出答案，而是分解问题，明确每一步。提升数学、逻辑和多步骤推理任务的准确度。
+让模型逐步展示推理过程。模型不是直接给出答案，而是明确拆解问题、逐步推理。这提升了数学、逻辑和多步骤推理任务的准确性。
 
-<img src="../../../translated_images/zh-CN/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
+<img src="../../../translated_images/zh-CN/chain-of-thought.5cff6630e2657e2a.webp" alt="思维链提示" width="800"/>
 
-*逐步推理——将复杂问题分解为明确逻辑步骤*
+*逐步推理——将复杂问题分解为明确的逻辑步骤*
 
 ```java
 String prompt = """
@@ -115,18 +115,18 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// 模型展示：15 - 8 = 7，然后 7 + 12 = 19 个苹果
+// 模型显示：15 - 8 = 7，然后 7 + 12 = 19 个苹果
 ```
 
-**使用时机：** 数学题、逻辑谜题、调试或任何展示推理过程可提升准确度和信任度的任务。
+**适用场景：** 数学题、逻辑谜题、调试，或任何显示推理过程可提升准确性和信任的任务。
 
 ### 基于角色的提示
 
-在提问前设定 AI 的身份或角色。这提供背景，影响回答的语气、深度和重点。“软件架构师”给出的建议和“初级开发人员”或“安全审核员”大相径庭。
+在提问前为 AI 设定角色或身份。这样提供的上下文会影响回答的语气、深度和重点。“软件架构师”给出的建议与“初级开发者”或“安全审计员”不同。
 
-<img src="../../../translated_images/zh-CN/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
+<img src="../../../translated_images/zh-CN/role-based-prompting.a806e1a73de6e3a4.webp" alt="基于角色的提示" width="800"/>
 
-*设定上下文和角色——相同问题依角色不同得不同回答*
+*设定上下文和身份——同一问题根据分配的角色得到不同回答*
 
 ```java
 String prompt = """
@@ -142,15 +142,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**使用时机：** 代码审查、辅导、领域特定分析，或需要针对特定专业水平或视角定制回答时。
+**适用场景：** 代码审查、辅导、领域专门分析，或当你需要针对特定专业水平或视角定制回答时。
 
 ### 提示模板
 
-创建可复用的提示，带变量占位符。无需每次重写提示，定义一次模板，填入不同值。LangChain4j 的 `PromptTemplate` 类用 `{{variable}}` 语法简化了这一操作。
+创建带变量占位符的可重用提示。无需每次都写新提示，只需定义模板，填充不同的值。LangChain4j 的 `PromptTemplate` 类使用 `{{variable}}` 语法简化此过程。
 
-<img src="../../../translated_images/zh-CN/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
+<img src="../../../translated_images/zh-CN/prompt-templates.14bfc37d45f1a933.webp" alt="提示模板" width="800"/>
 
-*带变量占位符的复用提示——一个模板，多次使用*
+*带变量占位符的可重用提示——一个模板，多种用途*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,136 +165,188 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**使用时机：** 不同输入的重复查询、批量处理、构建可复用 AI 工作流，或任何提示结构固定但数据变化的场景。
+**适用场景：** 多次查询不同输入、批量处理、构建可复用的 AI 工作流，或任何提示结构固定但数据变化的场景。
 
 ---
 
-这五项基础为你提供了大多数提示任务的坚实工具包。本模块余下内容将在此基础上构建，介绍利用 GPT-5.2 推理控制、自我评估和结构化输出能力的**八种高级模式**。
+这五个基础为大多数提示任务提供了坚实的工具包。本模块其余内容将基于它们，介绍**八种高级模式**，利用 GPT-5.2 的推理控制、自我评估和结构化输出能力。
 
 ## 高级模式
 
-基础介绍完毕，我们进入本模块特色的八种高级模式。不是所有问题都需相同方法。有些问题需快速解答，有些需深度思考。有些需展示推理，有些只要结果。以下每种模式针对不同场景优化——且 GPT-5.2 的推理控制使差异更明显。
+基础铺垫完毕，接下来介绍本模块独有的八种高级模式。不是所有问题都需要相同方式，有的问题需要快速回答，有的需要深入思考，有的需要显式推理，有的只要结果。下面每种模式都针对不同场景优化——而 GPT-5.2 的推理控制让这些区别更加明显。
 
-<img src="../../../translated_images/zh-CN/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
+<img src="../../../translated_images/zh-CN/eight-patterns.fa1ebfdf16f71e9a.webp" alt="八种提示工程模式" width="800"/>
 
-*八种提示工程模式及其使用场景概览*
+*八种提示工程模式及其适用案例概览*
 
-<img src="../../../translated_images/zh-CN/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
+<img src="../../../translated_images/zh-CN/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="GPT-5.2 推理控制" width="800"/>
 
-*GPT-5.2 的推理控制可指定模型应做多少思考——从快速直接到深度探索*
+*GPT-5.2 的推理控制允许你指定模型思考量——从快速直接回答到深度探索*
 
-<img src="../../../translated_images/zh-CN/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
+<img src="../../../translated_images/zh-CN/reasoning-effort.db4a3ba5b8e392c1.webp" alt="推理努力对比" width="800"/>
 
-*低渴望（快速直接）与高渴望（彻底探索）推理方法比较*
+*低热情（快速，直接） vs 高热情（透彻，探索）推理方法*
 
-**低渴望（快速且聚焦）** - 针对希望快速、直接回答的简单问题。模型执行最小推理——最多两步。适用于计算、查询或直接问题。
+**低热情（快速且聚焦）** - 适用于简单问题，希望快速直接回答。模型推理步骤最少——最多两步。用于计算、查找或简单问题。
 
 ```java
 String prompt = """
-    <reasoning_effort>low</reasoning_effort>
-    <instruction>maximum 2 reasoning steps</instruction>
+    <context_gathering>
+    - Search depth: very low
+    - Bias strongly towards providing a correct answer as quickly as possible
+    - Usually, this means an absolute maximum of 2 reasoning steps
+    - If you think you need more time, state what you know and what's uncertain
+    </context_gathering>
     
-    What is 15% of 200?
-    """;
-
-String response = chatModel.chat(prompt);
-```
-
-> 💡 **用 GitHub Copilot 探索：** 打开 [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)，提问：
-> - "低渴望和高渴望提示模式有什么区别？"
-> - "提示中的 XML 标签如何帮助结构化 AI 的回答？"
-> - "什么时候该用自我反思模式，什么时候用直接指令？"
-
-**高渴望（深度且全面）** - 适用于需要全面分析的复杂问题。模型彻底探索并展示详细推理。适合系统设计、架构决策或复杂研究。
-
-```java
-String prompt = """
-    <reasoning_effort>high</reasoning_effort>
-    <instruction>explore thoroughly, show detailed reasoning</instruction>
+    Problem: What is 15% of 200?
     
-    Design a caching strategy for a high-traffic REST API.
+    Provide your answer:
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-**任务执行（逐步进展）** - 面向多步骤工作流程。模型提供事先计划，边做边叙述每步，最后总结。适合迁移、实施或任意多步骤过程。
+> 💡 **用 GitHub Copilot 探索：** 打开 [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) 并提问：
+> - “低热情和高热情提示模式有什么区别？”
+> - “提示中的 XML 标签如何帮助结构化 AI 的回答？”
+> - “什么时候应该用自我反思模式，什么时候用直接指令？”
+
+**高热情（深度且全面）** - 适合复杂问题，需要全面分析。模型会深入探索并展示详尽推理。用于系统设计、架构决策或复杂研究。
 
 ```java
 String prompt = """
-    <task>Create a REST endpoint for user registration</task>
-    <preamble>Provide an upfront plan</preamble>
-    <narration>Narrate each step as you work</narration>
-    <summary>Summarize what was accomplished</summary>
+    Analyze this problem thoroughly and provide a comprehensive solution.
+    Consider multiple approaches, trade-offs, and important details.
+    Show your analysis and reasoning in your response.
+    
+    Problem: Design a caching strategy for a high-traffic REST API.
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-思路链提示明确要求模型展示推理过程，提升复杂任务的准确度。逐步分解有助于人类与 AI 理解逻辑。
-
-> **🤖 用 [GitHub Copilot](https://github.com/features/copilot) 聊天尝试：** 询问此模式：
-> - "如何将任务执行模式适配长时间运行的操作？"
-> - "生产应用中构建工具前言的最佳实践有哪些？"
-> - "怎样在 UI 中捕获并显示中间进度更新？"
-
-<img src="../../../translated_images/zh-CN/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
-
-*计划 → 执行 → 总结的多步骤任务工作流程*
-
-**自我反思代码** - 用于生成生产级代码。模型生成代码，依据质量标准审查并迭代改进。适合构建新功能或服务时使用。
+**任务执行（逐步进展）** - 用于多步骤工作流。模型提前制定计划，执行时逐步叙述进展，最后总结。适合迁移、实施或任何多步骤流程。
 
 ```java
 String prompt = """
-    <task>Create an email validation service</task>
-    <quality_criteria>
-    - Correct logic and error handling
-    - Best practices (clean code, proper naming)
-    - Performance optimization
-    - Security considerations
-    </quality_criteria>
-    <instruction>Generate code, evaluate against criteria, improve iteratively</instruction>
+    <task_execution>
+    1. First, briefly restate the user's goal in a friendly way
+    
+    2. Create a step-by-step plan:
+       - List all steps needed
+       - Identify potential challenges
+       - Outline success criteria
+    
+    3. Execute each step:
+       - Narrate what you're doing
+       - Show progress clearly
+       - Handle any issues that arise
+    
+    4. Summarize:
+       - What was completed
+       - Any important notes
+       - Next steps if applicable
+    </task_execution>
+    
+    <tool_preambles>
+    - Always begin by rephrasing the user's goal clearly
+    - Outline your plan before executing
+    - Narrate each step as you go
+    - Finish with a distinct summary
+    </tool_preambles>
+    
+    Task: Create a REST endpoint for user registration
+    
+    Begin execution:
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-CN/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
+思维链提示明确要求模型展示推理过程，提升复杂任务的准确性。逐步分解帮助人机更好理解逻辑。
 
-*迭代改进循环——生成、评估、识别问题、改进、重复*
+> **🤖 试试用 [GitHub Copilot](https://github.com/features/copilot) 聊天功能：** 询问该模式：
+> - “如何将任务执行模式调整为长时间运行的操作？”
+> - “生产环境中如何最佳组织工具前言？”
+> - “怎样捕获并在界面显示中间进展？”
 
-**结构化分析** - 用于一致性评估。模型使用固定框架审查代码（正确性、实践、性能、安全）。适合代码审查或质量评估。
+<img src="../../../translated_images/zh-CN/task-execution-pattern.9da3967750ab5c1e.webp" alt="任务执行模式" width="800"/>
+
+*计划 → 执行 → 总结 的多步任务工作流*
+
+**自我反思代码** - 生成生产质量代码。模型生成遵循生产标准和正确错误处理的代码。适合构建新功能或服务。
 
 ```java
 String prompt = """
-    <code>
+    Generate Java code with production-quality standards: Create an email validation service
+    Keep it simple and include basic error handling.
+    """;
+
+String response = chatModel.chat(prompt);
+```
+
+<img src="../../../translated_images/zh-CN/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="自我反思循环" width="800"/>
+
+*迭代改进循环——生成、评估、发现问题、改进、重复*
+
+**结构化分析** - 一致性评估。模型使用固定框架（正确性、实践、性能、安全、可维护性）审查代码。用于代码审查或质量评估。
+
+```java
+String prompt = """
+    <analysis_framework>
+    You are an expert code reviewer. Analyze the code for:
+    
+    1. Correctness
+       - Does it work as intended?
+       - Are there logical errors?
+    
+    2. Best Practices
+       - Follows language conventions?
+       - Appropriate design patterns?
+    
+    3. Performance
+       - Any inefficiencies?
+       - Scalability concerns?
+    
+    4. Security
+       - Potential vulnerabilities?
+       - Input validation?
+    
+    5. Maintainability
+       - Code clarity?
+       - Documentation?
+    
+    <output_format>
+    Provide your analysis in this structure:
+    - Summary: One-sentence overall assessment
+    - Strengths: 2-3 positive points
+    - Issues: List any problems found with severity (High/Medium/Low)
+    - Recommendations: Specific improvements
+    </output_format>
+    </analysis_framework>
+    
+    Code to analyze:
+    ```
     public List getUsers() {
         return database.query("SELECT * FROM users");
     }
-    </code>
-    
-    <framework>
-    Evaluate using these categories:
-    1. Correctness - Logic and functionality
-    2. Best Practices - Code quality
-    3. Performance - Efficiency concerns
-    4. Security - Vulnerabilities
-    </framework>
+    ```
+    Provide your structured analysis:
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 使用 [GitHub Copilot](https://github.com/features/copilot) 聊天尝试结构化分析：**
-> - "如何为不同类型代码审查定制分析框架？"
-> - "用编程方式解析并操作结构化输出的最佳方法是什么？"
-> - "如何确保不同审查会话中严重等级的一致性？"
+> **🤖 试试用 [GitHub Copilot](https://github.com/features/copilot) 聊天功能：** 询问结构化分析：
+> - “如何为不同类型代码审查定制分析框架？”
+> - “如何程序化解析并使用结构化输出？”
+> - “如何确保不同审查会话间的严重级别一致？”
 
-<img src="../../../translated_images/zh-CN/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
+<img src="../../../translated_images/zh-CN/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="结构化分析模式" width="800"/>
 
-*四类框架支持一致代码审查，带严重性等级*
+*用于一致代码审查的框架，含严重级别*
 
-**多轮聊天** - 针对需上下文的对话。模型记忆前置消息并不断构建。适用于互动帮助或复杂问答。
+**多轮聊天** - 适用于需要上下文的对话。模型记住前置消息并在此基础上构建。适合交互式帮助或复杂问答。
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -308,11 +360,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/zh-CN/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
+<img src="../../../translated_images/zh-CN/context-memory.dff30ad9fa78832a.webp" alt="上下文记忆" width="800"/>
 
-*对话上下文在多轮过程中累计，直到达到令牌限制*
+*对话上下文在多轮累积直至达到令牌限制*
 
-**逐步推理** - 需展示明确逻辑的问题。模型为每一步提供显式推理。适合数学题、逻辑谜题，或需要理解决策过程时。
+**逐步推理** - 适合需要可见逻辑的问题。模型展示每一步的明确推理。用于数学题、逻辑谜题，或需要了解思考过程的情况。
 
 ```java
 String prompt = """
@@ -326,11 +378,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-CN/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
+<img src="../../../translated_images/zh-CN/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="逐步推理模式" width="800"/>
 
 *将问题分解为明确的逻辑步骤*
 
-**受限输出** - 针对需特定格式要求的回复。模型严格遵守格式和长度规则。适用于摘要或需精确输出结构的情况。
+**受限输出** - 对回答有严格格式要求。模型严格遵守格式和长度规则。用于摘要或需要精确输出结构的场景。
 
 ```java
 String prompt = """
@@ -346,39 +398,39 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-CN/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
+<img src="../../../translated_images/zh-CN/constrained-output-pattern.0ce39a682a6795c2.webp" alt="受限输出模式" width="800"/>
 
-*要求特定格式、长度和结构规则*
+*强制执行特定格式、长度和结构要求*
 
 ## 使用现有 Azure 资源
 
 **验证部署：**
 
-确保根目录下存在包含 Azure 凭证的 `.env` 文件（模块 01 部署时创建）：
+确保根目录有包含 Azure 凭据的 `.env` 文件（模块 01 期间创建）：
 ```bash
-cat ../.env  # 应显示 AZURE_OPENAI_ENDPOINT、API_KEY、DEPLOYMENT
+cat ../.env  # 应显示 AZURE_OPENAI_ENDPOINT，API_KEY，DEPLOYMENT
 ```
 
-**启动应用：**
+**启动应用程序：**
 
-> **注意：** 如果你已在模块 01 中通过 `./start-all.sh` 启动所有应用，本模块已在端口 8083 运行。你可以跳过以下启动命令，直接访问 http://localhost:8083。
+> **注意：** 如果你已经在模块 01 中通过 `./start-all.sh` 启动了所有应用，本模块已经在端口 8083 运行。你可以跳过下面的启动命令，直接访问 http://localhost:8083。
 
 **选项 1：使用 Spring Boot Dashboard（推荐 VS Code 用户）**
 
-开发容器包含 Spring Boot Dashboard 扩展，提供可视界面管理所有 Spring Boot 应用。在 VS Code 左侧活动栏中找到 Spring Boot 图标即可访问。
-从 Spring Boot 仪表盘，您可以：
+开发容器包括 Spring Boot Dashboard 扩展，它提供一个可视化界面管理所有 Spring Boot 应用程序。你可以在 VS Code 左侧活动栏中找到它（寻找 Spring Boot 图标）。
+从 Spring Boot 仪表板，您可以：
 - 查看工作区中所有可用的 Spring Boot 应用程序
 - 一键启动/停止应用程序
 - 实时查看应用程序日志
 - 监控应用程序状态
 
-只需点击“prompt-engineering”旁边的播放按钮即可启动此模块，或者一次启动所有模块。
+只需点击“prompt-engineering”旁边的播放按钮即可启动此模块，或一次启动所有模块。
 
 <img src="../../../translated_images/zh-CN/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
 **选项 2：使用 shell 脚本**
 
-启动所有Web应用程序（模块 01-04）：
+启动所有 Web 应用程序（模块 01-04）：
 
 **Bash:**
 ```bash
@@ -406,9 +458,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-这两个脚本都会自动从根目录 `.env` 文件加载环境变量，如果 JAR 文件不存在则会构建它们。
+这两个脚本会自动从根目录的 `.env` 文件加载环境变量，如果 JAR 文件不存在，会自动构建。
 
-> **注意：** 如果您更喜欢在启动前手动构建所有模块：
+> **注意：** 如果您更喜欢先手动构建所有模块再启动：
 >
 > **Bash:**
 > ```bash
@@ -422,21 +474,21 @@ cd 02-prompt-engineering
 > mvn clean package -DskipTests
 > ```
 
-在浏览器中打开 http://localhost:8083。
+在浏览器中打开 http://localhost:8083 。
 
-**停止：**
+**停止方式：**
 
 **Bash:**
 ```bash
 ./stop.sh  # 仅此模块
-# 或
+# 或者
 cd .. && ./stop-all.sh  # 所有模块
 ```
 
 **PowerShell:**
 ```powershell
 .\stop.ps1  # 仅此模块
-# 或
+# 或者
 cd ..; .\stop-all.ps1  # 所有模块
 ```
 
@@ -444,15 +496,15 @@ cd ..; .\stop-all.ps1  # 所有模块
 
 <img src="../../../translated_images/zh-CN/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*主仪表盘显示所有 8 种 prompt engineering 模式及其特征和使用场景*
+*主仪表板显示所有 8 种提示工程模式及其特征和使用场景*
 
-## 探索模式
+## 探索这些模式
 
-网页界面允许您尝试不同的提示策略。每种模式解决不同的问题——试试看，了解每种方法何时最有效。
+Web 界面让您可以尝试不同的提示策略。每种模式解决不同的问题——尝试它们，看看每种方法何时最有效。
 
-### 低主动性 vs 高主动性
+### 低与高“求知欲”
 
-使用低主动性提问简单问题，比如“200 的 15% 是多少？”。您会立即得到直接答案。现在，用高主动性提问复杂问题，如“为高流量 API 设计缓存策略”。观察模型放慢速度，提供详细推理。同一个模型，同样的问题结构——但提示告诉它思考多少。
+用低求知欲问一个简单问题，比如“200 的 15% 是多少？”。您会马上得到直接的答案。现在用高求知欲问一个复杂问题，比如“为高流量 API 设计缓存策略”。观察模型如何减慢速度，给出详细推理。同一个模型，同样的问题结构——但提示告诉它要做多少思考。
 
 <img src="../../../translated_images/zh-CN/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
@@ -460,27 +512,27 @@ cd ..; .\stop-all.ps1  # 所有模块
 
 <img src="../../../translated_images/zh-CN/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
 
-*详尽缓存策略（2.8MB）*
+*全面的缓存策略（2.8MB）*
 
-### 任务执行（工具前言）
+### 任务执行（工具前导语）
 
-多步工作流受益于提前规划和过程叙述。模型会概述它将做什么，叙述每一步，然后总结结果。
+多步骤工作流受益于预先规划和过程叙述。模型会概述它要做的事情，叙述每一步，最后总结结果。
 
 <img src="../../../translated_images/zh-CN/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
 
-*分步骤叙述创建REST端点（3.9MB）*
+*创建 REST 端点，逐步叙述（3.9MB）*
 
 ### 自我反思代码
 
-试试“创建一个邮件验证服务”。模型不仅生成代码并停止，而是生成后按质量标准评估，识别弱点并改进。您会看到它不断迭代，直到代码达生产标准。
+试试“创建一个邮箱验证服务”。模型不仅生成代码就停，而是生成后根据质量标准评估，发现缺陷并改进。您会看到它反复迭代，直到代码符合生产标准。
 
 <img src="../../../translated_images/zh-CN/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
 
-*完整的邮件验证服务（5.2MB）*
+*完整的邮箱验证服务（5.2MB）*
 
 ### 结构化分析
 
-代码审查需要一致的评估框架。模型使用固定类别（正确性、实践、性能、安全）并按严重级别分析代码。
+代码审查需要一致的评估框架。模型使用固定类别（正确性、最佳实践、性能、安全性）和严重性等级来分析代码。
 
 <img src="../../../translated_images/zh-CN/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
 
@@ -488,61 +540,61 @@ cd ..; .\stop-all.ps1  # 所有模块
 
 ### 多轮对话
 
-问“什么是 Spring Boot？”，随即跟问“给我一个示例”。模型记得第一个问题，并针对性地给出一个 Spring Boot 示例。没了记忆，第二个问题会太模糊。
+问“什么是 Spring Boot？”，然后紧接着问“给我一个例子”。模型记住您第一个问题，专门给您一个 Spring Boot 例子。没有记忆，第二个问题会太模糊。
 
 <img src="../../../translated_images/zh-CN/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
 
-*问题间的上下文保持*
+*跨问题保持上下文*
 
 ### 逐步推理
 
-选一个数学题，用逐步推理和低主动性分别试试。低主动性只给答案——快速但不透明。逐步推理展示了每步计算和决策。
+选择一个数学题，分别用逐步推理和低求知欲尝试。低求知欲直接给答案——快但不透明。逐步推理展示每个计算和决策。
 
 <img src="../../../translated_images/zh-CN/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
 
 *带明确步骤的数学题*
 
-### 受限输出
+### 受约束的输出
 
-当需要特定格式或字数时，这种模式强制严格遵守。试着生成一个正好100字的项目符号格式总结。
+当您需要特定格式或字数时，此模式强制严格遵循。试试生成一个恰好 100 词的项目符号格式摘要。
 
 <img src="../../../translated_images/zh-CN/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
 
-*带格式控制的机器学习总结*
+*机器学习总结及格式控制*
 
-## 你真正学到的是什么
+## 您真正学到的是什么
 
 **推理努力改变一切**
 
-GPT-5.2 通过提示让你控制计算努力。低努力意味着快速响应且探索有限。高努力意味着模型花时间深入思考。你正在学习如何匹配任务复杂度调整努力——简单问题别浪费时间，复杂决策也别急。
+GPT-5.2 允许您通过提示控制计算努力。低努力意味着响应快速且探索最少。高努力意味着模型花时间深入思考。您正在学会根据任务复杂度匹配努力——简单问题不浪费时间，复杂决策不草率。
 
 **结构引导行为**
 
-注意提示中的 XML 标签？它们不是装饰。模型比起自由文本，更能可靠遵循结构化指令。需要多步或复杂逻辑时，结构帮助模型知道自己在哪步、接下来做什么。
+注意提示中的 XML 标签？它们不是装饰。模型比起自由文本更可靠地遵循结构化指令。需要多步骤流程或复杂逻辑时，结构帮助模型跟踪位置和下一步。
 
 <img src="../../../translated_images/zh-CN/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*结构化良好的提示示例，含清晰区块和 XML 风格组织*
+*结构良好的提示结构解剖，含明确分区和 XML 风格组织*
 
-**通过自我评估提升质量**
+**通过自我评估保证质量**
 
-自我反思模式通过明确质量标准工作。不再靠模型“自己做对”，而是告诉它“对”是什么：逻辑正确、错误处理、性能、安全。模型可以自评并改进。这让代码生成不再是运气，而是过程。
+自我反思模式通过明确质量标准起作用。不是指望模型“做正确”，而是告诉它“正确”意味着：逻辑正确、错误处理、性能、安全性。模型随后能评估自身输出并改进。这让代码生成变成一个有流程的过程，而不是随机博弈。
 
-**上下文是有限的**
+**上下文有限**
 
-多轮对话依赖每次请求包含历史消息。但有上限——每个模型都有最大token数。随着对话增长，你需要策略保持相关上下文且不过载。本模块展示记忆工作原理；后续学习何时总结、何时遗忘、何时检索。
+多轮对话通过每次请求包含消息历史来实现。但有上限——每个模型都有最大令牌数。随着对话增长，您需要策略保持相关上下文同时避免超限。这个模块展示内存如何工作；后续您将学习何时总结、何时遗忘、何时取回。
 
 ## 下一步
 
-**下一个模块：** [03-rag - RAG（检索增强生成）](../03-rag/README.md)
+**下一个模块：** [03-rag - RAG (检索增强生成)](../03-rag/README.md)
 
 ---
 
-**导航：** [← 上一篇：模块 01 - 入门](../01-introduction/README.md) | [回到主页](../README.md) | [下一篇：模块 03 - RAG →](../03-rag/README.md)
+**导航：** [← 上一：模块 01 - 介绍](../01-introduction/README.md) | [返回主页](../README.md) | [下一：模块 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**免责声明**：
-本文件通过AI翻译服务[Co-op Translator](https://github.com/Azure/co-op-translator)进行翻译。虽然我们力求准确，但请注意自动翻译可能存在错误或不准确之处。原始文件的母语版本应被视为权威来源。对于重要信息，建议采用专业人工翻译。我们不对因使用本翻译而产生的任何误解或误释承担责任。
+**免责声明**：  
+本文件由人工智能翻译服务 [Co-op Translator](https://github.com/Azure/co-op-translator) 翻译而成。虽然我们尽力确保翻译的准确性，但请注意，自动翻译可能存在错误或不准确之处。原始文件的母语版本应被视为权威来源。对于关键内容，建议使用专业人工翻译。我们不对因使用本翻译而产生的任何误解或误释承担责任。
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
