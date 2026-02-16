@@ -13,41 +13,41 @@
   - [1. Podstawowy czat](../../../00-quick-start)
   - [2. Wzorce promptów](../../../00-quick-start)
   - [3. Wywoływanie funkcji](../../../00-quick-start)
-  - [4. Pytania i odpowiedzi na podstawie dokumentów (RAG)](../../../00-quick-start)
-  - [5. Odpowiedzialna sztuczna inteligencja](../../../00-quick-start)
+  - [4. Pytania i odpowiedzi na dokumentach (RAG)](../../../00-quick-start)
+  - [5. Odpowiedzialna AI](../../../00-quick-start)
 - [Co pokazuje każdy przykład](../../../00-quick-start)
 - [Kolejne kroki](../../../00-quick-start)
 - [Rozwiązywanie problemów](../../../00-quick-start)
 
 ## Wprowadzenie
 
-Ten szybki start ma na celu jak najszybsze uruchomienie LangChain4j. Obejmuje absolutne podstawy budowania aplikacji AI z LangChain4j i modelami GitHub. W kolejnych modułach użyjesz Azure OpenAI z LangChain4j, aby tworzyć bardziej zaawansowane aplikacje.
+Ten szybki start ma na celu jak najszybsze uruchomienie LangChain4j. Obejmuje absolutne podstawy budowania aplikacji AI przy użyciu LangChain4j i modeli GitHub. W kolejnych modułach użyjesz Azure OpenAI z LangChain4j do tworzenia bardziej zaawansowanych aplikacji.
 
 ## Czym jest LangChain4j?
 
-LangChain4j to biblioteka Java, która upraszcza tworzenie aplikacji napędzanych sztuczną inteligencją. Zamiast zajmować się klientami HTTP i analizą JSON, pracujesz z czystymi interfejsami API w języku Java.
+LangChain4j to biblioteka Java, która upraszcza tworzenie aplikacji zasilanych AI. Zamiast zajmować się klientami HTTP i analizą JSON, pracujesz z czystym API w Javie.
 
-„Chain” w LangChain odnosi się do łączenia ze sobą wielu komponentów – możesz powiązać prompt z modelem i parserem lub połączyć wiele wywołań AI, gdzie jedno wyjście jest wejściem do następnego. Ten szybki start koncentruje się na podstawach, zanim przejdziemy do bardziej złożonych łańcuchów.
+„Łańcuch” w LangChain odnosi się do łączenia wielu komponentów — możesz połączyć prompt z modelem, z parserem lub łączyć wiele wywołań AI, gdzie jedno wyjście zasila kolejne wejście. Ten szybki start skupia się na podstawach, zanim przejdziemy do bardziej złożonych łańcuchów.
 
-<img src="../../../translated_images/pl/langchain-concept.ad1fe6cf063515e1.webp" alt="Koncept łańcuchowania w LangChain4j" width="800"/>
+<img src="../../../translated_images/pl/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*Łączenie komponentów w LangChain4j – bloki konstrukcyjne tworzą potężne przepływy AI*
+*Łączenie komponentów w LangChain4j – klocki budujące tworzą potężne przepływy pracy AI*
 
-Użyjemy trzech głównych komponentów:
+Użyjemy trzech podstawowych komponentów:
 
-**ChatLanguageModel** – interfejs do interakcji z modelem AI. Wywołaj `model.chat("prompt")` i otrzymaj odpowiedź w postaci łańcucha znaków. Używamy `OpenAiOfficialChatModel`, który współpracuje z punktami końcowymi kompatybilnymi z OpenAI, takimi jak GitHub Models.
+**ChatLanguageModel** – interfejs do interakcji z modelem AI. Wywołaj `model.chat("prompt")` i otrzymaj odpowiedź w postaci tekstu. Używamy `OpenAiOfficialChatModel`, który współpracuje z punktami końcowymi zgodnymi z OpenAI, takimi jak modele GitHub.
 
-**AiServices** – tworzy bezpieczne typowo interfejsy usług AI. Definiujesz metody, oznaczasz je adnotacją `@Tool`, a LangChain4j zajmuje się orkiestracją. AI automatycznie wywołuje Twoje metody w Javie w razie potrzeby.
+**AiServices** – tworzy typowo-bezpieczne interfejsy usług AI. Definiujesz metody, oznaczasz je adnotacją `@Tool`, a LangChain4j zajmuje się orchestracją. AI automatycznie wywołuje Twoje metody w Javie wtedy, gdy jest to potrzebne.
 
-**MessageWindowChatMemory** – utrzymuje historię rozmowy. Bez tego każde zapytanie jest niezależne. Z tym komponentem AI pamięta poprzednie wiadomości i utrzymuje kontekst przez wiele tur.
+**MessageWindowChatMemory** – utrzymuje historię rozmowy. Bez tego każde żądanie jest niezależne. Z tym AI pamięta poprzednie wiadomości i utrzymuje kontekst przez wiele tur.
 
-<img src="../../../translated_images/pl/architecture.eedc993a1c576839.webp" alt="Architektura LangChain4j" width="800"/>
+<img src="../../../translated_images/pl/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*Architektura LangChain4j – główne komponenty współpracują, aby zasilać twoje aplikacje AI*
+*Architektura LangChain4j – podstawowe komponenty współpracujące, aby zasilać Twoje aplikacje AI*
 
 ## Zależności LangChain4j
 
-Ten szybki start używa dwóch zależności Maven w [`pom.xml`](../../../00-quick-start/pom.xml):
+Ten szybki start używa dwóch zależności Maven w pliku [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -62,140 +62,140 @@ Ten szybki start używa dwóch zależności Maven w [`pom.xml`](../../../00-quic
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
 ```
-  
-Moduł `langchain4j-open-ai-official` dostarcza klasę `OpenAiOfficialChatModel` łączącą się z API kompatybilnymi z OpenAI. GitHub Models używa tego samego formatu API, więc nie jest potrzebny specjalny adapter – wystarczy wskazać podstawowy adres URL na `https://models.github.ai/inference`.
+
+Moduł `langchain4j-open-ai-official` dostarcza klasę `OpenAiOfficialChatModel`, która łączy się z API kompatybilnymi z OpenAI. Modele GitHub używają tego samego formatu API, więc nie jest potrzebny specjalny adapter — wystarczy wskazać bazowy URL na `https://models.github.ai/inference`.
 
 ## Wymagania wstępne
 
-**Używasz kontenera deweloperskiego?** Java i Maven są już zainstalowane. Potrzebujesz tylko osobistego tokena dostępu GitHub.
+**Korzystasz z Dev Container?** Java i Maven są już zainstalowane. Potrzebujesz tylko tokena dostępu osobistego GitHub.
 
-**Lokalny rozwój:**  
-- Java 21+, Maven 3.9+  
-- Osobisty token dostępu GitHub (instrukcje poniżej)
+**Lokalny rozwój:**
+- Java 21+, Maven 3.9+
+- Token dostępu osobistego GitHub (instrukcje poniżej)
 
-> **Uwaga:** Ten moduł używa modelu `gpt-4.1-nano` z GitHub Models. Nie modyfikuj nazwy modelu w kodzie – jest skonfigurowany do pracy z dostępnymi modelami GitHub.
+> **Uwaga:** Ten moduł korzysta z `gpt-4.1-nano` z modeli GitHub. Nie modyfikuj nazwy modelu w kodzie — jest skonfigurowany do pracy z dostępnymi tam modelami.
 
 ## Konfiguracja
 
 ### 1. Pobierz swój token GitHub
 
-1. Przejdź do [Ustawienia GitHub → Personal Access Tokens](https://github.com/settings/personal-access-tokens)  
-2. Kliknij „Generate new token”  
-3. Ustaw opisową nazwę (np. „LangChain4j Demo”)  
-4. Ustaw czas ważności (zalecane 7 dni)  
-5. W sekcji „Account permissions” znajdź „Models” i ustaw na „Read-only”  
-6. Kliknij „Generate token”  
-7. Skopiuj i zapisz token – nie zobaczysz go ponownie
+1. Przejdź do [Ustawienia GitHub → Tokeny dostępu osobistego](https://github.com/settings/personal-access-tokens)
+2. Kliknij „Generate new token”
+3. Nadaj opisową nazwę (np. „LangChain4j Demo”)
+4. Ustaw czas ważności (zalecane 7 dni)
+5. W „Uprawnienia konta” znajdź „Models” i ustaw na „Read-only”
+6. Kliknij „Generate token”
+7. Skopiuj i zapisz token – nie będzie już ponownie widoczny
 
 ### 2. Ustaw swój token
 
-**Opcja 1: Używając VS Code (zalecane)**
+**Opcja 1: Korzystając z VS Code (zalecane)**
 
-Jeśli używasz VS Code, dodaj token do pliku `.env` w katalogu głównym projektu:
+Jeśli używasz VS Code, dodaj swój token do pliku `.env` w katalogu głównym projektu:
 
 Jeśli plik `.env` nie istnieje, skopiuj `.env.example` do `.env` lub utwórz nowy plik `.env` w katalogu głównym projektu.
 
-**Przykładowy plik `.env`:**  
+**Przykładowy plik `.env`:**
 ```bash
 # W /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
-  
-Następnie możesz kliknąć prawym przyciskiem myszy dowolny plik demo (np. `BasicChatDemo.java`) w Eksploratorze i wybrać **„Run Java”** lub użyć konfiguracji uruchamiania z panelu Run and Debug.
 
-**Opcja 2: Używając terminala**
+Następnie możesz po prostu kliknąć prawym przyciskiem myszy na dowolny plik demo (np. `BasicChatDemo.java`) w Eksploratorze i wybrać **„Run Java”** lub użyć konfiguracji uruchamiania z panelu Run and Debug.
+
+**Opcja 2: Korzystając z terminala**
 
 Ustaw token jako zmienną środowiskową:
 
-**Bash:**  
+**Bash:**
 ```bash
 export GITHUB_TOKEN=your_token_here
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 $env:GITHUB_TOKEN=your_token_here
 ```
-  
+
 ## Uruchom przykłady
 
-**Używając VS Code:** Wystarczy kliknąć prawym przyciskiem myszy dowolny plik demo w Eksploratorze i wybrać **„Run Java”** lub użyć konfiguracji uruchamiania z panelu Run and Debug (upewnij się, że najpierw dodałeś token do pliku `.env`).
+**Używając VS Code:** Kliknij prawym przyciskiem na dowolny plik demo w Eksploratorze i wybierz **„Run Java”**, lub użyj konfiguracji uruchamiania z panelu Run and Debug (upewnij się wcześniej, że dodałeś token do pliku `.env`).
 
 **Używając Maven:** Alternatywnie możesz uruchomić z linii poleceń:
 
 ### 1. Podstawowy czat
 
-**Bash:**  
+**Bash:**
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
-  
+
 ### 2. Wzorce promptów
 
-**Bash:**  
+**Bash:**
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-  
+
 Pokazuje prompt zero-shot, few-shot, chain-of-thought oraz role-based.
 
 ### 3. Wywoływanie funkcji
 
-**Bash:**  
+**Bash:**
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
-  
-AI automatycznie wywołuje twoje metody w Javie, gdy jest to potrzebne.
 
-### 4. Pytania i odpowiedzi na podstawie dokumentów (RAG)
+AI automatycznie wywołuje Twoje metody w Javie wtedy, gdy jest to potrzebne.
 
-**Bash:**  
+### 4. Pytania i odpowiedzi na dokumentach (RAG)
+
+**Bash:**
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-  
-Zadaj pytania dotyczące zawartości pliku `document.txt`.
 
-### 5. Odpowiedzialna sztuczna inteligencja
+Zadawaj pytania dotyczące zawartości w `document.txt`.
 
-**Bash:**  
+### 5. Odpowiedzialna AI
+
+**Bash:**
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
-  
+
 Zobacz, jak filtry bezpieczeństwa AI blokują szkodliwe treści.
 
 ## Co pokazuje każdy przykład
 
 **Podstawowy czat** – [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Zacznij tutaj, aby zobaczyć LangChain4j w najprostszej formie. Utworzysz `OpenAiOfficialChatModel`, wyślesz prompt przez `.chat()` i otrzymasz odpowiedź. To pokazuje fundamenty: jak inicjalizować modele z niestandardowymi punktami końcowymi i kluczami API. Gdy zrozumiesz ten wzór, wszystko inne na nim bazuje.
+Zacznij tutaj, aby zobaczyć LangChain4j w najprostszej formie. Stworzysz `OpenAiOfficialChatModel`, wyślesz prompt z `.chat()` i otrzymasz odpowiedź. To pokazuje podstawy: jak inicjalizować modele z własnymi punktami końcowymi i kluczami API. Gdy zrozumiesz ten wzorzec, wszystko inne na nim bazuje.
 
 ```java
 ChatLanguageModel model = OpenAiOfficialChatModel.builder()
@@ -207,15 +207,18 @@ ChatLanguageModel model = OpenAiOfficialChatModel.builder()
 String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
-  
-> **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) i zapytaj:  
-> - „Jak przełączyć się z GitHub Models na Azure OpenAI w tym kodzie?”  
-> - „Jakie inne parametry mogę skonfigurować w OpenAiOfficialChatModel.builder()?”  
-> - „Jak dodać strumieniowe odpowiedzi zamiast czekać na pełną odpowiedź?”
+
+> **🤖 Wypróbuj z czatem [GitHub Copilot](https://github.com/features/copilot):** Otwórz [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) i zapytaj:
+> - „Jak przełączyć się z modeli GitHub na Azure OpenAI w tym kodzie?”
+> - „Jakie inne parametry mogę skonfigurować w OpenAiOfficialChatModel.builder()?”
+> - „Jak dodać streaming odpowiedzi zamiast czekać na całą odpowiedź?”
 
 **Inżynieria promptów** – [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Teraz, gdy wiesz jak rozmawiać z modelem, zobaczmy co do niego mówisz. Demo pokazuje cztery różne wzorce promptów, używając tego samego modelu. Wypróbuj prompt zero-shot z bezpośrednimi instrukcjami, few-shot uczące na przykładach, chain-of-thought pokazujące kroki rozumowania oraz role-based ustawiające kontekst. Zobaczysz, jak ten sam model daje zupełnie inne wyniki w zależności od konstrukcji promptu.
+Teraz, gdy wiesz, jak rozmawiać z modelem, przyjrzyjmy się co do niego mówisz. To demo używa tego samego ustawienia modelu, ale pokazuje pięć różnych wzorców promptów. Wypróbuj prompt zero-shot dla bezpośrednich instrukcji, few-shot, które uczą się na przykładach, chain-of-thought ujawniające kroki rozumowania oraz role-based, które ustalają kontekst. Zobaczysz jak ten sam model daje diametralnie różne wyniki, w zależności od postawienia zapytania.
+
+Demo pokazuje także szablony promptów, które są potężnym sposobem na tworzenie wielokrotnego użytku promptów ze zmiennymi.
+Poniższy przykład pokazuje prompt z użyciem `PromptTemplate` LangChain4j, który wypełnia zmienne. AI odpowie na podstawie podanego celu i aktywności.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -229,16 +232,16 @@ Prompt prompt = template.apply(Map.of(
 
 String response = model.chat(prompt.text());
 ```
-  
-> **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) i zapytaj:  
-> - „Jaka jest różnica między promptem zero-shot, a few-shot i kiedy ich używać?”  
-> - „Jak parametr temperature wpływa na odpowiedzi modelu?”  
-> - „Jakie są techniki zapobiegania atakom typu prompt injection w produkcji?”  
-> - „Jak stworzyć wielokrotnego użytku obiekty PromptTemplate dla popularnych wzorców?”
+
+> **🤖 Wypróbuj z czatem [GitHub Copilot](https://github.com/features/copilot):** Otwórz [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) i zapytaj:
+> - „Jaka jest różnica między zero-shot a few-shot promptowaniem i kiedy powinienem ich używać?”
+> - „Jak parametr temperature wpływa na odpowiedzi modelu?”
+> - „Jakie są techniki zapobiegania atakom prompt injection w produkcji?”
+> - „Jak tworzyć wielokrotnie używalne obiekty PromptTemplate dla typowych wzorców?”
 
 **Integracja narzędzi** – [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Tu LangChain4j staje się potężny. Użyjesz `AiServices`, aby stworzyć asystenta AI, który może wywoływać twoje metody Java. Wystarczy oznaczyć metody adnotacją `@Tool("opis")` a LangChain4j zajmie się resztą – AI sam decyduje, którego narzędzia użyć na podstawie zapytań użytkownika. To pokazuje wywoływanie funkcji, kluczową technikę do budowania AI, które potrafi działać, a nie tylko odpowiadać na pytania.
+Tu LangChain4j staje się potężny. Użyjesz `AiServices`, aby stworzyć asystenta AI, który wywołuje Twoje metody w Javie. Wystarczy oznaczyć metody adnotacją `@Tool("opis")`, a LangChain4j zajmie się resztą — AI automatycznie decyduje, kiedy użyć jakiego narzędzia na podstawie pytań użytkownika. To pokazuje wywoływanie funkcji, kluczową technikę do budowania AI, które wykonuje działania, a nie tylko odpowiada na pytania.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -249,16 +252,16 @@ public double add(double a, double b) {
 MathAssistant assistant = AiServices.create(MathAssistant.class, model);
 String response = assistant.chat("What is 25 plus 17?");
 ```
-  
-> **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) i zapytaj:  
-> - „Jak działa adnotacja @Tool i co LangChain4j robi z nią w tle?”  
-> - „Czy AI może wywołać kilka narzędzi kolejno, by rozwiązać złożone problemy?”  
-> - „Co się stanie, jeśli narzędzie rzuci wyjątek – jak obsługiwać błędy?”  
-> - „Jak zintegrować prawdziwe API zamiast tego przykładu kalkulatora?”
 
-**Pytania i odpowiedzi na podstawie dokumentów (RAG)** – [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+> **🤖 Wypróbuj z czatem [GitHub Copilot](https://github.com/features/copilot):** Otwórz [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) i zapytaj:
+> - „Jak działa adnotacja @Tool i co LangChain4j z nią robi w tle?”
+> - „Czy AI może wywołać wiele narzędzi po kolei, aby rozwiązać złożone problemy?”
+> - „Co się stanie, gdy narzędzie rzuci wyjątek – jak obsługiwać błędy?”
+> - „Jak zintegrowałbym prawdziwe API zamiast tego przykładu kalkulatora?”
 
-Tu zobaczysz fundament podejścia RAG (retrieval-augmented generation). Zamiast opierać się na danych treningowych modelu, ładujesz zawartość z [`document.txt`](../../../00-quick-start/document.txt) i włączasz ją do promptu. AI odpowiada na podstawie twojego dokumentu, a nie ogólnej wiedzy. To pierwszy krok do budowy systemów pracujących na własnych danych.
+**Pytania i odpowiedzi na dokumentach (RAG)** – [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+
+Tutaj zobaczysz podstawy RAG (retrieval-augmented generation). Zamiast polegać na danych treningowych modelu, ładujesz zawartość z [`document.txt`](../../../00-quick-start/document.txt) i włączasz ją do promptu. AI odpowiada na podstawie Twojego dokumentu, a nie ogólnej wiedzy. To pierwszy krok do budowy systemów, które wykorzystują własne dane.
 
 ```java
 Document document = FileSystemDocumentLoader.loadDocument("document.txt");
@@ -268,20 +271,20 @@ String prompt = "Based on this document: " + content +
                 "\nQuestion: What is the main topic?";
 String response = model.chat(prompt);
 ```
-  
-> **Uwaga:** To proste podejście ładuje cały dokument do promptu. Dla dużych plików (>10KB) przekroczysz limity kontekstu. Moduł 03 omawia dzielenie plików i wyszukiwanie wektorowe dla produkcyjnych systemów RAG.
 
-> **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) i zapytaj:  
-> - „Jak RAG zapobiega halucynacjom AI w porównaniu do danych treningowych modelu?”  
-> - „Jaka jest różnica między tym prostym podejściem a używaniem osadzeń wektorowych do wyszukiwania?”  
-> - „Jak skalować to rozwiązanie do wielu dokumentów lub większych baz wiedzy?”  
-> - „Jak najlepiej strukturyzować prompt, by AI korzystała wyłącznie z dostarczonego kontekstu?”
+> **Uwaga:** To proste podejście ładuje cały dokument do promptu. Przy dużych plikach (>10KB) przekroczysz limity kontekstu. Moduł 03 omawia dzielenie na fragmenty i wyszukiwanie wektorowe dla produkcyjnych systemów RAG.
 
-**Odpowiedzialna sztuczna inteligencja** – [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+> **🤖 Wypróbuj z czatem [GitHub Copilot](https://github.com/features/copilot):** Otwórz [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) i zapytaj:
+> - „Jak RAG zapobiega halucynacjom AI w porównaniu z użyciem danych treningowych modelu?”
+> - „Jaka jest różnica między tym prostym podejściem a używaniem osadzeń wektorowych do wyszukiwania?”
+> - „Jak skalować to rozwiązanie, obsługując wiele dokumentów lub większe bazy wiedzy?”
+> - „Jakie są najlepsze praktyki strukturyzowania promptu, aby AI korzystało wyłącznie z dostarczonego kontekstu?”
 
-Buduj bezpieczeństwo AI z wielowarstwowymi zabezpieczeniami. Demo pokazuje dwa poziomy ochrony współdziałające razem:
+**Odpowiedzialna AI** – [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-**Część 1: LangChain4j Input Guardrails** – blokowanie niebezpiecznych promptów zanim trafią do LLM. Twórz własne strażnice sprawdzające zabronione słowa lub wzorce. Działają w twoim kodzie, więc są szybkie i darmowe.
+Buduj bezpieczeństwo AI przez wielopoziomową ochronę. To demo pokazuje dwie współdziałające warstwy ochrony:
+
+**Część 1: LangChain4j Input Guardrails** – blokują niebezpieczne prompty zanim dotrą do LLM. Twórz własne zabezpieczenia, które sprawdzają zakazane słowa kluczowe lub wzorce. Działają w Twoim kodzie, więc są szybkie i darmowe.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -295,13 +298,13 @@ class DangerousContentGuardrail implements InputGuardrail {
     }
 }
 ```
-  
-**Część 2: Filtry bezpieczeństwa dostawcy** – GitHub Models ma wbudowane filtry wychwytujące to, co mogą pominąć strażnice. Zobaczysz twarde blokady (błędy HTTP 400) przy poważnych naruszeniach oraz miękkie odmowy, gdzie AI grzecznie odmawia.
 
-> **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) i zapytaj:  
-> - „Czym jest InputGuardrail i jak stworzyć własną?”  
-> - „Czym różni się twarda blokada od miękkiej odmowy?”  
-> - „Dlaczego warto używać obu: strażnic i filtrów dostawcy jednocześnie?”
+**Część 2: Filtry bezpieczeństwa dostawcy** – Modele GitHub mają wbudowane filtry, które wyłapują to, co mogą ominąć Twoje zabezpieczenia. Zobaczysz twarde blokady (błędy HTTP 400) dla poważnych naruszeń oraz miękkie odmowy, gdy AI grzecznie odmawia.
+
+> **🤖 Wypróbuj z czatem [GitHub Copilot](https://github.com/features/copilot):** Otwórz [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) i zapytaj:
+> - „Czym jest InputGuardrail i jak stworzyć własne?”
+> - „Jaka jest różnica między twardą blokadą a miękką odmową?”
+> - „Dlaczego używać zarówno zabezpieczeń, jak i filtrów dostawcy razem?”
 
 ## Kolejne kroki
 
@@ -309,7 +312,7 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ---
 
-**Nawigacja:** [← Powrót do głównej](../README.md) | [Dalej: Moduł 01 - Wprowadzenie →](../01-introduction/README.md)
+**Nawigacja:** [← Wróć do głównego](../README.md) | [Dalej: Moduł 01 - Wprowadzenie →](../01-introduction/README.md)
 
 ---
 
@@ -319,16 +322,16 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 **Problem:** Pierwsze `mvn clean compile` lub `mvn package` trwa długo (10-15 minut)
 
-**Przyczyna:** Maven musi pobrać wszystkie zależności projektu (Spring Boot, biblioteki LangChain4j, SDK Azure itp.) przy pierwszym budowaniu.
+**Przyczyna:** Maven musi pobrać wszystkie zależności projektu (Spring Boot, biblioteki LangChain4j, SDK Azure itd.) podczas pierwszego budowania.
 
-**Rozwiązanie:** To normalne zachowanie. Kolejne budowania będą znacznie szybsze, gdy zależności zostaną zapisane lokalnie. Czas pobierania zależy od szybkości twojego łącza.
+**Rozwiązanie:** To normalne zachowanie. Kolejne budowania będą dużo szybsze, ponieważ zależności są lokalnie pamiętane w pamięci podręcznej. Czas pobierania zależy od szybkości Twojego łącza internetowego.
+### Składnia polecenia PowerShell Maven
 
-### Składnia poleceń Maven w PowerShell
+**Problem**: Polecenia Maven kończą się błędem `Unknown lifecycle phase ".mainClass=..."`
 
-**Problem:** Polecenia Maven kończą się błędem `Unknown lifecycle phase ".mainClass=..."`
+**Przyczyna**: PowerShell interpretuje `=` jako operator przypisania zmiennej, co łamie składnię właściwości Maven
 
-**Przyczyna:** PowerShell interpretuje `=` jako operator przypisania zmiennej, co psuje składnię właściwości Maven.
-**Rozwiązanie**: Użyj operatora stop-parsing `--%` przed poleceniem Maven:
+**Rozwiązanie**: Użyj operatora zatrzymującego parsowanie `--%` przed poleceniem Maven:
 
 **PowerShell:**
 ```powershell
@@ -340,11 +343,11 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Operator `--%` mówi PowerShell, aby przekazał wszystkie pozostałe argumenty dosłownie do Maven bez interpretacji.
+Operator `--%` mówi PowerShell, aby przekazał wszystkie pozostałe argumenty literalnie do Maven, bez interpretacji.
 
 ### Wyświetlanie emoji w Windows PowerShell
 
-**Problem**: Odpowiedzi AI pokazują znaki śmieciowe (np. `????` lub `â??`) zamiast emoji w PowerShell
+**Problem**: Odpowiedzi AI pokazują znaki pustakowe (np. `????` lub `â??`) zamiast emoji w PowerShell
 
 **Przyczyna**: Domyślne kodowanie PowerShell nie obsługuje emoji UTF-8
 
@@ -353,17 +356,17 @@ Operator `--%` mówi PowerShell, aby przekazał wszystkie pozostałe argumenty d
 chcp 65001
 ```
 
-To wymusza kodowanie UTF-8 w terminalu. Alternatywnie użyj Windows Terminal, który ma lepsze wsparcie Unicode.
+To wymusza kodowanie UTF-8 w terminalu. Alternatywnie, użyj Windows Terminal, który ma lepsze wsparcie dla Unicode.
 
 ### Debugowanie wywołań API
 
-**Problem**: Błędy uwierzytelniania, limity zapytań lub nieoczekiwane odpowiedzi z modelu AI
+**Problem**: Błędy uwierzytelniania, limity zapytań lub nieoczekiwane odpowiedzi od modelu AI
 
-**Rozwiązanie**: Przykłady zawierają `.logRequests(true)` i `.logResponses(true)`, aby pokazać wywołania API w konsoli. Pomaga to rozwiązywać błędy uwierzytelniania, limity zapytań lub nieoczekiwane odpowiedzi. Usuń te flagi w środowisku produkcyjnym, aby zmniejszyć hałas w logach.
+**Rozwiązanie**: Przykłady zawierają `.logRequests(true)` oraz `.logResponses(true)`, aby pokazać wywołania API w konsoli. Pomaga to rozwiązywać błędy uwierzytelniania, limity zapytań lub nieoczekiwane odpowiedzi. Usuń te flagi w wersji produkcyjnej, aby zmniejszyć szum w logach.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Wyłączenie odpowiedzialności**:  
-Niniejszy dokument został przetłumaczony za pomocą automatycznej usługi tłumaczeniowej AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mimo że dążymy do dokładności, prosimy mieć na uwadze, że tłumaczenia automatyczne mogą zawierać błędy lub nieścisłości. Oryginalny dokument w jego oryginalnym języku należy uznać za źródło autorytatywne. W przypadku informacji krytycznych zaleca się skorzystanie z profesjonalnego tłumaczenia przez człowieka. Nie ponosimy odpowiedzialności za jakiekolwiek nieporozumienia lub błędne interpretacje wynikające z korzystania z tego tłumaczenia.
+**Zastrzeżenie**:
+Dokument ten został przetłumaczony za pomocą usługi tłumaczeń AI [Co-op Translator](https://github.com/Azure/co-op-translator). Choć dokładamy starań, aby tłumaczenie było jak najdokładniejsze, prosimy pamiętać, że automatyczne tłumaczenia mogą zawierać błędy lub niedokładności. Oryginalny dokument w języku źródłowym powinien być traktowany jako autorytatywne źródło. W przypadku informacji krytycznych zalecane jest skorzystanie z profesjonalnego tłumaczenia wykonanego przez człowieka. Nie ponosimy odpowiedzialności za jakiekolwiek nieporozumienia lub błędne interpretacje wynikające z korzystania z tego tłumaczenia.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
