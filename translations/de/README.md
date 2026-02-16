@@ -25,21 +25,41 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> Dies gibt Ihnen alles, was Sie benötigen, um den Kurs abzuschließen, mit einem viel schnelleren Download.
+> So erhalten Sie alles, was Sie benötigen, um den Kurs abzuschließen, mit einem deutlich schnelleren Download.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
-# LangChain4j für Einsteiger
+> **Möchten Sie lokal klonen?**
+>
+> Dieses Repository enthält über 50 Sprachübersetzungen, was die Downloadgröße erheblich erhöht. Um ohne Übersetzungen zu klonen, verwenden Sie Sparse Checkout:
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> So erhalten Sie alles, was Sie benötigen, um den Kurs abzuschließen, mit einem deutlich schnelleren Download.
 
-Ein Kurs zum Erstellen von KI-Anwendungen mit LangChain4j und Azure OpenAI GPT-5.2, vom einfachen Chat bis zu KI-Agenten.
+# LangChain4j für Anfänger
 
-**Neu bei LangChain4j?** Schauen Sie sich das [Glossar](docs/GLOSSARY.md) für Definitionen wichtiger Begriffe und Konzepte an.
+Ein Kurs zum Erstellen von KI-Anwendungen mit LangChain4j und Azure OpenAI GPT-5.2, von einfachem Chat bis hin zu KI-Agenten.
+
+**Neu bei LangChain4j?** Sieh dir das [Glossar](docs/GLOSSARY.md) an für Definitionen wichtiger Begriffe und Konzepte.
 
 ## Inhaltsverzeichnis
 
-1. [Schnellstart](00-quick-start/README.md) - Einstieg mit LangChain4j
-2. [Einführung](01-introduction/README.md) - Grundlagen von LangChain4j lernen
-3. [Prompt Engineering](02-prompt-engineering/README.md) - Effektives Prompt-Design meistern
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Intelligente wissensbasierte Systeme bauen
+1. [Schnellstart](00-quick-start/README.md) - Einstieg in LangChain4j
+2. [Einführung](01-introduction/README.md) - Erlernen der Grundlagen von LangChain4j
+3. [Prompt-Engineering](02-prompt-engineering/README.md) - Effektives Entwerfen von Prompts meistern
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Intelligente wissensbasierte Systeme erstellen
 5. [Werkzeuge](04-tools/README.md) - Externe Werkzeuge und einfache Assistenten integrieren
 6. [MCP (Model Context Protocol)](05-mcp/README.md) - Arbeiten mit dem Model Context Protocol (MCP) und agentischen Modulen
 ---
@@ -48,63 +68,63 @@ Ein Kurs zum Erstellen von KI-Anwendungen mit LangChain4j und Azure OpenAI GPT-5
 
 > **Schnellstart**
 
-1. Forken Sie dieses Repository auf Ihr GitHub-Konto
-2. Klicken Sie auf **Code** → **Codespaces**-Tab → **...** → **Neu mit Optionen...**
-3. Verwenden Sie die Standardwerte – dies wählt den für diesen Kurs erstellten Entwicklungscontainer aus
-4. Klicken Sie auf **Codespace erstellen**
-5. Warten Sie 5-10 Minuten, bis die Umgebung einsatzbereit ist
-6. Springen Sie direkt zu [Schnellstart](./00-quick-start/README.md), um loszulegen!
+1. Forke dieses Repository in dein GitHub-Konto
+2. Klicke auf **Code** → **Codespaces** Tab → **...** → **Neu mit Optionen...**
+3. Benutze die Standardwerte – dies wählt den für diesen Kurs erstellten Entwicklungscontainer aus
+4. Klicke auf **Codespace erstellen**
+5. Warte 5-10 Minuten, bis die Umgebung bereit ist
+6. Gehe direkt zu [Schnellstart](./00-quick-start/README.md), um loszulegen!
 
-Nachdem Sie die Module abgeschlossen haben, erkunden Sie den [Testleitfaden](docs/TESTING.md), um LangChain4j-Testkonzepte in Aktion zu sehen.
+Nach Abschluss der Module, erkunde den [Testleitfaden](docs/TESTING.md), um LangChain4j-Testkonzepte in Aktion zu sehen.
 
-> **Hinweis:** Dieses Training verwendet sowohl GitHub-Modelle als auch Azure OpenAI. Das [Schnellstart](00-quick-start/README.md)-Modul verwendet GitHub-Modelle (kein Azure-Abonnement erforderlich), während die Module 1-5 Azure OpenAI verwenden. Starten Sie mit einem [KOSTENLOSEN Azure-Konto](https://aka.ms/azure-free-account), falls Sie noch keines haben.
+> **Hinweis:** Dieses Training verwendet sowohl GitHub-Modelle als auch Azure OpenAI. Das Modul [Schnellstart](00-quick-start/README.md) nutzt GitHub-Modelle (kein Azure-Abonnement erforderlich), während die Module 1-5 Azure OpenAI verwenden. Erstelle ein [KOSTENLOSES Azure-Konto](https://aka.ms/azure-free-account), falls du noch keines hast.
 
 
 ## Lernen mit GitHub Copilot
 
-Um schnell mit dem Coden zu beginnen, öffnen Sie dieses Projekt in einem GitHub Codespace oder Ihrer lokalen IDE mit dem bereitgestellten Devcontainer. Der in diesem Kurs verwendete Devcontainer ist vorkonfiguriert mit GitHub Copilot für KI-Pair-Programming.
+Um schnell mit dem Codieren zu beginnen, öffne dieses Projekt in einem GitHub Codespace oder deiner lokalen IDE mit dem bereitgestellten Devcontainer. Der im Kurs verwendete Devcontainer ist vorkonfiguriert mit GitHub Copilot für KI-unterstützte Paarprogrammierung.
 
-Jedes Codebeispiel enthält vorgeschlagene Fragen, die Sie GitHub Copilot stellen können, um Ihr Verständnis zu vertiefen. Achten Sie auf die 💡/🤖-Hinweise in:
+Jedes Codebeispiel enthält vorgeschlagene Fragen, die du GitHub Copilot stellen kannst, um dein Verständnis zu vertiefen. Achte auf die 💡/🤖 Hinweise in:
 
-- **Java-Dateikopfzeilen** - Fragen, die speziell auf jedes Beispiel zugeschnitten sind
-- **Modul-READMEs** - Erkundungsfragen nach Codebeispielen
+- **Java-Dateiköpfen** – Fragen speziell für jedes Beispiel
+- **Modul-READMEs** – Erkundungsanregungen nach Codebeispielen
 
-**Wie man es benutzt:** Öffnen Sie eine beliebige Code-Datei und stellen Sie Copilot die vorgeschlagenen Fragen. Es hat den vollständigen Kontext des Codes und kann erklären, erweitern und Alternativen vorschlagen.
+**Wie es funktioniert:** Öffne eine beliebige Code-Datei und stelle Copilot die vorgeschlagenen Fragen. Es hat vollen Kontext des Codebestands und kann erklären, erweitern und Alternativen vorschlagen.
 
-Möchten Sie mehr erfahren? Sehen Sie sich [Copilot für KI-Paarprogrammierung](https://aka.ms/GitHubCopilotAI) an.
+Möchtest du mehr erfahren? Schau dir [Copilot für KI-Paarprogrammierung](https://aka.ms/GitHubCopilotAI) an.
 
 
 ## Zusätzliche Ressourcen
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
-[![LangChain4j für Einsteiger](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
-[![LangChain.js für Einsteiger](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
-[![LangChain für Einsteiger](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
+[![LangChain4j für Anfänger](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
+[![LangChain.js für Anfänger](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
+[![LangChain für Anfänger](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
-### Azure / Edge / MCP / Agents
-[![AZD für Einsteiger](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![Edge KI für Einsteiger](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![MCP für Einsteiger](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![KI-Agenten für Einsteiger](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
+### Azure / Edge / MCP / Agenten
+[![AZD für Anfänger](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![Edge AI für Anfänger](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![MCP für Anfänger](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![KI-Agenten für Anfänger](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
 ### Generative KI-Serie
-[![Generative KI für Einsteiger](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![Generative KI für Anfänger](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Generative KI (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
 [![Generative KI (Java)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
 [![Generative KI (JavaScript)](https://img.shields.io/badge/Generative%20AI%20(JavaScript)-E879F9?style=for-the-badge&labelColor=E5E7EB&color=E879F9)](https://github.com/microsoft/generative-ai-with-javascript?WT.mc_id=academic-105485-koreyst)
 
 ---
  
-### Kernlernangebote
-[![ML für Einsteiger](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
-[![Datenwissenschaft für Einsteiger](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
-[![KI für Einsteiger](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
-[![Cybersicherheit für Einsteiger](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
-[![Web-Entwicklung für Einsteiger](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
+### Grundlegendes Lernen
+[![ML für Anfänger](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
+[![Datenwissenschaft für Anfänger](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
+[![KI für Anfänger](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
+[![Cybersecurity für Anfänger](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
+[![Web Dev for Beginners](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
 [![IoT for Beginners](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
 [![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
@@ -118,21 +138,21 @@ Möchten Sie mehr erfahren? Sehen Sie sich [Copilot für KI-Paarprogrammierung](
 
 ## Hilfe erhalten
 
-Wenn Sie nicht weiterkommen oder Fragen zum Erstellen von KI-Anwendungen haben, treten Sie bei:
+Wenn Sie nicht weiterkommen oder Fragen zur Erstellung von KI-Anwendungen haben, treten Sie bei:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Wenn Sie Produktfeedback oder Fehler beim Erstellen haben, besuchen Sie:
+Wenn Sie Produktfeedback geben oder Fehler bei der Entwicklung melden möchten, besuchen Sie:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Lizenz
 
-MIT-Lizenz - Details siehe [LICENSE](../../LICENSE)-Datei.
+MIT-Lizenz - Details finden Sie in der [LICENSE](../../LICENSE)-Datei.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Haftungsausschluss**:  
-Dieses Dokument wurde mit dem KI-Übersetzungsdienst [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir uns um Genauigkeit bemühen, beachten Sie bitte, dass automatisierte Übersetzungen Fehler oder Ungenauigkeiten enthalten können. Das Originaldokument in seiner Ursprungssprache gilt als maßgebliche Quelle. Für wichtige Informationen wird eine professionelle menschliche Übersetzung empfohlen. Wir übernehmen keine Haftung für Missverständnisse oder Fehlinterpretationen, die durch die Nutzung dieser Übersetzung entstehen.
+Dieses Dokument wurde mit dem KI-Übersetzungsdienst [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir auf Genauigkeit achten, kann es bei automatisierten Übersetzungen zu Fehlern oder Ungenauigkeiten kommen. Das Originaldokument in seiner Ursprungssprache gilt als maßgebliche Quelle. Für wichtige Informationen wird eine professionelle menschliche Übersetzung empfohlen. Wir übernehmen keine Haftung für Missverständnisse oder Fehlinterpretationen, die durch die Nutzung dieser Übersetzung entstehen.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

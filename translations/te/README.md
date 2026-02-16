@@ -2,14 +2,14 @@
 
 ### 🌐 బహుభాషా మద్దతు
 
-#### GitHub చర్య ద్వారా మద్దతు (ఆటోమేటెడ్ & ఎప్పుడూ నవీకరించబడుతుంది)
+#### GitHub చర్య ద్వారా మద్దతు (ఆటోమేటెడ్ & ఎప్పుడూ తాజా)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
 [Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](./README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
-> **స్థానికంగా క్లోన్ చేయాలనుకుంటున్నారా?**
+> **స్థానికంగా క్లోన్ చేయదలచుకున్నారా?**
 >
-> ఈ రిపాజిటరీ 50+ భాషా అనువాదాలను కలిగి ఉంటుంది, ఇది డౌన్‌లోడ్ సైజ్ను గణనీయంగా పెంచుతుంది. అనువాదాలు లేకుండా క్లోన్ చేయడానికి, స్పార్స్ చెకౌట్ ఉపయోగించండి:
+> ఈ రిపాజిటరీ 50+ భాషల అనువాదాలను కలిగి ఉంది, దీని వల్ల డౌన్లోడ్ పరిమాణం గణనీయంగా పెరుగుతుంది. అనువాదాలు లేకుండా క్లోన్ చేసుకోవడానికి స్పార్స్ చెకౌట్ని ఉపయోగించండి:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -25,54 +25,72 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> ఇది కోర్సును ముగించడానికి అవసరమైన ప్రతి దాని కూడా చాలా వేగంగా డౌన్‌లోడ్ చేస్తుంది.
+> ఇది కోర్సును పూర్తిచేయడానికి అవసరమైన సమస్తం మరియు తక్కువ సమయంలో డౌన్లోడ్‌ను అందిస్తుంది.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
-# LangChain4j ప్రారంభకులకు
+> **స్థానికంగా క్లోన్ చేయదలచుకున్నారా?**
+>
+> ఈ రిపాజిటరీ 50+ భాషల అనువాదాలను కలిగి ఉంది, దీని వల్ల డౌన్లోడ్ పరిమాణం గణనీయంగా పెరుగుతుంది. అనువాదాలు లేకుండా క్లోన్ చేసుకోవడానికి స్పార్స్ చెకౌట్ని ఉపయోగించండి:
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> ఇది కోర్సును పూర్తిచేయడానికి అవసరమైన సమస్తం మరియు తక్కువ సమయంలో డౌన్లోడ్‌ను అందిస్తుంది.
 
-LangChain4j మరియు Azure OpenAI GPT-5.2 తో AI అనువర్తనాలు నిర్మించడానికి కోర్సు, ప్రాథమిక చాట్ నుండి AI ఏజెంట్ల వరకు.
+# LangChain4j ప్రారంభికుల కోసం
 
-**LangChain4j కొత్తయి?** ముఖ్యమైన పదాలు మరియు భావనలకు [Glossary](docs/GLOSSARY.md) చూడండి.
+LangChain4j మరియు Azure OpenAI GPT-5.2 తో AI అప్లికేషన్లను నిర్మించేందుకు కోర్సు, ప్రాథమిక చాట్ నుండి AI ఏజెంట్ల వరకు.
 
-## విశయ సూచీ
+**LangChain4j కొత్తదని అనుకుంటున్నారా?** ప్రధాన పదాలు మరియు భావాల నిర్వచనాలకు [Glossary](docs/GLOSSARY.md) చూడండి.
 
-1. [త్వరిత ప్రారంభం](00-quick-start/README.md) - LangChain4j తో ఆరంభించండి
-2. [పరిచయం](01-introduction/README.md) - LangChain4j యొక్క ప్రాథమికాంశాలు నేర్చుకోండి
-3. [ప్రాంప్ట్ ఇంజనీరింగ్](02-prompt-engineering/README.md) - సమర్థవంతమైన ప్రాంప్ట్ డిజైన్ నేర్చుకోండి
-4. [RAG (రిట్రీవల్-ఆగ్మెంటెడ్ జనరేషన్)](03-rag/README.md) - తెలివైన జ్ఞాన ఆధారిత వ్యవస్థలను నిర్మించండి
-5. [ఉపకరణాలు](04-tools/README.md) - బయటి టూల్స్ మరియు సులభ సహాయకుల అనుసంధానం
-6. [MCP (మోడల్ కాంటెక్స్ ప్రోటోకాల)](05-mcp/README.md) - మోడల్ కాంటెక్స్ ప్రోటోకాల (MCP) మరియు ఏజెంటిక్ మాడ్యూల్‌లతో పని చేయండి
+## విషయసూచి
+
+1. [క్విక్కు స్టార్ట్](00-quick-start/README.md) - LangChain4j తో ప్రారంభించండి
+2. [పరిచయం](01-introduction/README.md) - LangChain4j యొక్క ప్రాధమికాలు తెలియజుకోండి
+3. [ప్రాంప్ట్ ఇంజనీరింగ్](02-prompt-engineering/README.md) - సమర్థవంతమైన ప్రాంప్ట్ రూపకల్పన నేర్చుకోండి
+4. [RAG (రిట్రీవల్-ఆగ్మెంటెడ్ జనరేషన్)](03-rag/README.md) - తెలివైన జ్ఞాన ఆధారిత వ్యవస్థలు నిర్మించండి
+5. [పరికరాలు](04-tools/README.md) - బాహ్య పరికరాలు మరియు సరళ సహాయకులను సమీకరించండి
+6. [MCP (మోడల్ కాంటెక్స్ట్ ప్రోటోకాల్)](05-mcp/README.md) - మోడల్ కాంటెక్స్ట్ ప్రోటోకాల్ (MCP) మరియు ఏజెంటిక్ మాడ్యూల్స్ తో పనిచేయండి
 ---
 
-##  అభ్యాస పథం
+## అభ్యసన మార్గం
 
-> **త్వరిత ప్రారంభం**
+> **క్విక్కు స్టార్ట్**
 
 1. ఈ రిపాజిటరీని మీ GitHub ఖాతాకు ఫోర్క్ చేయండి
-2. **Code** → **Codespaces** ట్యాబ్ → **...** → **New with options...** క్లిక్ చేయండి
-3. డిఫాల్ట్స్ ఉపయోగించండి – ఇది ఈ కోర్సు కోసం సృష్టించబడిన డెవలప్‌మెంట్ కంటైనర్‌ను ఎంచుకుంటుంది
-4. **Create codespace** క్లిక్ చేయండి
-5. వాతావరణం సిద్ధంగా అయ్యేందుకు 5-10 నిమిషాలు వేచి ఉండండి
-6. ప్రారంభించడానికి నేరుగా [త్వరిత ప్రారంభం](./00-quick-start/README.md) కి వెళ్లండి!
+2. క్లిక్ చేయండి **కోడ్** → **కోడిస్పేస్** ట్యాబ్ → **...** → **కొత్త ఎంపికలతో...**
+3. డీఫాల్ట్స్ వినియోగించండి — ఈ కోర్సు కోసం రూపొందించిన డెవలప్‌మెంట్ కంటైనర్ ఎంచుకోబడుతుంది
+4. క్లిక్ చేయండి **కోడ్‌స్పేస్‌ను సృష్టించు**
+5. 5-10 నిమిషాలు వేచి ఉండండి పర్యావరణం సిద్ధంగా ఉండడానికి
+6. నేరుగా [క్విక్కు స్టార్ట్](./00-quick-start/README.md) కి వెళ్లి ప్రారంభించండి!
 
-మాడ్యూల్‌లను పూర్తిచేసిన తర్వాత, LangChain4j టెస్టింగ్ భావనలు పాలనా చూస్తూ [Testing Guide](docs/TESTING.md) ని అన్వేషించండి.
+మాడ్యూల్లు పూర్తి చేసిన తరువాత, LangChain4j టెస్టింగ్ భావనలు ఆచరణలో ఎలా ఉన్నాయో చూడటానికి [టెస్టింగ్ గైడ్](docs/TESTING.md) అన్వేషించండి.
 
-> **గమనిక:** ఈ శిక్షణలో GitHub మోడల్స్ మరియు Azure OpenAI రెండూ వాడతారు. [త్వరిత ప్రారంభం](00-quick-start/README.md) మాడ్యూల్ GitHub మోడల్స్ (Azure సబ్‌స్క్రిప్షన్ అవసరం లేదు) ఉపయోగిస్తుంది, మాడ్యూల్‌లు 1-5 Azure OpenAI ఉపయోగిస్తాయి. మీకు Azure ఖాతా లేకపోతే [ఉచిత Azure ఖాతా](https://aka.ms/azure-free-account) తో ప్రారంభించండి.
+> **గమనిక:** ఈ శిక్షణ GitHub మోడల్స్ మరియు Azure OpenAI రెండింటిని ఉపయోగిస్తుంది. [క్విక్కు స్టార్ట్](00-quick-start/README.md) మాడ్యూల్ GitHub మోడల్స్ (Azure సబ్‌స్క్రిప్షన్ అవసరం లేదు) ఉపయోగిస్తుంది, మాడ్యూలులు 1-5 Azure OpenAI ఉపయోగిస్తాయి. మీకు లేని వారైతే [ఉచిత Azure ఖాతా](https://aka.ms/azure-free-account) తో ప్రారంభించండి.
 
+## GitHub కోపైలట్ తో అభ్యసనం
 
-## GitHub Copilot తో నేర్చుకోండి
+త్వరగా కోడింగ్ ప్రారంభ하려면, ఈ ప్రాజెక్టును GitHub కోడిస్పేస్ లేదా మీ స్థానిక IDE లో devcontainer తో ఓపెన్ చేయండి. ఈ కోర్సులో ఉపయోగించిన devcontainer లో GitHub కోపైలట్ AI జంట ప్రోగ్రామ్మింగ్ కోసం ముందుగానే ఏర్పాటుచేయబడింది.
 
-త్వరగా కోడింగ్ ప్రారంభించేందుకు, ఈ ప్రాజెక్టును GitHub Codespace లో లేదా అందిన devcontainer తో మీ స్థానిక IDEలో ఓపెన్ చేయండి. ఈ కోర్సు కోసం ఉపయోగించే devcontainer GitHub Copilot తో AI జంట ప్రోగ్రామింగ్ కోసం ముందుగానే కాన్ఫిగర్ చేయబడింది.
+ప్రతి కోడ్ ఉదాహరణకు GitHub కోపైలట్ ను అడగగల సలహా ప్రశ్నలు ఉంటాయి మీ అవగాహనను లోతుగా చేసుకునేందుకు. ఈ 💡/🤖 సూచనలను చూడండి:
 
-ప్రతి కోడ్ ఉదాహరణలో GitHub Copilot తో మీ అవగాహనను పెంచేందుకు అడగవచ్చిన సూచించిన ప్రశ్నలు ఉంటాయి. 💡/🤖 ప్రాంప్ట్‌ల కోసం చూడండి:
+- **జావా ఫైల్ హెడ్డర్స్** - ప్రతి ఉదాహరణకు ప్రత్యేక ప్రశ్నలు
+- **మాడ్యూల్ READMEలు** - కోడ్ ఉదాహరణల తర్వాత ప్రయత్నించే ఆలోచనలు
 
-- **జావా ఫైల్ హెడ్డర్‌లు** - ప్రతి ఉదాహరణకు సంబంధించిన ప్రశ్నలు
-- **మాడ్యూల్ READMEలు** - కోడ్ ఉదాహరణల తరువాత అన్వేషణ కోసం సూచనలు
+**వినియోగం ఎలా:** ఏ కోడ్ ఫైల్‌ని ఓపెన్ చేసి కోపైలట్ కు సూచించిన ప్రశ్నలు అడగండి. దీనికి కోడ్‌బేస్ యొక్క పూర్తి సੰਦਰభం ఉంది, ఇది వివరించగలదు, విస్తరించగలదు మరియు ప్రత్యామ్నాయాలను సూచించగలదు.
 
-**ఎలా ఉపయోగించాలి:** ఏదైనా కోడ్ ఫైల్‌ను ఓపెన్ చేసి Copilot కి సూచించిన ప్రశ్నలు అడగండి. ఇది కోడ్‌బేస్ పూర్తి పరిజ్ఞానం కలిగి ఉండి వివరణలు, పొడగింపులు మరియు ప్రత్యామ్నాయాలు సూచించగలదు.
-
-మరింత తెలుసుకోవాలనుకుంటున్నారా? [AI జంట ప్రోగ్రామింగ్ కోసం Copilot](https://aka.ms/GitHubCopilotAI) చూడండి.
-
+ఇంకా తెలుసుకోవాలనుకుంటున్నారా? [AI జంట ప్రోగ్రామ్మింగ్ కోసం కోపైలట్](https://aka.ms/GitHubCopilotAI) చూడండి.
 
 ## అదనపు వనరులు
 
@@ -99,7 +117,7 @@ LangChain4j మరియు Azure OpenAI GPT-5.2 తో AI అనువర్త
 
 ---
  
-### Core Learning
+### మూల్య అభ్యాసం
 [![ML for Beginners](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -118,11 +136,11 @@ LangChain4j మరియు Azure OpenAI GPT-5.2 తో AI అనువర్త
 
 ## సహాయం పొందడం
 
-AI అప్లికేషన్లు నిర్మించడంలో మీరు ఇబ్బంది పడితే లేదా ఏవైనా ప్రశ్నలు ఉంటే, చేరండి:
+AI అనువర్తనాలు నిర్మించడంలో మీరు చిక్కుకుని పోతే లేదా ఏవైనా ప్రశ్నలు ఉంటే, చేరండి:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-ఉత్పత్తి ఫీడ్బ్యాక్ లేదా లోపాలు ఉంటే సందర్శించండి:
+ఉత్పత్తి అభిప్రాయం లేదా అభివృద్ధిచేస్తుంటే లోపాలు ఉంటే సందర్శించండి:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
@@ -133,6 +151,6 @@ MIT లైసెన్స్ - వివరాలకు [LICENSE](../../LICENSE)
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**అసహాయం**:
-ఈ దస్త్రాన్ని AI అనువాద సేవ [Co-op Translator](https://github.com/Azure/co-op-translator) ఉపయోగించి అనువదించబడింది. మేము నిర్ధారించడానికి ప్రయత్నించినప్పటికీ, ఆటోమేటిక్ అనువాదాలలో తప్పులు లేదా不చ్చెలు ఉండొచ్చు. స్థానిక భాషలో ఉన్న అసలు దస్త్రం అధికారిక మూలంగా పరిగణించాలి. కీలక సమాచారం కోసం, ప్రొఫెషనల్ మానవ అనువాదం సిఫార్సు చేయబడుతుంది. ఈ అనువాదం ఉపయోగించడంవలన సృష్టమైన ఏమైనా గందరగోళాలు లేదా తప్పుల కోసం మేము బాధ్యత ఉండము.
+**అస్పష్టం**:
+ఈ పత్రాన్ని AI అనువాద సేవ [Co-op Translator](https://github.com/Azure/co-op-translator) ఉపయోగించి అనువదించబడింది. మనం సక్రమత కోసం ప్రయత్నించినప్పటికీ, స్వయం ప్రక్రియ అనువాదాలలో తప్పిదాలు లేదా పొరపాట్లు ఉండవచ్చు అనే దాన్ని దయచేసి గమనించండి. మాతృభాషలో ఉన్న అసలు పత్రం అధికారిక మూలంగా పరిగణించబడాలి. ముఖ్యమైన సమాచారం కోసం, నిపుణుల మానవ అనువాదాన్ని సిఫార్సు చేసుకుంటాం. ఈ అనువాదం ఉపయోగించినందರಿಂದ వచ్చే ఏవిధమైన అవగాహన లోపాలు లేదా తప్పు వ్యాఖ్యానాలకు మేము బాధ్యత తీసుకోము.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

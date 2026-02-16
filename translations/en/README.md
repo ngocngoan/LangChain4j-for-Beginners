@@ -28,6 +28,26 @@
 > This gives you everything you need to complete the course with a much faster download.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
+> **Prefer to Clone Locally?**
+>
+> This repository includes 50+ language translations which significantly increases the download size. To clone without translations, use sparse checkout:
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> This gives you everything you need to complete the course with a much faster download.
+
 # LangChain4j for Beginners
 
 A course for building AI applications with LangChain4j and Azure OpenAI GPT-5.2, from basic chat to AI agents.
