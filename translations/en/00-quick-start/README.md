@@ -215,7 +215,10 @@ System.out.println(response);
 
 **Prompt Engineering** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Now that you know how to talk to a model, let's explore what you say to it. This demo uses the same model setup but shows four different prompting patterns. Try zero-shot prompts for direct instructions, few-shot prompts that learn from examples, chain-of-thought prompts that reveal reasoning steps, and role-based prompts that set context. You'll see how the same model gives dramatically different results based on how you frame your request.
+Now that you know how to talk to a model, let's explore what you say to it. This demo uses the same model setup but shows five different prompting patterns. Try zero-shot prompts for direct instructions, few-shot prompts that learn from examples, chain-of-thought prompts that reveal reasoning steps, and role-based prompts that set context. You'll see how the same model gives dramatically different results based on how you frame your request.
+
+The demo also demonstrates prompt templates, which are a powerful way to create reusable prompts with variables.
+The below example shows a prompt using the LangChain4j `PromptTemplate` to fill in variables. The AI will answer based on the provided destination and activity.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -322,12 +325,12 @@ class DangerousContentGuardrail implements InputGuardrail {
 **Cause**: Maven needs to download all project dependencies (Spring Boot, LangChain4j libraries, Azure SDKs, etc.) on the first build.
 
 **Solution**: This is normal behavior. Subsequent builds will be much faster as dependencies are cached locally. Download time depends on your network speed.
-
 ### PowerShell Maven Command Syntax
 
 **Issue**: Maven commands fail with error `Unknown lifecycle phase ".mainClass=..."`
 
 **Cause**: PowerShell interprets `=` as a variable assignment operator, breaking Maven property syntax
+
 **Solution**: Use the stop-parsing operator `--%` before the Maven command:
 
 **PowerShell:**

@@ -5,8 +5,13 @@
 - [What You'll Learn](../../../02-prompt-engineering)
 - [Prerequisites](../../../02-prompt-engineering)
 - [Understanding Prompt Engineering](../../../02-prompt-engineering)
-- [How This Uses LangChain4j](../../../02-prompt-engineering)
-- [The Core Patterns](../../../02-prompt-engineering)
+- [Prompt Engineering Fundamentals](../../../02-prompt-engineering)
+  - [Zero-Shot Prompting](../../../02-prompt-engineering)
+  - [Few-Shot Prompting](../../../02-prompt-engineering)
+  - [Chain of Thought](../../../02-prompt-engineering)
+  - [Role-Based Prompting](../../../02-prompt-engineering)
+  - [Prompt Templates](../../../02-prompt-engineering)
+- [Advanced Patterns](../../../02-prompt-engineering)
 - [Using Existing Azure Resources](../../../02-prompt-engineering)
 - [Application Screenshots](../../../02-prompt-engineering)
 - [Exploring the Patterns](../../../02-prompt-engineering)
@@ -22,7 +27,9 @@
 
 ## What You'll Learn
 
-In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions - the prompts themselves - using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get.
+<img src="../../../translated_images/en/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
+
+In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
 
 We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
 
@@ -35,69 +42,146 @@ We'll use GPT-5.2 because it introduces reasoning control - you can tell the mod
 
 ## Understanding Prompt Engineering
 
+<img src="../../../translated_images/en/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
+
 Prompt engineering is about designing input text that consistently gets you the results you need. It's not just about asking questions - it's about structuring requests so the model understands exactly what you want and how to deliver it.
 
 Think of it like giving instructions to a colleague. "Fix the bug" is vague. "Fix the null pointer exception in UserService.java line 45 by adding a null check" is specific. Language models work the same way - specificity and structure matter.
 
-## How This Uses LangChain4j
+<img src="../../../translated_images/en/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-This module demonstrates advanced prompting patterns using the same LangChain4j foundation from previous modules, with a focus on prompt structure and reasoning control.
+LangChain4j provides the infrastructure — model connections, memory, and message types — while prompt patterns are just carefully structured text you send through that infrastructure. The key building blocks are `SystemMessage` (which sets the AI's behavior and role) and `UserMessage` (which carries your actual request).
 
-<img src="../../../translated_images/en/langchain4j-flow.48e534666213010b.webp" alt="LangChain4j Flow" width="800"/>
+## Prompt Engineering Fundamentals
 
-*How LangChain4j connects your prompts to Azure OpenAI GPT-5.2*
+<img src="../../../translated_images/en/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-**Dependencies** - Module 02 uses the following langchain4j dependencies defined in `pom.xml`:
-```xml
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-```
+Before diving into the advanced patterns in this module, let's review five foundational prompting techniques. These are the building blocks that every prompt engineer should know. If you've already worked through the [Quick Start module](../00-quick-start/README.md#2-prompt-patterns), you've seen these in action — here's the conceptual framework behind them.
 
-**OpenAiOfficialChatModel Configuration** - [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java)
+### Zero-Shot Prompting
 
-The chat model is manually configured as a Spring bean using the OpenAI Official client, which supports Azure OpenAI endpoints. The key difference from Module 01 is how we structure the prompts sent to `chatModel.chat()`, not the model setup itself.
+The simplest approach: give the model a direct instruction with no examples. The model relies entirely on its training to understand and execute the task. This works well for straightforward requests where the expected behavior is obvious.
 
-**System and User Messages** - [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)
+<img src="../../../translated_images/en/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-LangChain4j separates message types for clarity. `SystemMessage` sets the AI's behavior and context (like "You are a code reviewer"), while `UserMessage` contains the actual request. This separation lets you maintain consistent AI behavior across different user queries.
+*Direct instruction without examples — the model infers the task from the instruction alone*
 
 ```java
-SystemMessage systemMsg = SystemMessage.from(
-    "You are a helpful Java programming expert."
-);
-
-UserMessage userMsg = UserMessage.from(
-    "Explain what a List is in Java"
-);
-
-String response = chatModel.chat(systemMsg, userMsg);
+String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
+String response = model.chat(prompt);
+// Response: "Positive"
 ```
 
-<img src="../../../translated_images/en/message-types.93e0779798a17c9d.webp" alt="Message Types Architecture" width="800"/>
+**When to use:** Simple classifications, direct questions, translations, or any task the model can handle without additional guidance.
 
-*SystemMessage provides persistent context while UserMessages contain individual requests*
+### Few-Shot Prompting
 
-**MessageWindowChatMemory for Multi-Turn** - For the multi-turn conversation pattern, we reuse `MessageWindowChatMemory` from Module 01. Each session gets its own memory instance stored in a `Map<String, ChatMemory>`, allowing multiple concurrent conversations without context mixing.
+Provide examples that demonstrate the pattern you want the model to follow. The model learns the expected input-output format from your examples and applies it to new inputs. This dramatically improves consistency for tasks where the desired format or behavior isn't obvious.
 
-**Prompt Templates** - The real focus here is prompt engineering, not new LangChain4j APIs. Each pattern (low eagerness, high eagerness, task execution, etc.) uses the same `chatModel.chat(prompt)` method but with carefully structured prompt strings. The XML tags, instructions, and formatting are all part of the prompt text, not LangChain4j features.
+<img src="../../../translated_images/en/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-**Reasoning Control** - GPT-5.2's reasoning effort is controlled through prompt instructions like "maximum 2 reasoning steps" or "explore thoroughly". These are prompt engineering techniques, not LangChain4j configurations. The library simply delivers your prompts to the model.
+*Learning from examples — the model identifies the pattern and applies it to new inputs*
 
-The key takeaway: LangChain4j provides the infrastructure (model connection via [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), memory, message handling via [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), while this module teaches you how to craft effective prompts within that infrastructure.
+```java
+String prompt = """
+    Classify the sentiment as positive, negative, or neutral.
+    
+    Examples:
+    Text: "This product exceeded my expectations!" → Positive
+    Text: "It's okay, nothing special." → Neutral
+    Text: "Waste of money, very disappointed." → Negative
+    
+    Now classify this:
+    Text: "Best purchase I've made all year!"
+    """;
+String response = model.chat(prompt);
+```
 
-## The Core Patterns
+**When to use:** Custom classifications, consistent formatting, domain-specific tasks, or when zero-shot results are inconsistent.
 
-Not all problems need the same approach. Some questions need quick answers, others need deep thinking. Some need visible reasoning, others just need results. This module covers eight prompting patterns - each optimized for different scenarios. You'll experiment with all of them to learn when each approach works best.
+### Chain of Thought
+
+Ask the model to show its reasoning step-by-step. Instead of jumping straight to an answer, the model breaks down the problem and works through each part explicitly. This improves accuracy on math, logic, and multi-step reasoning tasks.
+
+<img src="../../../translated_images/en/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
+
+*Step-by-step reasoning — breaking complex problems into explicit logical steps*
+
+```java
+String prompt = """
+    Problem: A store has 15 apples. They sell 8 apples and then 
+    receive a shipment of 12 more apples. How many apples do they have now?
+    
+    Let's solve this step-by-step:
+    """;
+String response = model.chat(prompt);
+// The model shows: 15 - 8 = 7, then 7 + 12 = 19 apples
+```
+
+**When to use:** Math problems, logic puzzles, debugging, or any task where showing the reasoning process improves accuracy and trust.
+
+### Role-Based Prompting
+
+Set a persona or role for the AI before asking your question. This provides context that shapes the tone, depth, and focus of the response. A "software architect" gives different advice than a "junior developer" or a "security auditor".
+
+<img src="../../../translated_images/en/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
+
+*Setting context and persona — the same question gets a different response depending on the assigned role*
+
+```java
+String prompt = """
+    You are an experienced software architect reviewing code.
+    Provide a brief code review for this function:
+    
+    def calculate_total(items):
+        total = 0
+        for item in items:
+            total = total + item['price']
+        return total
+    """;
+String response = model.chat(prompt);
+```
+
+**When to use:** Code reviews, tutoring, domain-specific analysis, or when you need responses tailored to a particular expertise level or perspective.
+
+### Prompt Templates
+
+Create reusable prompts with variable placeholders. Instead of writing a new prompt every time, define a template once and fill in different values. LangChain4j's `PromptTemplate` class makes this easy with `{{variable}}` syntax.
+
+<img src="../../../translated_images/en/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
+
+*Reusable prompts with variable placeholders — one template, many uses*
+
+```java
+PromptTemplate template = PromptTemplate.from(
+    "What's the best time to visit {{destination}} for {{activity}}?"
+);
+
+Prompt prompt = template.apply(Map.of(
+    "destination", "Paris",
+    "activity", "sightseeing"
+));
+
+String response = model.chat(prompt.text());
+```
+
+**When to use:** Repeated queries with different inputs, batch processing, building reusable AI workflows, or any scenario where the prompt structure stays the same but the data changes.
+
+---
+
+These five fundamentals give you a solid toolkit for most prompting tasks. The rest of this module builds on them with **eight advanced patterns** that leverage GPT-5.2's reasoning control, self-evaluation, and structured output capabilities.
+
+## Advanced Patterns
+
+With the fundamentals covered, let's move to the eight advanced patterns that make this module unique. Not all problems need the same approach. Some questions need quick answers, others need deep thinking. Some need visible reasoning, others just need results. Each pattern below is optimized for a different scenario — and GPT-5.2's reasoning control makes the differences even more pronounced.
 
 <img src="../../../translated_images/en/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
 *Overview of the eight prompt engineering patterns and their use cases*
+
+<img src="../../../translated_images/en/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
+
+*GPT-5.2's reasoning control lets you specify how much thinking the model should do — from fast direct answers to deep exploration*
 
 <img src="../../../translated_images/en/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
 
@@ -282,7 +366,6 @@ cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
 The dev container includes the Spring Boot Dashboard extension, which provides a visual interface to manage all Spring Boot applications. You can find it in the Activity Bar on the left side of VS Code (look for the Spring Boot icon).
-
 From the Spring Boot Dashboard, you can:
 - See all available Spring Boot applications in the workspace
 - Start/stop applications with a single click
@@ -299,7 +382,7 @@ Start all web applications (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # 从根目录
+cd ..  # From root directory
 ./start-all.sh
 ```
 
@@ -370,6 +453,7 @@ The web interface lets you experiment with different prompting strategies. Each 
 ### Low vs High Eagerness
 
 Ask a simple question like "What is 15% of 200?" using Low Eagerness. You'll get an instant, direct answer. Now ask something complex like "Design a caching strategy for a high-traffic API" using High Eagerness. Watch how the model slows down and provides detailed reasoning. Same model, same question structure - but the prompt tells it how much thinking to do.
+
 <img src="../../../translated_images/en/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
 *Quick calculation with minimal reasoning*
