@@ -331,7 +331,7 @@ String prompt = """
         return database.query("SELECT * FROM users");
     }
     ```
-        Provide your structured analysis:
+    Provide your structured analysis:
     """;
 
 String response = chatModel.chat(prompt);
