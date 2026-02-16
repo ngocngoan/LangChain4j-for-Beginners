@@ -191,10 +191,16 @@ With the fundamentals covered, let's move to the eight advanced patterns that ma
 
 ```java
 String prompt = """
-    <reasoning_effort>low</reasoning_effort>
-    <instruction>maximum 2 reasoning steps</instruction>
+    <context_gathering>
+    - Search depth: very low
+    - Bias strongly towards providing a correct answer as quickly as possible
+    - Usually, this means an absolute maximum of 2 reasoning steps
+    - If you think you need more time, state what you know and what's uncertain
+    </context_gathering>
     
-    What is 15% of 200?
+    Problem: What is 15% of 200?
+    
+    Provide your answer:
     """;
 
 String response = chatModel.chat(prompt);
@@ -209,10 +215,11 @@ String response = chatModel.chat(prompt);
 
 ```java
 String prompt = """
-    <reasoning_effort>high</reasoning_effort>
-    <instruction>explore thoroughly, show detailed reasoning</instruction>
+    Analyze this problem thoroughly and provide a comprehensive solution.
+    Consider multiple approaches, trade-offs, and important details.
+    Show your analysis and reasoning in your response.
     
-    Design a caching strategy for a high-traffic REST API.
+    Problem: Design a caching strategy for a high-traffic REST API.
     """;
 
 String response = chatModel.chat(prompt);
@@ -222,10 +229,35 @@ String response = chatModel.chat(prompt);
 
 ```java
 String prompt = """
-    <task>Create a REST endpoint for user registration</task>
-    <preamble>Provide an upfront plan</preamble>
-    <narration>Narrate each step as you work</narration>
-    <summary>Summarize what was accomplished</summary>
+    <task_execution>
+    1. First, briefly restate the user's goal in a friendly way
+    
+    2. Create a step-by-step plan:
+       - List all steps needed
+       - Identify potential challenges
+       - Outline success criteria
+    
+    3. Execute each step:
+       - Narrate what you're doing
+       - Show progress clearly
+       - Handle any issues that arise
+    
+    4. Summarize:
+       - What was completed
+       - Any important notes
+       - Next steps if applicable
+    </task_execution>
+    
+    <tool_preambles>
+    - Always begin by rephrasing the user's goal clearly
+    - Outline your plan before executing
+    - Narrate each step as you go
+    - Finish with a distinct summary
+    </tool_preambles>
+    
+    Task: Create a REST endpoint for user registration
+    
+    Begin execution:
     """;
 
 String response = chatModel.chat(prompt);
@@ -242,18 +274,12 @@ Chain-of-Thought prompting explicitly asks the model to show its reasoning proce
 
 *Plan → Execute → Summarize workflow for multi-step tasks*
 
-**Self-Reflecting Code** - For generating production-quality code. The model generates code, checks it against quality criteria, and improves it iteratively. Use this when building new features or services.
+**Self-Reflecting Code** - For generating production-quality code. The model generates code following production standards with proper error handling. Use this when building new features or services.
 
 ```java
 String prompt = """
-    <task>Create an email validation service</task>
-    <quality_criteria>
-    - Correct logic and error handling
-    - Best practices (clean code, proper naming)
-    - Performance optimization
-    - Security considerations
-    </quality_criteria>
-    <instruction>Generate code, evaluate against criteria, improve iteratively</instruction>
+    Generate Java code with production-quality standards: Create an email validation service
+    Keep it simple and include basic error handling.
     """;
 
 String response = chatModel.chat(prompt);
@@ -263,23 +289,49 @@ String response = chatModel.chat(prompt);
 
 *Iterative improvement loop - generate, evaluate, identify issues, improve, repeat*
 
-**Structured Analysis** - For consistent evaluation. The model reviews code using a fixed framework (correctness, practices, performance, security). Use this for code reviews or quality assessments.
+**Structured Analysis** - For consistent evaluation. The model reviews code using a fixed framework (correctness, practices, performance, security, maintainability). Use this for code reviews or quality assessments.
 
 ```java
 String prompt = """
-    <code>
+    <analysis_framework>
+    You are an expert code reviewer. Analyze the code for:
+    
+    1. Correctness
+       - Does it work as intended?
+       - Are there logical errors?
+    
+    2. Best Practices
+       - Follows language conventions?
+       - Appropriate design patterns?
+    
+    3. Performance
+       - Any inefficiencies?
+       - Scalability concerns?
+    
+    4. Security
+       - Potential vulnerabilities?
+       - Input validation?
+    
+    5. Maintainability
+       - Code clarity?
+       - Documentation?
+    
+    <output_format>
+    Provide your analysis in this structure:
+    - Summary: One-sentence overall assessment
+    - Strengths: 2-3 positive points
+    - Issues: List any problems found with severity (High/Medium/Low)
+    - Recommendations: Specific improvements
+    </output_format>
+    </analysis_framework>
+    
+    Code to analyze:
+    ```
     public List getUsers() {
         return database.query("SELECT * FROM users");
     }
-    </code>
-    
-    <framework>
-    Evaluate using these categories:
-    1. Correctness - Logic and functionality
-    2. Best Practices - Code quality
-    3. Performance - Efficiency concerns
-    4. Security - Vulnerabilities
-    </framework>
+    ```
+    Provide your structured analysis:
     """;
 
 String response = chatModel.chat(prompt);
@@ -292,7 +344,7 @@ String response = chatModel.chat(prompt);
 
 <img src="images/structured-analysis-pattern.png" alt="Structured Analysis Pattern" width="800"/>
 
-*Four-category framework for consistent code reviews with severity levels*
+*Framework for consistent code reviews with severity levels*
 
 **Multi-Turn Chat** - For conversations that need context. The model remembers previous messages and builds on them. Use this for interactive help sessions or complex Q&A.
 
