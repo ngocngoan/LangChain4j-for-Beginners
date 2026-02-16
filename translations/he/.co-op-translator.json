@@ -1,7 +1,7 @@
 {
   "00-quick-start/README.md": {
-    "original_hash": "22b5d7c8d7585325e38b37fd29eafe25",
-    "translation_date": "2026-01-06T00:07:57+00:00",
+    "original_hash": "95d0bbe4268e8d98d66c63da24dba477",
+    "translation_date": "2026-02-16T11:56:02+00:00",
     "source_file": "00-quick-start/README.md",
     "language_code": "he"
   },
@@ -18,8 +18,8 @@
     "language_code": "he"
   },
   "02-prompt-engineering/README.md": {
-    "original_hash": "0f54f3d1a10712a331dc8b7acc47c144",
-    "translation_date": "2026-02-10T12:32:16+00:00",
+    "original_hash": "6f278e3510950c52e93a72c740dc5e8f",
+    "translation_date": "2026-02-16T11:57:17+00:00",
     "source_file": "02-prompt-engineering/README.md",
     "language_code": "he"
   },

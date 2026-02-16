@@ -1,109 +1,193 @@
-# Module 02: Kỹ Thuật Tạo Prompt với GPT-5.2
+# Module 02: Kỹ Thuật Lập Trình Prompt với GPT-5.2
 
 ## Mục Lục
 
-- [Bạn Sẽ Học Gì](../../../02-prompt-engineering)
+- [Bạn Sẽ Học Những Gì](../../../02-prompt-engineering)
 - [Yêu Cầu Tiền Đề](../../../02-prompt-engineering)
-- [Hiểu về Kỹ Thuật Tạo Prompt](../../../02-prompt-engineering)
-- [Cách Thức Sử Dụng LangChain4j](../../../02-prompt-engineering)
-- [Các Mẫu Cơ Bản](../../../02-prompt-engineering)
-- [Sử Dụng Tài Nguyên Azure Có Sẵn](../../../02-prompt-engineering)
-- [Ảnh Chụp Ứng Dụng](../../../02-prompt-engineering)
+- [Hiểu Về Kỹ Thuật Lập Trình Prompt](../../../02-prompt-engineering)
+- [Các Nguyên Tắc Cơ Bản về Prompt Engineering](../../../02-prompt-engineering)
+  - [Zero-Shot Prompting](../../../02-prompt-engineering)
+  - [Few-Shot Prompting](../../../02-prompt-engineering)
+  - [Chain of Thought](../../../02-prompt-engineering)
+  - [Role-Based Prompting](../../../02-prompt-engineering)
+  - [Prompt Templates](../../../02-prompt-engineering)
+- [Các Mẫu Nâng Cao](../../../02-prompt-engineering)
+- [Sử Dụng Tài Nguyên Azure Hiện Có](../../../02-prompt-engineering)
+- [Ảnh Chụp Màn Hình Ứng Dụng](../../../02-prompt-engineering)
 - [Khám Phá Các Mẫu](../../../02-prompt-engineering)
-  - [Tham Vọng Thấp vs Cao](../../../02-prompt-engineering)
-  - [Thực Thi Nhiệm Vụ (Tiền Tố Công Cụ)](../../../02-prompt-engineering)
+  - [Nhiệt Tình Thấp vs Cao](../../../02-prompt-engineering)
+  - [Thực Thi Tác Vụ (Phần Mở Đầu Công Cụ)](../../../02-prompt-engineering)
   - [Mã Tự Phản Chiếu](../../../02-prompt-engineering)
   - [Phân Tích Có Cấu Trúc](../../../02-prompt-engineering)
-  - [Chat Nhiều Lượt](../../../02-prompt-engineering)
-  - [Lý Luận Từng Bước Một](../../../02-prompt-engineering)
-  - [Đầu Ra Bị Hạn Chế](../../../02-prompt-engineering)
-- [Bạn Thực Sự Học Gì](../../../02-prompt-engineering)
+  - [Chat Nhiều Vòng](../../../02-prompt-engineering)
+  - [Lý Luận Theo Từng Bước](../../../02-prompt-engineering)
+  - [Đầu Ra Có Hạn Chế](../../../02-prompt-engineering)
+- [Bạn Thực Sự Đang Học Gì](../../../02-prompt-engineering)
 - [Bước Tiếp Theo](../../../02-prompt-engineering)
 
-## Bạn Sẽ Học Gì
+## Bạn Sẽ Học Những Gì
 
-Trong module trước, bạn đã thấy bộ nhớ giúp AI đàm thoại thế nào và sử dụng các Mô hình GitHub cho các tương tác cơ bản. Giờ chúng ta sẽ tập trung vào cách bạn đặt câu hỏi – chính là các prompt – sử dụng GPT-5.2 của Azure OpenAI. Cách bạn cấu trúc prompt ảnh hưởng đáng kể đến chất lượng câu trả lời mà bạn nhận được.
+<img src="../../../translated_images/vi/what-youll-learn.c68269ac048503b2.webp" alt="Bạn Sẽ Học Những Gì" width="800"/>
 
-Chúng ta dùng GPT-5.2 vì nó giới thiệu tính năng điều khiển lý luận – bạn có thể cho mô hình biết mức độ suy nghĩ trước khi trả lời. Điều này làm cho các chiến lược tạo prompt khác nhau rõ ràng hơn và giúp bạn hiểu khi nào nên dùng cách nào. Chúng ta cũng được lợi từ việc Azure hạn chế tần suất thấp hơn so với các Mô hình GitHub cho GPT-5.2.
+Trong module trước, bạn đã thấy cách bộ nhớ hỗ trợ AI hội thoại và sử dụng GitHub Models để tương tác cơ bản. Bây giờ chúng ta sẽ tập trung vào cách bạn đặt câu hỏi — chính các prompt — sử dụng GPT-5.2 của Azure OpenAI. Cách bạn cấu trúc prompt ảnh hưởng lớn đến chất lượng câu trả lời nhận được. Chúng ta bắt đầu bằng việc xem lại các kỹ thuật prompt cơ bản, sau đó đi vào tám mẫu nâng cao tận dụng tối đa khả năng của GPT-5.2.
+
+Chúng ta sẽ dùng GPT-5.2 vì nó giới thiệu điều khiển lý luận — bạn có thể hướng dẫn mô hình suy nghĩ bao nhiêu trước khi trả lời. Điều này làm cho các chiến lược prompt khác nhau trở nên rõ ràng hơn và giúp bạn hiểu khi nào nên dùng từng cách. Chúng ta cũng được lợi từ các giới hạn sử dụng thấp hơn của Azure cho GPT-5.2 so với GitHub Models.
 
 ## Yêu Cầu Tiền Đề
 
 - Hoàn thành Module 01 (đã triển khai tài nguyên Azure OpenAI)
-- Tệp `.env` trong thư mục gốc chứa thông tin xác thực Azure (được tạo bằng `azd up` trong Module 01)
+- File `.env` ở thư mục gốc chứa thông tin đăng nhập Azure (được tạo bởi `azd up` trong Module 01)
 
 > **Lưu ý:** Nếu bạn chưa hoàn thành Module 01, hãy làm theo hướng dẫn triển khai ở đó trước.
 
-## Hiểu về Kỹ Thuật Tạo Prompt
+## Hiểu Về Kỹ Thuật Lập Trình Prompt
 
-Kỹ thuật tạo prompt là về thiết kế văn bản đầu vào sao cho liên tục mang lại kết quả bạn cần. Nó không chỉ là đặt câu hỏi mà là cấu trúc yêu cầu để mô hình hiểu chính xác bạn muốn gì và cách thức cung cấp.
+<img src="../../../translated_images/vi/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Kỹ Thuật Lập Trình Prompt Là Gì?" width="800"/>
 
-Hãy nghĩ nó giống như đưa hướng dẫn cho đồng nghiệp. "Sửa lỗi" là quá chung chung. "Sửa lỗi con trỏ null trong UserService.java dòng 45 bằng cách thêm kiểm tra null" cụ thể hơn. Các mô hình ngôn ngữ cũng vậy – sự cụ thể và cấu trúc rất quan trọng.
+Prompt engineering là về thiết kế văn bản đầu vào sao cho luôn đạt được kết quả bạn cần. Nó không chỉ là hỏi câu hỏi — mà còn là cấu trúc yêu cầu sao cho mô hình hiểu chính xác bạn muốn gì và cách cung cấp nó.
 
-## Cách Thức Sử Dụng LangChain4j
+Hãy nghĩ như việc bạn đưa hướng dẫn cho đồng nghiệp. "Sửa lỗi" thì mơ hồ. "Sửa lỗi null pointer trong UserService.java dòng 45 bằng cách thêm kiểm tra null" thì rõ ràng. Các mô hình ngôn ngữ cũng vậy — sự cụ thể và cấu trúc rất quan trọng.
 
-Module này trình bày các mẫu tạo prompt nâng cao sử dụng cùng nền tảng LangChain4j từ các module trước, với trọng tâm là cấu trúc prompt và điều khiển lý luận.
+<img src="../../../translated_images/vi/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="LangChain4j Phù Hợp Như Thế Nào" width="800"/>
 
-<img src="../../../translated_images/vi/langchain4j-flow.48e534666213010b.webp" alt="Luồng LangChain4j" width="800"/>
+LangChain4j cung cấp hạ tầng — kết nối mô hình, bộ nhớ và loại tin nhắn — trong khi các mẫu prompt chỉ là văn bản được cấu trúc cẩn thận bạn gửi qua hạ tầng đó. Các thành phần cốt lõi là `SystemMessage` (đặt hành vi và vai trò AI) và `UserMessage` (chứa yêu cầu thực tế của bạn).
 
-*Cách LangChain4j kết nối các prompt của bạn với Azure OpenAI GPT-5.2*
+## Các Nguyên Tắc Cơ Bản về Prompt Engineering
 
-**Phụ Thuộc** – Module 02 dùng các phụ thuộc langchain4j sau được định nghĩa trong `pom.xml`:
-```xml
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-```
+<img src="../../../translated_images/vi/five-patterns-overview.160f35045ffd2a94.webp" alt="Tổng Quan Năm Mẫu Prompt Engineering" width="800"/>
 
-**Cấu Hình OpenAiOfficialChatModel** – [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java)
+Trước khi đi vào các mẫu nâng cao trong module này, hãy xem lại năm kỹ thuật prompt nền tảng. Đây là những viên gạch xây dựng mà mọi kỹ sư prompt nên biết. Nếu bạn đã làm qua [mô-đun Quick Start](../00-quick-start/README.md#2-prompt-patterns), bạn đã thấy chúng trong thực tế — dưới đây là khung khái niệm đằng sau chúng.
 
-Mô hình chat được cấu hình thủ công như một bean Spring sử dụng client OpenAI Official, có hỗ trợ endpoint Azure OpenAI. Điểm khác biệt so với Module 01 là cách chúng ta cấu trúc prompt gửi vào `chatModel.chat()`, không phải cách thiết lập mô hình.
+### Zero-Shot Prompting
 
-**Tin Nhắn Hệ Thống và Người Dùng** – [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)
+Cách đơn giản nhất: cho mô hình một chỉ dẫn trực tiếp mà không có ví dụ. Mô hình dựa hoàn toàn vào việc học để hiểu và thực hiện nhiệm vụ. Cách này phù hợp với yêu cầu đơn giản, nơi hành vi mong đợi dễ hiểu.
 
-LangChain4j tách riêng các loại tin nhắn để minh bạch. `SystemMessage` đặt hành vi và ngữ cảnh AI (ví dụ: "Bạn là người đánh giá code"), còn `UserMessage` chứa yêu cầu thực tế. Việc tách biệt giúp duy trì hành vi AI nhất quán trên các truy vấn khác nhau.
+<img src="../../../translated_images/vi/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
+
+*Chỉ dẫn trực tiếp không có ví dụ — mô hình suy luận nhiệm vụ chỉ từ chỉ dẫn*
 
 ```java
-SystemMessage systemMsg = SystemMessage.from(
-    "You are a helpful Java programming expert."
-);
-
-UserMessage userMsg = UserMessage.from(
-    "Explain what a List is in Java"
-);
-
-String response = chatModel.chat(systemMsg, userMsg);
+String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
+String response = model.chat(prompt);
+// Phản hồi: "Tích cực"
 ```
 
-<img src="../../../translated_images/vi/message-types.93e0779798a17c9d.webp" alt="Kiến Trúc Các Loại Tin Nhắn" width="800"/>
+**Khi nào dùng:** Phân loại đơn giản, câu hỏi trực tiếp, dịch thuật hoặc bất kỳ tác vụ nào mô hình có thể xử lý mà không cần hướng dẫn thêm.
 
-*SystemMessage cung cấp ngữ cảnh lâu dài trong khi UserMessages chứa các yêu cầu riêng lẻ*
+### Few-Shot Prompting
 
-**MessageWindowChatMemory cho Đàm Thoại Nhiều Lượt** – Với mẫu đàm thoại nhiều lượt, chúng ta tái sử dụng `MessageWindowChatMemory` từ Module 01. Mỗi phiên làm việc có một thể hiện bộ nhớ riêng lưu trong `Map<String, ChatMemory>`, cho phép nhiều cuộc hội thoại đồng thời mà không bị lẫn ngữ cảnh.
+Cung cấp ví dụ minh họa mẫu bạn muốn mô hình theo. Mô hình học được định dạng đầu vào-đầu ra mong đợi từ ví dụ và áp dụng cho dữ liệu mới. Cách này cải thiện rất nhiều sự nhất quán khi định dạng hoặc hành vi mong muốn không rõ ràng.
 
-**Mẫu Prompt** – Trọng tâm thực sự ở đây là kỹ thuật tạo prompt, không phải API mới của LangChain4j. Mỗi mẫu (tham vọng thấp, cao, thực thi nhiệm vụ, v.v.) dùng cùng phương pháp `chatModel.chat(prompt)` nhưng với chuỗi prompt được cấu trúc kỹ lưỡng. Các thẻ XML, hướng dẫn, và định dạng đều nằm trong văn bản prompt, không phải tính năng của LangChain4j.
+<img src="../../../translated_images/vi/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-**Điều Khiển Lý Luận** – Sự nỗ lực lý luận của GPT-5.2 được điều khiển qua các chỉ dẫn prompt như "tối đa 2 bước lý luận" hoặc "khám phá kỹ lưỡng". Đây là kỹ thuật tạo prompt, không phải cấu hình LangChain4j. Thư viện chỉ đơn giản chuyển prompt của bạn tới mô hình.
+*Học từ ví dụ — mô hình nhận diện mẫu và áp dụng cho đầu vào mới*
 
-Điều then chốt: LangChain4j cung cấp hạ tầng (kết nối mô hình qua [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), bộ nhớ, xử lý tin nhắn qua [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), trong khi module này dạy bạn cách tạo prompt hiệu quả trong hạ tầng đó.
+```java
+String prompt = """
+    Classify the sentiment as positive, negative, or neutral.
+    
+    Examples:
+    Text: "This product exceeded my expectations!" → Positive
+    Text: "It's okay, nothing special." → Neutral
+    Text: "Waste of money, very disappointed." → Negative
+    
+    Now classify this:
+    Text: "Best purchase I've made all year!"
+    """;
+String response = model.chat(prompt);
+```
 
-## Các Mẫu Cơ Bản
+**Khi nào dùng:** Phân loại tùy chỉnh, format đồng nhất, tác vụ chuyên ngành, hoặc khi kết quả zero-shot không nhất quán.
 
-Không phải vấn đề nào cũng cần cùng một cách tiếp cận. Có câu hỏi cần trả lời nhanh, có câu cần suy nghĩ sâu. Có câu cần hiển thị lý luận, có câu chỉ cần kết quả. Module này bao gồm tám mẫu tạo prompt – mỗi mẫu tối ưu cho các hoàn cảnh khác nhau. Bạn sẽ thử nghiệm tất cả để học khi nào cách nào hiệu quả.
+### Chain of Thought
 
-<img src="../../../translated_images/vi/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Tám Mẫu Kỹ Thuật Tạo Prompt" width="800"/>
+Yêu cầu mô hình thể hiện lý luận từng bước. Thay vì trả lời ngay lập tức, mô hình chia nhỏ vấn đề và lý giải từng phần rõ ràng. Điều này nâng cao độ chính xác trên toán học, logic, và các nhiệm vụ cần suy luận nhiều bước.
 
-*Tổng quan về tám mẫu kỹ thuật tạo prompt và các trường hợp sử dụng*
+<img src="../../../translated_images/vi/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
+
+*Suy luận từng bước — phân nhỏ vấn đề phức tạp thành các bước logic rõ ràng*
+
+```java
+String prompt = """
+    Problem: A store has 15 apples. They sell 8 apples and then 
+    receive a shipment of 12 more apples. How many apples do they have now?
+    
+    Let's solve this step-by-step:
+    """;
+String response = model.chat(prompt);
+// Mô hình cho thấy: 15 - 8 = 7, sau đó 7 + 12 = 19 quả táo
+```
+
+**Khi nào dùng:** Các bài toán, câu đố logic, gỡ lỗi, hoặc bất cứ tác vụ nào việc thể hiện quá trình suy luận giúp tăng độ chính xác và tin cậy.
+
+### Role-Based Prompting
+
+Đặt vai trò hoặc persona cho AI trước khi hỏi. Điều này cung cấp ngữ cảnh tạo ra tông điệu, độ sâu và trọng tâm khác cho câu trả lời. Một "kiến trúc sư phần mềm" sẽ cho lời khuyên khác "lập trình viên mới" hoặc "chuyên viên kiểm thử an ninh".
+
+<img src="../../../translated_images/vi/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
+
+*Đặt ngữ cảnh và nhân vật — cùng một câu hỏi nhưng tùy vai trò sẽ có câu trả lời khác nhau*
+
+```java
+String prompt = """
+    You are an experienced software architect reviewing code.
+    Provide a brief code review for this function:
+    
+    def calculate_total(items):
+        total = 0
+        for item in items:
+            total = total + item['price']
+        return total
+    """;
+String response = model.chat(prompt);
+```
+
+**Khi nào dùng:** Đánh giá code, giảng dạy, phân tích chuyên ngành, hoặc khi bạn cần câu trả lời phù hợp trình độ chuyên môn hoặc góc nhìn cụ thể.
+
+### Prompt Templates
+
+Tạo prompt có thể tái sử dụng với các biến chỗ trống. Thay vì viết prompt mới mỗi lần, định nghĩa một mẫu và điền giá trị khác nhau. Lớp `PromptTemplate` của LangChain4j làm việc này dễ dàng với cú pháp `{{variable}}`.
+
+<img src="../../../translated_images/vi/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
+
+*Prompt tái sử dụng với biến chỗ trống — một mẫu, nhiều lần dùng*
+
+```java
+PromptTemplate template = PromptTemplate.from(
+    "What's the best time to visit {{destination}} for {{activity}}?"
+);
+
+Prompt prompt = template.apply(Map.of(
+    "destination", "Paris",
+    "activity", "sightseeing"
+));
+
+String response = model.chat(prompt.text());
+```
+
+**Khi nào dùng:** Truy vấn lặp đi lặp lại với đầu vào khác nhau, xử lý hàng loạt, xây dựng quy trình AI tái sử dụng, hoặc bất cứ tình huống nào cấu trúc prompt giữ nguyên nhưng dữ liệu thay đổi.
+
+---
+
+Năm nguyên tắc cơ bản này cung cấp cho bạn bộ công cụ vững chắc cho hầu hết nhiệm vụ prompt. Phần còn lại của module xây dựng dựa trên chúng với **tám mẫu nâng cao** tận dụng điều khiển lý luận, tự đánh giá và khả năng đầu ra có cấu trúc của GPT-5.2.
+
+## Các Mẫu Nâng Cao
+
+Khi đã bao quát các nguyên lý cơ bản, hãy chuyển sang tám mẫu nâng cao làm cho module này đặc biệt. Không phải vấn đề nào cũng cần cách tiếp cận giống nhau. Một số câu hỏi cần trả lời nhanh, có câu cần suy nghĩ sâu. Có câu cần thể hiện lý luận rõ ràng, câu khác chỉ cần kết quả. Mỗi mẫu dưới đây được tối ưu cho tình huống khác nhau — và điều khiển lý luận của GPT-5.2 làm sự khác biệt càng rõ nét hơn.
+
+<img src="../../../translated_images/vi/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Tám Mẫu Prompting" width="800"/>
+
+*Tổng quan tám mẫu kỹ thuật prompt và trường hợp sử dụng*
+
+<img src="../../../translated_images/vi/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Điều Khiển Lý Luận Với GPT-5.2" width="800"/>
+
+*Điều khiển lý luận của GPT-5.2 cho phép bạn chỉ định mức độ suy nghĩ mô hình nên thực hiện — từ trả lời nhanh gọn đến lý giải sâu sắc*
 
 <img src="../../../translated_images/vi/reasoning-effort.db4a3ba5b8e392c1.webp" alt="So Sánh Nỗ Lực Lý Luận" width="800"/>
 
-*Tham vọng thấp (nhanh, trực tiếp) vs Tham vọng cao (kỹ lưỡng, khám phá) trong các cách lý luận*
+*Nhiệt tình thấp (nhanh, trực tiếp) so với nhiệt tình cao (tỉ mỉ, khám phá) trong cách lý luận*
 
-**Tham Vọng Thấp (Nhanh & Tập Trung)** – Dùng cho câu hỏi đơn giản muốn câu trả lời nhanh và trực tiếp. Mô hình thực hiện ít bước lý luận – tối đa 2 bước. Dùng cho tính toán, tra cứu, hoặc câu hỏi đơn giản.
+**Nhiệt Tình Thấp (Nhanh & Tập Trung)** - Cho các câu hỏi đơn giản bạn muốn câu trả lời nhanh, trực tiếp. Mô hình suy nghĩ tối thiểu - tối đa 2 bước. Dùng cho phép tính, tra cứu hoặc câu hỏi đơn giản.
 
 ```java
 String prompt = """
@@ -117,11 +201,11 @@ String response = chatModel.chat(prompt);
 ```
 
 > 💡 **Khám phá với GitHub Copilot:** Mở [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) và hỏi:
-> - "Sự khác biệt giữa mẫu tham vọng thấp và tham vọng cao là gì?"
-> - "Các thẻ XML trong prompt giúp cấu trúc phản hồi AI ra sao?"
-> - "Khi nào tôi nên dùng mẫu tự phản chiếu so với hướng dẫn trực tiếp?"
+> - "Sự khác biệt giữa mẫu prompt nhiệt tình thấp và nhiệt tình cao là gì?"
+> - "Các thẻ XML trong prompt giúp cấu trúc câu trả lời AI thế nào?"
+> - "Khi nào nên dùng mẫu tự phản ánh thay vì chỉ dẫn trực tiếp?"
 
-**Tham Vọng Cao (Sâu Sắc & Kỹ Lưỡng)** – Cho các vấn đề phức tạp cần phân tích toàn diện. Mô hình khám phá kỹ và hiển thị lý luận chi tiết. Dùng cho thiết kế hệ thống, quyết định kiến trúc, hoặc nghiên cứu phức tạp.
+**Nhiệt Tình Cao (Sâu & Kỹ Lưỡng)** - Cho các vấn đề phức tạp bạn muốn phân tích toàn diện. Mô hình khám phá kỹ và thể hiện lý luận chi tiết. Dùng cho thiết kế hệ thống, quyết định kiến trúc hoặc nghiên cứu phức tạp.
 
 ```java
 String prompt = """
@@ -134,7 +218,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Thực Thi Nhiệm Vụ (Tiến Độ Từng Bước)** – Dùng cho quy trình nhiều bước. Mô hình cung cấp kế hoạch trước, kể chi tiết từng bước khi thực hiện, rồi tổng kết. Dùng cho di cư, triển khai, hoặc mọi quy trình phức tạp.
+**Thực Thi Tác Vụ (Tiến Trình Từng Bước)** - Cho quy trình làm việc nhiều bước. Mô hình cung cấp kế hoạch trước, tường thuật từng bước khi làm việc, rồi tổng kết. Dùng cho di chuyển dữ liệu, triển khai hoặc bất kỳ quá trình nhiều bước nào.
 
 ```java
 String prompt = """
@@ -147,18 +231,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Chuỗi suy nghĩ (Chain-of-Thought) yêu cầu mô hình hiển thị quá trình lý luận, nâng cao độ chính xác trong các nhiệm vụ phức tạp. Phân chia từng bước giúp người và AI hiểu logic hơn.
+Mẫu Chain-of-Thought yêu cầu mô hình thể hiện quá trình lý luận, nâng cao độ chính xác cho nhiệm vụ phức tạp. Việc phân tách từng bước giúp cả người và AI hiểu logic.
 
-> **🤖 Thử với chat [GitHub Copilot](https://github.com/features/copilot):** Hỏi về mẫu này:
-> - "Làm sao điều chỉnh mẫu thực thi nhiệm vụ cho các tác vụ chạy lâu?"
-> - "Các phương pháp hay nhất để cấu trúc tiền tố công cụ trong ứng dụng sản xuất là gì?"
-> - "Làm sao ghi lại và hiển thị tiến độ trung gian trong giao diện người dùng?"
+> **🤖 Thử với Chat [GitHub Copilot](https://github.com/features/copilot):** Hỏi về mẫu này:
+> - "Làm sao mình điều chỉnh mẫu thực thi tác vụ cho các hoạt động chạy lâu?"
+> - "Các thực hành tốt nhất để cấu trúc phần mở đầu công cụ trong ứng dụng sản xuất là gì?"
+> - "Làm sao mình ghi lại và hiển thị tiến trình trung gian trong giao diện UI?"
 
-<img src="../../../translated_images/vi/task-execution-pattern.9da3967750ab5c1e.webp" alt="Mẫu Thực Thi Nhiệm Vụ" width="800"/>
+<img src="../../../translated_images/vi/task-execution-pattern.9da3967750ab5c1e.webp" alt="Mẫu Thực Thi Tác Vụ" width="800"/>
 
-*Kế hoạch → Thực thi → Tổng kết cho các nhiệm vụ nhiều bước*
+*Kế hoạch → Thực thi → Tổng kết cho tác vụ nhiều bước*
 
-**Mã Tự Phản Chiếu** – Dùng để tạo mã chất lượng sản xuất. Mô hình sinh mã, kiểm tra theo tiêu chí chất lượng, và cải tiến theo vòng lặp. Dùng khi xây dựng tính năng hoặc dịch vụ mới.
+**Mã Tự Phản Chiếu** - Cho việc tạo mã chất lượng sản xuất. Mô hình tạo mã, kiểm tra tiêu chí chất lượng, cải tiến lặp đi lặp lại. Dùng khi xây dựng tính năng hoặc dịch vụ mới.
 
 ```java
 String prompt = """
@@ -177,9 +261,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/vi/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Chu Kỳ Tự Phản Chiếu" width="800"/>
 
-*Vòng lặp cải tiến tuần tự – tạo, đánh giá, xác định vấn đề, cải thiện, lặp lại*
+*Vòng cải tiến lặp - tạo, đánh giá, xác định lỗi, cải thiện, lặp lại*
 
-**Phân Tích Có Cấu Trúc** – Dùng để đánh giá nhất quán. Mô hình xem xét mã theo khuôn khổ cố định (độ đúng, thực hành, hiệu suất, bảo mật). Dùng cho đánh giá mã hoặc kiểm định chất lượng.
+**Phân Tích Có Cấu Trúc** - Cho đánh giá nhất quán. Mô hình kiểm tra code theo khung cố định (đúng đắn, thực hành tốt, hiệu suất, an toàn). Dùng cho đánh giá code hoặc kiểm định chất lượng.
 
 ```java
 String prompt = """
@@ -201,16 +285,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Thử với chat [GitHub Copilot](https://github.com/features/copilot):** Hỏi về phân tích có cấu trúc:
-> - "Làm sao tùy chỉnh khuôn khổ phân tích cho các loại đánh giá mã khác nhau?"
-> - "Phương pháp tốt nhất để phân tích và xử lý đầu ra có cấu trúc programmatic là gì?"
-> - "Làm sao đảm bảo mức độ nghiêm trọng nhất quán giữa các phiên đánh giá khác nhau?"
+> **🤖 Thử với Chat [GitHub Copilot](https://github.com/features/copilot):** Hỏi về phân tích có cấu trúc:
+> - "Làm sao để tùy chỉnh khung phân tích cho các loại đánh giá code khác nhau?"
+> - "Cách tốt nhất để phân tích và xử lý đầu ra có cấu trúc theo chương trình là gì?"
+> - "Làm sao đảm bảo mức độ nghiêm trọng đồng nhất qua các phiên đánh giá khác nhau?"
 
 <img src="../../../translated_images/vi/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Mẫu Phân Tích Có Cấu Trúc" width="800"/>
 
-*Khuôn khổ bốn mục để đánh giá mã nhất quán với các mức độ nghiêm trọng*
+*Khung bốn loại để đánh giá code nhất quán với các mức độ nghiêm trọng*
 
-**Chat Nhiều Lượt** – Dùng cho hội thoại cần ngữ cảnh. Mô hình nhớ các tin nhắn trước và xây dựng dựa trên đó. Dùng cho phiên trợ giúp tương tác hoặc hỏi đáp phức tạp.
+**Chat Nhiều Vòng** - Cho cuộc hội thoại cần ngữ cảnh. Mô hình nhớ các tin nhắn trước và xây dựng dựa trên đó. Dùng cho phiên trợ giúp tương tác hoặc hỏi đáp phức tạp.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -228,7 +312,7 @@ memory.add(aiMessage2);
 
 *Cách ngữ cảnh hội thoại tích lũy qua nhiều lượt cho đến khi đạt giới hạn token*
 
-**Lý Luận Từng Bước Một** – Cho các vấn đề cần logic rõ ràng. Mô hình hiển thị lý luận rõ ràng từng bước. Dùng cho bài toán toán học, câu đố logic, hoặc khi bạn cần hiểu quy trình suy nghĩ.
+**Lý Luận Theo Từng Bước** - Cho các vấn đề cần logic hiển thị. Mô hình thể hiện rõ ràng lý luận từng bước. Dùng cho bài toán toán học, câu đố logic hoặc khi bạn cần hiểu quá trình tư duy.
 
 ```java
 String prompt = """
@@ -242,11 +326,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/vi/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Mẫu Từng Bước Một" width="800"/>
+<img src="../../../translated_images/vi/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Mẫu Từng Bước" width="800"/>
 
-*Phân tách vấn đề thành các bước logic rõ ràng*
+*Phân tách vấn đề thành từng bước logic rõ ràng*
 
-**Đầu Ra Bị Hạn Chế** – Cho câu trả lời cần theo định dạng cụ thể. Mô hình tuân thủ nghiêm ngặt các quy tắc về định dạng và độ dài. Dùng cho tóm tắt hoặc khi cần cấu trúc đầu ra chính xác.
+**Đầu Ra Có Hạn Chế** - Cho câu trả lời với yêu cầu định dạng cụ thể. Mô hình tuân thủ nghiêm ngặt các quy tắc về format và độ dài. Dùng cho tóm tắt hoặc khi cần cấu trúc đầu ra chính xác.
 
 ```java
 String prompt = """
@@ -262,40 +346,39 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/vi/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Mẫu Đầu Ra Bị Hạn Chế" width="800"/>
+<img src="../../../translated_images/vi/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Mẫu Đầu Ra Có Hạn Chế" width="800"/>
 
-*Áp dụng quy định về định dạng, độ dài và cấu trúc cụ thể*
+*Áp đặt các yêu cầu định dạng, kích thước, và cấu trúc nghiêm ngặt*
 
-## Sử Dụng Tài Nguyên Azure Có Sẵn
+## Sử Dụng Tài Nguyên Azure Hiện Có
 
 **Xác minh triển khai:**
 
-Đảm bảo tệp `.env` tồn tại trong thư mục gốc với thông tin xác thực Azure (đã tạo trong Module 01):
+Đảm bảo file `.env` tồn tại ở thư mục gốc với thông tin xác thực Azure (được tạo trong Module 01):
 ```bash
 cat ../.env  # Nên hiển thị AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Khởi động ứng dụng:**
 
-> **Lưu ý:** Nếu bạn đã khởi động tất cả ứng dụng bằng `./start-all.sh` từ Module 01, module này đã chạy ở cổng 8083. Bạn có thể bỏ qua các lệnh khởi động dưới đây và truy cập trực tiếp http://localhost:8083.
+> **Lưu ý:** Nếu bạn đã khởi động tất cả ứng dụng bằng `./start-all.sh` từ Module 01, module này đã chạy trên cổng 8083. Bạn có thể bỏ qua các lệnh khởi động bên dưới và truy cập trực tiếp http://localhost:8083.
 
-**Tùy chọn 1: Sử dụng Spring Boot Dashboard (Khuyên dùng cho người dùng VS Code)**
+**Cách 1: Sử dụng Spring Boot Dashboard (Khuyên dùng cho người dùng VS Code)**
 
-Dev container bao gồm tiện ích mở rộng Spring Boot Dashboard, cung cấp giao diện trực quan quản lý tất cả ứng dụng Spring Boot. Bạn có thể tìm thấy nó ở Thanh Hoạt Động bên trái VS Code (tìm biểu tượng Spring Boot).
-
-Từ Spring Boot Dashboard, bạn có thể:
-- Xem tất cả các ứng dụng Spring Boot trong workspace
-- Khởi động/dừng ứng dụng chỉ với một cú nhấp
+Dev container bao gồm tiện ích mở rộng Spring Boot Dashboard, cung cấp giao diện trực quan để quản lý tất cả ứng dụng Spring Boot. Bạn có thể tìm thấy nó trong Thanh Hoạt Động bên trái màn hình VS Code (tìm biểu tượng Spring Boot).
+Từ Bảng điều khiển Spring Boot, bạn có thể:
+- Xem tất cả các ứng dụng Spring Boot có trong workspace
+- Khởi động/dừng ứng dụng chỉ với một cú nhấp chuột
 - Xem nhật ký ứng dụng theo thời gian thực
 - Giám sát trạng thái ứng dụng
 
-Chỉ cần nhấn nút chạy bên cạnh "prompt-engineering" để khởi động module này hoặc chạy tất cả các module cùng lúc.
+Chỉ cần nhấp vào nút phát bên cạnh "prompt-engineering" để khởi động module này, hoặc khởi động tất cả các module cùng lúc.
 
-<img src="../../../translated_images/vi/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
+<img src="../../../translated_images/vi/dashboard.da2c2130c904aaf0.webp" alt="Bảng điều khiển Spring Boot" width="400"/>
 
-**Tùy chọn 2: Sử dụng tập lệnh shell**
+**Tùy chọn 2: Sử dụng shell script**
 
-Khởi động các ứng dụng web (các module 01-04):
+Khởi động tất cả ứng dụng web (module 01-04):
 
 **Bash:**
 ```bash
@@ -323,9 +406,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Cả hai script tự động nạp biến môi trường từ tệp `.env` trong thư mục gốc và sẽ xây dựng file JAR nếu chưa có.
+Cả hai script đều tự động tải biến môi trường từ file `.env` gốc và sẽ xây dựng các file JAR nếu chưa tồn tại.
 
-> **Lưu ý:** Nếu bạn muốn tự xây dựng trước khi khởi động:
+> **Lưu ý:** Nếu bạn muốn tự xây dựng tất cả các module trước khi khởi động:
 >
 > **Bash:**
 > ```bash
@@ -339,7 +422,7 @@ Cả hai script tự động nạp biến môi trường từ tệp `.env` trong
 > mvn clean package -DskipTests
 > ```
 
-Mở http://localhost:8083 trong trình duyệt.
+Mở http://localhost:8083 trong trình duyệt của bạn.
 
 **Để dừng:**
 
@@ -357,108 +440,109 @@ cd .. && ./stop-all.sh  # Tất cả các mô-đun
 cd ..; .\stop-all.ps1  # Tất cả các mô-đun
 ```
 
-## Ảnh Chụp Ứng Dụng
+## Ảnh chụp màn hình ứng dụng
 
-<img src="../../../translated_images/vi/dashboard-home.5444dbda4bc1f79d.webp" alt="Trang Chủ Dashboard" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
+<img src="../../../translated_images/vi/dashboard-home.5444dbda4bc1f79d.webp" alt="Trang chủ Bảng điều khiển" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Bảng điều khiển chính hiển thị tám mẫu kỹ thuật tạo prompt với đặc điểm và trường hợp sử dụng*
+*Bảng điều khiển chính hiển thị 8 mẫu prompt engineering với đặc tính và trường hợp sử dụng của chúng*
 
-## Khám Phá Các Mẫu
+## Khám phá các Mẫu
 
-Giao diện web cho phép bạn thử các chiến lược tạo prompt khác nhau. Mỗi mẫu giải quyết các vấn đề khác nhau – hãy thử để biết khi nào cách nào phát huy hiệu quả.
+Giao diện web cho phép bạn thử nghiệm với các chiến lược prompt khác nhau. Mỗi mẫu giải quyết các vấn đề khác nhau - hãy thử chúng để xem khi nào từng cách tiếp cận phát huy hiệu quả.
 
-### Tham Vọng Thấp vs Cao
+### Độ Nhiệt Tình Thấp vs Cao
 
-Hãy hỏi một câu đơn giản như "15% của 200 là bao nhiêu?" bằng cách dùng Tham Vọng Thấp. Bạn sẽ nhận được câu trả lời nhanh và trực tiếp. Bây giờ thử hỏi câu phức tạp như "Thiết kế chiến lược bộ nhớ đệm cho một API có lưu lượng cao" dùng Tham Vọng Cao. Quan sát cách mô hình chậm lại và đưa ra lý luận chi tiết. Cùng một mô hình, cùng một cấu trúc câu hỏi – nhưng prompt báo cho nó biết mức độ suy nghĩ cần làm.
-<img src="../../../translated_images/vi/low-eagerness-demo.898894591fb23aa0.webp" alt="Demo Ít Nhiệt Tình" width="800"/>
+Hãy hỏi một câu đơn giản như "15% của 200 là bao nhiêu?" với Độ Nhiệt Tình Thấp. Bạn sẽ nhận được câu trả lời trực tiếp ngay lập tức. Bây giờ hãy hỏi điều phức tạp như "Thiết kế chiến lược cache cho API có lưu lượng cao" với Độ Nhiệt Tình Cao. Quan sát cách mô hình chậm lại và đưa ra lý luận chi tiết. Cùng một mô hình, cùng cấu trúc câu hỏi - nhưng prompt chỉ dẫn nó suy nghĩ bao nhiêu.
 
-*Tính toán nhanh với lý luận tối thiểu*
+<img src="../../../translated_images/vi/low-eagerness-demo.898894591fb23aa0.webp" alt="Demo Độ Nhiệt Tình Thấp" width="800"/>
 
-<img src="../../../translated_images/vi/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Demo Nhiệt Tình Cao" width="800"/>
+*Tính toán nhanh với ít suy luận*
 
-*Chiến lược lưu trữ toàn diện (2.8MB)*
+<img src="../../../translated_images/vi/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Demo Độ Nhiệt Tình Cao" width="800"/>
 
-### Thực Thi Nhiệm Vụ (Mở đầu Công Cụ)
+*Chiến lược cache toàn diện (2.8MB)*
 
-Các quy trình làm việc nhiều bước được hưởng lợi từ việc lập kế hoạch trước và thuật lại tiến trình. Mô hình phác thảo những gì nó sẽ làm, thuật lại từng bước, sau đó tóm tắt kết quả.
+### Thực thi Nhiệm vụ (Các phần mở đầu công cụ)
 
-<img src="../../../translated_images/vi/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Demo Thực Thi Nhiệm Vụ" width="800"/>
+Các workflow đa bước hưởng lợi từ việc lập kế hoạch trước và thuyết minh tiến trình. Mô hình phác thảo những gì sẽ làm, thuyết minh từng bước, rồi tổng kết kết quả.
 
-*Tạo một REST endpoint với thuật lại từng bước (3.9MB)*
+<img src="../../../translated_images/vi/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Demo Thực thi Nhiệm vụ" width="800"/>
+
+*Tạo một endpoint REST với thuyết minh từng bước (3.9MB)*
 
 ### Mã Tự Phản Chiếu
 
-Thử "Tạo dịch vụ kiểm tra email". Thay vì chỉ tạo mã và dừng lại, mô hình tạo ra, đánh giá dựa trên tiêu chí chất lượng, xác định điểm yếu và cải tiến. Bạn sẽ thấy nó lặp đi lặp lại cho đến khi mã đạt chuẩn sản xuất.
+Thử "Tạo một dịch vụ xác thực email". Thay vì chỉ tạo mã rồi dừng, mô hình tạo, đánh giá theo tiêu chí chất lượng, xác định điểm yếu, và cải tiến. Bạn sẽ thấy nó lặp đi lặp lại cho tới khi mã đạt tiêu chuẩn sản xuất.
 
 <img src="../../../translated_images/vi/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Demo Mã Tự Phản Chiếu" width="800"/>
 
-*Dịch vụ kiểm tra email hoàn chỉnh (5.2MB)*
+*Dịch vụ xác thực email hoàn chỉnh (5.2MB)*
 
-### Phân Tích Có Cấu Trúc
+### Phân tích Cấu trúc
 
-Đánh giá mã cần các khung đánh giá nhất quán. Mô hình phân tích mã theo các danh mục cố định (độ chính xác, thực hành, hiệu suất, bảo mật) với các mức độ nghiêm trọng.
+Đánh giá mã cần khung đánh giá nhất quán. Mô hình phân tích mã sử dụng các danh mục cố định (độ chính xác, thực hành, hiệu suất, bảo mật) với các mức độ nghiêm trọng.
 
-<img src="../../../translated_images/vi/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Demo Phân Tích Có Cấu Trúc" width="800"/>
+<img src="../../../translated_images/vi/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Demo Phân tích Cấu trúc" width="800"/>
 
-*Đánh giá mã theo khuôn khổ*
+*Đánh giá mã dựa trên khung*
 
-### Trò Chuyện Nhiều Vòng
+### Hội thoại Nhiều lượt
 
-Hỏi "Spring Boot là gì?" rồi ngay lập tức hỏi tiếp "Cho tôi một ví dụ". Mô hình nhớ câu hỏi đầu tiên và cung cấp ví dụ Spring Boot cụ thể cho bạn. Nếu không có bộ nhớ, câu hỏi thứ hai sẽ quá mơ hồ.
+Hỏi "Spring Boot là gì?" rồi ngay lập tức tiếp tục với "Cho tôi một ví dụ". Mô hình nhớ câu hỏi đầu tiên và đưa ra ví dụ Spring Boot cụ thể. Nếu không có bộ nhớ, câu hỏi thứ hai sẽ quá mơ hồ.
 
-<img src="../../../translated_images/vi/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Demo Trò Chuyện Nhiều Vòng" width="800"/>
+<img src="../../../translated_images/vi/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Demo Hội thoại Nhiều lượt" width="800"/>
 
-*Bảo toàn ngữ cảnh qua các câu hỏi*
+*Giữ nguyên ngữ cảnh qua các câu hỏi*
 
-### Lý Luận Từng Bước
+### Lý luận Từng bước
 
-Chọn một bài toán học toán và thử cả Lý Luận Từng Bước và Ít Nhiệt Tình. Ít nhiệt tình chỉ cho bạn câu trả lời - nhanh nhưng mơ hồ. Từng bước cho bạn thấy mọi phép tính và quyết định.
+Chọn một bài toán toán học và thử với cả Lý luận Từng bước và Độ Nhiệt Tình Thấp. Độ nhiệt tình thấp chỉ đưa ra câu trả lời nhanh - nhanh nhưng không rõ ràng. Lý luận từng bước cho bạn thấy mọi phép tính và quyết định.
 
-<img src="../../../translated_images/vi/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Demo Lý Luận Từng Bước" width="800"/>
+<img src="../../../translated_images/vi/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Demo Lý luận Từng bước" width="800"/>
 
-*Bài toán toán học với các bước rõ ràng*
+*Bài toán toán với các bước rõ ràng*
 
-### Đầu Ra Có Hạn Chế
+### Đầu ra Bị giới hạn
 
-Khi bạn cần định dạng hoặc số từ cụ thể, mẫu này bắt buộc tuân thủ chặt chẽ. Thử tạo một bản tóm tắt với chính xác 100 từ dạng gạch đầu dòng.
+Khi bạn cần định dạng cụ thể hoặc số lượng từ cố định, mẫu này bắt buộc tuân thủ nghiêm ngặt. Thử tạo một bản tóm tắt với đúng 100 từ theo định dạng gạch đầu dòng.
 
-<img src="../../../translated_images/vi/constrained-output-demo.567cc45b75da1633.webp" alt="Demo Đầu Ra Có Hạn Chế" width="800"/>
+<img src="../../../translated_images/vi/constrained-output-demo.567cc45b75da1633.webp" alt="Demo Đầu ra Bị giới hạn" width="800"/>
 
 *Tóm tắt học máy với kiểm soát định dạng*
 
-## Những Gì Bạn Thực Sự Đang Học
+## Những gì Bạn Thực Sự Học được
 
-**Nỗ Lực Lý Luận Thay Đổi Mọi Thứ**
+**Nỗ lực Lý luận Thay đổi Mọi thứ**
 
-GPT-5.2 cho phép bạn kiểm soát nỗ lực tính toán qua các gợi ý. Nỗ lực thấp có nghĩa phản hồi nhanh với khám phá tối thiểu. Nỗ lực cao nghĩa là mô hình dành thời gian suy nghĩ sâu sắc. Bạn học cách điều chỉnh nỗ lực với độ phức tạp nhiệm vụ - không phí thời gian cho câu hỏi đơn giản, nhưng cũng không vội vàng khi quyết định phức tạp.
+GPT-5.2 cho phép bạn điều khiển nỗ lực tính toán thông qua prompt của mình. Nỗ lực thấp có nghĩa là trả lời nhanh với ít khám phá. Nỗ lực cao nghĩa là mô hình dành thời gian suy nghĩ sâu sắc. Bạn đang học cách phối hợp nỗ lực với độ phức tạp nhiệm vụ - đừng lãng phí thời gian cho câu hỏi đơn giản, nhưng cũng đừng vội vàng với quyết định phức tạp.
 
-**Cấu Trúc Dẫn Dắt Hành Vi**
+**Cấu trúc Hướng Dẫn Hành vi**
 
-Bạn có để ý các thẻ XML trong gợi ý? Chúng không phải để trang trí. Mô hình tuân theo hướng dẫn có cấu trúc đáng tin cậy hơn so với văn bản tự do. Khi bạn cần quy trình đa bước hay logic phức tạp, cấu trúc giúp mô hình theo dõi vị trí và bước tiếp theo.
+Có nhận thấy các thẻ XML trong prompt không? Chúng không phải để trang trí. Mô hình theo các chỉ dẫn có cấu trúc đáng tin cậy hơn so với văn bản tự do. Khi bạn cần quy trình đa bước hoặc logic phức tạp, cấu trúc giúp mô hình theo dõi vị trí và bước tiếp theo.
 
-<img src="../../../translated_images/vi/prompt-structure.a77763d63f4e2f89.webp" alt="Cấu Trúc Gợi Ý" width="800"/>
+<img src="../../../translated_images/vi/prompt-structure.a77763d63f4e2f89.webp" alt="Cấu trúc Prompt" width="800"/>
 
-*Cấu trúc của một gợi ý được tổ chức tốt với các phần rõ ràng và bố cục kiểu XML*
+*Cấu tạo của một prompt có cấu trúc tốt với các phần rõ ràng và tổ chức kiểu XML*
 
-**Chất Lượng Qua Tự Đánh Giá**
+**Chất lượng Qua Tự Đánh giá**
 
-Mẫu tự phản chiếu hoạt động bằng cách làm rõ các tiêu chí chất lượng. Thay vì hy vọng mô hình "làm đúng", bạn nói rõ “đúng” là gì: logic chính xác, xử lý lỗi, hiệu suất, bảo mật. Mô hình sau đó có thể tự đánh giá đầu ra và cải thiện. Điều này biến việc tạo mã từ xổ số thành quy trình.
+Các mẫu tự phản chiếu hoạt động bằng cách làm rõ các tiêu chí chất lượng. Thay vì hy vọng mô hình "làm đúng", bạn chỉ rõ chính xác "đúng" nghĩa là gì: logic chính xác, xử lý lỗi, hiệu suất, bảo mật. Mô hình có thể tự đánh giá đầu ra và cải thiện. Điều này biến việc tạo code từ một trò chơi xổ số thành một quy trình.
 
-**Ngữ Cảnh Có Giới Hạn**
+**Ngữ cảnh là Có giới hạn**
 
-Hội thoại nhiều lượt làm việc bằng cách bao gồm lịch sử tin nhắn với mỗi yêu cầu. Nhưng có giới hạn - mỗi mô hình có số lượng token tối đa. Khi hội thoại kéo dài, bạn cần chiến lược giữ ngữ cảnh liên quan mà không vượt trần. Module này cho bạn thấy cách hoạt động bộ nhớ; sau này bạn sẽ học khi nào nên tóm tắt, khi nào nên quên, và khi nào nên truy xuất.
+Hội thoại nhiều lượt hoạt động bằng cách bao gồm lịch sử tin nhắn trong mỗi yêu cầu. Nhưng có giới hạn - mỗi mô hình có số lượng token tối đa. Khi hội thoại lớn lên, bạn cần chiến lược giữ ngữ cảnh phù hợp mà không vượt quá giới hạn đó. Module này chỉ bạn cách bộ nhớ hoạt động; sau này bạn sẽ học khi nào tóm tắt, khi nào quên, và khi nào truy xuất.
 
-## Bước Tiếp Theo
+## Bước tiếp theo
 
-**Module Tiếp Theo:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
+**Module kế tiếp:** [03-rag - RAG (Tạo nội dung bổ sung truy xuất)](../03-rag/README.md)
 
 ---
 
-**Điều Hướng:** [← Trước: Module 01 - Giới Thiệu](../01-introduction/README.md) | [Quay Về Chính](../README.md) | [Tiếp Theo: Module 03 - RAG →](../03-rag/README.md)
+**Điều hướng:** [← Trước: Module 01 - Giới thiệu](../01-introduction/README.md) | [Quay lại Chính](../README.md) | [Tiếp: Module 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Tuyên bố miễn trừ trách nhiệm**:  
-Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi nỗ lực để đảm bảo độ chính xác, xin lưu ý rằng bản dịch tự động có thể chứa lỗi hoặc không chính xác. Tài liệu gốc bằng ngôn ngữ ban đầu nên được coi là nguồn tham khảo chính xác nhất. Đối với các thông tin quan trọng, nên sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu lầm hay diễn giải sai nào phát sinh từ việc sử dụng bản dịch này.
+Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo tính chính xác, xin lưu ý rằng bản dịch tự động có thể chứa lỗi hoặc không chính xác. Tài liệu gốc bằng ngôn ngữ mẹ đẻ của nó nên được xem là nguồn tham khảo chính thống. Đối với các thông tin quan trọng, khuyến nghị sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu lầm hoặc giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

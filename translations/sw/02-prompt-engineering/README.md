@@ -1,109 +1,193 @@
-# Module 02: Uhandisi wa Prompti na GPT-5.2
+# Moduli 02: Uhandisi wa Prompt na GPT-5.2
 
-## Table of Contents
+## Jedwali la Yaliyomo
 
-- [Utazojifunza](../../../02-prompt-engineering)
-- [Mahitaji ya Awali](../../../02-prompt-engineering)
-- [Kuelewa Uhandisi wa Prompti](../../../02-prompt-engineering)
-- [Jinsi Hii Inavyotumia LangChain4j](../../../02-prompt-engineering)
-- [Mifumo Mikuu](../../../02-prompt-engineering)
-- [Kutumia Rasilimali Zaidi za Azure Zilizopo](../../../02-prompt-engineering)
-- [Picha za Skrini za Programu](../../../02-prompt-engineering)
+- [Utakayo Jifunza](../../../02-prompt-engineering)
+- [Mambo ya Kuzijua Kabla](../../../02-prompt-engineering)
+- [Kuelewa Uhandisi wa Prompt](../../../02-prompt-engineering)
+- [Misingi ya Uhandisi wa Prompt](../../../02-prompt-engineering)
+  - [Zero-Shot Prompting](../../../02-prompt-engineering)
+  - [Few-Shot Prompting](../../../02-prompt-engineering)
+  - [Chain of Thought](../../../02-prompt-engineering)
+  - [Role-Based Prompting](../../../02-prompt-engineering)
+  - [Prompt Templates](../../../02-prompt-engineering)
+- [Mifumo ya Juu Zaidi](../../../02-prompt-engineering)
+- [Kutumia Rasilimali Zilizopo za Azure](../../../02-prompt-engineering)
+- [Picha za Maonyesho ya Programu](../../../02-prompt-engineering)
 - [Kuchunguza Mifumo](../../../02-prompt-engineering)
-  - [Hamasa Ndogo vs Hamasa Juu](../../../02-prompt-engineering)
-  - [Utekeshaji wa Kazi (Utangulizi wa Vifaa)](../../../02-prompt-engineering)
+  - [Kiukutani Kidogo vs Kikubwa](../../../02-prompt-engineering)
+  - [Utekelezaji wa Kazi (Utangulizi wa Zana)](../../../02-prompt-engineering)
   - [Msimbo wa Kujitathmini](../../../02-prompt-engineering)
-  - [Uchambuzi wa Muundo](../../../02-prompt-engineering)
-  - [Maongezi ya Mizunguko mingi](../../../02-prompt-engineering)
-  - [Ufakirishaji Hatua kwa Hatua](../../../02-prompt-engineering)
-  - [Matokeo Yaliyopigwa Hati](../../../02-prompt-engineering)
-- [Unajifunza Kweli Nini](../../../02-prompt-engineering)
-- [Hatua Zifuatazo](../../../02-prompt-engineering)
+  - [Uchambuzi uliopangwa](../../../02-prompt-engineering)
+  - [Mazungumzo ya Mizunguko Mingi](../../../02-prompt-engineering)
+  - [Ufahamu wa Hatua Kwa Hatua](../../../02-prompt-engineering)
+  - [Matokeo Yaliyo Thibitishwa](../../../02-prompt-engineering)
+- [Unachojifunza Kiwango Halisi](../../../02-prompt-engineering)
+- [Hatua Zijazo](../../../02-prompt-engineering)
 
-## Utazojifunza
+## Utakayo Jifunza
 
-Katika moduli iliyopita, ukaona jinsi kumbukumbu inavyowezesha AI ya mazungumzo na ukatumia Modeli za GitHub kwa mwingiliano wa msingi. Sasa tutalenga jinsi unavyouliza maswali - prompti zenyewe - ukitumia GPT-5.2 ya Azure OpenAI. Njia unavyopanga prompti zako inaathiri kwa kiasi kikubwa ubora wa majibu unayopata.
+<img src="../../../translated_images/sw/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-Tutatumia GPT-5.2 kwa sababu inaleta udhibiti wa ufakirishaji - unaweza kumuambia modeli ni kiasi gani cha kufikiri kabla ya kujibu. Hii inafanya mbinu tofauti za kuprompt kuwa wazi zaidi na inakusaidia kuelewa lini utumie kila njia. Pia tutafaidika na ukomo mdogo wa viwango vya Azure kwa GPT-5.2 ikilinganishwa na Modeli za GitHub.
+Katika moduli iliyopita, umeona jinsi kumbukumbu inavyowawezesha AI ya mazungumzo na kutumia Mifano ya GitHub kwa maingiliano ya msingi. Sasa tutazingatia jinsi unavyouliza maswali — prompts yenyewe — kwa kutumia GPT-5.2 ya Azure OpenAI. Njia unavyojenga prompts zako inaathiri sana ubora wa majibu unayopata. Tunaanza na mapitio ya mbinu za msingi za prompting, kisha tunaenda kwenye mifumo nane ya juu zaidi inayotumia uwezo wa GPT-5.2 kikamilifu.
 
-## Mahitaji ya Awali
+Tutatumia GPT-5.2 kwa sababu inaleta udhibiti wa ufahamu - unaweza kueleza kwa mfano kiasi gani cha kufikiri kinachopaswa kufanywa kabla ya kujibu. Hii hufanya mikakati tofauti ya prompting ionekane zaidi na inakusaidia kuelewa lini utumie kila mbinu. Pia tutafaidika na vikwazo vya chini vya viwango vya Azure kwa GPT-5.2 ikilinganishwa na Mifano ya GitHub.
 
-- Kumaliza Module 01 (Rasilimali za Azure OpenAI zimewekwa)
-- Faili `.env` katika mzizi wa saraka yenye usajili wa Azure (iliyotengenezwa na `azd up` katika Module 01)
+## Mambo ya Kuzijua Kabla
 
-> **Kumbuka:** Ikiwa hujamaliza Module 01, fuata maelekezo ya usambazaji huko kwanza.
+- Umehitimu Moduli 01 (Rasilimali za Azure OpenAI zimewekwa)
+- Faili `.env` iko kwenye saraka kuu yenye taarifa za Azure (iliundwa na `azd up` katika Moduli 01)
 
-## Kuelewa Uhandisi wa Prompti
+> **Kumbuka:** Ikiwa hujamaliza Moduli 01, fuata maelekezo ya usakinishaji hapo kwanza.
 
-Uhandisi wa prompt ni kuhusu kubuni maandishi ya kuingiza yanayokupa matokeo unayohitaji kila wakati. Sio tu kuuliza maswali - bali ni kupanga maombi ili modeli ifahamu kabisa unachotaka na jinsi ya kuyatoa.
+## Kuelewa Uhandisi wa Prompt
 
-Fikiria kama kumtumia maelekezo mwenzako. "Rekebisha hitilafu" ni ya jumla. "Rekebisha hitilafu ya null pointer katika UserService.java mstari wa 45 kwa kuongeza ukaguzi wa null" ni maalum. Modeli za lugha hufanya kazi kwa njia ile ile - umakini na muundo ni muhimu.
+<img src="../../../translated_images/sw/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
-## Jinsi Hii Inavyotumia LangChain4j
+Uhandisi wa prompt ni kuhusu kubuni maandishi ya kuingiza ambayo yanakuletea matokeo unayohitaji mara kwa mara. Sio tu kuuliza maswali - ni kuhusu kuunda maombi ili mfano uelewe hasa unachotaka na jinsi ya kuileta.
 
-Moduli hii inaonyesha mifumo ya hali ya juu ya kuprompti kwa kutumia msingi ule ule wa LangChain4j kutoka moduli za awali, ikilenga muundo wa prompti na udhibiti wa ufakirishaji.
+Fikiria kama unampa maelekezo mwenzako. "Rekebisha hitilafu" ni neno la jumla. "Rekebisha hitilafu ya null pointer katika UserService.java mstari wa 45 kwa kuongeza ukaguzi wa null" ni maalum. Mifano ya lugha hufanya kazi sawa - ukamilifu na muundo ni muhimu.
 
-<img src="../../../translated_images/sw/langchain4j-flow.48e534666213010b.webp" alt="LangChain4j Flow" width="800"/>
+<img src="../../../translated_images/sw/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-*Jinsi LangChain4j inavyounganisha prompti zako na Azure OpenAI GPT-5.2*
+LangChain4j hutengeneza miundombinu — muunganisho wa mfano, kumbukumbu, na aina za ujumbe — wakati mifumo ya prompt ni maandishi yaliyoundwa kwa makini unayotuma kupitia miundombinu hiyo. Vitu muhimu ni `SystemMessage` (ambayo inaweka tabia na nafasi ya AI) na `UserMessage` (ambayo inabeba ombi lako halisi).
 
-**Mategemeo** - Module 02 inatumia utegemezi wa langchain4j uliofafanuliwa katika `pom.xml`:
-```xml
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
-</dependency>
-```
+## Misingi ya Uhandisi wa Prompt
 
-**Usanidi wa OpenAiOfficialChatModel** - [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java)
+<img src="../../../translated_images/sw/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-Modeli ya mazungumzo imewekwa kwa mkono kama bean ya Spring kwa kutumia mteja rasmi wa OpenAI, unaounga mkono vituo vya Azure OpenAI. Tofauti kuu na Module 01 ni jinsi tunavyopanga prompti zinazotumwa kwa `chatModel.chat()`, si usanidi wa modeli yenyewe.
+Kabla ya kuingia kwenye mifumo ya juu katika moduli hii, hebu pitia mbinu tano za msingi za prompting. Hizi ni vifaa vya msingi ambavyo kila mhandisi wa prompt anapaswa kujua. Ikiwa tayari umefanya kazi kupitia [Moduli ya Mwanzo Haraka](../00-quick-start/README.md#2-prompt-patterns), umeona hizi zikiendeshwa — hapa kuna muundo wa dhana nyuma yao.
 
-**Ujumbe wa Mfumo na Mtumiaji** - [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)
+### Zero-Shot Prompting
 
-LangChain4j hutofautisha aina za ujumbe kwa uwazi. `SystemMessage` huweka tabia na muktadha wa AI (kama "Wewe ni mkaguzi wa msimbo"), wakati `UserMessage` ina ombi halisi. Tofauti hii inakuwezesha kudumisha tabia thabiti ya AI kwa maswali tofauti ya mtumiaji.
+Njia rahisi kabisa: mpe mfano maagizo moja kwa moja bila mifano. Mfano hutegemea mafunzo yake kikamilifu kuelewa na kutekeleza kazi. Hii hufanya kazi vizuri kwa maombi rahisi ambapo mwenendo unaotarajiwa ni wazi.
+
+<img src="../../../translated_images/sw/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
+
+*Maagizo ya moja kwa moja bila mifano — mfano hutafsiri kazi kutoka kwa maagizo pekee*
 
 ```java
-SystemMessage systemMsg = SystemMessage.from(
-    "You are a helpful Java programming expert."
-);
-
-UserMessage userMsg = UserMessage.from(
-    "Explain what a List is in Java"
-);
-
-String response = chatModel.chat(systemMsg, userMsg);
+String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
+String response = model.chat(prompt);
+// Jibu: "Chanya"
 ```
 
-<img src="../../../translated_images/sw/message-types.93e0779798a17c9d.webp" alt="Message Types Architecture" width="800"/>
+**Lini utumie:** Kuelezea kwa urahisi, maswali ya moja kwa moja, tafsiri, au kazi yoyote mfano anaweza kushughulikia bila mwelekeo zaidi.
 
-*SystemMessage hutoa muktadha wa kudumu wakati UserMessages zina maombi binafsi*
+### Few-Shot Prompting
 
-**MessageWindowChatMemory kwa Mizunguko mingi** - Kwa muundo wa mazungumzo ya mizunguko mingi, tunatumia tena `MessageWindowChatMemory` kutoka Module 01. Kila kikao kinapata kumbukumbu yake mwenyewe iliyohifadhiwa ndani ya `Map<String, ChatMemory>`, kuruhusu mazungumzo mengi yanayoendeshwa sambamba bila kuchanganya muktadha.
+Toa mifano inayothibitisha muundo unaotaka mfano ufuate. Mfano hujifunza muundo wa pembejeo-toa toka kwa mifano yako na kulitumia kwa pembejeo mpya. Hii huongeza uthabiti kwa kazi ambapo muundo au mwenendo unaotakiwa hauonekani wazi.
 
-**Templates za Prompti** - Lengo kuu hapa ni uhandisi wa prompti, si API mpya za LangChain4j. Kila mfumo (hamasa ndogo, hamasa juu, utekelezaji wa kazi, nk) hutumia njia ile ile ya `chatModel.chat(prompt)` lakini na mistari ya prompt iliyopangwa kwa uangalifu. Mienendo ya XML, maelekezo, na muundo vyote ni sehemu ya maandishi ya prompt, si sifa za LangChain4j.
+<img src="../../../translated_images/sw/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-**Udhibiti wa Ufakirishaji** - Juhudi za ufakirishaji za GPT-5.2 zinadhibitiwa kupitia maelekezo ya prompt kama "hatua mbili za maksimum za ufakirishaji" au "chunguza kwa kina". Hizi ni mbinu za uhandisi wa prompti, si usanidi wa LangChain4j. Maktaba hutoa tu prompti zako kwa modeli.
+*Kujifunza kutoka kwa mifano — mfano hutambua muundo na kulitumia kwa pembejeo mpya*
 
-Mafunzo muhimu: LangChain4j hutoa miundombinu (unganisho wa modeli kupitia [LangChainConfig.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/config/LangChainConfig.java), kumbukumbu, usimamizi wa ujumbe kupitia [Gpt5PromptService.java](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java)), wakati moduli hii inakufundisha jinsi ya kutengeneza prompti zenye ufanisi ndani ya miundombinu hiyo.
+```java
+String prompt = """
+    Classify the sentiment as positive, negative, or neutral.
+    
+    Examples:
+    Text: "This product exceeded my expectations!" → Positive
+    Text: "It's okay, nothing special." → Neutral
+    Text: "Waste of money, very disappointed." → Negative
+    
+    Now classify this:
+    Text: "Best purchase I've made all year!"
+    """;
+String response = model.chat(prompt);
+```
 
-## Mifumo Mikuu
+**Lini utumie:** Uainishaji wa maalum, uundaji wa maandishi unaolingana, kazi za eneo mahususi, au wakati matokeo ya zero-shot hayazingani.
 
-Sio matatizo yote yanahitaji njia ile ile. Maswali mengine yanahitaji majibu ya haraka, mengine yafikiri kwa kina. Baadhi yanahitaji ufakirishaji unaoonekana, mengine tu matokeo. Moduli hii inajumuisha mifumo nane ya kuprompti - kila mmoja umeboreshwa kwa hali tofauti. Utajaribu yote ili ujue lini kila njia inafaa.
+### Chain of Thought
+
+Muulize mfano aonyeshe sababu zake hatua kwa hatua. Badala ya kuruka moja kwa moja kwa jibu, mfano huvunjika tatizo na kufanyia kila sehemu kwa uwazi. Hii huongeza usahihi kwa hisabati, mantiki, na kazi ngumu za hatua nyingi.
+
+<img src="../../../translated_images/sw/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
+
+*Sababu hatua kwa hatua — kuvunjika kwa matatizo magumu katika hatua za mantiki wazi*
+
+```java
+String prompt = """
+    Problem: A store has 15 apples. They sell 8 apples and then 
+    receive a shipment of 12 more apples. How many apples do they have now?
+    
+    Let's solve this step-by-step:
+    """;
+String response = model.chat(prompt);
+// Mfano unaonyesha: 15 - 8 = 7, kisha 7 + 12 = 19 tufaha
+```
+
+**Lini utumie:** Matatizo ya hisabati, fumbo za mantiki, utatuzi wa makosa, au kazi yoyote ambapo kuonyesha mchakato wa sababu huongeza usahihi na kuaminika.
+
+### Role-Based Prompting
+
+Weka persona au nafasi kwa AI kabla ya kuuliza swali lako. Hii hutoa muktadha unaoamua sauti, kina, na mtazamo wa jibu. "Mhandisi programu" hutoa ushauri tofauti na "mwanfunzi waani" au "mdhibiti usalama".
+
+<img src="../../../translated_images/sw/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
+
+*Kuweka muktadha na persona — swali moja hupata majibu tofauti kwa kulingana na nafasi iliyowekwa*
+
+```java
+String prompt = """
+    You are an experienced software architect reviewing code.
+    Provide a brief code review for this function:
+    
+    def calculate_total(items):
+        total = 0
+        for item in items:
+            total = total + item['price']
+        return total
+    """;
+String response = model.chat(prompt);
+```
+
+**Lini utumie:** Ukaguzi wa msimbo, kufundisha, uchambuzi wa eneo mahususi, au wakati unahitaji majibu yaliyobinafsishwa kwa kiwango fulani cha utaalamu au mtazamo.
+
+### Prompt Templates
+
+Tengeneza prompts zinazoweza kutumika tena na sehemu za kubadilika. Badala ya kuandika prompt mpya kila wakati, fafanua templeti mara moja kisha jaza thamani tofauti. Darasa la LangChain4j `PromptTemplate` linafanya hili kuwa rahisi kwa sintaksia ya `{{variable}}`.
+
+<img src="../../../translated_images/sw/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
+
+*Prompts zinazoweza kutumika tena na sehemu zinazobadilika — templeti moja, matumizi mengi*
+
+```java
+PromptTemplate template = PromptTemplate.from(
+    "What's the best time to visit {{destination}} for {{activity}}?"
+);
+
+Prompt prompt = template.apply(Map.of(
+    "destination", "Paris",
+    "activity", "sightseeing"
+));
+
+String response = model.chat(prompt.text());
+```
+
+**Lini utumie:** Maswali yanayojirudia mara kwa mara na pembejeo tofauti, usindikaji wa kundi, kujenga mizunguko ya AI inayoweza kutumika tena, au hali yoyote ambapo muundo wa prompt unabaki ule ule lakini data hubadilika.
+
+---
+
+Misingi mitano hii inakupa zana imara kwa kazi nyingi za prompting. Zilizobaki za moduli hii zinajenga juu yake kwa **mifumo nane ya juu zaidi** inayotumia udhibiti wa kufikiri wa GPT-5.2, kujitathmini, na uwezo wa matokeo yaliyopangwa.
+
+## Mifumo ya Juu Zaidi
+
+Baada ya kufunika misingi, twende kwa mifumo nane ya juu zaidi inayofanya moduli hii kuwa ya kipekee. Sio matatizo yote yanayohitaji njia ile ile. Maswali mengine yanahitaji majibu ya haraka, mengine yanahitaji kufikiri kwa kina. Baadhi yanahitaji dalili za ufahamu, mengine tu matokeo. Kila mfumo hapa chini umeboreshwa kwa hali tofauti — na udhibiti wa ufahamu wa GPT-5.2 hufanya tofauti hizi ionekane zaidi.
 
 <img src="../../../translated_images/sw/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
 *Muhtasari wa mifumo nane ya uhandisi wa prompt na matumizi yao*
 
+<img src="../../../translated_images/sw/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
+
+*Udhibiti wa ufahamu wa GPT-5.2 hukuwezesha kubainisha kiasi cha kufikiri mfano anapaswa kufanya — kutoka majibu ya moja kwa moja yenye kasi hadi uchunguzi wa kina*
+
 <img src="../../../translated_images/sw/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
 
-*Hamasa ndogo (haraka, moja kwa moja) dhidi ya Hamasa Juu (kwa kina, kinachochunguza) katika mbinu za ufakirishaji*
+*Kiukutani Kidogo (haraka, moja kwa moja) vs Kiukutani Kikubwa (kikamilifu, kinachochunguza) mbinu za ufahamu*
 
-**Hamasa Ndogo (Haraka & Iliyolengwa)** - Kwa maswali rahisi ambapo unataka majibu ya haraka na ya moja kwa moja. Modeli hufanya ufakirishaji mdogo - hatua 2 maksimum. Tumia hii kwa mahesabu, utaftaji, au maswali rahisi.
+**Kiukutani Kidogo (Haraka & Lenye Lengo)** - Kwa maswali rahisi ambapo unahitaji majibu ya haraka na ya moja kwa moja. Mfano hufanya ufahamu mdogo - hatua 2 tu kama kiwango cha juu. Tumia hii kwa mahesabu, kuangalia, au maswali rahisi.
 
 ```java
 String prompt = """
@@ -116,12 +200,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Chunguza na GitHub Copilot:** Fungua [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) ulize:
-> - "Tofauti baina ya mifumo ya hamasa ndogo na hamasa kubwa ni ipi?"
-> - "Je, lebo za XML katika prompti husaidiaje kupanga jibu la AI?"
-> - "Lini nitumie mifumo ya kujitathmini dhidi ya maagizo ya moja kwa moja?"
+> 💡 **Chunguza kwa GitHub Copilot:** Fungua [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) na uulize:
+> - "Je, ni tofauti gani kati ya mifumo ya prompting ya kiukutani kidogo na kiukutani kikubwa?"
+> - "Je, mabandiko ya XML katika prompts huwasaidiaje kupanga jibu la AI?"
+> - "Ninahitaji kutumia lini mifumo ya kujitathmini vs maagizo ya moja kwa moja?"
 
-**Hamasa Juu (Kina & Kina)** - Kwa matatizo magumu ambapo unahitaji uchambuzi kamili. Modeli huchunguza kwa kina na inaonyesha ufakirishaji wa kina. Tumia hii kwa muundo wa mfumo, maamuzi ya usanifu, au utafiti mgumu.
+**Kiukutani Kikubwa (Kina & Kinachochunguza)** - Kwa matatizo magumu ambapo unahitaji uchambuzi wa kina. Mfano huchunguza kwa kina na kuonyesha sababu za kina. Tumia hii kwa usanifu wa mifumo, maamuzi ya usanifu, au utafiti mgumu.
 
 ```java
 String prompt = """
@@ -134,7 +218,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Utekelezaji wa Kazi (Maendeleo Hatua kwa Hatua)** - Kwa mtiririko wa kazi za hatua nyingi. Modeli hutoa mpango wa awali, hueleza kila hatua anapofanya kazi, kisha hutoa muhtasari. Tumia hii kwa uhamishaji, utekelezaji, au mchakato wowote wa hatua nyingi.
+**Utekelezaji wa Kazi (Maendeleo Hatua kwa Hatua)** - Kwa mizunguko ya hatua nyingi. Mfano hutoa mpango wa awali, unasimulia kila hatua anapofanya kazi, kisha hutoa muhtasari. Tumia hii kwa uhamishaji, utekelezaji, au mchakato wowote wa hatua nyingi.
 
 ```java
 String prompt = """
@@ -147,18 +231,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Mipangilio ya Chain-of-Thought inamwomba modeli kuonyesha mchakato wake wa ufakirishaji, kuboresha usahihi kwa kazi ngumu. Ugawaji hatua kwa hatua husaidia wanadamu na AI kuelewa mantiki.
+Chain-of-Thought prompting huomba mfano kuonyesha mchakato wake wa ufahamu waziwazi, huongeza usahihi kwa kazi ngumu. Kuvunjika kwa hatua kwa hatua kunasaidia watu na AI kuelewa mantiki.
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Uliza kuhusu mfumo huu:
-> - "Ningebadilishaji vipi mfumo wa utekelezaji wa kazi kwa shughuli za muda mrefu?"
-> - "Nini ni mbinu bora za kupanga utangulizi wa vifaa katika programu za uzalishaji?"
-> - "Ninawezaje kunasa na kuonyesha taarifa za maendeleo ya kati kwenye UI?"
+> - "Nitabadilishaje mfumo wa utekelezaji wa kazi kwa ajili ya shughuli za muda mrefu?"
+> - "Ni mbinu gani bora za kupanga utangulizi wa zana katika programu za uzalishaji?"
+> - "Nawezaje kunasa na kuonyesha taarifa za maendeleo za kati kwenye UI?"
 
 <img src="../../../translated_images/sw/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
-*Mpango → Tekeleza → Fupisha mtiririko wa kazi kwa shughuli za hatua nyingi*
+*Mpango → Tekeleza → Fupisha mchakato wa kazi za hatua nyingi*
 
-**Msimbo wa Kujitathmini** - Kwa kuunda msimbo wa ubora wa uzalishaji. Modeli hutengeneza msimbo, kuupitia kulingana na vigezo vya ubora, na kuuboresha taratibu. Tumia hii wakati wa kujenga vipengele au huduma mpya.
+**Msimbo wa Kujitathmini** - Kwa kuzalisha msimbo wa ubora wa uzalishaji. Mfano huzalisha msimbo, kuupima dhidi ya viwango vya ubora, na kuuboresha hatua kwa hatua. Tumia hii unapotengeneza vipengele au huduma mpya.
 
 ```java
 String prompt = """
@@ -177,9 +261,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sw/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
-*Mzunguko wa kuboresha taratibu - tengeneza, tathmini, tambua matatizo, boresha, rudia*
+*Mzunguko wa kuboresha kwa kurudia - tengeneza, tathmini, tambua matatizo, boresha, rudia*
 
-**Uchambuzi wa Muundo** - Kwa tathmini thabiti. Modeli hupitia msimbo kwa kutumia mfumo uliowekwa (usahihi, mbinu, utendaji, usalama). Tumia hii kwa ukaguzi wa msimbo au tathmini za ubora.
+**Uchambuzi uliopangwa** - Kwa tathmini ya uthabiti. Mfano hupitia msimbo kwa kutumia mfumo uliowekwa (usayisi, mbinu, utendaji, usalama). Tumia hii kwa ukaguzi wa msimbo au tathmini za ubora.
 
 ```java
 String prompt = """
@@ -201,16 +285,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Uliza kuhusu uchambuzi wa muundo:
-> - "Ningebadilisha vipi mfumo wa uchambuzi kwa aina tofauti za ukaguzi wa msimbo?"
-> - "Njia bora ya kuchambua na kutekeleza matokeo yaliyopangwa kiutendaji ni ipi?"
-> - "Ninawezaje kuhakikisha viwango thabiti vya ukali katika vikao tofauti vya ukaguzi?"
+> **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Uliza kuhusu uchambuzi uliopangwa:
+> - "Nawezaje kubinafsisha mfumo wa uchambuzi kwa aina tofauti za ukaguzi wa msimbo?"
+> - "Ni njia gani bora ya kusoma na kutenda kwa matokeo yaliyopangwa kwa njia ya programu?"
+> - "Ninahakikishaje viwango vya uzito viko sawa katika vikao vya ukaguzi tofauti?"
 
 <img src="../../../translated_images/sw/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
-*Mfumo wa makundi manne kwa ukaguzi thabiti wa msimbo na viwango vya ukali*
+*Mfumo wa makundi manne kwa ukaguzi thabiti wa msimbo wenye viwango vya uzito*
 
-**Maongezi ya Mizunguko mingi** - Kwa mazungumzo yanayohitaji muktadha. Modeli hukumbuka ujumbe wa awali na kujenga juu yake. Tumia hii kwa vikao vya msaada wa mwingiliano au maswali na majibu magumu.
+**Mazungumzo ya Mizunguko Mingi** - Kwa mazungumzo yanayohitaji muktadha. Mfano unakumbuka ujumbe wa awali na kujenga juu yake. Tumia hii kwa vikao vya msaada wa kuingiliana au maswali na majibu magumu.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -226,9 +310,9 @@ memory.add(aiMessage2);
 
 <img src="../../../translated_images/sw/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
-*Jinsi muktadha wa mazungumzo unavyojikusanya baada ya mizunguko mingi hadi kufikia kikomo cha tokeni*
+*Jinsi muktadha wa mazungumzo unavyojikusanya juu ya mizunguko mingi hadi kufikia kikomo cha tokeni*
 
-**Ufakirishaji Hatua kwa Hatua** - Kwa matatizo yanayohitaji mantiki inayoonekana. Modeli inaonyesha ufakirishaji wazi kwa kila hatua. Tumia hii kwa matatizo ya hisabati, fumbo za mantiki, au wakati unahitaji kuelewa mchakato wa kufikiri.
+**Ufahamu wa Hatua Kwa Hatua** - Kwa matatizo yanayohitaji mantiki wazi. Mfano huonyesha sababu wazi kwa kila hatua. Tumia hii kwa matatizo ya hisabati, fumbo za mantiki, au unapotaka kuelewa mchakato wa kufikiri.
 
 ```java
 String prompt = """
@@ -244,9 +328,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sw/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
-*Kutenganisha matatizo kuwa hatua za mantiki zilizo wazi*
+*Kuvunjika kwa matatizo katika hatua za mantiki wazi*
 
-**Matokeo Yaliyopigwa Hati** - Kwa majibu yenye mahitaji maalum ya muundo. Modeli hufuata kwa umakini kanuni za muundo na urefu. Tumia hii kwa muhtasari au wakati unahitaji muundo sahihi wa matokeo.
+**Matokeo Yaliyo Thibitishwa** - Kwa majibu yenye mahitaji maalum ya muundo. Mfano hufuata kwa ukali kanuni za muundo na urefu. Tumia hii kwa muhtasari au unapotaka muundo sahihi wa matokeo.
 
 ```java
 String prompt = """
@@ -264,48 +348,47 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sw/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
-*Kutekeleza mahitaji maalum ya muundo, urefu, na mpangilio*
+*Kufuata kanuni za muundo, urefu, na mahitaji ya muundo kwa usahihi*
 
-## Kutumia Rasilimali Zaidi za Azure Zilizopo
+## Kutumia Rasilimali Zilizopo za Azure
 
-**Hakikisha usambazaji:**
+**Thibitisha usanikishaji:**
 
-Hakikisha faili `.env` ipo katika mzizi wa saraka ikiwa na usajili wa Azure (iliyotengenezwa wakati wa Module 01):
+Hakikisha faili `.env` ipo kwenye saraka kuu yenye taarifa za Azure (iliyotengenezwa wakati wa Moduli 01):
 ```bash
 cat ../.env  # Inapaswa kuonyesha AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Anzisha programu:**
 
-> **Kumbuka:** Ikiwa tayari umeanzisha programu zote kwa kutumia `./start-all.sh` kutoka Module 01, moduli hii inasubiri kazi kwa bandari 8083. Unaweza kuruka amri za kuanzisha hapa na kwenda moja kwa moja http://localhost:8083.
+> **Kumbuka:** Ikiwa tayari umeanzisha programu zote kwa kutumia `./start-all.sh` kutoka Moduli 01, moduli hii tayari inaendeshwa kwenye bandari 8083. Unaweza kuruka amri za kuanzisha hapa chini na kwenda moja kwa moja http://localhost:8083.
 
-**Chaguo 1: Kutumia Spring Boot Dashboard (Inapendekezwa kwa watumiaji wa VS Code)**
+**Chaguo 1: Kutumia Spring Boot Dashboard (Inayopendekezwa kwa watumiaji wa VS Code)**
 
-Kontena ya maendeleo ina nyongeza ya Spring Boot Dashboard, ambayo hutoa uso wa kuona wa kusimamia programu zote za Spring Boot. Unaweza kuipata kwenye Bar ya Shughuli upande wa kushoto wa VS Code (atafuta ikoni ya Spring Boot).
+Kontena la maendeleo linajumuisha ugani wa Spring Boot Dashboard, unaotoa kiolesura cha kuona kusimamia programu zote za Spring Boot. Unaweza kulipata kwenye Ukanda wa Shughuli upande wa kushoto wa VS Code (tazama ikoni ya Spring Boot).
+Kutoka kwenye Dashibodi ya Spring Boot, unaweza:
+- Kuona programu zote za Spring Boot zinazopatikana katika eneo la kazi
+- Anzisha/zimia programu kwa kubofya mara moja
+- Tazama kumbukumbu za programu kwa wakati halisi
+- Fuatilia hali ya programu
 
-Kutoka Spring Boot Dashboard, unaweza:
-- Kuona programu zote za Spring Boot zilizopo kazini
-- Kuanza/kukomesha programu kwa bonyeza moja
-- Kuangalia kumbukumbu za programu wakati halisi
-- Kufuatilia hali ya programu
-
-Bofya kitufe cha kucheza kando ya "prompt-engineering" kuanzisha moduli hii, au anzisha moduli zote kwa pamoja.
+Bonyeza tu kitufe cha kucheza kando ya "prompt-engineering" kuanzisha moduli hii, au anzisha moduli zote kwa wakati mmoja.
 
 <img src="../../../translated_images/sw/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Chaguo 2: Kutumia shell script**
+**Chaguo 2: Kutumia shell scripts**
 
 Anzisha programu zote za wavuti (moduli 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Kutoka kwa saraka ya mzizi
+cd ..  # Kutoka kwenye saraka ya mzizi
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Kutoka kwenye saraka ya mzizi
+cd ..  # Kutoka kwa saraka ya mzizi
 .\start-all.ps1
 ```
 
@@ -323,9 +406,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Skripti zote huchukua kwa otomatiki vigezo vya mazingira kutoka faili ya mzizi `.env` na zitajenga JAR ikiwa hazipo.
+Skripti zote mbili hujipakia kiotomatiki vigezo vya mazingira kutoka kwenye faili `.env` ya mzizi na zitaunda JARs kama hazipo.
 
-> **Kumbuka:** Ikiwa unapendelea kujenga moduli zote kwa mkono kabla ya kuanzisha:
+> **Kumbuka:** Ikiwa unapendelea kujenga moduli zote kwa mkono kabla ya kuanza:
 >
 > **Bash:**
 > ```bash
@@ -341,7 +424,7 @@ Skripti zote huchukua kwa otomatiki vigezo vya mazingira kutoka faili ya mzizi `
 
 Fungua http://localhost:8083 katika kivinjari chako.
 
-**Kusitisha:**
+**Kuzimia:**
 
 **Bash:**
 ```bash
@@ -352,113 +435,114 @@ cd .. && ./stop-all.sh  # Moduli zote
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Moduli hii pekee
+.\stop.ps1  # Moduli hii tu
 # Au
 cd ..; .\stop-all.ps1  # Moduli zote
 ```
 
-## Picha za Skrini za Programu
+## Picha za Programu
 
 <img src="../../../translated_images/sw/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Dashibodi kuu inaonyesha mifumo yote 8 ya uhandisi wa prompti na sifa zake pamoja na matumizi*
+*Dashibodi kuu ikionyesha mifumo 8 yote ya uhandisi wa prompt pamoja na sifa na matumizi yao*
 
 ## Kuchunguza Mifumo
 
-Uso wa wavuti unakuwezesha kujaribu mbinu tofauti za kuprompt. Kila mfumo unatatua matatizo tofauti - jaribu kuona lini kila njia inaingia kazini vizuri.
+Kiolesura cha wavuti hukuruhusu kujaribu mikakati tofauti ya kutoa maelekezo. Kila mfumo unasuluhisha matatizo tofauti - jaribu kuona lini kila mbinu huangaza.
 
-### Hamasa Ndogo vs Hamasa Juu
+### Udaraja wa Hamu Chini dhidi ya Juu
 
-Uliza swali rahisi kama "Ni asilimia ngapi 15 ya 200?" ukitumia Hamasa Ndogo. Utapata jibu la moja kwa moja kwa haraka. Sasa uliza jambo zito kama "Tengeneza mkakati wa kuhifadhi kwa API yenye trafiki kubwa" kwa Hamasa Juu. Angalia jinsi modeli inachelewa na kutoa ufakirishaji wa kina. Sawa modeli, muundo sawa wa swali - lakini prompti inaeleza kiasi cha kufikiri kinachotakiwa.
-<img src="../../../translated_images/sw/low-eagerness-demo.898894591fb23aa0.webp" alt="Onyesho la Hamu Ndogo" width="800"/>
+Uliza swali rahisi kama "Je, 15% ya 200 ni kiasi gani?" kwa kutumia Hamu Chini. Utapata jibu la haraka na moja kwa moja. Sasa uliza jambo gumu kama "Tengeneza mkakati wa caching kwa API yenye trafiki kubwa" kwa kutumia Hamu Juu. Tazama jinsi mfano unavyopungua kasi na kutoa maelezo ya kina. Mfano ule ule, muundo ule ule wa swali - lakini prompt inaeleza kiasi gani cha kufikiri kinapaswa kufanyika.
 
-*Hesabu ya haraka na sababu kidogo*
+<img src="../../../translated_images/sw/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
-<img src="../../../translated_images/sw/high-eagerness-demo.4ac93e7786c5a376.webp" alt="Onyesho la Hamu Kubwa" width="800"/>
+*Hesabu ya haraka na kufikiri kidogo*
 
-*Mikakati kamilifu ya kuhifadhi (2.8MB)*
+<img src="../../../translated_images/sw/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
+
+*Mkakati wa kina wa caching (2.8MB)*
 
 ### Utekelezaji wa Kazi (Utangulizi wa Zana)
 
-Mchakato wa hatua nyingi unafaidika na upangaji wa awali na maelezo ya maendeleo. Mfano unaeleza kinachofanya, unaelezea kila hatua, kisha hutoa muhtasari wa matokeo.
+Mchakato wa hatua nyingi unafaidika na upangaji wa awali na kueleza maendeleo. Mfano hueleza atakayofanya, husimulia kila hatua, kisha hutoa muhtasari wa matokeo.
 
-<img src="../../../translated_images/sw/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Onyesho la Utekelezaji wa Kazi" width="800"/>
+<img src="../../../translated_images/sw/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
 
-*Kuunda nukta ya REST hatua kwa hatua (3.9MB)*
+*Kutengeneza endpoint ya REST kwa kuonyesha hatua kwa hatua (3.9MB)*
 
-### Msimbo Unaojitathmini
+### Msimamo wa Kujiangalia Msimbo
 
-Jaribu "Unda huduma ya uhakiki wa barua pepe". Badala ya kuzalisha tu msimbo na kusimama, mfano huzalisha, kuhakiki dhidi ya vigezo vya ubora, kubaini mapungufu, na kuboresha. Utaona ukirudia hadi msimbo ufikie viwango vya uzalishaji.
+Jaribu "Tengeneza huduma ya uthibitishaji barua pepe". Badala ya tu kutengeneza msimbo na kuacha, mfano hutengeneza, hupima dhidi ya vigezo vya ubora, hutambua udhaifu, na kuboresha. Utaona ikirudia mchakato hadi msimbo ukidhi viwango vya uzalishaji.
 
-<img src="../../../translated_images/sw/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Onyesho la Msimbo Unaojitathmini" width="800"/>
+<img src="../../../translated_images/sw/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
 
-*Huduma kamili ya uhakiki wa barua pepe (5.2MB)*
+*Huduma kamili ya uthibitishaji barua pepe (5.2MB)*
 
-### Uchambuzi Uliojenziwa
+### Uchambuzi wa Muundo
 
-Mapitio ya msimbo yanahitaji mfumo thabiti wa tathmini. Mfano unachambua msimbo kwa kutumia makundi ya kudumu (usahihi, mazoea, utendaji, usalama) na viwango vya ukali.
+Mapitio ya msimbo yanahitaji mifumo thabiti ya tathmini. Mfano huchambua msimbo kwa kutumia makundi ya malengo (usalama, mazoea, utendaji, usalama) na viwango vya ukali.
 
-<img src="../../../translated_images/sw/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Onyesho la Uchambuzi Uliojenizwa" width="800"/>
+<img src="../../../translated_images/sw/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
 
-*Mapitio ya msimbo kwa mfumo rasmi*
+*Mapitio ya msimbo yanayotegemea mfumo*
 
-### Mazungumzo ya Mara-Nyingi
+### Mazungumzo ya Mizunguko Mingi
 
-Uliza "Spring Boot ni nini?" kisha mara moja fuata na "Nionyeshe mfano". Mfano unakumbuka swali lako la kwanza na anakupa mfano wa Spring Boot mahsusi. Bila kumbukumbu, swali la pili lingeweza kuwa na kutiliwa shaka.
+Uliza "Ni nini Spring Boot?" kisha mara moja fuata na "Nionyeshe mfano". Mfano hukumbuka swali lako la kwanza na anakupa mfano wa Spring Boot kwa kushindana. Bila kumbukumbu, swali la pili lingeweza kuwa la kukosa maelezo.
 
-<img src="../../../translated_images/sw/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Onyesho la Mazungumzo ya Mara-Nyingi" width="800"/>
+<img src="../../../translated_images/sw/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
 
-*Kuhifadhi muktadha kati ya maswali*
+*Uhifadhi wa muktadha katika maswali*
 
-### Sababu Hatua kwa Hatua
+### Kufikiri Hatua kwa Hatua
 
-Chagua tatizo la hesabu na liajaribu kwa Sababu Hatua kwa Hatua na Hamu Ndogo. Hamu ndogo inakupa jibu tu - haraka lakini haijafumbuliwa. Hatua kwa hatua inakuonyesha kila hesabu na uamuzi.
+Chagua tatizo la hesabu na lijaribu kwa kutumia Hamu ya Hatua kwa Hatua na Hamu Chini. Hamu ya chini hupitia jibu tu - haraka lakini haieleweki. Hatua kwa hatua huonyesha kila hesabu na uamuzi.
 
-<img src="../../../translated_images/sw/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Onyesho la Sababu Hatua kwa Hatua" width="800"/>
+<img src="../../../translated_images/sw/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
 
-*Tatizo la hisabati lenye hatua wazi*
+*Tatizo la hesabu na hatua wazi*
 
-### Matokeo Yaliyodhibitiwa
+### Matokeo Yaliyopigwa Mipaka
 
-Unapotaka miundo maalum au idadi ya maneno, mwendelezo huu unahimiza kushikamana mkali. Jaribu kuzalisha muhtasari wenye maneno 100 kabisa kwa muundo wa vidokezo.
+Unapohitaji miundo maalum au idadi ya maneno, mfumo huu unaweka utekelezaji mkali. Jaribu kutengeneza muhtasari wenye maneno 100 hasa kwa muundo wa pointi za risasi.
 
-<img src="../../../translated_images/sw/constrained-output-demo.567cc45b75da1633.webp" alt="Onyesho la Matokeo Yaliyodhibitiwa" width="800"/>
+<img src="../../../translated_images/sw/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
 
-*Muhtasari wa kujifunza mashine wenye udhibiti wa muundo*
+*Muhtasari wa mashine learning na udhibiti wa muundo*
 
 ## Unachojifunza Kweli
 
-**Juhudi ya Kufikiria Hubadilisha Kila Kitu**
+**Juhudi za Kufikiri Hubadilisha Kila Kitu**
 
-GPT-5.2 inakuwezesha kudhibiti juhudi za kompyuta kupitia maelekezo yako. Juhudi ndogo ina maana majibu ya haraka na utafiti mdogo. Juhudi kubwa ina maana mfano unachukua muda kufikiria kwa kina. Unajifunza kulinganisha juhudi na ugumu wa kazi - usipoteze muda kwa maswali rahisi, lakini usikimbilie maamuzi magumu pia.
+GPT-5.2 hukuruhusu kudhibiti juhudi za kihesabu kupitia prompts zako. Juhudi ndogo inamaanisha majibu ya haraka na uchunguzi mdogo. Juhudi kubwa inamaanisha mfano unachukua muda kufikiria kwa kina. Unajifunza kulingana juhudi na ugumu wa kazi - usipoteze muda kwa maswali rahisi, lakini pia usikimbize maamuzi magumu.
 
 **Muundo Huelekeza Tabia**
 
-Tambua lebo za XML katika maelekezo? Hazijapambwa tu. Mifano huifuata maagizo yaliyopangwa kwa uaminifu zaidi kuliko maandishi ya bure. Unapotaka michakato ya hatua nyingi au mantiki tata, muundo husaidia mfano kufuatilia wapi uko na nini kinakuja baadae.
+Umeona lebo za XML katika maelekezo? Sio mapambo. Mifano hufuata maagizo yenye muundo kwa uaminifu zaidi kuliko maandishi huru. Unapohitaji michakato ya hatua nyingi au mantiki ngumu, muundo husaidia mfano kufuatilia wapi yuko na kinachofuata.
 
-<img src="../../../translated_images/sw/prompt-structure.a77763d63f4e2f89.webp" alt="Muundo wa Maelekezo" width="800"/>
+<img src="../../../translated_images/sw/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Muundo wa maelekezo yaliyopangwa vyema yenye sehemu wazi na usanifu wa mtindo wa XML*
+*Muundo wa prompt ulio na sehemu wazi na mpangilio wa aina ya XML*
 
-**Ubora Kupitia Kujitathmini**
+**Ubora Kupitia Kujipima**
 
-Mifano ya kujitathmini huenda kwa kufanya vigezo vya ubora vya wazi. Badala ya kutegemea mfano "ufanye vizuri", unaeleza hasa maana ya "vema": mantiki sahihi, usimamizi wa makosa, utendaji, usalama. Mfano unaweza kisha kutathmini matokeo yake na kuboresha. Hii hubadilisha uzalishaji wa msimbo kutoka bahati nasibu kuwa mchakato.
+Mifumo ya kujikagua yenyewe hufanya vigezo vya ubora kuwa wazi. Badala ya kutegemea mfano "ufanye vizuri", unaeleza hasa maana ya "sahihi": mantiki sahihi, usimamizi wa makosa, utendaji, usalama. Mfano kisha unaweza kutathmini matokeo yake na kuboresha. Hii hubadilisha uzalishaji wa msimbo kutoka bahati nasibu kuwa mchakato.
 
-**Muktadha Ni Mdogo**
+**Muktadha Una Kipimo**
 
-Mazungumzo ya mara-nwingi hufanya kazi kwa kujumuisha historia ya ujumbe na kila ombi. Lakini kuna kikomo - kila mfano una idadi kubwa ya tokeni. Kadri mazungumzo yanavyoongezeka, utahitaji mikakati ya kuweka muktadha muhimu bila kufikia kikomo hicho. Moduli hii inakuonyesha jinsi kumbukumbu inavyofanya kazi; baadaye utajifunza lini kuifupisha, lini kusahau, na lini kuipata tena.
+Mazungumzo ya mizunguko mingi hufanya kazi kwa kujumuisha historia ya ujumbe kwa kila ombi. Lakini kuna kikomo - kila mfano una kikomo cha herufi (tokens). Kadiri mazungumzo yanavyokua, utahitaji mbinu za kuhifadhi muktadha muhimu bila kufikia kikomo hicho. Moduli hii inaonyesha jinsi kumbukumbu inavyofanya kazi; baadaye utajifunza lini kufupisha, lini kusahau, na lini kuchukua tena.
 
 ## Hatua Zifuatazo
 
-**Moduli Ifuatayo:** [03-rag - RAG (Uzalishaji ulioboreshwa kwa Kupata Taarifa)](../03-rag/README.md)
+**Moduli Inayofuata:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
 
 ---
 
-**Urambazaji:** [← Zamani: Moduli 01 - Utangulizi](../01-introduction/README.md) | [Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Moduli 03 - RAG →](../03-rag/README.md)
+**Utembeleaji:** [← Awali: Moduli 01 - Utangulizi](../01-introduction/README.md) | [Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Moduli 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Kiarifu cha Kukataa**:
-Hati hii imetafsiriwa kwa kutumia huduma ya utafsiri wa AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kuwa sahihi, tafadhali fahamu kwamba tafsiri za moja kwa moja zinaweza kuwa na makosa au upungufu. Hati ya asili katika lugha yake ya asili inapaswa kuchukuliwa kama chanzo cha mamlaka. Kwa taarifa muhimu, utafsiri wa kitaalamu unaofanywa na binadamu unashauriwa. Hatubebebi lawama kwa kutoelewana au tafsiri potofu zinazotokana na matumizi ya tafsiri hii.
+**Kukataliwa Kwa Mlolongo**:
+Hati hii imetafsiriwa kwa kutumia huduma ya tafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kwa usahihi, tafadhali fahamu kuwa tafsiri za kiotomatiki zinaweza kuwa na makosa au upungufu katika usahihi. Hati ya asili katika lugha yake ya asili inapaswa kuchukuliwa kama chanzo cha mamlaka. Kwa taarifa muhimu, tafsiri ya kitaalamu ya binadamu inapendekezwa. Hatuna dhamana kwa kutoelewana au tafsiri potofu zinazotokana na matumizi ya tafsiri hii.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
