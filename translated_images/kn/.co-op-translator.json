@@ -17,6 +17,12 @@
     "source_file": "00-quick-start/images/architecture.png",
     "language_code": "kn"
   },
+  "chain-of-thought.5cff6630e2657e2a.webp": {
+    "original_hash": "c396f6bd0295f2bda88ba3ccaaa0f39b",
+    "translation_date": "2026-02-16T11:11:20+00:00",
+    "source_file": "02-prompt-engineering/images/chain-of-thought.png",
+    "language_code": "kn"
+  },
   "constrained-output-demo.567cc45b75da1633.webp": {
     "original_hash": "4b8c148bc4c2976cdfbe806c29b0af3b",
     "translation_date": "2026-01-16T12:47:32+00:00",
@@ -89,6 +95,18 @@
     "source_file": "02-prompt-engineering/images/eight-patterns.png",
     "language_code": "kn"
   },
+  "few-shot-prompting.9d9eace1da88989a.webp": {
+    "original_hash": "3028419888cb8dbf1d70740b94d38682",
+    "translation_date": "2026-02-16T11:11:06+00:00",
+    "source_file": "02-prompt-engineering/images/few-shot-prompting.png",
+    "language_code": "kn"
+  },
+  "five-patterns-overview.160f35045ffd2a94.webp": {
+    "original_hash": "1f17703fd26e2973d60778e39fd656bb",
+    "translation_date": "2026-02-16T11:10:37+00:00",
+    "source_file": "02-prompt-engineering/images/five-patterns-overview.png",
+    "language_code": "kn"
+  },
   "high-eagerness-demo.4ac93e7786c5a376.webp": {
     "original_hash": "e29c4ea1d47dc693390535efe3779489",
     "translation_date": "2026-01-16T12:48:23+00:00",
@@ -99,6 +117,12 @@
     "original_hash": "a166e4a0960b604456c0b734d3f4c9b8",
     "translation_date": "2026-01-16T12:44:12+00:00",
     "source_file": "01-introduction/images/home-screen.png",
+    "language_code": "kn"
+  },
+  "how-langchain4j-fits.dfff4b0aa5f7812d.webp": {
+    "original_hash": "11814aa66f7cdfb2863ebd289d95c3b4",
+    "translation_date": "2026-02-16T11:11:13+00:00",
+    "source_file": "02-prompt-engineering/images/how-langchain4j-fits.png",
     "language_code": "kn"
   },
   "langchain-concept.ad1fe6cf063515e1.webp": {
@@ -179,6 +203,12 @@
     "source_file": "docs/images/prompt-template-testing.png",
     "language_code": "kn"
   },
+  "prompt-templates.14bfc37d45f1a933.webp": {
+    "original_hash": "6936a9103f09c1445a435738e095d7e4",
+    "translation_date": "2026-02-16T11:10:58+00:00",
+    "source_file": "02-prompt-engineering/images/prompt-templates.png",
+    "language_code": "kn"
+  },
   "rag-architecture.ccb53b71a6ce407f.webp": {
     "original_hash": "a0fb0671e18478ad83b93ac8d818c944",
     "translation_date": "2026-01-16T12:50:24+00:00",
@@ -209,10 +239,22 @@
     "source_file": "04-tools/images/react-pattern.png",
     "language_code": "kn"
   },
+  "reasoning-control.5cf85f0fc1d0c1f3.webp": {
+    "original_hash": "d4304f2a6a40c441205e6b8c2928117a",
+    "translation_date": "2026-02-16T11:10:07+00:00",
+    "source_file": "02-prompt-engineering/images/reasoning-control.png",
+    "language_code": "kn"
+  },
   "reasoning-effort.db4a3ba5b8e392c1.webp": {
     "original_hash": "9a6a2c984bacecd3870cfa9146bbeb92",
     "translation_date": "2026-01-16T12:45:47+00:00",
     "source_file": "02-prompt-engineering/images/reasoning-effort.png",
+    "language_code": "kn"
+  },
+  "role-based-prompting.a806e1a73de6e3a4.webp": {
+    "original_hash": "9730fe41b6c4ca19759bebdf7cc61058",
+    "translation_date": "2026-02-16T11:10:48+00:00",
+    "source_file": "02-prompt-engineering/images/role-based-prompting.png",
     "language_code": "kn"
   },
   "self-reflecting-code-demo.851ee05c988e743f.webp": {
@@ -357,6 +399,24 @@
     "original_hash": "dd983d81b3619c330151f2c23ccfcfdc",
     "translation_date": "2026-01-16T12:56:53+00:00",
     "source_file": "docs/images/vscode-testing.png",
+    "language_code": "kn"
+  },
+  "what-is-prompt-engineering.5c392a228a1f5823.webp": {
+    "original_hash": "a2a34056fee933abbf2509520d6956ad",
+    "translation_date": "2026-02-16T11:10:33+00:00",
+    "source_file": "02-prompt-engineering/images/what-is-prompt-engineering.png",
+    "language_code": "kn"
+  },
+  "what-youll-learn.c68269ac048503b2.webp": {
+    "original_hash": "8acd10180bef29930e6fd294d0644a3a",
+    "translation_date": "2026-02-16T11:10:25+00:00",
+    "source_file": "02-prompt-engineering/images/what-youll-learn.png",
+    "language_code": "kn"
+  },
+  "zero-shot-prompting.7abc24228be84e6c.webp": {
+    "original_hash": "4c24eb8b81e2c729fd3cc3d280c306d7",
+    "translation_date": "2026-02-16T11:10:15+00:00",
+    "source_file": "02-prompt-engineering/images/zero-shot-prompting.png",
     "language_code": "kn"
   }
 }
