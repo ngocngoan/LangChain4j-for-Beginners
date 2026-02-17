@@ -379,6 +379,13 @@ public class Gpt5PromptService {
     private SseEmitter streamResponse(String prompt) {
         SseEmitter emitter = new SseEmitter(600_000L);
 
+        // Send an initial comment to flush headers and prevent Chrome from buffering
+        try {
+            emitter.send(SseEmitter.event().comment("stream-start"));
+        } catch (Exception e) {
+            // ignore
+        }
+
         log.info("[STREAM] Starting streaming request");
         log.debug("[STREAM] Prompt length: {} chars", prompt.length());
 

@@ -2,6 +2,7 @@ package com.example.langchain4j.prompts.controller;
 
 import com.example.langchain4j.prompts.service.Gpt5PromptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,8 @@ public class Gpt5PromptController {
      *   -H "Content-Type: application/json" -d '{"problem": "your problem here"}'
      */
     @PostMapping(value = "/autonomous/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter solveAutonomousStreaming(@RequestBody ProblemRequest request) {
+    public SseEmitter solveAutonomousStreaming(@RequestBody ProblemRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.solveAutonomousStreaming(request.problem());
     }
 
@@ -165,7 +167,8 @@ public class Gpt5PromptController {
      * Streaming focused response (low eagerness) - Server-Sent Events
      */
     @PostMapping(value = "/focused/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter solveFocusedStreaming(@RequestBody ProblemRequest request) {
+    public SseEmitter solveFocusedStreaming(@RequestBody ProblemRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.solveFocusedStreaming(request.problem());
     }
 
@@ -173,7 +176,8 @@ public class Gpt5PromptController {
      * Streaming task execution - Server-Sent Events
      */
     @PostMapping(value = "/task/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter executeTaskStreaming(@RequestBody TaskRequest request) {
+    public SseEmitter executeTaskStreaming(@RequestBody TaskRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.executeWithPreambleStreaming(request.task());
     }
 
@@ -181,7 +185,8 @@ public class Gpt5PromptController {
      * Streaming code generation - Server-Sent Events
      */
     @PostMapping(value = "/code/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter generateCodeStreaming(@RequestBody CodeRequest request) {
+    public SseEmitter generateCodeStreaming(@RequestBody CodeRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.generateCodeWithReflectionStreaming(request.requirement());
     }
 
@@ -189,7 +194,8 @@ public class Gpt5PromptController {
      * Streaming code analysis - Server-Sent Events
      */
     @PostMapping(value = "/analyze/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter analyzeCodeStreaming(@RequestBody CodeAnalysisRequest request) {
+    public SseEmitter analyzeCodeStreaming(@RequestBody CodeAnalysisRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.analyzeCodeStreaming(request.code());
     }
 
@@ -197,7 +203,8 @@ public class Gpt5PromptController {
      * Streaming multi-turn chat - Server-Sent Events
      */
     @PostMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter chatStreaming(@RequestBody ChatRequest request) {
+    public SseEmitter chatStreaming(@RequestBody ChatRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.continueConversationStreaming(
             request.message(),
             request.sessionId()
@@ -208,7 +215,8 @@ public class Gpt5PromptController {
      * Streaming constrained output - Server-Sent Events
      */
     @PostMapping(value = "/constrained/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter generateConstrainedStreaming(@RequestBody ConstrainedRequest request) {
+    public SseEmitter generateConstrainedStreaming(@RequestBody ConstrainedRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.generateConstrainedStreaming(
             request.topic(),
             request.format(),
@@ -220,8 +228,21 @@ public class Gpt5PromptController {
      * Streaming step-by-step reasoning - Server-Sent Events
      */
     @PostMapping(value = "/reason/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter solveWithReasoningStreaming(@RequestBody ProblemRequest request) {
+    public SseEmitter solveWithReasoningStreaming(@RequestBody ProblemRequest request, HttpServletResponse response) {
+        setSseHeaders(response);
         return gpt5Service.solveWithReasoningStreaming(request.problem());
+    }
+
+    // ==================== HELPERS ====================
+
+    /**
+     * Set response headers to prevent buffering in Chrome and proxies.
+     * Without these, Chrome may buffer the entire SSE stream before delivering it.
+     */
+    private void setSseHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("X-Accel-Buffering", "no");
+        response.setHeader("Connection", "keep-alive");
     }
 
     // Request/Response DTOs

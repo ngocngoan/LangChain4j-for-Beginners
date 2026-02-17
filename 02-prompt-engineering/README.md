@@ -500,6 +500,8 @@ cd ..; .\stop-all.ps1  # All modules
 The web interface lets you experiment with different prompting strategies. Each pattern solves different problems - try them to see when each approach shines.
 
 > **Note: Streaming vs Non-Streaming** — Every pattern page offers two buttons: **🔴 Stream Response (Live)** and a **Non-streaming** option. Streaming uses Server-Sent Events (SSE) to display tokens in real-time as the model generates them, so you see progress immediately. The non-streaming option waits for the entire response before displaying it. For prompts that trigger deep reasoning (e.g., High Eagerness, Self-Reflecting Code), the non-streaming call can take a very long time — sometimes minutes — with no visible feedback. **Use streaming when experimenting with complex prompts** so you can see the model working and avoid the impression that the request has timed out.
+>
+> **Note: Browser Requirement** — The streaming feature uses the Fetch Streams API (`response.body.getReader()`) which requires a full browser (Chrome, Edge, Firefox, Safari). It does **not** work in VS Code's built-in Simple Browser, as its webview does not support the ReadableStream API. If you use the Simple Browser, the non-streaming buttons will still work normally — only the streaming buttons are affected. Open `http://localhost:8083` in an external browser for the full experience.
 
 ### Low vs High Eagerness
 
