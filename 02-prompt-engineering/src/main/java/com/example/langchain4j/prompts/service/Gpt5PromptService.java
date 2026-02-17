@@ -13,10 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gpt5PromptService - GPT-5 Prompting Best Practices
+ * Gpt5PromptService - GPT-5.2 Prompting Best Practices
  * Run: ./start.sh (from module directory, after deploying Azure resources with azd up)
  * 
- * Service demonstrating GPT-5 prompting best practices with LangChain4j.
+ * Service demonstrating GPT-5.2 prompting best practices with LangChain4j.
  * 
  * Based on OpenAI's GPT-5 Prompting Guide:
  * https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5_prompting_guide.ipynb

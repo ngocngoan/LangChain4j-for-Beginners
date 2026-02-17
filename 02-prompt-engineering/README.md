@@ -183,10 +183,6 @@ With the fundamentals covered, let's move to the eight advanced patterns that ma
 
 *GPT-5.2's reasoning control lets you specify how much thinking the model should do — from fast direct answers to deep exploration*
 
-<img src="images/reasoning-effort.png" alt="Reasoning Effort Comparison" width="800"/>
-
-*Low eagerness (fast, direct) vs High eagerness (thorough, exploratory) reasoning approaches*
-
 **Low Eagerness (Quick & Focused)** - For simple questions where you want fast, direct answers. The model does minimal reasoning - maximum 2 steps. Use this for calculations, lookups, or straightforward questions.
 
 ```java
