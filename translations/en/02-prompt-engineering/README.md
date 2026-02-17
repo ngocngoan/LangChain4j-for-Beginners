@@ -183,10 +183,6 @@ With the fundamentals covered, let's move to the eight advanced patterns that ma
 
 *GPT-5.2's reasoning control lets you specify how much thinking the model should do — from fast direct answers to deep exploration*
 
-<img src="../../../translated_images/en/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
-
-*Low eagerness (fast, direct) vs High eagerness (thorough, exploratory) reasoning approaches*
-
 **Low Eagerness (Quick & Focused)** - For simple questions where you want fast, direct answers. The model does minimal reasoning - maximum 2 steps. Use this for calculations, lookups, or straightforward questions.
 
 ```java
@@ -418,12 +414,12 @@ cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
 The dev container includes the Spring Boot Dashboard extension, which provides a visual interface to manage all Spring Boot applications. You can find it in the Activity Bar on the left side of VS Code (look for the Spring Boot icon).
+
 From the Spring Boot Dashboard, you can:
 - See all available Spring Boot applications in the workspace
 - Start/stop applications with a single click
 - View application logs in real-time
 - Monitor application status
-
 Simply click the play button next to "prompt-engineering" to start this module, or start all modules at once.
 
 <img src="../../../translated_images/en/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
@@ -434,7 +430,7 @@ Start all web applications (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Desde el directorio raíz
+cd ..  # From root directory
 ./start-all.sh
 ```
 
@@ -487,7 +483,7 @@ cd .. && ./stop-all.sh  # All modules
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Only this module
+.\stop.ps1  # This module only
 # Or
 cd ..; .\stop-all.ps1  # All modules
 ```
