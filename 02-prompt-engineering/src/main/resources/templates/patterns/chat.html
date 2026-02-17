@@ -86,21 +86,22 @@
             loadingDiv.style.display = 'block';
             submitBtn.disabled = true;
 
-            // Create streaming assistant message placeholder
+            // Create streaming assistant message placeholder with unique elements
             const container = document.getElementById('chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'chat-message assistant';
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    <pre id="stream-chat-output" style="white-space: pre-wrap; margin: 0;"></pre>
-                    <small id="stream-chat-status" style="color: #888;">Connecting...</small>
-                </div>
-            `;
+            const outputEl = document.createElement('pre');
+            outputEl.style.cssText = 'white-space: pre-wrap; margin: 0;';
+            const statusEl = document.createElement('small');
+            statusEl.style.color = '#888';
+            statusEl.textContent = 'Connecting...';
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.appendChild(outputEl);
+            contentDiv.appendChild(statusEl);
+            messageDiv.appendChild(contentDiv);
             container.appendChild(messageDiv);
             container.scrollTop = container.scrollHeight;
-
-            const outputEl = document.getElementById('stream-chat-output');
-            const statusEl = document.getElementById('stream-chat-status');
             let tokenCount = 0;
             let sseBuffer = '';
 
