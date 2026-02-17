@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Wetin You Go Learn](../../../02-prompt-engineering)
-- [Prerequisites](../../../02-prompt-engineering)
+- [Wetsudo You Need](../../../02-prompt-engineering)
 - [Understanding Prompt Engineering](../../../02-prompt-engineering)
 - [Prompt Engineering Fundamentals](../../../02-prompt-engineering)
   - [Zero-Shot Prompting](../../../02-prompt-engineering)
@@ -22,65 +22,65 @@
   - [Multi-Turn Chat](../../../02-prompt-engineering)
   - [Step-by-Step Reasoning](../../../02-prompt-engineering)
   - [Constrained Output](../../../02-prompt-engineering)
-- [Wetin You Really Dey Learn](../../../02-prompt-engineering)
+- [Wetin You Dey Really Learn](../../../02-prompt-engineering)
 - [Next Steps](../../../02-prompt-engineering)
 
-## What You'll Learn
+## Wetin You Go Learn
 
 <img src="../../../translated_images/pcm/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-For di module way pass, you see how memory dey enable conversational AI and how we use GitHub Models for basic interaction dem. Now we go focus on how you dey ask questions — di prompts dem self — using Azure OpenAI GPT-5.2. Di way wey you dey arrange your prompts dey affect correct answer dem wey you go get. We go start with review of di basic prompting techniques, then go move enter eight advanced patterns wey take full advantage of GPT-5.2 power.
+For di last module, you don see how memory dey enable conversational AI and how to use GitHub Models for small small interaction dem. Now we go focus on how you dey ask question — the prompts theirself — using Azure OpenAI's GPT-5.2. Di way wey you structure your prompts dey affect how better the answers wey you go receive be. We go start with review of di main prompting techniques, then move go eight advanced patterns wey go use GPT-5.2 full ground.
 
-We go use GPT-5.2 because e introduce reasoning control - you fit tell di model how much e suppose reason before e give answer. This one dey make different prompting strategies clear well well and e go help you sabi when to use each approach. We go also benefit from Azure better rate limit for GPT-5.2 compared to GitHub Models dem.
+We go use GPT-5.2 because e introduce reasoning control - you fit talk how much thinking di model suppose do before e give answer. Dis one dey make different prompting strategies clear and e help you sabi wen you go use each kind approach. We also go get benefit from Azure wey get less rate limits for GPT-5.2 compared to GitHub Models.
 
-## Prerequisites
+## Wetsudo You Need
 
-- Finished Module 01 (Azure OpenAI resources wey dem deploy)
-- `.env` file dey root directory wit Azure credentials (wey `azd up` create for Module 01)
+- You don finish Module 01 (Azure OpenAI resources deploy inside)
+- `.env` file dey root directory wit Azure credentials (e dey created by `azd up` for Module 01)
 
-> **Note:** If you never finish Module 01, first follow deployment instruction dem for there.
+> **Note:** If you never finish Module 01, abeg follow di deployment instructions wey dey there first.
 
 ## Understanding Prompt Engineering
 
 <img src="../../../translated_images/pcm/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
-Prompt engineering na about how you design input text wey go always bring di results wey you need. E no be just to ask question - na how you arrange the request dem so the model go understand exactly wetin you want and how e go deliver am.
+Prompt engineering na about how you go design di input text wey go always bring di results wey you want. E no be just ask question - e mean structure di request so di model go sabi exactly wetin you want and how e go deliver am.
 
-Make you think am like you dey give instruction to padi for work. "Fix the bug" no clear. "Fix the null pointer exception for UserService.java line 45 by adding null check" na specific instruction. Language models dem dey work the same way - to get right result specificity and good arrangement of instruction matter.
+Think am like how you go give instruction to your colleague. "Fix the bug" na vague instruction. "Fix the null pointer exception for UserService.java line 45 by adding null check" na specific instruction. Language models dey work like dat too - specificity and structure matter well well.
 
 <img src="../../../translated_images/pcm/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-LangChain4j na di setup — model connections, memory, and message types — while prompt patterns na carefully arranged text wey you go send through dat setup. Di main things be `SystemMessage` (wey control AI behavior and role) and `UserMessage` (wey carry your real request).
+LangChain4j na di infrastructure — model connections, memory, and message types — while prompt patterns na just well structured text wey you dey send through dat infrastructure. Di key building blocks na `SystemMessage` (wey dey set AI behavior and role) and `UserMessage` (wey carry your actual request).
 
 ## Prompt Engineering Fundamentals
 
 <img src="../../../translated_images/pcm/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-Before we waka enter advanced patterns for dis module, make we recap five foundational prompting ways. Na dem be di building blocks wey every prompt engineer suppose sabi. If you don already use di [Quick Start module](../00-quick-start/README.md#2-prompt-patterns), you don see dem dey work — dis na di concept framework behind dem.
+Before we enter advanced patterns for dis module, make we review five main prompting techniques. Dem be di building blocks wey every prompt engineer suppose sabi. If you don work wit di [Quick Start module](../00-quick-start/README.md#2-prompt-patterns) before, you don see these ones in action already — here na di main idea behind dem.
 
 ### Zero-Shot Prompting
 
-Di simplest way: give di model direct instruction without any example. Di model go rely totally on im training to understand and do di task. E good for simple requests wey di behavior wey dem expect clear well well.
+Na di simplest way be dis: you give di model direct instruction without example. Di model go depend on im training alone to understand and do di work. Dis one dey work well for simple requests wey di expected behavior dey clear.
 
 <img src="../../../translated_images/pcm/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-*Direct instruction without examples — di model dey figure di task from di instruction only*
+*Direct instruction without example — di model go infer di task from di instruction only*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// Response: "Correct"
+// Response: "Positiv"
 ```
 
-**When to use:** Simple classifications, direct questions, translations, or any task wey di model fit handle without extra instruction.
+**When to use:** Simple classifications, direct questions, translations, or any task wey di model fit handle without extra guidance.
 
 ### Few-Shot Prompting
 
-Give examples wey show di pattern wey you want di model follow. Di model go learn di right input-output format from your examples and apply am to new inputs. Dis one go improve consistency well for tasks wey di desired format or behavior no obvious.
+Make you provide examples wey show di pattern wey you want di model to follow. Di model go learn di expected input-output format from your examples and apply am to new input dem. Dis one dey sharply improve consistency for tasks wey di desired format or behavior no too clear.
 
 <img src="../../../translated_images/pcm/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-*Learning from examples — di model dey identify di pattern and apply am to new inputs*
+*Learning from examples — di model go identify di pattern and apply am to new inputs*
 
 ```java
 String prompt = """
@@ -97,15 +97,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**When to use:** Custom classifications, consistent formatting, domain-specific tasks, or when zero-shot results no dey consistent.
+**When to use:** Custom classifications, consistent formatting, domain-specific tasks, or wen zero-shot results no steady.
 
 ### Chain of Thought
 
-Make di model show how e reason step-by-step. Instead make e jump direct to answer, di model go break di problem and work through each part explicitly. Dis one go improve accuracy for math, logic, and multi-step reasoning tasks.
+Ask di model to show how e dey reason step by step. Instead of just jump straight to answer, di model go break down di problem and work through each part clearly. Dis one dey improve accuracy for math, logic, and multi-step reasoning tasks.
 
 <img src="../../../translated_images/pcm/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*Step-by-step reasoning — breaking complex problems into clear logical steps*
+*Step-by-step reasoning — breaking complex problems into explicit logical steps*
 
 ```java
 String prompt = """
@@ -115,18 +115,18 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// Di model dey show: 15 - 8 = 7, afta dat 7 + 12 = 19 apple dem
+// Di model dey show: 15 - 8 = 7, den 7 + 12 = 19 apple dem
 ```
 
-**When to use:** Math problems, logic puzzles, debugging, or any task wey showing di reasoning process dey improve accuracy plus trust.
+**When to use:** Math problems, logic puzzles, debugging, or any task wey showing reasoning dey improve accuracy and trust.
 
 ### Role-Based Prompting
 
-Assign persona or role to di AI before you ask question. Dis one go give context wey shape di tone, depth, and focus of di response. "Software architect" go give different advice than "junior developer" or "security auditor".
+Set persona or role for di AI before you ask your question. Dis one dey provide context wey dey shape di tone, depth, and focus of di answer. "Software architect" go give different advice than "junior developer" or "security auditor".
 
 <img src="../../../translated_images/pcm/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-*Setting context and persona — same question go get different response based on assigned role*
+*Setting context and persona — di same question fit get different answer depending on di assigned role*
 
 ```java
 String prompt = """
@@ -142,15 +142,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**When to use:** Code reviews, tutoring, domain-specific analysis, or when you need responses wey fit special expertise level or perspective.
+**When to use:** Code reviews, tutoring, domain-specific analysis, or wen you need answers wey fit one particular expertise level or perspective.
 
 ### Prompt Templates
 
-Make reusable prompts with variable placeholders. Instead make you write new prompt every time, define one template once and fill different values. LangChain4j `PromptTemplate` class dey make dis easy wit `{{variable}}` syntax.
+You fit create reusable prompts wey get variable placeholders. Instead of you write new prompt every time, you fit define one template once and just add different values. LangChain4j `PromptTemplate` class dey make dis easy wit `{{variable}}` syntax.
 
 <img src="../../../translated_images/pcm/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
-*Reusable prompts with variable placeholders — one template, many use*
+*Reusable prompts wit variable placeholders — one template, many uses*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,95 +165,121 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**When to use:** Repeated queries wit different inputs, batch processing, building reusable AI workflows, or any situation wey di prompt structure no dey change but data go change.
+**When to use:** Repeated queries wit different inputs, batch processing, building reusable AI workflows, or any time wey prompt structure dey same but data dey change.
 
 ---
 
-These five fundamentals give you solid toolkit for most prompting tasks. Di rest of dis module go build on top dem with **eight advanced patterns** wey leverage GPT-5.2 reasoning control, self evaluation, and structured output skill.
+Dis five fundamentals go give you solid toolkit for most prompting tasks. Di rest of dis module go build on dem wit **eight advanced patterns** wey go use GPT-5.2 reasoning control, self-evaluation, and structured output abilities.
 
 ## Advanced Patterns
 
-With fundamentals cover, make we move enter di eight advanced patterns wey dey make dis module special. No be all problem go need same approach. Some questions need quick answers, others deep thinking. Some need visible reasoning, others na just result we want. Each pattern below dey optimize for different situation — and GPT-5.2 reasoning control dey make di difference come clear well well.
+Now we don cover fundamentals, make we move to di eight advanced patterns wey make dis module special. No every question need di same way. Some questions need quick answers, some need deep thinking. Some need visible reasoning, some just need results. Each pattern below dey designed for different scenario — and GPT-5.2 reasoning control dey make di difference even clearpass.
 
 <img src="../../../translated_images/pcm/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
-*Overview of di eight prompt engineering patterns and their use cases*
+*Overview of eight prompt engineering patterns and their use cases*
 
 <img src="../../../translated_images/pcm/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
 
-*GPT-5.2 reasoning control let you tell how much di model suppose think — from quick direct answers to deep search*
+*GPT-5.2 reasoning control let you tell how much thinking di model go do — from fast direct answers to deep exploration*
 
 <img src="../../../translated_images/pcm/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Reasoning Effort Comparison" width="800"/>
 
-*Low eagerness (fast, direct) vs High eagerness (thorough, exploratory) reasoning methods*
+*Low eagerness (fast, direct) vs High eagerness (thorough, exploratory) reasoning approaches*
 
-**Low Eagerness (Quick & Focused)** - For simple questions wey you want fast, direct answers. Di model go do minimum reasoning - max 2 steps. Use dis for calculations, lookups, or straightforward questions dem.
+**Low Eagerness (Quick & Focused)** - For simple questions where you want fast, direct answer dem. Di model dey do small reasoning - max 2 steps. Use dis one for calculations, lookup, or simple question dem.
 
 ```java
 String prompt = """
-    <reasoning_effort>low</reasoning_effort>
-    <instruction>maximum 2 reasoning steps</instruction>
+    <context_gathering>
+    - Search depth: very low
+    - Bias strongly towards providing a correct answer as quickly as possible
+    - Usually, this means an absolute maximum of 2 reasoning steps
+    - If you think you need more time, state what you know and what's uncertain
+    </context_gathering>
     
-    What is 15% of 200?
-    """;
-
-String response = chatModel.chat(prompt);
-```
-
-> 💡 **Explore wit GitHub Copilot:** Open [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) and ask:
-> - "Wetin be difference between low eagerness and high eagerness prompting patterns?"
-> - "How di XML tags for prompts dey help arrange di AI's response?"
-> - "When I suppose use self-reflection patterns and when I suppose use direct instruction?"
-
-**High Eagerness (Deep & Thorough)** - For complex problems wey you want deep analysis. Di model dey explore thoroughly and show detailed reasoning. Use dis for system design, architecture decisions, or complex research.
-
-```java
-String prompt = """
-    <reasoning_effort>high</reasoning_effort>
-    <instruction>explore thoroughly, show detailed reasoning</instruction>
+    Problem: What is 15% of 200?
     
-    Design a caching strategy for a high-traffic REST API.
+    Provide your answer:
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-**Task Execution (Step-by-Step Progress)** - For multi-step workflows. Di model go provide upfront plan, talk each step as e dey do am, then give summary. Use dis for migrations, implementations, or any multi-step process.
+> 💡 **Try am wit GitHub Copilot:** Open [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) and ask:
+> - "Wetin be di difference between low eagerness and high eagerness prompting patterns?"
+> - "How di XML tags for prompts dey help structure di AI response?"
+> - "Wen I suppose use self-reflection patterns vs direct instruction?"
+
+**High Eagerness (Deep & Thorough)** - For complex problem dem wey you want full analysis. Di model go explore thoroughly and show detailed reasoning. Use dis for system design, architecture decisions, or complex research.
 
 ```java
 String prompt = """
-    <task>Create a REST endpoint for user registration</task>
-    <preamble>Provide an upfront plan</preamble>
-    <narration>Narrate each step as you work</narration>
-    <summary>Summarize what was accomplished</summary>
+    Analyze this problem thoroughly and provide a comprehensive solution.
+    Consider multiple approaches, trade-offs, and important details.
+    Show your analysis and reasoning in your response.
+    
+    Problem: Design a caching strategy for a high-traffic REST API.
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-Chain-of-Thought prompting clear-clear ask di model to show how e reason, e dey improve accuracy for complex tasks. Step-by-step breakdown dey help both human and AI understand di logic.
+**Task Execution (Step-by-Step Progress)** - For multi-step workflow dem. Di model go give upfront plan, narrate each step as e dey work, then give summary. Use dis for migrations, implementation, or any multi-step process.
 
-> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Ask about dis pattern:
-> - "How I fit adapt task execution pattern for long-running operations?"
-> - "Wetin be best way for arranging tool preambles for production applications?"
-> - "How I fit capture and show intermediate progress updates for UI?"
+```java
+String prompt = """
+    <task_execution>
+    1. First, briefly restate the user's goal in a friendly way
+    
+    2. Create a step-by-step plan:
+       - List all steps needed
+       - Identify potential challenges
+       - Outline success criteria
+    
+    3. Execute each step:
+       - Narrate what you're doing
+       - Show progress clearly
+       - Handle any issues that arise
+    
+    4. Summarize:
+       - What was completed
+       - Any important notes
+       - Next steps if applicable
+    </task_execution>
+    
+    <tool_preambles>
+    - Always begin by rephrasing the user's goal clearly
+    - Outline your plan before executing
+    - Narrate each step as you go
+    - Finish with a distinct summary
+    </tool_preambles>
+    
+    Task: Create a REST endpoint for user registration
+    
+    Begin execution:
+    """;
+
+String response = chatModel.chat(prompt);
+```
+
+Chain-of-Thought prompting explicitly talk make di model show im reasoning process, e dey improve accuracy for complex tasks. Di step-by-step breakdown dey help human and AI understand di logic better.
+
+> **🤖 Try am wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Ask about dis pattern:
+> - "How I go adapt task execution pattern for long-running operations?"
+> - "Wetin be best practices for structuring tool preambles for production apps?"
+> - "How I fit capture and show intermediate progress updates inside UI?"
 
 <img src="../../../translated_images/pcm/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
 *Plan → Execute → Summarize workflow for multi-step tasks*
 
-**Self-Reflecting Code** - For produce production-quality code. Di model go generate code, check am against quality criteria, then improve am step by step. Use dis when you dey build new features or services.
+**Self-Reflecting Code** - For generating production-level code. Di model go generate code wey follow production standard wit proper error handling. Use dis for building new feature dem or services.
 
 ```java
 String prompt = """
-    <task>Create an email validation service</task>
-    <quality_criteria>
-    - Correct logic and error handling
-    - Best practices (clean code, proper naming)
-    - Performance optimization
-    - Security considerations
-    </quality_criteria>
-    <instruction>Generate code, evaluate against criteria, improve iteratively</instruction>
+    Generate Java code with production-quality standards: Create an email validation service
+    Keep it simple and include basic error handling.
     """;
 
 String response = chatModel.chat(prompt);
@@ -261,40 +287,66 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/pcm/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
-*Iterative improvement loop - generate, evaluate, find wahala, improve, repeat*
+*Iterative improvement loop - generate, evaluate, find issues, improve, repeat*
 
-**Structured Analysis** - For consistent evaluation. Di model go review code wit fixed framework (correctness, practices, performance, security). Use dis for code reviews or quality check.
+**Structured Analysis** - For consistent evaluation. Di model go review code using fixed framework (correctness, practices, performance, security, maintainability). Use dis for code reviews or quality assessment.
 
 ```java
 String prompt = """
-    <code>
+    <analysis_framework>
+    You are an expert code reviewer. Analyze the code for:
+    
+    1. Correctness
+       - Does it work as intended?
+       - Are there logical errors?
+    
+    2. Best Practices
+       - Follows language conventions?
+       - Appropriate design patterns?
+    
+    3. Performance
+       - Any inefficiencies?
+       - Scalability concerns?
+    
+    4. Security
+       - Potential vulnerabilities?
+       - Input validation?
+    
+    5. Maintainability
+       - Code clarity?
+       - Documentation?
+    
+    <output_format>
+    Provide your analysis in this structure:
+    - Summary: One-sentence overall assessment
+    - Strengths: 2-3 positive points
+    - Issues: List any problems found with severity (High/Medium/Low)
+    - Recommendations: Specific improvements
+    </output_format>
+    </analysis_framework>
+    
+    Code to analyze:
+    ```
     public List getUsers() {
         return database.query("SELECT * FROM users");
     }
-    </code>
-    
-    <framework>
-    Evaluate using these categories:
-    1. Correctness - Logic and functionality
-    2. Best Practices - Code quality
-    3. Performance - Efficiency concerns
-    4. Security - Vulnerabilities
-    </framework>
+    ```
+    Provide your structured analysis:
     """;
 
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Ask about structured analysis:
-> - "How I fit customize analysis framework for different code review types?"
-> - "Wetin be best way to parse and act on structured output with program?"
-> - "How I go make sure consistent severity levels across different review sessions?"
+> **🤖 Try am wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Ask about structured analysis:
+> - "How I fit customize analysis framework for different kind code reviews?"
+> - "Wetin be best way to parse and act on structured output programmatically?"
+> - "How I fit ensure steady severity levels across different review sessions?"
 
 <img src="../../../translated_images/pcm/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
-*Four-category framework for consistent code reviews with severity levels*
+*Framework for steady code reviews wit severity levels*
 
-**Multi-Turn Chat** - For conversation wey need context. Di model go remember previous messages and build on dem. Use dis for interactive help sessions or complex Q&A.
+**Multi-Turn Chat** - For conversation wey need context. Di model go remember old messages and build on top of dem. Use dis for interactive help session or complex Q&A.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -310,9 +362,9 @@ memory.add(aiMessage2);
 
 <img src="../../../translated_images/pcm/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
-*How conversation context dey hold steady over many turns until token limit full*
+*How conversation context dey add up through many turns until token limit reach*
 
-**Step-by-Step Reasoning** - For problems wey need visible logic. Di model go show explicit reasoning every step. Use dis for math problems, logic puzzles, or when you need sabi di thinking process.
+**Step-by-Step Reasoning** - For problem dem wey need show logic. Di model go show reasoning clearly for every step. Use dis for math problems, logic puzzles, or wen you want understand di thinking process.
 
 ```java
 String prompt = """
@@ -328,9 +380,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/pcm/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
-*Break down problems into clear logical steps*
+*Breaking down problem dem into clear logical steps*
 
-**Constrained Output** - For answers wey get specific format rules. Di model go strictly follow format and length rules. Use dis for summaries or when you need exact output structure.
+**Constrained Output** - For answers wey get specific format requirements. Di model go strictly follow format and length rule. Use dis for summaries or if you want correct output structure.
 
 ```java
 String prompt = """
@@ -348,31 +400,31 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/pcm/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
-*Enforce specific format, length, and structure rules*
+*Make sure say specific format, length, and structure requirement dem dey follow*
 
 ## Using Existing Azure Resources
 
-**Make sure deployment correct:**
+**Make sure deployment dey:**
 
-Check say `.env` file dey root directory wit Azure credentials (wey Module 01 create):
+Check say `.env` file dey root directory with Azure credentials (e dey created during Module 01):
 ```bash
 cat ../.env  # E suppose show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Start di application:**
 
-> **Note:** If you don already start all apps using `./start-all.sh` from Module 01, dis module dey run already for port 8083. You fit skip di start commands below and go direct to http://localhost:8083.
+> **Note:** If you don start all di applications using `./start-all.sh` from Module 01, dis module don dey run for port 8083. You fit skip di start commands below and go straight to http://localhost:8083.
 
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
-Di dev container get Spring Boot Dashboard extension, wey provide visual interface to manage all Spring Boot applications. You fit find am for Activity Bar for left side of VS Code (look for Spring Boot icon).
+Di dev container get Spring Boot Dashboard extension, wey provide visual interface to manage all Spring Boot applications. You fit find am for di Activity Bar for left side of VS Code (look for Spring Boot icon).
 From di Spring Boot Dashboard, you fit:
-- See all di Spring Boot applications wey dey available for di workspace
-- Start/stop applications wit one click
+- See all di Spring Boot applications wey dey for di workspace
+- Start/stop applications with just one click
 - View application logs for real-time
 - Monitor application status
 
-Just click di play button wey dey next to "prompt-engineering" to start dis module, or start all modules all at once.
+Just click di play button wey dey next to "prompt-engineering" to start dis module, or start all di modules at once.
 
 <img src="../../../translated_images/pcm/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
@@ -382,7 +434,7 @@ Start all web applications (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # From de root directory
+cd ..  # From root folder
 ./start-all.sh
 ```
 
@@ -408,7 +460,7 @@ cd 02-prompt-engineering
 
 Both scripts go automatically load environment variables from di root `.env` file and go build di JARs if dem no dey.
 
-> **Note:** If you prefer to build all modules manually before you start:
+> **Note:** If you prefer to build all di modules manually before you start:
 >
 > **Bash:**
 > ```bash
@@ -444,19 +496,19 @@ cd ..; .\stop-all.ps1  # All modules
 
 <img src="../../../translated_images/pcm/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Di main dashboard wey dey show all 8 prompt engineering patterns wit dia characteristics and use cases*
+*Di main dashboard dey show all di 8 prompt engineering patterns with their characteristics and how dem dey use*
 
 ## Exploring di Patterns
 
-Di web interface let you try different prompting strategies. Each pattern dey solve different problems - try dem make you sabi when each method dey shine.
+Di web interface dey allow you experiment wit different prompting strategies. Each pattern dey solve different wahala - try dem to see when each approach dey show.
 
 ### Low vs High Eagerness
 
-Ask one simple question like "Wetin be 15% of 200?" using Low Eagerness. You go get quick, direct answer. Now ask something complex like "Design a caching strategy for a high-traffic API" using High Eagerness. Watch how di model slow down and provide detailed reasoning. Same model, same question structure - but di prompt tell am how much thinking make e do.
+Ask simple question like "Wetyn be 15% of 200?" using Low Eagerness. You go get quick, direct answer. Now ask something wey complex like "Design caching strategy for high-traffic API" using High Eagerness. Watch how di model slow down and give detailed reasoning. Same model, same question format - but di prompt dey tell am how much e go reason.
 
 <img src="../../../translated_images/pcm/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
-*Quick calculation wit small reasoning*
+*Quick calculation wit small reason*
 
 <img src="../../../translated_images/pcm/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
 
@@ -464,15 +516,15 @@ Ask one simple question like "Wetin be 15% of 200?" using Low Eagerness. You go 
 
 ### Task Execution (Tool Preambles)
 
-Multi-step workflows benefit from upfront planning and progress narration. Di model go outline wetin e go do, narrate each step, then summarise di results.
+Multi-step workflow dem sabi benefit from upfront planning and narration of progress. Di model go talk wetin e go do, narrate each step, then summarize di results.
 
 <img src="../../../translated_images/pcm/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
 
-*Creating one REST endpoint wit step-by-step narration (3.9MB)*
+*Wetin dey create REST endpoint with step-by-step narration (3.9MB)*
 
 ### Self-Reflecting Code
 
-Try "Create an email validation service". Instead of just generate code and stop, di model go generate, evaluate am against quality criteria, identify di weak points, and improve. You go see am dey repeat until di code meet production standards.
+Try "Create email validation service". Instead make e just generate code and stop, di model go generate, check with quality criteria, find weak points, and improve. You go see am dey repeat until di code reach production standard.
 
 <img src="../../../translated_images/pcm/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
 
@@ -480,7 +532,7 @@ Try "Create an email validation service". Instead of just generate code and stop
 
 ### Structured Analysis
 
-Code reviews need to get consistent evaluation frameworks. Di model dey analyze code using fixed categories (correctness, practices, performance, security) wit severity levels.
+Code reviews need consistent evaluation framework. Di model go analyze code using fixed categories (correctness, practices, performance, security) with severity levels.
 
 <img src="../../../translated_images/pcm/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
 
@@ -488,49 +540,49 @@ Code reviews need to get consistent evaluation frameworks. Di model dey analyze 
 
 ### Multi-Turn Chat
 
-Ask "Wetin be Spring Boot?" then immediately follow up wit "Show me an example". Di model go remember your first question and give you one Spring Boot example especially. Without memory, dat second question go be too vague.
+Ask "Wetyn be Spring Boot?" then immediately follow up wit "Show me example". Di model go remember your first question and give you Spring Boot example specifically. Without memory, dat second question go too vague.
 
 <img src="../../../translated_images/pcm/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
 
-*Context preservation across questions*
+*Context dey preserved across questions*
 
 ### Step-by-Step Reasoning
 
-Pick one math problem and try am wit both Step-by-Step Reasoning and Low Eagerness. Low eagerness just go give you di answer - fast but hard to understand. Step-by-step go show you every calculation and decision.
+Pick math problem and try am wit both Step-by-Step Reasoning and Low Eagerness. Low eagerness go just give you answer quick - fast but e no clear. Step-by-step go show you every calculation and decision.
 
 <img src="../../../translated_images/pcm/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
 
-*Math problem wit explicit steps*
+*Math problem wit clear steps*
 
 ### Constrained Output
 
-When you need specific formats or word counts, dis pattern go make sure Strict Adherence. Try generate one summary wit exactly 100 words in bullet point format.
+When you need specific format or word count, dis pattern go enforce strict adherence. Try generate summary wit exactly 100 words for bullet point format.
 
 <img src="../../../translated_images/pcm/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
 
 *Machine learning summary wit format control*
 
-## Wetin You Dey Really Learn
+## Wetyn You Dey Really Learn
 
 **Reasoning Effort Changes Everything**
 
-GPT-5.2 go let you control computational effort through your prompts. Low effort mean fast response wit minimal exploration. High effort mean say di model go take time to think deeply. You dey learn to match effort to task complexity - no waste time on simple questions, but no too rush complex decisions either.
+GPT-5.2 go allow you control computational effort through your prompts. Low effort mean fast answers wit small exploration. High effort mean di model go take time to reason well. You dey learn how to match effort to task complexity - no waste time for simple questions, but no rush complex decisions either.
 
 **Structure Guides Behavior**
 
-You notice di XML tags inside di prompts? Dem no be decoration. Models dey follow structured instructions more reliably than freeform text. When you need multi-step processes or complex logic, structure dey help di model track where e dey and wetin come next.
+You see XML tags for di prompts? Dem no just dey for decoration. Models follow structured instructions better than freeform text. When you need multi-step processes or complex logic, structure go help di model remember where e dey and wetin come next.
 
 <img src="../../../translated_images/pcm/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomy of one well-structured prompt wit clear sections and XML-style organization*
+*An anatomy of well-structured prompt wit clear sections and XML-style organization*
 
 **Quality Through Self-Evaluation**
 
-Di self-reflecting patterns dey work by making quality criteria explicit. Instead of hoping say di model "go do am right", you go tell am exactly wetin "right" mean: correct logic, error handling, performance, security. Di model fit evaluate im own output and improve. Dis one make code generation no be lottery again but na proper process.
+Self-reflecting patterns dey work by making quality criteria explicit. Instead of hoping di model "go do am right", you go tell am exactly wetin "right" mean: correct logic, error handling, performance, security. Di model fit then evaluate its own output and improve. Dis turn code generation from lottery to better process.
 
-**Context Is Finite**
+**Context Na Limited**
 
-Multi-turn conversations dey work by including message history wit every request. But e get limit - every model get maximum token count. As conversations dey grow, you go need strategies to keep relevant context without hit dat ceiling. Dis module go show you how memory dey work; later you go learn when to summarize, when to forget, and when to retrieve.
+Multi-turn conversations work by including message history for each request. But e get limit - every model get max token count. As conversations grow, you go need strategies to keep relevant context without reach dat limit. Dis module show you how memory dey work; later you go learn when to summarize, when to forget, and when to retrieve.
 
 ## Next Steps
 
@@ -543,6 +595,5 @@ Multi-turn conversations dey work by including message history wit every request
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:
-Dis document don translate wit AI translation service wey dem dey call [Co-op Translator](https://github.com/Azure/co-op-translator). As we dey try make am correct, abeg sabi say automated translation fit get some mistakes or small error. Di original document wey dey di main language na di correct one you suppose trust. If na serious matter, e better make you use human professional wey sabi translate. We no go take any blame if person no understand or make mistake because of dis translation.
+**Disclaimer**: Dis document e don translate wit AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we try make e correct, abeg make you sabi say automatic translation fit get some mistake or no too accurate. Di original document for dia own language na di correct one you suppose trust. If na serious tins, make person wey sabi translate do am. We no responsible if you no understand well or if you get wahala because of dis translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
