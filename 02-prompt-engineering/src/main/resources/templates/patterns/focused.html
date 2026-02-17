@@ -33,7 +33,8 @@
                 </div>
 
                 <div class="button-group">
-                    <button id="submit-btn" class="btn" onclick="submitFocused()">Generate Response</button>
+                    <button id="submit-btn" class="btn" onclick="submitFocusedStreaming()">🔴 Stream Response (Live)</button>
+                    <button id="submit-btn-sync" class="btn" onclick="submitFocused()" style="margin-left:10px; opacity: 0.7;">Generate Response (Non-streaming)</button>
                 </div>
             </div>
 
@@ -58,6 +59,12 @@
 
     <script th:src="@{/js/pattern-demo.js}"></script>
     <script>
+        function submitFocusedStreaming() {
+            const problem = document.getElementById('problem').value.trim();
+            if (!problem) { alert('Please enter a problem'); return; }
+            callPatternStreaming('focused', { problem });
+        }
+
         function submitFocused() {
             const problem = document.getElementById('problem').value.trim();
             if (!problem) {

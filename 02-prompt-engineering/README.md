@@ -499,65 +499,37 @@ cd ..; .\stop-all.ps1  # All modules
 
 The web interface lets you experiment with different prompting strategies. Each pattern solves different problems - try them to see when each approach shines.
 
+> **Note: Streaming vs Non-Streaming** — Every pattern page offers two buttons: **🔴 Stream Response (Live)** and a **Non-streaming** option. Streaming uses Server-Sent Events (SSE) to display tokens in real-time as the model generates them, so you see progress immediately. The non-streaming option waits for the entire response before displaying it. For prompts that trigger deep reasoning (e.g., High Eagerness, Self-Reflecting Code), the non-streaming call can take a very long time — sometimes minutes — with no visible feedback. **Use streaming when experimenting with complex prompts** so you can see the model working and avoid the impression that the request has timed out.
+>
+> **Note: Browser Requirement** — The streaming feature uses the Fetch Streams API (`response.body.getReader()`) which requires a full browser (Chrome, Edge, Firefox, Safari). It does **not** work in VS Code's built-in Simple Browser, as its webview does not support the ReadableStream API. If you use the Simple Browser, the non-streaming buttons will still work normally — only the streaming buttons are affected. Open `http://localhost:8083` in an external browser for the full experience.
+
 ### Low vs High Eagerness
 
-Ask a simple question like "What is 15% of 200?" using Low Eagerness. You'll get an instant, direct answer. Now ask something complex like "Design a caching strategy for a high-traffic API" using High Eagerness. Watch how the model slows down and provides detailed reasoning. Same model, same question structure - but the prompt tells it how much thinking to do.
-
-<img src="images/low-eagerness-demo.png" alt="Low Eagerness Demo" width="800"/>
-
-*Quick calculation with minimal reasoning*
-
-<img src="images/high-eagerness-demo.png" alt="High Eagerness Demo" width="800"/>
-
-*Comprehensive caching strategy (2.8MB)*
+Ask a simple question like "What is 15% of 200?" using Low Eagerness. You'll get an instant, direct answer. Now ask something complex like "Design a caching strategy for a high-traffic API" using High Eagerness. Click **🔴 Stream Response (Live)** and watch the model's detailed reasoning appear token-by-token. Same model, same question structure - but the prompt tells it how much thinking to do.
 
 ### Task Execution (Tool Preambles)
 
 Multi-step workflows benefit from upfront planning and progress narration. The model outlines what it will do, narrates each step, then summarizes results.
 
-<img src="images/tool-preambles-demo.png" alt="Task Execution Demo" width="800"/>
-
-*Creating a REST endpoint with step-by-step narration (3.9MB)*
-
 ### Self-Reflecting Code
 
 Try "Create an email validation service". Instead of just generating code and stopping, the model generates, evaluates against quality criteria, identifies weaknesses, and improves. You'll see it iterate until the code meets production standards.
-
-<img src="images/self-reflecting-code-demo.png" alt="Self-Reflecting Code Demo" width="800"/>
-
-*Complete email validation service (5.2MB)*
 
 ### Structured Analysis
 
 Code reviews need consistent evaluation frameworks. The model analyzes code using fixed categories (correctness, practices, performance, security) with severity levels.
 
-<img src="images/structured-analysis-demo.png" alt="Structured Analysis Demo" width="800"/>
-
-*Framework-based code review*
-
 ### Multi-Turn Chat
 
 Ask "What is Spring Boot?" then immediately follow up with "Show me an example". The model remembers your first question and gives you a Spring Boot example specifically. Without memory, that second question would be too vague.
-
-<img src="images/multi-turn-chat-demo.png" alt="Multi-Turn Chat Demo" width="800"/>
-
-*Context preservation across questions*
 
 ### Step-by-Step Reasoning
 
 Pick a math problem and try it with both Step-by-Step Reasoning and Low Eagerness. Low eagerness just gives you the answer - fast but opaque. Step-by-step shows you every calculation and decision.
 
-<img src="images/step-by-step-reasoning-demo.png" alt="Step-by-Step Reasoning Demo" width="800"/>
-
-*Math problem with explicit steps*
-
 ### Constrained Output
 
 When you need specific formats or word counts, this pattern enforces strict adherence. Try generating a summary with exactly 100 words in bullet point format.
-
-<img src="images/constrained-output-demo.png" alt="Constrained Output Demo" width="800"/>
-
-*Machine learning summary with format control*
 
 ## What You're Really Learning
 

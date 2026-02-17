@@ -42,7 +42,8 @@
                 </div>
 
                 <div class="button-group">
-                    <button id="submit-btn" class="btn" onclick="sendMessage()">Send Message</button>
+                    <button id="submit-btn" class="btn" onclick="sendMessageStreaming()">🔴 Stream Message (Live)</button>
+                    <button id="submit-btn-sync" class="btn" onclick="sendMessage()" style="margin-left:10px; opacity: 0.7;">Send Message (Non-streaming)</button>
                 </div>
             </div>
 
@@ -66,6 +67,126 @@
     <script th:src="@{/js/pattern-demo.js}"></script>
     <script>
         let sessionId = null;
+
+        async function sendMessageStreaming() {
+            const message = document.getElementById('message').value.trim();
+            if (!message) { alert('Please enter a message'); return; }
+
+            if (!sessionId) {
+                sessionId = 'session-' + Date.now();
+                document.getElementById('session-id').textContent = sessionId;
+                document.getElementById('session-info').style.display = 'block';
+            }
+
+            addMessage('user', message);
+            document.getElementById('message').value = '';
+
+            const loadingDiv = document.getElementById('loading');
+            const submitBtn = document.getElementById('submit-btn');
+            loadingDiv.style.display = 'block';
+            submitBtn.disabled = true;
+
+            // Create streaming assistant message placeholder with unique elements
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message assistant';
+            const outputEl = document.createElement('pre');
+            outputEl.style.cssText = 'white-space: pre-wrap; margin: 0;';
+            const statusEl = document.createElement('small');
+            statusEl.style.color = '#888';
+            statusEl.textContent = 'Connecting...';
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.appendChild(outputEl);
+            contentDiv.appendChild(statusEl);
+            messageDiv.appendChild(contentDiv);
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+            let tokenCount = 0;
+            let sseBuffer = '';
+
+            try {
+                const response = await fetch('/api/gpt5/chat/stream', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, sessionId })
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                loadingDiv.style.display = 'none';
+                statusEl.textContent = 'Streaming...';
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let streamDone = false;
+
+                function processSSEEvents(text) {
+                    sseBuffer += text;
+                    const events = sseBuffer.split('\n\n');
+                    sseBuffer = events.pop() || '';
+
+                    for (const event of events) {
+                        if (!event.trim()) continue;
+                        const lines = event.split('\n');
+                        let eventName = '';
+                        const dataLines = [];
+
+                        for (const line of lines) {
+                            if (line.startsWith('event:')) {
+                                eventName = line.substring(6).trim();
+                            } else if (line.startsWith('data:')) {
+                                dataLines.push(line.substring(5));
+                            }
+                        }
+
+                        const data = dataLines.join('\n');
+
+                        if (eventName === 'done' || data.trim() === '[DONE]') {
+                            statusEl.textContent = `\u2713 ${tokenCount} tokens`;
+                            submitBtn.disabled = false;
+                            streamDone = true;
+                            return;
+                        }
+
+                        if (eventName === 'error') {
+                            statusEl.textContent = 'Error: ' + data;
+                            submitBtn.disabled = false;
+                            streamDone = true;
+                            return;
+                        }
+
+                        if (eventName === 'token' && dataLines.length > 0) {
+                            outputEl.textContent += data;
+                            tokenCount++;
+                            container.scrollTop = container.scrollHeight;
+                        }
+                    }
+                }
+
+                function read() {
+                    reader.read().then(({ done, value }) => {
+                        if (done || streamDone) {
+                            if (!streamDone) {
+                                statusEl.textContent = `\u2713 ${tokenCount} tokens`;
+                                submitBtn.disabled = false;
+                            }
+                            return;
+                        }
+                        const text = decoder.decode(value, { stream: true });
+                        processSSEEvents(text);
+                        if (!streamDone) read();
+                    }).catch(err => {
+                        statusEl.textContent = 'Error: ' + err.message;
+                        submitBtn.disabled = false;
+                    });
+                }
+                read();
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                addMessage('assistant', 'Error: ' + error.message);
+                submitBtn.disabled = false;
+            }
+        }
 
         async function sendMessage() {
             const message = document.getElementById('message').value.trim();
