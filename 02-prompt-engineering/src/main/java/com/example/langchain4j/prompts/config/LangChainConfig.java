@@ -1,6 +1,7 @@
 package com.example.langchain4j.prompts.config;
 
 import dev.langchain4j.model.openaiofficial.OpenAiOfficialChatModel;
+import dev.langchain4j.model.openaiofficial.OpenAiOfficialStreamingChatModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,20 @@ public class LangChainConfig {
                 .modelName(deploymentName)
                 .timeout(Duration.ofMinutes(5))  // GPT-5 reasoning can take time
                 .maxRetries(3)
+                .build();
+    }
+
+    /**
+     * Streaming chat model for real-time token-by-token responses.
+     * Use for high eagerness or long-running prompts to avoid timeouts.
+     */
+    @Bean
+    public OpenAiOfficialStreamingChatModel streamingChatModel() {
+        return OpenAiOfficialStreamingChatModel.builder()
+                .baseUrl(azureEndpoint)
+                .apiKey(azureApiKey)
+                .modelName(deploymentName)
+                .timeout(Duration.ofMinutes(10))
                 .build();
     }
 }

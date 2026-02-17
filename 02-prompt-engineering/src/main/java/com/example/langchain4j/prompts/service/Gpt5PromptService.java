@@ -5,9 +5,16 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.model.chat.request.ChatRequest;
+import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.openaiofficial.OpenAiOfficialChatModel;
+import dev.langchain4j.model.openaiofficial.OpenAiOfficialStreamingChatModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,8 +46,13 @@ import java.util.Map;
 @Service
 public class Gpt5PromptService {
 
+    private static final Logger log = LoggerFactory.getLogger(Gpt5PromptService.class);
+
     @Autowired
     private OpenAiOfficialChatModel chatModel;
+
+    @Autowired
+    private OpenAiOfficialStreamingChatModel streamingChatModel;
 
     private final Map<String, ChatMemory> sessionMemories = new HashMap<>();
 
@@ -79,6 +91,77 @@ public class Gpt5PromptService {
             """.formatted(problem);
 
         return chatModel.chat(prompt);
+    }
+
+    /**
+     * Example 2b: High Eagerness with Streaming
+     * Streams tokens as they arrive so you can see progress in real-time.
+     * Avoids timeout issues with long-running reasoning.
+     */
+    public SseEmitter solveAutonomousStreaming(String problem) {
+        // 10 minute timeout for the SSE connection
+        SseEmitter emitter = new SseEmitter(600_000L);
+
+        String prompt = """
+            Analyze this problem thoroughly and provide a comprehensive solution.
+            Consider multiple approaches, trade-offs, and important details.
+            Show your analysis and reasoning in your response.
+            
+            Problem: %s
+            """.formatted(problem);
+
+        log.info("[STREAM] Starting streaming request for high-eagerness prompt");
+        log.debug("[STREAM] Prompt: {}", prompt);
+
+        streamingChatModel.chat(prompt, new StreamingChatResponseHandler() {
+            private final StringBuilder fullResponse = new StringBuilder();
+            private int tokenCount = 0;
+
+            @Override
+            public void onPartialResponse(String token) {
+                tokenCount++;
+                fullResponse.append(token);
+                if (tokenCount % 50 == 0) {
+                    log.info("[STREAM] Received {} tokens so far...", tokenCount);
+                }
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("token")
+                            .data(token));
+                } catch (Exception e) {
+                    log.warn("[STREAM] Client disconnected after {} tokens", tokenCount);
+                    emitter.completeWithError(e);
+                }
+            }
+
+            @Override
+            public void onCompleteResponse(ChatResponse response) {
+                log.info("[STREAM] Completed. Total tokens: {}. Response length: {} chars",
+                        tokenCount, fullResponse.length());
+                try {
+                    emitter.send(SseEmitter.event().name("done").data("[DONE]"));
+                    emitter.complete();
+                } catch (Exception e) {
+                    log.warn("[STREAM] Error sending completion event", e);
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                log.error("[STREAM] Error during streaming after {} tokens: {}",
+                        tokenCount, error.getMessage(), error);
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("error")
+                            .data(error.getMessage()));
+                } catch (Exception e) {
+                    // ignore
+                }
+                emitter.completeWithError(error);
+            }
+        });
+
+        return emitter;
     }
 
     /**
@@ -285,6 +368,331 @@ public class Gpt5PromptService {
             """.formatted(problem);
 
         return chatModel.chat(prompt);
+    }
+
+    // ==================== STREAMING METHODS ====================
+
+    /**
+     * Private helper: streams a prompt response via SSE.
+     * Used by all streaming pattern methods (except chat which needs memory).
+     */
+    private SseEmitter streamResponse(String prompt) {
+        SseEmitter emitter = new SseEmitter(600_000L);
+
+        log.info("[STREAM] Starting streaming request");
+        log.debug("[STREAM] Prompt length: {} chars", prompt.length());
+
+        streamingChatModel.chat(prompt, new StreamingChatResponseHandler() {
+            private final StringBuilder fullResponse = new StringBuilder();
+            private int tokenCount = 0;
+
+            @Override
+            public void onPartialResponse(String token) {
+                tokenCount++;
+                fullResponse.append(token);
+                if (tokenCount % 50 == 0) {
+                    log.info("[STREAM] Received {} tokens so far...", tokenCount);
+                }
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("token")
+                            .data(token));
+                } catch (Exception e) {
+                    log.warn("[STREAM] Client disconnected after {} tokens", tokenCount);
+                    emitter.completeWithError(e);
+                }
+            }
+
+            @Override
+            public void onCompleteResponse(ChatResponse response) {
+                log.info("[STREAM] Completed. Total tokens: {}. Response length: {} chars",
+                        tokenCount, fullResponse.length());
+                try {
+                    emitter.send(SseEmitter.event().name("done").data("[DONE]"));
+                    emitter.complete();
+                } catch (Exception e) {
+                    log.warn("[STREAM] Error sending completion event", e);
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                log.error("[STREAM] Error during streaming after {} tokens: {}",
+                        tokenCount, error.getMessage(), error);
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("error")
+                            .data(error.getMessage()));
+                } catch (Exception e) {
+                    // ignore
+                }
+                emitter.completeWithError(error);
+            }
+        });
+
+        return emitter;
+    }
+
+    /**
+     * Example 1b: Low Eagerness with Streaming
+     */
+    public SseEmitter solveFocusedStreaming(String problem) {
+        String prompt = """
+            <context_gathering>
+            - Search depth: very low
+            - Bias strongly towards providing a correct answer as quickly as possible
+            - Usually, this means an absolute maximum of 2 reasoning steps
+            - If you think you need more time, state what you know and what's uncertain
+            </context_gathering>
+            
+            Problem: %s
+            
+            Provide your answer:
+            """.formatted(problem);
+        return streamResponse(prompt);
+    }
+
+    /**
+     * Example 3b: Task Execution with Streaming
+     */
+    public SseEmitter executeWithPreambleStreaming(String task) {
+        String prompt = """
+            <task_execution>
+            1. First, briefly restate the user's goal in a friendly way
+            
+            2. Create a step-by-step plan:
+               - List all steps needed
+               - Identify potential challenges
+               - Outline success criteria
+            
+            3. Execute each step:
+               - Narrate what you're doing
+               - Show progress clearly
+               - Handle any issues that arise
+            
+            4. Summarize:
+               - What was completed
+               - Any important notes
+               - Next steps if applicable
+            </task_execution>
+            
+            <tool_preambles>
+            - Always begin by rephrasing the user's goal clearly
+            - Outline your plan before executing
+            - Narrate each step as you go
+            - Finish with a distinct summary
+            </tool_preambles>
+            
+            Task: %s
+            
+            Begin execution:
+            """.formatted(task);
+        return streamResponse(prompt);
+    }
+
+    /**
+     * Example 4b: Code Generation with Streaming
+     */
+    public SseEmitter generateCodeWithReflectionStreaming(String requirement) {
+        String prompt = """
+            Generate Java code with production-quality standards: %s
+            Keep it simple and include basic error handling.
+            """.formatted(requirement);
+        return streamResponse(prompt);
+    }
+
+    /**
+     * Example 5b: Structured Analysis with Streaming
+     */
+    public SseEmitter analyzeCodeStreaming(String code) {
+        String prompt = """
+            <analysis_framework>
+            You are an expert code reviewer. Analyze the code for:
+            
+            1. Correctness
+               - Does it work as intended?
+               - Are there logical errors?
+            
+            2. Best Practices
+               - Follows language conventions?
+               - Appropriate design patterns?
+            
+            3. Performance
+               - Any inefficiencies?
+               - Scalability concerns?
+            
+            4. Security
+               - Potential vulnerabilities?
+               - Input validation?
+            
+            5. Maintainability
+               - Code clarity?
+               - Documentation?
+            
+            <output_format>
+            Provide your analysis in this structure:
+            - Summary: One-sentence overall assessment
+            - Strengths: 2-3 positive points
+            - Issues: List any problems found with severity (High/Medium/Low)
+            - Recommendations: Specific improvements
+            </output_format>
+            </analysis_framework>
+            
+            Code to analyze:
+            ```
+            %s
+            ```
+            
+            Provide your structured analysis:
+            """.formatted(code);
+        return streamResponse(prompt);
+    }
+
+    /**
+     * Example 6b: Multi-Turn Conversation with Streaming
+     */
+    public SseEmitter continueConversationStreaming(String userMessage, String sessionId) {
+        SseEmitter emitter = new SseEmitter(600_000L);
+
+        ChatMemory chatMemory = sessionMemories.computeIfAbsent(
+            sessionId,
+            k -> MessageWindowChatMemory.withMaxMessages(10)
+        );
+
+        if (chatMemory.messages().isEmpty()) {
+            SystemMessage systemMsg = SystemMessage.from("""
+                You are a helpful assistant in an ongoing conversation.
+                
+                <conversation_guidelines>
+                - Remember previous context from this session
+                - Build on earlier discussion points naturally
+                - Ask clarifying questions when truly needed
+                - Maintain consistent personality and tone throughout
+                - Reference prior exchanges when relevant
+                </conversation_guidelines>
+                
+                <response_style>
+                - Be concise but complete
+                - Use examples when they help understanding
+                - Format responses clearly with proper structure
+                - Acknowledge the user's previous messages when relevant
+                - Show that you understand the conversation flow
+                </response_style>
+                
+                <tool_preambles>
+                - If you need to perform multiple steps, outline your plan first
+                - Provide updates as you work through complex requests
+                - Summarize what you've done at the end
+                </tool_preambles>
+                """);
+            chatMemory.add(systemMsg);
+        }
+
+        chatMemory.add(UserMessage.from(userMessage));
+
+        ChatRequest request = ChatRequest.builder()
+            .messages(chatMemory.messages())
+            .build();
+
+        log.info("[STREAM] Starting streaming chat, session: {}", sessionId);
+
+        streamingChatModel.chat(request, new StreamingChatResponseHandler() {
+            private final StringBuilder fullResponse = new StringBuilder();
+            private int tokenCount = 0;
+
+            @Override
+            public void onPartialResponse(String token) {
+                tokenCount++;
+                fullResponse.append(token);
+                if (tokenCount % 50 == 0) {
+                    log.info("[STREAM] Chat received {} tokens so far...", tokenCount);
+                }
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("token")
+                            .data(token));
+                } catch (Exception e) {
+                    log.warn("[STREAM] Client disconnected after {} tokens", tokenCount);
+                    emitter.completeWithError(e);
+                }
+            }
+
+            @Override
+            public void onCompleteResponse(ChatResponse response) {
+                chatMemory.add(response.aiMessage());
+                log.info("[STREAM] Chat completed. Total tokens: {}. Response length: {} chars",
+                        tokenCount, fullResponse.length());
+                try {
+                    emitter.send(SseEmitter.event().name("done").data("[DONE]"));
+                    emitter.complete();
+                } catch (Exception e) {
+                    log.warn("[STREAM] Error sending completion event", e);
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                log.error("[STREAM] Chat error after {} tokens: {}",
+                        tokenCount, error.getMessage(), error);
+                try {
+                    emitter.send(SseEmitter.event()
+                            .name("error")
+                            .data(error.getMessage()));
+                } catch (Exception e) {
+                    // ignore
+                }
+                emitter.completeWithError(error);
+            }
+        });
+
+        return emitter;
+    }
+
+    /**
+     * Example 7b: Constrained Output with Streaming
+     */
+    public SseEmitter generateConstrainedStreaming(String topic, String format, int maxWords) {
+        String prompt = """
+            <strict_constraints>
+            You MUST adhere to these constraints:
+            - Topic: %s
+            - Format: %s
+            - Maximum words: %d
+            - Do NOT exceed the word limit
+            - Do NOT deviate from the specified format
+            </strict_constraints>
+            
+            <quality_requirements>
+            Within the constraints:
+            - Be informative and accurate
+            - Use clear, professional language
+            - Organize content logically
+            - Include relevant details
+            </quality_requirements>
+            
+            Generate the content:
+            """.formatted(topic, format, maxWords);
+        return streamResponse(prompt);
+    }
+
+    /**
+     * Example 8b: Step-by-Step Reasoning with Streaming
+     */
+    public SseEmitter solveWithReasoningStreaming(String problem) {
+        String prompt = """
+            Solve this problem by explaining your reasoning step by step in your response.
+            
+            Show me:
+            1. How you understand the problem
+            2. Your approach to solving it
+            3. Each step of your work
+            4. Verification that your answer is correct
+            
+            Important: Write out your step-by-step thinking in your answer, not just the final result.
+            
+            Problem: %s
+            """.formatted(problem);
+        return streamResponse(prompt);
     }
 
     /**

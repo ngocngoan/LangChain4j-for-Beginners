@@ -50,7 +50,8 @@
                 </div>
 
                 <div class="button-group">
-                    <button id="submit-btn" class="btn" onclick="submitConstrained()">Generate Response</button>
+                    <button id="submit-btn" class="btn" onclick="submitConstrainedStreaming()">🔴 Stream Response (Live)</button>
+                    <button id="submit-btn-sync" class="btn" onclick="submitConstrained()" style="margin-left:10px; opacity: 0.7;">Generate Response (Non-streaming)</button>
                 </div>
             </div>
 
@@ -75,6 +76,14 @@
 
     <script th:src="@{/js/pattern-demo.js}"></script>
     <script>
+        function submitConstrainedStreaming() {
+            const topic = document.getElementById('topic').value.trim();
+            const format = document.getElementById('format').value;
+            const maxWords = parseInt(document.getElementById('maxWords').value);
+            if (!topic) { alert('Please enter a topic'); return; }
+            callPatternStreaming('constrained', { topic, format, maxWords });
+        }
+
         function submitConstrained() {
             const topic = document.getElementById('topic').value.trim();
             const format = document.getElementById('format').value;

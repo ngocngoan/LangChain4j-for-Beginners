@@ -2,8 +2,10 @@ package com.example.langchain4j.prompts.controller;
 
 import com.example.langchain4j.prompts.service.Gpt5PromptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 /**
  * REST Controller demonstrating GPT-5 prompting patterns.
@@ -42,6 +44,22 @@ public class Gpt5PromptController {
     public ResponseEntity<PromptResponse> solveAutonomous(@RequestBody ProblemRequest request) {
         String result = gpt5Service.solveAutonomous(request.problem());
         return ResponseEntity.ok(new PromptResponse(result));
+    }
+
+    /**
+     * Streaming thorough response (high eagerness) - Server-Sent Events
+     * Tokens stream in real-time so you can see progress immediately.
+     *
+     * Example:
+     * POST /api/gpt5/autonomous/stream
+     * {"problem": "Design a caching strategy for a high-traffic REST API"}
+     *
+     * Use curl to test: curl -N -X POST http://localhost:8083/api/gpt5/autonomous/stream \
+     *   -H "Content-Type: application/json" -d '{"problem": "your problem here"}'
+     */
+    @PostMapping(value = "/autonomous/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter solveAutonomousStreaming(@RequestBody ProblemRequest request) {
+        return gpt5Service.solveAutonomousStreaming(request.problem());
     }
 
     /**
@@ -139,6 +157,71 @@ public class Gpt5PromptController {
     public ResponseEntity<PromptResponse> solveWithReasoning(@RequestBody ProblemRequest request) {
         String result = gpt5Service.solveWithReasoning(request.problem());
         return ResponseEntity.ok(new PromptResponse(result));
+    }
+
+    // ==================== STREAMING ENDPOINTS ====================
+
+    /**
+     * Streaming focused response (low eagerness) - Server-Sent Events
+     */
+    @PostMapping(value = "/focused/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter solveFocusedStreaming(@RequestBody ProblemRequest request) {
+        return gpt5Service.solveFocusedStreaming(request.problem());
+    }
+
+    /**
+     * Streaming task execution - Server-Sent Events
+     */
+    @PostMapping(value = "/task/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter executeTaskStreaming(@RequestBody TaskRequest request) {
+        return gpt5Service.executeWithPreambleStreaming(request.task());
+    }
+
+    /**
+     * Streaming code generation - Server-Sent Events
+     */
+    @PostMapping(value = "/code/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter generateCodeStreaming(@RequestBody CodeRequest request) {
+        return gpt5Service.generateCodeWithReflectionStreaming(request.requirement());
+    }
+
+    /**
+     * Streaming code analysis - Server-Sent Events
+     */
+    @PostMapping(value = "/analyze/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter analyzeCodeStreaming(@RequestBody CodeAnalysisRequest request) {
+        return gpt5Service.analyzeCodeStreaming(request.code());
+    }
+
+    /**
+     * Streaming multi-turn chat - Server-Sent Events
+     */
+    @PostMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter chatStreaming(@RequestBody ChatRequest request) {
+        return gpt5Service.continueConversationStreaming(
+            request.message(),
+            request.sessionId()
+        );
+    }
+
+    /**
+     * Streaming constrained output - Server-Sent Events
+     */
+    @PostMapping(value = "/constrained/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter generateConstrainedStreaming(@RequestBody ConstrainedRequest request) {
+        return gpt5Service.generateConstrainedStreaming(
+            request.topic(),
+            request.format(),
+            request.maxWords()
+        );
+    }
+
+    /**
+     * Streaming step-by-step reasoning - Server-Sent Events
+     */
+    @PostMapping(value = "/reason/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter solveWithReasoningStreaming(@RequestBody ProblemRequest request) {
+        return gpt5Service.solveWithReasoningStreaming(request.problem());
     }
 
     // Request/Response DTOs
