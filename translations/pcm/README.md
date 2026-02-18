@@ -1,15 +1,19 @@
 <img src="../../translated_images/pcm/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-### 🌐 Support for Plenti Language
+# LangChain4j for Beginners
 
-#### Dem dey Supported through GitHub Action (Automatic & Always Up-to-Date)
+Na kɔs wey go help you build AI app dem wit LangChain4j an Azure OpenAI GPT-5.2, from basic chat go AI agents.
+
+### 🌐 Multi-Language Support
+
+#### Supported via GitHub Action (Automated & Always Up-to-Date)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
 [Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](./README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
-> **You Dey Prefer to Clone Am for Your Local?**
+> **Wetin you go like Clone locally?**
 >
-> Dis repository get more than 50 language translations wey dey increase the download size wella. To clone without the translations, use sparse checkout:
+> Dis repository get 50+ language translations wey go make di download size plenty well well. If you want clone without di translations, make you use sparse checkout:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -25,73 +29,49 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> Dis one go give you everything wey you need to finish the course with quick quick download.
+> Dis one go give you everything wey you need to finish di kɔs wit beta download speed.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
-
-> **You Dey Prefer to Clone Am for Your Local?**
->
-> Dis repository get more than 50 language translations wey dey increase the download size wella. To clone without the translations, use sparse checkout:
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> Dis one go give you everything wey you need to finish the course with quick quick download.
-
-# LangChain4j for Beginners
-
-Na course to build AI apps wit LangChain4j and Azure OpenAI GPT-5.2, from basic chat dey go AI agents.
-
-**New for LangChain4j?** Make you check the [Glossary](docs/GLOSSARY.md) for explanation of key words and concepts.
 
 ## Table of Contents
 
-1. [Quick Start](00-quick-start/README.md) - How to start wit LangChain4j
-2. [Introduction](01-introduction/README.md) - Learn the basics of LangChain4j
-3. [Prompt Engineering](02-prompt-engineering/README.md) - Master how to design better prompt
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Build smart knowledge based systems
-5. [Tools](04-tools/README.md) - Add external tools and simple helpers
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Work wit Model Context Protocol (MCP) and Agentic modules
+1. [Quick Start](00-quick-start/README.md) - Begin wit LangChain4j
+2. [Introduction](01-introduction/README.md) - Learn di fundamentals of LangChain4j
+3. [Prompt Engineering](02-prompt-engineering/README.md) - Master how to design prompt wey work well
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Build smart knowledge-based system dem
+5. [Tools](04-tools/README.md) - Join external tools an simple assistants
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Work wit Model Context Protocol (MCP) an Agentic modules
 ---
 
 ##  Learning Path
+
+**You be new to LangChain4j?** Check di [Glossary](docs/GLOSSARY.md) for wetin key terms and concepts mean.
 
 > **Quick Start**
 
 1. Fork dis repository go your GitHub account
 2. Click **Code** → **Codespaces** tab → **...** → **New with options...**
-3. Use the defaults – dis one go select the Development container wey dem create for dis course
+3. Use di defaults – dis one go select di Development container wey dem create for dis kɔs
 4. Click **Create codespace**
-5. Wait 5-10 minutes make the environment ready
-6. Jump straight go [Quick Start](./00-quick-start/README.md) to start!
+5. Wait 5-10 minutes make di environment ready
+6. Jump straight go [Quick Start](./00-quick-start/README.md) to begin!
 
-When you don finish the modules, try the [Testing Guide](docs/TESTING.md) to see how dem dey do LangChain4j testing.
+After you finish all di modules, waka go see di [Testing Guide](docs/TESTING.md) make you understand how LangChain4j testing concepts dey work.
 
-> **Note:** Dis training dey use both GitHub Models and Azure OpenAI. The [Quick Start](00-quick-start/README.md) module dey use GitHub Models (no Azure subscription needed), while modules 1-5 dey use Azure OpenAI. If you never get, start wit a [FREE Azure account](https://aka.ms/azure-free-account).
+> **Note:** Dis training dey use both GitHub Models and Azure OpenAI. Di [Quick Start](00-quick-start/README.md) module dey use GitHub Models (no Azure subscription required), but modules 1-5 dey use Azure OpenAI. Start wit a [FREE Azure account](https://aka.ms/azure-free-account) if you never get one.
 
 
 ## Learning with GitHub Copilot
 
-To start coding fast, open dis project for GitHub Codespace or your local IDE with the devcontainer wey dem provide. The devcontainer for dis course don already set up GitHub Copilot for AI paired programming.
+If you want start coding fast, open dis project for GitHub Codespace or your local IDE wit di devcontainer wey dem provide. Di devcontainer wey dis kɔs use don already set up wit GitHub Copilot for AI paired programming.
 
-Every code example get questions wey you fit ask GitHub Copilot to make you understand better. Look for the 💡/🤖 prompts for:
+Every code example get questions wey you fit ask GitHub Copilot to help you sabi better. Look out for di 💡/🤖 prompts for:
 
-- **Java file headers** - Questions wey fit each example
-- **Module READMEs** - Exploration questions after code examples
+- **Java file headers** - Questions wey relate to each example
+- **Module READMEs** - Exploration prompts after code examples
 
-**How to use:** Open any code file and ask Copilot the questions dem suggest. E get full knowledge of the codebase, e fit explain, add more, and suggest better ways.
+**How you go take use am:** Open any code file ask Copilot di questions wey dem suggest. E get full knowledge of di codebase and fit explain, extend, and suggest other ways to do am.
 
-You want learn more? Check am for [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
+Wanna sabi more? Check [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
 
 
 ## Additional Resources
@@ -138,11 +118,11 @@ You want learn more? Check am for [Copilot for AI Paired Programming](https://ak
 
 ## Getting Help
 
-If you get stuck or get any questions about how to build AI apps, join:
+If you get stuck or get any question about building AI apps, join:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-If you get product feedback or you find any errors when you dey build, go:
+If you get product feedback or errors while you dey build, visit:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
@@ -154,5 +134,5 @@ MIT License - See [LICENSE](../../LICENSE) file for details.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-Dis document na AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator) wey translate am. Even though we dey try make am correct, abeg sabi say automated translation fit get some errors or wahala. Di original document for dia own language na di surest source. If na important matter, better make professional human translator do am. We no go carry any wahala or misunderstanding wey fit happen from dis translation.
+Dis dokument don translate wit AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we dey try make am correct, abeg sabi say automated translations fit get some mistakes or wrong tins. The original dokument for im own language na the correct one you suppose trust. For important mata dem, e better make human pro translate am. We no go responsible for any wahala or wrong understandwey wey fit show from dis translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

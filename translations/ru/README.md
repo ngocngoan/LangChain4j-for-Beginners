@@ -1,97 +1,77 @@
 <img src="../../translated_images/ru/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-### 🌐 Поддержка нескольких языков
-
-#### Поддерживается с помощью GitHub Action (автоматически и всегда актуально)
-
-<!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Арабский](../ar/README.md) | [Бенгальский](../bn/README.md) | [Болгарский](../bg/README.md) | [Бирманский (Мьянма)](../my/README.md) | [Китайский (упрощённый)](../zh-CN/README.md) | [Китайский (традиционный, Гонконг)](../zh-HK/README.md) | [Китайский (традиционный, Макао)](../zh-MO/README.md) | [Китайский (традиционный, Тайвань)](../zh-TW/README.md) | [Хорватский](../hr/README.md) | [Чешский](../cs/README.md) | [Датский](../da/README.md) | [Нидерландский](../nl/README.md) | [Эстонский](../et/README.md) | [Финский](../fi/README.md) | [Французский](../fr/README.md) | [Немецкий](../de/README.md) | [Греческий](../el/README.md) | [Иврит](../he/README.md) | [Хинди](../hi/README.md) | [Венгерский](../hu/README.md) | [Индонезийский](../id/README.md) | [Итальянский](../it/README.md) | [Японский](../ja/README.md) | [Каннада](../kn/README.md) | [Корейский](../ko/README.md) | [Литовский](../lt/README.md) | [Малайский](../ms/README.md) | [Малаялам](../ml/README.md) | [Марати](../mr/README.md) | [Непальский](../ne/README.md) | [Нигерийский пиджин](../pcm/README.md) | [Норвежский](../no/README.md) | [Персидский (фарси)](../fa/README.md) | [Польский](../pl/README.md) | [Португальский (Бразилия)](../pt-BR/README.md) | [Португальский (Португалия)](../pt-PT/README.md) | [Пенджаби (гурмукхи)](../pa/README.md) | [Румынский](../ro/README.md) | [Русский](./README.md) | [Сербский (кириллица)](../sr/README.md) | [Словацкий](../sk/README.md) | [Словенский](../sl/README.md) | [Испанский](../es/README.md) | [Свахили](../sw/README.md) | [Шведский](../sv/README.md) | [Тагалог (филиппинский)](../tl/README.md) | [Тамильский](../ta/README.md) | [Телугу](../te/README.md) | [Тайский](../th/README.md) | [Турецкий](../tr/README.md) | [Украинский](../uk/README.md) | [Урду](../ur/README.md) | [Вьетнамский](../vi/README.md)
-
-> **Предпочитаете клонировать локально?**
->
-> В этом репозитории более 50 переводов на разные языки, что значительно увеличивает размер скачивания. Чтобы клонировать без переводов, используйте sparse checkout:
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> Это позволит вам получить всё необходимое для прохождения курса с гораздо более быстрой загрузкой.
-<!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
-
-> **Предпочитаете клонировать локально?**
->
-> В этом репозитории более 50 переводов на разные языки, что значительно увеличивает размер скачивания. Чтобы клонировать без переводов, используйте sparse checkout:
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> Это позволит вам получить всё необходимое для прохождения курса с гораздо более быстрой загрузкой.
-
 # LangChain4j для начинающих
 
-Курс по созданию AI-приложений с LangChain4j и Azure OpenAI GPT-5.2 — от базового чата до AI-агентов.
+Курс по созданию AI-приложений с LangChain4j и Azure OpenAI GPT-5.2, от базового чата до AI-агентов.
 
-**Новичок в LangChain4j?** Ознакомьтесь с [Глоссарием](docs/GLOSSARY.md) для определения ключевых терминов и понятий.
+### 🌐 Поддержка нескольких языков
+
+#### Поддерживается через GitHub Action (автоматизировано и всегда актуально)
+
+<!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
+[Арабский](../ar/README.md) | [Бенгальский](../bn/README.md) | [Болгарский](../bg/README.md) | [Бирманский (Мьянма)](../my/README.md) | [Китайский (упрощённый)](../zh-CN/README.md) | [Китайский (традиционный, Гонконг)](../zh-HK/README.md) | [Китайский (традиционный, Макао)](../zh-MO/README.md) | [Китайский (традиционный, Тайвань)](../zh-TW/README.md) | [Хорватский](../hr/README.md) | [Чешский](../cs/README.md) | [Датский](../da/README.md) | [Голландский](../nl/README.md) | [Эстонский](../et/README.md) | [Финский](../fi/README.md) | [Французский](../fr/README.md) | [Немецкий](../de/README.md) | [Греческий](../el/README.md) | [Иврит](../he/README.md) | [Хинди](../hi/README.md) | [Венгерский](../hu/README.md) | [Индонезийский](../id/README.md) | [Итальянский](../it/README.md) | [Японский](../ja/README.md) | [Каннада](../kn/README.md) | [Корейский](../ko/README.md) | [Литовский](../lt/README.md) | [Малайский](../ms/README.md) | [Малаялам](../ml/README.md) | [Маратхи](../mr/README.md) | [Непальский](../ne/README.md) | [Нигерийский пиджин](../pcm/README.md) | [Норвежский](../no/README.md) | [Персидский (фарси)](../fa/README.md) | [Польский](../pl/README.md) | [Португальский (Бразилия)](../pt-BR/README.md) | [Португальский (Португалия)](../pt-PT/README.md) | [Пенджаби (гурмукхи)](../pa/README.md) | [Румынский](../ro/README.md) | [Русский](./README.md) | [Сербский (кириллица)](../sr/README.md) | [Словацкий](../sk/README.md) | [Словенский](../sl/README.md) | [Испанский](../es/README.md) | [Суахили](../sw/README.md) | [Шведский](../sv/README.md) | [Тагальский (филиппинский)](../tl/README.md) | [Тамильский](../ta/README.md) | [Телугу](../te/README.md) | [Тайский](../th/README.md) | [Турецкий](../tr/README.md) | [Украинский](../uk/README.md) | [Урду](../ur/README.md) | [Вьетнамский](../vi/README.md)
+
+> **Предпочитаете клонировать локально?**
+>
+> В этом репозитории содержится более 50 переводов, что значительно увеличивает размер загрузки. Чтобы клонировать без переводов, используйте sparse checkout:
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> Это даст вам всё необходимое для прохождения курса с более быстрой загрузкой.
+<!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## Содержание
 
-1. [Быстрый старт](00-quick-start/README.md) — начните работу с LangChain4j
-2. [Введение](01-introduction/README.md) — основы LangChain4j
-3. [Проектирование подсказок](02-prompt-engineering/README.md) — освоение эффективного создания подсказок
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) — создание интеллектуальных систем на основе знаний
-5. [Инструменты](04-tools/README.md) — интеграция внешних инструментов и простых помощников
-6. [MCP (Model Context Protocol)](05-mcp/README.md) — работа с протоколом контекста модели (MCP) и агентными модулями
+1. [Быстрый старт](00-quick-start/README.md) - Начните работу с LangChain4j
+2. [Введение](01-introduction/README.md) - Изучите основы LangChain4j
+3. [Инжиниринг подсказок](02-prompt-engineering/README.md) - Освойте эффективный дизайн подсказок
+4. [RAG (Генерация с поддержкой поиска)](03-rag/README.md) - Создайте интеллектуальные системы на основе знаний
+5. [Инструменты](04-tools/README.md) - Интеграция внешних инструментов и простых помощников
+6. [MCP (Протокол контекста модели)](05-mcp/README.md) - Работа с MCP и агентными модулями
 ---
 
-## Учебный план
+## Учебный путь
+
+**Новичок в LangChain4j?** Ознакомьтесь с [Глоссарием](docs/GLOSSARY.md) для определения ключевых терминов и понятий.
 
 > **Быстрый старт**
 
-1. Создайте форк этого репозитория в вашем аккаунте GitHub
+1. Форкните этот репозиторий в свою учетную запись GitHub
 2. Нажмите **Code** → вкладка **Codespaces** → **...** → **New with options...**
-3. Используйте значения по умолчанию – будет выбран контейнер для разработки, созданный для этого курса
+3. Используйте настройки по умолчанию — это выберет контейнер разработки, созданный для этого курса
 4. Нажмите **Create codespace**
-5. Подождите 5-10 минут, пока среда не будет готова
-6. Перейдите прямо к [Быстрому старту](./00-quick-start/README.md) для начала!
+5. Подождите 5-10 минут пока среда будет готова
+6. Перейдите сразу к [Быстрому старту](./00-quick-start/README.md), чтобы начать!
 
-После прохождения модулей изучите [Руководство по тестированию](docs/TESTING.md), чтобы увидеть концепции тестирования LangChain4j в действии.
+После завершения модулей изучите [Руководство по тестированию](docs/TESTING.md) для ознакомления с концепциями тестирования LangChain4j на практике.
 
-> **Примечание:** В этом обучении используются GitHub Models и Azure OpenAI. Модуль [Быстрый старт](00-quick-start/README.md) использует GitHub Models (подписка Azure не нужна), тогда как модули 1-5 работают с Azure OpenAI. Если у вас ещё нет аккаунта, начните работу с [БЕСПЛАТНЫМ аккаунтом Azure](https://aka.ms/azure-free-account).
+> **Примечание:** В этом обучении используются как GitHub Models, так и Azure OpenAI. Модуль [Быстрый старт](00-quick-start/README.md) использует GitHub Models (не требуется подписка Azure), а модули 1–5 используют Azure OpenAI. Начните с [БЕСПЛАТНОГО аккаунта Azure](https://aka.ms/azure-free-account), если у вас его нет.
 
 
 ## Обучение с GitHub Copilot
 
-Чтобы быстро начать программировать, откройте этот проект в GitHub Codespace или в вашей локальной IDE с предоставленным devcontainer. Devcontainer, используемый в этом курсе, предварительно настроен с GitHub Copilot для парного программирования с AI.
+Чтобы быстро начать кодить, откройте этот проект в GitHub Codespace или вашей локальной IDE с предоставленным devcontainer. Контейнер разработки, используемый в этом курсе, уже настроен с GitHub Copilot для AI парного программирования.
 
-Каждый пример кода включает предлагаемые вопросы, которые вы можете задать GitHub Copilot, чтобы углубить понимание. Ищите подсказки 💡/🤖 в:
+Каждый пример кода включает рекомендованные вопросы, которые вы можете задать GitHub Copilot, чтобы углубить понимание. Ищите подсказки 💡/🤖 в:
 
-- **Заголовках Java-файлов** — вопросы, специфичные для каждого примера
-- **README модулей** — подсказки для исследований после примеров кода
+- **Заголовках Java-файлов** – Вопросы по каждому примеру
+- **README модулей** – Подсказки для исследования после примеров кода
 
-**Как использовать:** откройте любой файл с кодом и задайте Copilot предложенные вопросы. У него есть полный контекст кода и он может объяснять, расширять и предлагать альтернативы.
+**Как пользоваться:** Откройте любой файл с кодом и задайте Copilot предложенные вопросы. Он полностью понимает кодовую базу и может объяснять, расширять и предлагать альтернативы.
 
-Хотите узнать больше? Посетите [Copilot для парного программирования с AI](https://aka.ms/GitHubCopilotAI).
+Хотите узнать больше? Посмотрите [Copilot для AI парного программирования](https://aka.ms/GitHubCopilotAI).
 
 
 ## Дополнительные ресурсы
@@ -103,11 +83,11 @@
 [![LangChain для начинающих](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
-### Azure / Edge / MCP / Агенты
+### Azure / Edge / MCP / Agents
 [![AZD для начинающих](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Edge AI для начинающих](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![MCP для начинающих](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![AI агенты для начинающих](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![AI Agents для начинающих](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
@@ -124,7 +104,6 @@
 [![Data Science для начинающих](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI для начинающих](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
 [![Кибербезопасность для начинающих](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
-
 [![Веб-разработка для начинающих](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
 [![IoT для начинающих](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
 [![Разработка XR для начинающих](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
@@ -139,21 +118,21 @@
 
 ## Получение помощи
 
-Если вы застряли или у вас есть вопросы о создании AI приложений, присоединяйтесь:
+Если вы застряли или у вас есть вопросы по созданию AI-приложений, присоединяйтесь:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Если у вас есть отзывы о продукте или ошибки при разработке, посетите:
+Если у вас есть отзывы о продукте или ошибки при создании, посетите:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Лицензия
 
-Лицензия MIT - смотрите файл [LICENSE](../../LICENSE) для подробностей.
+Лицензия MIT — См. файл [LICENSE](../../LICENSE) для подробностей.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Отказ от ответственности**:  
-Этот документ был переведен с использованием сервиса автоматического перевода [Co-op Translator](https://github.com/Azure/co-op-translator). Несмотря на наши усилия обеспечить точность, пожалуйста, имейте в виду, что автоматические переводы могут содержать ошибки или неточности. Оригинальный документ на его исходном языке следует считать авторитетным источником. Для получения критически важной информации рекомендуется обратиться к профессиональному переводу, выполненному человеком. Мы не несем ответственности за любые недоразумения или неправильные толкования, возникшие в результате использования данного перевода.
+Этот документ был переведен с использованием сервиса автоматического перевода [Co-op Translator](https://github.com/Azure/co-op-translator). Несмотря на наши усилия по обеспечению точности, имейте в виду, что автоматические переводы могут содержать ошибки или неточности. Оригинальный документ на его родном языке следует считать авторитетным источником. Для критически важной информации рекомендуется обращаться к профессиональному переводу, выполненному человеком. Мы не несем ответственности за любые недоразумения или неправильные толкования, возникшие в результате использования данного перевода.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
