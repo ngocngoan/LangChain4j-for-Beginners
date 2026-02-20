@@ -3,8 +3,8 @@
 ## Table of Contents
 
 - [What You'll Learn](../../../03-rag)
-- [Prerequisites](../../../03-rag)
 - [Understanding RAG](../../../03-rag)
+- [Prerequisites](../../../03-rag)
 - [How It Works](../../../03-rag)
   - [Document Processing](../../../03-rag)
   - [Creating Embeddings](../../../03-rag)
@@ -40,9 +40,17 @@ Think of RAG as giving the model a reference library. When you ask a question, t
 
 This grounds the model's responses in your actual data instead of relying on its training knowledge or making up answers.
 
+## Understanding RAG
+
+The diagram below illustrates the core concept: instead of relying on the model's training data alone, RAG gives it a reference library of your documents to consult before generating each answer.
+
+<img src="../../../translated_images/en/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
+
+Here's how the pieces connect end-to-end. A user's question flows through four stages — embedding, vector search, context assembly, and answer generation — each building on the previous one:
+
 <img src="../../../translated_images/en/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
 
-*RAG workflow - from user query to semantic search to contextual answer generation*
+The rest of this module walks through each stage in detail, with code you can run and modify.
 
 ## Prerequisites
 
@@ -58,16 +66,22 @@ This grounds the model's responses in your actual data instead of relying on its
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-When you upload a document, the system breaks it into chunks - smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
+When you upload a document, the system parses it (PDF or plain text), attaches metadata such as the filename, and then breaks it into chunks — smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Parse the uploaded file and wrap it in a LangChain4j Document
+Document document = Document.from(content, metadata);
 
+// Split into 300-token chunks with 30-token overlap
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
+
+The diagram below shows how this works visually. Notice how each chunk shares some tokens with its neighbors — the 30-token overlap ensures no important context falls between the cracks:
+
+<img src="../../../translated_images/en/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) and ask:
 > - "How does LangChain4j split documents into chunks and why is overlap important?"
@@ -94,9 +108,13 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-<img src="../../../translated_images/en/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
+The class diagram below shows how these LangChain4j components connect. `OpenAiOfficialEmbeddingModel` converts text into vectors, `InMemoryEmbeddingStore` holds the vectors alongside their original `TextSegment` data, and `EmbeddingSearchRequest` controls retrieval parameters like `maxResults` and `minScore`:
 
-*Documents represented as vectors in embedding space - similar content clusters together*
+<img src="../../../translated_images/en/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
+
+Once embeddings are stored, similar content naturally clusters together in vector space. The visualization below shows how documents about related topics end up as nearby points, which is what makes semantic search possible:
+
+<img src="../../../translated_images/en/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
 
 ### Semantic Search
 
@@ -107,14 +125,24 @@ When you ask a question, your question also becomes an embedding. The system com
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
     double score = match.score();
 }
 ```
+
+The diagram below contrasts semantic search with traditional keyword search. A keyword search for "vehicle" misses a chunk about "cars and trucks," but semantic search understands they mean the same thing and returns it as a high-scoring match:
+
+<img src="../../../translated_images/en/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
@@ -125,7 +153,30 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-The most relevant chunks are included in the prompt to the model. The model reads those specific chunks and answers your question based on that information. This prevents hallucination - the model can only answer from what's in front of it.
+The most relevant chunks are assembled into a structured prompt that includes explicit instructions, the retrieved context, and the user's question. The model reads those specific chunks and answers based on that information — it can only use what's in front of it, which prevents hallucination.
+
+```java
+String context = matches.stream()
+    .map(match -> match.embedded().text())
+    .collect(Collectors.joining("\n\n"));
+
+String prompt = String.format("""
+    Answer the question based on the following context.
+    If the answer cannot be found in the context, say so.
+
+    Context:
+    %s
+
+    Question: %s
+
+    Answer:""", context, request.question());
+
+String answer = chatModel.chat(prompt);
+```
+
+The diagram below shows this assembly in action — the top-scoring chunks from the search step are injected into the prompt template, and the `OpenAiOfficialChatModel` generates a grounded answer:
+
+<img src="../../../translated_images/en/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
 ## Run the Application
 
@@ -261,6 +312,10 @@ Documents are split into 300-token chunks with 30 tokens of overlap. This balanc
 
 ### Similarity Scores
 
+Every retrieved chunk comes with a similarity score between 0 and 1 that indicates how closely it matches the user's question. The diagram below visualizes the score ranges and how the system uses them to filter results:
+
+<img src="../../../translated_images/en/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
+
 Scores range from 0 to 1:
 - 0.7-1.0: Highly relevant, exact match
 - 0.5-0.7: Relevant, good context
@@ -277,6 +332,10 @@ This module uses in-memory storage for simplicity. When you restart the applicat
 Each model has a maximum context window. You can't include every chunk from a large document. The system retrieves the top N most relevant chunks (default 5) to stay within limits while providing enough context for accurate answers.
 
 ## When RAG Matters
+
+RAG isn't always the right approach. The decision guide below helps you determine when RAG adds value versus when simpler approaches — like including content directly in the prompt or relying on the model's built-in knowledge — are sufficient:
+
+<img src="../../../translated_images/en/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
 **Use RAG when:**
 - Answering questions about proprietary documents
