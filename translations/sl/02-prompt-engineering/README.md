@@ -1,15 +1,15 @@
-# Modul 02: Inženiring pozivov z GPT-5.2
+# Modul 02: Oblikovanje pozivov z GPT-5.2
 
-## Kazalo
+## Kazalo vsebine
 
 - [Kaj se boste naučili](../../../02-prompt-engineering)
-- [Pogoji za začetek](../../../02-prompt-engineering)
-- [Razumevanje inženiringa pozivov](../../../02-prompt-engineering)
-- [Osnove inženiringa pozivov](../../../02-prompt-engineering)
+- [Predpogoji](../../../02-prompt-engineering)
+- [Razumevanje oblikovanja pozivov](../../../02-prompt-engineering)
+- [Osnove oblikovanja pozivov](../../../02-prompt-engineering)
   - [Zero-Shot pozivanje](../../../02-prompt-engineering)
   - [Few-Shot pozivanje](../../../02-prompt-engineering)
-  - [Veriga misli](../../../02-prompt-engineering)
-  - [Pozivanje na osnovi vloge](../../../02-prompt-engineering)
+  - [Veriga razmišljanja](../../../02-prompt-engineering)
+  - [Pozivanje po vlogi](../../../02-prompt-engineering)
   - [Predloge pozivov](../../../02-prompt-engineering)
 - [Napredni vzorci](../../../02-prompt-engineering)
 - [Uporaba obstoječih virov Azure](../../../02-prompt-engineering)
@@ -20,51 +20,51 @@
   - [Samoreflektirajoča koda](../../../02-prompt-engineering)
   - [Strukturirana analiza](../../../02-prompt-engineering)
   - [Večkratni pogovor](../../../02-prompt-engineering)
-  - [Korak za korakom razmišljanje](../../../02-prompt-engineering)
+  - [Razmišljanje korak za korakom](../../../02-prompt-engineering)
   - [Omejen izhod](../../../02-prompt-engineering)
-- [Kaj se v resnici učite](../../../02-prompt-engineering)
-- [Nadaljnji koraki](../../../02-prompt-engineering)
+- [Kaj se resnično učite](../../../02-prompt-engineering)
+- [Naslednji koraki](../../../02-prompt-engineering)
 
 ## Kaj se boste naučili
 
 <img src="../../../translated_images/sl/what-youll-learn.c68269ac048503b2.webp" alt="Kaj se boste naučili" width="800"/>
 
-V prejšnjem modulu ste videli, kako pomnilnik omogoča pogovorni AI in uporabili modele GitHub za osnovne interakcije. Zdaj se bomo osredotočili na to, kako postavljate vprašanja – same pozive – z uporabo GPT-5.2 iz Azure OpenAI. Način, kako strukturirate pozive, dramatično vpliva na kakovost odgovorov, ki jih prejmete. Začnemo z revizijo osnovnih tehnik pozivanja, nato pa preidemo na osem naprednih vzorcev, ki v celoti izkoristijo zmogljivosti GPT-5.2.
+V prejšnjem modulu ste videli, kako pomnilnik omogoča konverzacijsko AI in uporabljali modele GitHub za osnovne interakcije. Zdaj se bomo osredotočili na to, kako postavljate vprašanja — same pozive — z uporabo GPT-5.2 v Azure OpenAI. Način, kako strukturirate pozive, bistveno vpliva na kakovost odgovorov, ki jih prejmete. Začnemo z pregledom osnovnih tehnik pozivanja, nato pa nadaljujemo z osmimi naprednimi vzorci, ki izkoriščajo zmogljivosti GPT-5.2.
 
-Uporabljali bomo GPT-5.2, ker uvaja nadzor razmišljanja – lahko modelu poveste, koliko naj razmišlja pred odgovorom. To naredi različne strategije pozivanja bolj vidne in pomaga razumeti, kdaj uporabiti kateri pristop. Prav tako bomo imeli korist od manj omejitev hitrosti za GPT-5.2 v primerjavi z modeli GitHub.
+Uporabljali bomo GPT-5.2, ker ta uvaja nadzor razmišljanja - lahko modelu poveste, koliko premisleka naj opravi pred odgovorom. To različne strategije pozivanja naredi bolj očitne in pomaga razumeti, kdaj uporabiti kateri pristop. Prav tako bomo izkoristili manj omejitev hitrosti v Azure za GPT-5.2 v primerjavi z modeli GitHub.
 
-## Pogoji za začetek
+## Predpogoji
 
-- Zaključen Modul 01 (nameščeni viri Azure OpenAI)
-- `.env` datoteka v korenski mapi z Azure poverilnicami (ustvarjena z `azd up` v Modulu 01)
+- Zaključen modul 01 (nameščeni viri Azure OpenAI)
+- Datoteka `.env` v korenskem imeniku z Azure poverilnicami (ustvarjena z `azd up` v modulu 01)
 
-> **Opomba:** Če Modula 01 še niste zaključili, sledite najprej tamkajšnjim navodilom za namestitev.
+> **Opomba:** Če modul 01 še niste zaključili, sledite tam navedenim navodilom za namestitev najprej.
 
-## Razumevanje inženiringa pozivov
+## Razumevanje oblikovanja pozivov
 
-<img src="../../../translated_images/sl/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Kaj je inženiring pozivov?" width="800"/>
+<img src="../../../translated_images/sl/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Kaj je oblikovanje pozivov?" width="800"/>
 
-Inženiring pozivov je oblikovanje vhodnega besedila, ki vam dosledno prinaša želeni rezultat. Ni samo vprašanje postavljanje – gre za strukturiranje zahtev, da model natančno razume, kaj želite, in kako to dostaviti.
+Oblikovanje pozivov pomeni ustvarjanje vhodnega besedila, ki dosledno prinaša želene rezultate. Ne gre samo za postavljanje vprašanj - gre za strukturiranje zahtev, da model natančno razume, kaj želite in kako to dostaviti.
 
-Pomislite, kot da dajete navodila sodelavcu. "Popravi napako" je nejasno. "Popravi izjemo null pointer v UserService.java vrstica 45 z dodatkom preverjanja null" je specifično. Jezikovni modeli delujejo na enak način – pomembna sta specifičnost in struktura.
+Pomislite nanj kot na dajanje navodil sodelavcu. "Popravi napako" je nejasno. "Popravi izjemo null pointer v UserService.java vrstica 45 z dodajanjem preverjanja null" je specifično. Jezikovni modeli delujejo enako - specifičnost in struktura sta pomembni.
 
-<img src="../../../translated_images/sl/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Kako se LangChain4j vklopi" width="800"/>
+<img src="../../../translated_images/sl/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Kako se LangChain4j prilega" width="800"/>
 
-LangChain4j zagotavlja infrastrukturo — povezave modelov, pomnilnik in vrste sporočil — medtem ko so vzorci pozivov le skrbno strukturirano besedilo, ki ga pošljete skozi to infrastrukturo. Ključni gradniki so `SystemMessage` (ki nastavi vedenje in vlogo AI) ter `UserMessage` (ki nosi vašo dejansko zahtevo).
+LangChain4j zagotavlja infrastrukturo — povezave z modeli, pomnilnik in vrste sporočil — medtem ko so vzorci pozivov le skrbno strukturirano besedilo, ki ga pošljete skozi to infrastrukturo. Ključni gradniki so `SystemMessage` (ki nastavi vedenje in vlogo AI) in `UserMessage` (ki nosi vašo dejansko zahtevo).
 
-## Osnove inženiringa pozivov
+## Osnove oblikovanja pozivov
 
-<img src="../../../translated_images/sl/five-patterns-overview.160f35045ffd2a94.webp" alt="Pregled petih vzorcev inženiringa pozivov" width="800"/>
+<img src="../../../translated_images/sl/five-patterns-overview.160f35045ffd2a94.webp" alt="Pregled petih vzorcev oblikovanja pozivov" width="800"/>
 
-Preden se poglobimo v napredne vzorce tega modula, si poglejmo pet temeljnih tehnik pozivanja. To so gradniki, ki jih mora poznati vsak inženir pozivov. Če ste že delali skozi [modul hitrega začetka](../00-quick-start/README.md#2-prompt-patterns), ste jih že videli v praksi — tukaj je konceptualni okvir za njimi.
+Preden se poglobimo v napredne vzorce tega modula, preglejmo pet temeljnih tehnik pozivanja. To so gradniki, ki bi jih moral poznati vsak oblikovalec pozivov. Če ste že opravili [modul Hitri začetek](../00-quick-start/README.md#2-prompt-patterns), ste jih že videli v praksi — tukaj je konceptualni okvir za njimi.
 
 ### Zero-Shot pozivanje
 
-Najpreprostejši pristop: modelu dajte neposredno navodilo brez primerov. Model povsem zanaša na svoje učenje, da razume in izvede nalogo. To dobro deluje pri preprostih zahtevah, kjer je pričakovano vedenje očitno.
+Najpreprostejši pristop: modelu dajte neposredno navodilo brez primerov. Model se v celoti zanaša na svoje učenje, da razume in izvede nalogo. Dobro deluje za enostavne zahteve, kjer je pričakovano vedenje jasno.
 
 <img src="../../../translated_images/sl/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot pozivanje" width="800"/>
 
-*Neposredno navodilo brez primerov – model izvede nalogo na podlagi navodila*
+*Neposredno navodilo brez primerov — model sklepa nalogo samo iz navodila*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
@@ -72,15 +72,15 @@ String response = model.chat(prompt);
 // Odgovor: "Pozitivno"
 ```
 
-**Kdaj uporabiti:** Enostavne klasifikacije, neposredna vprašanja, prevodi ali katera koli naloga, ki jo model zmore brez dodatnih navodil.
+**Kdaj uporabiti:** Preprosta razvrščanja, neposredna vprašanja, prevodi ali katera koli naloga, ki jo model zna brez dodatnih navodil.
 
 ### Few-Shot pozivanje
 
-Podajte primere, ki pokažejo vzorec, ki ga želite, da model sledi. Model se iz vaših primerov nauči pričakovani vhodno-izhodni format in ga uporabi pri novih vnosih. To pomembno izboljša doslednost pri nalogah, kjer zahtevani format ali vedenje ni očitno.
+Podajte primere, ki pokažejo vzorec, ki ga želite, da model sledi. Model se uči pričakovanega formata vhod-izhod iz vaših primerov in ga uporablja za nove vhode. To bistveno izboljša doslednost pri nalogah, kjer želeni format ali vedenje ni očiten.
 
 <img src="../../../translated_images/sl/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot pozivanje" width="800"/>
 
-*Učenje iz primerov – model prepozna vzorec in ga uporabi na novih vhodih*
+*Učenje iz primerov — model prepozna vzorec in ga uporablja za nove vhode*
 
 ```java
 String prompt = """
@@ -97,15 +97,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kdaj uporabiti:** Prilagojene klasifikacije, dosledno oblikovanje, domeno specifične naloge ali kadar so zero-shot rezultati nedosledni.
+**Kdaj uporabiti:** Prilagojena razvrščanja, dosledno oblikovanje, naloge specifične za domeno ali ko so rezultati zero-shota neenakomerni.
 
-### Veriga misli
+### Veriga razmišljanja
 
-Prosite model, naj pokaže svoje razmišljanje korak za korakom. Namesto da skoči neposredno na odgovor, model razdeli problem in obravnava vsak del posebej. To poveča natančnost pri matematičnih, logičnih in večkorakih nalogah.
+Prosite model, naj pokaže svoje razmišljanje korak za korakom. Namesto da skoči neposredno na odgovor, model razdeli problem in jasno predela vsak del posebej. To izboljša natančnost pri matematiki, logiki in nalogah z več koraki.
 
-<img src="../../../translated_images/sl/chain-of-thought.5cff6630e2657e2a.webp" alt="Pozivanje z verigo misli" width="800"/>
+<img src="../../../translated_images/sl/chain-of-thought.5cff6630e2657e2a.webp" alt="Veriga razmišljanja" width="800"/>
 
-*Korak za korakom razmišljanje – razčlenjevanje kompleksnih problemov na izrecne logične korake*
+*Razmišljanje korak za korakom — razbijanje zapletenih problemov v jasne logične korake*
 
 ```java
 String prompt = """
@@ -118,15 +118,15 @@ String response = model.chat(prompt);
 // Model prikazuje: 15 - 8 = 7, nato 7 + 12 = 19 jabolk
 ```
 
-**Kdaj uporabiti:** Matematični problemi, logične uganke, odpravljanje napak ali katera koli naloga, kjer prikaz razmišljanja poveča natančnost in zaupanje.
+**Kdaj uporabiti:** Matematični problemi, logične uganke, odpravljanje napak ali katera koli naloga, kjer prikaz razmišljanja izboljša natančnost in zaupanje.
 
-### Pozivanje na osnovi vloge
+### Pozivanje po vlogi
 
-Nastavite osebnost ali vlogo AI pred postavitvijo vprašanja. To zagotavlja kontekst, ki oblikuje ton, globino in osredotočenost odgovora. "Programski arhitekt" daje drugačna priporočila kot "mlajši razvijalec" ali "revizor varnosti".
+Nastavite AI-ju osebnost ali vlogo, preden postavite vprašanje. To zagotovi kontekst, ki oblikuje ton, globino in fokus odgovora. "Softverski arhitekt" daje drugačne nasvete kot "mlajši razvijalec" ali "varnostni revizor".
 
-<img src="../../../translated_images/sl/role-based-prompting.a806e1a73de6e3a4.webp" alt="Pozivanje na osnovi vloge" width="800"/>
+<img src="../../../translated_images/sl/role-based-prompting.a806e1a73de6e3a4.webp" alt="Pozivanje po vlogi" width="800"/>
 
-*Nastavitev konteksta in osebnosti – isto vprašanje dobi drugačen odgovor glede na dodeljeno vlogo*
+*Nastavitev konteksta in osebe — isto vprašanje prejme različen odgovor glede na dodeljeno vlogo*
 
 ```java
 String prompt = """
@@ -142,15 +142,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kdaj uporabiti:** Pregledi kode, mentorstvo, domeno specifične analize ali kadar potrebujete odgovore, prilagojene določenemu strokovnemu nivoju ali perspektivi.
+**Kdaj uporabiti:** Pregledi kode, inštrukcije, analiza specifična za domeno ali ko potrebujete odgovore, prilagojene za določeno strokovno raven ali perspektivo.
 
 ### Predloge pozivov
 
-Ustvarite ponovno uporabne pozive z naslovniki za spremenljivke. Namesto, da vedno znova pišete nov poziv, definirajte predlogo enkrat in vstavite različne vrednosti. Razred `PromptTemplate` v LangChain4j to olajša z uporabo sintakse `{{spremenljivka}}`.
+Ustvarite ponovno uporabne pozive s spremenljivkami. Namesto da vsakič pišete nov poziv, definirajte predlogo in vanjo vnašajte različne vrednosti. Razred `PromptTemplate` iz LangChain4j omogoča to z uporabo sintakse `{{variable}}`.
 
 <img src="../../../translated_images/sl/prompt-templates.14bfc37d45f1a933.webp" alt="Predloge pozivov" width="800"/>
 
-*Ponovno uporabni pozivi s spremenljivkami – ena predloga, več uporab*
+*Ponovno uporabni pozivi s spremenljivkami — ena predloga, več uporab*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,29 +165,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Kdaj uporabiti:** Ponavljajoče se poizvedbe z različnimi vnosi, obdelava v serijah, ustvarjanje ponovno uporabnih AI tokov dela ali kjerkoli, kjer struktura poziva ostane enaka, podatki pa se spreminjajo.
+**Kdaj uporabiti:** Ponovljeni poizvedbi z različnimi vhodi, množični obdelavi, gradnji večkrat uporabnih AI potekov dela ali kjer koli, kjer struktura poziva ostaja ista, a se podatki spreminjajo.
 
 ---
 
-Ti pet osnovnih tehnik vam daje trden komplet orodij za večino pozivalnih nalog. Preostali del modula nadgradi to z **osmimi naprednimi vzorci**, ki izkoriščajo nadzor razmišljanja GPT-5.2, samoocenjevanje in zmožnosti strukturiranega izhoda.
+Ti pet osnovnih vzorcev vam daje močno orodje za večino nalog oblikovanja pozivov. Preostanek modula gradi na tem z **osmimi naprednimi vzorci**, ki izkoriščajo funkcije GPT-5.2 za nadzor razmišljanja, samoevalvacijo in strukturiran izhod.
 
 ## Napredni vzorci
 
-Ko smo pokrili osnove, pojdimo na osmice naprednih vzorcev, ki ta modul naredijo edinstven. Ne potrebujejo vsi problemi istega pristopa. Nekatera vprašanja zahtevajo hitre odgovore, druga globoko razmišljanje. Nekatera potrebujejo vidno razmišljanje, druga samo rezultate. Vsak spodaj prikazan vzorec je optimiziran za drugačen scenarij — in nadzor razmišljanja GPT-5.2 še poudari razlike.
+Ko smo pokrili osnove, preidimo na osem naprednih vzorcev, ki ta modul naredijo unikaten. Ne za vse probleme je potreben isti pristop. Nekatera vprašanja zahtevajo hitre odgovore, druga globoko razmišljanje. Nekatera potrebujejo vidno razmišljanje, druga le rezultate. Vsak spodnji vzorec je optimiziran za drugačen scenarij — in nadzor razmišljanja GPT-5.2 naredi razlike še bolj očitne.
 
-<img src="../../../translated_images/sl/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Osem vzorcev za pozivanje" width="800"/>
+<img src="../../../translated_images/sl/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Osem vzorcev pozivanja" width="800"/>
 
-*Pregled osmih vzorcev inženiringa pozivov in njihovih primerov uporabe*
+*Pregled osmih vzorcev oblikovanja pozivov in njihovih primerov uporabe*
 
 <img src="../../../translated_images/sl/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Nadzor razmišljanja z GPT-5.2" width="800"/>
 
-*Nadzor razmišljanja GPT-5.2 omogoča specificirati, koliko naj model razmišlja — od hitrih neposrednih odgovorov do globokega raziskovanja*
+*Nadzor razmišljanja GPT-5.2 omogoča določiti, koliko razmišljanja naj model opravi — od hitrih neposrednih odgovorov do globokega raziskovanja*
 
-<img src="../../../translated_images/sl/reasoning-effort.db4a3ba5b8e392c1.webp" alt="Primerjava truda razmišljanja" width="800"/>
-
-*Nizka vnema (hitro, neposredno) proti visoki vnemi (temeljito, raziskovalno) pristopi k razmišljanju*
-
-**Nizka vnema (hitro in osredotočeno)** - Za preprosta vprašanja, kjer želite hitre, neposredne odgovore. Model opravi minimalno razmišljanje - največ 2 koraka. Uporabite za izračune, iskanja ali preprosta vprašanja.
+**Nizka vnema (Hitro in fokusirano)** - Za preprosta vprašanja, kjer želite hitre, neposredne odgovore. Model opravi minimalno razmišljanje - največ 2 koraka. Uporabite to za izračune, iskanja ali enostavna vprašanja.
 
 ```java
 String prompt = """
@@ -206,12 +202,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Raziskujte s GitHub Copilot:** Odprite [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) in vprašajte:
-> - "Kakšna je razlika med nizko in visoko vnemo pri vzorcih pozivanja?"
-> - "Kako XML oznake v pozivih pomagajo strukturirati odgovor AI?"
+> 💡 **Raziščite z GitHub Copilot:** Odprite [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) in vprašajte:
+> - "Kakšna je razlika med nizko in visoko vnemo pozivanja?"
+> - "Kako XML oznake v pozivih pomagajo strukturirati AI odgovor?"
 > - "Kdaj naj uporabim vzorce samorefleksije in kdaj neposredna navodila?"
 
-**Visoka vnema (globoko in temeljito)** - Za kompleksne probleme, kjer želite poglobljeno analizo. Model temeljito raziskuje in pokaže podrobno razmišljanje. Uporabite za načrtovanje sistemov, arhitekturne odločitve ali zahtevne raziskave.
+**Visoka vnema (Globoko in temeljito)** - Za kompleksne probleme, kjer želite poglobljeno analizo. Model temeljito raziskuje in kaže podrobno razmišljanje. Uporabite to za sistemski dizajn, arhitekturne odločitve ali kompleksne raziskave.
 
 ```java
 String prompt = """
@@ -225,7 +221,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Izvajanje nalog (napredek korak za korakom)** - Za večkorakne poteke. Model najprej predstavi načrt, nato poroča o vsakem koraku med izvajanjem in na koncu poda povzetek. Uporabite za migracije, izvedbe ali katerikoli večkorakni proces.
+**Izvajanje nalog (Korak za korakom napredek)** - Za delo v več korakih. Model poda začetni načrt, pripoveduje vsak korak, medtem ko dela, nato pa poda povzetek. Uporabite za migracije, implementacije ali katerikoli večkorakni proces.
 
 ```java
 String prompt = """
@@ -263,18 +259,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Pozivanje z verigo misli eksplicitno zahteva od modela, da pokaže proces razmišljanja, kar poveča natančnost pri kompleksnih nalogah. Razčlenjevanje korak za korakom pomaga tako ljudem kot AI razumeti logiko.
+Pozivanje po verigi razmišljanja izrecno zahteva, da model pokaže svoj proces razmišljanja, kar izboljša natančnost pri kompleksnih nalogah. Razčlenitev korak za korakom pomaga tako ljudem kot AI razumeti logiko.
 
-> **🤖 Poskusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Vprašajte o tem vzorcu:
-> - "Kako bi prilagodil vzorec izvajanja nalog za dolgotrajne operacije?"
-> - "Kakšne so najboljše prakse za strukturiranje uvodov orodij v produkcijskih aplikacijah?"
-> - "Kako lahko ujamem in prikažem vmesne posodobitve napredka v uporabniškem vmesniku?"
+> **🤖 Preizkusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Vprašajte o tem vzorcu:
+> - "Kako prilagoditi vzorec izvajanja naloge za dolgotrajne operacije?"
+> - "Kakšne so najboljše prakse za strukturiranje uvodnih delov orodij v produkcijskih aplikacijah?"
+> - "Kako zajeti in prikazati vmesne posodobitve napredka v uporabniškem vmesniku?"
 
-<img src="../../../translated_images/sl/task-execution-pattern.9da3967750ab5c1e.webp" alt="Vzorec izvajanja nalog" width="800"/>
+<img src="../../../translated_images/sl/task-execution-pattern.9da3967750ab5c1e.webp" alt="Vzorčni izvedba naloge" width="800"/>
 
-*Načrt → Izvedba → Povzetek potek za večkorake naloge*
+*Načrtuj → Izvedi → Povzemi potek dela za večkorajne naloge*
 
-**Samoreflektirajoča koda** - Za generiranje kode kakovosti primerni za produkcijo. Model generira kodo po produkcijskih standardih z ustreznim ravnanjem z napakami. Uporabite, ko gradite nove funkcionalnosti ali storitve.
+**Samoreflektirajoča koda** - Za generiranje kode produkcijske kakovosti. Model generira kodo po produkcijskih standardih z ustreznim ravnanjem z napakami. Uporabite to pri gradnji novih funkcionalnosti ali storitev.
 
 ```java
 String prompt = """
@@ -287,9 +283,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sl/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Cikel samorefleksije" width="800"/>
 
-*Iterativni zanki izboljšav – generiraj, ocenjuj, identificiraj težave, izboljšaj, ponovi*
+*Iterativni izboljševalni cikel - generiraj, ocenjuj, ugotovi težave, izboljšaj, ponovi*
 
-**Strukturirana analiza** - Za dosledno ocenjevanje. Model pregleduje kodo s fiksnim okvirjem (pravilnost, prakse, zmogljivost, varnost, vzdržljivost). Uporabite za preglede kode ali ocene kakovosti.
+**Strukturirana analiza** - Za dosledno ocenjevanje. Model pregleda kodo z uporabo fiksnega okvira (pravilnost, prakse, zmogljivost, varnost, vzdrževanje). Uporabite za preglede kode ali ocene kakovosti.
 
 ```java
 String prompt = """
@@ -337,16 +333,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Poskusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Vprašajte o strukturirani analizi:
-> - "Kako prilagodim analizni okvir za različne vrste pregledov kode?"
-> - "Kako najbolj učinkovito programatično razčlenim in ukrepam na strukturiran izhod?"
-> - "Kako zagotovim doslednost stopenj resnosti skozi različne preglede?"
+> **🤖 Preizkusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Vprašajte o strukturirani analizi:
+> - "Kako prilagoditi analitični okvir za različne vrste pregledov kode?"
+> - "Kakšen je najboljši način za programatično razčlenjevanje in ukrepanje na strukturiran izhod?"
+> - "Kako zagotoviti dosledne ravni resnosti med različnimi recenzijami?"
 
-<img src="../../../translated_images/sl/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Vzorec strukturirane analize" width="800"/>
+<img src="../../../translated_images/sl/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Vzorčni strukturirana analiza" width="800"/>
 
-*Okvir za dosledne preglede kode s stopnjami resnosti*
+*Okvir za dosledne preglede kode z ravnmi resnosti*
 
-**Večkratni pogovor** - Za pogovore, ki potrebujejo kontekst. Model si zapomni prejšnja sporočila in gradi naprej na njih. Uporabite za interaktivne pomoči ali kompleksne Q&A.
+**Večkratni pogovor** - Za pogovore, ki potrebujejo kontekst. Model si zapomni prejšnja sporočila in gradi nanje. Uporabite za interaktivne pomočnike ali kompleksno Q&A.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -362,9 +358,9 @@ memory.add(aiMessage2);
 
 <img src="../../../translated_images/sl/context-memory.dff30ad9fa78832a.webp" alt="Pomnilnik konteksta" width="800"/>
 
-*Kako se kontekst pogovora kopiči skozi več krogov do dosega omejitve tokenov*
+*Kako se kontekst pogovora kopiči skozi več krogov, dokler ne doseže omejitve števila tokenov*
 
-**Korak-za-korakom razmišljanje** - Za probleme, ki zahtevajo vidno logiko. Model pokaže izrecno razmišljanje za vsak korak. Uporabite za matematične probleme, logične uganke ali kadar želite razumeti miselni proces.
+**Razmišljanje korak za korakom** - Za probleme, ki zahtevajo vidno logiko. Model pokaže eksplicitno razmišljanje za vsak korak. Uporabite za matematične probleme, logične uganke ali kadar morate razumeti proces razmišljanja.
 
 ```java
 String prompt = """
@@ -378,11 +374,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/sl/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Vzorec korak-za-korakom" width="800"/>
+<img src="../../../translated_images/sl/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Vzorčni korak za korakom" width="800"/>
 
-*Razčlenjevanje problemov na izrecne logične korake*
+*Razbijanje problemov v jasne logične korake*
 
-**Omejen izhod** - Za odgovore s specifičnimi zahtevami glede formata. Model striktno sledi pravilom formata in dolžine. Uporabite za povzetke ali kadar potrebujete natančno strukturo izhoda.
+**Omejen izhod** - Za odgovore s specifičnimi zahtevami glede formata. Model strogo sledi pravilom formata in dolžine. Uporabite za povzetke ali kadar potrebujete natančno strukturo izhoda.
 
 ```java
 String prompt = """
@@ -398,33 +394,33 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/sl/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Vzorec omejenega izhoda" width="800"/>
+<img src="../../../translated_images/sl/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Vzorčni omejen izhod" width="800"/>
 
-*Uveljavljanje specifičnih zahtev za format, dolžino in strukturo*
+*Uveljavljanje specifičnih zahtev po formatu, dolžini in strukturi*
 
 ## Uporaba obstoječih virov Azure
 
-**Preverite namestitev:**
+**Preverite nameščanje:**
 
-Prepričajte se, da je `.env` datoteka v korenski mapi z Azure poverilnicami (ustvarjena med Modulom 01):
+Prepričajte se, da datoteka `.env` obstaja v korenskem imeniku z Azure poverilnicami (ustvarjeno med modulom 01):
 ```bash
-cat ../.env  # Prikazati bi moral AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Naj bi prikazal AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Zaženite aplikacijo:**
 
-> **Opomba:** Če ste aplikacije že zagnali z `./start-all.sh` iz Modula 01, ta modul že deluje na portu 8083. Ukaze za zagon lahko preskočite in greste neposredno na http://localhost:8083.
+> **Opomba:** Če ste že zagnali vse aplikacije z uporabo `./start-all.sh` iz modula 01, ta modul že teče na vratih 8083. Zaženete lahko ta modul tudi brez spodnjih ukazov in neposredno odprete http://localhost:8083.
 
-**Možnost 1: Uporaba Spring Boot nadzorne plošče (priporočeno za uporabnike VS Code)**
+**Možnost 1: Uporaba Spring Boot Dashboard (priporočeno za uporabnike VS Code)**
 
-Razvojno okolje vsebuje razširitev Spring Boot Dashboard, ki ponuja vizualni vmesnik za upravljanje vseh Spring Boot aplikacij. Najdete jo v vrstici aktivnosti na levi strani VS Code (poiščite ikono Spring Boot).
-Iz nadzorne plošče Spring Boot lahko:
+V razvojni vsebnik je vključena razširitev Spring Boot Dashboard, ki omogoča vizualno upravljanje vseh Spring Boot aplikacij. Najdete jo na vrstici dejavnosti na levi strani VS Code (poiščite ikono Spring Boot).
+
+V Spring Boot Dashboard lahko:
 - Vidite vse razpoložljive Spring Boot aplikacije v delovnem prostoru
 - Zaženete/ustavite aplikacije z enim klikom
-- V realnem času ogledate dnevnike aplikacij
-- Spremljate stanje aplikacije
-
-Preprosto kliknite gumb za predvajanje poleg "prompt-engineering", da zaženete ta modul, ali zaženite vse module hkrati.
+- Ogledate si zapise aplikacij v realnem času
+- Spremljate status aplikacij
+Preprosto kliknite gumb za predvajanje poleg "prompt-engineering", da začnete ta modul, ali zaženite vse module hkrati.
 
 <img src="../../../translated_images/sl/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
@@ -440,7 +436,7 @@ cd ..  # Iz korenskega imenika
 
 **PowerShell:**
 ```powershell
-cd ..  # Iz korenske mape
+cd ..  # Iz korenskega imenika
 .\start-all.ps1
 ```
 
@@ -458,9 +454,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Obe skripti samodejno naložita okoljske spremenljivke iz korenske datoteke `.env` in bosta sestavili JAR-je, če ti ne obstajajo.
+Obe skripti samodejno naložita okoljske spremenljivke iz glavne datoteke `.env` in zgradita JAR, če ti ne obstajata.
 
-> **Opomba:** Če raje ročno sestavite vse module, preden jih zaženete:
+> **Opomba:** Če želite ročno sestaviti vse module pred zagonom:
 >
 > **Bash:**
 > ```bash
@@ -474,9 +470,9 @@ Obe skripti samodejno naložita okoljske spremenljivke iz korenske datoteke `.en
 > mvn clean package -DskipTests
 > ```
 
-Odprite http://localhost:8083 v svojem brskalniku.
+Odprite http://localhost:8083 v vašem brskalniku.
 
-**Za zaustavitev:**
+**Zaustavitev:**
 
 **Bash:**
 ```bash
@@ -496,67 +492,67 @@ cd ..; .\stop-all.ps1  # Vsi moduli
 
 <img src="../../../translated_images/sl/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Glavna nadzorna plošča, ki prikazuje vseh 8 vzorcev prompt inženiringa z njihovimi značilnostmi in primeri uporabe*
+*Glavni nadzorni plošči, ki prikazuje vseh 8 vzorcev prompt inženiringa z njihovimi značilnostmi in primeri uporabe*
 
-## Raziščite vzorce
+## Raziskovanje vzorcev
 
-Spletni vmesnik vam omogoča eksperimentiranje z različnimi strategijami prompotovanja. Vsak vzorec rešuje različne probleme – preizkusite jih, da boste videli, kdaj kateri pristop zasije.
+Spletni vmesnik vam omogoča eksperimentiranje z različnimi strategijami spodbujanja. Vsak vzorec rešuje različne probleme – preizkusite jih, da vidite, kdaj kateri pristop najbolj sije.
 
-### Nizka proti visoki vnemi
+### Nizka proti visoki zagnanosti
 
-Vprašajte preprosto vprašanje, kot je "Koliko je 15 % od 200?" z nizko vnemo. Dobili boste takojšen, neposreden odgovor. Zdaj vprašajte nekaj zapletenega, kot je "Oblikuj strategijo predpomnjenja za API z visokim prometom" z visoko vnemo. Opazujte, kako se model upočasni in poda podrobno obrazložitev. Isti model, ista struktura vprašanja – a prompt mu pove, koliko naj razmišlja.
+Postavite preprosto vprašanje, na primer "Koliko je 15 % od 200?" z nizko zagnanostjo. Dobite takojšen, neposreden odgovor. Zdaj postavite kaj zahtevnejšega, na primer "Oblikuj strategijo predpomnjenja za API z visoko obremenitvijo" z visoko zagnanostjo. Opazujte, kako model upočasni in poda podrobna obrazložitvena pojasnila. Enak model, enaka struktura vprašanja – vendar prompt pove, koliko razmišljanja naj opravi.
 
 <img src="../../../translated_images/sl/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
 
-*Hiter izračun z minimalno obrazložitvijo*
+*Hitri izračun z minimalno obrazložitvijo*
 
 <img src="../../../translated_images/sl/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
 
-*Celovita strategija predpomnjenja (2.8MB)*
+*Celovita strategija predpomnjenja (2,8 MB)*
 
-### Izvedba naloge (Uvodne besede orodij)
+### Izvajanje nalog (Uvodni tekst orodja)
 
-Večstopenjski delovni procesi koristijo načrtovanje vnaprej in pripovedovanje poteka. Model predstavi, kaj bo storil, pripoveduje vsak korak in nato povzame rezultate.
+Večstopenjski delovni procesi imajo koristi od vnaprejšnjega načrtovanja in opisovanja napredka. Model na kratko opiše, kaj bo naredil, pripoveduje o vsakem koraku in nato povzame rezultate.
 
 <img src="../../../translated_images/sl/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
 
-*Ustvarjanje REST endpointa z opisom korak za korakom (3.9MB)*
+*Ustvarjanje REST končne točke s korakom po korak pripovedjo (3,9 MB)*
 
 ### Samoreflektirajoča koda
 
-Poskusite "Ustvari storitev za preverjanje e-pošte". Namesto da bi samo generiral kodo in se ustavil, model generira, ocenjuje glede na kriterije kakovosti, prepozna slabosti in izboljšuje. Videli boste, kako ponavlja, dokler koda ne doseže produkcijskih standardov.
+Poskusite "Ustvari storitev za preverjanje e-pošte". Namesto da bi le generiral kodo in se ustavil, model generira, oceni glede na kakovostne kriterije, prepozna slabosti in izboljša. Videli boste, kako iterira, dokler koda ne doseže proizvodnih standardov.
 
 <img src="../../../translated_images/sl/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
 
-*Popolna storitev za preverjanje e-pošte (5.2MB)*
+*Popolna storitev preverjanja e-pošte (5,2 MB)*
 
 ### Strukturirana analiza
 
-Pregledi kode potrebujejo dosledne okvirje za ocenjevanje. Model analizira kodo z uporabo določenih kategorij (pravilnost, prakse, zmogljivost, varnost) z različnimi stopnjami resnosti.
+Pregledi kode zahtevajo dosledne okvirje ocenjevanja. Model analizira kodo z uporabo fiksnih kategorij (pravilnost, prakse, zmogljivost, varnost) z različnimi stopnjami resnosti.
 
 <img src="../../../translated_images/sl/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
 
-*Pregled kode na osnovi okvira*
+*Pregled kode na podlagi okvira*
 
-### Večkratno pogovarjanje
+### Večkratni pogovori
 
-Vprašajte "Kaj je Spring Boot?" in nato takoj dodajte "Pokaži mi primer". Model si zapomni vaše prvo vprašanje in vam posebej poda primer Spring Boot. Brez spomina bi bilo drugo vprašanje preveč nejasno.
+Vprašajte "Kaj je Spring Boot?" in takoj sledite s "Pokaži mi primer". Model si zapomni vaše prvo vprašanje in vam poda primer Spring Boot posebej za to. Brez spomina bi bilo drugo vprašanje preveč splošno.
 
 <img src="../../../translated_images/sl/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
 
 *Ohranjanje konteksta med vprašanji*
 
-### Korak-po-korak razlaga
+### Razmišljanje korak za korakom
 
-Izberite matematični problem in ga poskusite z razlago korak-po-korak in nizko vnemo. Nizka vnema vam le poda odgovor – hitro, a nejasno. Korak-po-korak pokaže vsak izračun in odločitev.
+Izberite matematični problem in ga poskusite tako z razmišljanjem korak za korakom kot z nizko zagnanostjo. Nizka zagnanost vam zgolj poda odgovor – hitro, a nejasno. Korak za korakom prikazuje vsak izračun in odločitev.
 
 <img src="../../../translated_images/sl/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
 
-*Matematični problem z izrecnimi koraki*
+*Matematični problem z eksplicitnimi koraki*
 
-### Omejen izhod
+### Ograničen izhod
 
-Ko potrebujete specifične formate ali število besed, ta vzorec zahteva strogo spoštovanje. Poskusite ustvariti povzetek z natanko 100 besedami v obliki označenih seznamov.
+Ko potrebujete specifične formate ali število besed, ta vzorec dosega strogo skladnost. Poskusite ustvariti povzetek z natanko 100 besedami v obliki pogosto uporabnih točk.
 
 <img src="../../../translated_images/sl/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
 
@@ -564,29 +560,29 @@ Ko potrebujete specifične formate ali število besed, ta vzorec zahteva strogo 
 
 ## Kaj se resnično učite
 
-**Napor razmišljanja spreminja vse**
+**Napor razmišljanja spremeni vse**
 
-GPT-5.2 vam omogoča nadzor računalniškega napora preko vaših promptov. Nizek napor pomeni hitre odgovore z minimalnim raziskovanjem. Visok napor pomeni, da si model vzame čas za poglobljeno razmišljanje. Učite se uskladiti napor s kompleksnostjo naloge – ne izgubljajte časa za preprosta vprašanja, a ne hitite pri zapletenih odločitvah.
+GPT-5.2 vam omogoča nadzor računalniškega napora prek vaših pozivov. Nizek napor pomeni hitre odgovore z minimalnim raziskovanjem. Visok napor pomeni, da si model vzame čas za globoko razmišljanje. Učite se uskladiti napor s kompleksnostjo naloge – ne zapravljajte časa za preprosta vprašanja, vendar se tudi ne hitite pri zahtevnih odločitvah.
 
 **Struktura vodi vedenje**
 
-Opazili ste XML oznake v promptih? Niso zgolj dekoracija. Modeli sledijo strukturiranim navodilom bolj zanesljivo kot prostemu besedilu. Ko potrebujete večstopenjske procese ali zapleteno logiko, struktura pomaga modelu slediti, kje je in kaj sledi.
+Opazite XML oznake v pozivih? Niso dekorativne. Modeli zanesljiveje sledijo strukturiranim navodilom kot prostemu besedilu. Ko potrebujete večstopenjske procese ali kompleksno logiko, struktura modelu pomaga slediti, kje je in kaj sledi.
 
 <img src="../../../translated_images/sl/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomija dobro strukturiranega prompta z jasnimi odseki in XML-stil organizacijo*
+*Anatomija dobro strukturiranega poziva s čistimi razdelki in organizacijo v slogu XML*
 
-**Kakovost skozi samoocenjevanje**
+**Kakovost prek samoocenjevanja**
 
-Samoreflektirajoči vzorci delujejo tako, da naredijo kriterije kakovosti izrecne. Namesto da bi upali, da bo model "storil prav", mu natančno poveste, kaj pomeni "prav": pravilna logika, obravnava napak, zmogljivost, varnost. Model lahko nato oceni svoj izhod in izboljša. To spremeni generiranje kode iz loterije v proces.
+Vzorce samoreflektiranja delujejo tako, da naredijo kakovostne kriterije eksplicitne. Namesto da bi upali, da model "pravično opravi delo", točno poveste, kaj pomeni "pravično": pravilna logika, ravnanje z napakami, zmogljivost, varnost. Model nato lahko oceni svoj izhod in ga izboljša. To spremeni generiranje kode iz loterije v proces.
 
 **Kontekst je omejen**
 
-Večkratni pogovori delujejo tako, da vključujejo zgodovino sporočil z vsakim zahtevkom. A obstaja meja – vsak model ima največje število tokenov. Ko pogovori rastejo, boste potrebovali strategije, da ohranite relevanten kontekst brez preseganja omejitev. Ta modul vam pokaže, kako spomin deluje; kasneje se boste naučili, kdaj povzeti, kdaj pozabiti in kdaj pridobiti.
+Večkratni pogovori delujejo tako, da vključujejo zgodovino sporočil pri vsakem pozivu. Vendar pa obstaja omejitev – vsak model ima maksimalno število tokenov. Ko pogovori rastejo, boste potrebovali strategije za ohranjanje relevantnega konteksta, ne da bi dosegli to mejo. Ta modul vam pokaže, kako spomin deluje; kasneje se boste naučili, kdaj povzeti, kdaj pozabiti in kdaj poiskati.
 
 ## Naslednji koraki
 
-**Naslednji modul:** [03-rag - RAG (izboljšano generiranje z iskanjem)](../03-rag/README.md)
+**Naslednji modul:** [03-rag - RAG (generiranje z iskanjem informacij)](../03-rag/README.md)
 
 ---
 
@@ -596,5 +592,5 @@ Večkratni pogovori delujejo tako, da vključujejo zgodovino sporočil z vsakim 
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Omejitev odgovornosti**:
-Ta dokument je bil preveden z uporabo AI prevajalske storitve [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da lahko samodejni prevodi vsebujejo napake ali netočnosti. Izvirni dokument v njegovem izvirnem jeziku se šteje za avtoritativni vir. Za kritične informacije priporočamo profesionalni človeški prevod. Nismo odgovorni za kakršne koli nesporazume ali napačne razlage, ki izhajajo iz uporabe tega prevoda.
+Ta dokument je bil preveden z uporabo storitve za avtomatski prevod AI [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, vas opozarjamo, da avtomatizirani prevodi lahko vsebujejo napake ali netočnosti. Izvirni dokument v njegovem izvirnem jeziku velja za avtoritativni vir. Za pomembne informacije priporočamo strokovni človeški prevod. Nismo odgovorni za kakršnekoli nesporazume ali napačne razlage, ki izhajajo iz uporabe tega prevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

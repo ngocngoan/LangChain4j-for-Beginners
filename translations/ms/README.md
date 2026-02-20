@@ -1,15 +1,19 @@
 <img src="../../translated_images/ms/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
+# LangChain4j untuk Pemula
+
+Satu kursus untuk membina aplikasi AI dengan LangChain4j dan Azure OpenAI GPT-5.2, dari sembang asas hingga ejen AI.
+
 ### 🌐 Sokongan Pelbagai Bahasa
 
 #### Disokong melalui GitHub Action (Automatik & Sentiasa Dikemas Kini)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Arab](../ar/README.md) | [Benggali](../bn/README.md) | [Bulgaria](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Cina (Dipermudahkan)](../zh-CN/README.md) | [Cina (Tradisional, Hong Kong)](../zh-HK/README.md) | [Cina (Tradisional, Macau)](../zh-MO/README.md) | [Cina (Tradisional, Taiwan)](../zh-TW/README.md) | [Kroasia](../hr/README.md) | [Czech](../cs/README.md) | [Denmark](../da/README.md) | [Belanda](../nl/README.md) | [Estonia](../et/README.md) | [Finland](../fi/README.md) | [Perancis](../fr/README.md) | [Jerman](../de/README.md) | [Greek](../el/README.md) | [Ibrani](../he/README.md) | [Hindi](../hi/README.md) | [Hungary](../hu/README.md) | [Indonesia](../id/README.md) | [Itali](../it/README.md) | [Jepun](../ja/README.md) | [Kannada](../kn/README.md) | [Korea](../ko/README.md) | [Lithuania](../lt/README.md) | [Melayu](./README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norway](../no/README.md) | [Parsi (Farsi)](../fa/README.md) | [Poland](../pl/README.md) | [Portugis (Brazil)](../pt-BR/README.md) | [Portugis (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romania](../ro/README.md) | [Rusia](../ru/README.md) | [Serbia (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenia](../sl/README.md) | [Sepanyol](../es/README.md) | [Swahili](../sw/README.md) | [Sweden](../sv/README.md) | [Tagalog (Filipina)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turki](../tr/README.md) | [Ukraine](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnam](../vi/README.md)
+[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](./README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
-> **Lebih Suka Klon Secara Tempatan?**
+> **Lebih suka Klon Secara Tempatan?**
 >
-> Repositori ini termasuk lebih 50 terjemahan bahasa yang meningkatkan saiz muat turun secara signifikan. Untuk mengklon tanpa terjemahan, gunakan sparse checkout:
+> Repositori ini merangkumi 50+ terjemahan bahasa yang secara signifikan meningkatkan saiz muat turun. Untuk klon tanpa terjemahan, gunakan sparse checkout:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -25,73 +29,49 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> Ini memberikan semua yang anda perlukan untuk menyelesaikan kursus dengan muat turun yang lebih pantas.
+> Ini memberikan anda segala yang anda perlukan untuk menyelesaikan kursus dengan muat turun yang jauh lebih cepat.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
-
-> **Lebih Suka Klon Secara Tempatan?**
->
-> Repositori ini termasuk lebih 50 terjemahan bahasa yang meningkatkan saiz muat turun secara signifikan. Untuk mengklon tanpa terjemahan, gunakan sparse checkout:
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> Ini memberikan semua yang anda perlukan untuk menyelesaikan kursus dengan muat turun yang lebih pantas.
-
-# LangChain4j untuk Pemula
-
-Satu kursus untuk membina aplikasi AI dengan LangChain4j dan Azure OpenAI GPT-5.2, dari perbualan asas hingga ejen AI.
-
-**Baru menggunakan LangChain4j?** Lihat [Glosari](docs/GLOSSARY.md) untuk definisi istilah dan konsep utama.
 
 ## Jadual Kandungan
 
-1. [Mula Pantas](00-quick-start/README.md) - Mula dengan LangChain4j  
-2. [Pengenalan](01-introduction/README.md) - Pelajari asas LangChain4j  
-3. [Reka Bentuk Prompt](02-prompt-engineering/README.md) - Kuasai reka bentuk prompt yang berkesan  
-4. [RAG (Penjanaan Dipertingkatkan Pengambilan)](03-rag/README.md) - Bina sistem berasaskan pengetahuan pintar  
-5. [Alat](04-tools/README.md) - Integrasi alat luaran dan pembantu mudah  
-6. [MCP (Protokol Konteks Model)](05-mcp/README.md) - Bekerja dengan Protokol Konteks Model (MCP) dan modul Agen  
+1. [Mula Pantas](00-quick-start/README.md) - Mula dengan LangChain4j
+2. [Pengenalan](01-introduction/README.md) - Pelajari asas LangChain4j
+3. [Kejuruteraan Prompt](02-prompt-engineering/README.md) - Kuasai reka bentuk prompt yang berkesan
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Bina sistem berasaskan pengetahuan yang pintar
+5. [Alat](04-tools/README.md) - Integrasi alat luaran dan pembantu mudah
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Bekerja dengan Protokol Konteks Model (MCP) dan modul Agentic
 ---
 
 ## Laluan Pembelajaran
 
+**Baru dengan LangChain4j?** Lihat [Glosari](docs/GLOSSARY.md) untuk definisi terma dan konsep utama.
+
 > **Mula Pantas**
 
-1. Fork repositori ini ke akaun GitHub anda  
-2. Klik **Code** → tab **Codespaces** → **...** → **Baru dengan pilihan...**  
-3. Gunakan tetapan lalai – ini akan memilih bekas Pembangunan yang dibuat untuk kursus ini  
-4. Klik **Buat codespace**  
-5. Tunggu 5-10 minit sehingga persekitaran siap  
+1. Fork repositori ini ke akaun GitHub anda
+2. Klik **Code** → tab **Codespaces** → **...** → **New with options...**
+3. Gunakan tetapan lalai – ini akan memilih kontena Pembangunan yang dibuat untuk kursus ini
+4. Klik **Create codespace**
+5. Tunggu 5-10 minit untuk persekitaran bersedia
 6. Teruskan ke [Mula Pantas](./00-quick-start/README.md) untuk bermula!
 
-Selepas menyiapkan modul, terokai [Panduan Ujian](docs/TESTING.md) untuk melihat konsep ujian LangChain4j beraksi.
+Selepas menyelesaikan modul, terokai [Panduan Ujian](docs/TESTING.md) untuk melihat konsep ujian LangChain4j dalam tindakan.
 
-> **Nota:** Latihan ini menggunakan kedua-dua Model GitHub dan Azure OpenAI. Modul [Mula Pantas](00-quick-start/README.md) menggunakan Model GitHub (tiada langganan Azure diperlukan), manakala modul 1-5 menggunakan Azure OpenAI. Daftar dengan [akaun Azure PERCUMA](https://aka.ms/azure-free-account) jika anda belum ada.
+> **Nota:** Latihan ini menggunakan kedua-dua Model GitHub dan Azure OpenAI. Modul [Mula Pantas](00-quick-start/README.md) menggunakan Model GitHub (tanpa keperluan langganan Azure), manakala modul 1-5 menggunakan Azure OpenAI. Mulakan dengan [akaun Azure PERCUMA](https://aka.ms/azure-free-account) jika anda belum ada.
 
 
-## Belajar dengan GitHub Copilot
+## Pembelajaran dengan GitHub Copilot
 
-Untuk mula menulis kod dengan cepat, buka projek ini di GitHub Codespace atau IDE tempatan anda dengan devcontainer yang disediakan. Devcontainer yang digunakan dalam kursus ini telah dikonfigurasi awal dengan GitHub Copilot untuk pengaturcaraan berpadu AI.
+Untuk mula menulis kod dengan cepat, buka projek ini dalam GitHub Codespace atau IDE tempatan anda dengan devcontainer yang disediakan. Devcontainer yang digunakan dalam kursus ini telah dikonfigurasikan awal dengan GitHub Copilot untuk pengaturcaraan berpasangan AI.
 
-Setiap contoh kod termasuk soalan yang dicadangkan yang boleh anda tanya kepada GitHub Copilot untuk memperdalam pemahaman anda. Cari tanda 💡/🤖 di:
+Setiap contoh kod mengandungi soalan yang disyorkan yang boleh anda tanya kepada GitHub Copilot untuk memperdalam pemahaman anda. Cari petunjuk 💡/🤖 di:
 
-- **Tajuk fail Java** - Soalan khusus untuk setiap contoh  
-- **README modul** - Cadangan penerokaan selepas contoh kod  
+- **Header fail Java** - Soalan khusus untuk setiap contoh
+- **README modul** - Cadangan eksplorasi selepas contoh kod
 
-**Cara guna:** Buka mana-mana fail kod dan tanya soalan yang dicadangkan kepada Copilot. Ia mempunyai konteks penuh pangkalan kod dan boleh menerangkan, memperluas, dan mencadangkan alternatif.
+**Cara guna:** Buka mana-mana fail kod dan tanya Copilot soalan yang disyorkan. Ia mempunyai konteks penuh kod dan boleh menerangkan, melanjutkan, dan mencadangkan alternatif.
 
-Ingin belajar lebih lanjut? Lihat [Copilot untuk Pengaturcaraan Berpadu AI](https://aka.ms/GitHubCopilotAI).
+Ingin belajar lebih lagi? Lihat [Copilot untuk Pengaturcaraan Berpasangan AI](https://aka.ms/GitHubCopilotAI).
 
 
 ## Sumber Tambahan
@@ -124,7 +104,7 @@ Ingin belajar lebih lanjut? Lihat [Copilot untuk Pengaturcaraan Berpadu AI](http
 [![Sains Data untuk Pemula](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI untuk Pemula](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
 [![Keselamatan Siber untuk Pemula](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
-[![Web Dev for Beginners](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
+[![Pembangunan Web untuk Pemula](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
 [![IoT for Beginners](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
 [![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
@@ -138,21 +118,21 @@ Ingin belajar lebih lanjut? Lihat [Copilot untuk Pengaturcaraan Berpadu AI](http
 
 ## Mendapatkan Bantuan
 
-Jika anda tersekat atau mempunyai sebarang soalan tentang membina aplikasi AI, sertai:
+Jika anda tersekat atau mempunyai sebarang soalan mengenai pembangunan aplikasi AI, sertai:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Jika anda mempunyai maklum balas produk atau ralat semasa membina, lawati:
+Jika anda mempunyai maklum balas produk atau ralat semasa pembangunan, layari:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Lesen
 
-Lesen MIT - Lihat fail [LICENSE](../../LICENSE) untuk butiran.
+Lesen MIT - Lihat fail [LICENSE](../../LICENSE) untuk maklumat lanjut.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Penafian**:  
-Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila maklum bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya harus dianggap sebagai sumber yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disarankan. Kami tidak bertanggungjawab atas sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
+Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk mencapai ketepatan, sila ambil maklum bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya hendaklah dianggap sebagai sumber yang sahih. Untuk maklumat yang penting, terjemahan profesional oleh manusia adalah digalakkan. Kami tidak bertanggungjawab terhadap sebarang salah faham atau tafsiran yang timbul daripada penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
