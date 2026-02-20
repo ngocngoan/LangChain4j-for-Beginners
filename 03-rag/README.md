@@ -66,11 +66,13 @@ The rest of this module walks through each stage in detail, with code you can ru
 
 [DocumentService.java](src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-When you upload a document, the system breaks it into chunks - smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
+When you upload a document, the system parses it (PDF or plain text), attaches metadata such as the filename, and then breaks it into chunks — smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Parse the uploaded file and wrap it in a LangChain4j Document
+Document document = Document.from(content, metadata);
 
+// Split into 300-token chunks with 30-token overlap
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
