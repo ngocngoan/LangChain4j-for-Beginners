@@ -121,11 +121,15 @@ public class RagService {
             // 5. Generate answer
             String answer = chatModel.chat(prompt);
             
-            // 6. Build source references
+            // 6. Build source references — convert each match into a SourceReference
             List<SourceReference> sources = matches.stream()
                 .map(match -> {
+                    // Extract the text segment that was matched
                     TextSegment segment = match.embedded();
+                    // Get the original filename from segment metadata (set during ingestion)
                     String filename = segment.metadata().getString("filename");
+                    // Create a SourceReference with filename (or "unknown" fallback),
+                    // the matched text content, and the similarity score
                     return new SourceReference(
                         filename != null ? filename : "unknown",
                         segment.text(),
