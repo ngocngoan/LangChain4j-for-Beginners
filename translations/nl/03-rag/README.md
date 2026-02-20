@@ -1,83 +1,97 @@
 # Module 03: RAG (Retrieval-Augmented Generation)
 
-## Table of Contents
+## Inhoudsopgave
 
-- [What You'll Learn](../../../03-rag)
-- [Prerequisites](../../../03-rag)
-- [Understanding RAG](../../../03-rag)
-- [How It Works](../../../03-rag)
-  - [Document Processing](../../../03-rag)
-  - [Creating Embeddings](../../../03-rag)
-  - [Semantic Search](../../../03-rag)
-  - [Answer Generation](../../../03-rag)
-- [Run the Application](../../../03-rag)
-- [Using the Application](../../../03-rag)
-  - [Upload a Document](../../../03-rag)
-  - [Ask Questions](../../../03-rag)
-  - [Check Source References](../../../03-rag)
-  - [Experiment with Questions](../../../03-rag)
-- [Key Concepts](../../../03-rag)
-  - [Chunking Strategy](../../../03-rag)
-  - [Similarity Scores](../../../03-rag)
-  - [In-Memory Storage](../../../03-rag)
-  - [Context Window Management](../../../03-rag)
-- [When RAG Matters](../../../03-rag)
-- [Next Steps](../../../03-rag)
+- [Wat je zult leren](../../../03-rag)
+- [Begrijpen van RAG](../../../03-rag)
+- [Vereisten](../../../03-rag)
+- [Hoe het werkt](../../../03-rag)
+  - [Documentverwerking](../../../03-rag)
+  - [Embeddings maken](../../../03-rag)
+  - [Semantisch zoeken](../../../03-rag)
+  - [Antwoordgeneratie](../../../03-rag)
+- [De applicatie uitvoeren](../../../03-rag)
+- [De applicatie gebruiken](../../../03-rag)
+  - [Een document uploaden](../../../03-rag)
+  - [Vragen stellen](../../../03-rag)
+  - [Controleer bronverwijzingen](../../../03-rag)
+  - [Experimenteer met vragen](../../../03-rag)
+- [Belangrijke begrippen](../../../03-rag)
+  - [Chunking-strategie](../../../03-rag)
+  - [Gelijkenisscores](../../../03-rag)
+  - [In geheugenopslag](../../../03-rag)
+  - [Contextvensterbeheer](../../../03-rag)
+- [Wanneer RAG relevant is](../../../03-rag)
+- [Volgende stappen](../../../03-rag)
 
-## What You'll Learn
+## Wat je zult leren
 
-In de vorige modules leerde je hoe je gesprekken voert met AI en je prompts effectief structuurt. Maar er is een fundamentele beperking: taalmodellen weten alleen wat ze tijdens de training geleerd hebben. Ze kunnen geen vragen beantwoorden over het beleid van jouw bedrijf, je projectdocumentatie, of informatie waarop ze niet getraind zijn.
+In de vorige modules heb je geleerd hoe je gesprekken voert met AI en hoe je je prompts effectief structureert. Maar er is een fundamentele beperking: taalmodellen weten alleen wat ze tijdens de training hebben geleerd. Ze kunnen geen vragen beantwoorden over het beleid van jouw bedrijf, je projectdocumentatie of enige informatie waarop ze niet getraind zijn.
 
-RAG (Retrieval-Augmented Generation) lost dit probleem op. In plaats van te proberen het model jouw informatie te leren (wat duur en onpraktisch is), geef je het de mogelijkheid om door jouw documenten te zoeken. Wanneer iemand een vraag stelt, vindt het systeem relevante informatie en voegt deze toe aan de prompt. Het model beantwoordt de vraag vervolgens op basis van die opgehaalde context.
+RAG (Retrieval-Augmented Generation) lost dit probleem op. In plaats van het model jouw informatie te proberen te leren (wat duur en onpraktisch is), geef je het de mogelijkheid om je documenten te doorzoeken. Wanneer iemand een vraag stelt, vindt het systeem relevante informatie en neemt die op in de prompt. Het model beantwoordt dan op basis van die opgehaalde context.
 
-Zie RAG als het geven van een referentiebibliotheek aan het model. Wanneer je een vraag stelt, doet het systeem het volgende:
+Beschouw RAG als het geven van een referentiebibliotheek aan het model. Wanneer je een vraag stelt, doet het systeem het volgende:
 
-1. **User Query** - Jij stelt een vraag  
+1. **Gebruikersvraag** - Je stelt een vraag  
 2. **Embedding** - Zet je vraag om in een vector  
-3. **Vector Search** - Vindt vergelijkbare documentstukken  
-4. **Context Assembly** - Voegt relevante stukken toe aan de prompt  
-5. **Response** - LLM genereert een antwoord op basis van de context  
+3. **Vectozzoektocht** - Vindt vergelijkbare documentfragmenten  
+4. **Contextsamenstelling** - Voegt relevante fragmenten toe aan de prompt  
+5. **Antwoord** - LLM genereert een antwoord op basis van de context  
 
-Dit maakt dat de antwoorden van het model gebaseerd zijn op jouw echte data in plaats van op zijn trainingskennis of verzonnen antwoorden.
+Dit verankert de reacties van het model in jouw daadwerkelijke gegevens in plaats van te vertrouwen op zijn trainingskennis of het verzinnen van antwoorden.
 
-<img src="../../../translated_images/nl/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
+## Begrijpen van RAG
 
-*RAG workflow - van gebruikersvraag naar semantische zoekopdracht tot contextueel antwoordgeneratie*
+Het onderstaande diagram illustreert het kernconcept: in plaats van alleen te vertrouwen op de trainingsdata van het model, geeft RAG het een referentiebibliotheek van jouw documenten om te raadplegen voordat het elk antwoord genereert.
 
-## Prerequisites
+<img src="../../../translated_images/nl/what-is-rag.1f9005d44b07f2d8.webp" alt="Wat is RAG" width="800"/>
 
-- Module 01 voltooid (Azure OpenAI resources gedeployed)  
-- `.env` bestand in de hoofdmap met Azure-gegevens (aangemaakt met `azd up` in Module 01)  
+Zo sluiten de onderdelen van begin tot eind op elkaar aan. De vraag van een gebruiker doorloopt vier fasen — embedding, vectozzoektocht, contextsamenstelling en antwoordgeneratie — waarbij elke fase voortbouwt op de vorige:
 
-> **Opmerking:** Als je Module 01 nog niet hebt afgerond, volg dan eerst de deploy-instructies daar.
+<img src="../../../translated_images/nl/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architectuur" width="800"/>
 
-## How It Works
+De rest van deze module loopt elke fase in detail door, met code die je kunt uitvoeren en aanpassen.
 
-### Document Processing
+## Vereisten
+
+- Voltooide Module 01 (Azure OpenAI resources gedeployed)  
+- `.env` bestand in de hoofdmap met Azure referenties (gemaakt door `azd up` in Module 01)
+
+> **Opmerking:** Als je Module 01 nog niet voltooid hebt, volg dan eerst de implementatie-instructies daar.
+
+## Hoe het werkt
+
+### Documentverwerking
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Wanneer je een document uploadt, splitst het systeem dit in stukken — kleinere delen die comfortabel in het contextvenster van het model passen. Deze stukken overlappen iets, zodat je geen context mist aan de randen.
+Wanneer je een document uploadt, parseert het systeem dit (PDF of platte tekst), voegt metadata toe zoals bestandsnaam en splitst het vervolgens op in chunks — kleinere stukken die comfortabel in het contextvenster van het model passen. Deze chunks overlappen enigszins zodat je geen context aan de randen verliest.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Parse het geüploade bestand en verpakt het in een LangChain4j Document
+Document document = Document.from(content, metadata);
 
+// Splits in stukken van 300 tokens met een overlap van 30 tokens
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
   
+Het onderstaande diagram laat visueel zien hoe dit werkt. Merk op dat elk chunk enkele tokens deelt met zijn buren — de overlap van 30 tokens zorgt ervoor dat geen belangrijke context verloren gaat:
+
+<img src="../../../translated_images/nl/document-chunking.a5df1dd1383431ed.webp" alt="Document opsplitsing in chunks" width="800"/>
+
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) en vraag:  
-> - "Hoe splitst LangChain4j documenten in stukken en waarom is overlapping belangrijk?"  
-> - "Wat is de optimale chunksize voor verschillende documenttypen en waarom?"  
+> - "Hoe verdeelt LangChain4j documenten in chunks en waarom is overlap belangrijk?"  
+> - "Wat is de optimale chunk-grootte voor verschillende documenttypen en waarom?"  
 > - "Hoe ga ik om met documenten in meerdere talen of met speciale opmaak?"
 
-### Creating Embeddings
+### Embeddings maken
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Elk stuk wordt omgezet in een numerieke representatie, een embedding — eigenlijk een wiskundige vingerafdruk die de betekenis van de tekst vastlegt. Vergelijkbare teksten geven vergelijkbare embeddings.
+Elk chunk wordt omgezet in een numerieke representatie die embedding heet - in essentie een mathematisch 'vingerafdruk' die de betekenis van de tekst vastlegt. Vergelijkbare teksten produceren vergelijkbare embeddings.
 
 ```java
 @Bean
@@ -93,21 +107,31 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
   
-<img src="../../../translated_images/nl/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
+Het klasse-diagram hieronder toont hoe deze LangChain4j-componenten schakelen. `OpenAiOfficialEmbeddingModel` zet tekst om in vectoren, `InMemoryEmbeddingStore` slaat de vectoren samen met hun originele `TextSegment` gegevens op, en `EmbeddingSearchRequest` regelt retrievalparameters zoals `maxResults` en `minScore`:
 
-*Documenten voorgesteld als vectoren in embedding-ruimte - vergelijkbare inhoud clustert samen*
+<img src="../../../translated_images/nl/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Klassen" width="800"/>
 
-### Semantic Search
+Zodra embeddings zijn opgeslagen, clustert vergelijkbare inhoud natuurlijk samen in de vectorruimte. De visualisatie hieronder toont hoe documenten over gerelateerde onderwerpen zich als nabijgelegen punten groeperen, wat semantische zoekmogelijkheden mogelijk maakt:
+
+<img src="../../../translated_images/nl/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embedding Ruimte" width="800"/>
+
+### Semantisch zoeken
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Wanneer je een vraag stelt, wordt die vraag ook omgezet in een embedding. Het systeem vergelijkt de embedding van jouw vraag met die van alle documentstukken. Het vindt de stukken met de meest vergelijkbare betekenis — niet alleen op overeenkomstige zoekwoorden, maar werkelijke semantische gelijkenis.
+Wanneer je een vraag stelt, wordt jouw vraag ook omgezet in een embedding. Het systeem vergelijkt de embedding van jouw vraag met alle embeddings van documentchunks. Het vindt de chunks met de meest vergelijkbare betekenissen - niet alleen overeenkomstige zoekwoorden, maar daadwerkelijke semantische gelijkenis.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
@@ -115,57 +139,84 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
   
+Het diagram hieronder vergelijkt semantisch zoeken met traditioneel zoekwoord zoeken. Een zoekwoordzoektocht naar "voertuig" mist een chunk over "auto's en vrachtwagens", maar semantisch zoeken begrijpt dat ze hetzelfde betekenen en geeft het terug als een hoog scorende match:
+
+<img src="../../../translated_images/nl/semantic-search.6b790f21c86b849d.webp" alt="Semantisch Zoeken" width="800"/>
+
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) en vraag:  
-> - "Hoe werkt gelijkeniszoek met embeddings en wat bepaalt de score?"  
-> - "Welke gelijkenisdrempel moet ik gebruiken en hoe beïnvloedt dit de resultaten?"  
+> - "Hoe werkt gelijkeniszoektocht met embeddings en wat bepaalt de score?"  
+> - "Welke gelijkenisdrempel moet ik gebruiken en hoe beïnvloedt dat de resultaten?"  
 > - "Hoe ga ik om met situaties waarin geen relevante documenten worden gevonden?"
 
-### Answer Generation
+### Antwoordgeneratie
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-De meest relevante stukken worden bij de prompt gevoegd voor het model. Het model leest die specifieke stukken en beantwoordt jouw vraag op basis van die informatie. Dit voorkomt hallucinaties — het model kan alleen antwoorden vanuit wat het ziet.
+De meest relevante chunks worden samengevoegd tot een gestructureerde prompt die expliciete instructies, de opgehaalde context en de gebruikersvraag bevat. Het model leest die specifieke chunks en beantwoordt op basis van die informatie — het kan alleen gebruiken wat voor het ligt ligt, wat hallucinaties voorkomt.
 
-## Run the Application
+```java
+String context = matches.stream()
+    .map(match -> match.embedded().text())
+    .collect(Collectors.joining("\n\n"));
 
-**Controleer deployment:**
+String prompt = String.format("""
+    Answer the question based on the following context.
+    If the answer cannot be found in the context, say so.
 
-Zorg dat het `.env` bestand bestaat in de hoofdmap met Azure-credentials (aangemaakt tijdens Module 01):  
+    Context:
+    %s
+
+    Question: %s
+
+    Answer:""", context, request.question());
+
+String answer = chatModel.chat(prompt);
+```
+  
+Het diagram hieronder toont deze assemblage in actie — de hoogst scorende chunks uit de zoekstap worden geïnjecteerd in de prompttemplate, en `OpenAiOfficialChatModel` genereert een verankerd antwoord:
+
+<img src="../../../translated_images/nl/context-assembly.7e6dd60c31f95978.webp" alt="Contextsamenstelling" width="800"/>
+
+## De applicatie uitvoeren
+
+**Verifieer de inzet:**  
+
+Controleer dat het `.env` bestand bestaat in de hoofdmap met Azure referenties (gemaakt tijdens Module 01):  
 ```bash
 cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT tonen
 ```
   
-**Start de applicatie:**
+**Start de applicatie:**  
 
-> **Opmerking:** Als je alle applicaties al gestart hebt met `./start-all.sh` uit Module 01, draait deze module al op poort 8081. Je kunt de startcommando's hieronder dan overslaan en direct naar http://localhost:8081 gaan.
+> **Opmerking:** Als je alle applicaties al gestart hebt met `./start-all.sh` vanaf Module 01, draait deze module al op poort 8081. Je kunt de startcommando's hieronder dan overslaan en rechtstreeks naar http://localhost:8081 gaan.
 
-**Optie 1: Gebruik Spring Boot Dashboard (aanbevolen voor VS Code gebruikers)**
+**Optie 1: Gebruik Spring Boot Dashboard (Aanbevolen voor VS Code gebruikers)**
 
-De dev container bevat de Spring Boot Dashboard extensie, die een visuele interface biedt om alle Spring Boot applicaties te beheren. Je vindt het in de Activiteitenbalk links van VS Code (zoek het Spring Boot-icoon).
+De dev container bevat de Spring Boot Dashboard-extensie, die een visuele interface biedt om alle Spring Boot-applicaties te beheren. Je vindt deze in de Actiebalk links in VS Code (zoek naar het Spring Boot icoon).
 
-Via het Spring Boot Dashboard kun je:  
-- Alle beschikbare Spring Boot applicaties in de workspace zien  
+Vanaf het Spring Boot Dashboard kun je:  
+- Alle beschikbare Spring Boot-applicaties in de workspace zien  
 - Applicaties starten/stoppen met één klik  
 - Applicatielogs realtime bekijken  
 - Applicatiestatus monitoren  
 
-Klik simpelweg op de play-knop naast "rag" om deze module te starten, of start alle modules tegelijk.
+Klik gewoon op de afspeelknop naast "rag" om deze module te starten, of start alle modules tegelijk.
 
 <img src="../../../translated_images/nl/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Optie 2: gebruik shell scripts**
+**Optie 2: Gebruik shell scripts**
 
 Start alle webapplicaties (modules 01-04):
 
 **Bash:**  
 ```bash
-cd ..  # Vanaf de hoofdmap
+cd ..  # Vanuit de rootdirectory
 ./start-all.sh
 ```
   
 **PowerShell:**  
 ```powershell
-cd ..  # Vanaf hoofddirectory
+cd ..  # Vanuit de root directory
 .\start-all.ps1
 ```
   
@@ -183,9 +234,9 @@ cd 03-rag
 .\start.ps1
 ```
   
-Beide scripts laden automatisch de omgevingsvariabelen uit het `.env` bestand in de hoofddirectory en bouwen de JAR’s indien deze nog niet bestaan.
+Beide scripts laden automatisch omgevingsvariabelen uit het `.env` bestand in de hoofdmap en bouwen de JARs als ze nog niet bestaan.
 
-> **Opmerking:** Wil je liever alle modules handmatig bouwen voordat je start:  
+> **Opmerking:** Als je liever alle modules handmatig bouwt voordat je opstart:  
 >  
 > **Bash:**  
 > ```bash
@@ -199,9 +250,10 @@ Beide scripts laden automatisch de omgevingsvariabelen uit het `.env` bestand in
 > mvn clean package -DskipTests
 > ```
   
+
 Open http://localhost:8081 in je browser.
 
-**Stoppen:**
+**Om te stoppen:**
 
 **Bash:**  
 ```bash
@@ -217,89 +269,98 @@ cd .. && ./stop-all.sh  # Alle modules
 cd ..; .\stop-all.ps1  # Alle modules
 ```
   
-## Using the Application
 
-De applicatie biedt een webinterface om documenten te uploaden en vragen te stellen.
+## De applicatie gebruiken
 
-<a href="images/rag-homepage.png"><img src="../../../translated_images/nl/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+De applicatie biedt een webinterface voor documentupload en het stellen van vragen.
+
+<a href="images/rag-homepage.png"><img src="../../../translated_images/nl/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Applicatie Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
 *De RAG applicatie-interface - upload documenten en stel vragen*
 
-### Upload a Document
+### Een document uploaden
 
-Begin met het uploaden van een document — TXT-bestanden werken het beste voor testen. In deze directory staat een `sample-document.txt` die informatie bevat over LangChain4j features, RAG-implementatie en best practices — ideaal om het systeem te testen.
+Begin met het uploaden van een document — TXT-bestanden zijn het beste voor testen. Er is een `sample-document.txt` aanwezig in deze map met informatie over LangChain4j-functies, RAG-implementatie en best practices — perfect om het systeem te testen.
 
-Het systeem verwerkt je document, splitst het in stukken en maakt embeddings aan voor elk stuk. Dit gebeurt automatisch bij uploaden.
+Het systeem verwerkt je document, splitst het in chunks en maakt embeddings voor elke chunk. Dit gebeurt automatisch bij uploaden.
 
-### Ask Questions
+### Vragen stellen
 
-Stel nu specifieke vragen over de inhoud van het document. Probeer iets feitelijks dat duidelijk in het document staat. Het systeem zoekt naar relevante stukken, voegt deze toe aan de prompt en genereert een antwoord.
+Stel nu specifieke vragen over de inhoud van het document. Probeer iets feitelijks dat duidelijk in het document staat. Het systeem zoekt relevante chunks, voegt deze toe aan de prompt en genereert een antwoord.
 
-### Check Source References
+### Controleer bronverwijzingen
 
-Opvallend is dat elk antwoord bronverwijzingen bevat met gelijkenisscores. Deze scores (van 0 tot 1) geven aan hoe relevant elk stuk was voor jouw vraag. Hogere scores betekenen betere matches. Zo kun je het antwoord verifieren met het bronmateriaal.
+Let op dat elk antwoord bronverwijzingen bevat met gelijkenisscores. Deze scores (0 tot 1) tonen hoe relevant elk chunk was voor jouw vraag. Hogere scores betekenen betere overeenkomsten. Zo kun je het antwoord verifiëren tegen de bronmaterialen.
 
-<a href="images/rag-query-results.png"><img src="../../../translated_images/nl/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-query-results.png"><img src="../../../translated_images/nl/rag-query-results.6d69fcec5397f355.webp" alt="RAG Resultaten van Vraag" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Zoekresultaten met antwoord, bronverwijzingen en relevantiescores*
+*Resultaten van query's met antwoord, bronverwijzingen en relevantiescores*
 
-### Experiment with Questions
+### Experimenteer met vragen
 
 Probeer verschillende soorten vragen:  
 - Specifieke feiten: "Wat is het hoofdonderwerp?"  
 - Vergelijkingen: "Wat is het verschil tussen X en Y?"  
-- Samenvattingen: "Vat de belangrijkste punten over Z samen"
+- Samenvattingen: "Vat de belangrijkste punten over Z samen"  
 
-Let op hoe de relevantiescores veranderen afhankelijk van hoe goed je vraag aansluit bij de inhoud van het document.
+Bekijk hoe de relevantiescores veranderen afhankelijk van hoe goed je vraag overeenkomt met de documentinhoud.
 
-## Key Concepts
+## Belangrijke begrippen
 
-### Chunking Strategy
+### Chunking-strategie
 
-Documenten worden opgesplitst in chunks van 300 tokens met 30 tokens overlap. Deze balans zorgt ervoor dat elk stuk genoeg context heeft om betekenisvol te zijn, terwijl het klein genoeg blijft om meerdere stukken in één prompt op te nemen.
+Documenten worden opgesplitst in 300-token chunks met 30 tokens overlap. Deze balans zorgt ervoor dat elk chunk genoeg context heeft om betekenisvol te zijn, maar klein genoeg blijft om meerdere chunks in een prompt op te nemen.
 
-### Similarity Scores
+### Gelijkenisscores
 
-Scores variëren van 0 tot 1:  
-- 0.7-1.0: Zeer relevant, exacte match  
-- 0.5-0.7: Relevant, goede context  
-- Lager dan 0.5: Gefilterd, te verschillend  
+Elke opgehaalde chunk wordt geleverd met een gelijkenisscore tussen 0 en 1 die aangeeft hoe goed het aansluit bij de vraag van de gebruiker. Het onderstaande diagram visualiseert de scorebereiken en hoe het systeem ze gebruikt om resultaten te filteren:
 
-Het systeem haalt alleen stukken op die boven de minimumdrempel scoren om kwaliteit te waarborgen.
+<img src="../../../translated_images/nl/similarity-scores.b0716aa911abf7f0.webp" alt="Gelijkenisscores" width="800"/>
 
-### In-Memory Storage
+Scores lopen van 0 tot 1:  
+- 0,7-1,0: Zeer relevant, exacte match  
+- 0,5-0,7: Relevant, goede context  
+- Lager dan 0,5: Uitgefilterd, te verschillend  
 
-Deze module gebruikt in-memory opslag voor eenvoud. Bij herstart van de applicatie gaan geüploade documenten verloren. Productiesystemen gebruiken persistente vector databases zoals Qdrant of Azure AI Search.
+Het systeem haalt alleen chunks op boven de minimale drempel om kwaliteit te waarborgen.
 
-### Context Window Management
+### In geheugenopslag
 
-Elk model heeft een maximale contextgrootte. Je kunt niet elk stuk van een groot document opnemen. Het systeem haalt de top N meest relevante stukken op (standaard 5) om binnen de limiet te blijven en toch voldoende context te bieden voor accurate antwoorden.
+Deze module gebruikt opslag in het geheugen voor eenvoud. Wanneer je de applicatie herstart, gaan geüploade documenten verloren. Productiesystemen gebruiken persistente vectordatabases zoals Qdrant of Azure AI Search.
 
-## When RAG Matters
+### Contextvensterbeheer
 
-**Gebruik RAG wanneer:**  
-- Je vragen beantwoordt over eigen documenten  
-- Informatie vaak verandert (beleid, prijzen, specificaties)  
-- Nauwkeurigheid bronvermelding vereist  
-- Inhoud te groot is voor één enkele prompt  
-- Je verifieerbare, grondige antwoorden nodig hebt
+Elk model heeft een maximale contextvenstergrootte. Je kunt niet elk chunk uit een groot document opnemen. Het systeem haalt de top-N meest relevante chunks op (standaard 5) om binnen de limieten te blijven en toch genoeg context te bieden voor accurate antwoorden.
+
+## Wanneer RAG relevant is
+
+RAG is niet altijd de juiste aanpak. De beslissingsgids hieronder helpt je bepalen wanneer RAG waarde toevoegt versus wanneer eenvoudigere benaderingen — zoals inhoud direct in de prompt opnemen of vertrouwen op de ingebouwde kennis van het model — voldoende zijn:
+
+<img src="../../../translated_images/nl/when-to-use-rag.1016223f6fea26bc.webp" alt="Wanneer RAG te gebruiken" width="800"/>
+
+**Gebruik RAG wanneer:**
+- Vragen beantwoorden over propriëtaire documenten  
+- Informatie verandert vaak (beleid, prijzen, specificaties)  
+- Nauwkeurigheid vereist bronvermelding  
+- Inhoud is te groot om in één prompt te passen  
+- Je hebt verifieerbare, onderbouwde antwoorden nodig  
 
 **Gebruik RAG niet wanneer:**  
-- Vragen algemene kennis betreffen die het model al weet  
-- Je realtime data nodig hebt (RAG werkt op geüploade documenten)  
-- Inhoud klein genoeg is om direct in prompts te zetten
+- Vragen algemene kennis vereisen die het model al heeft  
+- Real-time data nodig is (RAG werkt op geüploade documenten)  
+- Inhoud klein genoeg is om direct in prompts op te nemen  
 
-## Next Steps
+## Volgende stappen  
 
-**Volgende module:** [04-tools - AI Agents with Tools](../04-tools/README.md)
+**Volgend module:** [04-tools - AI Agents with Tools](../04-tools/README.md)  
 
----
+---  
 
-**Navigatie:** [← Vorige: Module 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Terug naar Hoofdmenu](../README.md) | [Volgende: Module 04 - Tools →](../04-tools/README.md)
+**Navigatie:** [← Vorige: Module 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Terug naar hoofdmenu](../README.md) | [Volgende: Module 04 - Tools →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-Dit document is vertaald met behulp van de AI-vertalingsservice [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het oorspronkelijke document in de oorspronkelijke taal dient als gezaghebbende bron te worden beschouwd. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties voortvloeiend uit het gebruik van deze vertaling.
+Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal moet worden beschouwd als de gezaghebbende bron. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
