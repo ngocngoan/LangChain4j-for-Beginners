@@ -1,24 +1,24 @@
-# Modul 03: RAG (Retrieval-Augmented Generation)
+# Modul 03: RAG (Generiranje s početnim dohvatom)
 
 ## Sadržaj
 
 - [Što ćete naučiti](../../../03-rag)
-- [Preduvjeti](../../../03-rag)
 - [Razumijevanje RAG-a](../../../03-rag)
-- [Kako funkcionira](../../../03-rag)
+- [Preduvjeti](../../../03-rag)
+- [Kako to funkcionira](../../../03-rag)
   - [Obrada dokumenata](../../../03-rag)
-  - [Stvaranje ugriza](../../../03-rag)
+  - [Stvaranje ugrađenosti](../../../03-rag)
   - [Semantičko pretraživanje](../../../03-rag)
   - [Generiranje odgovora](../../../03-rag)
-- [Pokretanje aplikacije](../../../03-rag)
+- [Pokrenite aplikaciju](../../../03-rag)
 - [Korištenje aplikacije](../../../03-rag)
-  - [Otpremi dokument](../../../03-rag)
-  - [Postavljanje pitanja](../../../03-rag)
-  - [Provjera izvora](../../../03-rag)
-  - [Eksperimentiranje s pitanjima](../../../03-rag)
+  - [Učitajte dokument](../../../03-rag)
+  - [Postavljajte pitanja](../../../03-rag)
+  - [Provjerite izvore](../../../03-rag)
+  - [Eksperimentirajte s pitanjima](../../../03-rag)
 - [Ključni pojmovi](../../../03-rag)
-  - [Strategija razbijanja na dijelove](../../../03-rag)
-  - [Ocjene sličnosti](../../../03-rag)
+  - [Strategija dijeljenja na dijelove](../../../03-rag)
+  - [Skorovi sličnosti](../../../03-rag)
   - [Pohrana u memoriji](../../../03-rag)
   - [Upravljanje kontekstnim prozorom](../../../03-rag)
 - [Kada je RAG važan](../../../03-rag)
@@ -26,57 +26,72 @@
 
 ## Što ćete naučiti
 
-U prethodnim modulima naučili ste kako voditi razgovore s AI-jem i kako učinkovito strukturirati svoje upite. Ali postoji temeljno ograničenje: jezični modeli znaju samo ono što su naučili tijekom treninga. Ne mogu odgovoriti na pitanja o pravilima vaše tvrtke, dokumentaciji vaših projekata ili bilo kojim informacijama na kojima nisu trenirani.
+U prethodnim modulima naučili ste kako voditi razgovore s AI-jem i učinkovito strukturirati svoje upite. No postoji temeljno ograničenje: jezični modeli znaju samo ono što su naučili tijekom treninga. Ne mogu odgovoriti na pitanja o politikama vaše tvrtke, dokumentaciji vašeg projekta ili bilo kojim informacijama na kojima nisu trenirani.
 
-RAG (Retrieval-Augmented Generation) rješava ovaj problem. Umjesto da pokušavate model naučiti vaše informacije (što je skupo i nepraktično), dajete mu mogućnost pretraživanja vaših dokumenata. Kada netko postavi pitanje, sustav pronalazi relevantne informacije i uključuje ih u upit. Model zatim odgovara na temelju tog dohvaćenog konteksta.
+RAG (Generiranje s početnim dohvatom) rješava ovaj problem. Umjesto da pokušavate model naučiti vaše informacije (što je skupo i nepraktično), dajete mu mogućnost pretraživanja kroz vaše dokumente. Kad netko postavi pitanje, sustav pronalazi relevantne informacije i uključuje ih u upit. Model tada odgovara na temelju tog dohvaćenog konteksta.
 
-Razmislite o RAG-u kao da modelu dajete referentnu knjižnicu. Kad postavite pitanje, sustav:
-1. **Upit korisnika** - Postavljate pitanje  
-2. **Ugriz (Embedding)** - Pretvara vaše pitanje u vektor  
-3. **Pretraživanje vektora** - Pronalazi slične dijelove dokumenata  
-4. **Sastavljanje konteksta** - Dodaje relevantne dijelove u upit  
-5. **Odgovor** - LLM generira odgovor na temelju konteksta
+Zamislite RAG kao davanje modelu referentne knjižnice. Kad postavite pitanje, sustav:
 
-Time se odgovori modela utemeljuju na vašim stvarnim podacima umjesto oslanjanja na njegovu trening znanje ili izmišljanje odgovora.
+1. **Korisnički upit** – Vi postavite pitanje  
+2. **Ugrađivanje** – Pretvara vaše pitanje u vektor  
+3. **Vektorsko pretraživanje** – Pronalazi slične dijelove dokumenata  
+4. **Sastavljanje konteksta** – Dodaje relevantne dijelove u upit  
+5. **Odgovor** – LLM generira odgovor temeljen na kontekstu
 
-<img src="../../../translated_images/hr/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Arhitektura" width="800"/>
+Ovo utemeljuje modelove odgovore u vašim stvarnim podacima umjesto da se oslanja na znanje sa treninga ili izmišlja odgovore.
 
-*RAG radni tijek - od korisničkog upita do semantičkog pretraživanja do generiranja odgovora temeljenog na kontekstu*
+## Razumijevanje RAG-a
+
+Donji dijagram ilustrira osnovni koncept: umjesto oslanjanja samo na podatke za trening modela, RAG mu daje referentnu knjižnicu vaših dokumenata koju konsultira prije nego generira svaki odgovor.
+
+<img src="../../../translated_images/hr/what-is-rag.1f9005d44b07f2d8.webp" alt="Što je RAG" width="800"/>
+
+Evo kako se dijelovi povezuju od početka do kraja. Korisničko pitanje prolazi kroz četiri faze — ugrađivanje, vektorsko pretraživanje, sastavljanje konteksta i generiranje odgovora — pri čemu svaka faza nadograđuje prethodnu:
+
+<img src="../../../translated_images/hr/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG arhitektura" width="800"/>
+
+Ostatak ovog modula detaljno prolazi kroz svaku fazu, s kodom koji možete pokrenuti i mijenjati.
 
 ## Preduvjeti
 
-- Završeni Modul 01 (postavljeni Azure OpenAI resursi)  
+- Završeni Modul 01 (deployani Azure OpenAI resursi)  
 - `.env` datoteka u korijenskom direktoriju s Azure vjerodajnicama (kreirana naredbom `azd up` u Modulu 01)
 
-> **Napomena:** Ako niste završili Modul 01, prvo slijedite tamo navedene upute za postavljanje.
+> **Napomena:** Ako niste završili Modul 01, prvo slijedite tamošnje upute za postavljanje.
 
-## Kako funkcionira
+## Kako to funkcionira
 
 ### Obrada dokumenata
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Kad otpremite dokument, sustav ga razbija na dijelove – manje komade koji se udobno uklapaju u kontekstni prozor modela. Ti dijelovi se malo preklapaju kako se ne bi izgubio kontekst na granicama.
+Kad učitate dokument, sustav ga parsira (PDF ili čist tekst), dodaje metapodatke poput naziva datoteke te ga zatim razbija u dijelove – manje dijelove koji se udobno uklapaju u kontekstni prozor modela. Ti dijelovi se djelomično preklapaju kako se na rubovima ne bi izgubio kontekst.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Parsiraj prenesenu datoteku i omotaj je u LangChain4j Dokument
+Document document = Document.from(content, metadata);
 
+// Podijeli na dijelove od 300 tokena s preklapanjem od 30 tokena
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
   
-> **🤖 Isprobajte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otvorite [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) i pitajte:  
-> - "Kako LangChain4j razbija dokumente na dijelove i zašto je preklapanje važno?"  
-> - "Koja je optimalna veličina dijelova za različite vrste dokumenata i zašto?"  
-> - "Kako rukovati dokumentima na više jezika ili s posebnim formatiranjem?"
+Dijagram dolje prikazuje kako to radi vizualno. Primijetite kako svaki dio dijeli neke tokene sa svojim susjedima — preklapanje od 30 tokena osigurava da nijedan važan kontekst ne padne između:
 
-### Stvaranje ugriza
+<img src="../../../translated_images/hr/document-chunking.a5df1dd1383431ed.webp" alt="Dijeljenje dokumenata na dijelove" width="800"/>
+
+> **🤖 Isprobajte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otvorite [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) i pitajte:  
+> - "Kako LangChain4j dijeli dokumente na dijelove i zašto je preklapanje važno?"  
+> - "Koja je optimalna veličina dijelova za različite vrste dokumenata i zašto?"  
+> - "Kako rukovati dokumentima na više jezika ili sa posebnom formatiranjem?"
+
+### Stvaranje ugrađenosti
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Svaki dio se pretvara u numerički prikaz nazvan embedding – u osnovi matematički otisak koji hvata značenje teksta. Sličan tekst proizvodi slične embeddings.
+Svaki dio se pretvara u numerički prikaz zvan embedding – ustvari matematički otisak koji hvata značenje teksta. Sličan tekst proizvodi slične embeddinge.
 
 ```java
 @Bean
@@ -92,21 +107,31 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
   
-<img src="../../../translated_images/hr/vector-embeddings.2ef7bdddac79a327.webp" alt="Prostor vektorskih ugriza" width="800"/>
+Dijagram klasa dolje pokazuje kako se ove komponente LangChain4j povezuju. `OpenAiOfficialEmbeddingModel` pretvara tekst u vektore, `InMemoryEmbeddingStore` drži vektore uz njihove originalne `TextSegment` podatke, a `EmbeddingSearchRequest` upravlja parametrima dohvaćanja, poput `maxResults` i `minScore`:
 
-*Dokumenti prikazani kao vektori u embedding prostoru - slični sadržaji grupirani zajedno*
+<img src="../../../translated_images/hr/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="Klase LangChain4j RAG" width="800"/>
+
+Nakon pohrane embeddinga, sličan sadržaj se prirodno grupira u prostoru vektora. Vizualizacija dolje pokazuje kako dokumenti o povezanim temama završavaju kao susjedne točke, što omogućuje semantičko pretraživanje:
+
+<img src="../../../translated_images/hr/vector-embeddings.2ef7bdddac79a327.webp" alt="Prostor vektorskih embeddinga" width="800"/>
 
 ### Semantičko pretraživanje
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Kad postavite pitanje, vaše pitanje također postaje embedding. Sustav uspoređuje embedding vašeg pitanja sa svim embeddingima dijelova dokumenata. Pronalazi dijelove s najsličnijim značenjima – ne samo podudaranje ključnih riječi, već stvarnu semantičku sličnost.
+Kada postavite pitanje, i ono se pretvara u embedding. Sustav uspoređuje embedding vašeg pitanja s embeddingima svih dijelova dokumenata. Pronalazi dijelove s najsličnijim značenjem – ne samo po ključnim riječima, nego stvarnu semantičku sličnost.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
@@ -114,41 +139,68 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
   
+Dijagram dolje kontrastira semantičko s pretraživanjem po ključnim riječima. Pretraživanje po ključnim riječima za "vozilo" propustit će dio o "automobilima i kamionima", ali semantičko pretraživanje razumije da znače isto i vrati ga kao visoko rangiranu podudarnost:
+
+<img src="../../../translated_images/hr/semantic-search.6b790f21c86b849d.webp" alt="Semantičko pretraživanje" width="800"/>
+
 > **🤖 Isprobajte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otvorite [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) i pitajte:  
-> - "Kako funkcionira pretraživanje po sličnosti s embeddingima i što određuje ocjenu?"  
-> - "Koji prag sličnosti trebam koristiti i kako to utječe na rezultate?"  
-> - "Kako riješiti situacije kad se ne pronađu relevantni dokumenti?"
+> - "Kako radi pretraživanje po sličnosti s embeddingima i što određuje skor?"  
+> - "Koju granicu sličnosti trebam koristiti i kako to utječe na rezultate?"  
+> - "Kako postupiti kad se ne pronađu relevantni dokumenti?"
 
 ### Generiranje odgovora
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Najrelevantniji dijelovi uključeni su u upit modelu. Model čita te specifične dijelove i daje odgovor na temelju tih informacija. Time se sprječava halucinacija – model može odgovarati samo na temelju onoga što mu je prikazano.
+Najrelevantniji dijelovi se sastavljaju u strukturirani upit koji uključuje eksplicitne upute, dohvaćeni kontekst i pitanje korisnika. Model čita te konkretne dijelove i odgovara na temelju te informacije — može koristiti samo ono što je pred njim, što sprječava izmišljanje.
 
-## Pokretanje aplikacije
+```java
+String context = matches.stream()
+    .map(match -> match.embedded().text())
+    .collect(Collectors.joining("\n\n"));
 
-**Provjera postavljanja:**
+String prompt = String.format("""
+    Answer the question based on the following context.
+    If the answer cannot be found in the context, say so.
 
-Provjerite postoji li `.env` datoteka u korijenskom direktoriju s Azure vjerodajnicama (kreirana tijekom Modula 01):  
+    Context:
+    %s
+
+    Question: %s
+
+    Answer:""", context, request.question());
+
+String answer = chatModel.chat(prompt);
+```
+  
+Dijagram dolje prikazuje taj sastav u akciji — najviši rangirani dijelovi iz koraka pretraživanja ubacuju se u predložak upita, a `OpenAiOfficialChatModel` generira odgovoran odgovor:
+
+<img src="../../../translated_images/hr/context-assembly.7e6dd60c31f95978.webp" alt="Sastavljanje konteksta" width="800"/>
+
+## Pokrenite aplikaciju
+
+**Provjerite deploy:**
+
+Provjerite postoji li `.env` datoteka u korijenskom direktoriju s Azure vjerodajnicama (kreirana u Modulu 01):  
 ```bash
 cat ../.env  # Trebalo bi prikazati AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
   
-**Pokretanje aplikacije:**
+**Pokrenite aplikaciju:**
 
-> **Napomena:** Ako ste već pokrenuli sve aplikacije koristeći `./start-all.sh` iz Modula 01, ovaj modul već radi na portu 8081. Možete preskočiti naredbe za pokretanje u nastavku i odmah otvoriti http://localhost:8081.
+> **Napomena:** Ako ste već pokrenuli sve aplikacije pomoću `./start-all.sh` iz Modula 01, ovaj modul već radi na portu 8081. Možete preskočiti naredbe za pokretanje i ići direktno na http://localhost:8081.
 
-**Opcija 1: Korištenje Spring Boot nadzorne ploče (preporučeno za korisnike VS Code-a)**
+**Opcija 1: Korištenje Spring Boot Dashboarda (preporučeno za korisnike VS Code-a)**
 
-Dev container uključuje ekstenziju Spring Boot Dashboard, koja pruža vizualno sučelje za upravljanje svim Spring Boot aplikacijama. Možete ju pronaći na Activity Bar-u s lijeve strane u VS Code-u (potražite ikonu Spring Boota).
+Razvojni kontejner uključuje Spring Boot Dashboard ekstenziju, koja pruža vizualno sučelje za upravljanje svim Spring Boot aplikacijama. Nalazi se u Activity Baru s lijeve strane VS Code-a (potražite ikonu Spring Boota).
 
 Iz Spring Boot Dashboarda možete:  
 - Vidjeti sve dostupne Spring Boot aplikacije u radnom prostoru  
-- Startati/zaustavljati aplikacije jednim klikom  
-- Pratiti logove aplikacije u stvarnom vremenu  
-- Nadzirati status aplikacije
+- Pokrenuti/zaustaviti aplikacije jednim klikom  
+- Prikazivati logove aplikacije u stvarnom vremenu  
+- Pratiti status aplikacija  
 
-Jednostavno kliknite na dugme za play pored "rag" da pokrenete ovaj modul, ili pokrenite sve module odjednom.
+Jednostavno kliknite gumb za pokretanje pored “rag” da započnete ovaj modul ili pokrenite sve module odjednom.
 
 <img src="../../../translated_images/hr/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
@@ -182,10 +234,10 @@ cd 03-rag
 .\start.ps1
 ```
   
-Obje skripte automatski učitavaju varijable okruženja iz `.env` datoteke u korijenu i grade JAR datoteke ako ne postoje.
+Obje skripte automatski učitavaju varijable okoline iz `.env` datoteke u korijenu i izgradit će JAR-ove ako ne postoje.
 
-> **Napomena:** Ako želite sami ručno izgraditi sve module prije pokretanja:  
->  
+> **Napomena:** Ako želite ručno izgraditi sve module prije pokretanja:  
+>
 > **Bash:**  
 > ```bash
 > cd ..  # Go to root directory
@@ -198,9 +250,9 @@ Obje skripte automatski učitavaju varijable okruženja iz `.env` datoteke u kor
 > mvn clean package -DskipTests
 > ```
   
-Otvorite http://localhost:8081 u pregledniku.
+Otvorite http://localhost:8081 u svom pregledniku.
 
-**Za zaustavljanje:**
+**Da zaustavite:**  
 
 **Bash:**  
 ```bash
@@ -218,75 +270,83 @@ cd ..; .\stop-all.ps1  # Svi moduli
   
 ## Korištenje aplikacije
 
-Aplikacija pruža web sučelje za otpremu dokumenata i postavljanje pitanja.
+Aplikacija pruža web sučelje za učitavanje dokumenata i postavljanje pitanja.
 
-<a href="images/rag-homepage.png"><img src="../../../translated_images/hr/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG aplikacijsko sučelje" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-homepage.png"><img src="../../../translated_images/hr/rag-homepage.d90eb5ce1b3caa94.webp" alt="Sučelje RAG aplikacije" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*RAG aplikacijsko sučelje - otpremite dokumente i postavljajte pitanja*
+*Sučelje RAG aplikacije – učitajte dokumente i postavljajte pitanja*
 
-### Otpremi dokument
+### Učitajte dokument
 
-Započnite otpremanjem dokumenta – TXT datoteke najbolje funkcioniraju za testiranje. U ovom direktoriju nalazi se `sample-document.txt` koji sadrži informacije o značajkama LangChain4j-a, RAG implementaciji i najboljim praksama – savršen za testiranje sustava.
+Započnite učitavanjem dokumenta – za testiranje najbolje rade TXT datoteke. U ovom direktoriju nalazi se primjer `sample-document.txt` koji sadrži informacije o značajkama LangChain4j, implementaciji RAG-a i najboljim praksama – savršeno za isprobavanje sustava.
 
-Sustav obrađuje vaš dokument, razbija ga na dijelove i stvara embeddings za svaki dio. To se događa automatski nakon što otpremite dokument.
+Sustav obrađuje dokument, dijeli ga u dijelove i stvara embeddinge za svaki dio. To se događa automatski nakon učitavanja.
 
-### Postavljanje pitanja
+### Postavljajte pitanja
 
-Sada postavite specifična pitanja o sadržaju dokumenta. Pokušajte s nečim činjeničnim što je jasno navedeno u dokumentu. Sustav traži relevantne dijelove, uključuje ih u upit i generira odgovor.
+Sad postavite specifična pitanja o sadržaju dokumenta. Pokušajte nešto što je činjenicom jasno navedeno u dokumentu. Sustav traži relevantne dijelove, uključuje ih u upit i generira odgovor.
 
-### Provjera izvora
+### Provjerite izvore
 
-Primijetite da svaki odgovor uključuje izvore s ocjenama sličnosti. Te ocjene (0 do 1) pokazuju koliko je svaki dio bio relevantan za vaše pitanje. Više ocjene znače bolje podudaranje. To vam omogućuje da provjerite točnost odgovora u odnosu na izvorni materijal.
+Primijetite da svaki odgovor uključuje izvore s relevantnim skorovima. Ti skorovi (0 do 1) pokazuju koliko je relevantan svaki dio u odnosu na vaše pitanje. Viši skorovi znače bolje podudaranje. Ovo vam omogućava da provjerite odgovor u izvoru.
 
-<a href="images/rag-query-results.png"><img src="../../../translated_images/hr/rag-query-results.6d69fcec5397f355.webp" alt="RAG rezultati upita" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-query-results.png"><img src="../../../translated_images/hr/rag-query-results.6d69fcec5397f355.webp" alt="Rezultati upita RAG-a" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Rezultati upita pokazuju odgovor sa referencama izvora i ocjenama relevantnosti*
+*Rezultati upita prikazuju odgovor s izvorima i ocjenom relevantnosti*
 
-### Eksperimentiranje s pitanjima
+### Eksperimentirajte s pitanjima
 
 Isprobajte različite vrste pitanja:  
 - Specifične činjenice: "Koja je glavna tema?"  
 - Usporedbe: "Koja je razlika između X i Y?"  
-- Sažeci: "Sažmi ključne točke o Z"
+- Sažeci: "Sažmi ključne točke o Z"  
 
-Promatrajte kako se ocjene relevantnosti mijenjaju ovisno o tome koliko dobro vaše pitanje odgovara sadržaju dokumenta.
+Promatrajte kako se skorovi relevantnosti mijenjaju ovisno o tome koliko dobro vaše pitanje odgovara sadržaju dokumenta.
 
 ## Ključni pojmovi
 
-### Strategija razbijanja na dijelove
+### Strategija dijeljenja na dijelove
 
-Dokumenti se dijele na dijelove od 300 tokena s preklapanjem od 30 tokena. Ova ravnoteža osigurava da svaki dio ima dovoljno konteksta da bude smislen, a istovremeno ostaje dovoljno mali da se u upit može uključiti više dijelova.
+Dokumenti se dijele u dijelove od 300 tokena s preklapanjem od 30 tokena. Ova ravnoteža osigurava da svaki dio ima dovoljno konteksta da bude smislen, a opet je dovoljno malen da se u upit može uključiti više dijelova.
 
-### Ocjene sličnosti
+### Skorovi sličnosti
 
-Ocjene su u rasponu od 0 do 1:  
-- 0.7-1.0: Izuzetno relevantno, točnu podudaranje  
+Svaki dohvaćeni dio dolazi sa skorom sličnosti između 0 i 1 koji pokazuje koliko je blizu podudaranja s pitanjem korisnika. Dijagram dolje vizualizira raspon skora i kako sustav koristi te vrijednosti za filtriranje rezultata:
+
+<img src="../../../translated_images/hr/similarity-scores.b0716aa911abf7f0.webp" alt="Skorovi sličnosti" width="800"/>
+
+Skorovi se kreću od 0 do 1:  
+- 0.7-1.0: Izuzetno relevantno, točno podudaranje  
 - 0.5-0.7: Relevantno, dobar kontekst  
-- Ispod 0.5: Filtrirano, previše različito
+- Ispod 0.5: Filtrirano, previše različito  
 
-Sustav dohvaća samo dijelove iznad minimalnog praga da bi osigurao kvalitetu.
+Sustav dohvaća samo dijelove iznad minimalnog praga radi osiguravanja kvalitete.
 
 ### Pohrana u memoriji
 
-Ovaj modul koristi pohranu u memoriji radi jednostavnosti. Kada ponovno pokrenete aplikaciju, učitani dokumenti se gube. Produkcijski sustavi koriste trajne vektorske baze podataka poput Qdrant ili Azure AI Search.
+Ovaj modul koristi pohranu u memoriji radi jednostavnosti. Pri ponovnom pokretanju aplikacije učitani dokumenti se gube. Produkcijski sustavi koriste postojane vektorske baze podataka poput Qdrant ili Azure AI Search.
 
 ### Upravljanje kontekstnim prozorom
 
-Svaki model ima maksimalni kontekstni prozor. Ne možete uključiti svaki dijelovi velikog dokumenta. Sustav dohvaća najrelevantnijih N dijelova (zadano 5) da ostane unutar ograničenja, a istovremeno pruži dovoljan kontekst za točne odgovore.
+Svaki model ima maksimalni kontekstni prozor. Ne možete uključiti svaki dio velikog dokumenta. Sustav dohvaća top N najrelevantnijih dijelova (zadano 5) kako bi ostao unutar limita, a da pritom pruži dovoljno konteksta za točne odgovore.
 
 ## Kada je RAG važan
 
-**Koristite RAG kada:**  
-- Odgovarate na pitanja o zaštićenim dokumentima  
-- Informacije se često mijenjaju (pravila, cijene, specifikacije)  
-- Potrebna je točnost s pripisivanjem izvora  
-- Sadržaj je prevelik za jedan upit  
-- Trebate provjerljive, utemeljene odgovore
+RAG nije uvijek ispravan pristup. Vodič za odluku dolje pomaže vam odrediti kada RAG donosi vrijednost za razliku od jednostavnijih pristupa — poput izravnog uključivanja sadržaja u upit ili oslanjanja na ugrađeno znanje modela:
 
-**Nemojte koristiti RAG kada:**  
-- Pitanja zahtijevaju opće znanje koje model već ima  
-- Potrebni su podaci u stvarnom vremenu (RAG radi na otpremnim dokumentima)  
-- Sadržaj je dovoljno mali da se može izravno uključiti u upite
+<img src="../../../translated_images/hr/when-to-use-rag.1016223f6fea26bc.webp" alt="Kada koristiti RAG" width="800"/>
+
+**Koristite RAG kada:**
+- Odgovaranje na pitanja o vlasničkim dokumentima
+- Informacije se često mijenjaju (politike, cijene, specifikacije)
+- Točnost zahtijeva navođenje izvora
+- Sadržaj je prevelik da stane u jedan upit
+- Potrebni su vam provjerljivi, utemeljeni odgovori
+
+**Nemojte koristiti RAG kada:**
+- Pitanja zahtijevaju opće znanje koje model već ima
+- Potrebni su podaci u stvarnom vremenu (RAG radi na učitanim dokumentima)
+- Sadržaj je dovoljno mali da se može uključiti izravno u upite
 
 ## Sljedeći koraci
 
@@ -294,11 +354,11 @@ Svaki model ima maksimalni kontekstni prozor. Ne možete uključiti svaki dijelo
 
 ---
 
-**Navigacija:** [← Prethodno: Modul 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Natrag na početak](../README.md) | [Sljedeće: Modul 04 - Alati →](../04-tools/README.md)
+**Navigacija:** [← Prethodni: Modul 02 - Prompt inženjering](../02-prompt-engineering/README.md) | [Natrag na početak](../README.md) | [Sljedeći: Modul 04 - Alati →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Odricanje od odgovornosti**:
-Ovaj dokument je preveden korištenjem AI usluge prevođenja [Co-op Translator](https://github.com/Azure/co-op-translator). Iako nastojimo biti točni, imajte na umu da automatski prijevodi mogu sadržavati pogreške ili netočnosti. Izvorni dokument na izvornom jeziku treba smatrati službenim i autoritativnim izvorom. Za važne informacije preporučuje se profesionalni ljudski prijevod. Ne snosimo odgovornost za bilo kakve nesporazume ili kriva tumačenja koja proizlaze iz korištenja ovog prijevoda.
+Ovaj dokument je preveden korištenjem AI usluge za prevođenje [Co-op Translator](https://github.com/Azure/co-op-translator). Iako nastojimo postići točnost, imajte na umu da automatski prijevodi mogu sadržavati pogreške ili netočnosti. Izvorni dokument na izvornom jeziku treba smatrati autoritativnim izvorom. Za važne informacije preporučuje se profesionalni ljudski prijevod. Ne snosimo odgovornost za bilo kakva nesporazuma ili pogrešna tumačenja nastala korištenjem ovog prijevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
