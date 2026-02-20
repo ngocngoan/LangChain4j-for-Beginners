@@ -1,83 +1,97 @@
-# Moduł 03: RAG (Generowanie Wzbogacone o Wyszukiwanie)
+# Modul 03: RAG (Retrieval-Augmented Generation)
 
 ## Spis treści
 
 - [Czego się nauczysz](../../../03-rag)
-- [Wymagania wstępne](../../../03-rag)
 - [Zrozumienie RAG](../../../03-rag)
+- [Wymagania wstępne](../../../03-rag)
 - [Jak to działa](../../../03-rag)
-  - [Przetwarzanie dokumentu](../../../03-rag)
+  - [Przetwarzanie dokumentów](../../../03-rag)
   - [Tworzenie osadzeń](../../../03-rag)
   - [Wyszukiwanie semantyczne](../../../03-rag)
   - [Generowanie odpowiedzi](../../../03-rag)
-- [Uruchom aplikację](../../../03-rag)
-- [Używanie aplikacji](../../../03-rag)
+- [Uruchomienie aplikacji](../../../03-rag)
+- [Korzystanie z aplikacji](../../../03-rag)
   - [Prześlij dokument](../../../03-rag)
   - [Zadaj pytania](../../../03-rag)
-  - [Sprawdź odniesienia źródłowe](../../../03-rag)
+  - [Sprawdź odwołania do źródeł](../../../03-rag)
   - [Eksperymentuj z pytaniami](../../../03-rag)
-- [Kluczowe koncepcje](../../../03-rag)
+- [Kluczowe pojęcia](../../../03-rag)
   - [Strategia dzielenia na fragmenty](../../../03-rag)
-  - [Wskaźniki podobieństwa](../../../03-rag)
+  - [Wyniki podobieństwa](../../../03-rag)
   - [Przechowywanie w pamięci operacyjnej](../../../03-rag)
   - [Zarządzanie oknem kontekstu](../../../03-rag)
 - [Kiedy RAG ma znaczenie](../../../03-rag)
-- [Następne kroki](../../../03-rag)
+- [Kolejne kroki](../../../03-rag)
 
 ## Czego się nauczysz
 
-W poprzednich modułach nauczyłeś się, jak rozmawiać z AI i jak efektywnie strukturyzować swoje zapytania. Ale istnieje podstawowe ograniczenie: modele językowe znają tylko to, czego nauczyły się podczas treningu. Nie są w stanie odpowiedzieć na pytania dotyczące polityk Twojej firmy, dokumentacji projektu czy innych informacji, na których nie były trenowane.
+W poprzednich modułach nauczyłeś się, jak prowadzić rozmowy z AI i jak skutecznie strukturyzować prompty. Istnieje jednak podstawowe ograniczenie: modele językowe znają tylko to, czego nauczyły się podczas treningu. Nie potrafią odpowiadać na pytania dotyczące polityk Twojej firmy, dokumentacji projektowej ani żadnych informacji, na których nie były trenowane.
 
-RAG (Generowanie Wzbogacone o Wyszukiwanie) rozwiązuje ten problem. Zamiast próbować nauczyć model Twoich informacji (co jest kosztowne i niepraktyczne), dajesz mu możliwość przeszukania Twoich dokumentów. Gdy ktoś zada pytanie, system znajduje odpowiednie informacje i dołącza je do zapytania. Model odpowiada w oparciu o ten pobrany kontekst.
+RAG (Retrieval-Augmented Generation) rozwiązuje ten problem. Zamiast próbować nauczyć model Twoich informacji (co jest kosztowne i niepraktyczne), dajesz mu możliwość przeszukiwania Twoich dokumentów. Gdy ktoś zada pytanie, system znajduje odpowiednie informacje i dołącza je do promptu. Model odpowiada wtedy bazując na tym pobranym kontekście.
 
-Pomyśl o RAG jak o dawaniu modelowi biblioteki odniesień. Gdy zadajesz pytanie, system:
+Pomyśl o RAG jak o przekazaniu modelowi biblioteki referencyjnej. Kiedy zadasz pytanie, system:
 
-1. **Zapytanie użytkownika** – Ty zadajesz pytanie  
-2. **Osadzenie (Embedding)** – Zapytanie jest przekształcane na wektor  
-3. **Wyszukiwanie wektorowe** – Znajduje podobne fragmenty dokumentów  
-4. **Tworzenie kontekstu** – Dodaje odpowiednie fragmenty do zapytania  
-5. **Odpowiedź** – LLM generuje odpowiedź na podstawie kontekstu  
+1. **Zapytanie użytkownika** - Zadajesz pytanie  
+2. **Osadzenie** - Zmienia Twoje pytanie w wektor  
+3. **Wyszukiwanie wektorowe** - Znajduje podobne fragmenty dokumentów  
+4. **Składanie kontekstu** - Dodaje odpowiednie fragmenty do promptu  
+5. **Odpowiedź** - LLM generuje odpowiedź na podstawie kontekstu  
 
-Dzięki temu odpowiedzi modelu są oparte na Twoich rzeczywistych danych, a nie tylko na wiedzy z treningu czy wymyślone.
+Dzięki temu odpowiedzi modelu są osadzone w Twoich rzeczywistych danych, zamiast opierać się jedynie na wiedzy z treningu lub wymyślaniu odpowiedzi.
 
-<img src="../../../translated_images/pl/rag-architecture.ccb53b71a6ce407f.webp" alt="Architektura RAG" width="800"/>
+## Zrozumienie RAG
 
-*Przebieg działania RAG – od zapytania użytkownika do wyszukiwania semantycznego i generowania odpowiedzi z kontekstem*
+Poniższy diagram ilustruje główną ideę: zamiast polegać tylko na danych treningowych modelu, RAG daje mu bibliotekę Twoich dokumentów do konsultacji przed wygenerowaniem każdej odpowiedzi.
+
+<img src="../../../translated_images/pl/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
+
+Oto jak elementy łączą się w całość. Pytanie użytkownika przechodzi przez cztery etapy — osadzanie, wyszukiwanie wektorowe, składanie kontekstu i generowanie odpowiedzi — gdzie każdy etap opiera się na poprzednim:
+
+<img src="../../../translated_images/pl/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
+
+W pozostałej części modułu szczegółowo przechodzimy każdy etap, z kodem, który możesz uruchomić i modyfikować.
 
 ## Wymagania wstępne
 
-- Ukończony Moduł 01 (zdeployowane zasoby Azure OpenAI)  
-- Plik `.env` w katalogu głównym z danymi uwierzytelniającymi Azure (utworzony przez `azd up` w Module 01)  
+- Ukończony Modul 01 (wdrożone zasoby Azure OpenAI)  
+- Plik `.env` w katalogu głównym z poświadczeniami Azure (utworzony przez `azd up` w Module 01)
 
-> **Uwaga:** Jeśli nie ukończyłeś Modułu 01, najpierw wykonaj tamte instrukcje dotyczące wdrożenia.
+> **Uwaga:** Jeśli nie ukończyłeś Modułu 01, najpierw postępuj zgodnie z instrukcjami wdrożenia tam.
 
 ## Jak to działa
 
-### Przetwarzanie dokumentu
+### Przetwarzanie dokumentów
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Gdy przesyłasz dokument, system dzieli go na fragmenty – mniejsze części, które mieszczą się w oknie kontekstu modelu. Fragmenty nieznacznie się nakładają, by nie tracić kontekstu na granicach.
+Po przesłaniu dokumentu system parsuje go (PDF lub zwykły tekst), dołącza metadane takie jak nazwa pliku, a następnie dzieli go na fragmenty — mniejsze części mieszczące się wygodnie w oknie kontekstowym modelu. Fragmenty nakładają się nieznacznie, aby nie stracić kontekstu na granicach.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Analizuj przesłany plik i opakuj go w dokument LangChain4j
+Document document = Document.from(content, metadata);
 
+// Podziel na fragmenty po 300 tokenów z 30-tokenowym nakładaniem
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
   
+Poniższy diagram pokazuje, jak to wygląda wizualnie. Zauważ, że każdy fragment dzieli część tokenów z sąsiadami — nakładka 30 tokenów zapewnia, że żaden ważny kontekst nie zostaje pominięty:
+
+<img src="../../../translated_images/pl/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
+
 > **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) i zapytaj:  
-> - "Jak LangChain4j dzieli dokumenty na fragmenty i dlaczego ważne jest nakładanie?"  
+> - "Jak LangChain4j dzieli dokumenty na fragmenty i dlaczego nakładka jest ważna?"  
 > - "Jaki jest optymalny rozmiar fragmentu dla różnych typów dokumentów i dlaczego?"  
-> - "Jak obsługiwać dokumenty w wielu językach lub ze specjalnym formatowaniem?"
+> - "Jak obsłużyć dokumenty w wielu językach lub ze specjalnym formatowaniem?"
 
 ### Tworzenie osadzeń
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Każdy fragment jest przekształcany w reprezentację numeryczną zwaną osadzeniem – zasadniczo matematyczny odcisk palca, który uchwyca znaczenie tekstu. Podobne teksty generują podobne osadzenia.
+Każdy fragment jest zamieniany na reprezentację numeryczną zwaną osadzeniem — to matematyczny odcisk palca, który uchwytuje znaczenie tekstu. Podobny tekst generuje podobne osadzenia.
 
 ```java
 @Bean
@@ -93,21 +107,31 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
   
-<img src="../../../translated_images/pl/vector-embeddings.2ef7bdddac79a327.webp" alt="Przestrzeń osadzeń wektorowych" width="800"/>
+Poniższy diagram klas pokazuje, jak łączą się komponenty LangChain4j. `OpenAiOfficialEmbeddingModel` przekształca tekst w wektory, `InMemoryEmbeddingStore` przechowuje wektory wraz z oryginalnymi danymi `TextSegment`, a `EmbeddingSearchRequest` kontroluje parametry wyszukiwania jak `maxResults` i `minScore`:
 
-*Dokumenty reprezentowane jako wektory w przestrzeni osadzeń – podobne treści grupują się razem*
+<img src="../../../translated_images/pl/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
+
+Po zapisaniu osadzeń podobne treści naturalnie grupują się w przestrzeni wektorowej. Poniższa wizualizacja pokazuje, jak dokumenty o podobnej tematyce tworzą sąsiednie punkty, co umożliwia wyszukiwanie semantyczne:
+
+<img src="../../../translated_images/pl/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
 
 ### Wyszukiwanie semantyczne
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Gdy zadajesz pytanie, ono również zostaje przekształcone w osadzenie. System porównuje osadzenie Twojego zapytania z osadzeniami wszystkich fragmentów dokumentów. Znajduje fragmenty o najbardziej zbliżonym znaczeniu – nie tylko dopasowanie słów kluczowych, lecz prawdziwe podobieństwo semantyczne.
+Kiedy zadasz pytanie, ono również zostaje zamienione na osadzenie. System porównuje osadzenie Twojego pytania z osadzeniami wszystkich fragmentów dokumentów. Znajduje te, które mają najbardziej zbliżone znaczenie — nie tylko pasujące słowa kluczowe, ale rzeczywiste podobieństwo semantyczne.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
@@ -115,45 +139,72 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
   
+Poniższy diagram kontrastuje wyszukiwanie semantyczne z tradycyjnym wyszukiwaniem słów kluczowych. Wyszukiwanie słowa kluczowego „vehicle” pomija fragment o „samochodach i ciężarówkach”, ale wyszukiwanie semantyczne rozumie, że to to samo i zwraca go jako dobrze dopasowany wynik:
+
+<img src="../../../translated_images/pl/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
+
 > **🤖 Wypróbuj z [GitHub Copilot](https://github.com/features/copilot) Chat:** Otwórz [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) i zapytaj:  
-> - "Jak działa wyszukiwanie podobieństwa z osadzeniami i co decyduje o wyniku?"  
-> - "Jaki próg podobieństwa powinienem używać i jak wpływa to na wyniki?"  
-> - "Jak obsłużyć sytuacje, gdy nie ma odpowiednich dokumentów?"
+> - "Jak działa wyszukiwanie podobieństwa z osadzeniami i co determinuje wynik?"  
+> - "Jaki próg podobieństwa powinienem stosować i jak wpływa on na wyniki?"  
+> - "Jak radzić sobie z sytuacjami, gdy nie znaleziono odpowiednich dokumentów?"
 
 ### Generowanie odpowiedzi
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Najbardziej odpowiednie fragmenty są dołączane do zapytania do modelu. Model czyta te konkretne fragmenty i odpowiada na pytanie na ich podstawie. Zapobiega to halucynacjom – model może odpowiedzieć tylko na podstawie tego, co ma przed sobą.
+Najbardziej istotne fragmenty są składane w uporządkowany prompt, który zawiera wyraźne instrukcje, pobrany kontekst i pytanie użytkownika. Model czyta te konkretne fragmenty i odpowiada na podstawie tych informacji — może wykorzystać tylko to, co jest przed nim, co zapobiega halucynacjom.
 
-## Uruchom aplikację
+```java
+String context = matches.stream()
+    .map(match -> match.embedded().text())
+    .collect(Collectors.joining("\n\n"));
 
-**Zweryfikuj wdrożenie:**  
+String prompt = String.format("""
+    Answer the question based on the following context.
+    If the answer cannot be found in the context, say so.
 
-Upewnij się, że plik `.env` istnieje w katalogu głównym z danymi uwierzytelniającymi Azure (utworzony podczas Modułu 01):  
+    Context:
+    %s
+
+    Question: %s
+
+    Answer:""", context, request.question());
+
+String answer = chatModel.chat(prompt);
+```
+  
+Poniższy diagram pokazuje składanie promptu w akcji — najwyżej oceniane fragmenty z etapu wyszukiwania są wstrzykiwane do szablonu promptu, a `OpenAiOfficialChatModel` generuje odpowiedź osadzoną w kontekście:
+
+<img src="../../../translated_images/pl/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
+
+## Uruchomienie aplikacji
+
+**Weryfikacja wdrożenia:**  
+
+Upewnij się, że plik `.env` istnieje w katalogu głównym z poświadczeniami Azure (utworzony podczas Modułu 01):  
 ```bash
-cat ../.env  # Powinno pokazywać AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Powinien pokazywać AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
   
 **Uruchom aplikację:**  
 
-> **Uwaga:** Jeśli już uruchomiłeś wszystkie aplikacje za pomocą `./start-all.sh` z Modułu 01, ten moduł już działa na porcie 8081. Możesz pominąć poniższe polecenia i przejść bezpośrednio na http://localhost:8081.
+> **Uwaga:** Jeśli już uruchomiłeś wszystkie aplikacje za pomocą `./start-all.sh` w Module 01, ten moduł już działa na porcie 8081. Możesz pominąć poniższe polecenia startowe i przejść bezpośrednio do http://localhost:8081.
 
-**Opcja 1: Użycie Spring Boot Dashboard (zalecane dla użytkowników VS Code)**  
+**Opcja 1: Korzystanie z Spring Boot Dashboard (zalecane dla użytkowników VS Code)**
 
-Kontener developerski zawiera rozszerzenie Spring Boot Dashboard, które udostępnia interfejs wizualny do zarządzania wszystkimi aplikacjami Spring Boot. Znajdziesz je na pasku aktywności po lewej stronie VS Code (szukaj ikony Spring Boot).
+Kontener developerski zawiera rozszerzenie Spring Boot Dashboard, które zapewnia wizualny interfejs do zarządzania wszystkimi aplikacjami Spring Boot. Znajdziesz je na pasku aktywności po lewej stronie VS Code (ikona Spring Boot).
 
 Z poziomu Spring Boot Dashboard możesz:  
 - Zobaczyć wszystkie dostępne aplikacje Spring Boot w przestrzeni roboczej  
 - Uruchamiać/zatrzymywać aplikacje jednym kliknięciem  
-- Podglądać logi aplikacji na bieżąco  
-- Monitorować status aplikacji  
+- Przeglądać logi aplikacji w czasie rzeczywistym  
+- Monitorować stan aplikacji  
 
-Po prostu kliknij przycisk "play" obok "rag", aby uruchomić ten moduł lub uruchom wszystkie moduły naraz.
+Kliknij przycisk play obok „rag”, aby uruchomić ten moduł, lub uruchom wszystkie moduły jednocześnie.
 
 <img src="../../../translated_images/pl/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Opcja 2: Użycie skryptów shell**  
+**Opcja 2: Korzystanie ze skryptów shell**
 
 Uruchom wszystkie aplikacje webowe (moduły 01-04):
 
@@ -183,16 +234,16 @@ cd 03-rag
 .\start.ps1
 ```
   
-Oba skrypty automatycznie ładują zmienne środowiskowe z pliku `.env` w katalogu głównym i zbudują JAR-y, jeśli nie istnieją.
+Oba skrypty automatycznie ładują zmienne środowiskowe z pliku `.env` w katalogu głównym i zbudują pliki JAR, jeśli ich nie ma.
 
-> **Uwaga:** Jeśli wolisz najpierw ręcznie zbudować wszystkie moduły przed uruchomieniem:  
+> **Uwaga:** Jeśli wolisz samodzielnie zbudować wszystkie moduły przed uruchomieniem:  
 >  
 > **Bash:**  
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
->  
+  
 > **PowerShell:**  
 > ```powershell
 > cd ..  # Go to root directory
@@ -205,7 +256,7 @@ Otwórz http://localhost:8081 w przeglądarce.
 
 **Bash:**  
 ```bash
-./stop.sh  # Tylko ten moduł
+./stop.sh  # Ten moduł tylko
 # Lub
 cd .. && ./stop-all.sh  # Wszystkie moduły
 ```
@@ -217,89 +268,98 @@ cd .. && ./stop-all.sh  # Wszystkie moduły
 cd ..; .\stop-all.ps1  # Wszystkie moduły
 ```
   
-## Używanie aplikacji
 
-Aplikacja oferuje interfejs webowy do przesyłania dokumentów i zadawania pytań.
+## Korzystanie z aplikacji
+
+Aplikacja udostępnia interfejs webowy do przesyłania dokumentów i zadawania pytań.
 
 <a href="images/rag-homepage.png"><img src="../../../translated_images/pl/rag-homepage.d90eb5ce1b3caa94.webp" alt="Interfejs aplikacji RAG" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Interfejs aplikacji RAG – prześlij dokument i zadaj pytania*
+*Interfejs aplikacji RAG – prześlij dokumenty i zadawaj pytania*
 
 ### Prześlij dokument
 
-Zacznij od przesłania dokumentu – najlepiej testować na plikach TXT. W tym katalogu znajduje się `sample-document.txt` z informacjami o funkcjach LangChain4j, implementacji RAG i najlepszych praktykach – idealny do testowania systemu.
+Zacznij od przesłania dokumentu – pliki TXT są najlepsze do testów. W tym katalogu jest dostępny `sample-document.txt` zawierający informacje o funkcjach LangChain4j, implementacji RAG i najlepszych praktykach – idealny do testowania systemu.
 
-System przetwarza Twój dokument, dzieli go na fragmenty i tworzy osadzenia dla każdego z nich. Dzieje się to automatycznie po przesłaniu.
+System przetwarza Twój dokument, dzieli go na fragmenty i tworzy osadzenia dla każdego fragmentu. Dzieje się to automatycznie po przesłaniu.
 
 ### Zadaj pytania
 
-Teraz zadaj konkretne pytania dotyczące zawartości dokumentu. Spróbuj czegoś faktycznego, co jest jasno opisane w tekście. System wyszukuje odpowiednie fragmenty, dołącza je do zapytania i generuje odpowiedź.
+Teraz zadaj konkretne pytania dotyczące treści dokumentu. Spróbuj czegoś faktycznego, co jest wyraźnie napisane w dokumencie. System wyszukuje odpowiednie fragmenty, dołącza je do promptu i generuje odpowiedź.
 
-### Sprawdź odniesienia źródłowe
+### Sprawdź odwołania do źródeł
 
-Zauważ, że każda odpowiedź zawiera odniesienia źródłowe wraz ze wskaźnikami podobieństwa. Te wyniki (0 do 1) pokazują, jak bardzo dany fragment odpowiada Twojemu pytaniu. Wyższe wyniki oznaczają lepsze dopasowanie. Dzięki temu możesz zweryfikować odpowiedź względem oryginalnego materiału.
+Zauważ, że każda odpowiedź zawiera odwołania do źródeł z wynikami podobieństwa. Wartości te (od 0 do 1) pokazują, jak bardzo dany fragment był istotny dla Twojego pytania. Wyższe wyniki oznaczają lepsze dopasowania. Dzięki temu możesz zweryfikować odpowiedź względem materiału źródłowego.
 
 <a href="images/rag-query-results.png"><img src="../../../translated_images/pl/rag-query-results.6d69fcec5397f355.webp" alt="Wyniki zapytania RAG" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Wyniki zapytania pokazujące odpowiedź wraz z odniesieniami źródłowymi i wskaźnikami trafności*
+*Wyniki zapytania pokazujące odpowiedź z odwołaniami do źródeł i wynikami istotności*
 
 ### Eksperymentuj z pytaniami
 
 Wypróbuj różne typy pytań:  
-- Konkretne fakty: "Jaki jest główny temat?"  
-- Porównania: "Jaka jest różnica między X a Y?"  
-- Podsumowania: "Podsumuj kluczowe punkty dotyczące Z"
+- Konkretne fakty: „Jaki jest główny temat?”  
+- Porównania: „Jaka jest różnica między X a Y?”  
+- Podsumowania: „Podsumuj kluczowe punkty dotyczące Z”
 
-Obserwuj, jak zmieniają się wskaźniki trafności w zależności od tego, jak dobrze Twoje pytanie pasuje do treści dokumentu.
+Obserwuj, jak wyniki istotności zmieniają się w zależności od tego, jak dobrze Twoje pytanie pasuje do treści dokumentu.
 
-## Kluczowe koncepcje
+## Kluczowe pojęcia
 
 ### Strategia dzielenia na fragmenty
 
-Dokumenty dzielone są na fragmenty o długości 300 tokenów z 30-tokenowym nakładaniem. Ta równowaga zapewnia, że każdy fragment zawiera wystarczająco dużo kontekstu, by być znaczącym, a jednocześnie jest na tyle mały, by można było umieścić wiele fragmentów w jednym zapytaniu.
+Dokumenty są dzielone na fragmenty po 300 tokenów z nakładką 30 tokenów. To zapewnia, że każdy fragment ma wystarczająco kontekstu, by być znaczącym, a jednocześnie jest na tyle mały, by można było zamieścić wiele fragmentów w prompt.
 
-### Wskaźniki podobieństwa
+### Wyniki podobieństwa
 
-Wyniki wahają się od 0 do 1:  
-- 0.7-1.0: Bardzo trafne, dokładne dopasowanie  
-- 0.5-0.7: Trafne, dobry kontekst  
-- Poniżej 0.5: Odfiltrowane, zbyt różne  
+Każdy pobrany fragment ma wynik podobieństwa w skali od 0 do 1, który pokazuje, jak blisko odpowiada pytaniu użytkownika. Poniższy diagram wizualizuje zakresy wyników i jak system używa ich do filtrowania wyników:
 
-System pobiera tylko fragmenty powyżej minimalnego progu, by zapewnić jakość.
+<img src="../../../translated_images/pl/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
+
+Wyniki mieszczą się w zakresie od 0 do 1:  
+- 0.7-1.0: Bardzo istotne, dokładne dopasowanie  
+- 0.5-0.7: Istotne, dobry kontekst  
+- Poniżej 0.5: Odrzucone, zbyt małe podobieństwo  
+
+System pobiera tylko fragmenty wyżej niż minimalny próg, aby zapewnić jakość.
 
 ### Przechowywanie w pamięci operacyjnej
 
-Ten moduł używa przechowywania w pamięci operacyjnej dla uproszczenia. Po ponownym uruchomieniu aplikacji przesłane dokumenty są tracone. Systemy produkcyjne korzystają z trwałych baz danych wektorowych takich jak Qdrant czy Azure AI Search.
+Ten moduł używa przechowywania w pamięci operacyjnej dla uproszczenia. Po restarcie aplikacji przesłane dokumenty są tracone. Systemy produkcyjne korzystają z trwałych baz danych wektorowych, takich jak Qdrant lub Azure AI Search.
 
 ### Zarządzanie oknem kontekstu
 
-Każdy model ma maksymalne okno kontekstowe. Nie możesz dołączyć wszystkich fragmentów dużego dokumentu. System pobiera N najbardziej trafnych fragmentów (domyślnie 5), by pozostać w limitach i zapewnić wystarczający kontekst dla precyzyjnych odpowiedzi.
+Każdy model ma maksymalny rozmiar okna kontekstu. Nie można dołączyć wszystkich fragmentów z dużego dokumentu. System pobiera N najbardziej istotnych fragmentów (domyślnie 5), aby pozostać w limitach i zapewnić wystarczający kontekst do dokładnych odpowiedzi.
 
 ## Kiedy RAG ma znaczenie
 
-**Używaj RAG gdy:**  
-- Odpowiadasz na pytania dotyczące własnych dokumentów  
+RAG nie zawsze jest właściwym podejściem. Poniższy przewodnik pomoże określić, kiedy RAG dodaje wartość, a kiedy wystarczą prostsze metody — jak bezpośredni zawartość w prompt lub poleganie na wbudowanej wiedzy modelu:
+
+<img src="../../../translated_images/pl/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
+
+**Używaj RAG, gdy:**
+- Odpowiadanie na pytania dotyczące dokumentów zastrzeżonych  
 - Informacje często się zmieniają (polityki, ceny, specyfikacje)  
-- Dokładność wymaga podania źródła  
-- Treść jest zbyt obszerna, by zmieścić się w jednym zapytaniu  
-- Potrzebujesz weryfikowalnych, ugruntowanych odpowiedzi
+- Dokładność wymaga przypisania źródła  
+- Treść jest zbyt obszerna, aby zmieścić się w jednym zapytaniu  
+- Potrzebujesz weryfikowalnych, opartych na faktach odpowiedzi  
 
-**Nie używaj RAG gdy:**  
-- Pytania dotyczą ogólnej wiedzy, którą model już posiada  
+**Nie używaj RAG, gdy:**  
+- Pytania wymagają ogólnej wiedzy, którą model już posiada  
 - Potrzebne są dane w czasie rzeczywistym (RAG działa na przesłanych dokumentach)  
-- Treść jest na tyle mała, że można ją zawrzeć bezpośrednio w zapytaniu
+- Treść jest na tyle mała, że można ją bezpośrednio umieścić w zapytaniu  
 
-## Następne kroki
+## Kolejne kroki  
 
-**Następny moduł:** [04-tools - Agenci AI z narzędziami](../04-tools/README.md)
+**Następny moduł:** [04-tools - AI Agents with Tools](../04-tools/README.md)  
 
----
+---  
 
-**Nawigacja:** [← Poprzedni: Moduł 02 - Inżynieria promptów](../02-prompt-engineering/README.md) | [Powrót do głównej](../README.md) | [Następny: Moduł 04 - Narzędzia →](../04-tools/README.md)
+**Nawigacja:** [← Poprzedni: Moduł 02 - Inżynieria promptów](../02-prompt-engineering/README.md) | [Powrót do głównego](../README.md) | [Następny: Moduł 04 - Narzędzia →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Zastrzeżenie**:  
-Niniejszy dokument został przetłumaczony za pomocą usługi tłumaczeń AI [Co-op Translator](https://github.com/Azure/co-op-translator). Chociaż dokładamy wszelkich starań, aby zapewnić poprawność, prosimy pamiętać, że tłumaczenia automatyczne mogą zawierać błędy lub niedokładności. Oryginalny dokument w jego języku źródłowym należy traktować jako źródło autorytatywne. W przypadku informacji krytycznych zalecane jest skorzystanie z profesjonalnego tłumaczenia wykonanego przez człowieka. Nie ponosimy odpowiedzialności za jakiekolwiek nieporozumienia lub błędne interpretacje wynikające z użycia tego tłumaczenia.
+Niniejszy dokument został przetłumaczony za pomocą usługi tłumaczenia AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mimo że dokładamy starań, aby tłumaczenie było jak najbardziej poprawne, prosimy pamiętać, że automatyczne tłumaczenia mogą zawierać błędy lub nieścisłości. Za oficjalne i wiążące źródło należy uważać oryginalny dokument w jego rodzimym języku. W przypadku informacji o istotnym znaczeniu zalecane jest skorzystanie z profesjonalnego tłumaczenia wykonanego przez człowieka. Nie ponosimy odpowiedzialności za jakiekolwiek nieporozumienia lub błędne interpretacje wynikłe z korzystania z tego tłumaczenia.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
