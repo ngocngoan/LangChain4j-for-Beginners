@@ -17,6 +17,12 @@
     "source_file": "00-quick-start/images/architecture.png",
     "language_code": "cs"
   },
+  "autonomous-streaming.9bf371904543fdc0.webp": {
+    "original_hash": "03c7b1ba574efd177a8eac96b7e81c0b",
+    "translation_date": "2026-02-20T09:20:49+00:00",
+    "source_file": "autonomous-streaming.png",
+    "language_code": "cs"
+  },
   "chain-of-thought.5cff6630e2657e2a.webp": {
     "original_hash": "c396f6bd0295f2bda88ba3ccaaa0f39b",
     "translation_date": "2026-02-16T11:44:34+00:00",
@@ -33,6 +39,12 @@
     "original_hash": "62f6334475633fccbea231413ad315cf",
     "translation_date": "2026-01-16T11:21:28+00:00",
     "source_file": "02-prompt-engineering/images/constrained-output-pattern.png",
+    "language_code": "cs"
+  },
+  "context-assembly.7e6dd60c31f95978.webp": {
+    "original_hash": "74e57e6bb9ba34753c7f83dfcbb461a2",
+    "translation_date": "2026-02-20T09:21:56+00:00",
+    "source_file": "03-rag/images/context-assembly.png",
     "language_code": "cs"
   },
   "context-memory.dff30ad9fa78832a.webp": {
@@ -77,6 +89,12 @@
     "source_file": "04-tools/images/dashboard.png",
     "language_code": "cs"
   },
+  "dashboard.c6474fc734029222.webp": {
+    "original_hash": "9f6fc3c139b4fbcc5c8f9bd7b9567cf5",
+    "translation_date": "2026-02-20T09:21:23+00:00",
+    "source_file": "dashboard.png",
+    "language_code": "cs"
+  },
   "dashboard.da2c2130c904aaf0.webp": {
     "original_hash": "cd1a01352482b96b964b169cf7ab2407",
     "translation_date": "2026-01-16T11:23:55+00:00",
@@ -87,6 +105,12 @@
     "original_hash": "dcba4dbca7117902a83c98b3792d0af3",
     "translation_date": "2026-01-16T11:25:56+00:00",
     "source_file": "03-rag/images/dashboard.png",
+    "language_code": "cs"
+  },
+  "document-chunking.a5df1dd1383431ed.webp": {
+    "original_hash": "38932705b4df98a8493fac6cda5bcd0c",
+    "translation_date": "2026-02-20T09:21:40+00:00",
+    "source_file": "03-rag/images/document-chunking.png",
     "language_code": "cs"
   },
   "eight-patterns.fa1ebfdf16f71e9a.webp": {
@@ -105,6 +129,12 @@
     "original_hash": "1f17703fd26e2973d60778e39fd656bb",
     "translation_date": "2026-02-16T11:43:57+00:00",
     "source_file": "02-prompt-engineering/images/five-patterns-overview.png",
+    "language_code": "cs"
+  },
+  "focused-streaming.e2f807057f39ae68.webp": {
+    "original_hash": "b8528ddb13ed566fe336f8e0563164f5",
+    "translation_date": "2026-02-20T09:21:00+00:00",
+    "source_file": "focused-streaming.png",
     "language_code": "cs"
   },
   "high-eagerness-demo.4ac93e7786c5a376.webp": {
@@ -221,6 +251,12 @@
     "source_file": "03-rag/images/rag-homepage.png",
     "language_code": "cs"
   },
+  "rag-langchain4j-classes.bbf3aa9077ab443d.webp": {
+    "original_hash": "f623d6029270b41c646b6f125df0dcef",
+    "translation_date": "2026-02-20T09:22:05+00:00",
+    "source_file": "03-rag/images/rag-langchain4j-classes.png",
+    "language_code": "cs"
+  },
   "rag-query-results.6d69fcec5397f355.webp": {
     "original_hash": "2b1942d1e9da76a3d7fc90b0f970a1a5",
     "translation_date": "2026-01-16T11:25:44+00:00",
@@ -267,6 +303,18 @@
     "original_hash": "97d6b065eec9eec09baf1583f626668a",
     "translation_date": "2026-01-16T11:21:58+00:00",
     "source_file": "02-prompt-engineering/images/self-reflection-cycle.png",
+    "language_code": "cs"
+  },
+  "semantic-search.6b790f21c86b849d.webp": {
+    "original_hash": "f0eb379c40eba6392286cdfb305b1f14",
+    "translation_date": "2026-02-20T09:21:45+00:00",
+    "source_file": "03-rag/images/semantic-search.png",
+    "language_code": "cs"
+  },
+  "similarity-scores.b0716aa911abf7f0.webp": {
+    "original_hash": "b4c58ffa3578d82bab82eee7e7317104",
+    "translation_date": "2026-02-20T09:22:11+00:00",
+    "source_file": "03-rag/images/similarity-scores.png",
     "language_code": "cs"
   },
   "simple-chat-empty.bac090137c1fa044.webp": {
@@ -407,10 +455,22 @@
     "source_file": "02-prompt-engineering/images/what-is-prompt-engineering.png",
     "language_code": "cs"
   },
+  "what-is-rag.1f9005d44b07f2d8.webp": {
+    "original_hash": "f91153718c3752ef6c10ad8164a28ee6",
+    "translation_date": "2026-02-20T09:21:30+00:00",
+    "source_file": "03-rag/images/what-is-rag.png",
+    "language_code": "cs"
+  },
   "what-youll-learn.c68269ac048503b2.webp": {
     "original_hash": "8acd10180bef29930e6fd294d0644a3a",
     "translation_date": "2026-02-16T11:43:48+00:00",
     "source_file": "02-prompt-engineering/images/what-youll-learn.png",
+    "language_code": "cs"
+  },
+  "when-to-use-rag.1016223f6fea26bc.webp": {
+    "original_hash": "aedd382969b17c76ce0b5b823390fda6",
+    "translation_date": "2026-02-20T09:21:36+00:00",
+    "source_file": "03-rag/images/when-to-use-rag.png",
     "language_code": "cs"
   },
   "zero-shot-prompting.7abc24228be84e6c.webp": {
