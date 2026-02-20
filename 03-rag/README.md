@@ -72,7 +72,7 @@ When you upload a document, the system breaks it into chunks - smaller pieces th
 Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
 
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
@@ -123,8 +123,14 @@ When you ask a question, your question also becomes an embedding. The system com
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
