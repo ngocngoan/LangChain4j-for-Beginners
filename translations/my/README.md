@@ -1,98 +1,80 @@
 <img src="../../translated_images/my/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-### 🌐 ဘာသာစကားအမျိုးမျိုးကို ထောက်ပံ့မှု
-
-#### GitHub Action ဖြင့် ထောက်ပံ့ထားခြင်း (အလိုအလျောက်နှင့် အမြဲတမ်း နောက်ဆုံးပေါ်)
-
-<!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[အာရပ်](../ar/README.md) | [ဗင်္ဂါလီ](../bn/README.md) | [ဘော်လ်ဂေးရီးယန်း](../bg/README.md) | [မြန်မာ (Myanmar)](./README.md) | [တရုတ် (ရိုးရှင်း)](../zh-CN/README.md) | [တရုတ် (ရိုးရာ၊ ဟောင်ကောင်)](../zh-HK/README.md) | [တရုတ် (ရိုးရာ၊ မကာအူး)](../zh-MO/README.md) | [တရုတ် (ရိုးရာ၊ ထိုင်ဝမ်)](../zh-TW/README.md) | [ခရိုအေးရှား](../hr/README.md) | [ချက်](../cs/README.md) | [ဒိန်းမတ်](../da/README.md) | [ဒါချက်](../nl/README.md) | [အက်စတိုနီးယား](../et/README.md) | [ဖင်နစ်](../fi/README.md) | [ပြင်သစ်](../fr/README.md) | [ဂျာမန်](../de/README.md) | [ဂရိ](../el/README.md) | [ဟီဘရူး](../he/README.md) | [ဟိန္ဒီ](../hi/README.md) | [ဟန်ဂဲရီ](../hu/README.md) | [အင်ဒိုနီးရှား](../id/README.md) | [အီတလီ](../it/README.md) | [ဂျပန်](../ja/README.md) | [ကန့်နဒါ](../kn/README.md) | [ကိုရီးယား](../ko/README.md) | [လစ်သူအေးနီးယား](../lt/README.md) | [မာလေး](../ms/README.md) | [မာလယာလာမ်](../ml/README.md) | [မာရသီ](../mr/README.md) | [နီပါလီ](../ne/README.md) | [နီဂျီးရီးယား ပစ်ဂိန်](../pcm/README.md) | [နော်ဝေနီးယား](../no/README.md) | [ဖာစီ (ပားစီ)](../fa/README.md) | [ပိုလန်](../pl/README.md) | [ပေါ်တူဂီส (ဘရာဇီး)](../pt-BR/README.md) | [ပေါ်တူဂီส (ပေါ်တူဂီ)](../pt-PT/README.md) | [ပန်ချာဘီ (ဂူရ်မူခီ)](../pa/README.md) | [ရိုမေးနေယား](../ro/README.md) | [ရုရှား](../ru/README.md) | [ဆားဘီးယား (စာရုိလစ်)](../sr/README.md) | [စလိုဗာက်](../sk/README.md) | [စလိုဗေးနီးယား](../sl/README.md) | [စပိန်ရှ်](../es/README.md) | [ဆွာဟီလီ](../sw/README.md) | [ဆွီဒင်](../sv/README.md) | [တာဂလို့ (ဖီလစ်ပိုင်)](../tl/README.md) | [တမီး](../ta/README.md) | [တယ်လူဂူ](../te/README.md) | [ထိုင်း](../th/README.md) | [တွTurkish](../tr/README.md) | [ယူကရိန်း](../uk/README.md) | [ဥာဒူး](../ur/README.md) | [ဗီယက်နမ်](../vi/README.md)
-
-> **ဒေသတွင်း မိမိလက်တွင် ကလုံးချင်ပါသလား?**
->
-> ဒီရိုက်ပွဲမှာ ဘာသာစကား ၅၀ ကျော်ပါဝင်ပြီး ဒါကြောင့် ဒေါင်းလုပ်အရွယ်အစား လုံးဝကြီးနေပါတယ်။ ဘာသာပြန်မပါဘဲ ကလုံးချင်ရင်၊ sparse checkout ကိုအသုံးပြုပါ။
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> ဒါဟာ သင့်ကို သင်ခန်းစာကို ပိုမိုအမြန်ဆုံးပြီးမြောက်စေဖို့ လိုအပ်သမျှအားလုံးကိုပေးမှာပါ။
-<!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
-
-> **ဒေသတွင်း မိမိလက်တွင် ကလုံးချင်ပါသလား?**
->
-> ဒီရိုက်ပွဲမှာ ဘာသာစကား ၅၀ ကျော်ပါဝင်ပြီး ဒါကြောင့် ဒေါင်းလုပ်အရွယ်အစား လုံးဝကြီးနေပါတယ်။ ဘာသာပြန်မပါဘဲ ကလုံးချင်ရင်၊ sparse checkout ကိုအသုံးပြုပါ။
->
-> **Bash / macOS / Linux:**
-> ```bash
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
-> ```
->
-> **CMD (Windows):**
-> ```cmd
-> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
-> cd LangChain4j-for-Beginners
-> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
-> ```
->
-> ဒါဟာ သင့်ကို သင်ခန်းစာကို ပိုမိုအမြန်ဆုံးပြီးမြောက်စေဖို့ လိုအပ်သမျှအားလုံးကိုပေးမှာပါ။
-
 # LangChain4j အတွက် စတင်သူများ
 
-LangChain4j နှင့် Azure OpenAI GPT-5.2 ကို အသုံးပြုပြီး AI applications တည်ဆောက်ခြင်းအတွက် သင်တန်း၊ မေးမြန်းစကားမှ AI agent များထိ။
+LangChain4j နှင့် Azure OpenAI GPT-5.2 ဖြင့် အခြေခံ ချက်မှ စ၍ AI ကိုယ်စားလှယ်များထိ AI အက်ပ်လီကေးရှင်းလ်များ တည်ဆောက်ခြင်းအတွက် သင်တန်း။
 
-**LangChain4j အသစ်လား?** အဓိပ္ပါယ်များနှင့် အကြောင်းအရာများအတွက် [Glossary](docs/GLOSSARY.md) ကို ကြည့်ပါ။
+### 🌐 ဘာသာစကား မျိုးစုံ ထောက်ခံမှု
 
-## အကြောင်းအရာ စာရင်း
+#### GitHub Action (အလိုအလျောက် နှင့် အမြဲပြန်တင်ပြီး) မှတဆင့် ထောက်ခံသည်
 
-1. [Quick Start](00-quick-start/README.md) - LangChain4j ဖြင့် စတင်ခြင်း
-2. [Introduction](01-introduction/README.md) - LangChain4j အခြေခံများ သင်ယူရန်
-3. [Prompt Engineering](02-prompt-engineering/README.md) - ထိရောက်သော prompt ဒီဇိုင်း ကျွမ်းကျင်ရေး
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - တော့တက်သော အသိပညာအခြေခံ စနစ်များ တည်ဆောက်ခြင်း
-5. [Tools](04-tools/README.md) - ပြင်ပကိရိယာများနှင့် ရိုးရှင်းသော ဘက်ဆိုင်အကူအညီများ ဖျော်ဖြေခြင်း
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Model Context Protocol (MCP) နှင့် Agentic modules နှင့် ပေါင်းစပ်ဆောင်ရွက်ခြင်း
+<!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
+[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](./README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
+
+> **ဒေသခံတွင် Clone လုပ်ရန် ကြိုက်ပါသလား?**
+>
+> ဒီ repository မှာ ဘာသာစကား ၅၀ ကျော်ရှိပြီး ဒါကြောင့် ဒေါင်းလုဒ်အရွယ်အစားမြင့်သည်။ ဘာသာပြန်ချက်များမပါဘဲ clone လုပ်လိုပါက sparse checkout ကို အသုံးပြုပါ။
+>
+> **Bash / macOS / Linux:**
+> ```bash
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
+> ```
+>
+> **CMD (Windows):**
+> ```cmd
+> git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
+> cd LangChain4j-for-Beginners
+> git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
+> ```
+>
+> ဒါက သင်တန်းတက်ရန် လိုအပ်သည့် အရာအားလုံးကို မြန်ဆန်စွာ ဒေါင်းလုဒ်ဆွဲပေးမည် ဖြစ်သည်။
+<!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
+
+## အကြောင်းအရာ ဇယား
+
+1. [အမြန် စတင်ခြင်း](00-quick-start/README.md) - LangChain4j နှင့် စတင်ပါ
+2. [နိဒါန်း](01-introduction/README.md) - LangChain4j အခြေခံများ သင်ယူပါ
+3. [Prompt Engineering](02-prompt-engineering/README.md) - ထိရောက်သော prompt ဒီဇိုင်း ကျွမ်းကျင်ပါ
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - ဉာဏ်ကြီးသော သိက္ခာဒေတာ စနစ်များ တည်ဆောက်ပါ
+5. [Tools](04-tools/README.md) - အပြင် tools နှင့် ရိုးရှင်းသည့် အကူအညီများ ပေါင်းစည်းပါ
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Model Context Protocol (MCP) နှင့် Agentic module များနှင့် လုပ်ဆောင်ပါ
 ---
 
-## သင်ယူရာလမ်းကြောင်း
+## သင်ယူရန် လမ်းကြောင်း
 
-> **Quick Start**
+**LangChain4j အသစ်လား?** အဓိက စကားလုံးများနှင့် သဘောတရားများ အတွက် [Glossary](docs/GLOSSARY.md) ကို ကြည့်ပါ။
 
-1. ဒီ repository ကို သင်၏ GitHub အကောင့်သို့ Fork လုပ်ပါ
+> **အမြန် စတင်ခြင်း**
+
+1. ဤ repository ကို သင့် GitHub အကောင့်သို့ fork လုပ်ပါ
 2. **Code** → **Codespaces** tab → **...** → **New with options...** ကို နှိပ်ပါ
-3. ပုံမှန် အသုံးပြုမှုဖြင့် – ဒီသင်တန်းအတွက် ဖန်တီးထားသော Development container ကို ရွေးချယ်မည်
+3. ဒေဖောလ့်များကို အသုံးပြုပါ – ဤသင်တန်းအတွက် ဆောက်လုပ်ထားသော Development container ကို ရွေးချယ်မည်
 4. **Create codespace** ကို နှိပ်ပါ
-5. ပတ်ဝန်းကျင် ပြင်ဆင်ပြီးစီးရန် ၅-၁၀ မိနစ် စောင့်ပါ
-6. LangChain4j စတင်ရန် [Quick Start](./00-quick-start/README.md) သို့ တိုက်ရိုက်မောင်းနှင်ပါ!
+5. ပတ်ဝန်းကျင်ပြင်ဆင်ပြီးစီးရန် ၅-၁၀ မိနစ် စောင့်ဆိုင်းပါ
+6. စတင်ရန် အမြန် စတင်ခြင်း [Quick Start](./00-quick-start/README.md) သို့ တိုက်ရိုက်ဝင်ပါ!
 
-မော်ဂျူးများ ပြီးဆုံးပြီးနောက်၊ LangChain4j စမ်းသပ်မှု မှတ်စုများကို လေ့လာရန် [Testing Guide](docs/TESTING.md) ကို ကြည့်ရှုပါ။
+Modules ပြီးဆုံးပြီးနောက်၊ LangChain4j စမ်းသပ်မှု သဘောတရားများကို ကြည့်ရှုရန် [Testing Guide](docs/TESTING.md) ကို လေ့လာပါ။
 
-> **မှတ်ချက်။** ဒီသင်တန်းတွင် GitHub Models နှင့် Azure OpenAI နှစ်ခုလုံး အသုံးပြုထားသည်။ [Quick Start](00-quick-start/README.md) မော်ဂျူးတွင် GitHub Models ကိုအသုံးပြုသည် (Azure subscription လိုမည် မဟုတ်ပါ)၊ ၁ မှ ၅ မော်ဂျူးတွင် Azure OpenAI ကို အသုံးပြုသည်။ မရှိသေးပါက [အခမဲ့ Azure အကောင့်](https://aka.ms/azure-free-account) ဖြင့် စတင်ပါ။
+> **မှတ်စု:** ဒီသင်တန်းမှာ GitHub Models နဲ့ Azure OpenAI နှစ်ခုစလုံး အသုံးပြုပါတယ်။ [Quick Start](00-quick-start/README.md) module မှာ GitHub Models ကို အသုံးပြုမှာဖြစ်ပြီး (Azure subscription မလိုအပ်ပါ)၊ မော်ဂျူး ၁ မှ ၅ ထိမှာ Azure OpenAI ကို အသုံးပြုပါမယ်။ Azure အကောင့် မရှိသေးပါက [အခမဲ့ Azure အကောင့်](https://aka.ms/azure-free-account) မှာ စတင်ပါ။
 
-## GitHub Copilot ဖြင့် သင်ယူခြင်း
 
-အမြန် ကုဒ်ရေးရန်၊ ဒီပရောဂျက်ကို GitHub Codespace သို့မဟုတ် သင့်ရဲ့ ဒေသခံ IDE မှာ devcontainer ဖြင့် ဖွင့်ပါ။ ဒီသင်တန်းအတွက် အသုံးပြုသော devcontainer တွင် AI ဆွေးနွေးရေးအတွက် GitHub Copilot ရှိပြီး ပြင်ဆင်ထားသည်။
+## GitHub Copilot နဲ့ သင်ယူခြင်း
 
-ကုဒ်နမူနာ တစ်ခုချင်းစီတွင် GitHub Copilot ကိုမေးမြန်းနိုင်သော မေးခွန်းအကြံပြုချက်များ ပါဝင်သည်။ 💡/🤖 ဖြင့် အောက်ပါနေရာများတွင် ကြည့်ရှုပါ။
+coding ကို မြန်ဆန်စတင်ရန်၊ ဒီပရောဂျက်ကို GitHub Codespace သို့မဟုတ် တည်နေရာရှိ IDE တွင် devcontainer အတူ ဖွင့်ပါ။ သင်တန်းတွင် အသုံးပြုသော devcontainer တွင် GitHub Copilot AI ဖက်ဖက်ပေါင်း programming အတွက် အသင့်ပြင်ဆင်ပြီး ပါဝင်သည်။
 
-- **Java ဖိုင် မျက်နှာပြင်** - နမူနာတစ်ခုစီအတွက် မေးခွန်းများ
-- **မော်ဂျူး README များ** - ကုဒ်နမူနာများပြီးနောက် စုံစမ်းဖော်ထုတ်မှု အကြံပြုချက်များ
+ကိုးကားသင်ခန်းစာ၌ GitHub Copilot ကို မေးမြန်းနိုင်သော မေးခွန်းများ ပါဝင်သည်။ 💡/🤖 prompt များကို အောက်ပါနေရာများတွင် ရှာပါ -
 
-**အသုံးပြုပုံ**– မည်သည့်ကုဒ်ဖိုင်ကိုမဆို ဖွင့်ပြီး Copilot ရဲ့ အကြံပြုမေးခွန်းများကို မေးပါ။ ကုဒ်ဘေ့စ်၏ အပြည့်အစုံကို သိပြီး ရှင်းလင်း၊ တိုးချဲ့၊ အစားထိုး အကြံပေးနိုင်ပါသည်။
+- **Java ဖိုင် header များ** - ဥပမာအလိုက် မေးခွန်းများ
+- **Module README များ** - ကုဒ် ဥပမာများနောက် ထပ်ဆင့် စူးစမ်းရန် prompt များ
 
-ပိုမိုလေ့လာလိုပါသလား? [AI ဆွေးနွေးရေး အတွက် Copilot](https://aka.ms/GitHubCopilotAI) ကို ကြည့်ရှုပါ။
+**သုံးနည်း** - ဖိုင်တစ်ခုစီ ဖွင့်ပြီး Copilot ကို မေးခွန်းများ စုံစမ်းမေးမြန်းပါ။ Copilot သည် ကုဒ်အခြေအနေနှင့် ပြည့်စုံသုံးသပ်ပြီး ရှင်းလင်း ဖွင့်ဆိုနိုင်ခြင်း၊ တိုးချဲ့နိုင်ခြင်း၊ အခြားရွေးချယ်စရာများ အကြံပြုနိုင်သည်။
 
-## နောက်ထပ် အရင်းအမြစ်များ
+ပိုမိုသိရှိရန် [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI) ကို ကြည့်ပါ။ 
+
+
+## အပိုဆောင်း အရင်းအမြစ်များ
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
@@ -122,36 +104,35 @@ LangChain4j နှင့် Azure OpenAI GPT-5.2 ကို အသုံးပြ
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
 [![Cybersecurity for Beginners](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
-
 [![Web Dev for Beginners](https://img.shields.io/badge/Web%20Dev%20for%20Beginners-EC4899?style=for-the-badge&labelColor=E5E7EB&color=EC4899)](https://aka.ms/webdev-beginners?WT.mc_id=academic-105485-koreyst)
 [![IoT for Beginners](https://img.shields.io/badge/IoT%20for%20Beginners-14B8A6?style=for-the-badge&labelColor=E5E7EB&color=14B8A6)](https://aka.ms/iot-beginners?WT.mc_id=academic-105485-koreyst)
 [![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
-### Copilot အစီအစဉ်
+### Copilot Series
 [![Copilot for AI Paired Programming](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
 [![Copilot for C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
 [![Copilot Adventure](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
 <!-- CO-OP TRANSLATOR OTHER COURSES END -->
 
-## အကူအညီရယူရန်
+## ကူညီမှု ရယူခြင်း
 
-AI အက်ပ်များ တည်ဆောက်ရာတွင် ဘယ်လိုနည်းပညာများ သုံးရမလဲ ဆွေးနွေးလိုပါက ဒါမှမဟုတ် မေးခွန်းများ ရှိပါက ဝင်ရောက်ပါ-
+AI အက်ပ်များ ဖန်တီးရာတွင် ပြဿနာရှိပါက သို့မဟုတ် မေးခွန်းရှိပါက ဇပ်ဝင်ပါ:
 
 [![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-ထုတ်ကုန်တုံ့ပြန်ချက်များ သို့မဟုတ် အမှားများရှိပါက တည်ဆောက်နေစဉ် တွေ့ရှိပါက ဤနေရာသို့ သွားရောက်ကြည့်ရှုနိုင်ပါသည်-
+ထုတ်ကုန်တုံ့ပြန်ချက် သို့မဟုတ် ဖန်တီးနေစဉ် အမှားများရှိပါက ဤနေရာသို့ သွားပါ:
 
 [![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
-## မှတ်ပုံတင်ခွင့်
+## ခွင့်ပြုချက်
 
-MIT License - အသေးစိတ်အချက်အလက်အတွက် [LICENSE](../../LICENSE) ဖိုင်ကိုကြည့်ပါ။
+MIT License - အသေးစိတ်အတွက် [LICENSE](../../LICENSE) ဖိုင်ကို ကြည့်ပါ။
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**အတိတ်အလွှာသတိပေးချက်**  
-ဤစာရွက်စာတမ်းကို AI ဘာသာပြန် ဝန်ဆောင်မှုဖြစ်သော [Co-op Translator](https://github.com/Azure/co-op-translator) ကို အသုံးပြု၍ ဘာသာပြန်ထားပါသည်။ ကျွန်ုပ်တို့သည် တိကျမှုကို စိုက်ထောက်ပံ့နေရသော်လည်း၊ စက်ရုပ်ဘာသာပြန်ခြင်းကြောင့် အမှားများ သို့မဟုတ် မှားယွင်းမှုများ ဖြစ်ပွားနိုင်သောအတွက် သတိထားရန် လိုအပ်ပါသည်။ မူလစာတမ်းကို ပင်မဘာသာဖြင့် အတည်ပြုရရှိသင့်ကောင်းသော အချက်အလက်အရင်းအမြစ်အဖြစ် သတ်မှတ်သင့်ပါသည်။ အရေးကြီးသော အချက်အလက်များအတွက် ကိုယ်စားပြုသူ လူ့ဘာသာပြန်ခြင်းကို အကြံပြုပါသည်။ ဤဘာသာပြန်မှု အသုံးပြုမှုကြောင့် ဖြစ်ပေါ်နိုင်သည့် နားလည်မှုမှားယွင်းမှုများအတွက် ကျွန်ုပ်တို့ တာဝန်မရှိပါ။
+**သတိပေးချက်**  
+ဤစာတမ်းကို AI ဘာသာပြန်ဝန်ဆောင်မှု [Co-op Translator](https://github.com/Azure/co-op-translator) ကူညီ၍ ဘာသာပြန်ထားပါသည်။ ကျွန်ုပ်တို့သည် တိကျမှန်ကန်မှုအတွက် ကြိုးစားဆောင်ရွက်သော်လည်း၊ စက်ရုပ်ဘာသာပြန်ခြင်းဟာ မှားယွင်းမှုများ သို့မဟုတ် မမှန်ကန်မှုများ ပါဝင်နိုင်ကြောင်း ကိုကျေးဇူးပြု၍ သိထားပါ။ မူလစာတမ်းကို မူခံဘာသာဖြင့် အာဏာပိုင်အရင်းအမြစ်အဖြစ် ယူဆရန် လိုအပ်ပါသည်။ အရေးကြီးသော သတင်းအချက်အလက်များအတွက် လူအရည်အချင်းပြည့်မီသော ဘာသာပြန်သူများအား အကြံပြုပါသည်။ ဤဘာသာပြန်မှုကို အသုံးပြုခြင်းကနေ ဖြစ်ပေါ်လာသော နားလည်မှုမှားယွင်းမှုများအတွက် ကျွန်ုပ်တို့မှာ တာဝန်မထားရှိပါ။
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
