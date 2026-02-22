@@ -46,9 +46,13 @@ The diagram below illustrates the core concept: instead of relying on the model'
 
 <img src="images/what-is-rag.png" alt="What is RAG" width="800"/>
 
+*This diagram shows the difference between a standard LLM (which guesses from training data) and a RAG-enhanced LLM (which consults your documents first).*
+
 Here's how the pieces connect end-to-end. A user's question flows through four stages — embedding, vector search, context assembly, and answer generation — each building on the previous one:
 
 <img src="images/rag-architecture.png" alt="RAG Architecture" width="800"/>
+
+*This diagram shows the end-to-end RAG pipeline — a user query flows through embedding, vector search, context assembly, and answer generation.*
 
 The rest of this module walks through each stage in detail, with code you can run and modify.
 
@@ -83,6 +87,8 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 
 <img src="images/document-chunking.png" alt="Document Chunking" width="800"/>
 
+*This diagram shows a document being split into 300-token chunks with 30-token overlap, preserving context at chunk boundaries.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`DocumentService.java`](src/main/java/com/example/langchain4j/rag/service/DocumentService.java) and ask:
 > - "How does LangChain4j split documents into chunks and why is overlap important?"
 > - "What's the optimal chunk size for different document types and why?"
@@ -95,6 +101,8 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 Each chunk is converted into a numerical representation called an embedding — essentially a meaning-to-numbers converter. The embedding model isn't "intelligent" the way a chat model is; it can't follow instructions, reason, or answer questions. What it can do is map text into a mathematical space where similar meanings land near each other — "car" near "automobile," "refund policy" near "return my money." Think of a chat model as a person you can talk to; an embedding model is an ultra-good filing system.
 
 <img src="images/embedding-model-concept.png" alt="Embedding Model Concept" width="800"/>
+
+*This diagram shows how an embedding model converts text into numerical vectors, placing similar meanings — like "car" and "automobile" — near each other in vector space.*
 
 ```java
 @Bean
@@ -114,13 +122,19 @@ The class diagram below shows how these LangChain4j components connect. `OpenAiO
 
 <img src="images/rag-langchain4j-classes.png" alt="LangChain4j RAG Classes" width="800"/>
 
+*This diagram shows the LangChain4j class architecture across four stages: ingest, embed, store & search, and generate.*
+
 Once embeddings are stored, similar content naturally clusters together in vector space. The visualization below shows how documents about related topics end up as nearby points, which is what makes semantic search possible:
 
 <img src="images/vector-embeddings.png" alt="Vector Embeddings Space" width="800"/>
 
+*This visualization shows how related documents cluster together in 3D vector space, with topics like Technical Docs, Business Rules, and FAQs forming distinct groups.*
+
 When a user searches, the system follows four steps: embed the documents once, embed the query on each search, compare the query vector against all stored vectors using cosine similarity, and return the top-K highest-scoring chunks. The diagram below walks through each step and the LangChain4j classes involved:
 
 <img src="images/embedding-search-steps.png" alt="Embedding Search Steps" width="800"/>
+
+*This diagram shows the four-step embedding search process: embed documents, embed the query, compare vectors with cosine similarity, and return the top-K results.*
 
 ### Semantic Search
 
@@ -149,12 +163,14 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 The diagram below contrasts semantic search with traditional keyword search. A keyword search for "vehicle" misses a chunk about "cars and trucks," but semantic search understands they mean the same thing and returns it as a high-scoring match:
 
 <img src="images/semantic-search.png" alt="Semantic Search" width="800"/>
-*Comparison of keyword-based and semantic search, highlighting how semantic search retrieves conceptually related content even when exact keywords differ.*
+
+*This diagram compares keyword-based search with semantic search, showing how semantic search retrieves conceptually related content even when exact keywords differ.*
 
 Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
 
 <img src="images/cosine-similarity.png" alt="Cosine Similarity" width="800"/>
-*Illustration of cosine similarity as the angle between embedding vectors, with more aligned vectors indicating higher semantic similarity.*
+
+*This diagram illustrates cosine similarity as the angle between embedding vectors — more aligned vectors score closer to 1.0, indicating higher semantic similarity.*
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
@@ -190,6 +206,8 @@ The diagram below shows this assembly in action — the top-scoring chunks from 
 
 <img src="images/context-assembly.png" alt="Context Assembly" width="800"/>
 
+*This diagram shows how the top-scoring chunks are assembled into a structured prompt, allowing the model to generate a grounded answer from your data.*
+
 ## Run the Application
 
 **Verify deployment:**
@@ -216,6 +234,8 @@ From the Spring Boot Dashboard, you can:
 Simply click the play button next to "rag" to start this module, or start all modules at once.
 
 <img src="images/dashboard.png" alt="Spring Boot Dashboard" width="400"/>
+
+*This screenshot shows the Spring Boot Dashboard in VS Code, where you can start, stop, and monitor applications visually.*
 
 **Option 2: Using shell scripts**
 
@@ -287,7 +307,7 @@ The application provides a web interface for document upload and questioning.
 
 <a href="images/rag-homepage.png"><img src="images/rag-homepage.png" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*The RAG application interface - upload documents and ask questions*
+*This screenshot shows the RAG application interface where you upload documents and ask questions.*
 
 ### Upload a Document
 
@@ -305,7 +325,7 @@ Notice each answer includes source references with similarity scores. These scor
 
 <a href="images/rag-query-results.png"><img src="images/rag-query-results.png" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Query results showing answer with source references and relevance scores*
+*This screenshot shows query results with the generated answer, source references, and relevance scores for each retrieved chunk.*
 
 ### Experiment with Questions
 
@@ -328,6 +348,8 @@ Every retrieved chunk comes with a similarity score between 0 and 1 that indicat
 
 <img src="images/similarity-scores.png" alt="Similarity Scores" width="800"/>
 
+*This diagram shows score ranges from 0 to 1, with a minimum threshold of 0.5 that filters out irrelevant chunks.*
+
 Scores range from 0 to 1:
 - 0.7-1.0: Highly relevant, exact match
 - 0.5-0.7: Relevant, good context
@@ -338,6 +360,8 @@ The system only retrieves chunks above the minimum threshold to ensure quality.
 Embeddings work well when meaning clusters cleanly, but they have blind spots. The diagram below shows the common failure modes — chunks that are too large produce muddy vectors, chunks that are too small lack context, ambiguous terms point to multiple clusters, and exact-match lookups (IDs, part numbers) don't work with embeddings at all:
 
 <img src="images/embedding-failure-modes.png" alt="Embedding Failure Modes" width="800"/>
+
+*This diagram shows common embedding failure modes: chunks too large, chunks too small, ambiguous terms that point to multiple clusters, and exact-match lookups like IDs.*
 
 ### In-Memory Storage
 
@@ -352,6 +376,8 @@ Each model has a maximum context window. You can't include every chunk from a la
 RAG isn't always the right approach. The decision guide below helps you determine when RAG adds value versus when simpler approaches — like including content directly in the prompt or relying on the model's built-in knowledge — are sufficient:
 
 <img src="images/when-to-use-rag.png" alt="When to Use RAG" width="800"/>
+
+*This diagram shows a decision guide for when RAG adds value versus when simpler approaches are sufficient.*
 
 **Use RAG when:**
 - Answering questions about proprietary documents
