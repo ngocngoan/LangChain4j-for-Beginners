@@ -92,7 +92,9 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 
 [LangChainRagConfig.java](src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Each chunk is converted into a numerical representation called an embedding - essentially a mathematical fingerprint that captures the meaning of the text. Similar text produces similar embeddings.
+Each chunk is converted into a numerical representation called an embedding — essentially a meaning-to-numbers converter. The embedding model isn't "intelligent" the way a chat model is; it can't follow instructions, reason, or answer questions. What it can do is map text into a mathematical space where similar meanings land near each other — "car" near "automobile," "refund policy" near "return my money." Think of a chat model as a person you can talk to; an embedding model is an ultra-good filing system.
+
+<img src="images/embedding-model-concept.png" alt="Embedding Model Concept" width="800"/>
 
 ```java
 @Bean
@@ -115,6 +117,10 @@ The class diagram below shows how these LangChain4j components connect. `OpenAiO
 Once embeddings are stored, similar content naturally clusters together in vector space. The visualization below shows how documents about related topics end up as nearby points, which is what makes semantic search possible:
 
 <img src="images/vector-embeddings.png" alt="Vector Embeddings Space" width="800"/>
+
+When a user searches, the system follows four steps: embed the documents once, embed the query on each search, compare the query vector against all stored vectors using cosine similarity, and return the top-K highest-scoring chunks. The diagram below walks through each step and the LangChain4j classes involved:
+
+<img src="images/embedding-search-steps.png" alt="Embedding Search Steps" width="800"/>
 
 ### Semantic Search
 
@@ -143,6 +149,10 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 The diagram below contrasts semantic search with traditional keyword search. A keyword search for "vehicle" misses a chunk about "cars and trucks," but semantic search understands they mean the same thing and returns it as a high-scoring match:
 
 <img src="images/semantic-search.png" alt="Semantic Search" width="800"/>
+
+Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
+
+<img src="images/cosine-similarity.png" alt="Cosine Similarity" width="800"/>
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
@@ -322,6 +332,10 @@ Scores range from 0 to 1:
 - Below 0.5: Filtered out, too dissimilar
 
 The system only retrieves chunks above the minimum threshold to ensure quality.
+
+Embeddings work well when meaning clusters cleanly, but they have blind spots. The diagram below shows the common failure modes — chunks that are too large produce muddy vectors, chunks that are too small lack context, ambiguous terms point to multiple clusters, and exact-match lookups (IDs, part numbers) don't work with embeddings at all:
+
+<img src="images/embedding-failure-modes.png" alt="Embedding Failure Modes" width="800"/>
 
 ### In-Memory Storage
 
