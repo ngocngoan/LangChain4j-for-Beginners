@@ -149,10 +149,12 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 The diagram below contrasts semantic search with traditional keyword search. A keyword search for "vehicle" misses a chunk about "cars and trucks," but semantic search understands they mean the same thing and returns it as a high-scoring match:
 
 <img src="images/semantic-search.png" alt="Semantic Search" width="800"/>
+*Comparison of keyword-based and semantic search, highlighting how semantic search retrieves conceptually related content even when exact keywords differ.*
 
 Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
 
 <img src="images/cosine-similarity.png" alt="Cosine Similarity" width="800"/>
+*Illustration of cosine similarity as the angle between embedding vectors, with more aligned vectors indicating higher semantic similarity.*
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
