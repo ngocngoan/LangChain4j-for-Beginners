@@ -1,11 +1,11 @@
 # Module 02: Prompt Engineering gamit ang GPT-5.2
 
-## Table of Contents
+## Talaan ng Nilalaman
 
 - [Ano ang Matututuhan Mo](../../../02-prompt-engineering)
-- [Mga Kinakailangan](../../../02-prompt-engineering)
+- [Mga Paunang Kaalaman](../../../02-prompt-engineering)
 - [Pag-unawa sa Prompt Engineering](../../../02-prompt-engineering)
-- [Mga Pangunahing Kaalaman sa Prompt Engineering](../../../02-prompt-engineering)
+- [Mga Pundamental sa Prompt Engineering](../../../02-prompt-engineering)
   - [Zero-Shot Prompting](../../../02-prompt-engineering)
   - [Few-Shot Prompting](../../../02-prompt-engineering)
   - [Chain of Thought](../../../02-prompt-engineering)
@@ -14,14 +14,14 @@
 - [Mga Advanced na Pattern](../../../02-prompt-engineering)
 - [Paggamit ng Umiiral na Azure Resources](../../../02-prompt-engineering)
 - [Mga Screenshot ng Aplikasyon](../../../02-prompt-engineering)
-- [Paggalugad sa mga Pattern](../../../02-prompt-engineering)
-  - [Mababang vs Mataas na Kasigasigan](../../../02-prompt-engineering)
-  - [Pagpapatupad ng Gawain (Tool Preambles)](../../../02-prompt-engineering)
-  - [Self-Reflecting Code](../../../02-prompt-engineering)
-  - [Structured Analysis](../../../02-prompt-engineering)
+- [Pagsusuri sa mga Pattern](../../../02-prompt-engineering)
+  - [Mababang Eagerness vs Mataas na Eagerness](../../../02-prompt-engineering)
+  - [Pagsasagawa ng Gawain (Tool Preambles)](../../../02-prompt-engineering)
+  - [Pag-replekta sa Sarili ng Code](../../../02-prompt-engineering)
+  - [Nakaayos na Pagsusuri](../../../02-prompt-engineering)
   - [Multi-Turn Chat](../../../02-prompt-engineering)
-  - [Step-by-Step Reasoning](../../../02-prompt-engineering)
-  - [Constrained Output](../../../02-prompt-engineering)
+  - [Hakbang-hakbang na Pangangatwiran](../../../02-prompt-engineering)
+  - [Limitadong Output](../../../02-prompt-engineering)
 - [Ano Talaga ang Iyong Natututuhan](../../../02-prompt-engineering)
 - [Mga Susunod na Hakbang](../../../02-prompt-engineering)
 
@@ -29,42 +29,42 @@
 
 <img src="../../../translated_images/tl/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-Sa nakaraang module, nakita mo kung paano nagbibigay-daan ang memorya sa conversational AI at ginamit ang GitHub Models para sa mga pangunahing interaksyon. Ngayon ay tututok tayo kung paano ka magtatanong — ang mga prompt mismo — gamit ang Azure OpenAI's GPT-5.2. Ang paraan ng pagbuo ng iyong mga prompt ay malaki ang epekto sa kalidad ng mga sagot na matatanggap mo. Nagsisimula tayo sa pagsusuri ng mga pangunahing teknik sa prompting, pagkatapos ay lilipat sa walong advanced patterns na ganap na ginagamit ang kakayahan ng GPT-5.2.
+Sa nakaraang module, nakita mo kung paano pinapagana ng memorya ang conversational AI at ginamit ang GitHub Models para sa mga pangunahing interaksyon. Ngayon, magpo-focus tayo kung paano ka magtatanong — ang mga prompts mismo — gamit ang Azure OpenAI GPT-5.2. Ang paraan ng pag-istruktura ng iyong mga prompt ay malaki ang epekto sa kalidad ng mga sagot na iyong matatanggap. Sisimula tayo sa pagrepaso ng mga pundamental na teknik sa prompting, tapos lilipat tayo sa walong advanced na pattern na lubos na gumagamit sa kakayahan ng GPT-5.2.
 
-Gagamitin natin ang GPT-5.2 dahil ipinakikilala nito ang reasoning control - maaari mong sabihin sa modelo kung gaano karaming pag-iisip ang gagawin bago sumagot. Ginagawa nitong mas malinaw ang iba't ibang estratehiya sa prompting at tinutulungan kang maintindihan kung kailan gagamitin ang bawat isa. Aabot din tayo sa benepisyo ng mas kaunting mga limitasyon sa rate ng Azure para sa GPT-5.2 kumpara sa GitHub Models.
+Gagamit tayo ng GPT-5.2 dahil ito ay nagdadala ng control sa pag-iisip — maaari mong sabihin sa modelo kung gaano karaming pag-iisip ang gagawin bago sumagot. Pinapalinaw nito ang iba't ibang istratehiya sa prompting at tinutulungan kang maintindihan kung kailan gagamitin ang bawat isa. Makinabang din tayo mula sa mas kaunting rate limits ng Azure para sa GPT-5.2 kumpara sa GitHub Models.
 
-## Mga Kinakailangan
+## Mga Paunang Kaalaman
 
-- Natapos ang Module 01 (Naideploy na ang Azure OpenAI resources)
-- `.env` na file sa root directory na may Azure credentials (nalikha ng `azd up` sa Module 01)
+- Natapos ang Module 01 (naideploy na ang Azure OpenAI resources)
+- `\.env` file sa root directory na may Azure credentials (ginawa ng `azd up` sa Module 01)
 
-> **Tandaan:** Kung hindi mo pa natatapos ang Module 01, sundin muna ang mga tagubilin sa deployment doon.
+> **Tandaan:** Kung hindi mo pa natatapos ang Module 01, sundan muna ang mga tagubilin sa pag-deploy doon.
 
 ## Pag-unawa sa Prompt Engineering
 
 <img src="../../../translated_images/tl/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
-Ang prompt engineering ay tungkol sa pagdidisenyo ng input na teksto na palaging nakukuha ang resulta na kailangan mo. Hindi lang ito basta pagtatanong - ito ay tungkol sa pag-istraktura ng mga kahilingan upang maunawaan ng modelo nang eksakto kung ano ang gusto mo at paano ito ihahatid.
+Ang prompt engineering ay tungkol sa pagdidisenyo ng input na teksto na palaging nakukuha ang mga kailangang resulta. Hindi ito basta pagtatanong lang — ito ay pag-istruktura ng mga kahilingan upang maintindihan ng modelo kung ano eksakto ang gusto mo at paano ito ihahatid.
 
-Isipin mo ito na parang pagbibigay ng mga tagubilin sa isang kasamahan. Ang "Ayusin ang bug" ay malabo. Ang "Ayusin ang null pointer exception sa UserService.java line 45 sa pamamagitan ng pagdagdag ng null check" ay tiyak. Ganun din ang mga language model - mahalaga ang pagiging tiyak at istraktura.
+Isipin mo itong pagbibigay ng mga tagubilin sa isang kasamahan. Ang "Ayusin ang bug" ay malabo. Ang "Ayusin ang null pointer exception sa UserService.java linya 45 sa pamamagitan ng pagdaragdag ng null check" ay tiyak. Ganoon din ang mga language model — mahalaga ang pagiging tiyak at istruktura.
 
 <img src="../../../translated_images/tl/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-Nagbibigay ang LangChain4j ng imprastruktura — mga koneksyon sa modelo, memorya, at uri ng mga mensahe — habang ang mga prompt pattern ay mga maingat na nakaayos na teksto na ipinapadala mo sa imprastrukturang iyon. Ang mga pangunahing bahagi ay ang `SystemMessage` (na nagse-set ng asal at papel ng AI) at `UserMessage` (na nagdadala ng iyong aktwal na kahilingan).
+Ang LangChain4j ay nagbibigay ng imprastruktura — koneksyon sa modelo, memorya, at mga uri ng mensahe — habang ang mga prompt pattern ay maingat na nakaayos na teksto na ipinapadala mo sa imprastrukturang iyon. Ang mga pangunahing bahagi ay ang `SystemMessage` (na nagseset ng asal at papel ng AI) at ang `UserMessage` (na nagdadala ng aktwal mong kahilingan).
 
-## Mga Pangunahing Kaalaman sa Prompt Engineering
+## Mga Pundamental sa Prompt Engineering
 
 <img src="../../../translated_images/tl/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-Bago sumabak sa mga advanced na pattern sa modulong ito, balikan muna natin ang limang pangunahing teknik sa prompting. Ito ang mga basehan na dapat alam ng bawat prompt engineer. Kung nakapagsimula ka na sa [Quick Start module](../00-quick-start/README.md#2-prompt-patterns), nakita mo na ang mga ito sa aksyon — narito ang konseptwal na balangkas sa likod nila.
+Bago sumabak sa mga advanced na pattern sa module na ito, balikan muna natin ang limang pundamental na teknik sa prompting. Ito ang mga pundasyon na dapat malaman ng bawat prompt engineer. Kung napagdaanan mo na ang [Quick Start module](../00-quick-start/README.md#2-prompt-patterns), nakita mo na ito sa aksyon — narito ang konseptwal na balangkas sa likod nila.
 
 ### Zero-Shot Prompting
 
-Pinakasimpleng pamamaraan: bigyan ang modelo ng direktang utos nang walang mga halimbawa. Umaasa ang modelo sa kanyang training upang maintindihan at isagawa ang gawain. Maganda ito para sa mga madaling kahilingan kung saan halatang-halata ang inaasahang kilos.
+Pinakasimpleng lapit: bigyan ang modelo ng direktang tagubilin nang walang mga halimbawa. Umaasa ang modelo sa kanyang training para maintindihan at isagawa ang gawain. Epektibo ito sa mga simpleng kahilingan kung saan ang inaasahang kilos ay halata.
 
 <img src="../../../translated_images/tl/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-*Direktang utos na walang mga halimbawa — hinuhinuha ng modelo ang gawain mula sa utos lamang*
+*Direktang tagubilin na walang mga halimbawa — hinuhango ng modelo ang gawain mula sa tagubilin lang*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
@@ -72,15 +72,15 @@ String response = model.chat(prompt);
 // Tugon: "Positibo"
 ```
 
-**Kailan gagamitin:** Mga simpleng klasipikasyon, direktang tanong, pagsasalin, o anomang gawain na kaya ng modelo nang walang dagdag na gabay.
+**Kailan gagamitin:** Simpleng klasipikasyon, direktang mga tanong, pagsasalin, o anumang gawain na kaya ng modelo nang walang dagdag na gabay.
 
 ### Few-Shot Prompting
 
-Magbigay ng mga halimbawa na nagpapakita ng pattern na gusto mong sundin ng modelo. Natututuhan ng modelo ang inaasahang format ng input-output mula sa iyong mga halimbawa at inaaplay ito sa mga bagong input. Malaking tulong ito sa consistency para sa mga gawain na hindi halata ang tamang format o kilos.
+Magbigay ng mga halimbawa na nagpapakita ng pattern na gusto mong sundin ng modelo. Natutunan ng modelo ang inaasahang format ng input-output mula sa mga halimbawang ito at inilalapat ito sa mga bagong input. Pinapabuti nito nang malaki ang konsistensi para sa mga gawain kung saan hindi halata ang nais na format o kilos.
 
 <img src="../../../translated_images/tl/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-*Pagkatuto mula sa mga halimbawa — kinikilala ng modelo ang pattern at inilalapat ito sa mga bagong input*
+*Pagtuturo mula sa mga halimbawa — kinikilala ng modelo ang pattern at inilalapat ito sa bagong input*
 
 ```java
 String prompt = """
@@ -97,15 +97,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kailan gagamitin:** Custom classifications, consistent formatting, domain-specific tasks, o kapag hindi konsistent ang resulta sa zero-shot.
+**Kailan gagamitin:** Custom na klasipikasyon, konsistenteng pag-format, mga domain-specific na gawain, o kapag hindi consistent ang resulta ng zero-shot.
 
 ### Chain of Thought
 
-Sabihin sa modelo na ipakita ang kanyang pag-iisip ng hakbang-hakbang. Sa halip na diretsong sumagot, hinahati-hati ng modelo ang problema at ipinapaliwanag bawat bahagi. Mas bumubuti ang katumpakan sa math, logic, at multi-step reasoning tasks.
+Hilingin sa modelo na ipakita ang kanyang pagsasaalang-alang step-by-step. Sa halip na diretso sumagot, hinahati ng modelo ang problema at tinatrabaho bawat bahagi nang malinaw. Pinapataas nito ang katumpakan sa math, logic, at mga multi-step na pangangatwiran.
 
 <img src="../../../translated_images/tl/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*Hakbang-hakbang na pag-iisip — paghahati ng komplikadong problema sa mga tiyak na lohikal na hakbang*
+*Hakbang-hakbang na pangangatwiran — paghati ng komplikadong mga problema sa malinaw na lohikal na hakbang*
 
 ```java
 String prompt = """
@@ -115,18 +115,18 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// Ipinapakita ng modelo: 15 - 8 = 7, pagkatapos 7 + 12 = 19 na mansanas
+// Ipinapakita ng modelo: 15 - 8 = 7, pagkatapos ay 7 + 12 = 19 na mansanas
 ```
 
-**Kailan gagamitin:** Mga problema sa matematika, logic puzzles, debugging, o anumang gawain kung saan ang pagpapakita ng proseso ng pag-iisip ay nagpapabuti ng katumpakan at tiwala.
+**Kailan gagamitin:** Mga problemang pang-matematika, logic puzzles, debugging, o anumang gawain kung saan pinapabuti ng pagpapakita ng proseso ng pangangatwiran ang katumpakan at pagtitiwala.
 
 ### Role-Based Prompting
 
-Mag-set ng persona o papel para sa AI bago magtanong. Nagbibigay ito ng konteksto na humuhubog sa tono, lalim, at pokus ng sagot. Iba ang maibibigay na payo ng "software architect" kaysa "junior developer" o "security auditor".
+Itakda ang persona o papel ng AI bago itanong ang iyong tanong. Nagbibigay ito ng konteksto na humuhubog sa tono, lalim, at pokus ng sagot. Iba ang payo ng "software architect" kaysa sa isang "junior developer" o "security auditor".
 
 <img src="../../../translated_images/tl/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-*Pag-set ng konteksto at persona — ibang sagot ang parehong tanong depende sa naitalagang papel*
+*Pagtatakda ng konteksto at persona — nagkakaiba ang sagot depende sa nakatalagang papel*
 
 ```java
 String prompt = """
@@ -142,15 +142,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kailan gagamitin:** Code reviews, pagtuturo, domain-specific analysis, o kapag kailangan mo ng sagot na nakaayon sa partikular na level ng expertise o perspektibo.
+**Kailan gagamitin:** Code reviews, pagtuturo, domain-specific na pagsusuri, o kapag kailangan mo ng mga sagot na nakaangkop sa partikular na antas ng kadalubhasaan o perspektibo.
 
 ### Prompt Templates
 
-Lumikha ng mga reusable prompt na may mga variable na placeholder. Sa halip na magsulat ng bagong prompt sa bawat pagkakataon, gumawa ng template isang beses at punan ng iba't ibang halaga. Ginagawa itong madali ng langChain4j na `PromptTemplate` na may syntax na `{{variable}}`.
+Gumawa ng reusable prompts na may mga variable placeholders. Sa halip na gumawa ng bagong prompt sa bawat pagkakataon, idefine ang template nang isang beses at punan ang iba't ibang mga halaga. Pinapadali ito ng klase ng LangChain4j na `PromptTemplate` gamit ang `{{variable}}` na syntax.
 
 <img src="../../../translated_images/tl/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
-*Reusable na mga prompt na may mga variable placeholder — isang template, maraming gamit*
+*Reusable na mga prompt na may variable placeholders — isang template, maraming gamit*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,25 +165,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Kailan gagamitin:** Paulit-ulit na mga query na may iba't ibang input, batch processing, paggawa ng reusable na AI workflows, o anumang sitwasyon kung saan ang istraktura ng prompt ay pareho lang ngunit nagbabago ang data.
+**Kailan gagamitin:** Uulit-ulit na mga query na may iba't ibang inputs, batch processing, paggawa ng reusable na AI workflows, o anumang senaryo kung saan pare-pareho ang istruktura ng prompt pero nagbabago ang datos.
 
 ---
 
-Binibigyan ka ng limang pundasyong ito ng solidong toolkit para sa karamihan ng mga prompting task. Ang natitira sa modulong ito ay nagtatayo sa mga ito gamit ang **walong advanced na pattern** na ginagamit ang reasoning control, self-evaluation, at structured output capabilities ng GPT-5.2.
+Binibigyan ka ng limang pundamental na ito ng matibay na kasangkapan para sa karamihan ng mga gawain sa prompting. Ang natitira sa module na ito ay nagpapalawak gamit ang **walong advanced na pattern** na kumikinabang sa reasoning control, self-evaluation, at structured output ng GPT-5.2.
 
 ## Mga Advanced na Pattern
 
-Pagkatapos ng mga pangunahing kaalaman, lumipat tayo sa walong advanced na pattern na nagpapalutang sa module na ito. Hindi lahat ng problema ay nangangailangan ng parehong paraan. Ang ilan ay nangangailangan ng mabilisang sagot, ang iba ay malalim na pag-iisip. Ang iba ay kailangan ng nakikitang paliwanag, ang iba ay kailangan lang ng resulta. Ang bawat pattern sa ibaba ay iniaayos para sa iba't ibang senaryo — at pinapatingkad ng reasoning control ng GPT-5.2 ang pagkakaiba.
+Matapos talakayin ang mga pundamental, lumipat tayo sa walong advanced na pattern na nagpapasikat sa module na ito. Hindi pareho ang lapit sa lahat ng problema. May mga tanong na nangangailangan ng mabilisang sagot, ang iba naman ay kailangang malalim ang pag-iisip. May mga kailangan ng nakikitang pangangatwiran, ang iba ay direktang resulta lang. Bawat pattern sa ibaba ay inangkop sa iba't ibang senaryo — at pinalalakas ng reasoning control ng GPT-5.2 ang mga pagkakaiba.
 
 <img src="../../../translated_images/tl/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
-*Pangkalahatang-ideya ng walong prompt engineering pattern at kanilang mga gamit*
+*Pangkalahatang-ideya ng walong prompt engineering patterns at ang kanilang mga gamit*
 
 <img src="../../../translated_images/tl/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
 
-*Pinapayagan ka ng reasoning control ng GPT-5.2 na tukuyin kung gaano karaming pag-iisip ang gagawin ng modelo — mula sa mabilis na direktang sagot hanggang sa malalim na eksplorasyon*
+*Pinapayagan ka ng reasoning control ng GPT-5.2 na tukuyin kung gaano karaming pag-iisip ang gagawin ng modelo — mula sa mabilis at direktang sagot hanggang sa malalim na pagsusuri*
 
-**Mababang Kasigasigan (Mabilis at Tiyak)** - Para sa simpleng mga tanong kung saan gusto mo ng mabilis, direktang sagot. Minimal ang pag-iisip ng modelo - maximum na 2 hakbang. Gamitin ito para sa kalkulasyon, paghahanap, o madaling tanong.
+**Mababang Eagerness (Mabilis at Pokusado)** - Para sa mga simpleng tanong na gusto mo ng mabilis at direktang sagot. Minimal lang ang pag-iisip ng modelo - maximum 2 hakbang. Gamitin ito para sa mga kalkulasyon, paghahanap, o mga direktang tanong.
 
 ```java
 String prompt = """
@@ -202,12 +202,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Suriin gamit ang GitHub Copilot:** Buksan ang [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) at itanong:
-> - "Ano ang pagkakaiba ng low eagerness at high eagerness prompting patterns?"
-> - "Paano nakatutulong ang mga XML tags sa prompts sa pag-istraktura ng sagot ng AI?"
-> - "Kailan ko gagamitin ang self-reflection patterns kumpara sa direct instruction?"
+> 💡 **Siyasatin gamit ang GitHub Copilot:** Buksan ang [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) at itanong:
+> - "Ano ang kaibahan ng mababang eagerness at mataas na eagerness na prompting patterns?"
+> - "Paano nakatutulong ang mga XML tags sa prompts sa pag-istruktura ng tugon ng AI?"
+> - "Kailan ko dapat gamitin ang mga self-reflection patterns kumpara sa direktang tagubilin?"
 
-**Mataas na Kasigasigan (Malalim at Masusi)** - Para sa masalimuot na mga problema kung saan gusto mong magkaroon ng komprehensibong pagsusuri. Malalim ang eksplorasyon ng modelo at nagpapakita ng detalyadong pag-iisip. Gamitin ito para sa disenyo ng sistema, desisyon sa arkitektura, o komplikadong pananaliksik.
+**Mataas na Eagerness (Malalim at Komprehensibo)** - Para sa mga komplikadong problema na gusto mo ng malawak na pagsusuri. Malalim ang pag-explore ng modelo at ipinapakita ang detalyadong pangangatwiran. Para ito sa system design, mga desisyon sa arkitektura, o komplikadong pananaliksik.
 
 ```java
 String prompt = """
@@ -221,7 +221,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Pagpapatupad ng Gawain (Hakbang-hakbang na Progreso)** - Para sa mga multi-step na workflow. Nagbibigay ang modelo ng plano sa simula, ikinukuwento ang bawat hakbang habang ginagawa ito, at nagbibigay ng buod pagkatapos. Gamitin ito para sa migrations, implementations, o anumang multi-step na proseso.
+**Pagsasagawa ng Gawain (Hakbang-hakbang na Pag-usad)** - Para sa mga multi-step na workflow. Nagbibigay ang modelo ng planong paunang gawin, inilalahad ang bawat hakbang habang gumagawa, at nagbibigay ng buod sa huli. Gamitin ito sa mga migration, implementasyon, o anumang multi-step na proseso.
 
 ```java
 String prompt = """
@@ -259,18 +259,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Ang Chain-of-Thought prompting ay hayagang hinihiling sa modelo na ipakita ang proseso ng pag-iisip, nagpapabuti ng katumpakan para sa mga komplikadong gawain. Ang hakbang-hakbang na pagkakapira-piraso ay tumutulong sa parehong tao at AI na maunawaan ang lohika.
+Ang Chain-of-Thought prompting ay malinaw na hinihiling sa modelo na ipakita ang proseso ng pangangatwiran, na nagpapataas ng katumpakan sa mga komplikadong gawain. Nakakatulong ang hakbang-hakbang na paghahati sa parehong tao at AI na maintindihan ang lohika.
 
 > **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Magtanong tungkol sa pattern na ito:
 > - "Paano ko iaangkop ang task execution pattern para sa mga long-running na operasyon?"
-> - "Ano ang mga pinakamainam na praktis sa pag-istruktura ng tool preambles sa mga production na aplikasyon?"
-> - "Paano ko makukuha at maipapakita ang mga intermediate progress update sa UI?"
+> - "Ano ang mga pinakamahusay na gawain sa pag-istruktura ng tool preambles sa mga production application?"
+> - "Paano ko makukuha at maipapakita ang mga update sa intermediate progress sa UI?"
 
 <img src="../../../translated_images/tl/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
-*Planuhin → Isagawa → Ibuod na workflow para sa multi-step na gawain*
+*Planuhin → Isagawa → Ibuod na workflow para sa mga multi-step na gawain*
 
-**Self-Reflecting Code** - Para sa pagbuo ng production-quality na code. Naggegenerate ang modelo ng code na sumusunod sa production standards na may tamang error handling. Gamitin ito kapag gumagawa ng bagong feature o serbisyo.
+**Self-Reflecting Code** - Para sa paggawa ng production-quality code. Gumagawa ang modelo ng code na sumusunod sa production standards na may tamang error handling. Gamitin ito kapag bumubuo ng mga bagong feature o serbisyo.
 
 ```java
 String prompt = """
@@ -283,9 +283,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/tl/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
-*Ulit-ulit na proseso ng pagpapabuti - generate, evaluate, hanapin ang problema, pagbutihin, ulitin*
+*Ulit-ulit na loop ng pagpapabuti - generate, evaluate, tukuyin ang problema, pag-ibayo, ulitin*
 
-**Structured Analysis** - Para sa consistent na pagsusuri. Nirereview ng modelo ang code gamit ang nakatakdang framework (katumpakan, praktis, performance, seguridad, maintainability). Gamitin ito sa code review o quality assessments.
+**Nakaayos na Pagsusuri** - Para sa konsistenteng pagsusuri. Nirereview ng modelo ang code gamit ang isang tiyak na framework (katumpakan, mga gawi, performance, seguridad, maintainability). Gamitin ito sa code reviews o pagsusuri ng kalidad.
 
 ```java
 String prompt = """
@@ -333,16 +333,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Magtanong tungkol sa structured analysis:
-> - "Paano ko mapapalit ang analysis framework para sa iba't ibang klase ng code review?"
-> - "Ano ang pinakamahusay na paraan para i-parse at i-apply ang structured output programmatically?"
-> - "Paano ko masisiguro ang consistent na severity levels sa iba't ibang sesyon ng review?"
+> **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Magtanong tungkol sa nakaayos na pagsusuri:
+> - "Paano ko mai-customize ang analysis framework para sa iba't ibang uri ng code review?"
+> - "Ano ang pinakamainam na paraan upang i-parse at iaksyonan ang structured output programmatically?"
+> - "Paano ko mapapanatili ang konsistenteng antas ng severity sa iba't ibang review session?"
 
 <img src="../../../translated_images/tl/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
-*Framework para sa consistent na code review na may severity levels*
+*Framework para sa konsistenteng code review na may severity levels*
 
-**Multi-Turn Chat** - Para sa mga pag-uusap na nangangailangan ng konteksto. Naalala ng modelo ang mga naunang mensahe at napapatuloy ang usapan. Gamitin ito para sa interactive help sessions o komplikadong Q&A.
+**Multi-Turn Chat** - Para sa mga pag-uusap na nangangailangan ng konteksto. Naaalala ng modelo ang mga naunang mensahe at pinapalawig ito. Gamitin ito para sa interaktibong help sessions o komplikadong Q&A.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -358,9 +358,9 @@ memory.add(aiMessage2);
 
 <img src="../../../translated_images/tl/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
-*Paano naipon ang konteksto ng pag-uusap sa maraming turn hanggang umabot sa token limit*
+*Paano ang konteksto ng pag-uusap ay naiipon sa maraming turn hanggang umabot sa token limit*
 
-**Step-by-Step Reasoning** - Para sa mga problema na nangangailangan ng nakikitang lohika. Ipinapakita ng modelo ang tiyak na pag-iisip bawat hakbang. Gamitin ito sa mga problema sa matematika, logic puzzles, o kapag gusto mong maintindihan ang proseso ng pag-iisip.
+**Hakbang-hakbang na Pangangatwiran** - Para sa mga problema na nangangailangan ng nakikitang lohika. Ipinapakita ng modelo ang malinaw na pangangatwiran para sa bawat hakbang. Gamitin ito sa math problems, logic puzzles, o kapag kailangan mong maunawaan ang proseso ng pag-iisip.
 
 ```java
 String prompt = """
@@ -376,9 +376,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/tl/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
-*Paghahati ng problema sa mga tiyak na lohikal na hakbang*
+*Paghahati ng mga problema sa malinaw na lohikal na hakbang*
 
-**Constrained Output** - Para sa mga sagot na may partikular na format na kailangan sundin. Mahigpit na sinusunod ng modelo ang mga patakaran sa format at haba. Gamitin ito para sa mga buod o kapag kailangan ng eksaktong output structure.
+**Limitadong Output** - Para sa mga tugon na may partikular na hinihinging format. Mahigpit na sinusunod ng modelo ang mga alituntunin sa format at haba. Gamitin ito para sa mga buod o kapag kailangan mo ng tiyak na istruktura ng output.
 
 ```java
 String prompt = """
@@ -396,51 +396,51 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/tl/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
-*Pagsunod sa partikular na format, haba, at mga kinakailangang istraktura*
+*Pagpapatupad ng tiyak na format, haba, at mga kinakailangan sa istruktura*
 
 ## Paggamit ng Umiiral na Azure Resources
 
-**I-verify ang deployment:**
+**Suriin ang deployment:**
 
-Siguraduhing may `.env` file sa root directory na may Azure credentials (nalikha noong Module 01):
+Siguraduhing may `.env` file sa root directory na may Azure credentials (nagawa noong Module 01):
 ```bash
 cat ../.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Simulan ang aplikasyon:**
 
-> **Tandaan:** Kung sinimulan mo na lahat ng aplikasyon gamit ang `./start-all.sh` mula sa Module 01, ang module na ito ay tumatakbo na sa port 8083. Maaari mo nang laktawan ang mga start commands sa ibaba at diretso na sa http://localhost:8083.
+> **Tandaan:** Kung sinimulan mo na ang lahat ng aplikasyon gamit ang `./start-all.sh` mula sa Module 01, tumatakbo na ang module na ito sa port 8083. Maaari mong laktawan ang mga utos ng pagsisimula sa ibaba at direktang pumunta sa http://localhost:8083.
 
 **Opsyon 1: Paggamit ng Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
 
-Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual na interface para i-manage ang lahat ng Spring Boot applications. Makikita mo ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang icon ng Spring Boot).
+Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual na interface para pamahalaan ang lahat ng mga Spring Boot application. Makikita mo ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang icon ng Spring Boot).
 
-Mula sa Spring Boot Dashboard, maaari mong:
-- Tingnan ang lahat ng available na Spring Boot applications sa workspace
-- Simulan/hintuin ang mga aplikasyon sa isang click lang
+Mula sa Spring Boot Dashboard, maaari mong gawin ang mga sumusunod:
+- Tingnan ang lahat ng magagamit na Spring Boot application sa workspace
+- Simulan/hintuin ang mga aplikasyon gamit ang isang click lang
 - Tingnan ang mga log ng aplikasyon nang real-time
-- I-monitor ang status ng aplikasyon
-Pindutin lamang ang play button sa tabi ng "prompt-engineering" upang simulan ang module na ito, o simulan lahat ng mga module nang sabay-sabay.
+- Subaybayan ang status ng aplikasyon
+I-click lamang ang pindutang play sa tabi ng "prompt-engineering" upang simulan ang module na ito, o simulan lahat ng modules nang sabay-sabay.
 
 <img src="../../../translated_images/tl/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Option 2: Paggamit ng shell scripts**
+**Opsyon 2: Paggamit ng shell scripts**
 
-Simulan lahat ng web applications (mga module 01-04):
+Simulan lahat ng web applications (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Mula sa root na direktoryo
+cd ..  # Mula sa direktorong ugat
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Mula sa direktoryo ng ugat
+cd ..  # Mula sa root direktoryo
 .\start-all.ps1
 ```
 
-O simulan lamang ang module na ito:
+O simulang ang module na ito lamang:
 
 **Bash:**
 ```bash
@@ -454,9 +454,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Awtomatikong iniloload ng parehong scripts ang mga environment variable mula sa root `.env` file at bubuuin ang mga JAR kung hindi pa ito umiiral.
+Awtomatikong nilaload ng parehong script ang mga environment variables mula sa root `.env` na file at magbubuo ng JARs kung wala pa ito.
 
-> **Note:** Kung nais mong manu-manong buuin lahat ng mga module bago magsimula:
+> **Tandaan:** Kung nais mong manu-manong itayo lahat ng modules bago simulan:
 >
 > **Bash:**
 > ```bash
@@ -472,113 +472,85 @@ Awtomatikong iniloload ng parehong scripts ang mga environment variable mula sa 
 
 Buksan ang http://localhost:8083 sa iyong browser.
 
-**Para itigil:**
+**Para huminto:**
 
 **Bash:**
 ```bash
-./stop.sh  # Ang module na ito lamang
+./stop.sh  # Para lamang sa modulong ito
 # O
-cd .. && ./stop-all.sh  # Lahat ng module
+cd .. && ./stop-all.sh  # Lahat ng mga module
 ```
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Module na ito lamang
+.\stop.ps1  # Para lamang sa module na ito
 # O
-cd ..; .\stop-all.ps1  # Lahat ng module
+cd ..; .\stop-all.ps1  # Lahat ng mga module
 ```
 
-## Mga Screenshot ng Aplikasyon
+## Mga Screenshot ng Application
 
 <img src="../../../translated_images/tl/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Pangunahing dashboard na nagpapakita ng lahat ng 8 prompt engineering patterns kasama ang kanilang mga katangian at gamit*
+*Ang pangunahing dashboard na nagpapakita ng lahat ng 8 prompt engineering patterns kasama ang kanilang mga katangian at mga gamit*
 
-## Pagsusuri sa mga Pattern
+## Pagsusuri sa Mga Pattern
 
-Pinapayagan ka ng web interface na subukan ang iba't ibang estratehiya sa prompting. Bawat pattern ay nagsosolusyon ng mga ibang problema - subukan ang mga ito upang makita kung kailan pinakamahusay gamitin ang bawat isa.
+Pinapayagan ka ng web interface na subukan ang iba't ibang mga diskarte sa prompting. Ang bawat pattern ay nakakatugon sa iba't ibang problema - subukan ang mga ito upang makita kung kailan lumalabas ang bawat pamamaraan.
 
-### Mababa vs Mataas na Kagustuhan (Eagerness)
+> **Tandaan: Streaming vs Non-Streaming** — Ang bawat pahina ng pattern ay may dalawang mga pindutan: **🔴 Stream Response (Live)** at isang **Non-streaming** na opsyon. Ginagamit ng streaming ang Server-Sent Events (SSE) para ipakita ang mga token nang real-time habang ini-generate ito ng modelo, kaya nakikita mo agad ang progreso. Ang non-streaming na opsyon ay naghihintay ng buong sagot bago ito ipakita. Para sa mga prompt na nangangailangan ng malalim na pag-iisip (halimbawa, High Eagerness, Self-Reflecting Code), maaaring tumagal nang matagal ang non-streaming call — kung minsan ay ilang minuto — nang walang nakikitang tugon. **Gamitin ang streaming kapag nagsu-experiment ka gamit ang mga komplikadong prompt** upang makita mong gumagana ang modelo at maiwasan ang impresyon na nag-timeout ang kahilingan.
+>
+> **Tandaan: Kinakailangan ng Browser** — Ginagamit ng streaming feature ang Fetch Streams API (`response.body.getReader()`) na nangangailangan ng ganap na browser (Chrome, Edge, Firefox, Safari). Hindi ito gumagana sa built-in Simple Browser ng VS Code, dahil hindi sinusuportahan ng webview nito ang ReadableStream API. Kung gagamit ka ng Simple Browser, gagana pa rin nang normal ang non-streaming buttons — ang streaming buttons lang ang apektado. Buksan ang `http://localhost:8083` sa isang panlabas na browser para sa buong karanasan.
 
-Magtanong ng simpleng tanong tulad ng "Ano ang 15% ng 200?" gamit ang Mababang Kagustuhan. Makakakuha ka ng agarang, direktang sagot. Ngayon, magtanong ng komplikadong bagay tulad ng "Disenyo ng caching strategy para sa high-traffic API" gamit ang Mataas na Kagustuhan. Mapapansin mong bumagal ang modelo at nagbibigay ng detalyadong paliwanag. Parehong modelo, parehong estruktura ng tanong - ngunit ang prompt ang nagsasabi kung gaano karaming pag-iisip ang gagawin.
+### Low vs High Eagerness
 
-<img src="../../../translated_images/tl/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
+Magtanong ng simpleng tanong tulad ng "Ano ang 15% ng 200?" gamit ang Low Eagerness. Makakakuha ka ng instant at direktang sagot. Ngayon, magtanong ng mas komplikado tulad ng "Magdisenyo ng caching strategy para sa mataas na trapikong API" gamit ang High Eagerness. I-click ang **🔴 Stream Response (Live)** at panoorin ang detalyadong pangangatwiran ng modelo na lumilitaw token-by-token. Parehong modelo, pareho ang istruktura ng tanong - ngunit sinasabi ng prompt kung gaano kalalim ang pag-iisip.
 
-*Mabilisang kalkulasyon na may kaunting paliwanag*
+### Task Execution (Tool Preambles)
 
-<img src="../../../translated_images/tl/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
-
-*Komprehensibong caching strategy (2.8MB)*
-
-### Pagsasagawa ng Task (Tool Preambles)
-
-Nakikinabang ang mga multi-step na workflow mula sa maagang pagpaplano at pagsasalaysay ng progreso. Inilalahad ng modelo kung ano ang gagawin, isinasalaysay ang bawat hakbang, at pagkatapos ay inilalahad ang mga resulta.
-
-<img src="../../../translated_images/tl/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
-
-*Paglikha ng REST endpoint na may hakbang-hakbang na pagsasalaysay (3.9MB)*
+Ang mga multi-step na workflow ay nakikinabang sa maagang pagpaplano at pagsasalaysay ng progreso. Ipinapakita ng modelo kung ano ang gagawin nito, ipinapaliwanag ang bawat hakbang, at pagkatapos ay nire-recap ang mga resulta.
 
 ### Self-Reflecting Code
 
-Subukang "Gumawa ng email validation service". Sa halip na basta bumuo ng code at tumigil, ang modelo ay bumubuo, sinusuri laban sa mga pamantayan ng kalidad, tinutukoy ang mga kahinaan, at pinapabuti. Makikita mong inuulit ito hanggang maabot ng code ang pamantayan para sa produksyon.
-
-<img src="../../../translated_images/tl/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
-
-*Kompletong email validation service (5.2MB)*
+Subukan ang "Gumawa ng email validation service". Sa halip na bumuo lang ng code at huminto, ang modelo ay bumubuo, sinusuri batay sa mga pamantayan ng kalidad, tinutukoy ang mga kahinaan, at pinapabuti ito. Makikita mong inuulit nito hanggang matugunan ng code ang mga pamantayan para sa produksyon.
 
 ### Structured Analysis
 
-Kailangan ng mga pagsusuri ng code ng mga pare-parehong framework sa pagsusuri. Sinusuri ng modelo ang code gamit ang mga nakapirming kategorya (katumpakan, kasanayan, pagganap, seguridad) na may antas ng tindi.
-
-<img src="../../../translated_images/tl/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
-
-*Pagsusuri ng code batay sa framework*
+Ang mga pagsusuri ng code ay nangangailangan ng pare-parehong mga balangkas ng pagsusuri. Inaalam ng modelo ang code gamit ang mga nakapirming kategorya (katumpakan, mga gawi, pagganap, seguridad) na may mga antas ng kaseryosohan.
 
 ### Multi-Turn Chat
 
-Magtanong ng "Ano ang Spring Boot?" tapos agad sumunod sa "Ipakita mo ako ng isang halimbawa". Naalala ng modelo ang iyong unang tanong at nagbibigay sa iyo ng isang halimbawa ng Spring Boot nang partikular. Kung walang memorya, sobrang malabo ng pangalawang tanong.
+Magtanong ng "Ano ang Spring Boot?" at agad na sundan ng "Ipakita mo ang isang halimbawa". Naalala ng modelo ang iyong unang tanong at bibigyan ka nito ng isang partikular na halimbawa ng Spring Boot. Kung walang memorya, magiging masyadong malabo ang pangalawang tanong.
 
-<img src="../../../translated_images/tl/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
+### Step-by-Step Reasoning
 
-*Pagpapanatili ng konteksto sa buong mga tanong*
+Pumili ng problema sa matematika at subukan ito gamit ang Step-by-Step Reasoning at Low Eagerness. Ang low eagerness ay nagbibigay lang ng sagot - mabilis ngunit malabo. Ipinapakita ng step-by-step ang bawat kalkulasyon at desisyon.
 
-### Hakbang-hakbang na Paliwanag
+### Constrained Output
 
-Pumili ng problema sa matematika at subukan ito gamit ang parehong Hakbang-hakbang na Paliwanag at Mababang Kagustuhan. Minsang ibinibigay lang ng mababang kagustuhan ang sagot - mabilis pero hindi malinaw. Ipinapakita ng hakbang-hakbang ang bawat pagkalkula at desisyon.
+Kapag kailangan mo ng partikular na format o bilang ng salita, pinipilit ng pattern na ito ang mahigpit na pagsunod. Subukang gumawa ng buod na may eksaktong 100 salita sa format na bullet points.
 
-<img src="../../../translated_images/tl/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
+## Ano Talagang Natututuhan Mo
 
-*Problema sa matematika na may malinaw na mga hakbang*
+**Binabago ng Pagsisikap sa Pag-iisip ang Lahat**
 
-### Limitadong Output
+Pinapayagan ka ng GPT-5.2 na kontrolin ang computational effort sa pamamagitan ng iyong mga prompt. Ang mababang pagsisikap ay nangangahulugang mabilis na mga tugon na may minimal na eksplorasyon. Ang mataas na pagsisikap ay nangangahulugang ang modelo ay maglalaan ng oras para mag-isip nang malalim. Natututuhan mong iangkop ang pagsisikap sa kumpleksidad ng gawain - huwag sayangin ang oras sa simpleng mga tanong, ngunit huwag din magmadali sa mga kumplikadong desisyon.
 
-Kapag kailangan mo ng mga partikular na format o bilang ng salita, pinipilit ng pattern na ito ang mahigpit na pagsunod. Subukang gumawa ng buod na may eksaktong 100 salita sa anyong bullet points.
+**Pinapatnubayan ng Estruktura ang Pag-uugali**
 
-<img src="../../../translated_images/tl/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
-
-*Buod ng machine learning na may kontrol sa format*
-
-## Ang Tunay Mong Natututuhan
-
-**Binabago ng Pagsisikap sa Papiisipan ang Lahat**
-
-Pinapayagan ka ng GPT-5.2 na kontrolin ang computational effort sa pamamagitan ng iyong mga prompt. Ang mababang pagsisikap ay nangangahulugan ng mabilis na tugon na may kaunting paggalugad. Ang mataas na pagsisikap ay nangangahulugan na maglalaan ng oras ang modelo upang mag-isip nang malalim. Natututuhan mong iayon ang pagsisikap sa kumplikasyon ng gawain - huwag sayangin ang oras sa simpleng mga tanong, pero huwag din magmadali sa mga komplikadong desisyon.
-
-**Gumagabay ang Estruktura sa Pag-uugali**
-
-Napansin mo ba ang mga tag na XML sa mga prompt? Hindi ito palamuti lang. Mas sumusunod ang mga modelo sa mga istrukturadong utos kaysa sa malayang teksto. Kapag kailangan mo ng multi-step na proseso o komplikadong lohika, tinutulungan ng estruktura ang modelo na masubaybayan kung nasaan na ito at ano ang susunod.
+Napansin mo ba ang mga XML tags sa mga prompt? Hindi ito palamuti lamang. Mas maaasahan ang mga modelo kapag sumusunod sila sa mga istrukturadong tagubilin kaysa sa malayang teksto. Kapag kailangan mo ng multi-step na proseso o komplikadong lohika, nakakatulong ang estruktura para mabantayan ng modelo kung nasaan ito at ano ang susunod.
 
 <img src="../../../translated_images/tl/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomiya ng mahusay na istrukturadong prompt na may malinaw na mga seksyon at organisasyong estilo XML*
+*Anatomiya ng isang maayos na istrukturadong prompt na may malinaw na mga seksyon at organisasyon na parang XML*
 
 **Kalidad sa Pamamagitan ng Sariling Pagsusuri**
 
-Gumagana ang mga self-reflecting pattern sa pamamagitan ng pagpapaliwanag nang malinaw ng mga pamantayan ng kalidad. Sa halip na maghintay na "tamang gawin" ng modelo, sinasabi mo dito nang eksakto kung ano ang ibig sabihin ng "tama": tamang lohika, paghawak ng mga error, pagganap, seguridad. Kaya nitong tasahin ang sariling output at pagbutihin ito. Ginagawa nitong proseso ang paglikha ng code mula sa isang suwerte.
+Gumagana ang mga self-reflecting patterns sa pamamagitan ng pagpapahayag ng mga pamantayan ng kalidad. Sa halip na umaasa na "tama ang gagawin" ng modelo, tinutukoy mo kung ano ang ibig sabihin ng "tama": wastong lohika, paghawak ng error, pagganap, seguridad. Maaari nang suriin ng modelo ang sariling output at pagbutihin ito. Ginagawa nitong proseso ang pagbuo ng code, hindi basta-loteriya.
 
 **May Hangganan ang Konteksto**
 
-Gumagana ang multi-turn na usapan sa pamamagitan ng pagsama ng kasaysayan ng mensahe sa bawat hiling. Pero may limitasyon - bawat modelo ay may maximum na bilang ng token. Habang lumalaki ang mga pag-uusap, kakailanganin mo ng mga estratehiya para mapanatili ang kaugnay na konteksto nang hindi nalalampasan ang limitasyon. Ipinapakita ng module na ito kung paano gumagana ang memorya; mamaya, matututunan mo kung kailan magsasummarize, kailan magpapabaya, at kailan kukuha muli.
+Gumagana ang multi-turn na pag-uusap sa pamamagitan ng pagsama ng kasaysayan ng mensahe sa bawat kahilingan. Ngunit may limitasyon - bawat modelo ay may maximum token count. Habang lumalaki ang pag-uusap, kakailanganin mo ng mga estratehiya para mapanatili ang mahalagang konteksto nang hindi umaabot sa limitasyon. Ipinapakita sa module na ito kung paano gumagana ang memorya; sa hinaharap matututuhan mo kung kailan magsasummarize, kailan kakalimutan, at kailan kukunin.
 
 ## Mga Susunod na Hakbang
 
@@ -586,11 +558,11 @@ Gumagana ang multi-turn na usapan sa pamamagitan ng pagsama ng kasaysayan ng men
 
 ---
 
-**Navigation:** [← Nakaraan: Module 01 - Panimula](../01-introduction/README.md) | [Bumalik sa Pangunahing Pahina](../README.md) | [Susunod: Module 03 - RAG →](../03-rag/README.md)
+**Pag-navigate:** [← Nakaraan: Module 01 - Panimula](../01-introduction/README.md) | [Bumalik sa Pangunahing Pahina](../README.md) | [Susunod: Module 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Pagsasabi ng Paalala**:
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat aming pinagsisikapang maging tumpak, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o di-tiyak na impormasyon. Ang orihinal na dokumento sa wikang pinagmulan nito ang dapat ituring na pinakamalawak na sanggunian. Para sa mga mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasaling-tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring magmula sa paggamit ng pagsasaling ito.
+**Paunawa**:  
+Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat nagsusumikap kami para sa katumpakan, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o kamalian. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na pinagsanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na magmumula sa paggamit ng pagsasaling ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

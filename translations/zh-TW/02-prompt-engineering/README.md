@@ -1,86 +1,86 @@
-# Module 02: 使用 GPT-5.2 的提示工程
+# Module 02: 使用 GPT-5.2 進行提示工程
 
 ## 目錄
 
-- [你將學到什麼](../../../02-prompt-engineering)
+- [您將學習什麼](../../../02-prompt-engineering)
 - [先決條件](../../../02-prompt-engineering)
 - [了解提示工程](../../../02-prompt-engineering)
 - [提示工程基礎](../../../02-prompt-engineering)
-  - [零次提示](../../../02-prompt-engineering)
-  - [少量示例提示](../../../02-prompt-engineering)
-  - [思維鏈提示](../../../02-prompt-engineering)
-  - [基於角色的提示](../../../02-prompt-engineering)
+  - [零次示例提示](../../../02-prompt-engineering)
+  - [少次示例提示](../../../02-prompt-engineering)
+  - [思維鏈](../../../02-prompt-engineering)
+  - [角色基礎提示](../../../02-prompt-engineering)
   - [提示模板](../../../02-prompt-engineering)
 - [進階模式](../../../02-prompt-engineering)
-- [使用現有的 Azure 資源](../../../02-prompt-engineering)
+- [使用現有 Azure 資源](../../../02-prompt-engineering)
 - [應用程式截圖](../../../02-prompt-engineering)
-- [探索這些模式](../../../02-prompt-engineering)
-  - [低積極 vs 高積極](../../../02-prompt-engineering)
+- [探索模式](../../../02-prompt-engineering)
+  - [低慾望 vs 高慾望](../../../02-prompt-engineering)
   - [任務執行（工具前言）](../../../02-prompt-engineering)
-  - [自我反思程式碼](../../../02-prompt-engineering)
+  - [自我反思代碼](../../../02-prompt-engineering)
   - [結構化分析](../../../02-prompt-engineering)
   - [多輪對話](../../../02-prompt-engineering)
   - [逐步推理](../../../02-prompt-engineering)
-  - [受限輸出](../../../02-prompt-engineering)
-- [你真正學到的內容](../../../02-prompt-engineering)
+  - [限制輸出](../../../02-prompt-engineering)
+- [您真正學習的是什麼](../../../02-prompt-engineering)
 - [下一步](../../../02-prompt-engineering)
 
-## 你將學到什麼
+## 您將學習什麼
 
-<img src="../../../translated_images/zh-TW/what-youll-learn.c68269ac048503b2.webp" alt="你將學到什麼" width="800"/>
+<img src="../../../translated_images/zh-TW/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-在上一個模組中，你了解了記憶如何促進對話式 AI，並使用 GitHub Models 進行基本互動。現在我們將專注於你如何提問——提示本身——使用 Azure OpenAI 的 GPT-5.2。你如何結構提示，會大大影響你獲得回答的質量。我們先回顧基本提示技術，再進入八種進階模式，充分利用 GPT-5.2 的能力。
+在上一個模組中，您瞭解了記憶如何促進對話式 AI，並使用 GitHub 模型進行基本互動。現在，我們將專注於您如何提問——也就是提示本身——使用 Azure OpenAI 的 GPT-5.2。您如何結構提示會極大影響您得到的回應品質。我們從複習基本提示技巧開始，然後介紹八個進階模式，充分利用 GPT-5.2 的功能。
 
-我們使用 GPT-5.2 是因為它引入了推理控制——你可以告訴模型在回答前要思考多少。這讓不同提示策略更加明顯，也有助於你了解何時使用哪種方法。相比 GitHub Models，我們還能享受 Azure 對 GPT-5.2 較低的速率限制。
+我們選擇 GPT-5.2 是因為它引入了推理控制——您可以告訴模型在回答前要思考多少。這使得不同提示策略更明顯，也幫助您理解何時使用每種方法。我們還會受益於 Azure 對 GPT-5.2 的較少速率限制，與 GitHub 模型相比有優勢。
 
 ## 先決條件
 
-- 完成模組 01（已部署 Azure OpenAI 資源）
-- 根目錄中有 `.env` 檔案包含 Azure 認證（由模組 01 中 `azd up` 建立）
+- 已完成模組 01（Azure OpenAI 資源已部署）
+- 根目錄下有含 Azure 憑證的 `.env` 檔案（由模組 01 中的 `azd up` 創建）
 
-> **注意：** 如果你還沒完成模組 01，請先跟隨那邊的部署指南。
+> **注意：** 如果您尚未完成模組 01，請先依指示完成部署。
 
 ## 了解提示工程
 
-<img src="../../../translated_images/zh-TW/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="什麼是提示工程？" width="800"/>
+<img src="../../../translated_images/zh-TW/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
-提示工程是設計輸入文本，使你能穩定取得想要結果。它不只是問問題——而是結構化請求，讓模型完全理解你想要什麼，如何給出答案。
+提示工程是設計輸入文本以穩定獲得所需結果的技術。它不只是問問題——而是構造請求，讓模型完全理解您想要什麼以及如何提供。
 
-可以想像像是在給同事下指令。「修 bug」很模糊，「在 UserService.java 第 45 行透過加上 null 檢查修正 null pointer 例外」則很具體。語言模型也是如此——具體和結構很重要。
+想像您在給同事指示。單說「修復錯誤」太含糊。「在 UserService.java 第45行對空指標異常加個空值檢查來修復」則具體。語言模型也是如此——具體且有結構的提示非常重要。
 
-<img src="../../../translated_images/zh-TW/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="LangChain4j 的定位" width="800"/>
+<img src="../../../translated_images/zh-TW/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-LangChain4j 提供基礎架構——模型連接、記憶與訊息類型——而提示模式只是你透過這些基礎架構傳遞的精心結構化文本。關鍵組件是 `SystemMessage`（設定 AI 的行為與角色）跟 `UserMessage`（攜帶你的實際請求）。
+LangChain4j 提供基礎設施——模型連接、記憶和訊息類型——而提示模式就是透過這個基礎設施傳送的精心結構化文本。關鍵組件是 `SystemMessage`（設定 AI 行為與角色）和 `UserMessage`（承載您的實際請求）。
 
 ## 提示工程基礎
 
-<img src="../../../translated_images/zh-TW/five-patterns-overview.160f35045ffd2a94.webp" alt="五種提示工程模式概述" width="800"/>
+<img src="../../../translated_images/zh-TW/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-在進入本模組進階模式前，先回顧五種基礎提示技巧。這是每個提示工程師都應該知道的基本組件。如果你曾經使用過[快速入門模組](../00-quick-start/README.md#2-prompt-patterns)，你應該已見過這些實作——這是背後的概念框架。
+在進入本模組的進階模式之前，先回顧五個基礎提示技術。這些是每位提示工程師必須了解的基礎組件。如果您已經學過[快速入門模組](../00-quick-start/README.md#2-prompt-patterns)，您應該已經看過它們的實作——這裡提供它們的概念框架。
 
-### 零次提示
+### 零次示例提示
 
-最簡單的方法：給模型直接指示，無須範例。模型完全依賴訓練來理解和執行任務。這適合預期行為明確的直接請求。
+最簡單的方法：給模型直接指令，不帶示例。模型完全依賴訓練來理解且執行任務。這適合明確且直接的請求。
 
-<img src="../../../translated_images/zh-TW/zero-shot-prompting.7abc24228be84e6c.webp" alt="零次提示" width="800"/>
+<img src="../../../translated_images/zh-TW/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-*無範例的直接指示——模型從指令中推斷任務*
+*直接指令沒有示例——模型從指令推斷任務*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// 回應："正面"
+// 回應:「正面」
 ```
 
-**使用時機：** 簡單的分類、直接問題、翻譯，或模型能無需額外指導處理的任務。
+**何時使用：** 簡單分類、直接問句、翻譯，或模型不需額外指導即可處理的任務。
 
-### 少量示例提示
+### 少次示例提示
 
-提供範例來示範你希望模型遵循的模式。模型從你給的範例學習預期的輸入輸出格式，並應用於新輸入。這能大幅提升欲求格式或行為不明顯任務的一致性。
+提供示例以展示您希望模型遵循的模式。模型從示例學習預期輸入輸出格式，並應用於新輸入。大幅提升目標格式或行為不明顯任務的一致性。
 
-<img src="../../../translated_images/zh-TW/few-shot-prompting.9d9eace1da88989a.webp" alt="少量示例提示" width="800"/>
+<img src="../../../translated_images/zh-TW/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-*從範例中學習——模型辨識模式並套用於新輸入*
+*從示例學習——模型識別模式並套用於新輸入*
 
 ```java
 String prompt = """
@@ -97,15 +97,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**使用時機：** 自訂分類、一致格式、領域特定任務，或零次提示結果不穩定時。
+**何時使用：** 自訂分類、一致格式化、特定領域任務，或零次示例結果不穩定時。
 
-### 思維鏈提示
+### 思維鏈
 
-請模型展示逐步推理。模型不會直接跳到答案，而是將問題拆解，逐步處理每部分。這提升數學、邏輯、多步推理等任務的準確度。
+要求模型一步步顯示推理過程。模型不直接跳到答案，而是拆解問題並逐步處理。提升數學、邏輯與多步推理任務的準確度。
 
-<img src="../../../translated_images/zh-TW/chain-of-thought.5cff6630e2657e2a.webp" alt="思維鏈提示" width="800"/>
+<img src="../../../translated_images/zh-TW/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*逐步推理——將複雜問題拆解成明確邏輯步驟*
+*逐步推理——將複雜問題拆解為明確邏輯步驟*
 
 ```java
 String prompt = """
@@ -118,15 +118,15 @@ String response = model.chat(prompt);
 // 模型顯示：15 - 8 = 7，然後 7 + 12 = 19 個蘋果
 ```
 
-**使用時機：** 數學問題、邏輯謎題、除錯，或任何透過展示推理過程提升準確度與信任感的任務。
+**何時使用：** 數學題、邏輯謎題、調試，或任何顯示推理過程可提升準確性與信任的任務。
 
-### 基於角色的提示
+### 角色基礎提示
 
-在提問前設定 AI 角色或身分。此上下文會調整回答的語氣、深度與重點。比方說「軟體架構師」會提供不同於「初級開發者」或「資安稽核員」的建議。
+在提出問題前設定 AI 的角色或身分。這提供背景，影響回答的口吻、深度與重點。「軟體架構師」與「新手開發者」或「安全稽核員」給出的建議會不同。
 
-<img src="../../../translated_images/zh-TW/role-based-prompting.a806e1a73de6e3a4.webp" alt="基於角色的提示" width="800"/>
+<img src="../../../translated_images/zh-TW/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-*設定上下文與身分——同樣問題依角色分別得到不同回答*
+*設定背景與角色——相同問題依分配角色產生不同回應*
 
 ```java
 String prompt = """
@@ -142,15 +142,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**使用時機：** 程式碼審查、輔導、領域分析，或需要針對特定專業層級或觀點定製回答時。
+**何時使用：** 程式碼審查、教學、特定領域分析，或需要針對專業層級或視角量身定制回答時。
 
 ### 提示模板
 
-建立可重複使用且含變數佔位符的提示。不是每次都寫新提示，而是定義一個模板，根據情況填入不同值。LangChain4j 的 `PromptTemplate` 類利用 `{{variable}}` 語法方便實現。
+建立可重複使用且帶變數佔位符的提示。無需每次都寫新提示，只需定義一次模板並填入不同值。LangChain4j 的 `PromptTemplate` 類用 `{{variable}}` 語法使此更簡單。
 
-<img src="../../../translated_images/zh-TW/prompt-templates.14bfc37d45f1a933.webp" alt="提示模板" width="800"/>
+<img src="../../../translated_images/zh-TW/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
-*可重用且帶變數佔位符的提示——一個模板，多種用途*
+*帶變數佔位符的可重複使用提示——一個模板，多種應用*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,25 +165,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**使用時機：** 重複查詢但輸入不同、批次處理、構建可重用 AI 流程，或任何提示結構固定、資料改變的場景。
+**何時使用：** 多次查詢但輸入不同、批次處理、建立可重用 AI 工作流，或提示結構不變但資料變動的場景。
 
 ---
 
-這五個基礎技巧讓你擁有大多數提示任務的堅實工具組。本模組的其餘內容基於此，展開八種利用 GPT-5.2 的推理控制、自我評價與結構化輸出能力的**進階模式**。
+這五個基礎提供了大部分提示任務的堅實工具。此模組其餘內容基於它們，加入了 **八個進階模式**，利用 GPT-5.2 的推理控制、自我評估與結構化輸出能力。
 
 ## 進階模式
 
-基礎說明完畢，現在來看使本模組獨特的八種進階模式。不是所有問題都適合用同一方法。有些問題要快速回答，有些需深入思考。有些需要可見推理，有些只要結果。以下每種模式都針對不同場景優化——而 GPT-5.2 的推理控制讓差異更明顯。
+打下基礎後，來看看使本模組獨特的八個進階模式。不是所有問題都用同樣方法。有些問題需要快速回答，有些需要深度思考。有些需要顯示推理過程，有些只要結果。以下每個模式針對不同場景優化——GPT-5.2 的推理控制讓這些差異更加明顯。
 
-<img src="../../../translated_images/zh-TW/eight-patterns.fa1ebfdf16f71e9a.webp" alt="八種提示模式" width="800"/>
+<img src="../../../translated_images/zh-TW/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
-*八種提示工程模式與其使用場合總覽*
+*八種提示工程模式及其應用概覽*
 
-<img src="../../../translated_images/zh-TW/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="GPT-5.2 的推理控制" width="800"/>
+<img src="../../../translated_images/zh-TW/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
 
-*GPT-5.2 的推理控制讓你指定模型思考程度——從快速直接答案到深入探索*
+*GPT-5.2 的推理控制可指定模型思考深度——從快速直接回答到深度探索*
 
-**低積極（快速且聚焦）** - 適用於你想要快速直接回答的簡單問題。模型推理步驟少，最多 2 步。用在計算、查詢或直接問題。
+**低慾望（快速且專注）** - 用於簡單問題，需要快速、直接回答。模型進行最少推理——最多兩步。適用於計算、查詢或直接問答。
 
 ```java
 String prompt = """
@@ -202,12 +202,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **用 GitHub Copilot 探索：**開啟 [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) 並問：
-> - 「低積極和高積極提示模式差異是什麼？」
-> - 「提示中的 XML 標籤如何幫助結構化 AI 回答？」
-> - 「什麼時候該用自我反思模式，什麼時候該直接指令？」
+> 💡 **使用 GitHub Copilot 探索：** 開啟 [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) 並詢問：
+> - 「低慾望與高慾望提示模式有何不同？」
+> - 「提示中的 XML 標籤如何幫助結構化 AI 回應？」
+> - 「何時應使用自我反思模式，何時使用直接指令？」
 
-**高積極（深入且全面）** - 適用於你想要全面分析的複雜問題。模型徹底挖掘並展示詳細推理。適合系統設計、架構決策或複雜研究。
+**高慾望（深入且徹底）** - 用於複雜問題，需要全面分析。模型深入探索並展示詳盡推理。適用系統設計、架構決策或複雜研究。
 
 ```java
 String prompt = """
@@ -221,7 +221,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**任務執行（逐步進度）** - 用於多步驟工作流程。模型提供前置計畫，逐步敘述過程後給出總結。適用遷移、實作或任何多步流程。
+**任務執行（逐步進展）** - 適用多步工作流程。模型提供前置計劃，邊執行邊說明每步，最後給出摘要。用於遷移、實作或其他多步驟流程。
 
 ```java
 String prompt = """
@@ -259,18 +259,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-思維鏈提示明確要求模型展示推理過程，提升複雜任務的準確度。逐步拆解幫助人類與 AI 理解邏輯。
+思維鏈提示明確要求模型展示推理過程，提升複雜任務準確度。逐步拆解讓人與 AI 均能理解邏輯。
 
-> **🤖 用 [GitHub Copilot](https://github.com/features/copilot) Chat 試試：**問這個模式：
-> - 「如何為長時間運作任務調整任務執行模式？」
-> - 「在生產應用中如何結構化工具前言較佳？」
-> - 「如何擷取並在 UI 顯示中間進度？」
+> **🤖 嘗試 [GitHub Copilot](https://github.com/features/copilot) Chat：** 詢問此模式：
+> - 「如何為長時間運行作業調整任務執行模式？」
+> - 「生產環境中如何最佳結構化工具前言？」
+> - 「如何捕捉並在 UI 中顯示中間進度更新？」
 
-<img src="../../../translated_images/zh-TW/task-execution-pattern.9da3967750ab5c1e.webp" alt="任務執行模式" width="800"/>
+<img src="../../../translated_images/zh-TW/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
-*計畫 → 執行 → 總結的多步任務流程*
+*計劃 → 執行 → 總結多步任務工作流程*
 
-**自我反思程式碼** - 生成符合生產標準的高品質程式碼。模型產生具備完善錯誤處理的程式碼。用於開發新功能或服務。
+**自我反思代碼** - 用於產生符合生產標準的代碼。模型依產業標準產生含適當錯誤處理的高品質代碼。用於建立新功能或服務。
 
 ```java
 String prompt = """
@@ -281,11 +281,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-TW/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="自我反思循環" width="800"/>
+<img src="../../../translated_images/zh-TW/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
-*迭代改善迴圈——生成、評估、識別問題、改進，重複*
+*迭代改進循環——生成、評估、識別問題、改良、重複*
 
-**結構化分析** - 用於一致性評估。模型依固定框架（正確性、慣例、效能、安全、可維護性）審查程式碼。適用程式碼審查或品質評估。
+**結構化分析** - 用於一致性評估。模型以固定框架審核代碼（正確性、實務、效能、安全性、可維護性）。用於程式碼審查或品質評估。
 
 ```java
 String prompt = """
@@ -333,16 +333,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 用 [GitHub Copilot](https://github.com/features/copilot) Chat 試試：**問結構化分析：
-> - 「如何針對不同程式碼審查自訂分析框架？」
-> - 「以程式方式解析與處理結構化輸出最佳方案？」
-> - 「如何確保不同審查會議中的嚴重程度一致？」
+> **🤖 嘗試 [GitHub Copilot](https://github.com/features/copilot) Chat：** 詢問結構化分析：
+> - 「如何針對不同類型代碼審查客製化分析框架？」
+> - 「以程式化方式解析並處理結構化輸出，有何最佳做法？」
+> - 「如何確保不同審查會議間嚴重性等級的一致性？」
 
-<img src="../../../translated_images/zh-TW/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="結構化分析模式" width="800"/>
+<img src="../../../translated_images/zh-TW/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
-*促進具嚴重度分級的一致程式碼審查框架*
+*用於一致程式碼審查及嚴重性分類的框架*
 
-**多輪對話** - 適用於需要上下文的對話。模型記憶先前訊息並沿用。用於互動幫助或複雜問答。
+**多輪對話** - 用於需上下文的對話。模型記憶前訊息並在此基礎回應。適用於互動輔助或複雜問答。
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -356,11 +356,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/zh-TW/context-memory.dff30ad9fa78832a.webp" alt="上下文記憶" width="800"/>
+<img src="../../../translated_images/zh-TW/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
-*對話上下文隨多輪累積直到達令牌限制*
+*對話上下文在多輪間累積直至達標記限制*
 
-**逐步推理** - 用於需要邏輯可視化的問題。模型展示每步明確推理。用在數學問題、邏輯謎題，或你想理解思考過程時。
+**逐步推理** - 用於需展現邏輯的問題。模型明確展出每步推理。適合數學題、邏輯謎題，或需理解思考過程時。
 
 ```java
 String prompt = """
@@ -374,11 +374,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-TW/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="逐步模式" width="800"/>
+<img src="../../../translated_images/zh-TW/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
-*將問題拆成明確邏輯步驟*
+*將問題拆解為明確邏輯步驟*
 
-**受限輸出** - 用於回答需特定格式要求。模型嚴格遵從格式與長度規則。適合摘要或需要精確輸出的情況。
+**限制輸出** - 適用於需遵守特定格式要求的回應。模型嚴格遵循格式及長度規則。適用摘要或需精確輸出結構時。
 
 ```java
 String prompt = """
@@ -394,37 +394,37 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/zh-TW/constrained-output-pattern.0ce39a682a6795c2.webp" alt="受限輸出模式" width="800"/>
+<img src="../../../translated_images/zh-TW/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
-*強制特定格式、長度與結構的要求*
+*強制執行特定格式、長度與結構要求*
 
-## 使用現有的 Azure 資源
+## 使用現有 Azure 資源
 
-**確認部署：**
+**驗證部署：**
 
-確保根目錄存在 `.env` 檔案，內含 Azure 認證（模組 01 部署時建立）：
+確保根目錄中存在含 Azure 憑證的 `.env` 檔案（在模組 01 期間建立）：
 ```bash
 cat ../.env  # 應該顯示 AZURE_OPENAI_ENDPOINT、API_KEY、DEPLOYMENT
 ```
 
 **啟動應用程式：**
 
-> **注意：** 如果你已透過模組 01 的 `./start-all.sh` 啟動所有服務，本模組已在 8083 端口運行。可跳過下列啟動步驟，直接訪問 http://localhost:8083 。
+> **注意：** 如果您已使用模組 01 中的 `./start-all.sh` 啟動所有應用程式，本模組已於 8083 埠上運行。您可以跳過以下啟動指令，直接前往 http://localhost:8083。
 
-**選項 1：使用 Spring Boot 儀表板（建議 VS Code 使用者）**
+**選項 1：使用 Spring Boot Dashboard（建議 VS Code 使用者）**
 
-開發容器內含 Spring Boot 儀表板擴充功能，提供管理所有 Spring Boot 應用的視覺介面。你可以在 VS Code 左側活動欄中找到（尋找 Spring Boot 圖示）。
+開發容器已包含 Spring Boot Dashboard 擴充，提供視覺化界面管理所有 Spring Boot 應用程式。您可在 VS Code 左側活動列找到（尋找 Spring Boot 圖示）。
 
-從 Spring Boot 儀表板，你可以：
-- 查看工作區所有可用 Spring Boot 應用
-- 一鍵啟動或停止應用
-- 實時查看應用程式日誌
+透過 Spring Boot Dashboard，您可以：
+- 查看工作區中所有可用 Spring Boot 應用
+- 一鍵啟動/停止應用程式
+- 即時檢視應用日誌
 - 監控應用狀態
-只要點擊「prompt-engineering」旁邊的播放按鈕即可啟動此模組，或一次啟動所有模組。
+只需點擊「prompt-engineering」旁的播放按鈕即可啟動此模組，或一次啟動所有模組。
 
 <img src="../../../translated_images/zh-TW/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**選項二：使用 shell 腳本**
+**選項 2：使用 shell 腳本**
 
 啟動所有網頁應用程式（模組 01-04）：
 
@@ -436,11 +436,11 @@ cd ..  # 從根目錄
 
 **PowerShell:**
 ```powershell
-cd ..  # 從根目錄開始
+cd ..  # 從根目錄
 .\start-all.ps1
 ```
 
-或者只啟動此模組：
+或只啟動此模組：
 
 **Bash:**
 ```bash
@@ -454,9 +454,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-兩個腳本都會自動從專案根目錄的 `.env` 檔案載入環境變數，並在 JAR 檔案不存在時自動編譯。
+兩個腳本會自動從根目錄的 `.env` 檔載入環境變數，並在 JAR 不存在時編譯它們。
 
-> **注意：** 如果你想要手動先編譯所有模組，再啟動的話：
+> **注意：** 如果您想在啟動前手動編譯所有模組：
 >
 > **Bash:**
 > ```bash
@@ -470,14 +470,14 @@ cd 02-prompt-engineering
 > mvn clean package -DskipTests
 > ```
 
-請在瀏覽器中打開 http://localhost:8083 。
+在瀏覽器中開啟 http://localhost:8083 。
 
-**停止方式：**
+**停止指令：**
 
 **Bash:**
 ```bash
-./stop.sh  # 僅此模組
-# 或
+./stop.sh  # 僅限此模組
+# 或者
 cd .. && ./stop-all.sh  # 所有模組
 ```
 
@@ -488,97 +488,69 @@ cd .. && ./stop-all.sh  # 所有模組
 cd ..; .\stop-all.ps1  # 所有模組
 ```
 
-## 應用程式畫面截圖
+## 應用程式截圖
 
 <img src="../../../translated_images/zh-TW/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*主控台顯示所有 8 種提示工程模式及其特性與使用案例*
+*主儀表板展示所有 8 種 prompt 設計模式以及它們的特性和應用案例*
 
-## 探索提示模式
+## 探索這些模式
 
-網頁介面讓你可以嘗試不同的提示策略。每種模式解決不同的問題——試試看它們各自何時最適用。
+這個網頁介面讓你試驗不同的提示策略。每種模式解決不同問題——試試看它們，了解每種方法的最佳使用時機。
 
-### 低積極度 vs 高積極度
+> **注意：串流與非串流** — 每個模式頁面都有兩個按鈕：**🔴 即時串流回應（Live）** 和 **非串流** 選項。串流使用伺服器推送事件（SSE）即時顯示模型生成的字元，所以你會立即看到進度。非串流則會等整個回應完成後才顯示。對於需要深入推理的提示（例如，高積極性、反思式程式碼），非串流呼叫可能花很長時間——有時甚至幾分鐘，且沒有任何顯示回饋。**嘗試複雜提示時建議使用串流**，這樣你才能看到模型運作，並避免誤以為請求已逾時。
+>
+> **注意：瀏覽器需求** — 串流功能使用 Fetch Streams API（`response.body.getReader()`），需要完整版瀏覽器（Chrome、Edge、Firefox、Safari）。VS Code 內建的 Simple Browser 不支援此 API，因此無法串流。若使用 Simple Browser，非串流按鈕仍正常運作，只有串流按鈕會受到影響。建議在外部瀏覽器中開啟 `http://localhost:8083` 以獲得完整體驗。
 
-使用低積極度問一個簡單問題，例如「200 的 15% 是多少？」你會立即得到直接答案。現在用高積極度問一個複雜問題，如「為高流量 API 設計緩存策略」。你會看到模型放慢速度並給出詳細推理。模型與問題結構相同——但提示告訴它要進行多少思考。
+### 低積極性 vs 高積極性
 
-<img src="../../../translated_images/zh-TW/low-eagerness-demo.898894591fb23aa0.webp" alt="Low Eagerness Demo" width="800"/>
+用低積極性問一個簡單問題，比如「200 的 15% 是多少？」你會迅速得到直接答案。接著用高積極性問一個複雜問題，如「設計高流量 API 的快取策略」。點擊 **🔴 即時串流回應（Live）**，觀察模型以字元為單位逐步產生詳細推理結果。模型與問題結構相同，但提示告訴它要思考多少。
 
-*迅速計算，幾乎不需推理*
+### 任務執行（工具預備語）
 
-<img src="../../../translated_images/zh-TW/high-eagerness-demo.4ac93e7786c5a376.webp" alt="High Eagerness Demo" width="800"/>
+多步驟工作流程受益於事前規劃與過程解說。模型會先列出它將執行的內容，逐步解說每一步，最後總結結果。
 
-*全面的緩存策略說明 (2.8MB)*
+### 反思式程式碼
 
-### 任務執行（工具前言）
-
-多步驟工作流程受益於事先規劃和過程描述。模型會列出其執行步驟，逐步講解，最後總結結果。
-
-<img src="../../../translated_images/zh-TW/tool-preambles-demo.3ca4881e417f2e28.webp" alt="Task Execution Demo" width="800"/>
-
-*以逐步講解方式建立 REST 端點（3.9MB）*
-
-### 自我反思程式碼
-
-嘗試「建立電子郵件驗證服務」。模型不只是產生程式碼後停止，而是生成、根據品質標準評估、找出弱點並改進。你會看到它不斷迭代直到程式碼達到生產標準。
-
-<img src="../../../translated_images/zh-TW/self-reflecting-code-demo.851ee05c988e743f.webp" alt="Self-Reflecting Code Demo" width="800"/>
-
-*完整的電子郵件驗證服務 (5.2MB)*
+嘗試「建立一個電子郵件驗證服務」。模型不只是生成程式碼後停止，它會生成後評估品質標準，找出缺點並改進。你會看到它反覆迭代直到程式碼達到生產標準。
 
 ### 結構化分析
 
-程式碼審查需要統一評估架構。模型使用固定分類（正確性、實務、效能、安全性）並搭配嚴重等級來分析程式碼。
+程式碼審查需要一致的評估框架。模型使用固定類別（正確性、最佳實踐、效能、安全性）與嚴重程度來分析程式碼。
 
-<img src="../../../translated_images/zh-TW/structured-analysis-demo.9ef892194cd23bc8.webp" alt="Structured Analysis Demo" width="800"/>
+### 多回合聊天
 
-*基於框架的程式碼審查*
-
-### 多輪對話
-
-先問「什麼是 Spring Boot？」然後緊接著問「給我一個範例」。模型會記住你的第一個問題，專門給你一個 Spring Boot 範例。若無記憶能力，第二個問題會太模糊。
-
-<img src="../../../translated_images/zh-TW/multi-turn-chat-demo.0d2d9b9a86a12b4b.webp" alt="Multi-Turn Chat Demo" width="800"/>
-
-*跨問題的上下文保存*
+問「什麼是 Spring Boot？」接著馬上追問「給我一個範例」。模型會記得你的第一個問題，並專門提供一個 Spring Boot 範例。如果沒有記憶，第二個問題會太模糊。
 
 ### 逐步推理
 
-挑一個數學問題，分別用逐步推理與低積極度嘗試。低積極度只給答案——快速但不透明。逐步推理會顯示每個計算與決策過程。
+選一個數學問題，分別使用逐步推理和低積極性來嘗試。低積極性快速給答案，但不透明；逐步推理則展示每個計算和決策。
 
-<img src="../../../translated_images/zh-TW/step-by-step-reasoning-demo.12139513356faecd.webp" alt="Step-by-Step Reasoning Demo" width="800"/>
+### 受限輸出
 
-*明確步驟的數學問題解答*
-
-### 限制輸出
-
-當你需要特定格式或字數時，這個模式可嚴格遵守規範。試試用 100 個字且列點格式產生摘要。
-
-<img src="../../../translated_images/zh-TW/constrained-output-demo.567cc45b75da1633.webp" alt="Constrained Output Demo" width="800"/>
-
-*機器學習摘要，具格式控制*
+當你需要特定格式或字數時，此模式強制嚴格遵守。試著產生一篇精確 100 字的摘要，以項目符號表示。
 
 ## 你真正學到的是什麼
 
-**推理力度改變一切**
+**推理的努力改變一切**
 
-GPT-5.2 讓你透過提示控制計算力度。低力度代表快速回應且少探究。高力度代表模型花時間深入思考。你正在學習匹配力度與任務複雜度——簡單問題不要浪費時間，複雜決策也別倉促。
+GPT-5.2 讓你可透過提示控制計算努力程度。努力低代表快速回應，探索少。努力高代表模型花時間深入思考。你在學習如何依任務複雜度匹配努力——簡單問題不浪費時間，複雜決策也不需急躁。
 
 **結構引導行為**
 
-注意提示中的 XML 標籤？它們不是裝飾。模型比起自由文字，更可靠地遵守結構化指令。當你需要多步驟流程或複雜邏輯時，結構可協助模型追蹤當前與下一步。
+注意 prompt 中的 XML 標籤？它們不是裝飾。模型更可靠地遵守結構化指令，而非自由文本。需要多步驟流程或複雜邏輯時，結構幫助模型追蹤目前階段與接下來流程。
 
 <img src="../../../translated_images/zh-TW/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*結構完整、段落清楚且以 XML 風格組織的提示組成*
+*清楚分段且具 XML 風格組織的 prompt 結構解析*
 
-**透過自我評估提升品質**
+**透過自我評估確保品質**
 
-自我反思模式會明確定義品質標準。不只是希望模型「做對」，而是告訴它「對」的標準：正確邏輯、錯誤處理、效能、安全。模型就能評估自己的輸出並加以改進。讓程式碼生成成為可控的流程，而非運氣。
+反思式模式具體說明品質標準。你不是希望模型「做對」，而是明確告訴它「對」的定義：邏輯正確、錯誤處理、效能、安全。模型才能自行評價輸出並改進。這讓程式碼產生從隨機變成有程序可循。
 
-**上下文是有限資源**
+**上下文有限**
 
-多輪對話運作靠每次請求帶入訊息歷史。但有上限——每個模型都有最大 token 數。隨對話增加，你需要策略維持相關上下文且不超標。本模組會示範記憶運作；未來你將學會何時摘要、何時遺忘、何時檢索。
+多回合對話是透過每次請求帶入訊息歷史實現，但有限制——每個模型都有最大 token 數。對話變長時，你需要策略保留重要上下文、避免超出限制。這個模組教你記憶如何運作；後面會學何時摘要、何時忘記、何時檢索。
 
 ## 下一步
 
@@ -586,11 +558,11 @@ GPT-5.2 讓你透過提示控制計算力度。低力度代表快速回應且少
 
 ---
 
-**導覽：** [← 上一頁：模組 01 - 介紹](../01-introduction/README.md) | [回主選單](../README.md) | [下一頁：模組 03 - RAG →](../03-rag/README.md)
+**導覽：** [← 上一頁：模組 01 - 介紹](../01-introduction/README.md) | [回主頁](../README.md) | [下一頁：模組 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**免責聲明**：
-本文件使用 AI 翻譯服務 [Co-op Translator](https://github.com/Azure/co-op-translator) 進行翻譯。雖然我們力求準確，但請注意自動翻譯可能包含錯誤或不準確之處。原始文件的母語版本應被視為權威來源。對於重要資訊，建議採用專業人工翻譯。我們不對因使用此翻譯而產生的任何誤解或誤釋負責。
+**免責聲明**：  
+本文件使用 AI 翻譯服務 [Co-op Translator](https://github.com/Azure/co-op-translator) 進行翻譯。儘管我們致力於提高準確度，但請注意，機器翻譯可能包含錯誤或不準確之處。原始文件的母語版本應視為權威來源。對於重要資訊，建議採用專業人工翻譯。我們不對因使用本翻譯而產生的任何誤解或誤釋負責。
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

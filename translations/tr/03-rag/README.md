@@ -1,13 +1,13 @@
-# Modül 03: RAG (Retrieval-Augmented Generation)
+# Modül 03: RAG (Arama Destekli Üretim)
 
 ## İçindekiler
 
-- [Neler Öğreneceksiniz](../../../03-rag)
-- [Ön Koşullar](../../../03-rag)
+- [Öğrenecekleriniz](../../../03-rag)
 - [RAG'i Anlamak](../../../03-rag)
+- [Ön Koşullar](../../../03-rag)
 - [Nasıl Çalışır](../../../03-rag)
   - [Belge İşleme](../../../03-rag)
-  - [Embedding Oluşturma](../../../03-rag)
+  - [Gömülü Temsil Oluşturma](../../../03-rag)
   - [Anlamsal Arama](../../../03-rag)
   - [Cevap Üretimi](../../../03-rag)
 - [Uygulamayı Çalıştırma](../../../03-rag)
@@ -18,38 +18,47 @@
   - [Sorularla Deney Yapma](../../../03-rag)
 - [Temel Kavramlar](../../../03-rag)
   - [Parçalama Stratejisi](../../../03-rag)
-  - [Benzerlik Puanları](../../../03-rag)
-  - [Bellek İçi Depolama](../../../03-rag)
+  - [Benzerlik Skorları](../../../03-rag)
+  - [Bellekte Depolama](../../../03-rag)
   - [Bağlam Penceresi Yönetimi](../../../03-rag)
 - [RAG'in Önemi Ne Zaman Artar](../../../03-rag)
 - [Sonraki Adımlar](../../../03-rag)
 
-## Neler Öğreneceksiniz
+## Öğrenecekleriniz
 
-Önceki modüllerde, AI ile nasıl sohbet edileceğini ve istemlerinizi etkili şekilde nasıl yapılandıracağınızı öğrendiniz. Ancak temel bir kısıtlama vardır: dil modelleri yalnızca eğitim sırasında öğrenilenlerle sınırlıdır. Şirket politikalarınız, proje dokümantasyonunuz veya eğitilmediği herhangi bir bilgi hakkında soruları yanıtlayamazlar.
+Önceki modüllerde, AI ile nasıl sohbet edeceğinizi ve istemlerinizi nasıl etkili şekilde yapılandıracağınızı öğrendiniz. Ancak temel bir sınırlama var: dil modelleri sadece eğitim sırasında öğrendiklerini bilir. Şirketinizin politikaları, projenizin dokümantasyonu veya eğitim verilmemiş başka bilgilerle ilgili soruları cevaplayamazlar.
 
-RAG (Retrieval-Augmented Generation) bu sorunu çözer. Modeli bilgilerinize öğretmeye çalışmak (ki bu maliyetli ve pratik olmayan bir yöntemdir) yerine, modele belgeleriniz arasında arama yapabilme yeteneği verirsiniz. Bir soru sorulduğunda, sistem ilgili bilgileri bulur ve isteme ekler. Model ardından o alınan bağlam temelinde yanıt verir.
+RAG (Arama Destekli Üretim) bu sorunu çözer. Modeli bilgilerinizi öğretmeye çalışmak yerine (ki bu pahalı ve pratik değil), modelin belgelerinizde arama yapabilmesi sağlanır. Birisi soru sorduğunda sistem ilgili bilgiyi bulur ve bunu isteme ekler. Model sonra o alınan bağlam üzerinden cevap verir.
 
-RAG'yi modele bir referans kütüphanesi sağlamak olarak düşünün. Bir soru sorduğunuzda, sistem:
+RAG'i modelin bir referans kütüphanesi varmış gibi düşünün. Soru sorulduğunda sistem:
 
-1. **Kullanıcı Sorgusu** - Bir soru sorarsınız
-2. **Embedding** - Sorunuzu vektöre dönüştürür
+1. **Kullanıcı Sorgusu** - Siz soru sorarsınız
+2. **Gömülü Temsil** - Sorunuz vektöre dönüştürülür
 3. **Vektör Araması** - Benzer belge parçalarını bulur
-4. **Bağlam Oluşturma** - İlgili parçaları isteme ekler
-5. **Yanıt** - LLM bağlam temelinde cevap üretir
+4. **Bağlam Toplama** - İlgili parçalar isteme eklenir
+5. **Yanıt** - LLM, bu bağlama dayanarak yanıt üretir
 
-Bu, modelin yanıtlarını eğitim bilgisinden veya uydurmalardan ziyade gerçek verilerinize dayandırır.
+Bu, modelin cevaplarını eğitim bilgisine bağlı kalmak yerine gerçek veriniz üzerine inşa eder.
 
-<img src="../../../translated_images/tr/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
+## RAG'i Anlamak
 
-*RAG iş akışı - kullanıcı sorgusundan anlamsal arama ve bağlamsal yanıt üretimine*
+Aşağıdaki diyagram temel kavramı gösterir: modelin sadece eğitim verisine güvenmek yerine, her cevabı üretmeden önce danışabileceği belgelerden oluşan bir referans kütüphanesi verilir.
+
+<img src="../../../translated_images/tr/what-is-rag.1f9005d44b07f2d8.webp" alt="RAG Nedir" width="800"/>
+
+Parçaların baştan sona nasıl bağlandığını gösteren şema. Kullanıcının sorusu dört aşamadan geçer — gömülü temsil, vektör arama, bağlam toplama ve cevap üretimi — her biri bir öncekine dayanır:
+
+<img src="../../../translated_images/tr/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Mimarisi" width="800"/>
+
+Modülün geri kalanı, çalıştırabileceğiniz ve değiştirebileceğiniz kodla her aşamayı ayrıntılı olarak anlatır.
 
 ## Ön Koşullar
 
 - Modül 01 tamamlandı (Azure OpenAI kaynakları dağıtıldı)
-- Kök dizinde Azure kimlik bilgilerini içeren `.env` dosyası mevcut (Modül 01’de `azd up` komutuyla oluşturuldu)
+- Kök dizinde Azure kimlik bilgileri içeren `.env` dosyası (Modül 01'de `azd up` komutuyla oluşturuldu)
 
-> **Not:** Modül 01’i tamamlamadıysanız, önce oradaki dağıtım talimatlarını izleyin.
+> **Not:** Modül 01'i tamamlamadıysanız, dağıtım talimatlarını orada ilk uygulayın.
+
 
 ## Nasıl Çalışır
 
@@ -57,27 +66,33 @@ Bu, modelin yanıtlarını eğitim bilgisinden veya uydurmalardan ziyade gerçek
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Bir belge yüklediğinizde, sistem onu dil modelinin bağlam penceresine rahatlıkla sığacak daha küçük parçalara böler. Bu parçalar, sınırlarında bağlam kaybını önlemek için biraz üst üste biner.
+Bir belge yüklediğinizde, sistem onu çözer (PDF veya düz metin), dosya adı gibi meta veriler ekler ve sonra belgeleri modelin bağlam penceresine rahat sığacak şekilde, küçük parçalara böler. Bu parçalar sınırda bağlam kaybı olmaması için biraz birbirleriyle kesişir.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("sample-document.txt");
+// Yüklenen dosyayı ayrıştır ve LangChain4j Belgesi içine sar
+Document document = Document.from(content, metadata);
 
+// 30 token örtüşmeyle 300 tokenlik parçalara böl
 DocumentSplitter splitter = DocumentSplitters
-    .recursive(300, 30, new OpenAiTokenizer());
+    .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) dosyasını açın ve sorun:
-> - "LangChain4j dokümanları parçalara nasıl böler ve üst üste binme neden önemlidir?"
-> - "Farklı belge türleri için ideal parça boyutu nedir ve neden?"
-> - "Birden fazla dilde olan veya özel biçimlendirmeye sahip belgelerle nasıl başa çıkarım?"
+Aşağıdaki diyagram bunu görsel olarak gösterir. Her parça komşularıyla biraz token paylaşır — 30 tokenlık üst üste binme önemli bağlamın yok olmasını engeller:
 
-### Embedding Oluşturma
+<img src="../../../translated_images/tr/document-chunking.a5df1dd1383431ed.webp" alt="Belge Parçalama" width="800"/>
+
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) dosyasını açın ve sorun:
+> - "LangChain4j belgeleri parçalara nasıl ayırıyor ve kesişmenin önemi nedir?"
+> - "Farklı belge türleri için optimal parça boyutu nedir ve neden?"
+> - "Çok dilli veya özel formatlı belgeleri nasıl yönetirim?"
+
+### Gömülü Temsil Oluşturma
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Her parça, embedding denilen sayısal bir temsile dönüştürülür — metnin anlamını yakalayan matematiksel bir parmak izi gibi. Benzer metinler benzer embedding’ler üretir.
+Her parça metin anlamını yakalayan matematiksel parmak izi gibi sayısal bir gösterime, yani gömülü temsile dönüştürülür. Benzer metinler benzer gömülü temsiller üretir.
 
 ```java
 @Bean
@@ -93,21 +108,31 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-<img src="../../../translated_images/tr/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
+Aşağıdaki sınıf diyagramı bu LangChain4j bileşenlerinin nasıl bağlandığını gösterir. `OpenAiOfficialEmbeddingModel` metni vektöre dönüştürür, `InMemoryEmbeddingStore` vektörleri orijinal `TextSegment` verisiyle birlikte tutar, `EmbeddingSearchRequest` ise `maxResults` ve `minScore` gibi getirme parametrelerini kontrol eder:
 
-*Embedding uzayında vektörlerle temsil edilen belgeler - benzer içerikler kümelenir*
+<img src="../../../translated_images/tr/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Sınıfları" width="800"/>
+
+Gömülü temsiller depolandıktan sonra benzer içerikler vektör alanında doğal olarak kümelenir. Aşağıdaki görsel, ilgili konulardaki belgelerin yakın noktalar olarak nasıl gruplanabileceğini gösterir — bu anlamsal aramayı mümkün kılar:
+
+<img src="../../../translated_images/tr/vector-embeddings.2ef7bdddac79a327.webp" alt="Vektör Gömülü Temsil Alanı" width="800"/>
 
 ### Anlamsal Arama
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Bir soru sorduğunuzda, soru da embedding olarak dönüştürülür. Sistem, sorunuzun embedding’ini tüm belge parçalarının embedding’leriyle karşılaştırır. En benzer anlamlara sahip parçaları bulur — sadece anahtar kelime eşleşmesi değil, gerçek anlamsal benzerlik.
+Soru sorduğunuzda, sorunuz da gömülü temsile dönüştürülür. Sistem, sorunuzun gömülü temsili ile tüm belge parçalarının gömülü temsillerini karşılaştırır. En benzer anlamda olan parçaları bulur — sadece anahtar kelime eşleşmesi değil, gerçek anlamsal benzerlik.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
 
-List<EmbeddingMatch<TextSegment>> matches = 
-    embeddingStore.findRelevant(queryEmbedding, 5, 0.7);
+EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
+    .queryEmbedding(queryEmbedding)
+    .maxResults(5)
+    .minScore(0.5)
+    .build();
+
+EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(searchRequest);
+List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
 
 for (EmbeddingMatch<TextSegment> match : matches) {
     String relevantText = match.embedded().text();
@@ -115,51 +140,78 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
 
+Aşağıdaki diyagram, anlamsal aramayı geleneksel anahtar kelime aramasıyla karşılaştırır. "Araç" kelimesi için anahtar kelime araması "arabalar ve kamyonlar" hakkında olan parçayı kaçırır, ama anlamsal arama bunların aynı anlama geldiğini anlar ve yüksek skorla sonucu döndürür:
+
+<img src="../../../translated_images/tr/semantic-search.6b790f21c86b849d.webp" alt="Anlamsal Arama" width="800"/>
+
 > **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) dosyasını açın ve sorun:
-> - "Benzerlik araması embedding’lerle nasıl çalışır ve skoru ne belirler?"
+> - "Benzerlik araması gömülü temsillerle nasıl çalışır ve skoru ne belirler?"
 > - "Hangi benzerlik eşik değerini kullanmalıyım ve sonuçları nasıl etkiler?"
-> - "İlgili belge bulunamadığında nasıl davranılır?"
+> - "İlgili belge bulunamadığında ne yapmalıyım?"
 
 ### Cevap Üretimi
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-En uygun parçalar modelin istemine dahil edilir. Model bu spesifik parçaları okur ve sorunuza bu bilgi temelinde yanıt verir. Bu, halüsinasyonu (uydurmayı) önler — model sadece önünde olan bilgiden cevap verir.
+En alakalı parçalar, açık talimatlar, bulunan bağlam ve kullanıcının sorusunu içeren yapılandırılmış bir isteme derlenir. Model bu özel parçaları okur ve bu bilgiler doğrultusunda yanıt üretir — sadece önünde olanı kullanabilir, bu da uydurma (halüsinasyon) olasılığını engeller.
+
+```java
+String context = matches.stream()
+    .map(match -> match.embedded().text())
+    .collect(Collectors.joining("\n\n"));
+
+String prompt = String.format("""
+    Answer the question based on the following context.
+    If the answer cannot be found in the context, say so.
+
+    Context:
+    %s
+
+    Question: %s
+
+    Answer:""", context, request.question());
+
+String answer = chatModel.chat(prompt);
+```
+
+Aşağıdaki diyagram bu birleştirmeyi gösterir — arama aşamasından en yüksek skorlu parçalar istem şablonuna eklenir ve `OpenAiOfficialChatModel` temellendirilmiş bir cevap üretir:
+
+<img src="../../../translated_images/tr/context-assembly.7e6dd60c31f95978.webp" alt="Bağlam Birleştirme" width="800"/>
 
 ## Uygulamayı Çalıştırma
 
 **Dağıtımı doğrulayın:**
 
-Azure kimlik bilgilerini içeren `.env` dosyasının kök dizinde olduğundan emin olun (Modül 01’de oluşturuldu):
+Kök dizinde Azure kimlik bilgileri içeren `.env` dosyasının var olduğundan emin olun (Modül 01 sırasında oluşturuldu):
 ```bash
 cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 ```
 
 **Uygulamayı başlatın:**
 
-> **Not:** Modül 01’de `./start-all.sh` komutuyla tüm uygulamaları zaten başlattıysanız, bu modül port 8081 üzerinde zaten çalışmaktadır. Aşağıdaki başlatma komutlarını atlayabilir ve doğrudan http://localhost:8081 adresine gidebilirsiniz.
+> **Not:** Eğer Modül 01'deki `./start-all.sh` komutu ile tüm uygulamaları zaten başlattıysanız, bu modül 8081 portunda zaten çalışıyor. Aşağıdaki başlatma komutlarını atlayıp doğrudan http://localhost:8081 adresine gidebilirsiniz.
 
-**Seçenek 1: Spring Boot Dashboard kullanma (VS Code kullanıcıları için önerilir)**
+**Seçenek 1: Spring Boot Dashboard kullanımı (VS Code kullanıcıları için önerilir)**
 
-Geliştirme konteyneri, tüm Spring Boot uygulamalarını görsel olarak yönetmenizi sağlayan Spring Boot Dashboard uzantısını içerir. VS Code’un sol tarafındaki Aktivite Çubuğunda (Spring Boot simgesine bakın) bulunabilir.
+Geliştirici konteyneri, tüm Spring Boot uygulamalarını yönetmek için görsel bir arayüz sağlayan Spring Boot Dashboard uzantısını içerir. VS Code'un sol yanındaki Etkinlik Çubuğunda (Spring Boot simgesini arayın) bulabilirsiniz.
 
-Spring Boot Dashboard’dan:
-- Çalışma alanındaki tüm kullanılabilir Spring Boot uygulamalarını görebilirsiniz
-- Tek tıklamayla uygulamaları başlatıp durdurabilirsiniz
+Spring Boot Dashboard'dan:
+- Çalışma alanındaki tüm Spring Boot uygulamalarını görebilirsiniz
+- Uygulamaları tek tıklamayla başlatıp durdurabilirsiniz
 - Uygulama günlüklerini gerçek zamanlı izleyebilirsiniz
 - Uygulama durumunu takip edebilirsiniz
 
-Sadece “rag” modülünün yanındaki oynat tuşuna tıklayın veya tüm modülleri birden başlatın.
+"rag" modülünün yanındaki oynat düğmesine tıklayarak bu modülü başlatabilir veya tüm modülleri aynı anda başlatabilirsiniz.
 
 <img src="../../../translated_images/tr/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Seçenek 2: Shell scriptleri kullanma**
+**Seçenek 2: Komut dosyaları kullanımı**
 
-Tüm web uygulamalarını (modüller 01-04) başlatın:
+Tüm web uygulamalarını başlatın (modüller 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Kök dizinden
+cd ..  # Kök dizininden
 ./start-all.sh
 ```
 
@@ -183,9 +235,9 @@ cd 03-rag
 .\start.ps1
 ```
 
-Her iki script de kök `.env` dosyasından otomatik olarak ortam değişkenlerini yükler ve JAR dosyaları yoksa oluşturur.
+Her iki betik kök dizindeki `.env` dosyasından ortam değişkenlerini yükler ve JAR dosyaları yoksa oluşturur.
 
-> **Not:** Başlatmadan önce tüm modülleri manuel olarak derlemek isterseniz:
+> **Not:** Başlatmadan önce tüm modülleri elle derlemek isterseniz:
 >
 > **Bash:**
 > ```bash
@@ -212,94 +264,102 @@ cd .. && ./stop-all.sh  # Tüm modüller
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Sadece bu modül
+.\stop.ps1  # Yalnızca bu modül
 # Veya
 cd ..; .\stop-all.ps1  # Tüm modüller
 ```
 
 ## Uygulamayı Kullanma
 
-Uygulama, belge yükleme ve soru sorma için web arayüzü sağlar.
+Uygulama belge yükleme ve soru sorma için web arayüzü sağlar.
 
-<a href="images/rag-homepage.png"><img src="../../../translated_images/tr/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-homepage.png"><img src="../../../translated_images/tr/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Uygulama Arayüzü" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*RAG uygulama arayüzü - belgeleri yükleyin ve sorular sorun*
+*RAG uygulama arayüzü - belge yükleyin ve sorular sorun*
 
 ### Belge Yükleme
 
-Başlangıç olarak belge yükleyin - test için TXT dosyaları en iyisidir. Bu dizinde LangChain4j özellikleri, RAG uygulaması ve en iyi uygulamalar hakkında bilgiler içeren bir `sample-document.txt` dosyası sağlanmıştır — sistem testi için mükemmel.
+Başlangıç olarak bir belge yükleyin - denemede TXT dosyaları en iyisidir. Bu klasörde LangChain4j özellikleri, RAG uygulaması ve en iyi uygulamalar hakkında bilgi içeren `sample-document.txt` dosyası mevcuttur - sistemi test etmek için mükemmel.
 
-Sistem belgenizi işler, parçalara böler ve her parça için embedding oluşturur. Bu işlem belgeyi yüklediğinizde otomatik olur.
+Sistem belgenizi işler, parçalara böler ve her parça için gömülü temsiller oluşturur. Bu işlem yükleme sırasında otomatik gerçekleşir.
 
 ### Soru Sorma
 
-Şimdi belge içeriği hakkında spesifik sorular sorun. Belgede açıkça belirtilmiş gerçek bilgiler deneyin. Sistem ilgili parçaları arar, isteme ekler ve bir cevap üretir.
+Belge içeriği hakkında spesifik sorular sorun. Belgeden açıkça belirtilmiş somut bir şey deneyin. Sistem ilgili parçaları arar, isteme ekler ve cevap üretir.
 
 ### Kaynak Referanslarını Kontrol Etme
 
-Her cevabın kaynak referansları ve benzerlik puanları içerdiğini fark edeceksiniz. Bu puanlar (0 ile 1 arasında) her parçanın sorunuzla ne kadar ilgili olduğunun göstergesidir. Yüksek puanlar daha iyi eşleşme demektir. Bu, cevabı kaynak materyalle doğrulamanızı sağlar.
+Her cevap, benzerlik skorlarıyla kaynak referansları içerir. Bu skorlar (0 ile 1 arasında) her bir parçanın sorunuzla ne kadar alakalı olduğunu gösterir. Yüksek skorlar daha iyi eşleşme demektir. Bu sayede cevabın kaynağını doğrulayabilirsiniz.
 
-<a href="images/rag-query-results.png"><img src="../../../translated_images/tr/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-query-results.png"><img src="../../../translated_images/tr/rag-query-results.6d69fcec5397f355.webp" alt="RAG Sorgu Sonuçları" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Sorgu sonuçları - cevap ve kaynak referansları ile alaka puanları gösterimi*
+*Sorgu sonuçları, cevap ile kaynak referanslar ve alaka puanları gösteriliyor*
 
 ### Sorularla Deney Yapma
 
-Farklı tipte sorular sorun:
-- Özel gerçekler: "Ana konu nedir?"
+Farklı türde sorular deneyin:
+- Spesifik gerçekler: "Ana konu nedir?"
 - Karşılaştırmalar: "X ile Y arasındaki fark nedir?"
-- Özetler: "Z hakkında temel noktaları özetle"
+- Özetler: "Z hakkında ana noktaları özetle"
 
-Sorunuz belgede ana içerikle ne kadar iyi eşleşiyorsa benzerlik puanlarının nasıl değiştiğine dikkat edin.
+Sorunuzun belge içeriğiyle ne kadar iyi eşleştiğine göre benzerlik skorlarının nasıl değiştiğini gözlemleyin.
 
 ## Temel Kavramlar
 
 ### Parçalama Stratejisi
 
-Belgeler, 30 token üst üste binme ile 300 token parçalar halinde bölünür. Bu denge, her parçanın anlamlı bağlam içermesini sağlar ve aynı zamanda bir istemde birden fazla parça dahil edilebilecek kadar küçük olmasını sağlar.
+Belgeler 300 tokenlık parçalar halinde, 30 token üst üste binme ile bölünür. Bu denge, her parçanın anlamlı bağlama sahip olmasını sağlarken çok büyük olmamasını ve birden fazla parçanın bir istemde yer almasını mümkün kılar.
 
-### Benzerlik Puanları
+### Benzerlik Skorları
 
-Puan aralığı 0 ile 1 arasındadır:
-- 0.7-1.0: Yüksek derecede ilgili, tam eşleşme
-- 0.5-0.7: İlgili, iyi bağlam
-- 0.5’in altında: Eleme, çok alakasız
+Her getirilen parça, kullanıcının sorusuyla ne kadar yakın eşleştiğini gösteren 0 ile 1 arasında benzerlik skoru ile gelir. Aşağıdaki diyagram skor aralıklarını ve sistemin bunları nasıl filtre için kullandığını görselleştirir:
 
-Sistem, kaliteyi sağlamak için minimum eşik değerinin üzerindeki parçaları getirir.
+<img src="../../../translated_images/tr/similarity-scores.b0716aa911abf7f0.webp" alt="Benzerlik Skorları" width="800"/>
 
-### Bellek İçi Depolama
+Skor aralıkları:
+- 0.7-1.0: Çok alakalı, kesin eşleşme
+- 0.5-0.7: Alakalı, iyi bağlam
+- 0.5'in altında: Filtrelenmiş, çok alakasız
 
-Bu modül basitlik için bellekte depolama kullanır. Uygulamayı yeniden başlattığınızda yüklediğiniz belgeler kaybolur. Üretim sistemleri Qdrant veya Azure AI Search gibi kalıcı vektör veritabanları kullanır.
+Sistem kaliteyi sağlamak için minimum eşik üstündeki parçaları getirir.
+
+### Bellekte Depolama
+
+Bu modülde basitlik için bellek içi depolama kullanılır. Uygulamayı yeniden başlatınca yüklenen belgeler kaybolur. Üretim sistemleri Qdrant veya Azure AI Search gibi kalıcı vektör veritabanları kullanır.
 
 ### Bağlam Penceresi Yönetimi
 
-Her modelin maksimum bağlam penceresi vardır. Büyük bir belgedeki tüm parçaları dahil edemezsiniz. Sistem, en alakalı N parçayı (varsayılan 5) getirir ve sınırlar içinde kalırken doğru cevap için yeterli bağlamı sağlar.
+Her modelin maksimum bağlam penceresi vardır. Büyük belgeden tüm parçaları ekleyemezsiniz. Sistem en alakalı ilk N parçayı (varsayılan 5) getirir, böylece sınırlar aşılmaz ve yeterli bağlam sunulur.
 
 ## RAG'in Önemi Ne Zaman Artar
 
-**RAG’i kullanın:**
-- Özel belgelerle ilgili soruları yanıtlamak gerektiğinde
-- Bilginin sık sık değiştiği durumlarda (politikalar, fiyatlar, spesifikasyonlar)
-- Doğruluk için kaynak gösterimi gerektiğinde
-- İçerik tek bir isteme sığmayacak kadar büyükse
-- Doğrulanabilir, temellendirilmiş yanıtlar elde etmek istediğinizde
+RAG her zaman en iyi yaklaşım değildir. Aşağıdaki karar rehberi, RAG'in ne zaman değer kattığını, ne zaman daha basit yaklaşımların — örneğin içeriği doğrudan isteme eklemek veya modelin yerleşik bilgisini kullanmak — yeterli olduğunu anlamanıza yardımcı olur:
 
-**RAG’i kullanmayın:**
-- Sorular modelin zaten bildiği genel bilgilerle alakalıysa
-- Gerçek zamanlı verilere ihtiyaç varsa (RAG yüklenen belgelere dayanır)
-- İçerik doğrudan isteme sığacak kadar küçükse
+<img src="../../../translated_images/tr/when-to-use-rag.1016223f6fea26bc.webp" alt="RAG Kullanım Zamanı" width="800"/>
+
+**RAG kullanın:**
+- Tescilli belgelerle ilgili soruları yanıtlamak  
+- Bilgiler sık sık değişir (politikalar, fiyatlar, teknik özellikler)  
+- Doğruluk için kaynak gösterimi gereklidir  
+- İçerik tek bir istemde sığamayacak kadar büyüktür  
+- Doğrulanabilir, dayanaklı yanıtlar istiyorsunuz  
+
+**RAG'ı kullanmayın, eğer:**  
+- Sorular modelin zaten sahip olduğu genel bilgi gerektiriyorsa  
+- Gerçek zamanlı veri gerekiyorsa (RAG yüklenen belgeler üzerinde çalışır)  
+- İçerik doğrudan istemlere dahil edilebilecek kadar küçükse  
 
 ## Sonraki Adımlar
 
-**Sonraki Modül:** [04-tools - Araçlarla AI Ajanları](../04-tools/README.md)
+**Sonraki Modül:** [04-tools - AI Agents with Tools](../04-tools/README.md)
 
 ---
 
-**Gezinme:** [← Önceki: Modül 02 - Prompt Mühendisliği](../02-prompt-engineering/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 04 - Araçlar →](../04-tools/README.md)
+**Gezinme:** [← Önceki: Modül 02 - İstem Mühendisliği](../02-prompt-engineering/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 04 - Araçlar →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Feragatname**:  
-Bu belge, yapay zeka çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba gösterilse de, otomatik çevirilerde hatalar veya yanlışlıklar bulunabilir. Orijinal belge, kendi diliyle yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımından kaynaklanan herhangi bir yanlış anlama veya yorumlamadan dolayı sorumluluk kabul edilmemektedir.
+Bu belge, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal belge, kendi dilindeki metni yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilmektedir. Bu çevirinin kullanımı sonucunda ortaya çıkabilecek yanlış anlamalar veya yanlış yorumlamalardan sorumlu tutulamayız.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
