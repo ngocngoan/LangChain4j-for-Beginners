@@ -118,11 +118,11 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-The class diagram below shows how these LangChain4j components connect. `OpenAiOfficialEmbeddingModel` converts text into vectors, `EmbeddingStore<TextSegment>` holds the vectors alongside their original `TextSegment` data, and `EmbeddingSearchRequest` controls retrieval parameters like `maxResults` and `minScore`:
+The class diagram below shows the two separate flows in a RAG pipeline and the LangChain4j classes that implement them. The **ingestion flow** (runs once at upload time) splits the document, embeds the chunks, and stores them via `.addAll()`. The **query flow** (runs each time a user asks) embeds the question, searches the store via `.search()`, and passes the matched context to the chat model. Both flows meet at the shared `EmbeddingStore<TextSegment>` interface:
 
 <img src="images/rag-langchain4j-classes.png" alt="LangChain4j RAG Classes" width="800"/>
 
-*This diagram shows the LangChain4j class architecture across four stages: ingest, embed, store & search, and generate.*
+*This diagram shows the two flows in a RAG pipeline — ingestion and query — and how they connect through a shared EmbeddingStore.*
 
 Once embeddings are stored, similar content naturally clusters together in vector space. The visualization below shows how documents about related topics end up as nearby points, which is what makes semantic search possible:
 
