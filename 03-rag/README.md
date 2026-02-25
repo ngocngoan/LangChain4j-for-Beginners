@@ -118,7 +118,7 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-The class diagram below shows how these LangChain4j components connect. `OpenAiOfficialEmbeddingModel` converts text into vectors, `InMemoryEmbeddingStore` holds the vectors alongside their original `TextSegment` data, and `EmbeddingSearchRequest` controls retrieval parameters like `maxResults` and `minScore`:
+The class diagram below shows how these LangChain4j components connect. `OpenAiOfficialEmbeddingModel` converts text into vectors, `EmbeddingStore<TextSegment>` holds the vectors alongside their original `TextSegment` data, and `EmbeddingSearchRequest` controls retrieval parameters like `maxResults` and `minScore`:
 
 <img src="images/rag-langchain4j-classes.png" alt="LangChain4j RAG Classes" width="800"/>
 
