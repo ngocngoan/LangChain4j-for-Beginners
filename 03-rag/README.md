@@ -4,6 +4,7 @@
 
 - [What You'll Learn](#what-youll-learn)
 - [Understanding RAG](#understanding-rag)
+  - [Which RAG Approach Does This Tutorial Use?](#which-rag-approach-does-this-tutorial-use)
 - [Prerequisites](#prerequisites)
 - [How It Works](#how-it-works)
   - [Document Processing](#document-processing)
@@ -55,6 +56,22 @@ Here's how the pieces connect end-to-end. A user's question flows through four s
 *This diagram shows the end-to-end RAG pipeline — a user query flows through embedding, vector search, context assembly, and answer generation.*
 
 The rest of this module walks through each stage in detail, with code you can run and modify.
+
+### Which RAG Approach Does This Tutorial Use?
+
+LangChain4j offers three ways to implement RAG, each with a different level of abstraction. The diagram below compares them side by side:
+
+<img src="images/rag-approaches.png" alt="Three RAG Approaches in LangChain4j" width="800"/>
+
+*This diagram compares the three LangChain4j RAG approaches — Easy, Native, and Advanced — showing their key components and when to use each one.*
+
+| Approach | What It Does | Trade-off |
+|---|---|---|
+| **Easy RAG** | Wires everything automatically through `AiServices` and `ContentRetriever`. You annotate an interface, attach a retriever, and LangChain4j handles embedding, searching, and prompt assembly behind the scenes. | Minimal code, but you don't see what's happening at each step. |
+| **Native RAG** | You call the embedding model, search the store, build the prompt, and generate the answer yourself — one explicit step at a time. | More code, but every stage is visible and modifiable. |
+| **Advanced RAG** | Uses the `RetrievalAugmentor` framework with pluggable query transformers, routers, re-rankers, and content injectors for production-grade pipelines. | Maximum flexibility, but significantly more complexity. |
+
+**This tutorial uses the Native approach.** Each step of the RAG pipeline — embedding the query, searching the vector store, assembling the context, and generating the answer — is written out explicitly in [`RagService.java`](src/main/java/com/example/langchain4j/rag/service/RagService.java). This is intentional: as a learning resource, it's more important that you see and understand every stage than that the code is minimized. Once you're comfortable with how the pieces fit together, you can graduate to Easy RAG for quick prototypes or Advanced RAG for production systems.
 
 ## Prerequisites
 
