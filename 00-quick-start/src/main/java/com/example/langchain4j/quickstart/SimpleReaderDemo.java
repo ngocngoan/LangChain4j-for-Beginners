@@ -108,15 +108,13 @@ public class SimpleReaderDemo {
 
     /** Resolve the directory that contains the *.txt documents to ingest. */
     private static Path resolveDocumentsDir() {
-        // Try common locations relative to the working directory
-        for (String candidate : new String[]{".", "00-quick-start"}) {
-            Path dir = Paths.get(candidate);
-            if (dir.toFile().isDirectory()) {
-                // Check if there is at least one .txt file
-                String[] txtFiles = dir.toFile().list((d, name) -> name.endsWith(".txt"));
-                if (txtFiles != null && txtFiles.length > 0) {
-                    return dir;
-                }
+        // Look for the known sample document in candidate directories.
+        // "00-quick-start" covers running from the repo root;
+        // "." covers running from inside the 00-quick-start folder.
+        for (String candidate : new String[]{"00-quick-start", "."}) {
+            Path doc = Paths.get(candidate, "document.txt");
+            if (doc.toFile().isFile()) {
+                return Paths.get(candidate);
             }
         }
         // Fallback — current directory (FileSystemDocumentLoader will throw if empty)
