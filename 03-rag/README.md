@@ -77,7 +77,7 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 
 <img src="images/easy-rag-pipeline.png" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
-*The Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
+*This diagram shows the Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
 
 ## Prerequisites
 
