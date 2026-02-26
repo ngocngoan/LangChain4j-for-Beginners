@@ -75,12 +75,17 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 
 > **💡 Already seen Easy RAG in action?** The [Quick Start module](../00-quick-start/README.md) includes a Document Q&A example ([`SimpleReaderDemo.java`](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) that uses the Easy RAG approach — LangChain4j handles embedding, searching, and prompt assembly automatically. This module takes the next step by breaking open that pipeline so you can see and control each stage yourself.
 
+<img src="images/easy-rag-pipeline.png" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
+
+*This diagram shows the Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
+
 ## Prerequisites
 
-- Completed Module 01 (Azure OpenAI resources deployed)
+- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
+- Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
 - `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
 
-> **Note:** If you haven't completed Module 01, follow the deployment instructions there first.
+> **Note:** If you haven't completed Module 01, follow the deployment instructions there first. The `azd up` command deploys both the GPT chat model and the embedding model used by this module.
 
 
 ## How It Works
@@ -232,8 +237,15 @@ The diagram below shows this assembly in action — the top-scoring chunks from 
 **Verify deployment:**
 
 Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+
+**Bash:**
 ```bash
 cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+```
+
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Start the application:**
