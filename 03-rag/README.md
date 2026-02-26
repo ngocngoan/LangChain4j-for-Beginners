@@ -3,9 +3,9 @@
 ## Table of Contents
 
 - [What You'll Learn](#what-youll-learn)
+- [Prerequisites](#prerequisites)
 - [Understanding RAG](#understanding-rag)
   - [Which RAG Approach Does This Tutorial Use?](#which-rag-approach-does-this-tutorial-use)
-- [Prerequisites](#prerequisites)
 - [How It Works](#how-it-works)
   - [Document Processing](#document-processing)
   - [Creating Embeddings](#creating-embeddings)
@@ -40,6 +40,14 @@ Think of RAG as giving the model a reference library. When you ask a question, t
 5. **Response** - LLM generates an answer based on the context
 
 This grounds the model's responses in your actual data instead of relying on its training knowledge or making up answers.
+
+## Prerequisites
+
+- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
+- Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
+- `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
+
+> **Note:** If you haven't completed Module 01, follow the deployment instructions there first. The `azd up` command deploys both the GPT chat model and the embedding model used by this module.
 
 ## Understanding RAG
 
@@ -78,15 +86,6 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 <img src="images/easy-rag-pipeline.png" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
 *This diagram shows the Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
-
-## Prerequisites
-
-- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
-- Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
-- `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
-
-> **Note:** If you haven't completed Module 01, follow the deployment instructions there first. The `azd up` command deploys both the GPT chat model and the embedding model used by this module.
-
 
 ## How It Works
 
