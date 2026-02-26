@@ -29,6 +29,12 @@
       <artifactId>langchain4j-open-ai-official</artifactId>
     </dependency>
 
+    <!-- Easy RAG: automatic document splitting, embedding, and retrieval -->
+    <dependency>
+      <groupId>dev.langchain4j</groupId>
+      <artifactId>langchain4j-easy-rag</artifactId>
+    </dependency>
+
     <!-- SLF4J Simple Logger (for logging) -->
     <dependency>
       <groupId>org.slf4j</groupId>
