@@ -90,6 +90,8 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 
 ## How It Works
 
+The RAG pipeline in this module breaks down into four stages that run in sequence every time a user asks a question. First, an uploaded document is **parsed and chunked** into manageable pieces. Those chunks are then converted into **vector embeddings** and stored so they can be compared mathematically. When a query arrives, the system performs a **semantic search** to find the most relevant chunks, and finally passes them as context to the LLM for **answer generation**. The sections below walk through each stage with the actual code and diagrams. Let's look at the first step.
+
 ### Document Processing
 
 [DocumentService.java](src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
