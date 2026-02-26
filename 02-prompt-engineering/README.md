@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](#video-walkthrough)
 - [What You'll Learn](#what-youll-learn)
 - [Prerequisites](#prerequisites)
 - [Understanding Prompt Engineering](#understanding-prompt-engineering)
@@ -24,6 +25,10 @@
   - [Constrained Output](#constrained-output)
 - [What You're Really Learning](#what-youre-really-learning)
 - [Next Steps](#next-steps)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
 
 ## What You'll Learn
 

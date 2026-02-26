@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](#video-walkthrough)
 - [What You'll Learn](#what-youll-learn)
 - [Prerequisites](#prerequisites)
 - [Understanding the Core Problem](#understanding-the-core-problem)
@@ -14,6 +15,10 @@
   - [Stateless Chat (Left Panel)](#stateless-chat-left-panel)
   - [Stateful Chat (Right Panel)](#stateful-chat-right-panel)
 - [Next Steps](#next-steps)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
 ## What You'll Learn
 
