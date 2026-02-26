@@ -73,6 +73,8 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 
 **This tutorial uses the Native approach.** Each step of the RAG pipeline — embedding the query, searching the vector store, assembling the context, and generating the answer — is written out explicitly in [`RagService.java`](src/main/java/com/example/langchain4j/rag/service/RagService.java). This is intentional: as a learning resource, it's more important that you see and understand every stage than that the code is minimized. Once you're comfortable with how the pieces fit together, you can graduate to Easy RAG for quick prototypes or Advanced RAG for production systems.
 
+> **💡 Already seen Easy RAG in action?** The [Quick Start module](../00-quick-start/README.md) includes a Document Q&A example ([`SimpleReaderDemo.java`](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) that uses the Easy RAG approach — LangChain4j handles embedding, searching, and prompt assembly automatically. This module takes the next step by breaking open that pipeline so you can see and control each stage yourself.
+
 ## Prerequisites
 
 - Completed Module 01 (Azure OpenAI resources deployed)
