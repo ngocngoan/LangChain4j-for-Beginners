@@ -15,7 +15,7 @@ import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
-import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocuments;
+import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 /**
  * SimpleReaderDemo - Easy RAG (Retrieval-Augmented Generation)
@@ -59,11 +59,11 @@ public class SimpleReaderDemo {
             System.exit(1);
         }
 
-        // --- 1. Load documents ---
-        // Look for *.txt files in several candidate directories
-        Path documentsDir = resolveDocumentsDir();
-        System.out.println("Loading documents from: " + documentsDir);
-        List<Document> documents = loadDocuments(documentsDir);
+        // --- 1. Load the sample document ---
+        Path documentPath = resolveDocumentPath();
+        System.out.println("Loading document: " + documentPath);
+        Document document = loadDocument(documentPath);
+        List<Document> documents = List.of(document);
         System.out.println("Loaded " + documents.size() + " document(s).");
 
         // --- 2. Create the chat model (GitHub Models / OpenAI-compatible) ---
@@ -106,20 +106,17 @@ public class SimpleReaderDemo {
         return EmbeddingStoreContentRetriever.from(embeddingStore);
     }
 
-    /** Resolve the directory that contains the *.txt documents to ingest. */
-    private static Path resolveDocumentsDir() {
-        // Try common locations relative to the working directory
-        for (String candidate : new String[]{".", "00-quick-start"}) {
-            Path dir = Paths.get(candidate);
-            if (dir.toFile().isDirectory()) {
-                // Check if there is at least one .txt file
-                String[] txtFiles = dir.toFile().list((d, name) -> name.endsWith(".txt"));
-                if (txtFiles != null && txtFiles.length > 0) {
-                    return dir;
-                }
+    /** Resolve the path to the sample document.txt file. */
+    private static Path resolveDocumentPath() {
+        // "00-quick-start" covers running from the repo root;
+        // "." covers running from inside the 00-quick-start folder.
+        for (String candidate : new String[]{"00-quick-start", "."}) {
+            Path doc = Paths.get(candidate, "document.txt");
+            if (doc.toFile().isFile()) {
+                return doc;
             }
         }
-        // Fallback — current directory (FileSystemDocumentLoader will throw if empty)
-        return Paths.get(".");
+        // Fallback — assume document.txt is in the current directory
+        return Paths.get("document.txt");
     }
 }

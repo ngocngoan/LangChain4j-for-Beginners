@@ -276,10 +276,10 @@ String response = assistant.chat("What is 25 plus 17?");
 Here you'll see RAG (retrieval-augmented generation) using LangChain4j's "Easy RAG" approach. Documents are loaded, automatically split and embedded into an in-memory store, then a content retriever supplies relevant chunks to the AI at query time. The AI answers based on your documents, not its general knowledge.
 
 ```java
-List<Document> documents = loadDocuments(documentsDir);
+Document document = loadDocument(Paths.get("document.txt"));
 
 InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-EmbeddingStoreIngestor.ingest(documents, embeddingStore);
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
 
 Assistant assistant = AiServices.builder(Assistant.class)
         .chatModel(chatModel)
