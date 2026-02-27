@@ -1,13 +1,13 @@
 {
   "00-quick-start/README.md": {
-    "original_hash": "95d0bbe4268e8d98d66c63da24dba477",
-    "translation_date": "2026-02-16T10:31:43+00:00",
+    "original_hash": "151207abac7dfe9c2986c33ee0fc1b71",
+    "translation_date": "2026-02-27T15:43:02+00:00",
     "source_file": "00-quick-start/README.md",
     "language_code": "ko"
   },
   "01-introduction/README.md": {
-    "original_hash": "48650a76d6620c09dfd70a113fa1502b",
-    "translation_date": "2026-02-10T10:45:05+00:00",
+    "original_hash": "d8aa246d7049a9c7ebf53b3aca67249e",
+    "translation_date": "2026-02-27T15:42:06+00:00",
     "source_file": "01-introduction/README.md",
     "language_code": "ko"
   },
@@ -18,26 +18,26 @@
     "language_code": "ko"
   },
   "02-prompt-engineering/README.md": {
-    "original_hash": "23991b990ce3e2257ef000eabab37ef4",
-    "translation_date": "2026-02-20T10:36:57+00:00",
+    "original_hash": "f658e8af557695218d484021526467ec",
+    "translation_date": "2026-02-27T15:44:27+00:00",
     "source_file": "02-prompt-engineering/README.md",
     "language_code": "ko"
   },
   "03-rag/README.md": {
-    "original_hash": "a12aedcc2f4c253abb60db32fe24cc44",
-    "translation_date": "2026-02-20T10:37:51+00:00",
+    "original_hash": "b93c3d41393d131122841993bb7a1edb",
+    "translation_date": "2026-02-27T15:45:55+00:00",
     "source_file": "03-rag/README.md",
     "language_code": "ko"
   },
   "04-tools/README.md": {
-    "original_hash": "844788938b26242f3cc54ce0d0951bea",
-    "translation_date": "2026-01-05T22:22:11+00:00",
+    "original_hash": "d9bd1d8e3b479d2df11beaf2f4821854",
+    "translation_date": "2026-02-27T15:48:09+00:00",
     "source_file": "04-tools/README.md",
     "language_code": "ko"
   },
   "05-mcp/README.md": {
-    "original_hash": "6c816d130a1fa47570c11907e72d84ae",
-    "translation_date": "2026-01-05T22:20:36+00:00",
+    "original_hash": "74652625929cac8d060bdeefe07e5e70",
+    "translation_date": "2026-02-27T15:46:56+00:00",
     "source_file": "05-mcp/README.md",
     "language_code": "ko"
   },
