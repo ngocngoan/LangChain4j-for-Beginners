@@ -28,7 +28,9 @@
 
 ## Video Walkthrough
 
-Watch this live session that explains how to get started with this module: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
