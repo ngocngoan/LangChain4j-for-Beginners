@@ -171,7 +171,7 @@ Here's what this looks like in the running application — the agent chains two 
 
 <img src="images/error-handling-flow.png" alt="Error Handling Flow" width="800"/>
 
-*When a tool fails the agent catches the error and responds with a helpful explanation instead of crashing.*
+*When a tool fails, the agent catches the error and responds with a helpful explanation instead of crashing.*
 
 This happens in a single conversation turn. The agent orchestrates multiple tool calls autonomously.
 
