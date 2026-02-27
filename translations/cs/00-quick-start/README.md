@@ -9,45 +9,45 @@
 - [Nastavení](../../../00-quick-start)
   - [1. Získejte svůj GitHub token](../../../00-quick-start)
   - [2. Nastavte svůj token](../../../00-quick-start)
-- [Spuštění příkladů](../../../00-quick-start)
+- [Spusťte příklady](../../../00-quick-start)
   - [1. Základní chat](../../../00-quick-start)
   - [2. Vzory promptů](../../../00-quick-start)
   - [3. Volání funkcí](../../../00-quick-start)
-  - [4. Otázky a odpovědi k dokumentům (RAG)](../../../00-quick-start)
-  - [5. Odpovědná AI](../../../00-quick-start)
+  - [4. Otázky a odpovědi k dokumentům (Easy RAG)](../../../00-quick-start)
+  - [5. Odpovědné AI](../../../00-quick-start)
 - [Co každý příklad ukazuje](../../../00-quick-start)
 - [Další kroky](../../../00-quick-start)
 - [Řešení problémů](../../../00-quick-start)
 
 ## Úvod
 
-Tento rychlý start je určen k co nejrychlejšímu seznámení s LangChain4j. Pokrývá naprosté základy tvorby AI aplikací s LangChain4j a GitHub Models. V dalších modulech použijete Azure OpenAI s LangChain4j k vývoji pokročilejších aplikací.
+Tento rychlý start je určen k tomu, abyste co nejrychleji začali pracovat s LangChain4j. Pokrývá základní principy budování AI aplikací s LangChain4j a GitHub Models. V následujících modulech použijete Azure OpenAI s LangChain4j k vytváření pokročilejších aplikací.
 
 ## Co je LangChain4j?
 
-LangChain4j je Java knihovna, která zjednodušuje vytváření AI aplikací. Místo práce s HTTP klienty a JSON parsováním pracujete s čistými Java API.
+LangChain4j je Java knihovna, která zjednodušuje vytváření AI poháněných aplikací. Místo zabývání se HTTP klienty a parsováním JSON pracujete s čistými Java API.
 
-Slovo „chain“ v LangChain znamená propojování více komponent – například můžete propojit prompt s modelem a parserem, nebo spojit více AI volání, kde výstup jednoho je vstupem dalšího. Tento rychlý start se zaměřuje na základy, než se pustíte do složitějších řetězců.
+„Řetězec“ v LangChain odkazuje na propojení více komponent – můžete propojit prompt s modelem a následně s parserem, nebo řetězit více AI volání, kde výstup jednoho slouží jako vstup pro další. Tento rychlý start se zaměřuje na základy před tím, než prozkoumáte složitější řetězce.
 
-<img src="../../../translated_images/cs/langchain-concept.ad1fe6cf063515e1.webp" alt="Koncept propojení LangChain4j" width="800"/>
+<img src="../../../translated_images/cs/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*Propojování komponent v LangChain4j – stavební bloky spojující se pro vytvoření výkonných AI workflow*
+*Propojení komponent v LangChain4j – stavební bloky se spojují pro vytváření výkonných AI workflow*
 
 Použijeme tři hlavní komponenty:
 
-**ChatLanguageModel** – Rozhraní pro interakce s AI modelem. Zavolejte `model.chat("prompt")` a získejte textovou odpověď. Používáme `OpenAiOfficialChatModel`, která pracuje s endpointy kompatibilními s OpenAI, jako GitHub Models.
+**ChatModel** – Rozhraní pro interakci s AI modelem. Zavolejte `model.chat("prompt")` a získejte textovou odpověď. Používáme `OpenAiOfficialChatModel`, který pracuje s OpenAI-kompatibilními endpointy, jako jsou GitHub Models.
 
-**AiServices** – Vytváří typově bezpečná rozhraní AI služeb. Definujte metody, anotujte je `@Tool` a LangChain4j se postará o orchestraci. AI automaticky volá vaše Java metody podle potřeby.
+**AiServices** – Vytváří typově bezpečné rozhraní AI služeb. Definujte metody, anotujte je `@Tool` a LangChain4j se postará o orchestraci. AI automaticky volá vaše Java metody, když je to potřeba.
 
-**MessageWindowChatMemory** – Udržuje historii konverzace. Bez této komponenty je každý dotaz nezávislý. S ní si AI pamatuje předchozí zprávy a udržuje kontext v průběhu několika kol.
+**MessageWindowChatMemory** – Udržuje historii konverzace. Bez toho je každý požadavek nezávislý. S tímto si AI pamatuje předchozí zprávy a udržuje kontext přes více kol.
 
-<img src="../../../translated_images/cs/architecture.eedc993a1c576839.webp" alt="Architektura LangChain4j" width="800"/>
+<img src="../../../translated_images/cs/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
 *Architektura LangChain4j – hlavní komponenty spolupracují na pohánění vašich AI aplikací*
 
 ## Závislosti LangChain4j
 
-Tento rychlý start používá dvě závislosti Maven v souboru [`pom.xml`](../../../00-quick-start/pom.xml):
+Tento rychlý start používá tři Maven závislosti v [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -61,49 +61,57 @@ Tento rychlý start používá dvě závislosti Maven v souboru [`pom.xml`](../.
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
+
+<!-- Easy RAG: automatic splitting, embedding, and retrieval -->
+<dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
+</dependency>
 ```
 
-Modul `langchain4j-open-ai-official` poskytuje třídu `OpenAiOfficialChatModel`, která se připojuje k API kompatibilním s OpenAI. GitHub Models používá stejný formát API, takže není potřeba žádný speciální adaptér – stačí nasměrovat základní URL na `https://models.github.ai/inference`.
+Modul `langchain4j-open-ai-official` poskytuje třídu `OpenAiOfficialChatModel`, která se připojuje k OpenAI-kompatibilním API. GitHub Models používá stejný formát API, takže není potřeba žádný speciální adaptér – stačí nastavit základní URL na `https://models.github.ai/inference`.
+
+Modul `langchain4j-easy-rag` zajišťuje automatické dělení dokumentů, vytváření embeddingů a vyhledávání, takže můžete stavět RAG aplikace bez ruční konfigurace každého kroku.
 
 ## Požadavky
 
-**Používáte Dev Container?** Java a Maven už jsou nainstalované. Potřebujete jen GitHub Personal Access Token.
+**Používáte Dev Container?** Java a Maven jsou již nainstalovány. Potřebujete pouze GitHub Personal Access Token.
 
 **Lokální vývoj:**
 - Java 21+, Maven 3.9+
-- GitHub Personal Access Token (návod níže)
+- GitHub Personal Access Token (instrukce níže)
 
-> **Poznámka:** Tento modul používá `gpt-4.1-nano` z GitHub Models. Neměňte jméno modelu v kódu – je to nastaveno pro spolupráci s dostupnými modely GitHubu.
+> **Poznámka:** Tento modul používá `gpt-4.1-nano` z GitHub Models. Neměňte název modelu v kódu – je nakonfigurován tak, aby fungoval s dostupnými modely GitHubu.
 
 ## Nastavení
 
 ### 1. Získejte svůj GitHub token
 
-1. Přejděte na [GitHub Nastavení → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
+1. Přejděte do [GitHub Nastavení → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
 2. Klikněte na „Generate new token“
-3. Zadejte popisný název (např. „LangChain4j Demo“)
-4. Nastavte dobu platnosti (doporučeno 7 dní)
-5. V sekci „Account permissions“ najděte „Models“ a nastavte na „Read-only“
+3. Nastavte popisný název (např. „LangChain4j Demo“)
+4. Nastavte platnost (doporučeno 7 dní)
+5. V části „Account permissions“ najděte „Models“ a nastavte na „Read-only“
 6. Klikněte na „Generate token“
-7. Zkopírujte a uložte token – už ho znovu neuvidíte
+7. Zkopírujte a uložte si token – už ho neuvidíte
 
 ### 2. Nastavte svůj token
 
 **Možnost 1: Použití VS Code (doporučeno)**
 
-Pokud používáte VS Code, přidejte token do souboru `.env` v kořenovém adresáři projektu:
+Pokud používáte VS Code, přidejte svůj token do `.env` souboru v kořenovém adresáři projektu:
 
-Pokud soubor `.env` neexistuje, zkopírujte `.env.example` do `.env` nebo si vytvořte nový `.env` v kořenovém adresáři.
+Pokud `.env` soubor neexistuje, zkopírujte `.env.example` jako `.env` nebo vytvořte nový `.env` soubor v kořenovém adresáři.
 
-**Ukázka souboru `.env`:**
+**Příklad souboru `.env`:**
 ```bash
 # V /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
 
-Poté stačí kliknout pravým tlačítkem na libovolný demo soubor (např. `BasicChatDemo.java`) v Průzkumníku a vybrat **"Run Java"**, nebo použít konfigurace spuštění v panelu Run and Debug.
+Pak stačí kliknout pravým tlačítkem na jakýkoliv demo soubor (např. `BasicChatDemo.java`) ve Stromu souborů a vybrat **„Run Java“** nebo použít spouštěcí konfigurace z panelu Run and Debug.
 
-**Možnost 2: Použití Terminálu**
+**Možnost 2: Použití terminálu**
 
 Nastavte token jako proměnnou prostředí:
 
@@ -117,11 +125,11 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-## Spuštění příkladů
+## Spusťte příklady
 
-**Ve VS Code:** Klikněte pravým tlačítkem na libovolný demo soubor v Průzkumníku a vyberte **"Run Java"**, nebo použijte konfigurace spuštění v Run and Debug (nezapomeňte nejdříve přidat token do `.env`).
+**Použití VS Code:** Stačí kliknout pravým tlačítkem na libovolný demo soubor ve Stromu souborů a vybrat **„Run Java“**, nebo použijte spouštěcí konfigurace v panelu Run and Debug (ujistěte se, že jste nejprve přidali token do `.env`).
 
-**Pomocí Maven:** Alternativně můžete spustit z příkazové řádky:
+**Použití Maven:** Alternativně můžete spustit z příkazového řádku:
 
 ### 1. Základní chat
 
@@ -161,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-AI automaticky volá vaše Java metody podle potřeby.
+AI automaticky volá vaše Java metody, když je to potřeba.
 
-### 4. Otázky a odpovědi k dokumentům (RAG)
+### 4. Otázky a odpovědi k dokumentům (Easy RAG)
 
 **Bash:**
 ```bash
@@ -175,9 +183,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Pokládejte otázky ohledně obsahu v `document.txt`.
+Pokládejte otázky ohledně svých dokumentů pomocí Easy RAG s automatickým embeddingem a vyhledáváním.
 
-### 5. Odpovědná AI
+### 5. Odpovědné AI
 
 **Bash:**
 ```bash
@@ -189,16 +197,16 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-Ukažte si, jak bezpečnostní filtry AI blokují škodlivý obsah.
+Uvidíte, jak bezpečnostní filtry AI blokují škodlivý obsah.
 
 ## Co každý příklad ukazuje
 
 **Základní chat** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Začněte zde, abyste viděli LangChain4j v nejjednodušší podobě. Vytvoříte `OpenAiOfficialChatModel`, pošlete prompt pomocí `.chat()`, a dostanete odpověď. Toto ukazuje základy: jak inicializovat modely s vlastními endpointy a API klíči. Jakmile tento vzor pochopíte, vše další na něm staví.
+Začněte zde, abyste viděli LangChain4j v jeho nejjednodušší podobě. Vytvoříte `OpenAiOfficialChatModel`, odešlete prompt pomocí `.chat()` a získáte odpověď. Tento příklad demonstruje základy: jak inicializovat modely s vlastními endpointy a API klíči. Jakmile tento vzor pochopíte, vše ostatní na něj navazuje.
 
 ```java
-ChatLanguageModel model = OpenAiOfficialChatModel.builder()
+OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
     .baseUrl("https://models.github.ai/inference")
     .apiKey(System.getenv("GITHUB_TOKEN"))
     .modelName("gpt-4.1-nano")
@@ -209,16 +217,16 @@ System.out.println(response);
 ```
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otevřete [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) a zeptejte se:
-> - „Jak přepnout z GitHub Models na Azure OpenAI v tomto kódu?“
-> - „Jaké další parametry mohu nastavit v OpenAiOfficialChatModel.builder()?“
-> - „Jak přidám streamované odpovědi místo čekání na kompletní odpověď?“
+> - „Jak přepnu z GitHub Models na Azure OpenAI v tomto kódu?“
+> - „Jaké další parametry mohu nakonfigurovat v OpenAiOfficialChatModel.builder()?“
+> - „Jak přidám streamování odpovědí místo čekání na kompletní odpověď?“
 
-**Prompt Engineering** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+**Vytváření promptů** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Teď když víte, jak s modelem komunikovat, pojďme prozkoumat, co mu říkáte. Toto demo používá stejný model, ale ukazuje pět různých vzorů promptů. Vyzkoušejte zero-shot (přímé instrukce), few-shot (učení na příkladech), chain-of-thought (postupné uvažování) a role-based prompting (nastavení kontextu rolí). Uvidíte, jak stejný model dává dramaticky odlišné výsledky podle toho, jak je dotaz formulován.
+Teď když víte, jak mluvit s modelem, prozkoumáme, co mu říkáte. Toto demo používá stejnou konfiguraci modelu, ale ukazuje pět různých vzorů promptů. Vyzkoušejte zero-shot prompt pro přímé instrukce, few-shot prompt, které se učí z příkladů, chain-of-thought prompt, který odhaluje kroky uvažování, a role-based prompt, který nastavuje kontext. Uvidíte, jak stejný model dává dramaticky odlišné výsledky podle toho, jak formulujete požadavek.
 
-Demo také ukazuje prompt šablony, které jsou silným nástrojem pro vytváření znovupoužitelných promptů s proměnnými.
-Níže uvedený příklad ukazuje prompt s použitím LangChain4j `PromptTemplate` k vyplnění proměnných. AI odpoví na základě zadané destinace a aktivity.
+Demo také demonstruje šablony promptů, což je silný způsob, jak vytvářet znovupoužitelné prompty s proměnnými.
+Níže uvedený příklad ukazuje prompt využívající LangChain4j `PromptTemplate` pro vyplnění proměnných. AI odpoví na základě poskytnuté destinace a aktivity.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -234,14 +242,14 @@ String response = model.chat(prompt.text());
 ```
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otevřete [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) a zeptejte se:
-> - „Jaký je rozdíl mezi zero-shot a few-shot promptováním a kdy použít který?“
-> - „Jak parametr temperature ovlivňuje odpovědi modelu?“
-> - „Jaké jsou techniky, jak zabránit prompt injection útokům v produkci?“
-> - „Jak mohu vytvořit znovupoužitelné objekty PromptTemplate pro běžné vzory?“
+> - „Jaký je rozdíl mezi zero-shot a few-shot promptováním a kdy každý použít?“
+> - „Jak parametr teploty ovlivňuje odpovědi modelu?“
+> - „Jaké jsou techniky k zabránění prompt injection útokům v produkci?“
+> - „Jak vytvořit znovupoužitelné objekty PromptTemplate pro běžné vzory?“
 
 **Integrace nástrojů** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Tady LangChain4j skutečně sílí. Použijete `AiServices` k vytvoření AI asistenta, který může volat vaše Java metody. Stačí anotovat metody `@Tool("popis")` a LangChain4j se postará o zbytek – AI automaticky rozhoduje, kdy který nástroj použít podle požadavků uživatele. Ukazuje to volání funkcí, klíčovou techniku pro vytváření AI schopné podniknout akce, nejen odpovědět na otázky.
+Tady LangChain4j získává sílu. Použijete `AiServices` k vytvoření AI asistenta, který může volat vaše Java metody. Stačí anotovat metody s `@Tool("popis")` a LangChain4j se o vše ostatní postará – AI automaticky rozhoduje, kdy použít který nástroj podle toho, co uživatel požádá. Toto demonstruje volání funkcí, klíčovou techniku pro vytváření AI, která může provádět akce, ne jen odpovídat na otázky.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -249,42 +257,49 @@ public double add(double a, double b) {
     return a + b;
 }
 
-MathAssistant assistant = AiServices.create(MathAssistant.class, model);
+MathAssistant assistant = AiServices.builder(MathAssistant.class)
+    .chatModel(model)
+    .tools(new Calculator())
+    .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+    .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otevřete [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) a zeptejte se:
-> - „Jak funguje anotace @Tool a co s ní LangChain4j dělá na pozadí?“
-> - „Může AI volat více nástrojů za sebou k řešení složitých problémů?“
-> - „Co se stane, když nástroj vyhodí výjimku – jak mám řešit chyby?“
-> - „Jak integrovat skutečné API místo této kalkulačky?“
+> - „Jak funguje anotace @Tool a co s ní LangChain4j dělá v pozadí?“
+> - „Může AI volat více nástrojů za sebou k vyřešení složitých problémů?“
+> - „Co se stane, když nástroj vyhodí výjimku – jak mám chybám předcházet?“
+> - „Jak bych integroval reálné API místo tohoto příkladu kalkulačky?“
 
-**Otázky a odpovědi k dokumentům (RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Otázky a odpovědi k dokumentům (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Zde uvidíte základy RAG (retrieval-augmented generation). Místo spoléhaní se na tréninková data modelu nahráváte obsah z [`document.txt`](../../../00-quick-start/document.txt) a zahrnujete ho do promptu. AI odpovídá na základě vašeho dokumentu, nikoliv obecné znalosti. To je první krok k vytváření systémů, které pracují s vlastními daty.
+Zde uvidíte RAG (retrieval-augmented generation) pomocí přístupu LangChain4j „Easy RAG“. Dokumenty se načtou, automaticky rozdělí a vloží do paměťového úložiště, poté obsahový vyhledávač poskytuje relevantní části AI při dotazování. AI odpovídá na základě vašich dokumentů, nikoli obecné znalosti modelu.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("document.txt");
-String content = document.text();
+Document document = loadDocument(Paths.get("document.txt"));
 
-String prompt = "Based on this document: " + content + 
-                "\nQuestion: What is the main topic?";
-String response = model.chat(prompt);
+InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
+
+Assistant assistant = AiServices.builder(Assistant.class)
+        .chatModel(chatModel)
+        .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+        .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore))
+        .build();
+
+String answer = assistant.chat("What is the main topic?");
 ```
-
-> **Poznámka:** Tento jednoduchý přístup načítá celý dokument do promptu. U velkých souborů (>10KB) překročíte limity kontextu. Modul 03 se zabývá dělením na části a vektorovým vyhledáváním pro produkční RAG systémy.
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otevřete [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) a zeptejte se:
 > - „Jak RAG zabraňuje halucinacím AI ve srovnání s použitím tréninkových dat modelu?“
-> - „Jaký je rozdíl mezi tímto jednoduchým přístupem a použitím vektorových embeddingů pro hledání?“
-> - „Jak to škálovat na více dokumentů nebo větší znalostní báze?“
-> - „Jaké jsou nejlepší postupy pro strukturování promptu, aby AI používala jen poskytnutý kontext?“
+> - „Jaký je rozdíl mezi tímto jednoduchým přístupem a vlastním RAG pipeline?“
+> - „Jak bych škáloval řešení pro více dokumentů nebo větší znalostní bázi?“
 
-**Odpovědná AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+**Odpovědné AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Budujte bezpečnost AI s více vrstvami ochrany. Toto demo ukazuje dvě vrstvy ochrany spolupracující dohromady:
+Budujte bezpečnost AI s obranou do hloubky. Toto demo ukazuje dvě vrstvy ochrany spolupracující dohromady:
 
-**Část 1: Vstupní bezpečnostní pravidla LangChain4j** – Blokují nebezpečné prompty dřív, než dosáhnou LLM. Vytvářejte vlastní pravidla, která kontrolují zakázaná klíčová slova nebo vzory. Běží ve vašem kódu, takže jsou rychlá a zdarma.
+**Část 1: LangChain4j Input Guardrails** – Blokuje nebezpečné prompty dříve, než dosáhnou LLM. Vytvořte vlastní „guardraily“, které kontrolují zakázaná klíčová slova nebo vzory. Tyto běží ve vašem kódu, takže jsou rychlé a zdarma.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -299,12 +314,12 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**Část 2: Bezpečnostní filtry poskytovatele** – GitHub Models mají zabudované filtry, které zachytí to, co vaše pravidla mohou přehlédnout. Uvidíte tvrdé blokace (chyby HTTP 400) u závažných porušení a měkké odmítnutí, kde AI zdvořile odmítá.
+**Část 2: Poskytovatelé bezpečnostních filtrů** – GitHub Models má vestavěné filtry, které zachytí to, co mohou vaše guardraily přehlédnout. Uvidíte tvrdé blokace (HTTP 400 chyby) při závažných porušeních a měkké odmítnutí, kdy AI zdvořile odmítne.
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Otevřete [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) a zeptejte se:
-> - „Co je InputGuardrail a jak si vytvořit vlastní?“
-> - „Jaký je rozdíl mezi tvrdou blokací a měkkým odmítnutím?“
-> - „Proč používat zároveň guardrails i filtry poskytovatele?“
+> - „Co je InputGuardrail a jak vytvořím vlastní?“
+> - „Jaký je rozdíl mezi tvrdým blokem a měkkým odmítnutím?“
+> - „Proč používat guardraily i filtry poskytovatele dohromady?“
 
 ## Další kroky
 
@@ -318,20 +333,20 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ## Řešení problémů
 
-### První build Maven
+### První sestavení Maven
 
-**Problém:** První `mvn clean compile` nebo `mvn package` trvá dlouho (10–15 minut)
+**Problém:** První `mvn clean compile` nebo `mvn package` trvá dlouho (10-15 minut)
 
-**Příčina:** Maven musí stáhnout všechny závislosti projektu (Spring Boot, LangChain4j knihovny, Azure SDK atd.) při prvním buildě.
+**Příčina:** Maven musí při prvním sestavení stáhnout všechny závislosti projektu (Spring Boot, LangChain4j knihovny, Azure SDK atd.).
 
-**Řešení:** To je normální chování. Následující buildy budou mnohem rychlejší, protože závislosti jsou uložené lokálně. Délka stahování závisí na rychlosti vaší sítě.
-### Syntaxe příkazů PowerShell Maven
+**Řešení:** Toto je normální chování. Následující sestavení budou mnohem rychlejší, protože závislosti jsou lokálně uložené v cache. Doba stahování závisí na rychlosti vašeho připojení.
 
-**Problém**: Příkazy Maven selhávají s chybou `Unknown lifecycle phase ".mainClass=..."`
+### Syntaxe Maven příkazů v PowerShell
 
-**Příčina**: PowerShell interpretuje `=` jako operátor přiřazení proměnné, čímž porušuje syntaxi vlastností Maven
+**Problém:** Maven příkazy končí chybou `Unknown lifecycle phase ".mainClass=..."`
+**Příčina**: PowerShell interpretuje `=` jako operátor přiřazení proměnné, což narušuje syntaxi vlastností Maven
 
-**Řešení**: Použijte operátor zastavení parsování `--%` před příkazem Maven:
+**Řešení**: Použijte operátor zastavení parsování `--%` před Maven příkazem:
 
 **PowerShell:**
 ```powershell
@@ -343,11 +358,11 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Operátor `--%` říká PowerShellu, aby všechny zbývající argumenty předal Maven doslovně bez interpretace.
+Operátor `--%` říká PowerShellu, aby předal všechny zbývající argumenty doslovně do Maven bez interpretace.
 
 ### Zobrazení emoji ve Windows PowerShell
 
-**Problém**: Odpovědi AI zobrazují nesmyslné znaky (např. `????` nebo `â??`) místo emoji v PowerShellu
+**Problém**: Odpovědi AI zobrazují špatné znaky (např. `????` nebo `â??`) místo emoji v PowerShell
 
 **Příčina**: Výchozí kódování PowerShellu nepodporuje UTF-8 emoji
 
@@ -356,17 +371,17 @@ Operátor `--%` říká PowerShellu, aby všechny zbývající argumenty předal
 chcp 65001
 ```
 
-Tím dojde k nucenému nastavení kódování UTF-8 v terminálu. Alternativně můžete použít Windows Terminal, který má lepší podporu Unicode.
+Tím se v terminálu vynutí kódování UTF-8. Alternativně použijte Windows Terminal, který má lepší podporu Unicode.
 
-### Ladění volání API
+### Ladění API volání
 
-**Problém**: Chyby ověřování, limity rychlosti nebo neočekávané odpovědi od AI modelu
+**Problém**: Chyby autentizace, limity rychlosti nebo neočekávané odpovědi od AI modelu
 
-**Řešení**: Příklady obsahují `.logRequests(true)` a `.logResponses(true)` pro zobrazení API volání v konzoli. To pomáhá při řešení chyb ověřování, limitů rychlosti nebo neočekávaných odpovědí. Tyto přepínače odstraňte v produkčním provozu, aby se snížil šum v logu.
+**Řešení**: Příklady obsahují `.logRequests(true)` a `.logResponses(true)` pro zobrazení API volání v konzoli. To pomáhá řešit chyby autentizace, limity rychlosti nebo neočekávané odpovědi. V produkci tyto příznaky odstraňte pro snížení šumu v logu.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Prohlášení o vyloučení odpovědnosti**:  
-Tento dokument byl přeložen pomocí AI překladatelské služby [Co-op Translator](https://github.com/Azure/co-op-translator). Přestože usilujeme o přesnost, mějte prosím na paměti, že automatizované překlady mohou obsahovat chyby nebo nepřesnosti. Původní dokument v jeho původním jazyce by měl být považován za autoritativní zdroj. Pro důležité informace se doporučuje využít profesionální lidský překlad. Nebereme žádnou odpovědnost za případné nedorozumění nebo chybné výklady vyplývající z použití tohoto překladu.
+Tento dokument byl přeložen pomocí AI překladatelské služby [Co-op Translator](https://github.com/Azure/co-op-translator). Ačkoli se snažíme o přesnost, mějte prosím na paměti, že automatické překlady mohou obsahovat chyby nebo nepřesnosti. Originální dokument v jeho původním jazyce by měl být považován za autoritativní zdroj. Pro kritické informace se doporučuje profesionální lidský překlad. Nejsme odpovědní za jakékoliv nedorozumění nebo nesprávné výklady vyplývající z použití tohoto překladu.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
