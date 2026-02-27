@@ -10,6 +10,7 @@
   - [Decision Making](#decision-making)
   - [Execution](#execution)
   - [Response Generation](#response-generation)
+  - [Architecture: Spring Boot Auto-Wiring](#architecture-spring-boot-auto-wiring)
 - [Tool Chaining](#tool-chaining)
 - [Run the Application](#run-the-application)
 - [Using the Application](#using-the-application)
@@ -24,6 +25,7 @@
   - [Error Handling](#error-handling)
 - [Available Tools](#available-tools)
 - [When to Use Tool-Based Agents](#when-to-use-tool-based-agents)
+- [Tools vs RAG](#tools-vs-rag)
 - [Next Steps](#next-steps)
 
 ## What You'll Learn
@@ -43,18 +45,22 @@ Tools change this. By giving the model access to functions it can call, you tran
 
 > **📝 Note:** The term "agents" in this module refers to AI assistants enhanced with tool-calling capabilities. This is different from the **Agentic AI** patterns (autonomous agents with planning, memory, and multi-step reasoning) that we'll cover in [Module 05: MCP](../05-mcp/README.md).
 
-An AI agent with tools follows a reasoning and acting pattern (ReAct):
+Without tools, a language model can only generate text from its training data. Ask it for the current weather, and it has to guess. Give it tools, and it can call a weather API, perform calculations, or query a database — then weave those real results into its response.
 
-1. User asks a question
-2. Agent reasons about what it needs to know
-3. Agent decides if it needs a tool to answer
-4. If yes, agent calls the appropriate tool with the right parameters
-5. Tool executes and returns data
-6. Agent incorporates the result and provides the final answer
+<img src="images/what-are-tools.png" alt="Without Tools vs With Tools" width="800"/>
 
-<img src="images/react-pattern.png" alt="ReAct Pattern" width="800"/>
+*Without tools the model can only guess — with tools it can call APIs, run calculations, and return real-time data.*
 
-*The ReAct pattern - how AI agents alternate between reasoning and acting to solve problems*
+An AI agent with tools follows a **Reasoning and Acting (ReAct)** pattern. The model doesn't just respond — it thinks about what it needs, acts by calling a tool, observes the result, and then decides whether to act again or deliver the final answer:
+
+1. **Reason** — The agent analyzes the user's question and determines what information it needs
+2. **Act** — The agent selects the right tool, generates the correct parameters, and calls it
+3. **Observe** — The agent receives the tool's output and evaluates the result
+4. **Repeat or Respond** — If more data is needed, the agent loops back; otherwise, it composes a natural language answer
+
+<img src="images/react-pattern-detail.png" alt="ReAct Pattern" width="800"/>
+
+*The ReAct cycle — the agent reasons about what to do, acts by calling a tool, observes the result, and loops until it can deliver the final answer.*
 
 This happens automatically. You define the tools and their descriptions. The model handles the decision-making about when and how to use them.
 
@@ -88,6 +94,12 @@ public interface Assistant {
 // - ChatMemoryProvider for session management
 ```
 
+The diagram below breaks down every annotation and shows how each piece helps the AI understand when to call the tool and what arguments to pass:
+
+<img src="images/tool-definitions-anatomy.png" alt="Anatomy of Tool Definitions" width="800"/>
+
+*Anatomy of a tool definition — @Tool tells the AI when to use it, @P describes each parameter, and @AiService wires everything together at startup.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`WeatherTool.java`](src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) and ask:
 > - "How would I integrate a real weather API like OpenWeatherMap instead of mock data?"
 > - "What makes a good tool description that helps the AI use it correctly?"
@@ -95,13 +107,23 @@ public interface Assistant {
 
 ### Decision Making
 
-When a user asks "What's the weather in Seattle?", the model recognizes it needs the weather tool. It generates a function call with the location parameter set to "Seattle".
+When a user asks "What's the weather in Seattle?", the model doesn't randomly pick a tool. It compares the user's intent against every tool description it has access to, scores each one for relevance, and selects the best match. It then generates a structured function call with the right parameters — in this case, setting `location` to `"Seattle"`.
+
+If no tool matches the user's request, the model falls back to answering from its own knowledge. If multiple tools match, it picks the most specific one.
+
+<img src="images/decision-making.png" alt="How the AI Decides Which Tool to Use" width="800"/>
+
+*The model evaluates every available tool against the user's intent and selects the best match — this is why writing clear, specific tool descriptions matters.*
 
 ### Execution
 
 [AgentService.java](src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot auto-wires the declarative `@AiService` interface with all registered tools, and LangChain4j executes tool calls automatically.
+Spring Boot auto-wires the declarative `@AiService` interface with all registered tools, and LangChain4j executes tool calls automatically. Behind the scenes, a complete tool call flows through six stages — from the user's natural language question all the way back to a natural language answer:
+
+<img src="images/tool-calling-flow.png" alt="Tool Calling Flow" width="800"/>
+
+*The end-to-end flow — the user asks a question, the model selects a tool, LangChain4j executes it, and the model weaves the result into a natural response.*
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`AgentService.java`](src/main/java/com/example/langchain4j/agents/service/AgentService.java) and ask:
 > - "How does the ReAct pattern work and why is it effective for AI agents?"
@@ -112,28 +134,44 @@ Spring Boot auto-wires the declarative `@AiService` interface with all registere
 
 The model receives the weather data and formats it into a natural language response for the user.
 
-### Why Use Declarative AI Services?
+### Architecture: Spring Boot Auto-Wiring
 
-This module uses LangChain4j's Spring Boot integration with declarative `@AiService` interfaces:
+This module uses LangChain4j's Spring Boot integration with declarative `@AiService` interfaces. At startup Spring Boot discovers every `@Component` that contains `@Tool` methods, your `ChatModel` bean, and the `ChatMemoryProvider` — then wires them all into a single `Assistant` interface with zero boilerplate.
 
-- **Spring Boot auto-wiring** - ChatModel and tools automatically injected
-- **@MemoryId pattern** - Automatic session-based memory management
-- **Single instance** - Assistant created once and reused for better performance
-- **Type-safe execution** - Java methods called directly with type conversion
-- **Multi-turn orchestration** - Handles tool chaining automatically
-- **Zero boilerplate** - No manual AiServices.builder() calls or memory HashMap
+<img src="images/spring-boot-wiring.png" alt="Spring Boot Auto-Wiring Architecture" width="800"/>
+
+*The @AiService interface ties together the ChatModel, tool components, and memory provider — Spring Boot handles all the wiring automatically.*
+
+Key benefits of this approach:
+
+- **Spring Boot auto-wiring** — ChatModel and tools automatically injected
+- **@MemoryId pattern** — Automatic session-based memory management
+- **Single instance** — Assistant created once and reused for better performance
+- **Type-safe execution** — Java methods called directly with type conversion
+- **Multi-turn orchestration** — Handles tool chaining automatically
+- **Zero boilerplate** — No manual `AiServices.builder()` calls or memory HashMap
 
 Alternative approaches (manual `AiServices.builder()`) require more code and miss Spring Boot integration benefits.
 
 ## Tool Chaining
 
-**Tool Chaining** - The AI might call multiple tools in sequence. Ask "What's the weather in Seattle and should I bring an umbrella?" and watch it chain `getCurrentWeather` with reasoning about rain gear.
+**Tool Chaining** — The real power of tool-based agents shows when a single question requires multiple tools. Ask "What's the weather in Seattle in Fahrenheit?" and the agent automatically chains two tools: first it calls `getCurrentWeather` to get the temperature in Celsius, then it passes that value to `celsiusToFahrenheit` for conversion — all in a single conversation turn.
+
+<img src="images/tool-chaining-example.png" alt="Tool Chaining Example" width="800"/>
+
+*Tool chaining in action — the agent calls getCurrentWeather first, then pipes the Celsius result into celsiusToFahrenheit, and delivers a combined answer.*
+
+Here's what this looks like in the running application — the agent chains two tool calls in a single conversation turn:
 
 <a href="images/tool-chaining.png"><img src="images/tool-chaining.png" alt="Tool Chaining" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Sequential tool calls - one tool's output feeds into the next decision*
+*Actual application output — the agent automatically chains getCurrentWeather → celsiusToFahrenheit in one turn.*
 
-**Graceful Failures** - Ask for weather in a city that's not in the mock data. The tool returns an error message, and the AI explains it can't help. Tools fail safely.
+**Graceful Failures** — Ask for weather in a city that's not in the mock data. The tool returns an error message, and the AI explains it can't help rather than crashing. Tools fail safely.
+
+<img src="images/error-handling-flow.png" alt="Error Handling Flow" width="800"/>
+
+*When a tool fails, the agent catches the error and responds with a helpful explanation instead of crashing.*
 
 This happens in a single conversation turn. The agent orchestrates multiple tool calls autonomously.
 
@@ -273,13 +311,23 @@ The quality of your tool descriptions directly affects how well the agent uses t
 
 ### Session Management
 
-The `@MemoryId` annotation enables automatic session-based memory management. Each session ID gets its own `ChatMemory` instance managed by the `ChatMemoryProvider` bean, eliminating the need for manual memory tracking.
+The `@MemoryId` annotation enables automatic session-based memory management. Each session ID gets its own `ChatMemory` instance managed by the `ChatMemoryProvider` bean, so multiple users can interact with the agent simultaneously without their conversations mixing together.
+
+<img src="images/session-management.png" alt="Session Management with @MemoryId" width="800"/>
+
+*Each session ID maps to an isolated conversation history — users never see each other's messages.*
 
 ### Error Handling
 
-Tools can fail - APIs timeout, parameters might be invalid, external services go down. Production agents need error handling so the model can explain problems or try alternatives.
+Tools can fail — APIs timeout, parameters might be invalid, external services go down. Production agents need error handling so the model can explain problems or try alternatives rather than crashing the entire application. When a tool throws an exception, LangChain4j catches it and feeds the error message back to the model, which can then explain the problem in natural language.
 
 ## Available Tools
+
+The diagram below shows the broad ecosystem of tools you can build. This module demonstrates weather and temperature tools, but the same `@Tool` pattern works for any Java method — from database queries to payment processing.
+
+<img src="images/tool-ecosystem.png" alt="Tool Ecosystem" width="800"/>
+
+*Any Java method annotated with @Tool becomes available to the AI — the pattern extends to databases, APIs, email, file operations, and more.*
 
 **Weather Tools** (mock data for demonstration):
 - Get current weather for a location
@@ -297,6 +345,10 @@ These are simple examples, but the pattern extends to any function: database que
 
 ## When to Use Tool-Based Agents
 
+<img src="images/when-to-use-tools.png" alt="When to Use Tools" width="800"/>
+
+*A quick decision guide — tools are for real-time data, calculations, and actions; general knowledge and creative tasks don't need them.*
+
 **Use tools when:**
 - Answering requires real-time data (weather, stock prices, inventory)
 - You need to perform calculations beyond simple math
@@ -308,6 +360,16 @@ These are simple examples, but the pattern extends to any function: database que
 - Questions can be answered from general knowledge
 - Response is purely conversational
 - Tool latency would make the experience too slow
+
+## Tools vs RAG
+
+Modules 03 and 04 both extend what the AI can do, but in fundamentally different ways. RAG gives the model access to **knowledge** by retrieving documents. Tools give the model the ability to take **actions** by calling functions.
+
+<img src="images/tools-vs-rag.png" alt="Tools vs RAG Comparison" width="800"/>
+
+*RAG retrieves information from static documents — Tools execute actions and fetch dynamic, real-time data. Many production systems combine both.*
+
+In practice, many production systems combine both approaches: RAG for grounding answers in your documentation, and Tools for fetching live data or performing operations.
 
 ## Next Steps
 
