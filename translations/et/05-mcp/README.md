@@ -1,48 +1,54 @@
-# Moodul 05: Mudeli Konteksti Protokoll (MCP)
+# Moodul 05: Mudeli konteksti protokoll (MCP)
 
 ## Sisukord
 
-- [Mida Sa Õpid](../../../05-mcp)
-- [Mis On MCP?](../../../05-mcp)
-- [Kuidas MCP Töötab](../../../05-mcp)
-- [Agentne Moodul](../../../05-mcp)
-- [Näidete Käivitamine](../../../05-mcp)
+- [Mida sa õpid](../../../05-mcp)
+- [Mis on MCP?](../../../05-mcp)
+- [Kuidas MCP töötab](../../../05-mcp)
+- [Agentne moodul](../../../05-mcp)
+- [Näidete käivitamine](../../../05-mcp)
   - [Eeltingimused](../../../05-mcp)
-- [Kiire Algus](../../../05-mcp)
+- [Kiire algus](../../../05-mcp)
   - [Failioperatsioonid (Stdio)](../../../05-mcp)
-  - [Järelevalve Agent](../../../05-mcp)
-    - [Väljundi Mõistmine](../../../05-mcp)
+  - [Järelevalve agent](../../../05-mcp)
+    - [Demo jooksutamine](../../../05-mcp)
+    - [Kuidas järelevalve töötab](../../../05-mcp)
     - [Vastusstrateegiad](../../../05-mcp)
-    - [Agentse Mooduli Funktsioonide Selgitus](../../../05-mcp)
+    - [Väljundi mõistmine](../../../05-mcp)
+    - [Agentse mooduli funktsioonide seletus](../../../05-mcp)
 - [Põhimõisted](../../../05-mcp)
-- [Palju Õnne!](../../../05-mcp)
-  - [Mis Järgmine?](../../../05-mcp)
+- [Palju õnne!](../../../05-mcp)
+  - [Mis järgmiseks?](../../../05-mcp)
 
-## Mida Sa Õpid
+## Mida sa õpid
 
-Oled loonud vestlusliku tehisintellekti, valdad sõelujaid, sidunud vastused dokumentidega ja loonud agentide tööriistu. Kuid kõik need tööriistad olid spetsiaalselt sinu rakenduse jaoks kohandatud. Mis juhtuks, kui saaksid anda oma tehisintellektile ligipääsu standardiseeritud tööriistade ökosüsteemile, mida igaüks saab luua ja jagada? Selles moodulis õpidki, kuidas teha just nii Model Context Protocoli (MCP) ja LangChain4j agentse mooduli abil. Esiteks tutvustame lihtsat MCP faililugejat ja seejärel näitame, kuidas see sujuvalt ühineb arenenud agentse töövoogudega, kasutades Järelevalve Agendi mustrit.
+Oled loonud vestlusliku tehisintellekti, valdanud promte, sidunud vastused dokumentidega ja loonud agendid tööriistadega. Kuid need tööriistad olid kõik sinu konkreetse rakenduse jaoks kohandatud. Mis siis, kui saaksid anda oma tehisintellektile juurdepääsu standardiseeritud tööriistade ökosüsteemile, mida igaüks saab luua ja jagada? Selles moodulis õpidki seda tegema Mudeli konteksti protokolli (MCP) ja LangChain4j agentse mooduli abil. Esmalt demonstreerime lihtsat MCP faililugejat ja seejärel näitame, kuidas see lihtsalt integreerub täiustatud agentsetesse töövoogudesse kasutades järelevalve agendi mustrit.
 
-## Mis On MCP?
+## Mis on MCP?
 
-Model Context Protocol (MCP) pakub just seda — standardset viisi, kuidas AI rakendused leiavad ja kasutavad väliseid tööriistu. Selle asemel, et kirjutada iga andmeallika või teenuse jaoks eraldi integratsioon, ühendad MCP serveritega, mis avaldavad oma võimekuse ühtses formaadis. Sinu AI agent saab neid tööriistu siis automaatselt avastada ja kasutada.
+Mudeli konteksti protokoll (MCP) pakub just seda - standardset viisi AI rakendustel avastada ja kasutada väliseid tööriistu. Selle asemel, et kirjutada kohandatud integratsioone iga andmeallika või teenuse jaoks, ühendud MCP serveritega, mis avaldavad oma võimalused ühtses formaadis. Sinu tehisintellekti agent saab siis need tööriistad automaatselt avastada ja kasutada.
 
-<img src="../../../translated_images/et/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Võrdlus" width="800"/>
+<img src="../../../translated_images/et/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*Enne MCP-d: keerulised otsast-otsani integratsioonid. Pärast MCP-d: üks protokoll, lõputud võimalused.*
+*Enne MCP-d: keerukad otseühendused. Pärast MCP-d: üks protokoll, lõputud võimalused.*
 
-MCP lahendab AI arenduse põhiprobleemi: iga integratsioon on käsitsi kohandatud. Tahad ligipääsu GitHubile? Kohandatud kood. Tahad faile lugeda? Kohandatud kood. Tahad andmebaasipäringuid teha? Kohandatud kood. Ja ükski neist integratsioonidest ei tööta teiste AI rakendustega.
+MCP lahendab AI arenduses põhimõttelise probleemi: iga integratsioon on kohandatud. Tahad GitHubi kasutada? Kohandatud kood. Tahad faile lugeda? Kohandatud kood. Tahad pärida andmebaasi? Kohandatud kood. Ja ükski neist integratsioonidest ei toimi teiste AI rakendustega.
 
-MCP standardiseerib selle. MCP server avaldab tööriistu selgete kirjelduse ja skeemidega. Igal MCP kliendil on võimalik ühenduda, avastada olemasolevaid tööriistu ja neid kasutada. Loo üks kord, kasuta kõikjal.
+MCP standardiseerib selle. MCP server avaldab tööriistad selgete kirjelduste ja skeemidega. Iga MCP klient saab ühendada, avastada saadavalolevad tööriistad ja neid kasutada. Ehita kord, kasuta kõikjal.
 
-<img src="../../../translated_images/et/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Arhitektuur" width="800"/>
+<img src="../../../translated_images/et/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*Model Context Protocoli arhitektuur – standardiseeritud tööriistade avastamine ja käivitamine*
+*Mudeli konteksti protokolli arhitektuur - standardiseeritud tööriistade avastamine ja täitmine*
 
-## Kuidas MCP Töötab
+## Kuidas MCP töötab
 
-**Server-Klient Arhitektuur**
+<img src="../../../translated_images/et/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
 
-MCP kasutab klient-server mudelit. Serverid pakuvad tööriistu – failide lugemine, andmebaaside päringud, API kutseid. Kliendid (sinu AI rakendus) ühenduvad serveritega ja kasutavad nende tööriistu.
+*Kuidas MCP töötab - kliendid avastavad tööriistu, vahetavad JSON-RPC sõnumeid ja täidavad toiminguid transpordi kihi kaudu.*
+
+**Serveri-Kliendi arhitektuur**
+
+MCP kasutab kliendi-serveri mudelit. Serverid pakuvad tööriistu - failide lugemist, andmebaasi päringuid, API kutsed. Kliendid (sinu AI rakendus) ühenduvad serveritega ja kasutavad nende tööriistu.
 
 MCP kasutamiseks koos LangChain4j-ga lisa see Maven sõltuvus:
 
@@ -53,22 +59,26 @@ MCP kasutamiseks koos LangChain4j-ga lisa see Maven sõltuvus:
     <version>${langchain4j.version}</version>
 </dependency>
 ```
+  
+**Tööriistade avastamine**
 
-**Tööriistade Avastamine**
+Kui sinu klient ühendub MCP serveriga, küsib ta: "Milliseid tööriistu sul on?" Server vastab saadaval olevate tööriistade nimekirjaga, igaühel kirjeldus ja parameetrite skeemid. Sinu AI agent saab siis otsustada, milliseid tööriistu kasutaja päringu põhjal kasutada.
 
-Kui su klient ühendub MCP serveriga, küsib ta: "Millised tööriistad sul olemas on?" Server vastab nimekirjaga saadaval olevatest tööriistadest, igaühe kirjelduste ja parameetrite skeemidega. Sinu AI agent saab seejärel otsustada, milliseid tööriistu kasutusele võtta vastavalt kasutaja päringule.
+<img src="../../../translated_images/et/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-**Transportmehhanismid**
+*AI avastab käivitamisel saadaval olevad tööriistad — nüüd teab, millised võimalused on saadaval ja saab valida, milliseid kasutada.*
 
-MCP toetab erinevaid transpordimehhanisme. See moodul demonstreerib Stdio transporti kohalike protsesside puhul:
+**Transpordimehhanismid**
 
-<img src="../../../translated_images/et/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transpordimehhanismid" width="800"/>
+MCP toetab erinevaid transpordimehhanisme. Selles moodulis demonstreeritakse Stdio transpordimeetodit kohalike protsesside jaoks:
+
+<img src="../../../translated_images/et/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
 *MCP transpordimehhanismid: HTTP kaugserverite jaoks, Stdio kohalike protsesside jaoks*
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Kohalike protsesside jaoks. Sinu rakendus käivitab serveri alamprotsessina ja suhtleb standardse sisendi/väljundi kaudu. Kasulik failisüsteemi ligipääsuks või käsureatööriistade jaoks.
+Kohalike protsesside jaoks. Sinu rakendus käivitab serveri alamprotsessina ja suhtleb standardse sisendi/väljundi kaudu. Kasulik failisüsteemile ligipääsuks või käsureatööriistadele.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -80,17 +90,21 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .logEvents(false)
     .build();
 ```
+  
+<img src="../../../translated_images/et/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
 
-> **🤖 Proovi koos [GitHub Copilot](https://github.com/features/copilot) Chat'iga:** Ava [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) ja küsi:
-> - "Kuidas Stdio transport töötab ja millal tuleks seda kasutada võrreldes HTTP-ga?"
+*Stdio transport tegevuses — sinu rakendus käivitab MCP serveri lapseprotsessina ja suhtleb stdin/stdout torude kaudu.*
+
+> **🤖 Proovi [GitHub Copilot](https://github.com/features/copilot) Chatiga:** Ava [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) ja küsi:
+> - "Kuidas Stdio transport töötab ja millal peaksin seda kasutama võrreldes HTTP-ga?"
 > - "Kuidas haldab LangChain4j MCP serveriprotsesside elutsüklit?"
-> - "Millised on turvariskid, kui anda AI-le ligipääs failisüsteemile?"
+> - "Millised on turvariskid, kui anda AI-le failisüsteemile juurdepääs?"
 
-## Agentne Moodul
+## Agentne moodul
 
-Kuigi MCP pakub standardiseeritud tööriistu, annab LangChain4j **agentne moodul** deklaratiivse viisi agentide loomiseks, kes neid tööriistu orkestreerivad. `@Agent` annotatsioon ja `AgenticServices` võimaldavad määratleda agendi käitumist liideste kaudu, mitte imperatiivse koodina.
+Kuigi MCP pakub standardiseeritud tööriistu, pakub LangChain4j **agentne moodul** deklaratiivset viisi agentide loomiseks, kes orkestreerivad neid tööriistu. `@Agent` annotatsioon ja `AgenticServices` võimaldavad defineerida agendi käitumist liideste kaudu, mitte imperatiivse koodi kaudu.
 
-Selles moodulis uurid **Järelevalve Agendi** mustrit — arenenud agentne AI lähenemine, kus "järelevalve" agent otsustab dünaamiliselt, milliseid alaagente käivitada vastavalt kasutaja päringule. Ühendame need mõlemad, andes ühele meie alaagentidest MCP-toega failide lugemise võimekuse.
+Selles moodulis uurid **Järelevalve agendi** mustrit — arenenud agentset AI lähenemist, kus "järelevalve" agent otsustab dünaamiliselt, milliseid alaagente kasutaja päringu põhjal kutsuda. Kombineerime mõlemad kontseptsioonid, andes ühele meie alaagentidest MCP-toega failide ligipääsu võimed.
 
 Agentse mooduli kasutamiseks lisa see Maven sõltuvus:
 
@@ -101,35 +115,35 @@ Agentse mooduli kasutamiseks lisa see Maven sõltuvus:
     <version>${langchain4j.mcp.version}</version>
 </dependency>
 ```
+  
+> **⚠️ Eksperimentaalne:** `langchain4j-agentic` moodul on **eksperimentaalne** ja võib muutuda. Stabiilne viis AI assistentide ehitamiseks jääb `langchain4j-core` koos kohandatud tööriistadega (Moodul 04).
 
-> **⚠️ Eksperimentaalne:** `langchain4j-agentic` moodul on **eksperimentaalne** ja võib muutuda. Stabiilne viis AI assistentide ehitamiseks on endiselt `langchain4j-core` koos kohandatud tööriistadega (Moodul 04).
-
-## Näidete Käivitamine
+## Näidete käivitamine
 
 ### Eeltingimused
 
 - Java 21+, Maven 3.9+
 - Node.js 16+ ja npm (MCP serverite jaoks)
-- Keskkonnamuutujad seadistatud `.env` failis (juurkataloogist):
+- Keskkonnamuutujad seadistatud `.env` failis (juurkaustast):
   - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (nagu Moodulites 01-04)
 
-> **Märkus:** Kui pole keskkonnamuutujaid veel seadistanud, vaata [Moodul 00 - Kiire Algus](../00-quick-start/README.md) juhiseid või kopeeri `.env.example` `.env`-iks juurkataloogis ja täida enda andmed.
+> **Märkus:** Kui sa pole oma keskkonnamuutujaid veel seadistanud, vaata [Moodul 00 - Kiire algus](../00-quick-start/README.md) juhiseid või kopeeri `.env.example` fail `.env` faili juurkaustas ja täida oma väärtused.
 
-## Kiire Algus
+## Kiire algus
 
-**VS Code kasutamine:** Paremklõpsa Exploreris mis tahes demo failil ja vali **"Run Java"** või kasuta Run and Debug paneeli käivituskonfiguratsioone (eeldades, et oled esmalt lisanud oma tokeni `.env` faili).
+**VS Code kasutamine:** Lihtsalt paremklõpsa mõnel demo failil Exploreris ja vali **"Run Java"** või kasuta käivituskonfiguratsioone Run and Debug paneelil (veendu, et oled oma tokeni `.env` faili lisanud).
 
-**Maveni kasutamine:** Alternatiivselt võid käivitada käsurealt järgmiste näidetega.
+**Maveni kasutamine:** Alternatiivina võid käivitada näited käsurealt alljärgnevalt.
 
 ### Failioperatsioonid (Stdio)
 
 See demonstreerib kohalikke alamprotsessidel põhinevaid tööriistu.
 
-**✅ Eeltingimused puuduvad** - MCP server käivitatakse automaatselt.
+**✅ Eeltingimusi pole vaja** - MCP server käivitub automaatselt.
 
-**Käivituskriptide kasutamine (Soovitatav):**
+**Käivitusskriptide kasutamine (Soovitatav):**
 
-Käivitusskriptid laadivad automaatselt keskkonnamuutujad juurkataloogi `.env` failist:
+Käivitusskriptid laadivad automaatselt keskkonnamuutujad juurkausta `.env` failist:
 
 **Bash:**
 ```bash
@@ -137,45 +151,44 @@ cd 05-mcp
 chmod +x start-stdio.sh
 ./start-stdio.sh
 ```
-
+  
 **PowerShell:**
 ```powershell
 cd 05-mcp
 .\start-stdio.ps1
 ```
+  
+**VS Code kasutamine:** Paremklõpsa `StdioTransportDemo.java` failil ja vali **"Run Java"** (veendu, et `.env` fail on õigesti seadistatud).
 
-**VS Code kasutamine:** Paremklõpsa `StdioTransportDemo.java` failil ja vali **"Run Java"** (kontrolli, et su `.env` fail on korras).
-
-Rakendus käivitab automaatselt failisüsteemi MCP serveri ja loeb kohaliku faili. Pane tähele, kuidas alamprotsessi haldus on sinu eest tehtud.
+Rakendus käivitab automaatselt failisüsteemi MCP serveri ja loeb kohalikku faili. Märka, kuidas alamprotsesside haldus on sinu eest tehtud.
 
 **Oodatav väljund:**
 ```
 Assistant response: The file provides an overview of LangChain4j, an open-source Java library
 for integrating Large Language Models (LLMs) into Java applications...
 ```
+  
+### Järelevalve agent
 
-### Järelevalve Agent
+**Järelevalve agendi muster** on **paindlik** viis agentseks AI-ks. Järelevalve kasutab LLM-i, et iseseisvalt otsustada, milliseid agente kutsuda vastavalt kasutaja päringule. Järgmises näites kombineerime MCP-toega failide ligipääsu LLM agendiga, luues järelevalve all faililugemise → aruande töövoo.
 
-**Järelevalve Agendi mustrit** iseloomustab **paindlik** agentne AI vorm. Järelevalve kasutab LLM-i autonoomselt otsustamaks, milliseid agente käivitada vastavalt kasutaja päringule. Järgmises näites ühendame MCP-toega faililuugimise LLM agentiga, luues järelevalve all toimiva faili lugemise → aruande töövoo.
+Demos loeb `FileAgent` faili MCP failisüsteemi tööriistadega ja `ReportAgent` genereerib struktureeritud aruande koos juhtemomendiga (1 lause), 3 peamise punktiga ja soovitustega. Järelevalve juhib seda voogu automaatselt:
 
-Demos loeb `FileAgent` faili MCP failisüsteemi tööriistade abil ja `ReportAgent` genereerib struktureeritud aruande juhtkokkuvõtte (1 lause), 3 võtmekohaga ja soovitustega. Järelevalve orkestreerib selle töövoo automaatselt:
+<img src="../../../translated_images/et/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-<img src="../../../translated_images/et/agentic.cf84dcda226374e3.webp" alt="Agentne Moodul" width="800"/>
+*Järelevalve kasutab oma LLM-i, et otsustada, milliseid agente ja mis järjekorras kutsuda — kõvade reeglite koodita.*
 
-```
-┌─────────────┐      ┌──────────────┐
-│  FileAgent  │ ───▶ │ ReportAgent  │
-│ (MCP tools) │      │  (pure LLM)  │
-└─────────────┘      └──────────────┘
-   outputKey:           outputKey:
-  'fileContent'         'report'
-```
+Siin on konkreetne töövoog meie failist aruandeni torujuhtmele:
 
-Iga agent salvestab väljundi **Agentse Ulatusesse** (jagunatud mällu), võimaldades järgmiste agentide ligipääsu eelnevatele tulemustele. See demonstreerib, kuidas MCP tööriistad integreeruvad voolavalt agentsetesse töövoogudesse — Järelevalve ei pea teadma *kuidas* faile loetakse, vaid ainult, et `FileAgent` suudab seda teha.
+<img src="../../../translated_images/et/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
-#### Demo Käivitamine
+*FileAgent loeb faili MCP tööriistade kaudu, seejärel ReportAgent muudab toore sisu struktuurseks aruandeks.*
 
-Käivitusskriptid laadivad automaatselt keskkonnamuutujad juurkataloogi `.env` failist:
+Iga agent salvestab oma väljundi **Agentse ulatuse** (jagatud mälu), võimaldades alluvatel agentidel varasemaid tulemusi kasutada. See demonstreerib, kuidas MCP tööriistad sujuvalt agentsetesse töövoogudesse integreeruvad — Järelevalve ei pea teadma *kuidas* faile loetakse, vaid ainult, et `FileAgent` suudab seda teha.
+
+#### Demo käivitamine
+
+Käivitusskriptid laadivad automaatselt keskkonnamuutujad juurkausta `.env` failist:
 
 **Bash:**
 ```bash
@@ -183,22 +196,22 @@ cd 05-mcp
 chmod +x start-supervisor.sh
 ./start-supervisor.sh
 ```
-
+  
 **PowerShell:**
 ```powershell
 cd 05-mcp
 .\start-supervisor.ps1
 ```
+  
+**VS Code kasutamine:** Paremklõpsa `SupervisorAgentDemo.java` failil ja vali **"Run Java"** (veendu, et `.env` fail on seadistatud).
 
-**VS Code kasutamine:** Paremklõpsa `SupervisorAgentDemo.java` failil ja vali **"Run Java"** (kontrolli, et su `.env` fail on korras).
-
-#### Kuidas Järelevalve Töötab
+#### Kuidas järelevalve töötab
 
 ```java
-// Samm 1: FileAgent loeb faile kasutades MCP tööriistu
+// Samm 1: FileAgent loeb faile, kasutades MCP tööriistu
 FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .chatModel(model)
-        .toolProvider(mcpToolProvider)  // Omab MCP tööriistu failitoiminguteks
+        .toolProvider(mcpToolProvider)  // Omab MCP tööriistu failioperatsioonideks
         .build();
 
 // Samm 2: ReportAgent genereerib struktureeritud aruandeid
@@ -206,37 +219,43 @@ ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// Juhataja korraldab faili → aruande töövoogu
+// Juht koordineerib faili → aruande töövoogu
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
-        .responseStrategy(SupervisorResponseStrategy.LAST)  // Tagasta lõplik aruanne
+        .responseStrategy(SupervisorResponseStrategy.LAST)  // Tagastab lõpliku aruande
         .build();
 
-// Juhataja otsustab, milliseid agente päringu põhjal kutsuda
+// Juht otsustab, milliseid agente päringu põhjal kutsuda
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
-
+  
 #### Vastusstrateegiad
 
-Kui seadistad `SupervisorAgent`, määrad, kuidas see peab formuleerima oma lõpliku vastuse kasutajale pärast seda, kui alaagendid on oma ülesanded lõpetanud. Saadaval on järgmised strateegiad:
+Kui seadistad `SupervisorAgent`-i, määrad, kuidas ta kasutajale lõpliku vastuse formuleerib pärast alaagentide töö lõpetamist.
+
+<img src="../../../translated_images/et/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
+
+*Kolm strateegiat, kuidas Järelevalve esitab lõpliku vastuse — vali, kas soovid viimase agendi väljundit, sünteesitud kokkuvõtet või parima skooriga valikut.*
+
+Saadaval strateegiad on:
 
 | Strateegia | Kirjeldus |
 |------------|-----------|
-| **LAST** | Järelevalve tagastab viimase alagentide või tööriista väljastuse. See sobib, kui töövoo viimane agent on spetsiaalselt loodud ühtse, lõpliku vastuse tootmiseks (nt "Kokkuvõte Agent" uurimistöö voos). |
-| **SUMMARY** | Järelevalve kasutab oma sisemist keeletugevust (LLM) kogu suhtluse ja kõigi alagentide väljundite kokkuvõtte sünteesimiseks ning tagastab selle kokkuvõtte lõpliku vastusena. See annab kasutajale puhta, koondatud vastuse. |
-| **SCORED** | Süsteem kasutab sisemist LLM-i nii viimase vastuse kui ka suhtluse kokkuvõtte hindamiseks originaalse kasutajapäringu suhtes ning tagastab tulemuse, mis saab kõrgema skoori. |
+| **LAST** | Järelevalve tagastab viimase subagendi või tööriista väljundi. See sobib, kui töövoo lõplik agent on spetsiaalselt loodud lõpplahenduse andmiseks (nt "Kokkuvõtte agent" uurimistöö torujuhtmes). |
+| **SUMMARY** | Järelevalve kasutab oma sisemist keelemudelit (LLM), et sünteesida kokkuvõte kogu suhtlusest ja kõigist alaagentide vastustest ning tagastab selle kokkuvõtte lõpliku vastusena. See annab kasutajale puhta ja koondatud vastuse. |
+| **SCORED** | Süsteem kasutab sisemist LLM-i, et skoorida nii VIIMAST vastust kui ka KOKKUVÕTET kasutaja algse päringu alusel ning tagastab selle väljundi, millel on kõrgem skoor. |
 
-Vaata täielikku implementatsiooni failist [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java).
+Vaata täielikku implementatsiooni [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) failist.
 
-> **🤖 Proovi koos [GitHub Copilot](https://github.com/features/copilot) Chat'iga:** Ava [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) ja küsi:
-> - "Kuidas otsustab Järelevalve, milliseid agente käivitada?"
-> - "Mis vahe on Järelevalve ja Järjestikulise töövoo mustri vahel?"
-> - "Kuidas kohandada Järelevalve planeerimiskäitumist?"
+> **🤖 Proovi [GitHub Copilot](https://github.com/features/copilot) Chatiga:** Ava [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) ja küsi:
+> - "Kuidas Järelevalve otsustab, milliseid agente kutsuda?"
+> - "Mis vahe on Järelevalve ja järjestikuse töövoo mustrite vahel?"
+> - "Kuidas saan kohandada Järelevalve planeerimis käitumist?"
 
-#### Väljundi Mõistmine
+#### Väljundi mõistmine
 
-Demo käivitamisel näed, kuidas Järelevalve orkestreerib mitmeid agente struktureeritud viisil. Iga jaotis tähendab järgmist:
+Demot käivitades näed struktureeritud ülevaadet, kuidas Järelevalve juhib mitut agenti. Siin on, mida iga sektsioon tähendab:
 
 ```
 ======================================================================
@@ -246,8 +265,8 @@ Demo käivitamisel näed, kuidas Järelevalve orkestreerib mitmeid agente strukt
 This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
-
-**Päis** tutvustab töövoo kontseptsiooni: keskendunud torujuhe faililugemisest aruande koostamiseni.
+  
+**Päis** tutvustab töövoo kontseptsiooni: keskendunud torujuhe failist aruande genereerimiseni.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -262,17 +281,17 @@ The Supervisor orchestrates the agents automatically based on the request.
   [FILE]   FileAgent   - Reads files via MCP → stores in 'fileContent'
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
-
-**Töövoo Diagramm** näitab andmevoogu agentide vahel. Igal agendil on kindel ülesanne:
-- **FileAgent** loeb failid MCP tööriistade abil ja salvestab toore sisu `fileContent` muutujasse
-- **ReportAgent** tarbib seda sisu ja genereerib struktureeritud aruande `report` muutujasse
+  
+**Töövoo diagramm** kuvab andmevoo agentide vahel. Igal agendil on konkreetne roll:
+- **FileAgent** loeb faile MCP tööriistadega ja salvestab toore sisu `fileContent`-i
+- **ReportAgent** kasutab seda sisu ja toodab struktureeritud aruande `report`-i
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
-
-**Kasutaja Päring** näitab ülesannet. Järelevalve parsib selle ja otsustab käivitada FileAgent → ReportAgent.
+  
+**Kasutaja päring** näitab ülesannet. Järelevalve analüüsib seda ja otsustab kutsuda FileAgent → ReportAgent.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -292,12 +311,12 @@ The Supervisor orchestrates the agents automatically based on the request.
   |   Result: Executive Summary...
   +-- [OK] ReportAgent (generating structured report) completed
 ```
+  
+**Järelevalve orkestreerimine** kuvab 2-astmelise voo tegevuses:
+1. **FileAgent** loeb faili MCP kaudu ja salvestab sisu
+2. **ReportAgent** võtab sisu vastu ja genereerib struktureeritud aruande
 
-**Järelevalve Orkestreerimine** kuvab 2-astmelise voolu toimimises:
-1. **FileAgent** loeb faili MCP abil ja salvestab sisu
-2. **ReportAgent** võtab sisu ja genereerib struktureeritud aruande
-
-Järelevalve tegi need otsused **autonoomselt** vastavalt kasutaja soovile.
+Järelevalve tegi need otsused **autonoomselt** kasutaja päringu põhjal.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -315,27 +334,35 @@ Recommendations
   * fileContent: LangChain4j is an open-source, provider-agnostic Java framework...
   * report: Executive Summary...
 ```
+  
+#### Agentse mooduli funktsioonide seletus
 
-#### Agentse Mooduli Funktsioonide Selgitus
+Näide demonstreerib mitmeid agentse mooduli arenenud funktsioone. Vaatame lähemalt Agentic Scope ja Agent Listenerid.
 
-Näidis demonstreerib mitmeid agentse mooduli arenenud funktsioone. Vaatame lähemalt Agentset Ulatust ja Agendi Kuulajaid.
+**Agentic Scope** näitab jagatud mäluruumi, kuhu agendid salvestavad oma tulemusi kasutades `@Agent(outputKey="...")`. See võimaldab:
+- Hilisematel agentidel pääseda ligi varasemate agentide väljunditele
+- Järelevalvel sünteesida lõplikku vastust
+- Sul on võimalik uurida, mida iga agent tootis
 
-**Agentne Ulatus** tähistab jagatud mälu, kuhu agentide tulemused salvestatakse `@Agent(outputKey="...")` abil. See võimaldab:
-- Hilisematel agentidel ligipääsu varasemate agentide väljunditele
-- Järelevalve sünteesida lõpliku vastuse
-- Sul endal kontrollida, mida iga agent on toodetud
+<img src="../../../translated_images/et/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
+
+*Agentic Scope toimib jagatud mäluna — FileAgent kirjutab `fileContent`i, ReportAgent loeb seda ja kirjutab `report`i ning sinu kood loeb lõpplahendust.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
-String fileContent = scope.readState("fileContent");  // Toores failide andmed FileAgendilt
-String report = scope.readState("report");            // Struktureeritud aruanne ReportAgendilt
+String fileContent = scope.readState("fileContent");  // Pärisfaili andmed FileAgentilt
+String report = scope.readState("report");            // Struktureeritud aruanne ReportAgentilt
 ```
+  
+**Agent Listenerid** võimaldavad jälgida ja siluda agentide täitmist. Demos näha olev samm-sammuline väljund pärineb AgentListenerist, mis on ühendatud iga agendi kutsesse:
+- **beforeAgentInvocation** - Kutsutakse, kui juhendaja valib agendi, võimaldades näha, milline agent valiti ja miks
+- **afterAgentInvocation** - Kutsutakse, kui agent lõpetab, näidates selle tulemust
+- **inheritedBySubagents** - Kui tõene, jälgib kuulaja kõiki agente hierarhias
 
-**Agendi Kuulajad** võimaldavad agentide käivitamise jälgimist ja silumist. Demo samm-sammult väljund pärineb Agendi Kuulajalt, kes ühendub iga agendi kutsumisega:
-- **beforeAgentInvocation** – kutsutakse, kui Järelevalve valib agendi, võimaldades näha, milline agent valiti ja miks
-- **afterAgentInvocation** – kutsutakse pärast agendi lõpetamist, näidates selle tulemust
-- **inheritedBySubagents** – kui tõene, jälgib kuulaja kõiki agentide hierarhias
+<img src="../../../translated_images/et/agent-listeners.784bfc403c80ea13.webp" alt="Agentide kuulajate elutsükkel" width="800"/>
+
+*Agentide kuulajad ühinevad täitmise elutsükliga — jälgivad, millal agent alustab, lõpetab või kogeb vigu.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -354,58 +381,75 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Levita kõigile alaagentidele
+        return true; // Levita kõigile alamagentidele
     }
 };
 ```
 
-Lisaks Järelevalve mustrile pakub `langchain4j-agentic` moodul mitmeid võimsaid töövoo mustreid ja funktsioone:
+Lisaks juhendaja mustrile pakub moodul `langchain4j-agentic` mitmeid võimsaid töövoo mustreid ja funktsioone:
+
+<img src="../../../translated_images/et/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agentide töövoo mustrid" width="800"/>
+
+*Viis töövoo mustrit agentide orkestreerimiseks — alates lihtsatest järjestikustest torujuhtmetest kuni inimese osalusega kinnitustöövoogudeni.*
 
 | Muster | Kirjeldus | Kasutusjuhtum |
-|--------|-----------|---------------|
-| **Järjestikune** | Käivitab agendid järjekorras, väljund juhitakse järgmisele | Torujuhtmed: uurimine → analüüs → aruanne |
-| **Paralleelne** | Käivitab agendid samaaegselt | Sõltumatud ülesanded: ilm + uudised + aktsiad |
-| **Tsükkel** | Kordab kuni tingimus täidetud | Kvaliteedihindamine: täienda kuni skoor ≥ 0.8 |
-| **Tingimuslik** | Suunab tingimustel põhinevalt | Klassifitseeri → saada spetsialistile |
-| **Inimene Tsüklis** | Lisab inimeste kontrollpunktid | Kinnituse töövood, sisu ülevaatus |
+|---------|-------------|----------|
+| **Järjestikune** | Täida agentide toimingud järjest, väljund läheb järgmisele | Torujuhtmed: uurimine → analüüs → aruanne |
+| **Paralleelne** | Käivita agentide toimingud samaaegselt | Sõltumatud ülesanded: ilm + uudised + aktsiad |
+| **Tsükkel** | Korda seni, kuni tingimus on täidetud | Kvaliteedi hindamine: täiusta seni, kuni hinne ≥ 0.8 |
+| **Tingimuslik** | Määra marsruut tingimuste alusel | Klassifitseeri → suuna spetsialistile |
+| **Inimene-silmuses** | Lisa inim-punktid kinnituseks | Kinnitustöövood, sisukontroll |
 
-## Põhimõisted
+## Peamised mõisted
 
-Nüüd, kui oled MCP ja agentse mooduli praktiliselt läbi töötanud, teeme kokkuvõtte, millal kasutada kumbagi lähenemist.
+Nüüd, kui oled uurinud MCP ja agentic mooduli tööd, võrdleme, millal kasutada kumbagi lähenemist.
 
-**MCP** sobib ideaalselt, kui tahad kasutada olemasolevaid tööriistade ökosüsteeme, ehitada tööriistu, mida mitmed rakendused saavad jagada, integreerida kolmanda osapoole teenuseid standardprotokollide abil või vahetada tööriistade rakendusi ilma koodi muutmata.
+<img src="../../../translated_images/et/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP ökosüsteem" width="800"/>
 
-**Agentne Moodul** sobib kõige paremini, kui soovid deklaratiivset agenndi defineerimist `@Agent` annotatsioonide kaudu, vajad töövoo orkestreerimist (järjestikune, tsükkel, paralleel), eelistad liidesepõhist agentdisaini imperatiivse koodi asemel või kombineerid mitut agenti, kes jagavad väljundeid `outputKey` kaudu.
+*MCP loob universaalse protokollide ökosüsteemi — iga MCP-ga ühilduv server töötab mis tahes MCP-ga ühilduva kliendiga, võimaldades tööriistade jagamist rakenduste vahel.*
 
-**Järelevalve Agendi muster** paistab silma, kui töövoog ei ole ette ennustatav ning soovid, et LLM otsustab, kui sul on mitu spetsialiseerunud agenti, kelle dünaamiline juhtimine on vajalik, kui ehitad vestlussüsteeme, mis suunavad erinevatele võimekustele või kui soovid kõige paindlikumat, kohanduvat agentse käitumist.
+**MCP** sobib ideaalselt, kui soovid kasutada olemasolevaid tööriistade ökosüsteeme, luua tööriistu, mida saab jagada mitme rakenduse vahel, integreerida kolmandate osapoolte teenuseid standardprotokollidega või vahetada tööriistade teostusi ilma koodi muutmata.
+
+**Agentic Moodul** töötab kõige paremini, kui soovid deklaratiivseid agentide definitsioone koos `@Agent` annotatsioonidega, vajad töövoo orkestreerimist (järjestikune, tsükkel, paralleel), eelistad liidese-põhist agentide kavandamist käsurealisele koodile või kombineerid mitu agenti, mis jagavad väljundeid `outputKey` kaudu.
+
+**Juhendaja tapattern** paistab silma, kui töövoog ei ole ette ennustatav ja soovid, et LLM otsustaks, kui sul on mitu spetsialiseerunud agenti, kes vajavad dünaamilist orkestreerimist, vestlussüsteemide loomisel, mis juhivad erinevatele võimetele või kui soovid kõige paindlikumat ja kohanduvamat agentide käitumist.
+
+<img src="../../../translated_images/et/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Kohandatud tööriistad vs MCP tööriistad" width="800"/>
+
+*Millal kasutada kohandatud @Tool meetodeid vs MCP tööriistu — kohandatud tööriistad rakenduse spetsiifilise loogika jaoks täis tüübiturvalisusega, MCP tööriistad standardiseeritud integreerimiseks, mis toimivad rakenduste piiril.*
+
 ## Palju õnne!
 
-Oled lõpetanud LangChain4j algajatele kursuse. Sa õppisid:
+<img src="../../../translated_images/et/course-completion.48cd201f60ac7570.webp" alt="Kursuse lõpetamine" width="800"/>
 
-- Kuidas ehitada vestluslikku tehisintellekti mäluga (Moodul 01)
-- Promptide loomise mustrid erinevate ülesannete jaoks (Moodul 02)
-- Vastuste sidumine oma dokumentidega RAG abil (Moodul 03)
-- Põhiliste tehisintellekti agentide (abimeeste) loomine kohandatud tööriistadega (Moodul 04)
+*Sinu õpiteekond läbi kõigi viie mooduli — alates põhilisest vestlusest kuni MCP-toega agenticsüsteemideni.*
+
+Oled lõpetanud kursuse LangChain4j algajatele. Sa õppisid:
+
+- Kuidas ehitada mäluga vestluslikku tehisintellekti (Moodul 01)
+- Sõelumisoskuse mustrid erinevate ülesannete jaoks (Moodul 02)
+- Vastuste sidumine sinu dokumentidega RAG abil (Moodul 03)
+- Elementaarsete AI agentide (assistendid) loomine kohandatud tööriistadega (Moodul 04)
 - Standardiseeritud tööriistade integreerimine LangChain4j MCP ja Agentic moodulitega (Moodul 05)
 
-### Mis järgmiseks?
+### Mis edasi?
 
-Pärast moodulite läbimist tutvu [Testimise juhendiga](../docs/TESTING.md), et näha LangChain4j testimise kontseptsioone praktikas.
+Pärast moodulite lõpetamist vaata [Testimise juhendit](../docs/TESTING.md), et näha LangChain4j testimise kontseptsioone praktikas.
 
 **Ametlikud ressursid:**
-- [LangChain4j dokumentatsioon](https://docs.langchain4j.dev/) - Põhjalikud juhendid ja API viited
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Allikakood ja näited
-- [LangChain4j õpitoad](https://docs.langchain4j.dev/tutorials/) - Samm-sammult juhendid erinevate kasutusjuhtude jaoks
+- [LangChain4j dokumentatsioon](https://docs.langchain4j.dev/) - Üksikasjalikud juhendid ja API viide
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Algkood ja näited
+- [LangChain4j õpikud](https://docs.langchain4j.dev/tutorials/) - Samm-sammult juhendid erinevates kasutusjuhtudes
 
-Täname, et läbisid selle kursuse!
+Täname, et lõpetasid selle kursuse!
 
 ---
 
-**Navigeerimine:** [← Eelmine: Moodul 04 - Tööriistad](../04-tools/README.md) | [Tagasi avalehele](../README.md)
+**Navigeerimine:** [← Eelmine: Moodul 04 - Tööriistad](../04-tools/README.md) | [Tagasi avalehhele](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Lahtiütlus**:
-See dokument on tõlgitud kasutades tehisintellektil põhinevat tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüdleme täpsuse poole, palun pidage meeles, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles tuleks pidada autoriteetseks allikaks. Olulise info puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tingitud arusaamatuste või valesti mõistmiste eest.
+**Eitus**:
+See dokument on tõlgitud kasutades tehisintellektil põhinevat tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüame täpsust, palun arvestage, et automatiseeritud tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selles algkeeles tuleks pidada autoritatiivseks allikaks. Tähtsa info puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta missuguste arusaamatuste või väärtõlgenduste eest, mis võivad tekkida selle tõlke kasutamisest.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
