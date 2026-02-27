@@ -2,77 +2,82 @@
 
 ## Turinys
 
-- [Ką Išmoksite](../../../01-introduction)
+- [Vaizdo įrašo pristatymas](../../../01-introduction)
+- [Ko išmoksite](../../../01-introduction)
 - [Reikalavimai](../../../01-introduction)
-- [Pagrindinės Problemos Supratimas](../../../01-introduction)
-- [Žetonų Supratimas](../../../01-introduction)
-- [Kaip Veikia Atmintis](../../../01-introduction)
-- [Kaip Tai Naudoja LangChain4j](../../../01-introduction)
-- [Azure OpenAI Infrastruktūros Diegimas](../../../01-introduction)
-- [Programos Paleidimas Vietoje](../../../01-introduction)
-- [Programos Naudojimas](../../../01-introduction)
-  - [Stateless Chat (Kairysis Skydelis)](../../../01-introduction)
-  - [Stateful Chat (Dešinysis Skydelis)](../../../01-introduction)
-- [Kiti Žingsniai](../../../01-introduction)
+- [Pagrindinės problemos supratimas](../../../01-introduction)
+- [Tokenų supratimas](../../../01-introduction)
+- [Kaip veikia atmintis](../../../01-introduction)
+- [Kaip tai veikia su LangChain4j](../../../01-introduction)
+- [Azure OpenAI infrastruktūros diegimas](../../../01-introduction)
+- [Programos paleidimas vietoje](../../../01-introduction)
+- [Programos naudojimas](../../../01-introduction)
+  - [Bevaldinis pokalbis (kairysis skydelis)](../../../01-introduction)
+  - [Valdomas pokalbis (dešinysis skydelis)](../../../01-introduction)
+- [Kiti žingsniai](../../../01-introduction)
 
-## Ką Išmoksite
+## Vaizdo įrašo pristatymas
 
-Jei baigėte greitą pradžią, matėte, kaip siųsti užklausas ir gauti atsakymus. Tai yra pagrindas, bet tikroms programoms reikia daugiau. Šis modulis mokys jus kurti pokalbių AI, kuris prisimena kontekstą ir palaiko būseną - skirtumas tarp vienkartinės demonstracijos ir gamybai paruoštos programos.
+Žiūrėkite šią tiesioginę sesiją, kurioje paaiškinama, kaip pradėti naudotis šiuo moduliu: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
-Šioje instrukcijoje visą laiką naudosime Azure OpenAI GPT-5.2, nes jo pažangios samprotavimo galimybės daro skirtingų modelių elgesį aiškesnį. Pridėjus atmintį, skirtumas bus aiškiai matomas. Tai padeda suprasti, ką kiekvienas komponentas prideda jūsų programai.
+## Ko išmoksite
 
-Jūs sukursite vieną programą, kuri demonstruoja abu modelius:
+Jei užbaigėte greitą pradžią, matėte, kaip siųsti užklausas ir gauti atsakymus. Tai yra pagrindas, tačiau tikrosios programos reikalauja daugiau. Šiame modulyje mokysitės kurti pokalbių AI, kuris prisimena kontekstą ir palaiko būseną – tai skirtumas tarp vienkartinės demonstracijos ir gamybai paruoštos programos.
 
-**Stateless Chat** – Kiekvienas užklausa yra nepriklausoma. Modelis neprisimena ankstesnių žinučių. Tai yra modelis, kurį naudojote greitoje pradžioje.
+Viso vadovo metu naudosime Azure OpenAI GPT-5.2, nes jo pažangios samprotavimo galimybės padaro skirtingų modelių elgseną aiškesnę. Pridėjus atmintį, skirtumas tampa akivaizdus. Tai palengvina supratimą, ką kiekviena dalis prideda jūsų programai.
 
-**Stateful Conversation** – Kiekviena užklausa apima pokalbio istoriją. Modelis palaiko kontekstą per kelis sukimus. Tai reikalauja gamybos programos.
+Sukursite vieną programą, kuri demonstruoja abi schemas:
+
+**Bevaldinis pokalbis** – Kiekviena užklausa yra nepriklausoma. Modelis neprisimena ankstesnių žinučių. Tai yra schema, kurią naudojote greitojoje pradžioje.
+
+**Valdomas pokalbis** – Kiekviena užklausa apima pokalbio istoriją. Modelis palaiko kontekstą per kelis pokalbio posūkius. Tai būtina gamybinėms programoms.
 
 ## Reikalavimai
 
 - Azure prenumerata su Azure OpenAI prieiga
-- Java 21, Maven 3.9+ 
+- Java 21, Maven 3.9+
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Pastaba:** Java, Maven, Azure CLI ir Azure Developer CLI (azd) yra iš anksto įdiegti pateiktame devcontainer.
+> **Pastaba:** Java, Maven, Azure CLI ir Azure Developer CLI (azd) jau įdiegtos pateiktame devcontainer.
 
-> **Pastaba:** Šis modulis naudoja GPT-5.2 Azure OpenAI. Diegimas konfigūruojamas automatiškai per `azd up` – nekeiskite modelio vardo kode.
+> **Pastaba:** Šis modulis naudoja GPT-5.2 Azure OpenAI. Diegimas automatiškai konfigūruojamas naudojant `azd up` – nekoreguokite modelio pavadinimo kode.
 
-## Pagrindinės Problemos Supratimas
+## Pagrindinės problemos supratimas
 
-Kalbos modeliai yra stateless. Kiekvienas API kvietimas yra nepriklausomas. Jei pasakote "Mano vardas John", o paskui paklausiate "Koks mano vardas?", modelis neturi jokios idėjos, kad jūs ką tik prisistatėte. Jis traktuoja kiekvieną užklausą taip, tarsi tai būtų pirmasis jūsų pokalbis.
+Kalbos modeliai yra bevaldiniai. Kiekvienas API kvietimas nepriklausomas. Jei pasakote „Mano vardas Jonas“ ir tada klausi „Koks mano vardas?“, modelis nežino, kad ką tik prisistatėte. Jis traktuoja kiekvieną užklausą, tarsi tai būtų pirmasis jūsų pokalbis.
 
-Tai tinka paprastiems klausimams ir atsakymams, bet yra nenaudinga tikroms programoms. Klientų aptarnavimo botams reikia prisiminti, ką jiems pasakėte. Asmeniniai asistentai reikalauja konteksto. Bet kuris pokalbis su keliais sukimais reikalauja atminties.
+Tai tinka paprastiems klausimams ir atsakymams, bet nenaudinga tikroms programoms. Klientų aptarnavimo botai turi prisiminti, ką jiems pasakėte. Asmeniniai asistentai reikalauja konteksto. Bet koks daugkartinis pokalbis reikalauja atminties.
 
 <img src="../../../translated_images/lt/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-*Skirtumas tarp stateless (nepriklausomų kreipinių) ir stateful (kontekstą suprantančių) pokalbių*
+*Bevaldinio (nepriklausomi kvietimai) ir valdomo (konteksto palaikymas) pokalbių skirtumas*
 
-## Žetonų Supratimas
+## Tokenų supratimas
 
-Prieš pradedant pokalbius svarbu suprasti žetonus – pagrindinius teksto vienetus, kuriuos apdoroja kalbos modeliai:
+Prieš pradedant pokalbius svarbu suprasti tokenus – pagrindinius teksto vienetus, kuriuos apdoroja kalbos modeliai:
 
 <img src="../../../translated_images/lt/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-*Pavyzdys, kaip tekstas suskaidomas į žetonus – "I love AI!" tampa 4 atskiromis apdorojimo vienetais*
+*Teksto, pvz., „I love AI!“, skaidymas į tokenus – gaunami 4 atskiri apdorojimo vienetai*
 
-Žetonai yra tai, kaip AI modeliai matuoja ir apdoroja tekstą. Žodžiai, skyryba ir net tarpai gali būti žetonai. Jūsų modelis turi ribą, kiek žetonų gali apdoroti vienu metu (400,000 GPT-5.2, su iki 272,000 įėjimo žetonų ir 128,000 išėjimo). Žetonų supratimas padeda valdyti pokalbių ilgį ir kaštus.
+Tokenai yra būdas AI modeliams matuoti ir apdoroti tekstą. Žodžiai, skyryba ir net tarpai gali būti tokenai. Jūsų modelio limitas, kiek tokenų jis gali apdoroti vienu metu, yra 400 000 (GPT-5.2, iki 272 000 įvesties tokenų ir 128 000 išvesties tokenų). Suprasdami tokenus lengviau reguliuoti pokalbio ilgį ir sąnaudas.
 
-## Kaip Veikia Atmintis
+## Kaip veikia atmintis
 
-Pokalbių atmintis sprendžia stateless problemą palaikydama pokalbio istoriją. Prieš siųsdamas jūsų užklausą modeliui, karkasas priduria atitinkamas ankstesnes žinutes. Kai klausiate "Koks mano vardas?", sistema iš tikrųjų siunčia visą pokalbio istoriją, leidžiant modeliui matyti, kad anksčiau pasakėte "Mano vardas John."
+Pokalbių atmintis sprendžia bevaldinę problemą saugodama pokalbio istoriją. Prieš nusiųsdama užklausą modeliui, sistema prideda aktualias ankstesnes žinutes. Kai klausi „Koks mano vardas?“, sistema iš tiesų siunčia visą pokalbio istoriją, leisdama modeliui matyti, kad anksčiau pasakėte „Mano vardas Jonas“.
 
-LangChain4j teikia atminties įgyvendinimus, kurie tai valdo automatiškai. Jūs pasirinksite, kiek žinučių laikyti, o karkasas valdys konteksto langą.
+LangChain4j teikia atminties įgyvendinimus, kurie tai automatizuoja. Pasirenkate, kiek žinučių laikyti, o sistema tvarko konteksto langą.
 
 <img src="../../../translated_images/lt/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory palaiko slenkantį langą su naujausiomis žinutėmis, automatiškai meta senas*
+*MessageWindowChatMemory palaiko slenkamąjį langą su naujausiomis žinutėmis, automatiškai pašalindamas senas*
 
-## Kaip Tai Naudoja LangChain4j
+## Kaip tai veikia su LangChain4j
 
-Šis modulis išplečia greitą pradžią integruodamas Spring Boot ir pridedant pokalbių atmintį. Štai kaip elementai dera:
+Šis modulis išplečia greitosios pradžios pavyzdį integruojant Spring Boot ir pridedant pokalbių atmintį. Štai kaip dalys dera:
 
-**Priklausomybės** – Pridėkite dvi LangChain4j bibliotekas:
+**Priklausomybės** – pridėkite dvi LangChain4j bibliotekas:
 
 ```xml
 <dependency>
@@ -85,7 +90,7 @@ LangChain4j teikia atminties įgyvendinimus, kurie tai valdo automatiškai. Jūs
 </dependency>
 ```
 
-**Pokalbių modelis** – Konfigūruokite Azure OpenAI kaip Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Pokalbių modelis** – konfigūruokite Azure OpenAI kaip Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -100,9 +105,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Builderis skaito kredencialus iš aplinkos kintamųjų, nustatytų `azd up`. Nustatymas `baseUrl` į jūsų Azure galutinį tašką leidžia OpenAI klientui veikti su Azure OpenAI.
+Builder’is paima paskyrų duomenis iš aplinkos kintamųjų, nustatytų `azd up`. `baseUrl` nurodote savo Azure endpoint’ą, kad OpenAI klientas veiktų su Azure OpenAI.
 
-**Pokalbių atmintis** – Sekite pokalbio istoriją su MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Pokalbių atmintis** – sekite pokalbio istoriją su MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -115,16 +120,16 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Sukurkite atmintį su `withMaxMessages(10)` – saugokite paskutines 10 žinučių. Pridėkite naudotojo ir AI žinutes su tipinėmis apvijomis: `UserMessage.from(text)` ir `AiMessage.from(text)`. Gaukite istoriją su `memory.messages()` ir siųskite modeliui. Servisas saugo atskiras atminties instancijas pagal pokalbio ID, leidžiant keliems naudotojams diskutuoti vienu metu.
+Sukurkite atmintį su `withMaxMessages(10)`, kad išlaikytumėte paskutines 10 žinučių. Pridėkite naudotojo ir AI žinutes su tipais: `UserMessage.from(text)` ir `AiMessage.from(text)`. Gaukite istoriją per `memory.messages()` ir siųskite modeliui. Servisas saugo atskiras atmintis pagal pokalbio ID, leidžiant kelis vartotojus bendrauti vienu metu.
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ir paklauskite:
-> - "Kaip MessageWindowChatMemory nusprendžia, kurias žinutes mesti, kai langas pilnas?"
-> - "Ar galiu įgyvendinti savo atminties saugyklą naudojant duomenų bazę vietoje atminties?"
-> - "Kaip pridėčiau santrauką, kad suspaustų seną pokalbio istoriją?"
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atverkite [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ir paklauskite:
+> - „Kaip MessageWindowChatMemory nusprendžia, kurios žinutės pašalinamos, kai langas yra pilnas?“
+> - „Ar galiu įgyvendinti custom atmintį naudojant duomenų bazę vietoje atminties operacijų? “
+> - „Kaip pridėčiau santraukų kūrimą, kad suspausti seną pokalbio istoriją?“
 
-Stateless pokalbių galinis taškas visiškai apeina atmintį – tiesiog `chatModel.chat(prompt)` kaip greitoje pradžioje. Stateful galinis taškas prideda žinutes į atmintį, gauna istoriją ir įtraukia tą kontekstą į kiekvieną užklausą. Tos pačios modelio konfigūracijos, skirtingi modeliai.
+Bevaldinis pokalbių galinis taškas visiškai neprisijungia prie atminties – tiesiog `chatModel.chat(prompt)` kaip greitojoje pradžioje. Valdomas galinis taškas priduria žinutes į atmintį, gauna istoriją ir siunčia ją su kiekvienu užklausimu. Modelis tas pats, tik skirtingos schemos.
 
-## Azure OpenAI Infrastruktūros Diegimas
+## Azure OpenAI infrastruktūros diegimas
 
 **Bash:**
 ```bash
@@ -138,14 +143,14 @@ cd 01-introduction
 azd up  # Pasirinkite prenumeratą ir vietą (rekomenduojama eastus2)
 ```
 
-> **Pastaba:** Jei susiduriate su laiko viršijimo klaida (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), tiesiog paleiskite `azd up` dar kartą. Azure resursai gali vis dar būti diegiami fone, o pakartojimas leidžia diegimui užbaigti pasiekus galutinę būseną.
+> **Pastaba:** Jei atsiranda laiko viršijimo klaida (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), tiesiog vėl paleiskite `azd up`. Azure ištekliai gali dar būti diegimo būsenoje, ir kartojimas leidžia baigti diegimą, kai ištekliai pasiekia galutinę būseną.
 
-Tai:
-1. Diegs Azure OpenAI resursą su GPT-5.2 ir text-embedding-3-small modeliais
-2. Automatiškai sugeneruos `.env` failą projekto šakniniame kataloge su kredencialais
-3. Nustatys visus reikalingus aplinkos kintamuosius
+Tai atliks:
+1. Diegs Azure OpenAI išteklius su GPT-5.2 ir text-embedding-3-small modeliais
+2. Automatiškai sugeneruos `.env` failą projekto šakniniame kataloge su paskyros duomenimis
+3. Nustatys visus reikiamus aplinkos kintamuosius
 
-**Turite diegimo problemų?** Žr. [Infrastruktūros README](infra/README.md) dėl išsamios problemų sprendimo, įskaitant potinklio pavadinimų konfliktus, rankinius Azure Portal diegimo žingsnius ir modelių konfigūracijos gaires.
+**Turite problemų su diegimu?** Peržiūrėkite [Infrastruktūros README](infra/README.md) su išsamia problemų sprendimo informacija, įskaitant subdomenų konfliktus, Azure Portal rankinio diegimo žingsnius ir modelių konfigūracijos gaires.
 
 **Patikrinkite, ar diegimas pavyko:**
 
@@ -156,32 +161,33 @@ cat ../.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY ir kt.
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Turėtų būti rodoma AZURE_OPENAI_ENDPOINT, API_KEY ir kt.
+Get-Content ..\.env  # Turėtų parodyti AZURE_OPENAI_ENDPOINT, API_KEY ir kt.
 ```
 
-> **Pastaba:** Komanda `azd up` automatiškai generuoja `.env` failą. Jei reikės vėliau atnaujinti, galite redaguoti `.env` rankiniu būdu ar atnaujinti paleisdami:
+> **Pastaba:** Komanda `azd up` automatiškai sukuria `.env` failą. Jei vėliau norėsite jį atnaujinti, galite redaguoti `.env` failą rankiniu būdu arba sugeneruoti iš naujo paleisdami:
 >
 > **Bash:**
 > ```bash
 > cd ..
 > bash .azd-env.sh
 > ```
-
+>
 > **PowerShell:**
 > ```powershell
 > cd ..
 > .\.azd-env.ps1
 > ```
 
-## Programos Paleidimas Vietoje
+
+## Programos paleidimas vietoje
 
 **Patikrinkite diegimą:**
 
-Įsitikinkite, kad `.env` failas yra pagrindiniame kataloge su Azure kredencialais:
+Įsitikinkite, kad `.env` failas su Azure kredencialais yra šakniniame kataloge:
 
 **Bash:**
 ```bash
-cat ../.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Turėtų parodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **PowerShell:**
@@ -191,27 +197,27 @@ Get-Content ..\.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMEN
 
 **Paleiskite programas:**
 
-**1 variantas: Naudojant Spring Boot Dashboard (rekomenduojama VS Code vartotojams)**
+**Variantas 1: Naudojant Spring Boot Dashboard (rekomenduojama VS Code vartotojams)**
 
-Dev konteineryje yra Spring Boot Dashboard plėtinys, kuris suteikia vizualią sąsają valdyti visas Spring Boot programas. Jį rasite Activity Bar kairėje VS Code pusėje (pažymėtą Spring Boot ikona).
+Dev container įtraukia Spring Boot Dashboard plėtinį, kuris suteikia vizualų sąsają valdyti visas Spring Boot programas. Jį rasite Activity Bar kairėje VS Code pusėje (pažymėta Spring Boot ikona).
 
 Iš Spring Boot Dashboard galite:
-- Matyti visas turimas Spring Boot programas darbo zonoje
-- Vienu spustelėjimu paleisti/stabdyti programas
-- Matyti realiu laiku programų žurnalus
+- Peržiūrėti visas Spring Boot programas dirbamojoje aplinkoje
+- Vienu paspaudimu paleisti/stabdyti programas
+- Realiais laiko matyti programų įrašus
 - Stebėti programų būseną
 
-Tiesiog paspauskite paleidimo mygtuką prie "introduction", kad pradėtumėte šį modulį, arba paleiskite visus modulius iš karto.
+Tiesiog paspauskite paleidimo mygtuką prie „introduction“, kad pradėtumėte šį modulį, arba paleiskite visus modulius vienu metu.
 
 <img src="../../../translated_images/lt/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**2 variantas: Naudojant shell skriptus**
+**Variantas 2: Naudojant shell skriptus**
 
-Paleiskite visas žiniatinklio programas (moduliai 01-04):
+Paleiskite visas žiniatinklio programas (01-04 moduliai):
 
 **Bash:**
 ```bash
-cd ..  # Iš šakninių katalogų
+cd ..  # Iš šaknininio katalogo
 ./start-all.sh
 ```
 
@@ -235,23 +241,23 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Abi scenarijai automatiškai užkraus aplinkos kintamuosius iš pagrindinio `.env` failo ir jei reikia, sukurs JAR failus.
+Abu skriptai automatiškai įkrauna aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo ir sukurs JAR failus, jei jų nėra.
 
-> **Pastaba:** Jei norite rankiniu būdu pastatyti visus modulius prieš paleidimą:
+> **Pastaba:** Jei norite prieš paleidimą visus modulius sukompiliuoti rankiniu būdu:
 >
 > **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-
+>
 > **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
 
-Atidarykite http://localhost:8080 savo naršyklėje.
+Atverkite http://localhost:8080 naršyklėje.
 
 **Norėdami sustabdyti:**
 
@@ -269,43 +275,44 @@ cd .. && ./stop-all.sh  # Visi moduliai
 cd ..; .\stop-all.ps1  # Visi moduliai
 ```
 
-## Programos Naudojimas
 
-Programa suteikia interneto sąsają su dviem pokalbių įgyvendinimais šalia vienas kito.
+## Programos naudojimas
+
+Programa pateikia internetinę sąsają su dviem pokalbių implementacijomis šalia viena kitos.
 
 <img src="../../../translated_images/lt/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Skydelis su Simple Chat (stateless) ir Conversational Chat (stateful) pasirinkimais*
+*Skydelis su paprasto pokalbio (bevaldinis) ir pokalbio su būsena (valdomas) pasirinkimais*
 
-### Stateless Chat (Kairysis Skydelis)
+### Bevaldinis pokalbis (kairysis skydelis)
 
-Išbandykite tai pirmiausia. Paklauskite "Mano vardas John", tada iškart "Koks mano vardas?" Modelis neprisimins, nes kiekviena žinutė yra nepriklausoma. Tai iliustruoja pagrindinę problemą su paprasta kalbos modelio integracija – nėra pokalbio konteksto.
+Išbandykite pirmiausia čia. Paklauskite „Mano vardas Jonas“ ir iškart po to „Koks mano vardas?“ Modelis neprisimins, nes kiekviena žinutė yra nepriklausoma. Tai demonstruoja pagrindinę kalbos modelių integravimo problemą - nėra pokalbio konteksto.
 
 <img src="../../../translated_images/lt/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
 *AI neprisimena jūsų vardo iš ankstesnės žinutės*
 
-### Stateful Chat (Dešinysis Skydelis)
+### Valdomas pokalbis (dešinysis skydelis)
 
-Dabar išbandykite tą pačią seką čia. Paklauskite "Mano vardas John" ir tada "Koks mano vardas?" Šį kartą jis prisimena. Skirtumas yra MessageWindowChatMemory – jis palaiko pokalbio istoriją ir prideda ją prie kiekvienos užklausos. Šitaip veikia gamybos pokalbių AI.
+Dabar išbandykite tą pačią seką čia. Paklauskite „Mano vardas Jonas“ ir tada „Koks mano vardas?“ Šį kartą AI prisimena. Skirtumas yra MessageWindowChatMemory – jis palaiko pokalbio istoriją ir įtraukia ją kiekvienai užklausai. Taip veikia gamybinis pokalbių AI.
 
 <img src="../../../translated_images/lt/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*AI prisimena jūsų vardą iš ankstesnio pokalbio*
+*AI prisimena jūsų vardą iš ankstesnio pokalbio momento*
 
-Abu skydeliai naudoja tą patį GPT-5.2 modelį. Vienintelis skirtumas yra atmintis. Tai aiškiai parodo, ką atmintis suteikia jūsų programai ir kodėl ji būtina tikriems naudojimo atvejams.
+Abi pusės naudoja tą patį GPT-5.2 modelį. Vienintelis skirtumas – atmintis. Tai aiškiai parodo, ką atmintis duoda jūsų programai ir kodėl ji būtina tikruose naudojimo atvejuose.
 
-## Kiti Žingsniai
+## Kiti žingsniai
 
-**Kitas Modulis:** [02-prompt-engineering - Užklausų inžinerija su GPT-5.2](../02-prompt-engineering/README.md)
+**Kitas modulis:** [02-prompt-engineering - Prompt Engineering su GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigacija:** [← Ankstesnis: Modulis 00 - Greita Pradžia](../00-quick-start/README.md) | [Atgal į Pagrindinį](../README.md) | [Kitas: Modulis 02 - Užklausų Inžinerija →](../02-prompt-engineering/README.md)
+**Navigacija:** [← Ankstesnis: Modulis 00 - Greitoji pradžia](../00-quick-start/README.md) | [Atgal į pagrindinį](../README.md) | [Kitas: Modulis 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Atsakomybės atsisakymas**:
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, prašome atkreipti dėmesį, kad automatizuoti vertimai gali turėti klaidų arba netikslumų. Pirminis dokumentas jo gimtąja kalba turėtų būti laikomas autoritetingu šaltiniu. Dėl svarbios informacijos rekomenduojamas profesionalus žmogaus atliktas vertimas. Mes neatsakome už bet kokius nesusipratimus ar klaidingus aiškinimus, kilusius naudojantis šiuo vertimu.
+**Atsakomybės apribojimas**:
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, turėkite omenyje, kad automatiniai vertimai gali turėti klaidų arba netikslumų. Originalus dokumentas gimtąja kalba turėtų būti laikomas pagrindiniu ir autoritetingu šaltiniu. Svarbiai informacijai rekomenduojama naudotis profesionaliu žmogaus atliktu vertimu. Mes neatsakome už jokius nesusipratimus ar klaidingas interpretacijas, atsiradusias naudojant šį vertimą.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
