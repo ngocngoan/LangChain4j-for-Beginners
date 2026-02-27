@@ -5,6 +5,18 @@
     "source_file": "images/LangChain4j.png",
     "language_code": "no"
   },
+  "agent-listeners.784bfc403c80ea13.webp": {
+    "original_hash": "9086e2d2351d0b84e29bc47baa2f1e6b",
+    "translation_date": "2026-02-27T16:58:35+00:00",
+    "source_file": "05-mcp/images/agent-listeners.png",
+    "language_code": "no"
+  },
+  "agentic-scope.95ef488b6c1d02ef.webp": {
+    "original_hash": "0f4ca84195eff59cce95e04dbd42a082",
+    "translation_date": "2026-02-27T16:58:49+00:00",
+    "source_file": "05-mcp/images/agentic-scope.png",
+    "language_code": "no"
+  },
   "architecture.eedc993a1c576839.webp": {
     "original_hash": "add139926cd5d568e3ba2c38eb32312b",
     "translation_date": "2026-01-16T10:45:04+00:00",
@@ -65,6 +77,24 @@
     "source_file": "01-introduction/images/conversational-chat-stateful-demo.png",
     "language_code": "no"
   },
+  "cosine-similarity.9baeaf3fc3336abb.webp": {
+    "original_hash": "9225a016a9bdffa26ddda6336468ddf5",
+    "translation_date": "2026-02-27T16:56:01+00:00",
+    "source_file": "03-rag/images/cosine-similarity.png",
+    "language_code": "no"
+  },
+  "course-completion.48cd201f60ac7570.webp": {
+    "original_hash": "dd1e1b76ef6e36e9e3fb43e18283473c",
+    "translation_date": "2026-02-27T16:58:43+00:00",
+    "source_file": "05-mcp/images/course-completion.png",
+    "language_code": "no"
+  },
+  "custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp": {
+    "original_hash": "7ba56c2cd920f481cf1795b01b93f5c1",
+    "translation_date": "2026-02-27T16:58:14+00:00",
+    "source_file": "05-mcp/images/custom-vs-mcp-tools.png",
+    "language_code": "no"
+  },
   "dashboard-home.5444dbda4bc1f79d.webp": {
     "original_hash": "3c10f2ac0c216bb86a974f56fe2120a5",
     "translation_date": "2026-01-16T10:46:56+00:00",
@@ -101,10 +131,22 @@
     "source_file": "03-rag/images/dashboard.png",
     "language_code": "no"
   },
+  "decision-making.409cd562e5cecc49.webp": {
+    "original_hash": "9c3bbccc833be19b424faa3cc79dcff7",
+    "translation_date": "2026-02-27T16:59:43+00:00",
+    "source_file": "04-tools/images/decision-making.png",
+    "language_code": "no"
+  },
   "document-chunking.a5df1dd1383431ed.webp": {
     "original_hash": "38932705b4df98a8493fac6cda5bcd0c",
     "translation_date": "2026-02-20T10:55:33+00:00",
     "source_file": "03-rag/images/document-chunking.png",
+    "language_code": "no"
+  },
+  "easy-rag-pipeline.2e1602e2ad2ded42.webp": {
+    "original_hash": "f8a7e3ffd5f7919670dbee9a1001fe1b",
+    "translation_date": "2026-02-27T16:57:10+00:00",
+    "source_file": "03-rag/images/easy-rag-pipeline.png",
     "language_code": "no"
   },
   "eight-patterns.fa1ebfdf16f71e9a.webp": {
@@ -113,10 +155,40 @@
     "source_file": "02-prompt-engineering/images/eight-patterns.png",
     "language_code": "no"
   },
+  "embedding-failure-modes.b2bcb901d8970fc0.webp": {
+    "original_hash": "4339e119baa801e22d00da36f6f39af6",
+    "translation_date": "2026-02-27T16:56:58+00:00",
+    "source_file": "03-rag/images/embedding-failure-modes.png",
+    "language_code": "no"
+  },
+  "embedding-model-concept.90760790c336a705.webp": {
+    "original_hash": "73ca805b149975f261644238fccfc433",
+    "translation_date": "2026-02-27T16:56:43+00:00",
+    "source_file": "03-rag/images/embedding-model-concept.png",
+    "language_code": "no"
+  },
+  "embedding-search-steps.f54c907b3c5b4332.webp": {
+    "original_hash": "b0a0be3ef12c9901a957d770fa84b95b",
+    "translation_date": "2026-02-27T16:56:28+00:00",
+    "source_file": "03-rag/images/embedding-search-steps.png",
+    "language_code": "no"
+  },
+  "error-handling-flow.9a330ffc8ee0475c.webp": {
+    "original_hash": "d9be991ccc1151bd127b424577b8e33d",
+    "translation_date": "2026-02-27T17:01:07+00:00",
+    "source_file": "04-tools/images/error-handling-flow.png",
+    "language_code": "no"
+  },
   "few-shot-prompting.9d9eace1da88989a.webp": {
     "original_hash": "3028419888cb8dbf1d70740b94d38682",
     "translation_date": "2026-02-16T11:27:34+00:00",
     "source_file": "02-prompt-engineering/images/few-shot-prompting.png",
+    "language_code": "no"
+  },
+  "file-report-workflow.649bb7a896800de9.webp": {
+    "original_hash": "cffe9673fbcdf7b210e1f6a1c73af969",
+    "translation_date": "2026-02-27T16:57:18+00:00",
+    "source_file": "05-mcp/images/file-report-workflow.png",
     "language_code": "no"
   },
   "five-patterns-overview.160f35045ffd2a94.webp": {
@@ -185,6 +257,18 @@
     "source_file": "05-mcp/images/mcp-comparison.png",
     "language_code": "no"
   },
+  "mcp-ecosystem.2783c9cc5cfa07d2.webp": {
+    "original_hash": "c3c2fa38c726272000409053847af710",
+    "translation_date": "2026-02-27T16:58:58+00:00",
+    "source_file": "05-mcp/images/mcp-ecosystem.png",
+    "language_code": "no"
+  },
+  "mcp-protocol-detail.01204e056f45308b.webp": {
+    "original_hash": "0afab46b80bd3fab8104c4fab2c7b36f",
+    "translation_date": "2026-02-27T16:58:27+00:00",
+    "source_file": "05-mcp/images/mcp-protocol-detail.png",
+    "language_code": "no"
+  },
   "mcp-testing.bb3b3e92e47acb4b.webp": {
     "original_hash": "8bb435d24bc33171adc6f6b4c603126b",
     "translation_date": "2026-01-16T10:51:31+00:00",
@@ -233,6 +317,12 @@
     "source_file": "02-prompt-engineering/images/prompt-templates.png",
     "language_code": "no"
   },
+  "rag-approaches.5b97fdcc626f1447.webp": {
+    "original_hash": "9d4d80986f9c8a9f77a0db584bad5cb9",
+    "translation_date": "2026-02-27T16:56:15+00:00",
+    "source_file": "03-rag/images/rag-approaches.png",
+    "language_code": "no"
+  },
   "rag-architecture.ccb53b71a6ce407f.webp": {
     "original_hash": "a0fb0671e18478ad83b93ac8d818c944",
     "translation_date": "2026-01-16T10:49:49+00:00",
@@ -246,8 +336,8 @@
     "language_code": "no"
   },
   "rag-langchain4j-classes.bbf3aa9077ab443d.webp": {
-    "original_hash": "f623d6029270b41c646b6f125df0dcef",
-    "translation_date": "2026-02-20T10:55:54+00:00",
+    "original_hash": "2aafb0fd34a7e8071ad20e72f82443f1",
+    "translation_date": "2026-02-27T16:55:45+00:00",
     "source_file": "03-rag/images/rag-langchain4j-classes.png",
     "language_code": "no"
   },
@@ -263,6 +353,12 @@
     "source_file": "docs/images/rag-testing.png",
     "language_code": "no"
   },
+  "react-pattern-detail.96a5efeeb6dd2f61.webp": {
+    "original_hash": "e6993e152e49e7db98ea01803af60fc9",
+    "translation_date": "2026-02-27T17:00:02+00:00",
+    "source_file": "04-tools/images/react-pattern-detail.png",
+    "language_code": "no"
+  },
   "reasoning-control.5cf85f0fc1d0c1f3.webp": {
     "original_hash": "d4304f2a6a40c441205e6b8c2928117a",
     "translation_date": "2026-02-16T11:26:50+00:00",
@@ -273,6 +369,12 @@
     "original_hash": "9a6a2c984bacecd3870cfa9146bbeb92",
     "translation_date": "2026-01-16T10:46:14+00:00",
     "source_file": "02-prompt-engineering/images/reasoning-effort.png",
+    "language_code": "no"
+  },
+  "response-strategies.3d0cea19d096bdf9.webp": {
+    "original_hash": "76a77f4d1cf798450260b07baae18e69",
+    "translation_date": "2026-02-27T16:57:47+00:00",
+    "source_file": "05-mcp/images/response-strategies.png",
     "language_code": "no"
   },
   "role-based-prompting.a806e1a73de6e3a4.webp": {
@@ -299,6 +401,12 @@
     "source_file": "03-rag/images/semantic-search.png",
     "language_code": "no"
   },
+  "session-management.91ad819c6c89c400.webp": {
+    "original_hash": "84fce1dfa360d3ceb6741d82545a6375",
+    "translation_date": "2026-02-27T17:00:56+00:00",
+    "source_file": "04-tools/images/session-management.png",
+    "language_code": "no"
+  },
   "similarity-scores.b0716aa911abf7f0.webp": {
     "original_hash": "b4c58ffa3578d82bab82eee7e7317104",
     "translation_date": "2026-02-20T10:56:01+00:00",
@@ -317,6 +425,12 @@
     "source_file": "01-introduction/images/simple-chat-stateless-demo.png",
     "language_code": "no"
   },
+  "spring-boot-wiring.151321795988b04e.webp": {
+    "original_hash": "f4cfb40479536d71b6ae7c560650c317",
+    "translation_date": "2026-02-27T16:59:28+00:00",
+    "source_file": "04-tools/images/spring-boot-wiring.png",
+    "language_code": "no"
+  },
   "stateless-stateful.e988809e368089da.webp": {
     "original_hash": "340ea635d16b2d03ff2f7a7ee5907182",
     "translation_date": "2026-01-16T10:49:05+00:00",
@@ -327,6 +441,12 @@
     "original_hash": "1c9e89b85ad199860cd0ccee393f1b9a",
     "translation_date": "2026-01-16T10:44:14+00:00",
     "source_file": "01-introduction/images/stateless-vs-stateful.png",
+    "language_code": "no"
+  },
+  "stdio-transport-flow.45eaff4af2d81db4.webp": {
+    "original_hash": "19c786e217cfd65e0ab4666cfa6d7728",
+    "translation_date": "2026-02-27T16:57:55+00:00",
+    "source_file": "05-mcp/images/stdio-transport-flow.png",
     "language_code": "no"
   },
   "step-by-step-pattern.a99ea4ca1c48578c.webp": {
@@ -351,6 +471,12 @@
     "original_hash": "13711f73af72aece4a6012d1f4ab193f",
     "translation_date": "2026-01-16T10:47:22+00:00",
     "source_file": "02-prompt-engineering/images/structured-analysis-pattern.png",
+    "language_code": "no"
+  },
+  "supervisor-agent-pattern.06275a41ae006ac8.webp": {
+    "original_hash": "441974bc854e265760746b68c03fc00e",
+    "translation_date": "2026-02-27T16:57:26+00:00",
+    "source_file": "05-mcp/images/supervisor-agent-pattern.png",
     "language_code": "no"
   },
   "task-execution-pattern.9da3967750ab5c1e.webp": {
@@ -383,10 +509,40 @@
     "source_file": "01-introduction/images/token-explanation.png",
     "language_code": "no"
   },
+  "tool-calling-flow.8601941b0ca041e6.webp": {
+    "original_hash": "1fc05f653fd9c04aa0220c1eba521e38",
+    "translation_date": "2026-02-27T16:59:52+00:00",
+    "source_file": "04-tools/images/tool-calling-flow.png",
+    "language_code": "no"
+  },
+  "tool-chaining-example.538203e73d09dd82.webp": {
+    "original_hash": "6f3acee2ebc2549da7099f5f9c3bb82d",
+    "translation_date": "2026-02-27T16:59:08+00:00",
+    "source_file": "04-tools/images/tool-chaining-example.png",
+    "language_code": "no"
+  },
   "tool-chaining.3b25af01967d6f7b.webp": {
     "original_hash": "b7dc1c932f5146db7961dfe34f122ddb",
     "translation_date": "2026-01-16T10:51:18+00:00",
     "source_file": "04-tools/images/tool-chaining.png",
+    "language_code": "no"
+  },
+  "tool-definitions-anatomy.f6468546037cf28b.webp": {
+    "original_hash": "77e329e50148e0a7473e74dff11a0789",
+    "translation_date": "2026-02-27T16:59:19+00:00",
+    "source_file": "04-tools/images/tool-definitions-anatomy.png",
+    "language_code": "no"
+  },
+  "tool-discovery.07760a8a301a7832.webp": {
+    "original_hash": "418d11cd2bbec18deaf6ed9940d7aeb2",
+    "translation_date": "2026-02-27T16:58:03+00:00",
+    "source_file": "05-mcp/images/tool-discovery.png",
+    "language_code": "no"
+  },
+  "tool-ecosystem.aad3d74eaa14a44f.webp": {
+    "original_hash": "1717746f7934e04ee3ba64566a6e369a",
+    "translation_date": "2026-02-27T17:00:45+00:00",
+    "source_file": "04-tools/images/tool-ecosystem.png",
     "language_code": "no"
   },
   "tool-preambles-demo.3ca4881e417f2e28.webp": {
@@ -419,6 +575,12 @@
     "source_file": "docs/images/tools-testing.png",
     "language_code": "no"
   },
+  "tools-vs-rag.ad55ce10d7e4da87.webp": {
+    "original_hash": "c739af535e62edc9acd4222439d54032",
+    "translation_date": "2026-02-27T17:00:34+00:00",
+    "source_file": "04-tools/images/tools-vs-rag.png",
+    "language_code": "no"
+  },
   "transport-mechanisms.2791ba7ee93cf020.webp": {
     "original_hash": "4b946879b30cf2ad6e048289655e553e",
     "translation_date": "2026-01-16T10:50:11+00:00",
@@ -435,6 +597,12 @@
     "original_hash": "dd983d81b3619c330151f2c23ccfcfdc",
     "translation_date": "2026-01-16T10:51:47+00:00",
     "source_file": "docs/images/vscode-testing.png",
+    "language_code": "no"
+  },
+  "what-are-tools.724e468fc4de64da.webp": {
+    "original_hash": "9fd75969d07910e98f030c32f5723ae8",
+    "translation_date": "2026-02-27T17:00:10+00:00",
+    "source_file": "04-tools/images/what-are-tools.png",
     "language_code": "no"
   },
   "what-is-prompt-engineering.5c392a228a1f5823.webp": {
@@ -459,6 +627,18 @@
     "original_hash": "aedd382969b17c76ce0b5b823390fda6",
     "translation_date": "2026-02-20T10:55:28+00:00",
     "source_file": "03-rag/images/when-to-use-rag.png",
+    "language_code": "no"
+  },
+  "when-to-use-tools.51d1592d9cbdae9c.webp": {
+    "original_hash": "8a0a6e714292ba5caf345f80946ab963",
+    "translation_date": "2026-02-27T17:00:21+00:00",
+    "source_file": "04-tools/images/when-to-use-tools.png",
+    "language_code": "no"
+  },
+  "workflow-patterns.82b2cc5b0c5edb22.webp": {
+    "original_hash": "2a01ceb2596514bc2808a85cf52c1bc3",
+    "translation_date": "2026-02-27T16:57:37+00:00",
+    "source_file": "05-mcp/images/workflow-patterns.png",
     "language_code": "no"
   },
   "zero-shot-prompting.7abc24228be84e6c.webp": {
