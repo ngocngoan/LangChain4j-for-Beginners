@@ -2,69 +2,75 @@
 
 ## Índice
 
-- [O que você aprenderá](../../../04-tools)
+- [O que você vai aprender](../../../04-tools)
 - [Pré-requisitos](../../../04-tools)
 - [Entendendo Agentes de IA com Ferramentas](../../../04-tools)
-- [Como Funciona a Chamada de Ferramentas](../../../04-tools)
-  - [Definições de Ferramentas](../../../04-tools)
-  - [Tomada de Decisão](../../../04-tools)
+- [Como funciona a chamada de ferramentas](../../../04-tools)
+  - [Definições de ferramenta](../../../04-tools)
+  - [Tomada de decisão](../../../04-tools)
   - [Execução](../../../04-tools)
-  - [Geração de Resposta](../../../04-tools)
-- [Encadeamento de Ferramentas](../../../04-tools)
-- [Executar a Aplicação](../../../04-tools)
-- [Usando a Aplicação](../../../04-tools)
-  - [Experimente o Uso Simples de Ferramentas](../../../04-tools)
-  - [Teste o Encadeamento de Ferramentas](../../../04-tools)
-  - [Veja o Fluxo da Conversa](../../../04-tools)
-  - [Experimente com Diferentes Solicitações](../../../04-tools)
-- [Conceitos Principais](../../../04-tools)
+  - [Geração de resposta](../../../04-tools)
+  - [Arquitetura: Auto-Wiring do Spring Boot](../../../04-tools)
+- [Encadeamento de ferramentas](../../../04-tools)
+- [Rodando a aplicação](../../../04-tools)
+- [Usando a aplicação](../../../04-tools)
+  - [Tente uso simples de ferramenta](../../../04-tools)
+  - [Teste encadeamento de ferramentas](../../../04-tools)
+  - [Veja o fluxo da conversa](../../../04-tools)
+  - [Experimente diferentes solicitações](../../../04-tools)
+- [Conceitos chave](../../../04-tools)
   - [Padrão ReAct (Raciocínio e Ação)](../../../04-tools)
-  - [Descrições de Ferramentas Importam](../../../04-tools)
-  - [Gerenciamento de Sessão](../../../04-tools)
-  - [Tratamento de Erros](../../../04-tools)
-- [Ferramentas Disponíveis](../../../04-tools)
-- [Quando Usar Agentes Baseados em Ferramentas](../../../04-tools)
-- [Próximos Passos](../../../04-tools)
+  - [Descrições de ferramenta importam](../../../04-tools)
+  - [Gerenciamento de sessão](../../../04-tools)
+  - [Tratamento de erros](../../../04-tools)
+- [Ferramentas disponíveis](../../../04-tools)
+- [Quando usar agentes baseados em ferramentas](../../../04-tools)
+- [Ferramentas vs RAG](../../../04-tools)
+- [Próximos passos](../../../04-tools)
 
-## O que você aprenderá
+## O que você vai aprender
 
-Até agora, você aprendeu como ter conversas com IA, estruturar prompts efetivamente e fundamentar respostas em seus documentos. Mas ainda existe uma limitação fundamental: modelos de linguagem só podem gerar texto. Eles não podem verificar o clima, realizar cálculos, consultar bancos de dados ou interagir com sistemas externos.
+Até agora, você aprendeu como ter conversas com IA, estruturar prompts efetivamente e fundamentar respostas em seus documentos. Mas ainda há uma limitação fundamental: modelos de linguagem só conseguem gerar texto. Eles não podem checar o tempo, fazer cálculos, consultar bancos de dados ou interagir com sistemas externos.
 
-As ferramentas mudam isso. Ao dar ao modelo acesso a funções que ele pode chamar, você o transforma de um gerador de texto em um agente que pode tomar ações. O modelo decide quando precisa de uma ferramenta, qual usar e quais parâmetros passar. Seu código executa a função e retorna o resultado. O modelo incorpora esse resultado em sua resposta.
+As ferramentas mudam isso. Dando ao modelo acesso a funções que ele pode chamar, você o transforma de um gerador de texto em um agente que pode tomar ações. O modelo decide quando precisa de uma ferramenta, qual ferramenta usar e quais parâmetros passar. Seu código executa a função e retorna o resultado. O modelo incorpora esse resultado em sua resposta.
 
 ## Pré-requisitos
 
-- Módulo 01 concluído (recursos Azure OpenAI implantados)
+- Ter completado o Módulo 01 (recursos Azure OpenAI implantados)
 - Arquivo `.env` no diretório raiz com credenciais Azure (criado pelo `azd up` no Módulo 01)
 
-> **Nota:** Se você não concluiu o Módulo 01, siga primeiro as instruções de implantação lá.
+> **Nota:** Se você não completou o Módulo 01, siga as instruções de implantação lá primeiro.
 
 ## Entendendo Agentes de IA com Ferramentas
 
-> **📝 Nota:** O termo "agentes" neste módulo refere-se a assistentes de IA aprimorados com capacidades de chamada de ferramentas. Isso é diferente dos padrões **Agentic AI** (agentes autônomos com planejamento, memória e raciocínio em múltiplas etapas) que abordaremos em [Módulo 05: MCP](../05-mcp/README.md).
+> **📝 Nota:** O termo "agentes" neste módulo refere-se a assistentes de IA aprimorados com capacidades de chamada de ferramentas. Isso é diferente dos padrões **Agentic AI** (agentes autônomos com planejamento, memória e raciocínio multi-etapas) que abordaremos no [Módulo 05: MCP](../05-mcp/README.md).
 
-Um agente de IA com ferramentas segue um padrão de raciocínio e ação (ReAct):
+Sem ferramentas, um modelo de linguagem só pode gerar texto a partir dos dados de treinamento. Pergunte a ele qual é o tempo atual, e ele tem que adivinhar. Dê ferramentas e ele pode chamar uma API do tempo, realizar cálculos ou consultar um banco de dados — e então integrar esses resultados reais em sua resposta.
 
-1. Usuário faz uma pergunta  
-2. O agente raciocina sobre o que precisa saber  
-3. O agente decide se precisa de uma ferramenta para responder  
-4. Se sim, o agente chama a ferramenta apropriada com os parâmetros certos  
-5. A ferramenta executa e retorna dados  
-6. O agente incorpora o resultado e fornece a resposta final  
+<img src="../../../translated_images/pt-BR/what-are-tools.724e468fc4de64da.webp" alt="Sem Ferramentas vs Com Ferramentas" width="800"/>
 
-<img src="../../../translated_images/pt-BR/react-pattern.86aafd3796f3fd13.webp" alt="Padrão ReAct" width="800"/>
+*Sem ferramentas o modelo só pode adivinhar — com ferramentas ele pode chamar APIs, realizar cálculos e retornar dados em tempo real.*
 
-*O padrão ReAct - como agentes de IA alternam entre raciocínio e ação para resolver problemas*
+Um agente de IA com ferramentas segue um padrão de **Raciocínio e Ação (ReAct)**. O modelo não só responde — ele pensa sobre o que precisa, age chamando uma ferramenta, observa o resultado e então decide se deve agir novamente ou entregar a resposta final:
 
-Isso acontece automaticamente. Você define as ferramentas e suas descrições. O modelo gerencia a tomada de decisão sobre quando e como usá-las.
+1. **Raciocina** — O agente analisa a pergunta do usuário e determina quais informações precisa
+2. **Age** — O agente seleciona a ferramenta certa, gera os parâmetros corretos e a chama
+3. **Observa** — O agente recebe a saída da ferramenta e avalia o resultado
+4. **Repete ou Responde** — Se mais dados forem necessários, o agente repete o ciclo; caso contrário, compõe uma resposta em linguagem natural
 
-## Como Funciona a Chamada de Ferramentas
+<img src="../../../translated_images/pt-BR/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Padrão ReAct" width="800"/>
 
-### Definições de Ferramentas
+*O ciclo ReAct — o agente raciocina sobre o que fazer, age chamando uma ferramenta, observa o resultado e repete até poder entregar a resposta final.*
 
-[WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)  
+Isso acontece automaticamente. Você define as ferramentas e suas descrições. O modelo cuida da tomada de decisão sobre quando e como usá-las.
 
-Você define funções com descrições claras e especificações de parâmetros. O modelo vê essas descrições em seu prompt do sistema e entende o que cada ferramenta faz.
+## Como funciona a chamada de ferramentas
+
+### Definições de ferramenta
+
+[WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
+
+Você define funções com descrições claras e especificações de parâmetros. O modelo vê essas descrições em seu prompt de sistema e entende o que cada ferramenta faz.
 
 ```java
 @Component
@@ -82,83 +88,115 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// O Assistente é automaticamente conectado pelo Spring Boot com:
+// Assistente é automaticamente configurado pelo Spring Boot com:
 // - Bean ChatModel
 // - Todos os métodos @Tool de classes @Component
 // - ChatMemoryProvider para gerenciamento de sessão
 ```
-  
-> **🤖 Experimente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) e pergunte:  
-> - "Como eu integraria uma API real de clima como OpenWeatherMap ao invés dos dados simulados?"  
-> - "O que faz uma boa descrição de ferramenta que ajuda a IA a usá-la corretamente?"  
-> - "Como lido com erros de API e limites de taxa nas implementações das ferramentas?"
 
-### Tomada de Decisão
+O diagrama abaixo detalha cada anotação e mostra como cada parte ajuda a IA a entender quando chamar a ferramenta e quais argumentos passar:
 
-Quando um usuário pergunta "Qual é o clima em Seattle?", o modelo reconhece que precisa da ferramenta de clima. Ele gera uma chamada de função com o parâmetro de localização definido para "Seattle".
+<img src="../../../translated_images/pt-BR/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomia das Definições de Ferramenta" width="800"/>
+
+*Anatomia de uma definição de ferramenta — @Tool diz para o IA quando usá-la, @P descreve cada parâmetro, e @AiService conecta tudo na inicialização.*
+
+> **🤖 Tente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) e pergunte:
+> - "Como eu integraria uma API real de clima como OpenWeatherMap em vez de dados simulados?"
+> - "O que torna uma boa descrição de ferramenta que ajuda a IA a usá-la corretamente?"
+> - "Como eu trato erros de API e limites de taxa nas implementações de ferramentas?"
+
+### Tomada de decisão
+
+Quando um usuário pergunta "Qual é o tempo em Seattle?", o modelo não escolhe uma ferramenta aleatoriamente. Ele compara a intenção do usuário com cada descrição de ferramenta disponível, atribui uma pontuação de relevância e seleciona a melhor correspondência. Em seguida, gera uma chamada de função estruturada com os parâmetros certos — neste caso, definindo `location` como `"Seattle"`.
+
+Se nenhuma ferramenta corresponder ao pedido do usuário, o modelo responde com base em seu próprio conhecimento. Se múltiplas ferramentas corresponderem, escolhe a mais específica.
+
+<img src="../../../translated_images/pt-BR/decision-making.409cd562e5cecc49.webp" alt="Como a IA Decide Qual Ferramenta Usar" width="800"/>
+
+*O modelo avalia cada ferramenta disponível em relação à intenção do usuário e seleciona a melhor — por isso escrever descrições claras e específicas importa.*
 
 ### Execução
 
-[AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)  
+[AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-O Spring Boot injeta automaticamente a interface declarativa `@AiService` com todas as ferramentas registradas, e o LangChain4j executa as chamadas às ferramentas automaticamente.
+O Spring Boot auto-conecta a interface declarativa `@AiService` com todas as ferramentas registradas, e o LangChain4j executa as chamadas de ferramentas automaticamente. Nos bastidores, uma chamada completa de ferramenta passa por seis etapas — desde a pergunta do usuário em linguagem natural até a resposta em linguagem natural:
 
-> **🤖 Experimente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) e pergunte:  
-> - "Como funciona o padrão ReAct e por que é eficaz para agentes de IA?"  
-> - "Como o agente decide qual ferramenta usar e em que ordem?"  
+<img src="../../../translated_images/pt-BR/tool-calling-flow.8601941b0ca041e6.webp" alt="Fluxo de Chamada de Ferramenta" width="800"/>
+
+*O fluxo completo — o usuário faz uma pergunta, o modelo seleciona uma ferramenta, LangChain4j a executa, e o modelo integra o resultado em uma resposta natural.*
+
+> **🤖 Tente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) e pergunte:
+> - "Como funciona o padrão ReAct e por que ele é eficaz para agentes de IA?"
+> - "Como o agente decide qual ferramenta usar e em que ordem?"
 > - "O que acontece se a execução de uma ferramenta falhar - como devo tratar erros de forma robusta?"
 
-### Geração de Resposta
+### Geração de resposta
 
-O modelo recebe os dados do clima e os formata em uma resposta em linguagem natural para o usuário.
+O modelo recebe os dados do tempo e os formata em uma resposta em linguagem natural para o usuário.
 
-### Por Que Usar Serviços Declarativos de IA?
+### Arquitetura: Auto-Wiring do Spring Boot
 
-Este módulo usa a integração do LangChain4j com Spring Boot via interfaces declarativas `@AiService`:
+Este módulo usa a integração do LangChain4j com Spring Boot por meio de interfaces declarativas `@AiService`. Na inicialização, o Spring Boot descobre cada `@Component` que contém métodos `@Tool`, seu bean `ChatModel` e o `ChatMemoryProvider` — e conecta todos juntos em uma única interface `Assistant` com zero código repetitivo.
 
-- **Injeção automática Spring Boot** - ChatModel e ferramentas são injetados automaticamente  
-- **Padrão @MemoryId** - Gerenciamento automático de memória baseado em sessão  
-- **Instância única** - Assistente criado uma vez e reutilizado para melhor desempenho  
-- **Execução com tipos seguros** - Métodos Java chamados diretamente com conversão de tipo  
-- **Orquestração multi-turno** - Lida automaticamente com encadeamento de ferramentas  
-- **Zero boilerplate** - Sem chamadas manuais AiServices.builder() ou HashMap de memória  
+<img src="../../../translated_images/pt-BR/spring-boot-wiring.151321795988b04e.webp" alt="Arquitetura de Auto-Wiring do Spring Boot" width="800"/>
 
-Abordagens alternativas (manual `AiServices.builder()`) exigem mais código e perdem benefícios da integração Spring Boot.
+*A interface @AiService reúne o ChatModel, componentes de ferramenta e o provedor de memória — o Spring Boot faz todo o wiring automaticamente.*
 
-## Encadeamento de Ferramentas
+Principais benefícios dessa abordagem:
 
-**Encadeamento de Ferramentas** - A IA pode chamar múltiplas ferramentas em sequência. Pergunte "Qual o clima em Seattle e devo levar um guarda-chuva?" e veja como encadeia `getCurrentWeather` com raciocínio sobre chuva.
+- **Auto-wiring do Spring Boot** — ChatModel e ferramentas injetados automaticamente
+- **Padrão @MemoryId** — Gerenciamento automático de memória baseado em sessão
+- **Instância única** — Assistant criado uma vez e reutilizado para melhor performance
+- **Execução tipada segura** — métodos Java chamados diretamente com conversão de tipos
+- **Orquestração multi-turno** — trata encadeamento de ferramentas automaticamente
+- **Zero código repetitivo** — sem chamadas manuais a `AiServices.builder()` ou HashMap de memória
+
+Abordagens alternativas (como `AiServices.builder()` manual) exigem mais código e não aproveitam os benefícios da integração com Spring Boot.
+
+## Encadeamento de ferramentas
+
+**Encadeamento de ferramentas** — O poder real dos agentes baseados em ferramentas aparece quando uma única pergunta requer múltiplas ferramentas. Pergunte "Qual o tempo em Seattle em Fahrenheit?" e o agente encadeia automaticamente duas ferramentas: primeiro chama `getCurrentWeather` para obter a temperatura em Celsius, depois passa esse valor para `celsiusToFahrenheit` para conversão — tudo em um único turno de conversa.
+
+<img src="../../../translated_images/pt-BR/tool-chaining-example.538203e73d09dd82.webp" alt="Exemplo de Encadeamento de Ferramentas" width="800"/>
+
+*Encadeamento de ferramentas em ação — o agente chama getCurrentWeather primeiro, depois encaminha o resultado em Celsius para celsiusToFahrenheit, e entrega uma resposta combinada.*
+
+Veja como isso fica na aplicação em execução — o agente encadeia duas chamadas de ferramenta em um único turno de conversa:
 
 <a href="images/tool-chaining.png"><img src="../../../translated_images/pt-BR/tool-chaining.3b25af01967d6f7b.webp" alt="Encadeamento de Ferramentas" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Chamadas sequenciais de ferramentas - a saída de uma ferramenta alimenta a decisão da próxima*
+*Resultado real da aplicação — o agente encadeia automaticamente getCurrentWeather → celsiusToFahrenheit em um turno.*
 
-**Falhas Elegantes** - Peça o clima de uma cidade que não está nos dados simulados. A ferramenta retorna uma mensagem de erro, e a IA explica que não pode ajudar. As ferramentas falham com segurança.
+**Falhas Elegantes** — Solicite o tempo em uma cidade que não está nos dados simulados. A ferramenta retorna uma mensagem de erro, e a IA explica que não pode ajudar em vez de travar. As ferramentas falham com segurança.
 
-Isso acontece em uma única rodada de conversa. O agente orquestra múltiplas chamadas de ferramentas autonomamente.
+<img src="../../../translated_images/pt-BR/error-handling-flow.9a330ffc8ee0475c.webp" alt="Fluxo de Tratamento de Erro" width="800"/>
 
-## Executar a Aplicação
+*Quando uma ferramenta falha, o agente captura o erro e responde com uma explicação útil ao invés de travar.*
+
+Isso acontece em um único turno de conversa. O agente orquestra múltiplas chamadas de ferramentas autonomamente.
+
+## Rodando a aplicação
 
 **Verifique a implantação:**
 
-Certifique-se que o arquivo `.env` exista no diretório raiz com credenciais Azure (criado durante o Módulo 01):  
+Certifique-se de que o arquivo `.env` exista no diretório raiz com as credenciais Azure (criado durante o Módulo 01):
 ```bash
 cat ../.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
+
 **Inicie a aplicação:**
 
-> **Nota:** Se você já iniciou todas as aplicações usando `./start-all.sh` do Módulo 01, este módulo já estará rodando na porta 8084. Você pode pular os comandos de inicialização abaixo e ir direto para http://localhost:8084.
+> **Nota:** Se você já iniciou todas as aplicações usando `./start-all.sh` do Módulo 01, este módulo já está rodando na porta 8084. Você pode pular os comandos de início abaixo e ir direto para http://localhost:8084.
 
-**Opção 1: Usando o Spring Boot Dashboard (Recomendado para usuários VS Code)**
+**Opção 1: Usando o Spring Boot Dashboard (Recomendado para usuários do VS Code)**
 
-O container de desenvolvimento inclui a extensão Spring Boot Dashboard, que fornece uma interface visual para gerenciar todas as aplicações Spring Boot. Você pode encontrá-la na Barra de Atividades no lado esquerdo do VS Code (procure o ícone Spring Boot).
+O contêiner de desenvolvimento inclui a extensão Spring Boot Dashboard, que oferece uma interface visual para gerenciar todas as aplicações Spring Boot. Você pode encontrá-la na Barra de Atividades à esquerda do VS Code (procure o ícone do Spring Boot).
 
-Pelo Spring Boot Dashboard você pode:  
-- Ver todas as aplicações Spring Boot disponíveis na workspace  
-- Iniciar/parar aplicações com um clique  
-- Visualizar logs em tempo real  
-- Monitorar status da aplicação  
+No Spring Boot Dashboard, você pode:
+- Ver todas as aplicações Spring Boot disponíveis no workspace
+- Iniciar/parar aplicações com um clique
+- Visualizar logs da aplicação em tempo real
+- Monitorar o status da aplicação
 
 Basta clicar no botão de play ao lado de "tools" para iniciar este módulo, ou iniciar todos os módulos de uma vez.
 
@@ -168,146 +206,155 @@ Basta clicar no botão de play ao lado de "tools" para iniciar este módulo, ou 
 
 Inicie todas as aplicações web (módulos 01-04):
 
-**Bash:**  
+**Bash:**
 ```bash
-cd ..  # A partir do diretório raiz
+cd ..  # Do diretório raiz
 ./start-all.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd ..  # A partir do diretório raiz
 .\start-all.ps1
 ```
-  
+
 Ou inicie apenas este módulo:
 
-**Bash:**  
+**Bash:**
 ```bash
 cd 04-tools
 ./start.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 04-tools
 .\start.ps1
 ```
-  
-Ambos os scripts carregam automaticamente as variáveis de ambiente do arquivo `.env` raiz e irão construir os JARs se eles não existirem.
 
-> **Nota:** Se preferir construir todos os módulos manualmente antes de iniciar:  
->  
-> **Bash:**  
+Ambos os scripts carregam automaticamente variáveis de ambiente do arquivo `.env` raiz e irão construir os JARs se eles não existirem.
+
+> **Nota:** Se preferir construir todos os módulos manualmente antes de iniciar:
+>
+> **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
->  
-> **PowerShell:**  
+>
+> **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-  
-Abra http://localhost:8084 em seu navegador.
 
-**Para parar a aplicação:**
+Abra http://localhost:8084 no seu navegador.
 
-**Bash:**  
+**Para parar:**
+
+**Bash:**
 ```bash
-./stop.sh  # Este módulo somente
+./stop.sh  # Somente este módulo
 # Ou
 cd .. && ./stop-all.sh  # Todos os módulos
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 .\stop.ps1  # Somente este módulo
 # Ou
 cd ..; .\stop-all.ps1  # Todos os módulos
 ```
-  
-## Usando a Aplicação
 
-A aplicação oferece uma interface web onde você pode interagir com um agente de IA que tem acesso a ferramentas de clima e conversão de temperatura.
+## Usando a aplicação
 
-<a href="images/tools-homepage.png"><img src="../../../translated_images/pt-BR/tools-homepage.4b4cd8b2717f9621.webp" alt="Interface de Ferramentas do Agente de IA" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+A aplicação fornece uma interface web onde você pode interagir com um agente de IA que tem acesso a ferramentas de clima e conversão de temperatura.
 
-*Interface das Ferramentas do Agente de IA - exemplos rápidos e interface de chat para interação com ferramentas*
+<a href="images/tools-homepage.png"><img src="../../../translated_images/pt-BR/tools-homepage.4b4cd8b2717f9621.webp" alt="Interface de Agente de IA com Ferramentas" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-### Experimente o Uso Simples de Ferramentas
+*A interface de Ferramentas do Agente de IA - exemplos rápidos e interface de chat para interagir com as ferramentas*
 
-Comece com uma solicitação direta: "Converter 100 graus Fahrenheit para Celsius". O agente reconhece que precisa da ferramenta de conversão de temperatura, a chama com os parâmetros corretos e retorna o resultado. Perceba como isso é natural - você não especificou qual ferramenta usar nem como chamá-la.
+### Tente uso simples de ferramenta
+Comece com uma solicitação simples: "Converta 100 graus Fahrenheit para Celsius". O agente reconhece que precisa da ferramenta de conversão de temperatura, chama-a com os parâmetros corretos e retorna o resultado. Note como isso parece natural - você não especificou qual ferramenta usar ou como chamá-la.
 
-### Teste o Encadeamento de Ferramentas
+### Testar Encadeamento de Ferramentas
 
-Agora tente algo mais complexo: "Qual o clima em Seattle e converta para Fahrenheit?" Veja o agente trabalhar isso passo a passo. Primeiro obtém o clima (que retorna em Celsius), reconhece que precisa converter para Fahrenheit, chama a ferramenta de conversão e combina ambos os resultados em uma única resposta.
+Agora tente algo mais complexo: "Qual é o tempo em Seattle e converta para Fahrenheit?" Observe o agente trabalhar isso em etapas. Primeiro ele obtém o tempo (que retorna em Celsius), reconhece que precisa converter para Fahrenheit, chama a ferramenta de conversão e combina ambos os resultados em uma única resposta.
 
 ### Veja o Fluxo da Conversa
 
-A interface de chat mantém o histórico da conversa, permitindo interações multi-turno. Você pode ver todas as consultas e respostas anteriores, facilitando acompanhar a conversa e entender como o agente constrói o contexto em múltiplas trocas.
+A interface de chat mantém o histórico da conversa, permitindo interações em múltiplas etapas. Você pode ver todas as consultas e respostas anteriores, facilitando o acompanhamento da conversa e entendendo como o agente constrói o contexto por várias trocas.
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/pt-BR/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversa com Múltiplas Chamadas de Ferramentas" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/pt-BR/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversa com múltiplas chamadas de ferramenta" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Conversa multi-turno mostrando conversões simples, consultas de clima e encadeamento de ferramentas*
+*Conversa de múltiplas etapas mostrando conversões simples, consultas meteorológicas e encadeamento de ferramentas*
 
 ### Experimente com Diferentes Solicitações
 
-Teste várias combinações:  
-- Consultas de clima: "Qual o clima em Tóquio?"  
-- Conversões de temperatura: "Quanto é 25°C em Kelvin?"  
-- Consultas combinadas: "Verifique o clima em Paris e me diga se está acima de 20°C"  
+Tente várias combinações:
+- Consultas de clima: "Qual é o tempo em Tóquio?"
+- Conversões de temperatura: "Quanto é 25°C em Kelvin?"
+- Consultas combinadas: "Verifique o tempo em Paris e me diga se está acima de 20°C"
 
-Observe como o agente interpreta linguagem natural e mapeia para chamadas adequadas das ferramentas.
+Perceba como o agente interpreta linguagem natural e a mapeia para chamadas apropriadas das ferramentas.
 
 ## Conceitos Principais
 
 ### Padrão ReAct (Raciocínio e Ação)
 
-O agente alterna entre raciocinar (decidir o que fazer) e agir (usar ferramentas). Esse padrão permite resolução autônoma de problemas, não apenas resposta a instruções.
+O agente alterna entre raciocínio (decidir o que fazer) e ação (usar ferramentas). Esse padrão permite resolução autônoma de problemas ao invés de apenas responder instruções.
 
-### Descrições de Ferramentas Importam
+### Descrições das Ferramentas Importam
 
-A qualidade das descrições das suas ferramentas afeta diretamente como o agente as usa. Descrições claras e específicas ajudam o modelo a entender quando e como chamar cada ferramenta.
+A qualidade das descrições das suas ferramentas impacta diretamente o quão bem o agente as utiliza. Descrições claras e específicas ajudam o modelo a entender quando e como chamar cada ferramenta.
 
 ### Gerenciamento de Sessão
 
-A anotação `@MemoryId` permite gerenciamento automático de memória baseado em sessão. Cada ID de sessão recebe sua própria instância `ChatMemory` gerenciada pelo bean `ChatMemoryProvider`, eliminando a necessidade de rastreamento manual de memória.
+A anotação `@MemoryId` permite gerenciamento automático de memória baseado em sessão. Cada ID de sessão recebe sua própria instância `ChatMemory` gerenciada pelo bean `ChatMemoryProvider`, para que múltiplos usuários possam interagir com o agente simultaneamente sem suas conversas se misturarem.
+
+<img src="../../../translated_images/pt-BR/session-management.91ad819c6c89c400.webp" alt="Gerenciamento de Sessão com @MemoryId" width="800"/>
+
+*Cada ID de sessão mapeia para um histórico de conversa isolado — os usuários nunca veem as mensagens uns dos outros.*
 
 ### Tratamento de Erros
 
-As ferramentas podem falhar - APIs podem expirar, parâmetros podem estar inválidos, serviços externos podem parar. Agentes para produção precisam de tratamento de erros para que o modelo possa explicar problemas ou tentar alternativas.
+Ferramentas podem falhar — APIs podem expirar, parâmetros podem ser inválidos, serviços externos podem ficar indisponíveis. Agentes em produção precisam de tratamento de erros para que o modelo possa explicar problemas ou tentar alternativas ao invés de travar a aplicação inteira. Quando uma ferramenta lança uma exceção, o LangChain4j a captura e envia a mensagem de erro de volta para o modelo, que então pode explicar o problema em linguagem natural.
 
 ## Ferramentas Disponíveis
 
-**Ferramentas de Clima** (dados simulados para demonstração):  
-- Obter o clima atual para uma localização  
-- Obter previsão para múltiplos dias  
+O diagrama abaixo mostra o amplo ecossistema de ferramentas que você pode construir. Este módulo demonstra ferramentas de clima e temperatura, mas o mesmo padrão `@Tool` funciona para qualquer método Java — desde consultas a bancos de dados até processamento de pagamentos.
 
-**Ferramentas de Conversão de Temperatura**:  
-- Celsius para Fahrenheit  
-- Fahrenheit para Celsius  
-- Celsius para Kelvin  
-- Kelvin para Celsius  
-- Fahrenheit para Kelvin  
-- Kelvin para Fahrenheit  
+<img src="../../../translated_images/pt-BR/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ecossistema de Ferramentas" width="800"/>
 
-Estes são exemplos simples, mas o padrão se estende a qualquer função: consultas a bancos de dados, chamadas de API, cálculos, operações com arquivos ou comandos de sistema.
+*Qualquer método Java anotado com @Tool fica disponível para a IA — o padrão se estende a bancos de dados, APIs, e-mail, operações de arquivos e mais.*
 
 ## Quando Usar Agentes Baseados em Ferramentas
 
-**Use ferramentas quando:**  
-- A resposta requer dados em tempo real (clima, preços de ações, inventário)  
-- Precisa realizar cálculos além da matemática simples  
-- Acesso a bancos de dados ou APIs  
-- Executar ações (enviar e-mails, criar tickets, atualizar registros)  
-- Combinar múltiplas fontes de dados  
+<img src="../../../translated_images/pt-BR/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Quando Usar Ferramentas" width="800"/>
 
-**Não use ferramentas quando:**  
-- As perguntas podem ser respondidas com conhecimento geral  
-- A resposta é puramente conversacional  
-- A latência da ferramenta tornaria a experiência muito lenta  
+*Um guia rápido de decisão — ferramentas são para dados em tempo real, cálculos e ações; tarefas de conhecimento geral e criativas não precisam delas.*
+
+**Use ferramentas quando:**
+- A resposta requer dados em tempo real (clima, preços de ações, inventário)
+- Precisa realizar cálculos além da matemática simples
+- Acessar bancos de dados ou APIs
+- Executar ações (enviar e-mails, criar tickets, atualizar registros)
+- Combinar múltiplas fontes de dados
+
+**Não use ferramentas quando:**
+- Perguntas podem ser respondidas a partir de conhecimento geral
+- A resposta é puramente conversacional
+- Latência da ferramenta tornaria a experiência muito lenta
+
+## Ferramentas vs RAG
+
+Os módulos 03 e 04 ampliam o que a IA pode fazer, mas de maneiras fundamentalmente diferentes. RAG dá ao modelo acesso a **conhecimento** recuperando documentos. Ferramentas dão ao modelo a capacidade de tomar **ações** chamando funções.
+
+<img src="../../../translated_images/pt-BR/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Comparação Ferramentas vs RAG" width="800"/>
+
+*RAG recupera informação de documentos estáticos — Ferramentas executam ações e buscam dados dinâmicos em tempo real. Muitos sistemas produtivos combinam ambos.*
+
+Na prática, muitos sistemas de produção combinam essas abordagens: RAG para fundamentar respostas na sua documentação, e Ferramentas para buscar dados ao vivo ou realizar operações.
 
 ## Próximos Passos
 
@@ -321,5 +368,5 @@ Estes são exemplos simples, mas o padrão se estende a qualquer função: consu
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Aviso Legal**:  
-Este documento foi traduzido utilizando o serviço de tradução por IA [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos para garantir a precisão, esteja ciente de que traduções automáticas podem conter erros ou imprecisões. O documento original em sua língua nativa deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se tradução profissional realizada por humanos. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações incorretas decorrentes do uso desta tradução.
+Este documento foi traduzido usando o serviço de tradução automática [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos para garantir a precisão, esteja ciente de que traduções automáticas podem conter erros ou imprecisões. O documento original em seu idioma nativo deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se a tradução profissional por humanos. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações incorretas decorrentes do uso desta tradução.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
