@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](#video-walkthrough)
 - [What You'll Learn](#what-youll-learn)
 - [Prerequisites](#prerequisites)
 - [Understanding RAG](#understanding-rag)
@@ -24,6 +25,10 @@
   - [Context Window Management](#context-window-management)
 - [When RAG Matters](#when-rag-matters)
 - [Next Steps](#next-steps)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
 
 ## What You'll Learn
 
