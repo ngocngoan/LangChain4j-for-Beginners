@@ -329,20 +329,6 @@ The diagram below shows the broad ecosystem of tools you can build. This module 
 
 *Any Java method annotated with @Tool becomes available to the AI — the pattern extends to databases, APIs, email, file operations, and more.*
 
-**Weather Tools** (mock data for demonstration):
-- Get current weather for a location
-- Get multi-day forecast
-
-**Temperature Conversion Tools**:
-- Celsius to Fahrenheit
-- Fahrenheit to Celsius
-- Celsius to Kelvin
-- Kelvin to Celsius
-- Fahrenheit to Kelvin
-- Kelvin to Fahrenheit
-
-These are simple examples, but the pattern extends to any function: database queries, API calls, calculations, file operations, or system commands.
-
 ## When to Use Tool-Based Agents
 
 <img src="images/when-to-use-tools.png" alt="When to Use Tools" width="800"/>
