@@ -1,29 +1,34 @@
-# Modul 01: Început cu LangChain4j
+# Modulul 01: Primii pași cu LangChain4j
 
 ## Cuprins
 
-- [Ce vei învăța](../../../01-introduction)
+- [Parcurgere video](../../../01-introduction)
+- [Ce veți învăța](../../../01-introduction)
 - [Precondiții](../../../01-introduction)
-- [Înțelegerea problemei esențiale](../../../01-introduction)
+- [Înțelegerea problemei de bază](../../../01-introduction)
 - [Înțelegerea token-urilor](../../../01-introduction)
 - [Cum funcționează memoria](../../../01-introduction)
-- [Cum folosește acesta LangChain4j](../../../01-introduction)
-- [Deplasează infrastructura Azure OpenAI](../../../01-introduction)
-- [Rulează aplicația local](../../../01-introduction)
+- [Cum utilizează acest modul LangChain4j](../../../01-introduction)
+- [Implementați infrastructura Azure OpenAI](../../../01-introduction)
+- [Rulați aplicația local](../../../01-introduction)
 - [Folosirea aplicației](../../../01-introduction)
-  - [Chat fără stare (panoul din stânga)](../../../01-introduction)
-  - [Chat cu stare (panoul din dreapta)](../../../01-introduction)
-- [Următorii pași](../../../01-introduction)
+  - [Chat fără stare (Panoul din stânga)](../../../01-introduction)
+  - [Conversație cu stare (Panoul din dreapta)](../../../01-introduction)
+- [Pașii următori](../../../01-introduction)
 
-## Ce vei învăța
+## Parcurgere video
 
-Dacă ai completat începutul rapid, ai văzut cum să trimiți prompturi și să obții răspunsuri. Aceasta este fundația, dar aplicațiile reale au nevoie de mai mult. Acest modul te învață cum să construiești AI conversațional care își amintește contextul și menține starea – diferența între o demonstrație ocazională și o aplicație pregătită pentru producție.
+Urmăriți această sesiune live care explică cum să începeți cu acest modul: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
-Vom folosi GPT-5.2 de la Azure OpenAI pe tot parcursul acestui ghid, deoarece capacitățile sale avansate de raționare fac comportamentul diferitelor tipare mai evident. Când adaugi memorie, vei vedea clar diferența. Acest lucru face mai ușor să înțelegi ce aduce fiecare componentă aplicației tale.
+## Ce veți învăța
 
-Vei construi o aplicație care demonstrează ambele tipare:
+Dacă ați terminat ghidul rapid, ați văzut cum să trimiteți prompturi și să obțineți răspunsuri. Aceasta este fundația, dar aplicațiile reale au nevoie de mai mult. Acest modul vă învață cum să construiți AI conversațional care își amintește contextul și menține starea - diferența dintre un demo ocazional și o aplicație gata pentru producție.
 
-**Chat fără stare** - Fiecare cerere este independentă. Modelul nu are memorie a mesajelor anterioare. Acesta este tiparul folosit în începutul rapid.
+Vom folosi GPT-5.2 de la Azure OpenAI pe tot parcursul acestui ghid, deoarece capacitățile sale avansate de raționament fac mai clar comportamentul diferitelor modele. Când adăugați memorie, veți vedea clar diferența. Acest lucru face mai ușor să înțelegeți ce aduce fiecare componentă aplicației dumneavoastră.
+
+Veți construi o aplicație care demonstrează ambele modele:
+
+**Chat fără stare** - Fiecare cerere este independentă. Modelul nu memorează mesajele anterioare. Acesta este modelul folosit în ghidul rapid.
 
 **Conversație cu stare** - Fiecare cerere include istoricul conversației. Modelul menține contextul pe parcursul mai multor schimburi. Acesta este ceea ce cer aplicațiile de producție.
 
@@ -38,41 +43,41 @@ Vei construi o aplicație care demonstrează ambele tipare:
 
 > **Notă:** Acest modul folosește GPT-5.2 pe Azure OpenAI. Implementarea este configurată automat prin `azd up` - nu modificați numele modelului în cod.
 
-## Înțelegerea problemei esențiale
+## Înțelegerea problemei de bază
 
-Modelele de limbaj sunt fără stare. Fiecare apel API este independent. Dacă trimiți „Numele meu este John” și apoi întrebi „Cum mă numesc?”, modelul nu știe că tocmai te-ai prezentat. Tratează fiecare cerere ca și cum ar fi prima conversație pe care ai avut-o vreodată.
+Modelele de limbaj sunt fără stare. Fiecare apel API este independent. Dacă trimiteți "Mă numesc John" și apoi întrebați "Cum mă numesc?", modelul nu are habar că tocmai v-ați prezentat. Tratează fiecare cerere ca și cum ar fi prima conversație pe care o aveți vreodată.
 
-Acest lucru este bine pentru întrebări și răspunsuri simple, dar inutil pentru aplicații reale. Boții de serviciu clienți trebuie să-și amintească ce le-ai spus. Asistenții personali au nevoie de context. Orice conversație multi-turn necesită memorie.
+Acest lucru este acceptabil pentru întrebări și răspunsuri simple, dar inutil pentru aplicații reale. Roboții de serviciu clienți trebuie să-și amintească ce le-ați spus. Asistenții personali au nevoie de context. Orice conversație cu mai multe schimburi necesită memorie.
 
-<img src="../../../translated_images/ro/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Conversații fără stare vs cu stare" width="800"/>
+<img src="../../../translated_images/ro/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Conversații Stateless vs Stateful" width="800"/>
 
-*Diferența dintre conversațiile fără stare (apeluri independente) și cele cu stare (conștiente de context)*
+*Diferența între conversațiile fără stare (apeluri independente) și cele cu stare (conștiente de context)*
 
 ## Înțelegerea token-urilor
 
-Înainte de a începe conversațiile, este important să înțelegi token-urile – unitățile de bază de text pe care le procesează modelele de limbaj:
+Înainte de a începe conversațiile, este important să înțelegeți token-urile - unitățile de bază de text pe care modelele lingvistice le procesează:
 
-<img src="../../../translated_images/ro/token-explanation.c39760d8ec650181.webp" alt="Explicația token-ului" width="800"/>
+<img src="../../../translated_images/ro/token-explanation.c39760d8ec650181.webp" alt="Explicație Token" width="800"/>
 
-*Exemplu despre cum textul este împărțit în token-uri - "I love AI!" devine 4 unități separate de procesare*
+*Exemplu de cum textul este împărțit în token-uri - "I love AI!" devine 4 unități separate de procesare*
 
-Token-urile sunt modul în care modelele AI măsoară și procesează textul. Cuvintele, punctuația și chiar spațiile pot fi token-uri. Modelul tău are o limită a câtor token-uri poate procesa odată (400.000 pentru GPT-5.2, cu până la 272.000 token-uri de intrare și 128.000 token-uri de ieșire). Înțelegerea token-urilor te ajută să gestionezi lungimea conversației și costurile.
+Token-urile sunt modul prin care modelele AI măsoară și procesează textul. Cuvintele, semnele de punctuație și chiar spațiile pot fi token-uri. Modelul dvs. are o limită a numărului de token-uri pe care le poate procesa odată (400.000 pentru GPT-5.2, cu până la 272.000 token-uri de intrare și 128.000 token-uri de ieșire). Înțelegerea token-urilor vă ajută să gestionați lungimea conversației și costurile.
 
 ## Cum funcționează memoria
 
-Memoria chat rezolvă problema lipsei stării, menținând istoricul conversației. Înainte de a trimite cererea către model, cadrul adaugă mesajele relevante anterioare. Când întrebi „Cum mă numesc?”, sistemul trimite de fapt întregul istoric al conversației, permițând modelului să vadă că ai spus anterior „Numele meu este John.”
+Memoria chatului rezolvă problema fără starea menținând istoricul conversației. Înainte de a trimite cererea către model, cadrul adaugă înainte mesajele relevante anterioare. Când întrebați "Cum mă numesc?", sistemul trimite de fapt întreg istoricul conversației, permițând modelului să vadă că anterior ați spus "Mă numesc John."
 
-LangChain4j oferă implementări de memorie care gestionează acest aspect automat. Alegi câte mesaje să păstrezi, iar cadrul gestionează fereastra de context.
+LangChain4j oferă implementări de memorie care gestionează acest lucru automat. Alegeți câte mesaje să păstrați și cadrul gestionează fereastra de context.
 
-<img src="../../../translated_images/ro/memory-window.bbe67f597eadabb3.webp" alt="Concept fereastră de memorie" width="800"/>
+<img src="../../../translated_images/ro/memory-window.bbe67f597eadabb3.webp" alt="Conceptul Ferestrei de Memorie" width="800"/>
 
-*MessageWindowChatMemory menține o fereastră glisantă cu mesajele recente, eliminând automat mesajele vechi*
+*MessageWindowChatMemory menține o fereastră glisantă cu mesajele recente, eliminând automat pe cele vechi*
 
-## Cum folosește acesta LangChain4j
+## Cum utilizează acest modul LangChain4j
 
-Acest modul extinde începutul rapid prin integrarea Spring Boot și adăugarea memoriei conversației. Iată cum se potrivesc piesele:
+Acest modul extinde ghidul rapid prin integrarea Spring Boot și adăugarea memoriei conversației. Iată cum se leagă componentele:
 
-**Dependențe** - Adaugă două biblioteci LangChain4j:
+**Dependențe** - Adăugați două biblioteci LangChain4j:
 
 ```xml
 <dependency>
@@ -84,8 +89,8 @@ Acest modul extinde începutul rapid prin integrarea Spring Boot și adăugarea 
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
 ```
-  
-**Modelul de chat** - Configurează Azure OpenAI ca bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+
+**Model Chat** - Configurați Azure OpenAI ca un bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -99,10 +104,10 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
             .build();
 }
 ```
-  
-Builder-ul citește credențialele din variabilele de mediu setate de `azd up`. Setarea `baseUrl` cu endpoint-ul tău Azure face ca clientul OpenAI să funcționeze cu Azure OpenAI.
 
-**Memoria conversației** - Urmărește istoricul chat-ului cu MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+Builder-ul citește acreditările din variabilele de mediu setate de `azd up`. Setarea `baseUrl` către endpoint-ul Azure face clientul OpenAI să funcționeze cu Azure OpenAI.
+
+**Memoria conversației** - Urmăriți istoricul chat-ului cu MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -114,198 +119,200 @@ memory.add(UserMessage.from("What's my name?"));
 AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
-  
-Creează memoria cu `withMaxMessages(10)` pentru a păstra ultimele 10 mesaje. Adaugă mesaje de utilizator și AI cu învelitori tipizate: `UserMessage.from(text)` și `AiMessage.from(text)`. Recuperează istoricul cu `memory.messages()` și trimite-l către model. Serviciul stochează instanțe de memorie separate pe ID de conversație, permițând mai multor utilizatori să converseze simultan.
 
-> **🤖 Încearcă cu [GitHub Copilot](https://github.com/features/copilot) Chat:** Deschide [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) și întreabă:
+Creați memoria cu `withMaxMessages(10)` pentru a păstra ultimele 10 mesaje. Adăugați mesaje de utilizator și AI cu învelitori tipizate: `UserMessage.from(text)` și `AiMessage.from(text)`. Recuperați istoricul cu `memory.messages()` și îl trimiteți modelului. Serviciul stochează instanțe separate de memorie pentru fiecare ID de conversație, permițând mai multor utilizatori să converseze simultan.
+
+> **🤖 Încercați cu [GitHub Copilot](https://github.com/features/copilot) Chat:** Deschideți [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) și întrebați:
 > - "Cum decide MessageWindowChatMemory ce mesaje să elimine când fereastra este plină?"
-> - "Pot implementa un stocaj personalizat al memoriei folosind o bază de date în loc de memorie în RAM?"
+> - "Pot implementa stocare personalizată a memoriei folosind o bază de date în loc de memorie internă?"
 > - "Cum aș adăuga sumarizare pentru a comprima istoricul vechi al conversației?"
 
-Endpoint-ul de chat fără stare ocolește complet memoria - doar `chatModel.chat(prompt)` ca în începutul rapid. Endpoint-ul cu stare adaugă mesaje în memorie, recuperează istoricul și include acel context la fiecare cerere. Aceeași configurație de model, tipare diferite.
+Endpoint-ul pentru chat fără stare ocolește complet memoria - doar `chatModel.chat(prompt)` ca în ghidul rapid. Endpoint-ul cu stare adaugă mesaje la memorie, recuperează istoricul și include acest context la fiecare cerere. Aceeași configurare de model, modele diferite.
 
-## Deplasează infrastructura Azure OpenAI
+## Implementați infrastructura Azure OpenAI
 
-**Bash:**  
+**Bash:**
 ```bash
 cd 01-introduction
-azd up  # Selectați abonamentul și locația (eastus2 recomandat)
+azd up  # Selectați abonamentul și locația (recomandat eastus2)
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 01-introduction
-azd up  # Selectați abonamentul și locația (eastus2 recomandat)
+azd up  # Selectați abonamentul și locația (se recomandă eastus2)
 ```
-  
-> **Notă:** Dacă întâmpini o eroare de timeout (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), doar rulează din nou `azd up`. Resursele Azure pot fi încă în proces de configurare în fundal, iar reîncercarea permite finalizarea implementării odată ce resursele ajung într-o stare terminală.
 
-Aceasta va:  
-1. Implementa resursa Azure OpenAI cu modelele GPT-5.2 și text-embedding-3-small  
-2. Va genera automat fișierul `.env` în rădăcina proiectului cu credențiale  
-3. Va seta toate variabilele de mediu necesare
+> **Notă:** Dacă întâmpinați o eroare de timeout (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), rulați pur și simplu `azd up` din nou. Resursele Azure pot fi încă în proces de aprovizionare în fundal, iar retry-ul permite finalizarea implementării când resursele ating o stare terminală.
 
-**Ai probleme cu implementarea?** Consultă [README-ul infrastructurii](infra/README.md) pentru depanare detaliată, inclusiv conflicte la numele subdomeniului, pași pentru implementare manuală din Azure Portal și ghid de configurare a modelului.
+Aceasta va:
+1. Implementa resursa Azure OpenAI cu modelele GPT-5.2 și text-embedding-3-small
+2. Va genera automat fișierul `.env` în rădăcina proiectului cu acreditările
+3. Va configura toate variabilele de mediu necesare
 
-**Verifică dacă implementarea a reușit:**
+**Aveți probleme cu implementarea?** Consultați [README-ul infrastructurii](infra/README.md) pentru depanare detaliată, inclusiv conflicte de nume de subdomenii, pași manuali pentru implementare în Azure Portal și ghid pentru configurarea modelului.
 
-**Bash:**  
+**Verificați dacă implementarea a reușit:**
+
+**Bash:**
 ```bash
 cat ../.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 Get-Content ..\.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 ```
-  
-> **Notă:** Comanda `azd up` generează automat fișierul `.env`. Dacă ai nevoie să îl actualizezi ulterior, poți edita manual fișierul `.env` sau îl poți regenera rulând:  
+
+> **Notă:** Comanda `azd up` generează automat fișierul `.env`. Dacă aveți nevoie să-l actualizați mai târziu, puteți edita manual fișierul `.env` sau îl puteți regenera rulând:
 >
-> **Bash:**  
+> **Bash:**
 > ```bash
 > cd ..
 > bash .azd-env.sh
 > ```
-  
-> **PowerShell:**  
+>
+> **PowerShell:**
 > ```powershell
 > cd ..
 > .\.azd-env.ps1
 > ```
-  
-## Rulează aplicația local
 
-**Verifică implementarea:**
 
-Asigură-te că fișierul `.env` există în directorul rădăcină cu credențialele Azure:
+## Rulați aplicația local
 
-**Bash:**  
+**Verificați implementarea:**
+
+Asigurați-vă că fișierul `.env` există în directorul rădăcină și conține acreditările Azure:
+
+**Bash:**
 ```bash
 cat ../.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 Get-Content ..\.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
-**Pornește aplicațiile:**
+
+**Porniți aplicațiile:**
 
 **Opțiunea 1: Folosind Spring Boot Dashboard (Recomandat pentru utilizatorii VS Code)**
 
-Containerul de dezvoltare include extensia Spring Boot Dashboard, care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O poți găsi în bara de activități din stânga VS Code (caută iconița Spring Boot).
+Dev container-ul include extensia Spring Boot Dashboard, care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O puteți găsi în bara de activități din partea stângă a VS Code (căutați pictograma Spring Boot).
 
-Din Spring Boot Dashboard poți:  
-- Vizualiza toate aplicațiile Spring Boot disponibile în spațiul de lucru  
-- Porni/opri aplicațiile cu un singur click  
-- Vizualiza jurnalele aplicațiilor în timp real  
-- Monitoriza statusul aplicațiilor  
+Din Spring Boot Dashboard puteți:
+- Vizualiza toate aplicațiile Spring Boot disponibile în workspace
+- Porni/opri aplicațiile cu un singur click
+- Vizualiza în timp real jurnalele aplicațiilor
+- Monitoriza starea aplicației
 
-Apasă pur și simplu butonul play lângă „introduction” pentru a porni acest modul sau pornește toate modulele simultan.
+Pur și simplu apăsați butonul play de lângă "introduction" pentru a porni acest modul sau porniți toate modulele simultan.
 
 <img src="../../../translated_images/ro/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
 **Opțiunea 2: Folosind scripturi shell**
 
-Pornește toate aplicațiile web (modulele 01-04):
+Porniți toate aplicațiile web (modulele 01-04):
 
-**Bash:**  
+**Bash:**
 ```bash
 cd ..  # Din directorul rădăcină
 ./start-all.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd ..  # Din directorul rădăcină
 .\start-all.ps1
 ```
-  
-Sau pornește doar acest modul:
 
-**Bash:**  
+Sau porniți doar acest modul:
+
+**Bash:**
 ```bash
 cd 01-introduction
 ./start.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 01-introduction
 .\start.ps1
 ```
-  
-Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` din rădăcină și vor genera JAR-urile dacă acestea nu există.
 
-> **Notă:** Dacă preferi să compilzi manual toate modulele înainte de a porni:  
+Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` din rădăcină și vor construi JAR-urile dacă nu există.
+
+> **Notă:** Dacă preferați să construiți manual toate modulele înainte de pornire:
 >
-> **Bash:**  
+> **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-  
-> **PowerShell:**  
+>
+> **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-  
-Accesează http://localhost:8080 în browserul tău.
 
-**Pentru a opri:**
+Deschideți http://localhost:8080 în browser.
 
-**Bash:**  
+**Pentru oprire:**
+
+**Bash:**
 ```bash
-./stop.sh  # Numai acest modul
+./stop.sh  # Doar acest modul
 # Sau
 cd .. && ./stop-all.sh  # Toate modulele
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 .\stop.ps1  # Doar acest modul
 # Sau
 cd ..; .\stop-all.ps1  # Toate modulele
 ```
-  
+
+
 ## Folosirea aplicației
 
 Aplicația oferă o interfață web cu două implementări de chat afișate una lângă alta.
 
 <img src="../../../translated_images/ro/home-screen.121a03206ab910c0.webp" alt="Ecran principal al aplicației" width="800"/>
 
-*Tablou de bord care afișează opțiunile Simple Chat (fără stare) și Conversational Chat (cu stare)*
+*Tabloul de bord afișând opțiunile Chat Simplu (fără stare) și Chat Conversațional (cu stare)*
 
-### Chat fără stare (panoul din stânga)
+### Chat fără stare (Panoul din stânga)
 
-Încearcă asta prima dată. Spune „Numele meu este John” și apoi imediat întreabă „Cum mă numesc?” Modelul nu va ține minte pentru că fiecare mesaj este independent. Aceasta demonstrează problema esențială a integrării simple a modelelor de limbaj – fără context conversațional.
+Încercați mai întâi aici. Spuneți "Mă numesc John" și apoi imediat întrebați "Cum mă numesc?" Modelul nu va ține minte pentru că fiecare mesaj este independent. Acest lucru demonstrează problema de bază a integrării simple a modelelor de limbaj - lipsa contextului conversației.
 
-<img src="../../../translated_images/ro/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Demo chat fără stare" width="800"/>
+<img src="../../../translated_images/ro/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Demo Chat fără stare" width="800"/>
 
-*AI nu îți amintește numele din mesajul anterior*
+*AI nu-și amintește numele dvs. din mesajul anterior*
 
-### Chat cu stare (panoul din dreapta)
+### Conversație cu stare (Panoul din dreapta)
 
-Acum încearcă aceeași secvență aici. Spune „Numele meu este John” și apoi „Cum mă numesc?” De data aceasta își amintește. Diferența este MessageWindowChatMemory – menține istoricul conversației și îl include la fiecare cerere. Așa funcționează AI conversațional în producție.
+Acum încercați aceeași secvență aici. Spuneți "Mă numesc John" și apoi "Cum mă numesc?" De această dată își amintește. Diferența este MessageWindowChatMemory - menține istoricul conversației și îl include cu fiecare cerere. Așa funcționează AI conversațional de producție.
 
-<img src="../../../translated_images/ro/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Demo chat cu stare" width="800"/>
+<img src="../../../translated_images/ro/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Demo Chat cu stare" width="800"/>
 
-*AI își amintește numele tău din conversația anterioară*
+*AI își amintește numele dvs. din conversația anterioară*
 
-Ambele panouri folosesc același model GPT-5.2. Singura diferență este memoria. Astfel, este clar ce aduce memoria aplicației tale și de ce este esențială pentru cazuri reale.
+Ambele panouri folosesc același model GPT-5.2. Singura diferență este memoria. Acest lucru evidențiază clar ce aduce memoria aplicației dvs. și de ce este esențială pentru cazurile reale de utilizare.
 
-## Următorii pași
+## Pașii următori
 
 **Următorul modul:** [02-prompt-engineering - Ingineria prompturilor cu GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigare:** [← Anterior: Modul 00 - Început rapid](../00-quick-start/README.md) | [Înapoi la principal](../README.md) | [Următor: Modul 02 - Ingineria prompturilor →](../02-prompt-engineering/README.md)
+**Navigare:** [← Anterior: Modulul 00 - Quick Start](../00-quick-start/README.md) | [Înapoi la Principal](../README.md) | [Următorul: Modulul 02 - Ingineria Prompturilor →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Declinare de responsabilitate**:
-Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să țineți cont că traducerile automate pot conține erori sau inexactități. Documentul original în limba sa nativă trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un translator uman. Nu ne asumăm responsabilitatea pentru eventualele neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
+**Declinarea responsabilității**:
+Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim să asigurăm acuratețea, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm nicio responsabilitate pentru eventualele neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
