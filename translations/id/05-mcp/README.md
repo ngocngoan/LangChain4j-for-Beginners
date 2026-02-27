@@ -6,43 +6,49 @@
 - [Apa itu MCP?](../../../05-mcp)
 - [Bagaimana MCP Bekerja](../../../05-mcp)
 - [Modul Agentic](../../../05-mcp)
-- [Men jalankan Contoh](../../../05-mcp)
-  - [Persyaratan Awal](../../../05-mcp)
-- [Memulai dengan Cepat](../../../05-mcp)
+- [Menjalankan Contoh](../../../05-mcp)
+  - [Prasyarat](../../../05-mcp)
+- [Mulai Cepat](../../../05-mcp)
   - [Operasi Berkas (Stdio)](../../../05-mcp)
-  - [Agen Supervisor](../../../05-mcp)
-    - [Memahami Output](../../../05-mcp)
+  - [Supervisor Agent](../../../05-mcp)
+    - [Menjalankan Demo](../../../05-mcp)
+    - [Bagaimana Supervisor Bekerja](../../../05-mcp)
     - [Strategi Respons](../../../05-mcp)
+    - [Memahami Output](../../../05-mcp)
     - [Penjelasan Fitur Modul Agentic](../../../05-mcp)
-- [Konsep Kunci](../../../05-mcp)
+- [Konsep Utama](../../../05-mcp)
 - [Selamat!](../../../05-mcp)
-  - [Apa Berikutnya?](../../../05-mcp)
+  - [Apa Selanjutnya?](../../../05-mcp)
 
 ## Apa yang Akan Anda Pelajari
 
-Anda telah membangun AI percakapan, menguasai prompt, memantapkan respons dalam dokumen, dan membuat agen dengan alat. Tetapi semua alat tersebut dibuat khusus untuk aplikasi spesifik Anda. Bagaimana jika Anda dapat memberi AI Anda akses ke ekosistem alat standar yang dapat dibuat dan dibagikan siapa saja? Dalam modul ini, Anda akan belajar cara melakukan ini dengan Model Context Protocol (MCP) dan modul agentic LangChain4j. Kami pertama-tama menampilkan pembaca file MCP sederhana dan kemudian menunjukkan bagaimana itu mudah diintegrasikan ke dalam alur kerja agentic lanjutan menggunakan pola Agen Supervisor.
+Anda telah membangun AI percakapan, menguasai prompt, menghubungkan respons pada dokumen, dan membuat agen dengan alat. Namun semua alat itu dibangun khusus untuk aplikasi spesifik Anda. Bagaimana jika Anda bisa memberi AI akses ke ekosistem alat standar yang dapat dibuat dan dibagikan siapa saja? Dalam modul ini, Anda akan belajar cara melakukan itu dengan Model Context Protocol (MCP) dan modul agentic LangChain4j. Kami tunjukkan pertama pembaca berkas MCP sederhana lalu bagaimana integrasi mudahnya ke alur kerja agentic tingkat lanjut dengan pola Supervisor Agent.
 
 ## Apa itu MCP?
 
-Model Context Protocol (MCP) memberikan tepat itu — cara standar bagi aplikasi AI untuk menemukan dan menggunakan alat eksternal. Alih-alih menulis integrasi khusus untuk setiap sumber data atau layanan, Anda terhubung ke server MCP yang memamerkan kemampuannya dalam format yang konsisten. Agen AI Anda kemudian dapat menemukan dan menggunakan alat-alat tersebut secara otomatis.
+Model Context Protocol (MCP) menyediakan tepat itu - cara standar bagi aplikasi AI untuk menemukan dan menggunakan alat eksternal. Alih-alih menulis integrasi khusus untuk setiap sumber data atau layanan, Anda menghubungkan ke server MCP yang mengekspos kapabilitasnya dalam format konsisten. Agen AI Anda lalu dapat menemukan dan menggunakan alat ini secara otomatis.
 
-<img src="../../../translated_images/id/mcp-comparison.9129a881ecf10ff5.webp" alt="Perbandingan MCP" width="800"/>
+<img src="../../../translated_images/id/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*Sebelum MCP: Integrasi kompleks point-to-point. Setelah MCP: Satu protokol, kemungkinan tak terbatas.*
+*Sebelum MCP: Integrasi titik-ke-titik yang kompleks. Setelah MCP: Satu protokol, kemungkinan tak terbatas.*
 
-MCP memecahkan masalah mendasar dalam pengembangan AI: setiap integrasi bersifat khusus. Ingin mengakses GitHub? Kode khusus. Ingin membaca file? Kode khusus. Ingin kueri database? Kode khusus. Dan tidak ada integrasi ini yang bekerja dengan aplikasi AI lainnya.
+MCP memecahkan masalah mendasar dalam pengembangan AI: setiap integrasi bersifat khusus. Ingin akses GitHub? Kode khusus. Ingin membaca berkas? Kode khusus. Ingin kueri database? Kode khusus. Dan tidak satu pun integrasi ini bekerja dengan aplikasi AI lain.
 
-MCP menstandarisasi ini. Server MCP memamerkan alat dengan deskripsi jelas dan skema parameter. Klien MCP mana pun dapat terhubung, menemukan alat yang tersedia, dan menggunakannya. Bangun sekali, gunakan di mana-mana.
+MCP menstandarkan ini. Server MCP mengekspos alat dengan deskripsi jelas dan skema. Klien MCP manapun bisa terhubung, menemukan alat yang tersedia, dan menggunakannya. Bangun sekali, gunakan dimana saja.
 
-<img src="../../../translated_images/id/mcp-architecture.b3156d787a4ceac9.webp" alt="Arsitektur MCP" width="800"/>
+<img src="../../../translated_images/id/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*Arsitektur Model Context Protocol — penemuan dan eksekusi alat yang distandarisasi*
+*Arsitektur Model Context Protocol - penemuan dan eksekusi alat yang distandarkan*
 
 ## Bagaimana MCP Bekerja
 
+<img src="../../../translated_images/id/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
+
+*Bagaimana MCP bekerja dibalik layar — klien menemukan alat, bertukar pesan JSON-RPC, dan menjalankan operasi melalui lapisan transport.*
+
 **Arsitektur Server-Klien**
 
-MCP menggunakan model klien-server. Server menyediakan alat — membaca file, kueri database, memanggil API. Klien (aplikasi AI Anda) terhubung ke server dan menggunakan alatnya.
+MCP menggunakan model klien-server. Server menyediakan alat - membaca berkas, kueri database, memanggil API. Klien (aplikasi AI Anda) terhubung ke server dan menggunakan alat mereka.
 
 Untuk menggunakan MCP dengan LangChain4j, tambahkan dependensi Maven ini:
 
@@ -56,19 +62,23 @@ Untuk menggunakan MCP dengan LangChain4j, tambahkan dependensi Maven ini:
 
 **Penemuan Alat**
 
-Saat klien Anda terhubung ke server MCP, ia bertanya "Alat apa yang kamu miliki?" Server merespons dengan daftar alat yang tersedia, masing-masing dengan deskripsi dan skema parameter. Agen AI Anda kemudian dapat memutuskan alat mana yang digunakan berdasarkan permintaan pengguna.
+Saat klien Anda terhubung ke server MCP, ia bertanya "Alat apa yang Anda miliki?" Server balas dengan daftar alat yang tersedia, masing-masing dengan deskripsi dan skema parameter. Agen AI Anda dapat memutuskan alat mana yang dipakai berdasarkan permintaan pengguna.
 
-**Mekanisme Transportasi**
+<img src="../../../translated_images/id/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-MCP mendukung berbagai mekanisme transportasi. Modul ini mendemonstrasikan transport Stdio untuk proses lokal:
+*AI menemukan alat yang tersedia saat startup — kini tahu kemampuan apa yang siap dipakai dan dapat memutuskan mana yang digunakan.*
 
-<img src="../../../translated_images/id/transport-mechanisms.2791ba7ee93cf020.webp" alt="Mekanisme Transportasi" width="800"/>
+**Mekanisme Transport**
+
+MCP mendukung berbagai mekanisme transport. Modul ini mendemonstrasikan transport Stdio untuk proses lokal:
+
+<img src="../../../translated_images/id/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
 *Mekanisme transport MCP: HTTP untuk server jarak jauh, Stdio untuk proses lokal*
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Untuk proses lokal. Aplikasi Anda menjalankan server sebagai subprocess dan berkomunikasi melalui input/output standar. Berguna untuk akses sistem berkas atau alat baris perintah.
+Untuk proses lokal. Aplikasi Anda membuat server sebagai proses anak dan berkomunikasi lewat input/output standar. Berguna untuk akses filesystem atau alat baris perintah.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -81,16 +91,20 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
-> **🤖 Coba dengan [GitHub Copilot](https://github.com/features/copilot) Chat:** Buka [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) dan tanyakan:
-> - "Bagaimana cara kerja transportasi Stdio dan kapan saya harus menggunakannya dibanding HTTP?"
-> - "Bagaimana LangChain4j mengelola siklus hidup proses server MCP yang dijalankan?"
-> - "Apa implikasi keamanan memberikan AI akses ke sistem berkas?"
+<img src="../../../translated_images/id/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
+
+*Transport Stdio dalam aksi — aplikasi Anda membuat server MCP sebagai proses anak dan berkomunikasi melalui pipa stdin/stdout.*
+
+> **🤖 Coba dengan [GitHub Copilot](https://github.com/features/copilot) Chat:** Buka [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) dan tanya:
+> - "Bagaimana cara kerja transport Stdio dan kapan saya harus menggunakannya dibanding HTTP?"
+> - "Bagaimana LangChain4j mengelola siklus hidup proses server MCP yang dibuat?"
+> - "Apa implikasi keamanan dari memberi AI akses ke sistem berkas?"
 
 ## Modul Agentic
 
-Sementara MCP menyediakan alat standar, modul **agentic** LangChain4j menyediakan cara deklaratif untuk membangun agen yang mengoordinasikan alat-alat tersebut. Anotasi `@Agent` dan `AgenticServices` memungkinkan Anda mendefinisikan perilaku agen melalui antarmuka daripada kode imperatif.
+Sementara MCP menyediakan alat yang distandarkan, modul **agentic** LangChain4j menyediakan cara deklaratif membangun agen yang mengatur alat tersebut. Anotasi `@Agent` dan `AgenticServices` membiarkan Anda mendefinisikan perilaku agen lewat antarmuka, bukan kode imperatif.
 
-Dalam modul ini, Anda akan mengeksplorasi pola **Agen Supervisor** — pendekatan AI agentic lanjutan dimana agen "supervisor" memutuskan secara dinamis sub-agen mana yang harus dipanggil berdasarkan permintaan pengguna. Kita akan menggabungkan kedua konsep ini dengan memberi salah satu sub-agen kita kemampuan akses file bertenaga MCP.
+Dalam modul ini, Anda akan mengeksplor pola **Supervisor Agent** — pendekatan AI agentic lanjutan di mana agen "supervisor" memutuskan secara dinamis sub-agen mana yang dipanggil berdasarkan permintaan pengguna. Kami gabungkan kedua konsep dengan memberi salah satu sub-agen kemampuan akses berkas bertenaga MCP.
 
 Untuk menggunakan modul agentic, tambahkan dependensi Maven ini:
 
@@ -102,34 +116,34 @@ Untuk menggunakan modul agentic, tambahkan dependensi Maven ini:
 </dependency>
 ```
 
-> **⚠️ Eksperimental:** Modul `langchain4j-agentic` adalah **eksperimental** dan dapat berubah. Cara stabil membangun asisten AI tetap `langchain4j-core` dengan alat khusus (Modul 04).
+> **⚠️ Eksperimental:** Modul `langchain4j-agentic` bersifat **eksperimental** dan bisa berubah. Cara stabil membangun asisten AI tetap menggunakan `langchain4j-core` dengan alat kustom (Modul 04).
 
 ## Menjalankan Contoh
 
-### Persyaratan Awal
+### Prasyarat
 
 - Java 21+, Maven 3.9+
 - Node.js 16+ dan npm (untuk server MCP)
-- Variabel lingkungan dikonfigurasi di file `.env` (dari direktori akar):
-  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (sama dengan Modul 01-04)
+- Variabel lingkungan dikonfigurasi di file `.env` (dari direktori root):
+  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (sama seperti Modul 01-04)
 
-> **Catatan:** Jika Anda belum menyiapkan variabel lingkungan, lihat [Modul 00 - Memulai dengan Cepat](../00-quick-start/README.md) untuk petunjuk, atau salin `.env.example` ke `.env` di direktori akar dan isi nilainya.
+> **Catatan:** Jika Anda belum mengatur variabel lingkungan, lihat [Modul 00 - Mulai Cepat](../00-quick-start/README.md) untuk petunjuk, atau salin `.env.example` ke `.env` di direktori root dan isi nilainya.
 
-## Memulai dengan Cepat
+## Mulai Cepat
 
-**Menggunakan VS Code:** Klik kanan pada file demo mana pun di Explorer dan pilih **"Jalankan Java"**, atau gunakan konfigurasi peluncuran dari panel Jalankan dan Debug (pastikan token Anda sudah ditambahkan ke file `.env` terlebih dahulu).
+**Menggunakan VS Code:** Klik kanan pada berkas demo mana pun di Explorer dan pilih **"Run Java"**, atau gunakan konfigurasi peluncuran dari panel Run and Debug (pastikan Anda sudah menambahkan token Anda ke file `.env` terlebih dahulu).
 
-**Menggunakan Maven:** Alternatifnya, Anda dapat menjalankan dari baris perintah dengan contoh berikut.
+**Menggunakan Maven:** Atau, jalankan dari command line dengan contoh berikut.
 
 ### Operasi Berkas (Stdio)
 
-Ini mendemonstrasikan alat berbasis subprocess lokal.
+Ini mendemonstrasikan alat berbasis proses anak lokal.
 
-**✅ Tidak perlu persyaratan awal** - server MCP dijalankan otomatis.
+**✅ Tidak perlu prasyarat** - server MCP dibuat otomatis.
 
-**Menggunakan Skrip Start (Direkomendasikan):**
+**Menggunakan Skrip Mulai (Direkomendasikan):**
 
-Skrip start otomatis memuat variabel lingkungan dari file `.env` di akar:
+Skrip mulai otomatis memuat variabel lingkungan dari file `.env` root:
 
 **Bash:**
 ```bash
@@ -144,9 +158,9 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
-**Menggunakan VS Code:** Klik kanan pada `StdioTransportDemo.java` dan pilih **"Jalankan Java"** (pastikan file `.env` Anda sudah dikonfigurasi).
+**Menggunakan VS Code:** Klik kanan pada `StdioTransportDemo.java` dan pilih **"Run Java"** (pastikan file `.env` sudah dikonfigurasi).
 
-Aplikasi secara otomatis menjalankan server MCP filesystem dan membaca file lokal. Perhatikan bagaimana pengelolaan subprocess dilakukan untuk Anda.
+Aplikasi membuat server MCP filesystem secara otomatis dan membaca berkas lokal. Perhatikan bagaimana pengelolaan proses anak ditangani untuk Anda.
 
 **Output yang diharapkan:**
 ```
@@ -154,28 +168,27 @@ Assistant response: The file provides an overview of LangChain4j, an open-source
 for integrating Large Language Models (LLMs) into Java applications...
 ```
 
-### Agen Supervisor
+### Supervisor Agent
 
-Pola **Agen Supervisor** adalah bentuk AI agentic yang **fleksibel**. Seorang Supervisor menggunakan LLM untuk secara otomatis memutuskan agen mana yang harus dipanggil berdasarkan permintaan pengguna. Dalam contoh berikut, kita menggabungkan akses file bertenaga MCP dengan agen LLM untuk membuat alur kerja baca file → laporan yang diawasi.
+**Pola Supervisor Agent** adalah bentuk AI agentic yang **fleksibel**. Supervisor menggunakan LLM untuk memutuskan secara mandiri agen mana yang dipanggil berdasarkan permintaan pengguna. Dalam contoh berikut, kami gabungkan akses berkas bertenaga MCP dengan agen LLM untuk membuat alur baca berkas → laporan terawasi.
 
-Dalam demo, `FileAgent` membaca file menggunakan alat filesystem MCP, dan `ReportAgent` menghasilkan laporan terstruktur dengan ringkasan eksekutif (1 kalimat), 3 poin utama, dan rekomendasi. Supervisor mengatur alur ini secara otomatis:
+Dalam demo, `FileAgent` membaca berkas menggunakan alat filesystem MCP, dan `ReportAgent` menghasilkan laporan terstruktur berisi ringkasan eksekutif (1 kalimat), 3 poin kunci, dan rekomendasi. Supervisor mengatur alur ini secara otomatis:
 
-<img src="../../../translated_images/id/agentic.cf84dcda226374e3.webp" alt="Modul Agentic" width="800"/>
+<img src="../../../translated_images/id/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-```
-┌─────────────┐      ┌──────────────┐
-│  FileAgent  │ ───▶ │ ReportAgent  │
-│ (MCP tools) │      │  (pure LLM)  │
-└─────────────┘      └──────────────┘
-   outputKey:           outputKey:
-  'fileContent'         'report'
-```
+*Supervisor menggunakan LLM-nya untuk menentukan agen mana yang dipanggil dan urutannya — tanpa routing yang dikodekan keras.*
 
-Setiap agen menyimpan outputnya dalam **Agentic Scope** (memori bersama), memungkinkan agen berikutnya mengakses hasil sebelumnya. Ini menunjukkan bagaimana alat MCP terintegrasi mulus ke dalam alur kerja agentic — Supervisor tidak perlu tahu *bagaimana* file dibaca, hanya bahwa `FileAgent` bisa melakukannya.
+Berikut alur kerja konkret untuk pipeline file-ke-laporan:
+
+<img src="../../../translated_images/id/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
+
+*FileAgent membaca berkas melalui alat MCP, lalu ReportAgent mengubah konten mentah menjadi laporan terstruktur.*
+
+Setiap agen menyimpan hasilnya di **Agentic Scope** (memori bersama), memungkinkan agen berikutnya mengakses hasil sebelumnya. Ini menunjukkan bagaimana alat MCP terintegrasi mulus ke alur agentic — Supervisor tidak perlu tahu *bagaimana* berkas dibaca, cukup bahwa `FileAgent` bisa melakukannya.
 
 #### Menjalankan Demo
 
-Skrip start otomatis memuat variabel lingkungan dari file `.env` di akar:
+Skrip mulai otomatis memuat variabel lingkungan dari file `.env` root:
 
 **Bash:**
 ```bash
@@ -190,9 +203,9 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
-**Menggunakan VS Code:** Klik kanan pada `SupervisorAgentDemo.java` dan pilih **"Jalankan Java"** (pastikan file `.env` sudah dikonfigurasi).
+**Menggunakan VS Code:** Klik kanan pada `SupervisorAgentDemo.java` dan pilih **"Run Java"** (pastikan `.env` sudah dikonfigurasi).
 
-#### Cara Kerja Supervisor
+#### Bagaimana Supervisor Bekerja
 
 ```java
 // Langkah 1: FileAgent membaca file menggunakan alat MCP
@@ -219,24 +232,30 @@ String response = supervisor.invoke("Read the file at /path/file.txt and generat
 
 #### Strategi Respons
 
-Saat Anda mengonfigurasi `SupervisorAgent`, Anda menentukan bagaimana ia harus merumuskan jawaban akhir kepada pengguna setelah sub-agen menyelesaikan tugas mereka. Strategi yang tersedia adalah:
+Saat Anda mengonfigurasi `SupervisorAgent`, Anda menentukan bagaimana ia merumuskan jawaban akhirnya kepada pengguna setelah sub-agen selesai tugasnya.
+
+<img src="../../../translated_images/id/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
+
+*Tiga strategi untuk bagaimana Supervisor merumuskan respons akhirnya — pilih berdasarkan apakah Anda ingin output agen terakhir, ringkasan sintesis, atau opsi dengan skor terbaik.*
+
+Strategi yang tersedia:
 
 | Strategi | Deskripsi |
 |----------|-------------|
-| **LAST** | Supervisor mengembalikan output dari sub-agen atau alat terakhir yang dipanggil. Ini berguna ketika agen terakhir dalam alur kerja dirancang khusus untuk menghasilkan jawaban lengkap akhir (misal, "Agen Ringkasan" dalam pipeline riset). |
-| **SUMMARY** | Supervisor menggunakan Model Bahasa (LLM) internalnya untuk menyintesis ringkasan seluruh interaksi dan semua output sub-agen, lalu mengembalikan ringkasan tersebut sebagai respons akhir. Ini memberikan jawaban yang bersih dan teragregasi kepada pengguna. |
-| **SCORED** | Sistem menggunakan LLM internal untuk memberi skor pada respons LAST dan SUMMARY terhadap permintaan asli pengguna, mengembalikan output yang mendapat skor lebih tinggi. |
+| **LAST** | Supervisor mengembalikan output dari sub-agen atau alat terakhir yang dipanggil. Berguna jika agen akhir dalam alur kerja memang dirancang menghasilkan jawaban lengkap dan final (misalnya "Summary Agent" dalam pipeline riset). |
+| **SUMMARY** | Supervisor menggunakan Language Model internalnya untuk mensintesis ringkasan dari seluruh interaksi dan semua output sub-agen, lalu mengembalikan ringkasan tersebut sebagai respons akhir. Ini memberikan jawaban teragregasi yang bersih kepada pengguna. |
+| **SCORED** | Sistem menggunakan LLM internal untuk memberi skor pada respons LAST dan SUMMARY terhadap permintaan pengguna asli, kemudian mengembalikan output yang mendapat skor tertinggi. |
 
-Lihat [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) untuk implementasi lengkapnya.
+Lihat [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) untuk implementasi lengkap.
 
-> **🤖 Coba dengan [GitHub Copilot](https://github.com/features/copilot) Chat:** Buka [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) dan tanyakan:
+> **🤖 Coba dengan [GitHub Copilot](https://github.com/features/copilot) Chat:** Buka [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) dan tanya:
 > - "Bagaimana Supervisor memutuskan agen mana yang dipanggil?"
-> - "Apa perbedaan pola Supervisor dan pola alur kerja Sequential?"
-> - "Bagaimana cara saya menyesuaikan perilaku perencanaan Supervisor?"
+> - "Apa perbedaan pola Supervisor dan Sequential workflow?"
+> - "Bagaimana cara saya menyesuaikan perilaku rencana Supervisor?"
 
 #### Memahami Output
 
-Saat Anda menjalankan demo, Anda akan melihat penjelasan terstruktur tentang bagaimana Supervisor mengoordinasikan beberapa agen. Ini arti setiap bagian:
+Saat Anda menjalankan demo, Anda akan melihat panduan terstruktur bagaimana Supervisor mengatur banyak agen. Berikut arti tiap bagian:
 
 ```
 ======================================================================
@@ -247,7 +266,7 @@ This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
 
-**Judul** memperkenalkan konsep alur kerja: pipeline terfokus dari pembacaan file ke pembuatan laporan.
+**Bagian header** memperkenalkan konsep alur kerja: pipeline terfokus dari baca berkas ke pembuatan laporan.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -263,16 +282,16 @@ The Supervisor orchestrates the agents automatically based on the request.
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
 
-**Diagram Alur Kerja** menunjukkan alur data antar agen. Setiap agen memiliki peran spesifik:
-- **FileAgent** membaca file menggunakan alat MCP dan menyimpan konten mentah di `fileContent`
-- **ReportAgent** menggunakan konten tersebut dan menghasilkan laporan terstruktur di `report`
+**Diagram Alur Kerja** menampilkan aliran data antar agen. Setiap agen punya peran spesifik:
+- **FileAgent** membaca berkas dengan alat MCP dan menyimpan konten mentah di `fileContent`
+- **ReportAgent** menggunakan konten itu dan menghasilkan laporan terstruktur di `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
 
-**Permintaan Pengguna** menunjukkan tugas. Supervisor mem-parsing ini dan memutuskan memanggil FileAgent → ReportAgent.
+**Permintaan Pengguna** menunjukkan tugasnya. Supervisor memproses ini dan memutuskan memanggil FileAgent → ReportAgent.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -293,11 +312,11 @@ The Supervisor orchestrates the agents automatically based on the request.
   +-- [OK] ReportAgent (generating structured report) completed
 ```
 
-**Orkestrasi Supervisor** menunjukkan alur 2 langkah yang berjalan:
-1. **FileAgent** membaca file via MCP dan menyimpan konten
-2. **ReportAgent** menerima konten dan membuat laporan terstruktur
+**Orkestrasi Supervisor** menunjukkan alur 2 langkah secara nyata:
+1. **FileAgent** membaca berkas lewat MCP dan menyimpan konten
+2. **ReportAgent** menerima konten lalu membuat laporan terstruktur
 
-Supervisor membuat keputusan ini **secara otonom** berdasarkan permintaan pengguna.
+Supervisor membuat keputusan ini **secara mandiri** berdasarkan permintaan pengguna.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -318,12 +337,16 @@ Recommendations
 
 #### Penjelasan Fitur Modul Agentic
 
-Contoh ini menunjukkan beberapa fitur maju modul agentic. Mari perhatikan Agentic Scope dan Agent Listeners.
+Contoh ini menunjukkan beberapa fitur canggih modul agentic. Mari lihat lebih dekat Agentic Scope dan Agent Listeners.
 
-**Agentic Scope** menunjukkan memori bersama tempat agen menyimpan hasilnya menggunakan `@Agent(outputKey="...")`. Ini memungkinkan:
+**Agentic Scope** menunjukkan memori bersama tempat agen menyimpan hasilnya memakai `@Agent(outputKey="...")`. Ini memungkinkan:
 - Agen berikutnya mengakses output agen sebelumnya
-- Supervisor menyintesis respons akhir
-- Anda memeriksa apa yang dihasilkan setiap agen
+- Supervisor mensintesis respons akhir
+- Anda memeriksa apa yang diproduksi tiap agen
+
+<img src="../../../translated_images/id/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
+
+*Agentic Scope berperan sebagai memori bersama — FileAgent menulis `fileContent`, ReportAgent membacanya dan menulis `report`, dan kode Anda membaca hasil akhirnya.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
@@ -332,10 +355,14 @@ String fileContent = scope.readState("fileContent");  // Data file mentah dari F
 String report = scope.readState("report");            // Laporan terstruktur dari ReportAgent
 ```
 
-**Agent Listeners** memungkinkan pemantauan dan debugging eksekusi agen. Output langkah-demi-langkah yang Anda lihat dalam demo berasal dari AgentListener yang terhubung ke setiap pemanggilan agen:
-- **beforeAgentInvocation** – Dipanggil saat Supervisor memilih agen, memungkinkan Anda melihat agen mana yang dipilih dan alasannya
-- **afterAgentInvocation** – Dipanggil saat agen selesai, menampilkan hasilnya
-- **inheritedBySubagents** – Jika true, listener memantau semua agen dalam hierarki
+**Agent Listeners** memungkinkan pemantauan dan debug eksekusi agen. Output langkah demi langkah yang Anda lihat di demo berasal dari AgentListener yang tersambung ke setiap pemanggilan agen:
+- **beforeAgentInvocation** - Dipanggil ketika Supervisor memilih agen, memungkinkan Anda melihat agen mana yang dipilih dan mengapa  
+- **afterAgentInvocation** - Dipanggil ketika agen selesai, menampilkan hasilnya  
+- **inheritedBySubagents** - Jika true, pendengar memantau semua agen dalam hierarki  
+
+<img src="../../../translated_images/id/agent-listeners.784bfc403c80ea13.webp" alt="Siklus Hidup Pendengar Agen" width="800"/>
+
+*Pendengar Agen tersambung ke siklus hidup eksekusi — memantau saat agen mulai, selesai, atau mengalami kesalahan.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -358,44 +385,61 @@ AgentListener monitor = new AgentListener() {
     }
 };
 ```
-
+  
 Selain pola Supervisor, modul `langchain4j-agentic` menyediakan beberapa pola dan fitur alur kerja yang kuat:
 
-| Pola | Deskripsi | Kasus Penggunaan |
-|---------|-------------|----------|
-| **Sequential** | Menjalankan agen berurutan, output mengalir ke agen berikutnya | Pipeline: riset → analisis → laporan |
-| **Parallel** | Menjalankan agen secara simultan | Tugas independen: cuaca + berita + saham |
-| **Loop** | Mengulangi sampai kondisi terpenuhi | Penilaian kualitas: perbaiki sampai skor ≥ 0,8 |
-| **Conditional** | Mengarahkan berdasarkan kondisi | Klasifikasi → rute ke agen spesialis |
-| **Human-in-the-Loop** | Menambahkan checkpoint manusia | Alur kerja persetujuan, peninjauan konten |
+<img src="../../../translated_images/id/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Pola Alur Kerja Agen" width="800"/>
 
-## Konsep Kunci
+*Lima pola alur kerja untuk mengorkestrasi agen — dari pipeline sederhana berurutan sampai alur kerja persetujuan manusia-dalam-loop.*
 
-Setelah Anda menjelajahi MCP dan modul agentic secara langsung, mari kita ringkas kapan menggunakan masing-masing pendekatan.
+| Pola          | Deskripsi                                  | Kasus Penggunaan                              |
+|---------------|--------------------------------------------|-----------------------------------------------|
+| **Berurutan** | Eksekusi agen secara berurutan, output mengalir ke selanjutnya | Pipeline: riset → analisis → laporan          |
+| **Paralel**   | Jalankan agen secara bersamaan             | Tugas independen: cuaca + berita + saham      |
+| **Loop**      | Iterasi hingga kondisi terpenuhi            | Penilaian kualitas: perbaiki hingga skor ≥ 0.8|
+| **Kondisional** | Rute berdasarkan kondisi                   | Klasifikasi → rute ke agen spesialis          |
+| **Manusia-dalam-Loop** | Tambah titik cek manusia               | Alur kerja persetujuan, tinjauan konten        |
 
-**MCP** ideal saat Anda ingin memanfaatkan ekosistem alat yang sudah ada, membangun alat yang dapat digunakan oleh banyak aplikasi, mengintegrasikan layanan pihak ketiga dengan protokol standar, atau mengganti implementasi alat tanpa mengubah kode.
+## Konsep Utama
 
-**Modul Agentic** terbaik digunakan jika Anda ingin definisi agen deklaratif dengan anotasi `@Agent`, memerlukan orkestrasi alur kerja (sekuensial, loop, paralel), lebih suka desain agen berbasis antarmuka daripada kode imperatif, atau menggabungkan beberapa agen yang berbagi output melalui `outputKey`.
+Sekarang setelah Anda mengeksplorasi MCP dan modul agentic secara langsung, mari kita rangkum kapan menggunakan masing-masing pendekatan.
 
-**Pola Agen Supervisor** menonjol ketika alur kerja tidak dapat diprediksi sebelumnya dan Anda ingin LLM yang memutuskan, ketika Anda memiliki banyak agen khusus yang memerlukan orkestrasi dinamis, saat membangun sistem percakapan yang mengarahkan ke berbagai kapabilitas, atau ketika Anda ingin perilaku agen yang paling fleksibel dan adaptif.
+<img src="../../../translated_images/id/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="Ekosistem MCP" width="800"/>
+
+*MCP menciptakan ekosistem protokol universal — setiap server kompatibel MCP dapat bekerja dengan klien kompatibel MCP mana pun, memungkinkan berbagi alat antar aplikasi.*
+
+**MCP** ideal digunakan ketika Anda ingin memanfaatkan ekosistem alat yang sudah ada, membuat alat yang dapat dibagi oleh beberapa aplikasi, mengintegrasikan layanan pihak ketiga dengan protokol standar, atau mengganti implementasi alat tanpa mengubah kode.
+
+**Modul Agentic** paling cocok ketika Anda ingin definisi agen deklaratif dengan anotasi `@Agent`, membutuhkan orkestrasi alur kerja (berurutan, loop, paralel), lebih suka desain agen berbasis antarmuka daripada kode imperatif, atau menggabungkan beberapa agen yang berbagi output melalui `outputKey`.
+
+**Pola Supervisor Agent** unggul ketika alur kerja tidak dapat diprediksi sebelumnya dan Anda ingin LLM yang menentukan, ketika Anda memiliki beberapa agen khusus yang perlu orkestrasi dinamis, saat membangun sistem percakapan yang mengarahkan ke kemampuan berbeda, atau ketika Anda menginginkan perilaku agen paling fleksibel dan adaptif.
+
+<img src="../../../translated_images/id/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Alat Kustom vs Alat MCP" width="800"/>
+
+*Kapan menggunakan metode @Tool kustom vs alat MCP — alat kustom untuk logika aplikasi spesifik dengan keamanan tipe penuh, alat MCP untuk integrasi standar yang bekerja lintas aplikasi.*
+
 ## Selamat!
 
-Anda telah menyelesaikan kursus LangChain4j untuk Pemula. Anda telah mempelajari:
+<img src="../../../translated_images/id/course-completion.48cd201f60ac7570.webp" alt="Penyelesaian Kursus" width="800"/>
 
-- Cara membangun AI percakapan dengan memori (Modul 01)
-- Pola rekayasa prompt untuk berbagai tugas (Modul 02)
-- Membumikan respons dalam dokumen Anda dengan RAG (Modul 03)
-- Membuat agen AI dasar (asisten) dengan alat khusus (Modul 04)
-- Mengintegrasikan alat standar dengan modul LangChain4j MCP dan Agentic (Modul 05)
+*Perjalanan belajar Anda melalui kelima modul — dari chat dasar sampai sistem agentic bertenaga MCP.*
+
+Anda telah menyelesaikan kursus LangChain4j untuk Pemula. Anda telah belajar:
+
+- Cara membangun AI percakapan dengan memori (Modul 01)  
+- Pola rekayasa prompt untuk berbagai tugas (Modul 02)  
+- Membumikan respons dalam dokumen Anda dengan RAG (Modul 03)  
+- Membuat agen AI dasar (asisten) dengan alat kustom (Modul 04)  
+- Mengintegrasikan alat standar dengan modul LangChain4j MCP dan Agentic (Modul 05)  
 
 ### Apa Selanjutnya?
 
-Setelah menyelesaikan modul, jelajahi [Panduan Pengujian](../docs/TESTING.md) untuk melihat konsep pengujian LangChain4j dalam praktik.
+Setelah menyelesaikan modul, jelajahi [Panduan Pengujian](../docs/TESTING.md) untuk melihat konsep pengujian LangChain4j secara langsung.
 
-**Sumber Resmi:**
-- [Dokumentasi LangChain4j](https://docs.langchain4j.dev/) - Panduan lengkap dan referensi API
-- [GitHub LangChain4j](https://github.com/langchain4j/langchain4j) - Kode sumber dan contoh
-- [Tutorial LangChain4j](https://docs.langchain4j.dev/tutorials/) - Tutorial langkah demi langkah untuk berbagai kasus penggunaan
+**Sumber Daya Resmi:**  
+- [Dokumentasi LangChain4j](https://docs.langchain4j.dev/) - Panduan komprehensif dan referensi API  
+- [GitHub LangChain4j](https://github.com/langchain4j/langchain4j) - Kode sumber dan contoh  
+- [Tutorial LangChain4j](https://docs.langchain4j.dev/tutorials/) - Tutorial langkah demi langkah untuk berbagai kasus  
 
 Terima kasih telah menyelesaikan kursus ini!
 
@@ -406,6 +450,6 @@ Terima kasih telah menyelesaikan kursus ini!
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Penafian**:  
-Dokumen ini telah diterjemahkan menggunakan layanan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Meskipun kami berupaya untuk akurasi, harap diketahui bahwa terjemahan otomatis mungkin mengandung kesalahan atau ketidakakuratan. Dokumen asli dalam bahasa aslinya harus dianggap sebagai sumber yang berwenang. Untuk informasi penting, disarankan menggunakan terjemahan profesional oleh manusia. Kami tidak bertanggung jawab atas kesalahpahaman atau salah tafsir yang timbul dari penggunaan terjemahan ini.
+**Penafian**:
+Dokumen ini telah diterjemahkan menggunakan layanan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Meskipun kami berupaya untuk mencapai akurasi, harap diingat bahwa terjemahan otomatis mungkin mengandung kesalahan atau ketidakakuratan. Dokumen asli dalam bahasa aslinya harus dianggap sebagai sumber yang sahih. Untuk informasi penting, disarankan menggunakan terjemahan profesional oleh manusia. Kami tidak bertanggung jawab atas kesalahpahaman atau salah interpretasi yang timbul dari penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
