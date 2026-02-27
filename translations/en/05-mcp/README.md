@@ -11,8 +11,10 @@
 - [Quick Start](../../../05-mcp)
   - [File Operations (Stdio)](../../../05-mcp)
   - [Supervisor Agent](../../../05-mcp)
-    - [Understanding the Output](../../../05-mcp)
+    - [Running the Demo](../../../05-mcp)
+    - [How the Supervisor Works](../../../05-mcp)
     - [Response Strategies](../../../05-mcp)
+    - [Understanding the Output](../../../05-mcp)
     - [Explanation of Agentic Module Features](../../../05-mcp)
 - [Key Concepts](../../../05-mcp)
 - [Congratulations!](../../../05-mcp)
@@ -40,6 +42,10 @@ MCP standardizes this. An MCP server exposes tools with clear descriptions and s
 
 ## How MCP Works
 
+<img src="../../../translated_images/en/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
+
+*How MCP works under the hood — clients discover tools, exchange JSON-RPC messages, and execute operations through a transport layer.*
+
 **Server-Client Architecture**
 
 MCP uses a client-server model. Servers provide tools - reading files, querying databases, calling APIs. Clients (your AI application) connect to servers and use their tools.
@@ -57,6 +63,10 @@ To use MCP with LangChain4j, add this Maven dependency:
 **Tool Discovery**
 
 When your client connects to an MCP server, it asks "What tools do you have?" The server responds with a list of available tools, each with descriptions and parameter schemas. Your AI agent can then decide which tools to use based on user requests.
+
+<img src="../../../translated_images/en/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
+
+*The AI discovers available tools at startup — it now knows what capabilities are available and can decide which ones to use.*
 
 **Transport Mechanisms**
 
@@ -80,6 +90,10 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .logEvents(false)
     .build();
 ```
+
+<img src="../../../translated_images/en/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
+
+*Stdio transport in action — your application spawns the MCP server as a child process and communicates through stdin/stdout pipes.*
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) and ask:
 > - "How does Stdio transport work and when should I use it vs HTTP?"
@@ -160,16 +174,15 @@ The **Supervisor Agent pattern** is a **flexible** form of agentic AI. A Supervi
 
 In the demo, `FileAgent` reads a file using MCP filesystem tools, and `ReportAgent` generates a structured report with an executive summary (1 sentence), 3 key points, and recommendations. The Supervisor orchestrates this flow automatically:
 
-<img src="../../../translated_images/en/agentic.cf84dcda226374e3.webp" alt="Agentic Module" width="800"/>
+<img src="../../../translated_images/en/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-```
-┌─────────────┐      ┌──────────────┐
-│  FileAgent  │ ───▶ │ ReportAgent  │
-│ (MCP tools) │      │  (pure LLM)  │
-└─────────────┘      └──────────────┘
-   outputKey:           outputKey:
-  'fileContent'         'report'
-```
+*The Supervisor uses its LLM to decide which agents to invoke and in what order — no hardcoded routing needed.*
+
+Here's what the concrete workflow looks like for our file-to-report pipeline:
+
+<img src="../../../translated_images/en/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
+
+*FileAgent reads the file via MCP tools, then ReportAgent transforms the raw content into a structured report.*
 
 Each agent stores its output in the **Agentic Scope** (shared memory), allowing downstream agents to access previous results. This demonstrates how MCP tools integrate seamlessly into agentic workflows — the Supervisor doesn't need to know *how* files are read, only that `FileAgent` can do it.
 
@@ -219,7 +232,13 @@ String response = supervisor.invoke("Read the file at /path/file.txt and generat
 
 #### Response Strategies
 
-When you configure a `SupervisorAgent`, you specify how it should formulate its final answer to the user after the sub-agents have completed their tasks. The available strategies are:
+When you configure a `SupervisorAgent`, you specify how it should formulate its final answer to the user after the sub-agents have completed their tasks.
+
+<img src="../../../translated_images/en/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
+
+*Three strategies for how the Supervisor formulates its final response — choose based on whether you want the last agent's output, a synthesized summary, or the best-scoring option.*
+
+The available strategies are:
 
 | Strategy | Description |
 |----------|-------------|
@@ -325,6 +344,10 @@ The example demonstrates several advanced features of the agentic module. Let's 
 - The Supervisor to synthesize a final response
 - You to inspect what each agent produced
 
+<img src="../../../translated_images/en/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
+
+*Agentic Scope acts as shared memory — FileAgent writes `fileContent`, ReportAgent reads it and writes `report`, and your code reads the final result.*
+
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
@@ -333,9 +356,14 @@ String report = scope.readState("report");            // Structured report from 
 ```
 
 **Agent Listeners** enable monitoring and debugging of agent execution. The step-by-step output you see in the demo comes from an AgentListener that hooks into each agent invocation:
-- **beforeAgentInvocation** - Called when the Supervisor selects an agent, letting you see which agent was chosen and why
-- **afterAgentInvocation** - Called when an agent completes, showing its result
-- **inheritedBySubagents** - When true, the listener monitors all agents in the hierarchy
+
+- **beforeAgentInvocation** - Called when the Supervisor selects an agent, letting you see which agent was chosen and why  
+- **afterAgentInvocation** - Called when an agent completes, showing its result  
+- **inheritedBySubagents** - When true, the listener monitors all agents in the hierarchy  
+
+<img src="../../../translated_images/en/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
+
+*Agent Listeners hook into the execution lifecycle — monitor when agents start, complete, or encounter errors.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -358,8 +386,12 @@ AgentListener monitor = new AgentListener() {
     }
 };
 ```
-
+  
 Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several powerful workflow patterns and features:
+
+<img src="../../../translated_images/en/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
+
+*Five workflow patterns for orchestrating agents — from simple sequential pipelines to human-in-the-loop approval workflows.*
 
 | Pattern | Description | Use Case |
 |---------|-------------|----------|
@@ -373,29 +405,42 @@ Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several
 
 Now that you've explored MCP and the agentic module in action, let's summarize when to use each approach.
 
+<img src="../../../translated_images/en/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
+
+*MCP creates a universal protocol ecosystem — any MCP-compatible server works with any MCP-compatible client, enabling tool sharing across applications.*
+
 **MCP** is ideal when you want to leverage existing tool ecosystems, build tools that multiple applications can share, integrate third-party services with standard protocols, or swap tool implementations without changing code.
 
 **The Agentic Module** works best when you want declarative agent definitions with `@Agent` annotations, need workflow orchestration (sequential, loop, parallel), prefer interface-based agent design over imperative code, or are combining multiple agents that share outputs via `outputKey`.
 
 **The Supervisor Agent pattern** shines when the workflow isn't predictable in advance and you want the LLM to decide, when you have multiple specialized agents that need dynamic orchestration, when building conversational systems that route to different capabilities, or when you want the most flexible, adaptive agent behavior.
+
+<img src="../../../translated_images/en/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
+
+*When to use custom @Tool methods vs MCP tools — custom tools for app-specific logic with full type safety, MCP tools for standardized integrations that work across applications.*
+
 ## Congratulations!
+
+<img src="../../../translated_images/en/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
+
+*Your learning journey through all five modules — from basic chat to MCP-powered agentic systems.*
 
 You've completed the LangChain4j for Beginners course. You've learned:
 
-- How to build conversational AI with memory (Module 01)
-- Prompt engineering patterns for different tasks (Module 02)
-- Grounding responses in your documents with RAG (Module 03)
-- Creating basic AI agents (assistants) with custom tools (Module 04)
-- Integrating standardized tools with the LangChain4j MCP and Agentic modules (Module 05)
+- How to build conversational AI with memory (Module 01)  
+- Prompt engineering patterns for different tasks (Module 02)  
+- Grounding responses in your documents with RAG (Module 03)  
+- Creating basic AI agents (assistants) with custom tools (Module 04)  
+- Integrating standardized tools with the LangChain4j MCP and Agentic modules (Module 05)  
 
 ### What's Next?
 
 After completing the modules, explore the [Testing Guide](../docs/TESTING.md) to see LangChain4j testing concepts in action.
 
-**Official Resources:**
-- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Comprehensive guides and API reference
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for various use cases
+**Official Resources:**  
+- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Comprehensive guides and API reference  
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples  
+- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for various use cases  
 
 Thank you for completing this course!
 

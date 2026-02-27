@@ -2,59 +2,65 @@
 
 ## Table des Matières
 
-- [Ce que vous apprendrez](../../../04-tools)
+- [Ce que vous allez apprendre](../../../04-tools)
 - [Prérequis](../../../04-tools)
-- [Comprendre les agents IA avec outils](../../../04-tools)
+- [Comprendre les Agents IA avec Outils](../../../04-tools)
 - [Comment fonctionne l'appel d'outil](../../../04-tools)
   - [Définitions des outils](../../../04-tools)
   - [Prise de décision](../../../04-tools)
   - [Exécution](../../../04-tools)
   - [Génération de la réponse](../../../04-tools)
+  - [Architecture : Auto-wiring Spring Boot](../../../04-tools)
 - [Chaînage d'outils](../../../04-tools)
 - [Lancer l'application](../../../04-tools)
-- [Utiliser l'application](../../../04-tools)
-  - [Essayer une utilisation simple d'outil](../../../04-tools)
-  - [Tester le chaînage d'outils](../../../04-tools)
-  - [Voir le flux de la conversation](../../../04-tools)
-  - [Expérimenter avec différentes requêtes](../../../04-tools)
+- [Utilisation de l'application](../../../04-tools)
+  - [Essayez une utilisation simple des outils](../../../04-tools)
+  - [Testez le chaînage d'outils](../../../04-tools)
+  - [Voir le déroulement de la conversation](../../../04-tools)
+  - [Expérimentez avec différentes requêtes](../../../04-tools)
 - [Concepts clés](../../../04-tools)
-  - [Pattern ReAct (Raisonner et Agir)](../../../04-tools)
+  - [Pattern ReAct (Reasoning and Acting)](../../../04-tools)
   - [Les descriptions d'outils sont importantes](../../../04-tools)
-  - [Gestion de session](../../../04-tools)
+  - [Gestion des sessions](../../../04-tools)
   - [Gestion des erreurs](../../../04-tools)
 - [Outils disponibles](../../../04-tools)
-- [Quand utiliser les agents basés sur les outils](../../../04-tools)
-- [Étapes suivantes](../../../04-tools)
+- [Quand utiliser des agents basés sur des outils](../../../04-tools)
+- [Outils vs RAG](../../../04-tools)
+- [Prochaines étapes](../../../04-tools)
 
-## Ce que vous apprendrez
+## Ce que vous allez apprendre
 
-Jusqu'à présent, vous avez appris comment avoir des conversations avec l'IA, structurer efficacement les prompts et ancrer les réponses dans vos documents. Mais il existe encore une limitation fondamentale : les modèles de langue ne peuvent générer que du texte. Ils ne peuvent pas vérifier la météo, effectuer des calculs, interroger des bases de données ou interagir avec des systèmes externes.
+Jusqu'ici, vous avez appris à dialoguer avec l'IA, structurer efficacement les prompts et ancrer les réponses dans vos documents. Mais il y a encore une limitation fondamentale : les modèles de langage ne peuvent générer que du texte. Ils ne peuvent pas vérifier la météo, effectuer des calculs, interroger des bases de données ou interagir avec des systèmes externes.
 
-Les outils changent cela. En donnant au modèle accès à des fonctions qu'il peut appeler, vous le transformez d'un générateur de texte en un agent capable d'agir. Le modèle décide quand il a besoin d'un outil, quel outil utiliser et quels paramètres passer. Votre code exécute la fonction et renvoie le résultat. Le modèle intègre ce résultat dans sa réponse.
+Les outils changent cela. En donnant au modèle accès à des fonctions qu'il peut appeler, vous le transformez d'un générateur de texte en un agent capable d'agir. Le modèle décide quand il a besoin d'un outil, quel outil utiliser et quels paramètres passer. Votre code exécute la fonction et retourne le résultat. Le modèle intègre ce résultat dans sa réponse.
 
 ## Prérequis
 
-- Module 01 complété (ressources Azure OpenAI déployées)
-- Fichier `.env` dans le répertoire racine avec les identifiants Azure (créé par `azd up` dans le Module 01)
+- Module 01 complété (ressources Azure OpenAI déployées)  
+- Fichier `.env` à la racine avec les identifiants Azure (créé par `azd up` dans le Module 01)
 
-> **Note :** Si vous n'avez pas encore complété le Module 01, suivez d'abord les instructions de déploiement de ce module.
+> **Note :** Si vous n'avez pas encore complété le Module 01, suivez d'abord les instructions de déploiement là-bas.
 
-## Comprendre les agents IA avec outils
+## Comprendre les Agents IA avec Outils
 
-> **📝 Note :** Le terme « agents » dans ce module fait référence à des assistants IA enrichis de capacités d'appel d'outils. Cela diffère des patterns **Agentic AI** (agents autonomes avec planification, mémoire et raisonnement multi-étapes) que nous aborderons dans [Module 05 : MCP](../05-mcp/README.md).
+> **📝 Note :** Le terme « agents » dans ce module fait référence aux assistants IA enrichis de capacités d'appel d'outils. Cela diffère des patterns **Agentic AI** (agents autonomes avec planification, mémoire et raisonnement multi-étapes) que nous aborderons dans [Module 05 : MCP](../05-mcp/README.md).
 
-Un agent IA avec outils suit un pattern de raisonnement et d'action (ReAct) :
+Sans outils, un modèle de langage ne peut générer que du texte issu de ses données d'entraînement. Demandez-lui la météo actuelle, il doit deviner. Donnez-lui des outils, il peut appeler une API météo, effectuer des calculs ou interroger une base de données — puis intégrer ces résultats réels dans sa réponse.
 
-1. L'utilisateur pose une question
-2. L'agent réfléchit à ce qu'il doit savoir
-3. L'agent décide s'il a besoin d'un outil pour répondre
-4. Si oui, l'agent appelle l'outil approprié avec les bons paramètres
-5. L'outil s'exécute et renvoie des données
-6. L'agent intègre le résultat et fournit la réponse finale
+<img src="../../../translated_images/fr/what-are-tools.724e468fc4de64da.webp" alt="Sans outils vs Avec outils" width="800"/>
 
-<img src="../../../translated_images/fr/react-pattern.86aafd3796f3fd13.webp" alt="Pattern ReAct" width="800"/>
+*Sans outils, le modèle ne fait que deviner — avec des outils, il peut appeler des API, effectuer des calculs et fournir des données en temps réel.*
 
-*Le pattern ReAct – comment les agents IA alternent entre raisonnement et action pour résoudre des problèmes*
+Un agent IA avec outils suit un pattern **Reasoning and Acting (ReAct)**. Le modèle ne se contente pas de répondre — il réfléchit à ce dont il a besoin, agit en appelant un outil, observe le résultat, puis décide s'il doit agir à nouveau ou fournir la réponse finale :
+
+1. **Reasonner** — L'agent analyse la question de l'utilisateur et détermine les informations dont il a besoin  
+2. **Agir** — L'agent choisit le bon outil, génère les paramètres corrects et l'appelle  
+3. **Observer** — L'agent reçoit la sortie de l'outil et évalue le résultat  
+4. **Répéter ou répondre** — Si plus de données sont nécessaires, l'agent boucle ; sinon, il compose une réponse en langage naturel  
+
+<img src="../../../translated_images/fr/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Pattern ReAct" width="800"/>
+
+*Le cycle ReAct — l'agent raisonne sur ce qu'il doit faire, agit en appelant un outil, observe le résultat et boucle jusqu'à pouvoir donner la réponse finale.*
 
 Cela se fait automatiquement. Vous définissez les outils et leurs descriptions. Le modèle gère la prise de décision sur quand et comment les utiliser.
 
@@ -64,7 +70,7 @@ Cela se fait automatiquement. Vous définissez les outils et leurs descriptions.
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Vous définissez des fonctions avec des descriptions claires et des spécifications de paramètres. Le modèle voit ces descriptions dans son prompt système et comprend ce que fait chaque outil.
+Vous définissez des fonctions avec des descriptions claires et des spécifications de paramètres. Le modèle voit ces descriptions dans son prompt système et comprend ce que chaque outil fait.
 
 ```java
 @Component
@@ -83,235 +89,276 @@ public interface Assistant {
 }
 
 // L'assistant est automatiquement configuré par Spring Boot avec :
-// - Le bean ChatModel
+// - Bean ChatModel
 // - Toutes les méthodes @Tool des classes @Component
 // - ChatMemoryProvider pour la gestion de session
 ```
+  
+Le diagramme ci-dessous détaille chaque annotation et montre comment chaque élément aide l'IA à comprendre quand appeler l'outil et quels arguments passer :
 
-> **🤖 Essayez avec [GitHub Copilot](https://github.com/features/copilot) Chat :** Ouvrez [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) et demandez :
-> - « Comment intégrer une API météo réelle comme OpenWeatherMap au lieu des données simulées ? »
-> - « Qu’est-ce qui fait une bonne description d’outil qui aide l’IA à l’utiliser correctement ? »
-> - « Comment gérer les erreurs API et les limites de taux dans les implémentations d’outil ? »
+<img src="../../../translated_images/fr/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomie des définitions d'outils" width="800"/>
+
+*Anatomie d'une définition d'outil — @Tool indique à l'IA quand l'utiliser, @P décrit chaque paramètre, et @AiService assemble tout au démarrage.*
+
+> **🤖 Essayez avec le Chat [GitHub Copilot](https://github.com/features/copilot) :** Ouvrez [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) et demandez :  
+> - "Comment intégrer une vraie API météo comme OpenWeatherMap au lieu de données factices ?"  
+> - "Qu'est-ce qui fait une bonne description d'outil pour aider l'IA à bien l'utiliser ?"  
+> - "Comment gérer les erreurs d'API et les limites de requêtes dans les implémentations d'outils ?"
 
 ### Prise de décision
 
-Quand un utilisateur demande « Quel temps fait-il à Seattle ? », le modèle reconnaît qu'il a besoin de l’outil météo. Il génère un appel de fonction avec le paramètre location défini à « Seattle ».
+Quand un utilisateur demande « Quelle est la météo à Seattle ? », le modèle ne choisit pas un outil au hasard. Il compare l'intention de l'utilisateur à chaque description d'outil à sa disposition, attribue un score de pertinence à chacun, et sélectionne la meilleure correspondance. Il génère alors un appel de fonction structuré avec les bons paramètres — dans ce cas, `location` à `"Seattle"`.
+
+Si aucun outil ne correspond à la requête, le modèle répond à partir de ses propres connaissances. Si plusieurs outils conviennent, il choisit le plus spécifique.
+
+<img src="../../../translated_images/fr/decision-making.409cd562e5cecc49.webp" alt="Comment l'IA décide quel outil utiliser" width="800"/>
+
+*Le modèle évalue chaque outil disponible par rapport à l'intention de l'utilisateur et choisit la meilleure correspondance — d'où l'importance d'écrire des descriptions d'outils claires et précises.*
 
 ### Exécution
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot injecte automatiquement l’interface déclarative `@AiService` avec tous les outils enregistrés, et LangChain4j exécute automatiquement les appels d’outils.
+Spring Boot injecte automatiquement l'interface déclarative `@AiService` avec tous les outils enregistrés, et LangChain4j exécute les appels d'outils automatiquement. En coulisses, un appel d'outil complet suit six étapes — depuis la question en langage naturel de l'utilisateur jusqu'à une réponse également en langage naturel :
 
-> **🤖 Essayez avec [GitHub Copilot](https://github.com/features/copilot) Chat :** Ouvrez [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) et demandez :
-> - « Comment fonctionne le pattern ReAct et pourquoi est-il efficace pour les agents IA ? »
-> - « Comment l’agent décide quel outil utiliser et dans quel ordre ? »
-> - « Que se passe-t-il si une exécution d’outil échoue – comment gérer les erreurs de façon robuste ? »
+<img src="../../../translated_images/fr/tool-calling-flow.8601941b0ca041e6.webp" alt="Flux d'appel d'outil" width="800"/>
+
+*Le flux bout en bout — l'utilisateur pose une question, le modèle sélectionne un outil, LangChain4j l'exécute, et le modèle intègre le résultat dans une réponse naturelle.*
+
+> **🤖 Essayez avec le Chat [GitHub Copilot](https://github.com/features/copilot) :** Ouvrez [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) et demandez :  
+> - "Comment fonctionne le pattern ReAct et pourquoi est-il efficace pour les agents IA ?"  
+> - "Comment l'agent décide quel outil utiliser et dans quel ordre ?"  
+> - "Que se passe-t-il si l'exécution d'un outil échoue - comment gérer les erreurs de manière robuste ?"
 
 ### Génération de la réponse
 
-Le modèle reçoit les données météo et les formate en une réponse en langage naturel pour l’utilisateur.
+Le modèle reçoit les données météo et les formate en une réponse en langage naturel pour l'utilisateur.
 
-### Pourquoi utiliser les services IA déclaratifs ?
+### Architecture : Auto-wiring Spring Boot
 
-Ce module utilise l’intégration Spring Boot de LangChain4j avec des interfaces déclaratives `@AiService` :
+Ce module utilise l’intégration LangChain4j avec Spring Boot via des interfaces déclaratives `@AiService`. Au démarrage, Spring Boot découvre chaque `@Component` contenant des méthodes `@Tool`, votre bean `ChatModel` et le `ChatMemoryProvider` — puis les connecte tous ensemble dans une seule interface `Assistant` sans aucun code boilerplate.
 
-- **Injection automatique Spring Boot** – ChatModel et outils injectés automatiquement
-- **Pattern @MemoryId** – Gestion automatique de la mémoire basée sur la session
-- **Instance unique** – Assistant créé une fois et réutilisé pour de meilleures performances
-- **Exécution typée** – Méthodes Java appelées directement avec conversion de types
-- **Orchestration multi-tours** – Gère automatiquement le chaînage d’outils
-- **Zéro code répétitif** – Pas d’appel manuel à AiServices.builder() ni de HashMap mémoire
+<img src="../../../translated_images/fr/spring-boot-wiring.151321795988b04e.webp" alt="Architecture Auto-wiring Spring Boot" width="800"/>
 
-Les approches alternatives (manuelles avec `AiServices.builder()`) nécessitent plus de code et ne bénéficient pas de l’intégration Spring Boot.
+*L'interface @AiService relie le ChatModel, les composants outils et le fournisseur de mémoire — Spring Boot gère automatiquement tout le câblage.*
+
+Les principaux avantages de cette approche :
+
+- **Auto-wiring Spring Boot** — Injection automatique de ChatModel et des outils  
+- **Pattern @MemoryId** — Gestion automatique de la mémoire basée sur la session  
+- **Instance unique** — Assistant créé une fois et réutilisé pour de meilleures performances  
+- **Exécution typée** — Appels directs aux méthodes Java avec conversion de types  
+- **Orchestration multi-tours** — Gère automatiquement le chaînage d'outils  
+- **Zéro boilerplate** — Pas d'appels manuels à `AiServices.builder()` ni HashMap mémoire  
+
+Les approches alternatives (usage manuel de `AiServices.builder()`) nécessitent plus de code et ne bénéficient pas des avantages de l’intégration Spring Boot.
 
 ## Chaînage d'outils
 
-**Chaînage d’outils** – L’IA peut appeler plusieurs outils en séquence. Demandez « Quel temps fait-il à Seattle et dois-je prendre un parapluie ? » et regardez comment il enchaîne `getCurrentWeather` avec un raisonnement sur les vêtements de pluie.
+**Chaînage d'outils** — La vraie puissance des agents basés sur les outils apparaît lorsqu'une seule question nécessite plusieurs outils. Demandez « Quelle est la météo à Seattle en Fahrenheit ? » et l'agent enchaîne automatiquement deux outils : il appelle d'abord `getCurrentWeather` pour obtenir la température en Celsius, puis transmet cette valeur à `celsiusToFahrenheit` pour la conversion — tout cela en un seul tour de conversation.
+
+<img src="../../../translated_images/fr/tool-chaining-example.538203e73d09dd82.webp" alt="Exemple de chaînage d'outils" width="800"/>
+
+*Chaînage d'outils en action — l'agent appelle d'abord getCurrentWeather, puis transmet le résultat Celsius à celsiusToFahrenheit, et fournit une réponse combinée.*
+
+Voici à quoi cela ressemble dans l’application en fonctionnement — l'agent enchaîne deux appels d'outils en un seul tour de conversation :
 
 <a href="images/tool-chaining.png"><img src="../../../translated_images/fr/tool-chaining.3b25af01967d6f7b.webp" alt="Chaînage d'outils" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Appels d’outils séquentiels – la sortie d’un outil alimente la décision suivante*
+*Sortie réelle de l'application — l'agent enchaîne automatiquement getCurrentWeather → celsiusToFahrenheit en un seul tour.*
 
-**Échecs gracieux** – Demandez la météo d’une ville qui n’est pas dans les données simulées. L’outil renvoie un message d'erreur, et l’IA explique qu’elle ne peut pas aider. Les outils échouent en toute sécurité.
+**Échecs maîtrisés** — Demandez la météo dans une ville qui n’est pas dans les données factices. L’outil renvoie un message d’erreur, et l’IA explique qu’elle ne peut pas aider au lieu de planter. Les outils échouent en toute sécurité.
 
-Cela se produit en un seul tour de conversation. L’agent orchestre plusieurs appels d’outils de façon autonome.
+<img src="../../../translated_images/fr/error-handling-flow.9a330ffc8ee0475c.webp" alt="Flux de gestion des erreurs" width="800"/>
+
+*Quand un outil échoue, l'agent intercepte l'erreur et répond avec une explication utile au lieu de planter.*
+
+Cela se produit en un seul tour de conversation. L’agent orchestre plusieurs appels d’outils de manière autonome.
 
 ## Lancer l'application
 
 **Vérifiez le déploiement :**
 
-Assurez-vous que le fichier `.env` existe dans le répertoire racine avec les identifiants Azure (créé lors du Module 01) :
+Assurez-vous que le fichier `.env` existe à la racine avec les identifiants Azure (créé pendant le Module 01) :  
 ```bash
 cat ../.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
+  
+**Démarrez l'application :**
 
-**Démarrez l’application :**
+> **Note :** Si vous avez déjà démarré toutes les applications avec `./start-all.sh` du Module 01, ce module tourne déjà sur le port 8084. Vous pouvez sauter les commandes de démarrage ci-dessous et aller directement sur http://localhost:8084.
 
-> **Note :** Si vous avez déjà démarré toutes les applications avec `./start-all.sh` depuis le Module 01, ce module fonctionne déjà sur le port 8084. Vous pouvez sauter les commandes de démarrage ci-dessous et accéder directement à http://localhost:8084.
+**Option 1 : Utiliser le Spring Boot Dashboard (recommandé pour les utilisateurs VS Code)**
 
-**Option 1 : Utiliser le tableau de bord Spring Boot (recommandé pour les utilisateurs VS Code)**
+Le container de développement inclut l'extension Spring Boot Dashboard, qui offre une interface visuelle pour gérer toutes les applications Spring Boot. Vous la trouverez dans la barre d'activité à gauche de VS Code (icône Spring Boot).
 
-Le conteneur de développement inclut l’extension Spring Boot Dashboard, qui fournit une interface visuelle pour gérer toutes les applications Spring Boot. Vous la trouverez dans la barre d’activité sur le côté gauche de VS Code (cherchez l’icône Spring Boot).
+Depuis le Spring Boot Dashboard, vous pouvez :  
+- Voir toutes les applications Spring Boot disponibles dans l’espace de travail  
+- Démarrer/arrêter les applications d’un clic  
+- Consulter les logs d’application en temps réel  
+- Surveiller l’état des applications  
 
-Depuis le tableau de bord Spring Boot, vous pouvez :
-- Voir toutes les applications Spring Boot disponibles dans l’espace de travail
-- Démarrer/arrêter les applications d’un simple clic
-- Afficher les journaux d’application en temps réel
-- Surveiller le statut des applications
+Cliquez simplement sur le bouton lecture à côté de "tools" pour démarrer ce module, ou démarrez tous les modules en une fois.
 
-Cliquez simplement sur le bouton de lecture à côté de « tools » pour démarrer ce module, ou lancez tous les modules en une fois.
-
-<img src="../../../translated_images/fr/dashboard.9b519b1a1bc1b30a.webp" alt="Tableau de bord Spring Boot" width="400"/>
+<img src="../../../translated_images/fr/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
 **Option 2 : Utiliser des scripts shell**
 
 Démarrez toutes les applications web (modules 01-04) :
 
-**Bash :**
+**Bash :**  
 ```bash
 cd ..  # Depuis le répertoire racine
 ./start-all.sh
 ```
-
-**PowerShell :**
+  
+**PowerShell :**  
 ```powershell
-cd ..  # À partir du répertoire racine
+cd ..  # Depuis le répertoire racine
 .\start-all.ps1
 ```
+  
+Ou démarrez uniquement ce module :
 
-Ou démarrez juste ce module :
-
-**Bash :**
+**Bash :**  
 ```bash
 cd 04-tools
 ./start.sh
 ```
-
-**PowerShell :**
+  
+**PowerShell :**  
 ```powershell
 cd 04-tools
 .\start.ps1
 ```
+  
+Les deux scripts chargent automatiquement les variables d’environnement depuis le fichier `.env` racine et construiront les JARs s’ils n’existent pas.
 
-Les deux scripts chargent automatiquement les variables d’environnement depuis le fichier `.env` racine et compileront les JARs s’ils n’existent pas.
-
-> **Note :** Si vous préférez construire manuellement tous les modules avant de démarrer :
->
-> **Bash :**
+> **Note :** Si vous préférez construire manuellement tous les modules avant de démarrer :  
+>  
+> **Bash :**  
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
->
-> **PowerShell :**
+  
+> **PowerShell :**  
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-
+  
 Ouvrez http://localhost:8084 dans votre navigateur.
 
 **Pour arrêter :**
 
-**Bash :**
+**Bash :**  
 ```bash
-./stop.sh  # Seulement ce module
+./stop.sh  # Ce module seulement
 # Ou
 cd .. && ./stop-all.sh  # Tous les modules
 ```
-
-**PowerShell :**
+  
+**PowerShell :**  
 ```powershell
-.\stop.ps1  # Ce module seulement
+.\stop.ps1  # Seulement ce module
 # Ou
 cd ..; .\stop-all.ps1  # Tous les modules
 ```
+  
+## Utilisation de l'application
 
-## Utiliser l'application
+L'application fournit une interface web où vous pouvez interagir avec un agent IA ayant accès aux outils météo et conversion de température.
 
-L’application propose une interface web où vous pouvez interagir avec un agent IA ayant accès à des outils météo et de conversion de température.
+<a href="images/tools-homepage.png"><img src="../../../translated_images/fr/tools-homepage.4b4cd8b2717f9621.webp" alt="Interface des outils Agent IA" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-<a href="images/tools-homepage.png"><img src="../../../translated_images/fr/tools-homepage.4b4cd8b2717f9621.webp" alt="Interface des outils de l’agent IA" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+*Interface des outils Agent IA - exemples rapides et interface de chat pour interagir avec les outils*
 
-*Interface des outils de l’agent IA – exemples rapides et interface de chat pour interagir avec les outils*
+### Essayez une utilisation simple des outils
+Commencez par une demande simple : « Convertir 100 degrés Fahrenheit en Celsius ». L'agent reconnaît qu'il a besoin de l'outil de conversion de température, l'appelle avec les bons paramètres et renvoie le résultat. Remarquez à quel point cela semble naturel — vous n'avez pas spécifié quel outil utiliser ni comment l'appeler.
 
-### Essayer une utilisation simple d'outil
+### Tester l’enchaînement des outils
 
-Commencez par une requête simple : « Convertis 100 degrés Fahrenheit en Celsius ». L’agent reconnaît qu’il a besoin de l’outil de conversion de température, l’appelle avec les bons paramètres, et renvoie le résultat. Remarquez comme c’est naturel – vous n’avez pas spécifié quel outil utiliser ni comment l’appeler.
+Essayez maintenant quelque chose de plus complexe : « Quel temps fait-il à Seattle et convertis-le en Fahrenheit ? » Observez comment l'agent procède en étapes. Il récupère d'abord la météo (qui retourne en Celsius), reconnaît qu'il doit convertir en Fahrenheit, appelle l'outil de conversion, puis combine les deux résultats en une seule réponse.
 
-### Tester le chaînage d'outils
+### Voir le déroulement de la conversation
 
-Essayez maintenant quelque chose de plus complexe : « Quel temps fait-il à Seattle et convertis-le en Fahrenheit ? » Regardez l’agent procéder étape par étape. Il récupère d’abord la météo (en Celsius), reconnaît qu’il doit convertir en Fahrenheit, appelle l’outil de conversion, puis combine les deux résultats dans une même réponse.
+L'interface de chat conserve l'historique des conversations, vous permettant d’avoir des échanges à plusieurs tours. Vous pouvez voir toutes les requêtes et réponses précédentes, ce qui facilite le suivi de la conversation et la compréhension de la manière dont l'agent construit le contexte au fil des échanges multiples.
 
-### Voir le flux de la conversation
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/fr/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation avec plusieurs appels d’outils" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-L’interface de chat conserve l’historique des conversations, vous permettant d’avoir des interactions multiples. Vous pouvez voir toutes les requêtes et réponses précédentes, ce qui facilite le suivi de la conversation et la compréhension de la construction contextuelle sur plusieurs échanges.
+*Conversation multi-tours montrant de simples conversions, recherches météo et enchaînement d’outils*
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/fr/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation avec appels multiples d’outils" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+### Expérimentez avec différentes requêtes
 
-*Conversation multi-tours montrant conversions simples, recherches météo et chaînage d’outils*
-
-### Expérimenter avec différentes requêtes
-
-Essayez diverses combinaisons :
+Essayez différentes combinaisons :
 - Recherches météo : « Quel temps fait-il à Tokyo ? »
-- Conversions de température : « Quel est 25 °C en Kelvin ? »
-- Requêtes combinées : « Vérifie la météo à Paris et dis-moi si elle est au-dessus de 20 °C »
+- Conversions de température : « Quel est 25°C en Kelvin ? »
+- Requêtes combinées : « Vérifie la météo à Paris et dis-moi s’il fait plus de 20°C »
 
-Remarquez comment l’agent interprète le langage naturel et le mappe aux appels d’outils appropriés.
+Remarquez comment l'agent interprète le langage naturel et le traduit en appels d’outils appropriés.
 
 ## Concepts clés
 
-### Pattern ReAct (Raisonner et Agir)
+### Modèle ReAct (Raisonnement et Action)
 
-L’agent alterne entre raisonnement (décider quoi faire) et action (utiliser les outils). Ce pattern permet une résolution autonome de problèmes plutôt que de simplement répondre aux instructions.
+L'agent alterne entre raisonnement (décider quoi faire) et action (utiliser des outils). Ce modèle permet une résolution de problèmes autonome plutôt que de simplement répondre à des instructions.
 
-### Les descriptions d'outils sont importantes
+### Les descriptions d’outils sont importantes
 
-La qualité des descriptions de vos outils affecte directement la façon dont l’agent les utilise. Des descriptions claires et spécifiques aident le modèle à comprendre quand et comment appeler chaque outil.
+La qualité des descriptions de vos outils influence directement la capacité de l’agent à les utiliser. Des descriptions claires et spécifiques aident le modèle à comprendre quand et comment appeler chaque outil.
 
-### Gestion de session
+### Gestion des sessions
 
-L’annotation `@MemoryId` active une gestion automatique de la mémoire basée sur la session. Chaque ID de session obtient sa propre instance de `ChatMemory` gérée par le bean `ChatMemoryProvider`, éliminant ainsi la nécessité d’un suivi manuel de la mémoire.
+L’annotation `@MemoryId` permet une gestion automatique de la mémoire basée sur la session. Chaque identifiant de session reçoit sa propre instance de `ChatMemory`, gérée par le bean `ChatMemoryProvider`, ce qui permet à plusieurs utilisateurs d’interagir avec l’agent simultanément sans que leurs conversations ne se mélangent.
+
+<img src="../../../translated_images/fr/session-management.91ad819c6c89c400.webp" alt="Gestion de session avec @MemoryId" width="800"/>
+
+*Chaque ID de session correspond à un historique de conversation isolé — les utilisateurs ne voient jamais les messages des autres.*
 
 ### Gestion des erreurs
 
-Les outils peuvent échouer – les API peuvent expirer, les paramètres être invalides, les services externes tomber en panne. Les agents en production nécessitent une gestion d’erreurs afin que le modèle puisse expliquer les problèmes ou tenter des alternatives.
+Les outils peuvent échouer — des API peuvent expirer, des paramètres être invalides, ou des services externes tomber en panne. Les agents en production ont besoin de gestion d’erreurs pour que le modèle puisse expliquer les problèmes ou essayer des alternatives au lieu de faire planter toute l’application. Lorsqu’un outil lance une exception, LangChain4j la capture et transmet le message d’erreur au modèle, qui peut alors expliquer le problème en langage naturel.
 
 ## Outils disponibles
 
-**Outils météo** (données simulées pour démonstration) :
-- Obtenir la météo actuelle d’un lieu
-- Obtenir les prévisions sur plusieurs jours
+Le schéma ci-dessous montre le large écosystème d’outils que vous pouvez construire. Ce module démontre des outils météo et de température, mais le même modèle `@Tool` fonctionne pour n’importe quelle méthode Java — des requêtes en base de données au traitement de paiements.
 
-**Outils de conversion de température** :
-- Celsius vers Fahrenheit
-- Fahrenheit vers Celsius
-- Celsius vers Kelvin
-- Kelvin vers Celsius
-- Fahrenheit vers Kelvin
-- Kelvin vers Fahrenheit
+<img src="../../../translated_images/fr/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Écosystème des outils" width="800"/>
 
-Ce sont des exemples simples, mais le pattern s’étend à toute fonction : requêtes de base de données, appels API, calculs, opérations de fichiers ou commandes système.
+*Toute méthode Java annotée avec @Tool devient disponible pour l’IA — le modèle s’étend aux bases de données, APIs, emails, opérations sur fichiers, et plus.*
 
-## Quand utiliser les agents basés sur les outils
+## Quand utiliser des agents basés sur des outils
+
+<img src="../../../translated_images/fr/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Quand utiliser des outils" width="800"/>
+
+*Un guide rapide — les outils servent pour des données en temps réel, calculs et actions ; la connaissance générale et les tâches créatives n’en ont pas besoin.*
 
 **Utilisez des outils lorsque :**
-- La réponse nécessite des données en temps réel (météo, cours boursiers, inventaire)
-- Vous devez effectuer des calculs au-delà de la simple arithmétique
-- Accès à des bases de données ou API
-- Réalisation d’actions (envoi d’emails, création de tickets, mise à jour d’enregistrements)
-- Combinaison de sources de données multiples
+- La réponse exige des données en temps réel (météo, cours boursiers, inventaire)
+- Vous devez réaliser des calculs plus complexes que des mathématiques simples
+- Accéder à des bases de données ou des APIs
+- Exécuter des actions (envoyer des emails, créer des tickets, mettre à jour des enregistrements)
+- Combiner plusieurs sources de données
 
 **N’utilisez pas d’outils lorsque :**
-- Les questions peuvent être répondues avec des connaissances générales
+- Les questions peuvent être répondues grâce à des connaissances générales
 - La réponse est purement conversationnelle
-- La latence de l’outil rendrait l’expérience trop lente
+- La latence des outils rendrait l’expérience trop lente
+
+## Outils vs RAG
+
+Les modules 03 et 04 étendent tous deux les capacités de l’IA, mais d’une manière fondamentalement différente. Le RAG donne au modèle accès à la **connaissance** via la récupération de documents. Les outils donnent au modèle la capacité d’effectuer des **actions** en appelant des fonctions.
+
+<img src="../../../translated_images/fr/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Comparaison Outils vs RAG" width="800"/>
+
+*Le RAG récupère des informations dans des documents statiques — les outils exécutent des actions et récupèrent des données dynamiques et en temps réel. Beaucoup de systèmes de production combinent les deux.*
+
+En pratique, de nombreux systèmes de production combinent les deux approches : le RAG pour ancrer les réponses dans votre documentation, et les outils pour récupérer des données en direct ou effectuer des opérations.
 
 ## Étapes suivantes
 
-**Module suivant :** [05-mcp - Protocole de Contexte de Modèle (MCP)](../05-mcp/README.md)
+**Module suivant :** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
 
 ---
 
@@ -320,6 +367,6 @@ Ce sont des exemples simples, mais le pattern s’étend à toute fonction : req
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Avis de non-responsabilité** :  
-Ce document a été traduit à l'aide du service de traduction IA [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d'assurer l'exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des imprécisions. Le document original dans sa langue d'origine doit être considéré comme la source faisant foi. Pour les informations sensibles, il est recommandé de recourir à une traduction professionnelle effectuée par un humain. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l'utilisation de cette traduction.
+**Avertissement** :  
+Ce document a été traduit à l'aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d'assurer l'exactitude, veuillez noter que les traductions automatisées peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue native doit être considéré comme la source faisant autorité. Pour des informations critiques, une traduction professionnelle réalisée par un humain est recommandée. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l'utilisation de cette traduction.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

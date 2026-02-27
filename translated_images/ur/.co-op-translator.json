@@ -5,12 +5,6 @@
     "source_file": "images/LangChain4j.png",
     "language_code": "ur"
   },
-  "agentic.cf84dcda226374e3.webp": {
-    "original_hash": "4fd1d85d67263a3ecf91134778403eaa",
-    "translation_date": "2026-01-16T08:39:36+00:00",
-    "source_file": "05-mcp/images/agentic.png",
-    "language_code": "ur"
-  },
   "architecture.eedc993a1c576839.webp": {
     "original_hash": "add139926cd5d568e3ba2c38eb32312b",
     "translation_date": "2026-01-16T08:34:31+00:00",
@@ -267,12 +261,6 @@
     "original_hash": "34b9bdfdfaafb04fdcf1452cfd981205",
     "translation_date": "2026-01-16T08:40:38+00:00",
     "source_file": "docs/images/rag-testing.png",
-    "language_code": "ur"
-  },
-  "react-pattern.86aafd3796f3fd13.webp": {
-    "original_hash": "945d85c7691a81bab0cb1dc4bd9cdc7f",
-    "translation_date": "2026-01-16T08:39:59+00:00",
-    "source_file": "04-tools/images/react-pattern.png",
     "language_code": "ur"
   },
   "reasoning-control.5cf85f0fc1d0c1f3.webp": {

@@ -13,7 +13,7 @@
   - [1. Basic Chat](../../../00-quick-start)
   - [2. Prompt Patterns](../../../00-quick-start)
   - [3. Function Calling](../../../00-quick-start)
-  - [4. Document Q&A (RAG)](../../../00-quick-start)
+  - [4. Document Q&A (Easy RAG)](../../../00-quick-start)
   - [5. Responsible AI](../../../00-quick-start)
 - [What Each Example Shows](../../../00-quick-start)
 - [Next Steps](../../../00-quick-start)
@@ -35,7 +35,7 @@ The "chain" in LangChain refers to chaining together multiple components - you m
 
 We'll use three core components:
 
-**ChatLanguageModel** - The interface for AI model interactions. Call `model.chat("prompt")` and get a response string. We use `OpenAiOfficialChatModel` which works with OpenAI-compatible endpoints like GitHub Models.
+**ChatModel** - The interface for AI model interactions. Call `model.chat("prompt")` and get a response string. We use `OpenAiOfficialChatModel` which works with OpenAI-compatible endpoints like GitHub Models.
 
 **AiServices** - Creates type-safe AI service interfaces. Define methods, annotate them with `@Tool`, and LangChain4j handles the orchestration. The AI automatically calls your Java methods when needed.
 
@@ -47,7 +47,7 @@ We'll use three core components:
 
 ## LangChain4j Dependencies
 
-This quick start uses two Maven dependencies in the [`pom.xml`](../../../00-quick-start/pom.xml):
+This quick start uses three Maven dependencies in the [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -61,9 +61,17 @@ This quick start uses two Maven dependencies in the [`pom.xml`](../../../00-quic
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
+
+<!-- Easy RAG: automatic splitting, embedding, and retrieval -->
+<dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
+</dependency>
 ```
 
 The `langchain4j-open-ai-official` module provides the `OpenAiOfficialChatModel` class that connects to OpenAI-compatible APIs. GitHub Models uses the same API format, so no special adapter is needed - just point the base URL to `https://models.github.ai/inference`.
+
+The `langchain4j-easy-rag` module provides automatic document splitting, embedding, and retrieval so you can build RAG applications without manually configuring each step.
 
 ## Prerequisites
 
@@ -163,7 +171,7 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.To
 
 AI automatically calls your Java methods when needed.
 
-### 4. Document Q&A (RAG)
+### 4. Document Q&A (Easy RAG)
 
 **Bash:**
 ```bash
@@ -175,7 +183,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Ask questions about content in `document.txt`.
+Ask questions about your documents using Easy RAG with automatic embedding and retrieval.
 
 ### 5. Responsible AI
 
@@ -198,7 +206,7 @@ See how AI safety filters block harmful content.
 Start here to see LangChain4j at its simplest. You'll create an `OpenAiOfficialChatModel`, send a prompt with `.chat()`, and get back a response. This demonstrates the foundation: how to initialize models with custom endpoints and API keys. Once you understand this pattern, everything else builds on it.
 
 ```java
-ChatLanguageModel model = OpenAiOfficialChatModel.builder()
+OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
     .baseUrl("https://models.github.ai/inference")
     .apiKey(System.getenv("GITHUB_TOKEN"))
     .modelName("gpt-4.1-nano")
@@ -249,7 +257,11 @@ public double add(double a, double b) {
     return a + b;
 }
 
-MathAssistant assistant = AiServices.create(MathAssistant.class, model);
+MathAssistant assistant = AiServices.builder(MathAssistant.class)
+    .chatModel(model)
+    .tools(new Calculator())
+    .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+    .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
@@ -259,26 +271,29 @@ String response = assistant.chat("What is 25 plus 17?");
 > - "What happens if a tool throws an exception - how should I handle errors?"
 > - "How would I integrate a real API instead of this calculator example?"
 
-**Document Q&A (RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Document Q&A (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Here you'll see the foundation of RAG (retrieval-augmented generation). Instead of relying on the model's training data, you load content from [`document.txt`](../../../00-quick-start/document.txt) and include it in the prompt. The AI answers based on your document, not its general knowledge. This is the first step toward building systems that can work with your own data.
+Here you'll see RAG (retrieval-augmented generation) using LangChain4j's "Easy RAG" approach. Documents are loaded, automatically split and embedded into an in-memory store, then a content retriever supplies relevant chunks to the AI at query time. The AI answers based on your documents, not its general knowledge.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("document.txt");
-String content = document.text();
+Document document = loadDocument(Paths.get("document.txt"));
 
-String prompt = "Based on this document: " + content + 
-                "\nQuestion: What is the main topic?";
-String response = model.chat(prompt);
+InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
+
+Assistant assistant = AiServices.builder(Assistant.class)
+        .chatModel(chatModel)
+        .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+        .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore))
+        .build();
+
+String answer = assistant.chat("What is the main topic?");
 ```
-
-> **Note:** This simple approach loads the entire document into the prompt. For large files (>10KB), you'll exceed context limits. Module 03 covers chunking and vector search for production RAG systems.
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) and ask:
 > - "How does RAG prevent AI hallucinations compared to using the model's training data?"
-> - "What's the difference between this simple approach and using vector embeddings for retrieval?"
+> - "What's the difference between this easy approach and a custom RAG pipeline?"
 > - "How would I scale this to handle multiple documents or larger knowledge bases?"
-> - "What are best practices for structuring the prompt to ensure the AI uses only the provided context?"
 
 **Responsible AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
@@ -325,10 +340,10 @@ class DangerousContentGuardrail implements InputGuardrail {
 **Cause**: Maven needs to download all project dependencies (Spring Boot, LangChain4j libraries, Azure SDKs, etc.) on the first build.
 
 **Solution**: This is normal behavior. Subsequent builds will be much faster as dependencies are cached locally. Download time depends on your network speed.
+
 ### PowerShell Maven Command Syntax
 
 **Issue**: Maven commands fail with error `Unknown lifecycle phase ".mainClass=..."`
-
 **Cause**: PowerShell interprets `=` as a variable assignment operator, breaking Maven property syntax
 
 **Solution**: Use the stop-parsing operator `--%` before the Maven command:
