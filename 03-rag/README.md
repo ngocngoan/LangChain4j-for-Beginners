@@ -28,7 +28,9 @@
 
 ## Video Walkthrough
 
-Watch this live session that explains how to get started with this module: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
