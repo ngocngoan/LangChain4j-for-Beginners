@@ -1,76 +1,81 @@
 # Module 01: Bắt Đầu với LangChain4j
 
-## Mục Lục
+## Mục lục
 
-- [Bạn Sẽ Học Được Gì](../../../01-introduction)
-- [Các Yêu Cầu Tiên Quyết](../../../01-introduction)
+- [Video Hướng Dẫn](../../../01-introduction)
+- [Bạn Sẽ Học Gì](../../../01-introduction)
+- [Yêu Cầu Trước](../../../01-introduction)
 - [Hiểu Vấn Đề Cốt Lõi](../../../01-introduction)
-- [Hiểu về Token](../../../01-introduction)
+- [Hiểu Về Token](../../../01-introduction)
 - [Cách Bộ Nhớ Hoạt Động](../../../01-introduction)
-- [Cách Đây Sử Dụng LangChain4j](../../../01-introduction)
+- [Cách Sử Dụng LangChain4j](../../../01-introduction)
 - [Triển Khai Hạ Tầng Azure OpenAI](../../../01-introduction)
 - [Chạy Ứng Dụng Cục Bộ](../../../01-introduction)
 - [Sử Dụng Ứng Dụng](../../../01-introduction)
-  - [Chat Không Bộ Nhớ (Bảng Bên Trái)](../../../01-introduction)
-  - [Chat Có Bộ Nhớ (Bảng Bên Phải)](../../../01-introduction)
-- [Các Bước Tiếp Theo](../../../01-introduction)
+  - [Chat Không Bộ Nhớ (Bảng Điều Khiển Bên Trái)](../../../01-introduction)
+  - [Chat Có Bộ Nhớ (Bảng Điều Khiển Bên Phải)](../../../01-introduction)
+- [Bước Tiếp Theo](../../../01-introduction)
 
-## Bạn Sẽ Học Được Gì
+## Video Hướng Dẫn
 
-Nếu bạn đã hoàn thành phần bắt đầu nhanh, bạn đã thấy cách gửi yêu cầu và nhận phản hồi. Đó là nền tảng, nhưng các ứng dụng thực tế cần nhiều hơn thế. Module này sẽ dạy bạn cách xây dựng AI hội thoại nhớ ngữ cảnh và duy trì trạng thái - sự khác biệt giữa một bản demo một lần và một ứng dụng sẵn sàng sản xuất.
+Xem buổi trực tiếp giải thích cách bắt đầu với module này: [Bắt Đầu với LangChain4j - Buổi Trực Tiếp](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
-Chúng ta sẽ sử dụng GPT-5.2 của Azure OpenAI trong suốt hướng dẫn này vì khả năng suy luận nâng cao giúp làm rõ hành vi của các mẫu khác nhau. Khi bạn thêm bộ nhớ, bạn sẽ thấy rõ sự khác biệt. Điều này giúp dễ hiểu hơn về vai trò của mỗi thành phần trong ứng dụng của bạn.
+## Bạn Sẽ Học Gì
+
+Nếu bạn đã hoàn thành phần khởi động nhanh, bạn đã thấy cách gửi đề bài và nhận phản hồi. Đó là nền tảng, nhưng ứng dụng thực sự cần nhiều hơn thế. Module này dạy bạn cách xây dựng AI hội thoại nhớ ngữ cảnh và duy trì trạng thái - điểm khác biệt giữa demo một lần và ứng dụng sẵn sàng cho sản xuất.
+
+Chúng ta sẽ dùng GPT-5.2 của Azure OpenAI xuyên suốt hướng dẫn này vì khả năng suy luận nâng cao giúp làm rõ hành vi của các mẫu khác nhau. Khi thêm bộ nhớ, bạn sẽ thấy khác biệt rõ ràng. Điều này giúp dễ hiểu hơn về những gì từng thành phần mang lại cho ứng dụng của bạn.
 
 Bạn sẽ xây dựng một ứng dụng minh họa cả hai mẫu:
 
-**Chat Không Bộ Nhớ** - Mỗi yêu cầu độc lập. Mô hình không nhớ các tin nhắn trước. Đây là mẫu bạn đã dùng trong phần bắt đầu nhanh.
+**Chat Không Bộ Nhớ** - Mỗi yêu cầu độc lập. Mô hình không nhớ tin nhắn trước. Đây là mẫu bạn sử dụng trong phần khởi động nhanh.
 
-**Cuộc Hội Thoại Có Bộ Nhớ** - Mỗi yêu cầu bao gồm lịch sử hội thoại. Mô hình duy trì ngữ cảnh qua nhiều lượt trò chuyện. Đây là điều các ứng dụng sản xuất cần.
+**Hội Thoại Có Bộ Nhớ** - Mỗi yêu cầu bao gồm lịch sử hội thoại. Mô hình duy trì ngữ cảnh qua nhiều lượt. Đây là điều ứng dụng sản xuất cần.
 
-## Các Yêu Cầu Tiên Quyết
+## Yêu Cầu Trước
 
-- Tài khoản Azure với quyền truy cập Azure OpenAI
+- Tài khoản Azure có quyền truy cập Azure OpenAI
 - Java 21, Maven 3.9+
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Lưu ý:** Java, Maven, Azure CLI và Azure Developer CLI (azd) đã được cài sẵn trong devcontainer cung cấp.
+> **Lưu ý:** Java, Maven, Azure CLI và Azure Developer CLI (azd) đã được cài đặt sẵn trong devcontainer cung cấp.
 
-> **Lưu ý:** Module này sử dụng GPT-5.2 trên Azure OpenAI. Việc triển khai được cấu hình tự động qua `azd up` - không chỉnh sửa tên mô hình trong mã.
+> **Lưu ý:** Module này dùng GPT-5.2 trên Azure OpenAI. Việc triển khai được cấu hình tự động qua `azd up` - không sửa tên mô hình trong code.
 
 ## Hiểu Vấn Đề Cốt Lõi
 
-Các mô hình ngôn ngữ không có trạng thái. Mỗi cuộc gọi API độc lập. Nếu bạn gửi "Tên tôi là John" rồi hỏi "Tên tôi là gì?", mô hình sẽ không biết bạn vừa giới thiệu tên. Nó xử lý mỗi yêu cầu như là cuộc trò chuyện đầu tiên bạn từng có.
+Mô hình ngôn ngữ không có trạng thái. Mỗi cuộc gọi API độc lập. Nếu bạn gửi "My name is John" rồi hỏi "Tôi tên gì?", mô hình không biết bạn vừa giới thiệu tên. Nó xử lý mỗi yêu cầu như thể đó là cuộc hội thoại đầu tiên bạn từng có.
 
-Điều này ổn cho những câu hỏi đơn giản nhưng không dùng được cho ứng dụng thực tế. Bot hỗ trợ khách hàng cần nhớ những gì bạn nói. Trợ lý cá nhân cần ngữ cảnh. Bất cứ cuộc hội thoại đa lượt nào cũng cần bộ nhớ.
+Điều này ổn cho Q&A đơn giản nhưng vô dụng với ứng dụng thật. Bot chăm sóc khách hàng cần nhớ bạn đã nói gì. Trợ lý cá nhân cần ngữ cảnh. Mọi hội thoại nhiều lượt đều cần bộ nhớ.
 
 <img src="../../../translated_images/vi/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-*Sự khác biệt giữa hội thoại không trạng thái (gọi độc lập) và có trạng thái (có nhận thức ngữ cảnh)*
+*Sự khác biệt giữa hội thoại không trạng thái (gọi độc lập) và có trạng thái (nhận biết ngữ cảnh)*
 
-## Hiểu về Token
+## Hiểu Về Token
 
-Trước khi đi sâu vào hội thoại, bạn cần hiểu token - đơn vị cơ bản của văn bản mà mô hình ngôn ngữ xử lý:
+Trước khi vào hội thoại, bạn cần hiểu token - đơn vị cơ bản của văn bản mà mô hình ngôn ngữ xử lý:
 
 <img src="../../../translated_images/vi/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-*Ví dụ cách văn bản được chia thành các token - "I love AI!" trở thành 4 đơn vị xử lý riêng biệt*
+*Ví dụ về cách văn bản được tách thành token - "I love AI!" thành 4 đơn vị xử lý riêng biệt*
 
-Token là cách các mô hình AI đo lường và xử lý văn bản. Từ, dấu câu, thậm chí khoảng trắng cũng có thể là token. Mô hình của bạn có giới hạn số token có thể xử lý cùng lúc (400,000 với GPT-5.2, gồm tối đa 272,000 token đầu vào và 128,000 token đầu ra). Hiểu token giúp bạn quản lý độ dài hội thoại và chi phí.
+Token là cách mô hình AI đo lường và xử lý văn bản. Từ, dấu câu và cả khoảng trắng cũng có thể là token. Mô hình của bạn giới hạn số token nó có thể xử lý cùng lúc (400,000 cho GPT-5.2, tối đa 272,000 token đầu vào và 128,000 token đầu ra). Hiểu token giúp bạn quản lý độ dài hội thoại và chi phí.
 
 ## Cách Bộ Nhớ Hoạt Động
 
-Bộ nhớ chat giải quyết vấn đề không trạng thái bằng cách duy trì lịch sử hội thoại. Trước khi gửi yêu cầu tới mô hình, khung làm việc sẽ thêm vào các tin nhắn trước đó có liên quan. Khi bạn hỏi "Tên tôi là gì?", hệ thống thực sự gửi toàn bộ lịch sử cuộc trò chuyện, cho phép mô hình thấy bạn đã nói "Tên tôi là John" trước đó.
+Bộ nhớ chat giải quyết vấn đề không trạng thái bằng cách duy trì lịch sử hội thoại. Trước khi gửi yêu cầu đến mô hình, framework thêm vào các tin nhắn trước có liên quan. Khi bạn hỏi "Tôi tên gì?", hệ thống thực sự gửi toàn bộ lịch sử hội thoại để mô hình thấy bạn đã nói "My name is John" trước đó.
 
-LangChain4j cung cấp các triển khai bộ nhớ xử lý việc này tự động. Bạn chọn số tin nhắn cần giữ và khung tự quản lý cửa sổ ngữ cảnh.
+LangChain4j cung cấp các triển khai bộ nhớ tự động xử lý việc này. Bạn chọn số tin nhắn giữ lại và framework quản lý ngữ cảnh.
 
 <img src="../../../translated_images/vi/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory duy trì cửa sổ trượt các tin nhắn gần đây, tự động loại bỏ các tin nhắn cũ*
+*MessageWindowChatMemory duy trì cửa sổ trượt các tin nhắn gần đây, tự động loại bỏ tin nhắn cũ*
 
-## Cách Đây Sử Dụng LangChain4j
+## Cách Sử Dụng LangChain4j
 
-Module này mở rộng phần bắt đầu nhanh bằng cách tích hợp Spring Boot và thêm bộ nhớ hội thoại. Các thành phần kết hợp như sau:
+Module này mở rộng phần khởi động nhanh bằng cách tích hợp Spring Boot và thêm bộ nhớ hội thoại. Cách các phần kết nối:
 
 **Phụ thuộc** - Thêm hai thư viện LangChain4j:
 
@@ -84,8 +89,8 @@ Module này mở rộng phần bắt đầu nhanh bằng cách tích hợp Sprin
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
 ```
-  
-**Mô Hình Chat** - Cấu hình Azure OpenAI dưới dạng bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+
+**Mô hình Chat** - Cấu hình Azure OpenAI làm Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -99,10 +104,10 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
             .build();
 }
 ```
-  
-Trình xây dựng đọc thông tin đăng nhập từ biến môi trường được thiết lập bởi `azd up`. Việc đặt `baseUrl` tới endpoint Azure của bạn khiến client OpenAI làm việc cùng Azure OpenAI.
 
-**Bộ Nhớ Hội Thoại** - Theo dõi lịch sử chat với MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+Builder đọc thông tin đăng nhập từ biến môi trường do `azd up` đặt. Cài đặt `baseUrl` trỏ đến endpoint Azure của bạn làm client OpenAI hoạt động với Azure OpenAI.
+
+**Bộ nhớ Hội Thoại** - Theo dõi lịch sử chat với MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -114,95 +119,94 @@ memory.add(UserMessage.from("What's my name?"));
 AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
-  
-Tạo bộ nhớ với `withMaxMessages(10)` để giữ 10 tin nhắn cuối. Thêm tin nhắn người dùng và AI bằng lớp đóng gói kiểu `UserMessage.from(text)` và `AiMessage.from(text)`. Lấy lại lịch sử với `memory.messages()` và gửi cho mô hình. Dịch vụ lưu trữ bộ nhớ riêng cho từng ID cuộc hội thoại, cho phép nhiều người dùng chat cùng lúc.
+
+Tạo bộ nhớ với `withMaxMessages(10)` giữ 10 tin nhắn gần nhất. Thêm tin nhắn người dùng và AI dạng typed wrapper: `UserMessage.from(text)` và `AiMessage.from(text)`. Lấy lịch sử bằng `memory.messages()` và gửi tới mô hình. Dịch vụ lưu các phiên bản bộ nhớ riêng theo conversation ID, cho phép nhiều người dùng chat cùng lúc.
 
 > **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) và hỏi:
-> - "MessageWindowChatMemory quyết định loại tin nhắn nào khi cửa sổ đầy bằng cách nào?"
-> - "Tôi có thể cài bộ nhớ tùy chỉnh dùng cơ sở dữ liệu thay vì trong bộ nhớ không?"
-> - "Làm sao để thêm tóm tắt để nén lịch sử hội thoại cũ?"
+> - "MessageWindowChatMemory quyết định bỏ tin nhắn nào khi cửa sổ đầy bằng cách nào?"
+> - "Tôi có thể triển khai lưu bộ nhớ tùy chỉnh sử dụng cơ sở dữ liệu thay vì bộ nhớ trong không?"
+> - "Làm thế nào để tôi thêm tóm tắt nén lịch sử hội thoại cũ?"
 
-Điểm cuối chat không trạng thái bỏ qua bộ nhớ hoàn toàn - chỉ `chatModel.chat(prompt)` như phần bắt đầu nhanh. Điểm cuối có trạng thái thêm tin nhắn vào bộ nhớ, lấy lịch sử, và bao gồm ngữ cảnh đó trong mỗi yêu cầu. Cấu hình mô hình giống nhau, mẫu dùng khác nhau.
+Điểm cuối chat không bộ nhớ bỏ qua hoàn toàn - chỉ `chatModel.chat(prompt)` như phần khởi động nhanh. Điểm cuối có trạng thái thêm tin nhắn vào bộ nhớ, lấy lịch sử và đính kèm ngữ cảnh mỗi yêu cầu. Cấu hình mô hình giống nhau, mẫu khác nhau.
 
 ## Triển Khai Hạ Tầng Azure OpenAI
 
-**Bash:**  
+**Bash:**
 ```bash
 cd 01-introduction
 azd up  # Chọn đăng ký và vị trí (khuyến nghị eastus2)
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 01-introduction
-azd up  # Chọn đăng ký và vị trí (khuyến nghị eastus2)
+azd up  # Chọn đăng ký và vị trí (gợi ý eastus2)
 ```
-  
-> **Lưu ý:** Nếu gặp lỗi hết giờ (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), chỉ cần chạy lại `azd up`. Các tài nguyên Azure có thể vẫn đang được thiết lập nền, việc thử lại cho phép triển khai hoàn thành khi tài nguyên ở trạng thái cuối.
+
+> **Lưu ý:** Nếu gặp lỗi hết thời gian chờ (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), chỉ cần chạy lại `azd up`. Tài nguyên Azure có thể vẫn đang triển khai nền, và thử lại cho phép triển khai hoàn tất khi tài nguyên đạt trạng thái cuối.
 
 Việc này sẽ:
-1. Triển khai tài nguyên Azure OpenAI với các mô hình GPT-5.2 và text-embedding-3-small  
-2. Tự động tạo file `.env` trong thư mục gốc dự án với thông tin đăng nhập  
-3. Thiết lập tất cả biến môi trường cần thiết  
+1. Triển khai tài nguyên Azure OpenAI với GPT-5.2 và các mô hình text-embedding-3-small
+2. Tự động tạo file `.env` trong thư mục gốc dự án với thông tin đăng nhập
+3. Thiết lập tất cả biến môi trường cần thiết
 
-**Gặp sự cố triển khai?** Xem [README Hạ Tầng](infra/README.md) để biết giải pháp chi tiết, bao gồm trùng tên miền phụ, các bước triển khai thủ công trên Azure Portal, và hướng dẫn cấu hình mô hình.
+**Gặp sự cố triển khai?** Xem [README hạ tầng](infra/README.md) để biết chi tiết xử lý sự cố bao gồm xung đột tên miền phụ, các bước triển khai thủ công qua Azure Portal và hướng dẫn cấu hình mô hình.
 
-**Xác minh việc triển khai thành công:**
+**Xác nhận triển khai thành công:**
 
-**Bash:**  
+**Bash:**
 ```bash
 cat ../.env  # Nên hiển thị AZURE_OPENAI_ENDPOINT, API_KEY, v.v.
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 Get-Content ..\.env  # Nên hiển thị AZURE_OPENAI_ENDPOINT, API_KEY, v.v.
 ```
-  
-> **Lưu ý:** Lệnh `azd up` tự động tạo file `.env`. Nếu cần cập nhật sau, bạn có thể chỉnh sửa file `.env` thủ công hoặc tạo lại bằng lệnh:
+
+> **Lưu ý:** Lệnh `azd up` tự động tạo file `.env`. Nếu cần cập nhật sau, bạn có thể chỉnh file `.env` thủ công hoặc tạo lại bằng cách chạy:
 >
-> **Bash:**  
+> **Bash:**
 > ```bash
 > cd ..
 > bash .azd-env.sh
 > ```
 >
-> **PowerShell:**  
+> **PowerShell:**
 > ```powershell
 > cd ..
 > .\.azd-env.ps1
 > ```
 
-
 ## Chạy Ứng Dụng Cục Bộ
 
-**Xác minh triển khai:**
+**Kiểm tra triển khai:**
 
 Đảm bảo file `.env` tồn tại trong thư mục gốc với thông tin đăng nhập Azure:
 
-**Bash:**  
+**Bash:**
 ```bash
 cat ../.env  # Nên hiển thị AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 Get-Content ..\.env  # Nên hiển thị AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
+
 **Khởi động ứng dụng:**
 
 **Lựa chọn 1: Dùng Spring Boot Dashboard (Khuyến nghị cho người dùng VS Code)**
 
-Dev container bao gồm tiện ích mở rộng Spring Boot Dashboard cung cấp giao diện trực quan quản lý tất cả ứng dụng Spring Boot. Bạn có thể tìm thấy nó trong Thanh Hoạt Động ở bên trái VS Code (biểu tượng Spring Boot).
+Dev container có tiện ích mở rộng Spring Boot Dashboard cung cấp giao diện trực quan quản lý tất cả ứng dụng Spring Boot. Bạn tìm thấy nó ở Thanh Hoạt Động bên trái VS Code (biểu tượng Spring Boot).
 
 Từ Spring Boot Dashboard, bạn có thể:
-- Xem tất cả ứng dụng Spring Boot có trong workspace  
-- Khởi động/dừng ứng dụng chỉ với một cú nhấp  
-- Xem nhật ký ứng dụng theo thời gian thực  
-- Giám sát trạng thái ứng dụng  
+- Xem tất cả ứng dụng Spring Boot trong workspace
+- Khởi động/dừng ứng dụng chỉ với một cú nhấp
+- Xem nhật ký ứng dụng theo thời gian thực
+- Giám sát trạng thái ứng dụng
 
-Chỉ cần nhấn nút chạy bên cạnh "introduction" để khởi động module này, hoặc khởi động tất cả các module cùng lúc.
+Chỉ cần bấm nút chạy bên cạnh "introduction" để khởi động module này, hoặc khởi động mọi module cùng lúc.
 
 <img src="../../../translated_images/vi/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
@@ -210,104 +214,103 @@ Chỉ cần nhấn nút chạy bên cạnh "introduction" để khởi động m
 
 Khởi động tất cả ứng dụng web (module 01-04):
 
-**Bash:**  
+**Bash:**
 ```bash
 cd ..  # Từ thư mục gốc
 ./start-all.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd ..  # Từ thư mục gốc
 .\start-all.ps1
 ```
-  
+
 Hoặc chỉ khởi động module này:
 
-**Bash:**  
+**Bash:**
 ```bash
 cd 01-introduction
 ./start.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 01-introduction
 .\start.ps1
 ```
-  
-Cả hai script tự động tải biến môi trường từ file `.env` gốc và sẽ build JAR nếu chưa tồn tại.
 
-> **Lưu ý:** Nếu muốn build thủ công tất cả module trước khi chạy:
+Cả hai script tự động tải biến môi trường từ file `.env` gốc và sẽ build file JAR nếu chưa tồn tại.
+
+> **Lưu ý:** Nếu bạn muốn build thủ công tất cả module trước khi chạy:
 >
-> **Bash:**  
+> **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
 >
-> **PowerShell:**  
+> **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-  
-Mở http://localhost:8080 trên trình duyệt của bạn.
 
-**Dừng ứng dụng:**
+Mở http://localhost:8080 trên trình duyệt.
 
-**Bash:**  
+**Để dừng:**
+
+**Bash:**
 ```bash
 ./stop.sh  # Chỉ mô-đun này
 # Hoặc
 cd .. && ./stop-all.sh  # Tất cả các mô-đun
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
-.\stop.ps1  # Chỉ mô-đun này
+.\stop.ps1  # Chỉ module này
 # Hoặc
-cd ..; .\stop-all.ps1  # Tất cả các mô-đun
+cd ..; .\stop-all.ps1  # Tất cả các module
 ```
-  
 
 ## Sử Dụng Ứng Dụng
 
-Ứng dụng cung cấp giao diện web với hai chế độ chat cạnh nhau.
+Ứng dụng cung cấp giao diện web với hai phiên bản chat đặt cạnh nhau.
 
 <img src="../../../translated_images/vi/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Bảng điều khiển hiển thị cả hai tùy chọn Chat Đơn Giản (không trạng thái) và Chat Hội Thoại (có trạng thái)*
+*Bảng điều khiển hiển thị cả tùy chọn Chat Đơn Giản (không bộ nhớ) và Chat Hội Thoại (có bộ nhớ)*
 
-### Chat Không Bộ Nhớ (Bảng Bên Trái)
+### Chat Không Bộ Nhớ (Bảng Điều Khiển Bên Trái)
 
-Thử trước. Hỏi "Tên tôi là John" rồi ngay lập tức hỏi "Tên tôi là gì?" Mô hình sẽ không nhớ vì mỗi tin nhắn độc lập. Điều này minh họa vấn đề cốt lõi của tích hợp mô hình ngôn ngữ cơ bản - không có ngữ cảnh hội thoại.
+Thử trước. Hỏi "My name is John" rồi ngay lập tức hỏi "Tôi tên gì?" Mô hình sẽ không nhớ vì mỗi tin nhắn độc lập. Điều này minh họa vấn đề cốt lõi khi tích hợp mô hình ngôn ngữ cơ bản - không có ngữ cảnh cuộc hội thoại.
 
 <img src="../../../translated_images/vi/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
 *AI không nhớ tên bạn từ tin nhắn trước*
 
-### Chat Có Bộ Nhớ (Bảng Bên Phải)
+### Chat Có Bộ Nhớ (Bảng Điều Khiển Bên Phải)
 
-Bây giờ thử chuỗi câu hỏi tương tự tại đây. Hỏi "Tên tôi là John" rồi "Tên tôi là gì?" Lần này nó nhớ. Khác biệt là MessageWindowChatMemory - nó duy trì lịch sử hội thoại và gửi kèm trong mỗi yêu cầu. Đây là cách AI hội thoại sản xuất hoạt động.
+Bây giờ thử chuỗi tương tự ở đây. Hỏi "My name is John" rồi "Tôi tên gì?" Lần này nó nhớ. Khác biệt là MessageWindowChatMemory - nó giữ lịch sử hội thoại và đính kèm vào mỗi yêu cầu. Đây là cách AI hội thoại trong sản xuất hoạt động.
 
 <img src="../../../translated_images/vi/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*AI nhớ tên bạn từ trước trong cuộc trò chuyện*
+*AI nhớ tên bạn từ trước trong cuộc hội thoại*
 
-Cả hai bảng dùng chung mô hình GPT-5.2. Khác biệt duy nhất là bộ nhớ. Điều này làm rõ bộ nhớ mang lại gì cho ứng dụng của bạn và tại sao nó cần thiết cho trường hợp sử dụng thực tế.
+Cả hai bảng dùng chung mô hình GPT-5.2. Khác biệt duy nhất là bộ nhớ. Điều này làm rõ giá trị bộ nhớ mang lại cho ứng dụng của bạn và tại sao nó cần thiết cho trường hợp sử dụng thực tế.
 
-## Các Bước Tiếp Theo
+## Bước Tiếp Theo
 
-**Module tiếp theo:** [02-prompt-engineering - Kỹ Thuật Lập Prompt với GPT-5.2](../02-prompt-engineering/README.md)
+**Module tiếp theo:** [02-prompt-engineering - Kỹ Thuật Tạo Đề Bài với GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 
-**Điều hướng:** [← Trước: Module 00 - Bắt Đầu Nhanh](../00-quick-start/README.md) | [Quay Lại Chính](../README.md) | [Tiếp: Module 02 - Kỹ Thuật Lập Prompt →](../02-prompt-engineering/README.md)
+**Điều hướng:** [← Trước: Module 00 - Khởi Đầu Nhanh](../00-quick-start/README.md) | [Trở Về Chính](../README.md) | [Tiếp: Module 02 - Kỹ Thuật Tạo Đề Bài →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Tuyên bố miễn trách nhiệm**:
-Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo tính chính xác, xin lưu ý rằng các bản dịch tự động có thể chứa lỗi hoặc không chính xác. Tài liệu gốc bằng ngôn ngữ nguyên thủy nên được coi là nguồn chính xác và đáng tin cậy. Đối với những thông tin quan trọng, nên sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu lầm hay diễn giải sai nào phát sinh từ việc sử dụng bản dịch này.
+**Tuyên bố từ chối trách nhiệm**:
+Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo độ chính xác, xin lưu ý rằng các bản dịch tự động có thể chứa lỗi hoặc sai sót. Văn bản gốc bằng ngôn ngữ gốc của tài liệu nên được xem là nguồn thông tin chính xác và đáng tin cậy. Đối với những thông tin quan trọng, nên sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm đối với bất kỳ sự hiểu lầm hoặc giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
