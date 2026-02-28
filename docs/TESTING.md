@@ -26,7 +26,7 @@ mvn test
 mvn --% test
 ```
 
-When all tests pass, you should see output like the screenshot below — 56 tests run with zero failures.
+When all tests pass, you should see output like the screenshot below — tests run with zero failures.
 
 <img src="images/test-results.png" alt="Successful Test Results" width="800"/>
 
