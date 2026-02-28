@@ -1,89 +1,91 @@
-# Moodul 02: Prompt-ehitamine GPT-5.2-ga
+# Moodul 02: Promptide ehitamine GPT-5.2-ga
 
 ## Sisukord
 
 - [Videojuhend](../../../02-prompt-engineering)
-- [Mida Sa Õpid](../../../02-prompt-engineering)
+- [Mida sa õpid](../../../02-prompt-engineering)
 - [Eeltingimused](../../../02-prompt-engineering)
-- [Prompt-ehituse Mõistmine](../../../02-prompt-engineering)
-- [Prompt-ehituse Alused](../../../02-prompt-engineering)
-  - [Zero-Shot Põhimõte](../../../02-prompt-engineering)
-  - [Few-Shot Põhimõte](../../../02-prompt-engineering)
-  - [Mõttelaine Jada](../../../02-prompt-engineering)
-  - [Rollipõhine Promptimine](../../../02-prompt-engineering)
-  - [Prompt-mallid](../../../02-prompt-engineering)
-- [Edasijõudnud Mustrid](../../../02-prompt-engineering)
-- [Olemasolevate Azure Ressursside Kasutamine](../../../02-prompt-engineering)
-- [Rakenduse Ekraanipildid](../../../02-prompt-engineering)
-- [Mustrite Uurimine](../../../02-prompt-engineering)
-  - [Madal vs Kõrge Töövõime](../../../02-prompt-engineering)
-  - [Tööülesannete Täitmine (Tööriistade Sissejuhatused)](../../../02-prompt-engineering)
-  - [Isetutvustav Kood](../../../02-prompt-engineering)
-  - [Struktureeritud Analüüs](../../../02-prompt-engineering)
-  - [Mitme-Korra Vestlus](../../../02-prompt-engineering)
-  - [Samm-Sammult Mõtlemine](../../../02-prompt-engineering)
-  - [Piiratud Väljund](../../../02-prompt-engineering)
-- [Mida Sa Tõeliselt Õpid](../../../02-prompt-engineering)
-- [Järgmised Sammud](../../../02-prompt-engineering)
+- [Mõistes promptide ehitamist](../../../02-prompt-engineering)
+- [Promptide ehitamise põhialused](../../../02-prompt-engineering)
+  - [Null-kaugus promptimine](../../../02-prompt-engineering)
+  - [Mõne näite promptimine](../../../02-prompt-engineering)
+  - [Mõtte ahela meetod](../../../02-prompt-engineering)
+  - [Rollipõhine promptimine](../../../02-prompt-engineering)
+  - [Promptide mallid](../../../02-prompt-engineering)
+- [Arendatud mustrid](../../../02-prompt-engineering)
+- [Olemasolevate Azure ressursside kasutamine](../../../02-prompt-engineering)
+- [Rakenduse ekraanipildid](../../../02-prompt-engineering)
+- [Mustrite uurimine](../../../02-prompt-engineering)
+  - [Madal vs kõrge valmisolek](../../../02-prompt-engineering)
+  - [Ülesande täitmine (tööriistade sissejuhatused)](../../../02-prompt-engineering)
+  - [Isepeegeldav kood](../../../02-prompt-engineering)
+  - [Struktureeritud analüüs](../../../02-prompt-engineering)
+  - [Mitme vooru vestlus](../../../02-prompt-engineering)
+  - [Samm-sammult põhjendamine](../../../02-prompt-engineering)
+  - [Piiratud väljund](../../../02-prompt-engineering)
+- [Mida sa tegelikult õpid](../../../02-prompt-engineering)
+- [Järgmised sammud](../../../02-prompt-engineering)
 
 ## Videojuhend
 
-Vaata seda otseülekannet, mis selgitab, kuidas selle mooduliga alustada: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
+Vaata seda otseülekannet, mis selgitab, kuidas selle mooduliga alustada:
 
-## Mida Sa Õpid
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
 
-<img src="../../../translated_images/et/what-youll-learn.c68269ac048503b2.webp" alt="Mida Sa Õpid" width="800"/>
+## Mida sa õpid
 
-Eelmises moodulis nägid, kuidas mälu võimaldab vestlus-IA-d ja kasutasid GitHubi mudeleid põhisuhtluseks. Nüüd keskendume sellele, kuidas küsida küsimusi — ehk promptide endi kasutamisele — kasutades Azure OpenAI GPT-5.2. Kuidas sa promptid struktureerid, mõjutab oluliselt vastuste kvaliteeti. Alustame põhiliste promptimisvõtete ülevaatega ja liigume siis kaheksa edasijõudnud mustri juurde, mis kasutavad GPT-5.2 täielikku potentsiaali.
+<img src="../../../translated_images/et/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-Kasutame GPT-5.2, sest see omab mõtlemise juhtimise funktsiooni — saad mudelile öelda, kui palju peaks enne vastamist mõtlema. See teeb erinevad promptimisstrateegiad selgemaks ja aitab mõista, millal mida kasutada. Samuti saame kasu Azure väiksematest kiirusepiirangutest GPT-5.2 puhul võrreldes GitHubi mudelitega.
+Eelmises moodulis nägid, kuidas mälu võimaldab vestlus-IA-d ja kasutasid GitHubi mudeleid põhilisteks interaktsioonideks. Nüüd keskendume sellele, kuidas küsimusi esitada — promptidele endile — kasutades Azure OpenAI GPT-5.2. Kuidas sa oma prompte struktureerid, mõjutab dramaatiliselt vastuste kvaliteeti. Alustame põhitehnikate ülevaatega, seejärel liigume edasi kaheksa arendatud mustri poole, mis kasutavad GPT-5.2 võimekust täielikult ära.
+
+Kasutame GPT-5.2, kuna see tutvustab põhjendamise juhtimist - sa saad mudelile öelda, kui palju mõtlemist ta enne vastamist tegema peaks. See muudab erinevad promptimise strateegiad selgemaks ja aitab sul mõista, millal mida kasutada. Lisaks on Azure'l GPT-5.2 jaoks vähem kasutuspiiranguid võrreldes GitHubi mudelitega.
 
 ## Eeltingimused
 
-- Moodul 01 lõpetatud (Azure OpenAI ressursid juurutatud)
-- `.env` fail juurkataloogis Azure volitustega (moodul 01 `azd up` loodud)
+- Läbitud Moodul 01 (Azure OpenAI ressursid juurutatud)
+- `.env` fail juurkataloogis Azure volitustega (loodud `azd up` käsuga Moodulis 01)
 
-> **Märkus:** Kui sa pole veel moodulit 01 lõpetanud, järgi esmalt seal olevaid juurutamisjuhiseid.
+> **Märkus:** Kui sa pole Moodulit 01 lõpetanud, järgi seal esmalt juurutamise juhiseid.
 
-## Prompt-ehituse Mõistmine
+## Mõistes promptide ehitamist
 
-<img src="../../../translated_images/et/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Mis on Prompt-ehitus?" width="800"/>
+<img src="../../../translated_images/et/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Mis on promptide ehitamine?" width="800"/>
 
-Prompt-ehitamine tähendab sisendi teksti kujundamist nii, et see pidevalt tagab vajalikud tulemused. See pole ainult küsimuste esitamine — see tähendab taotluste struktureerimist nii, et mudel mõistaks täpselt, mida soovid ja kuidas seda pakkuda.
+Promptide ehitamine tähendab sisendteksti kujundamist nii, et see pidevalt annaks vajalikke tulemusi. See ei seisne ainult küsimuste esitamisel - vaid ka taotluste struktureerimises nii, et mudel mõistaks täpselt, mida sa tahad ja kuidas seda esitada.
 
-Mõtle nagu juhendad kolleegi. „Paranda viga“ on ebamäärane. „Paranda UserService.java faili 45. reale nullpunkti tõrge lisades null-kontrolli“ on konkreetne. Keelemudelid töötavad samamoodi — spetsiifilisus ja struktuur on olulised.
+Mõtle sellele nagu kolleegile juhiste andmine. "Paranda viga" on ebamäärane. "Paranda UserService.java faili 45. real esinev null-viitaja erand, lisades nulli kontrolli" on konkreetne. Keelemudelid töötavad samamoodi - täpsus ja struktuur on olulised.
 
-<img src="../../../translated_images/et/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Kuidas LangChain4j Sobib" width="800"/>
+<img src="../../../translated_images/et/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Kuidas LangChain4j sobib" width="800"/>
 
-LangChain4j pakub taristut — mudelühendusi, mälu ja sõnumitüüpe — samal ajal kui promptimustritena on täpselt struktureeritud tekst, mida selle taristu kaudu saadad. Peamised ehitusplokid on `SystemMessage` (mille kaudu määratakse tehisintellekti käitumine ja roll) ja `UserMessage` (mis kannab sinu tegelikku taotlust).
+LangChain4j pakub infrastruktuuri — mudeliühendused, mälu ja sõnumitüübid — samal ajal kui promptide mustrid on lihtsalt hoolikalt struktureeritud tekst, mida selle infrastruktuuri kaudu saadad. Põhikomponentideks on `SystemMessage` (mis määrab IA käitumise ja rolli) ja `UserMessage` (mis kannab sinu tegelikku taotlust).
 
-## Prompt-ehituse Alused
+## Promptide ehitamise põhialused
 
-<img src="../../../translated_images/et/five-patterns-overview.160f35045ffd2a94.webp" alt="Viie Prompt-ehituse Mustri Ülevaade" width="800"/>
+<img src="../../../translated_images/et/five-patterns-overview.160f35045ffd2a94.webp" alt="Viie promptide ehitamise mustri ülevaade" width="800"/>
 
-Enne selle mooduli edasijõudnumate mustrite juurde asumist vaatame üle viis põhilist promptimisvõtet. Need on ehitusplokid, mida iga prompti insener peaks tundma. Kui oled juba läbinud [Quick Start mooduli](../00-quick-start/README.md#2-prompt-patterns), oled neid näinud tegutsemas — siin on nende taga olev kontseptuaalne raamistik.
+Enne kui sukeldume selle mooduli arendatud mustritesse, vaatame viis põhitehnikat üle. Need on ehitusplokid, mida iga promptide ehitaja peaks tundma. Kui oled juba läbinud [Kiirstardi mooduli](../00-quick-start/README.md#2-prompt-patterns), oled neid seal näinud — siin on nende mõtteline raamistik.
 
-### Zero-Shot Põhimõte
+### Null-kaugus promptimine
 
-Lihtsaim lähenemine: anna mudelile otsene juhis ilma näideteta. Mudel tugineb täielikult enda treeningule, et mõista ja ülesannet täita. Sobib hästi otsekohesteks ülesanneteks, kus oodatav käitumine on ilmne.
+Lihtsaim lähenemine: anna mudelile otsene juhis ilma näideteta. Mudel tugineb täielikult oma koolitusel, et mõista ja täita ülesannet. See töötab hästi lihtsate taotluste puhul, kus eeldatav käitumine on ilmselge.
 
-<img src="../../../translated_images/et/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Põhimõte" width="800"/>
+<img src="../../../translated_images/et/zero-shot-prompting.7abc24228be84e6c.webp" alt="Null-kaugus promptimine" width="800"/>
 
-*Otsene juhis ilma näideteta — mudel järeldab ülesande ainult juhisest*
+*Otsene juhis ilma näideteta — mudel järeldab ülesande ainult juhiseta*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// Vastus: "Positiivne"
+// Vasta: "Positiivne"
 ```
 
-**Kasutamiseks, kui:** Lihtsad klassifikatsioonid, otsesed küsimused, tõlked või mis tahes ülesanded, mida mudel saab ilma täiendava juhiseta täita.
+**Millal kasutada:** Lihtsad klassifikatsioonid, otsesed küsimused, tõlked või kõik ülesanded, mida mudel suudab ilma täiendava juhenduseta täita.
 
-### Few-Shot Põhimõte
+### Mõne näite promptimine
 
-Esita näited, mis näitavad mustrit, mida soovid mudelilt järgida. Mudel õpib oodatud sisendi-väljundi vormingu sinu näidetest ja rakendab seda uutele sisenditele. See parandab konsistentsust ülesannetes, kus soovitud vorming või käitumine pole nähtav.
+Esita näited, mis demonstreerivad mustrit, mida soovid mudelilt järgida. Mudel õpib sinu näidete põhjal oodatud sisend-väljundi vormingu ja rakendab seda uute sisendite puhul. See parandab märkimisväärselt järjepidevust ülesannetes, kus soovitud formaat või käitumine ei ole ilmne.
 
-<img src="../../../translated_images/et/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Põhimõte" width="800"/>
+<img src="../../../translated_images/et/few-shot-prompting.9d9eace1da88989a.webp" alt="Mõne näite promptimine" width="800"/>
 
 *Näidetest õppimine — mudel tuvastab mustri ja rakendab seda uutele sisenditele*
 
@@ -102,15 +104,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kasutamiseks, kui:** Kohandatud klassifikatsioonid, järjepidev vormindus, valdkonnapõhised ülesanded või kui zero-shot tulemused on ebakindlad.
+**Millal kasutada:** Kohandatud klassifikatsioonid, järjepidev vormindus, domeenispetsiifilised ülesanded või kui null-kauguse tulemused on ebaühtlased.
 
-### Mõttelaine Jada
+### Mõtte ahela meetod
 
-Paluge mudelil näidata oma mõtlemist samm-sammult. Selle asemel, et kohe vastata, laguneb mudel probleemi detailseks lahenduseks ja töötab iga osa läbi eraldi. See parandab täpsust matemaatika, loogika ja mitmeastmeliste mõtlemisülesannete puhul.
+Paluge mudelil näidata oma põhjendus samm-sammult. Selle asemel, et kohe vastusest mööda minna, lagundab mudel probleemi ja töötab läbi iga osa täpselt. See parandab täpsust matemaatikas, loogikas ja mitmeastmeliste mõtlemisülesannete puhul.
 
-<img src="../../../translated_images/et/chain-of-thought.5cff6630e2657e2a.webp" alt="Mõttelaine Jada Promptimine" width="800"/>
+<img src="../../../translated_images/et/chain-of-thought.5cff6630e2657e2a.webp" alt="Mõtte ahela promptimine" width="800"/>
 
-*Samm-sammult mõtlemine — keeruliste probleemide jagamine loogilisteks sammudeks*
+*Samm-sammult põhjendamine — keeruliste probleemide lahtilõhkumine selgeteks loogilisteks sammudeks*
 
 ```java
 String prompt = """
@@ -120,18 +122,18 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// Mudel näitab: 15 - 8 = 7, siis 7 + 12 = 19 õuna
+// Mudel näitab: 15 - 8 = 7, seejärel 7 + 12 = 19 õuna
 ```
 
-**Kasutamiseks, kui:** Matemaatikaprobleemid, loogikapähklid, silumine või mis tahes ülesanne, kus mõtlemisprotsessi näitamine parandab täpsust ja usaldust.
+**Millal kasutada:** Matemaatikaülesanded, loogikapuzzle’id, silumine või igasugune ülesanne, kus põhjendusprotsessi näitamine suurendab täpsust ja usaldusväärsust.
 
-### Rollipõhine Promptimine
+### Rollipõhine promptimine
 
-Sea enne küsimust AI-le persona või roll. See annab konteksti, mis mõjutab vastuse tooni, sügavust ja fookust. „Tarkvara arhitekt“ annab erinevaid nõuandeid kui „alglaadija arendaja“ või „turbe-audiitor“.
+Sea IA-le isiksus või roll enne oma küsimuse esitamist. See annab konteksti, mis mõjutab vastuse tooni, sügavust ja fookust. "Tarkvaraarhitekt" annab erineva nõu kui "noorem arendaja" või "turvaaudiitor".
 
-<img src="../../../translated_images/et/role-based-prompting.a806e1a73de6e3a4.webp" alt="Rollipõhine Promptimine" width="800"/>
+<img src="../../../translated_images/et/role-based-prompting.a806e1a73de6e3a4.webp" alt="Rollipõhine promptimine" width="800"/>
 
-*Konteksti ja persona määramine — sama küsimus saab erineva vastuse, sõltuvalt määratud rollist*
+*Konteksti ja isiksuse määramine — sama küsimus saab erineva vastuse sõltuvalt määratud rollist*
 
 ```java
 String prompt = """
@@ -147,15 +149,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kasutamiseks, kui:** Koodi ülevaated, juhendamine, valdkonnapõhine analüüs või kui vajad vastuseid, mis on kohandatud kindlale asjatundlikkuse tasemele või vaatenurgale.
+**Millal kasutada:** Koodikontrollid, juhendamine, domeenispetsiifiline analüüs või kui vajad vastuseid, mis on kohandatud mingile konkreetsele teadmiste tasemele või vaatenurgale.
 
-### Prompt-mallid
+### Promptide mallid
 
-Loo korduvkasutatavad promptid muutujate kohtadega. Selle asemel, et iga kord uut prompti kirjutada, defineeri mall ja täida erinevad väärtused. LangChain4j `PromptTemplate` klass teeb selle lihtsaks `{{variable}}` süntaksiga.
+Loo taaskasutatavad promptid muutujate kohatäitetega. Selle asemel, et iga kord uut prompti kirjutada, defineeri mall üks kord ja täida erinevate väärtustega. LangChain4j `PromptTemplate` klass teeb selle lihtsaks kasutades `{{variable}}` süntaksit.
 
-<img src="../../../translated_images/et/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt-mallid" width="800"/>
+<img src="../../../translated_images/et/prompt-templates.14bfc37d45f1a933.webp" alt="Promptide mallid" width="800"/>
 
-*Korduvkasutatavad promptid muutuste kohtadega — üks mall, palju kasutusvõimalusi*
+*Taaskasutatavad promptid muutujate kohatäidetega — üks mall, palju kasutusi*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -170,25 +172,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Kasutamiseks, kui:** Korduvad päringud erinevate sisenditega, partiitöötlus, korduvkasutatavad IA töövood või olukorrad, kus prompti struktuur jääb samaks, kuid andmed muutuvad.
+**Millal kasutada:** Korduvad päringud erinevate sisenditega, partiitöötlus, taaskasutatavate IA töövoogude loomine või igas olukorras, kus prompti struktuur jääb samaks, kuid andmed muutuvad.
 
 ---
 
-Need viis alust annavad tugeva tööriistakomplekti enamiku promptimisülesannete jaoks. Käesolev moodul ehitab nendele peale kaheksale edasijõudnud mustrile, mis kasutavad GPT-5.2 mõtlemise juhtimist, enesehindamist ja struktureeritud väljundi võimekust.
+Need viis põhialust annavad sulle tugeva tööriistakomplekti enamiku promptimise ülesannete jaoks. Selle mooduli ülejäänud osa ehitab nendele peale kaheksa arenenud mustriga, mis kasutavad GPT-5.2 põhjendusjuhtimist, enesehindamist ja struktureeritud väljundivõimalusi.
 
-## Edasijõudnud Mustrid
+## Arendatud mustrid
 
-Kui alused on läbi käidud, liigume kaheksale edasijõudnud mustrile, mis teevad selle mooduli eriliseks. Mitte iga probleem ei vaja sama lähenemist. Mõned küsimused vajavad kiireid vastuseid, teised sügavat mõtlemist. Mõned vajavad nähtavat mõtlemist, teised ainult tulemusi. Iga allolev mustritüüp on optimeeritud eri olukorrale — ja GPT-5.2 mõtlemise juhtimise funktsioon toob erinevused eriti selgelt esile.
+Pärast põhialuste käsitlemist liigume kaheksa arenenud mustri juurde, mis teevad selle mooduli ainulaadseks. Kõik probleemid ei vaja sama lähenemist. Mõned küsimused vajavad kiireid vastuseid, teised sügavat mõtlemist. Mõned vajavad nähtavat põhjendamist, teised ainult tulemusi. Iga alljärgnev muster on optimeeritud erinevale olukorrale — ja GPT-5.2 põhjendusjuhtimine muudab erinevused veelgi ilmsemaks.
 
-<img src="../../../translated_images/et/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Kaheksa Prompt-ehituse Mustrit" width="800"/>
+<img src="../../../translated_images/et/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Kaheksa promptide ehitamise mustrit" width="800"/>
 
-*Kaheksa prompt-ehituse mustri ülevaade ja nende kasutusvaldkonnad*
+*Kaheksa promptide ehitamise mustri ja nende kasutusjuhtumite ülevaade*
 
-<img src="../../../translated_images/et/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Mõtlemise Juhtimine GPT-5.2-ga" width="800"/>
+<img src="../../../translated_images/et/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Põhjendusjuhtimine GPT-5.2-ga" width="800"/>
 
-*GPT-5.2 mõtlemise juhtimine võimaldab määrata, kui palju mudel peaks mõtlema — alates kiiretest otsestest vastustest kuni sügava uurimiseni*
+*GPT-5.2 põhjendusjuhtimine võimaldab sul määrata, kui palju mõtlemist mudel peaks tegema — alates kiirtest otsestest vastustest kuni sügava uurimiseni*
 
-**Madal Töövõime (Kiire & Fookustatud)** - Lihtsate küsimuste jaoks, kus sa soovid kiireid ja otseseid vastuseid. Mudel teeb minimaalselt mõtlemist — maksimaalselt 2 sammu. Kasuta seda arvutuste, otsingute või lihtsate küsimuste puhul.
+**Madal valmisolek (Kiire ja keskendunud)** - Lihtsate küsimuste jaoks, kus tahad kiireid ja otsekoheseid vastuseid. Mudel teeb minimaalset põhjendamist - maksimaalselt 2 sammu. Kasuta seda arvutusteks, otsinguteks või lihtsate päringute jaoks.
 
 ```java
 String prompt = """
@@ -207,12 +209,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Uuri GitHub Copilotiga:** Ava [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) ja küsi:
-> - „Mis vahe on madala ja kõrge töövõimega promptimismustritel?“
-> - „Kuidas XML sildid promptides aitavad AI vastust struktureerida?“
-> - „Millal kasutada isereflekseerimise mustreid ja millal otsest juhist?“
+> 💡 **Uuri koos GitHub Copilotiga:** Ava [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) ja küsi:
+> - "Mis vahe on madala ja kõrge valmisoleku promptimismustritel?"
+> - "Kuidas aitavad XML sildid promptides struktureerida IA vastust?"
+> - "Millal peaks kasutama enesepeegeldamise mustreid ja millal otseseid juhiseid?"
 
-**Kõrge Töövõime (Sügav & Põhjalik)** - Komplekssete probleemide puhul, kus soovid põhjalikku analüüsi. Mudel uurib põhjalikult ja näitab detailset mõtlemist. Kasuta seda süsteemide planeerimisel, arhitektuurivalikutes või keerulises uurimistöös.
+**Kõrge valmisolek (Sügav ja põhjalik)** - Keerukate probleemide jaoks, kus soovid põhjalikku analüüsi. Mudel uurib põhjalikult ja näitab detailset põhjendust. Kasuta seda süsteemide disainiks, arhitektuuriliste otsuste tegemiseks või keerukateks uuringuteks.
 
 ```java
 String prompt = """
@@ -226,7 +228,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Tööülesannete Täitmine (Samm-sammuline Edasiminek)** - Mitmeastmeliste töövoogude jaoks. Mudel pakub algplaani, kirjeldab iga sammu töö kaudu, seejärel annab kokkuvõtte. Kasuta seda migratsioonidel, rakendamisülesannetes või mitmeastmelistes protsessides.
+**Ülesande täitmine (Samm-sammult edenemine)** - Mitmeastmeliste töövoogude jaoks. Mudel annab alguses plaani, kirjeldab iga sammu läbimist ja annab seejärel kokkuvõtte. Kasuta seda migratsioonide, rakenduste või mistahes mitmesammuliste protsesside puhul.
 
 ```java
 String prompt = """
@@ -264,18 +266,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Mõttelaine jada promptimine palub mudelil ekspliciitselt näidata oma mõtlemisprotsessi, parandades keerukate ülesannete täpsust. Samm-sammuline jaotus aitab nii inimestel kui ka tehisintellektil mõista loogikat.
+Mõtte ahela promptimine palub mudelil selgelt näidata oma põhjendusprotsessi, mis parandab täpsust keerukate ülesannete puhul. Samm-sammult lahtilõhkumine aitab nii inimestel kui ka IA-l loogikat paremini mõista.
 
-> **🤖 Proovi GitHub Copilot Chatiga:** Küsi selle mustri kohta:
-> - „Kuidas kohandada tööülesannete täitmise mustrit pikaajaliste operatsioonide jaoks?“
-> - „Millised on parimad praktikad tööriistade sissejuhatuste struktuurimiseks tootmiskeskkonnas?“
-> - „Kuidas tabada ja kuvada vaheskäigu edenemise uuendusi kasutajaliideses?“
+> **🤖 Proovi koos [GitHub Copilot](https://github.com/features/copilot) Chatiga:** Küsi selle mustri kohta:
+> - "Kuidas kohandada ülesande täitmise mustrit pikkade toimingute jaoks?"
+> - "Millised on parimad tavad tööriistade sissejuhatuste struktureerimisel tootmisrakendustes?"
+> - "Kuidas saada vahereportite kuvamist kasutajaliideses?"
 
-<img src="../../../translated_images/et/task-execution-pattern.9da3967750ab5c1e.webp" alt="Tööülesannete Täitmise Muster" width="800"/>
+<img src="../../../translated_images/et/task-execution-pattern.9da3967750ab5c1e.webp" alt="Ülesande täitmise muster" width="800"/>
 
 *Plaani → Täida → Kokkuvõtlik töövoog mitmeastmeliste ülesannete jaoks*
 
-**Isetutvustav Kood** - Tootmiskvaliteediga koodi genereerimiseks. Mudel genereerib koodi, järgides tootmisstandardeid ja korrapärast veahaldust. Kasuta seda uute funktsioonide või teenuste arendamisel.
+**Isepeegeldav kood** - Tootmiskvaliteediga koodi genereerimiseks. Mudel genereerib koodi, mis järgib tootmisstandardeid ja korralikku veakäsitlust. Kasuta seda uute funktsioonide või teenuste loomisel.
 
 ```java
 String prompt = """
@@ -286,11 +288,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/et/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Isetutvustuse Tsükkel" width="800"/>
+<img src="../../../translated_images/et/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Isepeegeldamise tsükkel" width="800"/>
 
-*Iteratiivne täiustamise tsükkel - genereeri, hinda, leia probleemid, paranda, korda*
+*Iteratiivse täiustuse tsükkel - genereeri, hinda, tuvastaja probleemid, parenda, korda*
 
-**Struktureeritud Analüüs** - Järjepideva hindamise jaoks. Mudel hindab koodi fikseeritud raamistikus (täpsus, praktikad, jõudlus, turvalisus, hooldatavus). Kasuta seda koodi ülevaadete või kvaliteedi hindamiseks.
+**Struktureeritud analüüs** - Järjepidevaks hindamiseks. Mudel vaatab koodi üle kindla raamistiku alusel (õigsus, tavad, jõudlus, turvalisus, hooldatavus). Kasuta seda koodikontrollides või kvaliteedihinnangutes.
 
 ```java
 String prompt = """
@@ -338,16 +340,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Proovi GitHub Copilot Chatiga:** Küsi struktureeritud analüüsi kohta:
-> - „Kuidas kohandada analüüsiraamistikku eri tüüpi koodi ülevaadete jaoks?“
-> - „Mis on parim viis struktureeritud väljundi programmiliseks parsimiseks ja töötluseks?“
-> - „Kuidas tagada järjepidevad raskusastmed erinevate ülevaatesessioonide vahel?“
+> **🤖 Proovi koos [GitHub Copilot](https://github.com/features/copilot) Chatiga:** Küsi struktureeritud analüüsi kohta:
+> - "Kuidas kohandada analüüsiraamistikku erinevat tüüpi koodikontrollide jaoks?"
+> - "Mis on parim viis struktureeritud väljundi programmiliseks töötlemiseks?"
+> - "Kuidas tagada ühtlane raskusaste erinevates kontrollsessioonides?"
 
-<img src="../../../translated_images/et/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Struktureeritud Analüüsi Muster" width="800"/>
+<img src="../../../translated_images/et/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Struktureeritud analüüsi muster" width="800"/>
 
-*Järjepideva koodi ülevaate raamistiku kasutamine raskusastmetega*
+*Raamistik järjepidevate koodikontrollide jaoks raskusastmetega*
 
-**Mitme-Korra Vestlus** - Konteksti vajavate vestluste jaoks. Mudel mäletab varasemaid sõnumeid ja ehitab neile edasi. Kasuta seda interaktiivsete abisessioonide või keeruliste Q&A jaoks.
+**Mitme vooru vestlus** - Vestlused, mis vajavad konteksti. Mudel mäletab eelnevaid sõnumeid ja ehitab nende peale. Kasuta seda interaktiivseteks abisessioonideks või keerukate küsimuste-vastuste jaoks.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -361,11 +363,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/et/context-memory.dff30ad9fa78832a.webp" alt="Konteksti Mälu" width="800"/>
+<img src="../../../translated_images/et/context-memory.dff30ad9fa78832a.webp" alt="Konteksti mälu" width="800"/>
 
-*Kuidas vestluse kontekst koguneb mitme käigu jooksul kuni juurdepääsutokenite piirini*
+*Kuidas vestluse kontekst koguneb mitme vooru vältel kuni tokenite limiidini*
 
-**Samm-Sammult Mõtlemine** - Probleemidele, mis vajavad nähtavat loogikat. Mudel näitab selgelt mõtlemist iga sammu kohta. Kasuta seda matemaatikaülesannete, loogikalõksude või juhul, kui vajad mõtlemisprotsessi mõistmist.
+**Samm-sammult põhjendamine** - Probleemide jaoks, mis vajavad nähtavat loogikat. Mudel näitab iga sammu kohta otsest põhjendust. Kasuta seda matemaatikaprobleemide, loogikapuzzle’de või siis, kui vajad mõtlemisprotsessi mõistmist.
 
 ```java
 String prompt = """
@@ -379,11 +381,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/et/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Samm-Sammult Muster" width="800"/>
+<img src="../../../translated_images/et/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Samm-sammult muster" width="800"/>
 
-*Probleemide lagundamine selgeteks loogilisteks sammudeks*
+*Probleemide lahtilõhkumine selgeteks loogilisteks sammudeks*
 
-**Piiratud Väljund** - Vastustele, mis nõuavad kindlat vormingut. Mudel järgib rangelt formaadi ja pikkuse nõudeid. Kasuta seda kokkuvõtete jaoks või kui vajad täpset väljundistruktuuri.
+**Piiratud väljund** - Vastuste jaoks, millel on spetsiifilised formaadi nõuded. Mudel järgib rangelt formaadi- ja pikkusjuhiseid. Kasuta seda kokkuvõtete tegemiseks või kui vajad täpset väljundistruktuuri.
 
 ```java
 String prompt = """
@@ -399,43 +401,43 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/et/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Piiratud Väljundi Muster" width="800"/>
+<img src="../../../translated_images/et/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Piiratud väljundi muster" width="800"/>
 
-*Kindlate formaadi, pikkuse ja struktuuri nõuete rakendamine*
+*Spetsiifiliste formaadi, pikkuse ja struktuuri nõuete täitmine*
 
-## Olemasolevate Azure Ressursside Kasutamine
+## Olemasolevate Azure ressursside kasutamine
 
 **Kontrolli juurutust:**
 
-Veendu, et `.env` fail juurkataloogis sisaldab Azure volitusi (moodulis 01 loodud):
+Veendu, et `.env` fail on juurkataloogis Azure volitustega (loodud Moodulis 01):
 ```bash
-cat ../.env  # Peaks kuvama AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Peaks näitama AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Alusta rakendust:**
+**Rakenduse käivitamine:**
 
-> **Märkus:** Kui oled juba alustanud kõiki rakendusi käsuga `./start-all.sh` moodulist 01, siis see moodul töötab juba pordil 8083. Võid allolevad käivitamiskäsud vahele jätta ja minna otse aadressile http://localhost:8083.
+> **Märkus:** Kui oled juba kõik rakendused käivitanud `./start-all.sh` käsuga Moodulis 01, siis see moodul juba töötab pordil 8083. Sa võid allolevad käivitamiskäsud vahele jätta ja minna otse lehele http://localhost:8083.
+**Variant 1: Spring Boot Dashboardi kasutamine (soovitatav VS Code kasutajatele)**
 
-**Variant 1: Spring Boot juhtpaneeli kasutamine (soovitatav VS Code'i kasutajatele)**
-Arenduskonteiner sisaldab Spring Boot Dashboard laiendust, mis pakub visuaalset liidest kõigi Spring Boot rakenduste haldamiseks. Selle leiate VS Code'i vasakpoolsest tegevusribast (otsi Spring Boot ikooni).
+Arenduskonteiner sisaldab Spring Boot Dashboard laiendust, mis pakub visuaalset kasutajaliidest kõigi Spring Boot rakenduste haldamiseks. Leiate selle VS Code vasakpoolsest tegevusribast (otsige Spring Boot ikooni).
 
-Spring Boot Dashboardi kaudu saate:
-- Näha kõiki tööruumis saadaolevaid Spring Boot rakendusi
-- Käivitada/peatada rakendusi ühe klõpsuga
+Spring Boot Dashboardist saate:
+- Vaadata kõiki tööruumis olevaid Spring Boot rakendusi
+- Käivitada/peatada rakendusi ühe klikiga
 - Vaadata rakenduse logisid reaalajas
 - Jälgida rakenduse olekut
 
-Lihtsalt klõpsake nuppu "play" kõrval "prompt-engineering", et see moodul käivitada, või käivitage korraga kõik moodulid.
+Lihtsalt klõpsake “prompt-engineering” kõrval olevat mängimisnuppu, et see moodul käivitada, või käivitage korraga kõik moodulid.
 
 <img src="../../../translated_images/et/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Valik 2: Kasutades shell-skripte**
+**Variant 2: Shell-skriptide kasutamine**
 
 Käivitage kõik veebirakendused (moodulid 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Juurekataloogist
+cd ..  # Juure kataloogist
 ./start-all.sh
 ```
 
@@ -459,9 +461,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Mõlemad skriptid laadivad automaatselt keskkonnamuutujad juurkataloogi `.env` failist ning ehitavad JAR-id, kui neid veel ei ole.
+Mõlemad skriptid laadivad automaatselt juure `.env` faili keskkonnamuutujad ja koostavad JAR failid, kui need puuduvad.
 
-> **Märkus:** Kui eelistate enne käivitamist kõik moodulid käsitsi ehitada:
+> **Märkus:** Kui soovite kõik moodulid enne käivitamist käsitsi koostada:
 >
 > **Bash:**
 > ```bash
@@ -475,7 +477,7 @@ Mõlemad skriptid laadivad automaatselt keskkonnamuutujad juurkataloogi `.env` f
 > mvn clean package -DskipTests
 > ```
 
-Avage oma brauseris aadress http://localhost:8083.
+Avage brauseris aadress http://localhost:8083.
 
 **Peatamiseks:**
 
@@ -497,77 +499,77 @@ cd ..; .\stop-all.ps1  # Kõik moodulid
 
 <img src="../../../translated_images/et/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Peamine armatuurlaud, mis kuvab kõiki 8 prompt-disaini mustrit koos nende omaduste ja kasutusjuhtudega*
+*Peamine juhtpaneel, mis näitab kõiki 8 prompt-engineerimise mustrit koos nende omaduste ja kasutusjuhtudega*
 
-## Mustrite uurimine
+## Musterde uurimine
 
-Veebiliides võimaldab teil katsetada erinevaid küsitlusstrateegiaid. Iga muster lahendab erinevaid probleeme – proovige neid, et näha, millal iga lähenemine kõige paremini toimib.
+Veebiliides võimaldab katsetada erinevaid promptimise strateegiaid. Iga muster lahendab erinevaid probleeme - proovi neid, et näha, millal iga lahendus silma paistab.
 
-> **Märkus: voogesitus vs mittevoogesitus** — Igal mustri lehel on kaks nuppu: **🔴 Stream Response (Live)** ja **Mittevoogesituse valik**. Voogesitus kasutab Server-Sent Events (SSE), et kuvada mudeeli genereeritavad tokenid reaalajas, nii näete edenemist kohe. Mittevoogesitus ootab terve vastuse ära, enne kui selle kuvab. Sügava mõtlemisega (nt High Eagerness, Self-Reflecting Code) promptid võivad mittevoogesituse korral võtta väga kaua aega – mõnikord minuteid – ilma nähtava tagasisideta. **Kasuta voogesitust keerukate promptidega katsetamisel**, et näha mudeli tööd ja vältida muljet, justkui päring oleks aegunud.
+> **Märkus: voogedastus vs mittevoogedastus** — Igal mustri lehel on kaks nuppu: **🔴 Stream Response (Live)** ja **Mittevoogedastus** valik. Voogedastus kasutab Server-Sent Events (SSE), et kuvada mudeeli genereeritud tokenid reaalajas, nii et näed edusamme kohe. Mittevoogedastus valik ootab kogu vastuse lõpuni, enne kui selle kuvab. Sügavat mõtlemist nõudvate promptide puhul (nt High Eagerness, Self-Reflecting Code) võib mittevoogedastus kutsuda väga kaua aega — mõnikord minuteid — ilma nähtava tagasisideta. **Kasuta voogedastust keerukate promptide katsetamisel**, et näha mudeeli tööd ja vältida muljet, et päring aegus.
 >
-> **Märkus: brauseri nõue** — Voogesitusfunktsioon kasutab Fetch Streams API-d (`response.body.getReader()`), mis nõuab täisfunktsionaalset brauserit (Chrome, Edge, Firefox, Safari). See EI toimi VS Code sisseehitatud Simple Browseris, kuna selle veebivaade ei toeta ReadableStream API-d. Kui kasutate Simple Browserit, töötavad mittevoogesituse nupud endiselt normaalselt – ainult voogesituse nupud on mõjutatud. Täieliku kogemuse saamiseks avage `http://localhost:8083` välist brauserit.
+> **Märkus: brauseri nõue** — Voogedastusfunktsioon kasutab Fetch Streams API-d (`response.body.getReader()`), mis nõuab täisfunktsionaalsusega brauserit (Chrome, Edge, Firefox, Safari). See EI toimi VS Code sisseehitatud Simple Browseris, kuna selle veebivaade ei toeta ReadableStream API-d. Kui kasutad Simple Browserit, toimivad mittevoogedastuse nupud tavapäraselt — ainult voogedastuse nupud on mõjutatud. Täieliku kogemuse saamiseks ava `http://localhost:8083` välises brauseris.
 
-### Madal vs Kõrge innukus
+### Madal vs Kõrge Innukus
 
-Küsige lihtne küsimus nagu "Mis on 15% 200-st?" madala innukuse tasemega. Saate kiire ja otsese vastuse. Nüüd küsige keerulisem küsimus "Disainige vahemälustrateegia suure liiklusega API-le" kõrge innukuse tasemel. Klõpsake **🔴 Stream Response (Live)** ja jälgige, kuidas mudeli üksikasjalik arutelu ilmub token tokeni haaval. Sama mudel, sama küsimuse struktuur – kuid prompt ütleb, kui palju mõtlemist teha.
+Esita lihtne küsimus nagu „Mis on 15% 200-st?“ kasutades madalat innukust. Saad kohese ja otsese vastuse. Nüüd esita keerulisem küsimus: „Tööta välja vahemällu salvestamise strateegia kõrge liiklusega API-le“ kasutades kõrget innukust. Klõpsa **🔴 Stream Response (Live)** ja vaata mudeeli üksikasjalikku põhjendust token-tokeni haaval. Sama mudel, sama küsimus - kuid prompt ütleb, kui palju mõtlemist tehakse.
 
-### Ülesande täitmine (tööriistade sissejuhatused)
+### Ülesande Täitmine (Tööriistade Eelsõnad)
 
-Mitmeastmelised töövood saavad kasu etteplaneerimisest ja edenemise jutustamisest. Mudel kirjeldab, mida teeb, tutvustab igat sammu ja seejärel võtab tulemused kokku.
+Mitmeetapilised töövood vajavad eelplaneerimist ja edenemise jutustamist. Mudel kirjeldab, mida ta teeb, jutustab iga sammu, ning võtab tulemused kokku.
 
-### Enesepeegelduv kood
+### Enesereflekteeriv Kood
 
-Proovige "Looge e-kirjade valideerimise teenus". Mudel ei genereeri lihtsalt koodi ja peatu, vaid genereerib, hindab kvaliteedistandardeid, tuvastab nõrkusi ja täiustab. Näete, kuidas ta kordab seni, kuni kood vastab tootmisstandarditele.
+Proovi "Loo e-posti valideerimise teenus". Selle asemel, et lihtsalt koodi genereerida ja peatuda, genereerib mudel, hindab kvaliteedikriteeriumite alusel, tuvastab nõrkused ja parandab. Näed, kuidas ta iteratiivselt parandab, kuni kood vastab tootmisstandarditele.
 
-### Struktureeritud analüüs
+### Struktureeritud Analüüs
 
-Koodikontrollid vajavad ühtseid hindamiskriteeriume. Mudel analüüsib koodi fikseeritud kategooriates (õigsus, praktikad, jõudlus, turvalisus) koos raskusastme tasemega.
+Koodülevaated vajavad ühtset hindamisraamistikku. Mudel analüüsib koodi fikseeritud kategooriate kaupa (õigsus, praktikad, jõudlus, turvalisus) koos raskusastme tasemetega.
 
-### Mitme vooru vestlus
+### Mitmekäiguline Vestlus
 
-Küsige "Mis on Spring Boot?" ja kohe seejärel "Näidake mulle näidet". Mudel mäletab teie esimest küsimust ja annab teile spetsiifilise Spring Boot näite. Ilma mäluta oleks teine küsimus liiga ebamäärane.
+Küsi „Mis on Spring Boot?“ ja kohe seejärel „Näita mulle näidet“. Mudel mäletab sinu esimest küsimust ja annab spetsiifilise Spring Boot näite. Ilma mäluta oleks see teine küsimus liiga ebamäärane.
 
-### Samm-sammuline põhjendus
+### Järg-järgult Põhjendamine
 
-Valige matemaatikaülesanne ja proovige seda nii samm-sammult põhjendades kui ka madala innukusega. Madal innukus annab lihtsalt kiire ja varjatud vastuse. Samm-sammult näitab kõiki arvutusi ja otsuseid.
+Võta mõni matemaatikaülesanne ja proovi nii järg-järgult põhjendamist kui ka madalat innukust. Madal innukus annab ainult vastuse - kiire, kuid ebaselge. Järg-järgult näitab iga arvutust ja otsust.
 
-### Piiratud väljund
+### Piiratud Väljund
 
-Kui vajate kindlaid vorminguid või sõnade arvu, sunnib see muster ranget järgimist. Proovige genereerida kokkuvõte täpselt 100 sõnaga punktide formaadis.
+Kui vajad kindlaid vorminguid või sõnade arvu, sunnib see muster rangelt järgima nõudeid. Proovi genereerida kokkuvõtet täpselt 100 sõnaga märksõnade vormis.
 
-## Mida te tegelikult õpite
+## Mida Sa Tegelikult Õpid
 
-**Põhjendamise jõupingutus muudab kõik**
+**Põhjenduspingutus muudab kõik**
 
-GPT-5.2 võimaldab teil oma promptide kaudu juhtida arvutuslikku pingutust. Madal pingutus tähendab kiireid vastuseid minimaalse uurimisega. Kõrge pingutus tähendab, et mudel võtab aega sügavaks mõtlemiseks. Õpite sobitama pingutust ülesande keerukusega – ärge raisake aega lihtsatele küsimustele, aga ärge kiirustage ka keeruliste otsuste tegemist.
+GPT-5.2 võimaldab sul kontrollida arvutuspingutust promptide kaudu. Madal pingutus tähendab kiireid vastuseid minimaalse uurimisega. Kõrge pingutus tähendab, et mudel võtab aega sügavamaks mõtlemiseks. Õpid sobitama pingutust ülesande keerukusega - ära raiska aega lihtsatele küsimustele, kuid ära kiirusta keeruliste otsustega.
 
 **Struktuur juhib käitumist**
 
-Kas olete märganud XML-silte promptides? Need ei ole lihtsalt dekoratiivsed. Mudelid järgivad struktureeritud juhiseid palju usaldusväärsemalt kui vabateksti. Kui vajate mitmeastmelisi protsesse või keerukat loogikat, aitab struktuur mudelil jälgida, kus ta on ja mis järgmiseks tuleb.
+Kas märkad XML-tähti promptides? Need ei ole dekoratiivsed. Mudelid järgivad struktureeritud juhiseid usaldusväärsemalt kui vabateksti. Kui vajad mitme sammu protsessi või keerulist loogikat, aitab struktuur mudelil jälgida, kus ta on ja mis tuleb järgmisena.
 
 <img src="../../../translated_images/et/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Hästi struktureeritud prompti anatoomia, kus on selged sektsioonid ja XML-laadne korraldus*
+*Hea struktureeritud prompti anatoomia koos selgete osade ja XML-laadse korraldusega*
 
 **Kvaliteet enesehindamise kaudu**
 
-Enesepeegeldavad mustrid töötavad, muutes kvaliteedikriteeriumid selgelt väljendatuks. Selle asemel, et loota, et mudel "teeb õigesti", ütlete täpselt, mida "õige" tähendab: õige loogika, veahaldus, jõudlus, turvalisus. Mudel saab siis oma väljundit hinnata ja täiustada. See muudab koodi genereerimise loteriist protsessiks.
+Enesereflekteerivad mustrid toimivad, tehes kvaliteedikriteeriumid selgelt nähtavaks. Kujutle, et lootes, et mudel "teeb õigesti" – selle asemel ütled täpselt, mida "õige" tähendab: õige loogika, veakäsitlus, jõudlus, turvalisus. Seejärel saab mudel oma väljundit hinnata ja parandada. See muudab koodigeneratsiooni loteriist protsessiks.
 
 **Kontekst on piiratud**
 
-Mitme vooru vestlused toimivad nii, et iga päringu juurde lisatakse sõnumite ajalugu. Kuid on piir – igal mudelil on maksimaalne tokenite arv. Vestluste kasvades vajate strateegiaid, kuidas säilitada asjakohane kontekst ilma seda piirangut ületamata. See moodul näitab teile, kuidas mälu töötab; hiljem õpite, millal kokkuvõtteid teha, millal unustada ja millal taaskasutada.
+Mitmekäigulised vestlused toimivad sõnumiajaloo lisamisega igale päringule. Kuid on limiit – igal mudelil on maksimaalne tokenite arv. Kuna vestlused kasvavad, vajad strateegiaid asjakohase konteksti hoidmiseks ilma lakke sattumata. See moodul näitab, kuidas mälu töötab; hiljem õpid, millal kokku võtta, millal unustada ja millal taastada.
 
-## Järgmised sammud
+## Järgmised Sammud
 
-**Järgmine moodul:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
+**Järgmine moodul:** [03-rag - RAG (otsimisega täiustatud genereerimine)](../03-rag/README.md)
 
 ---
 
-**Navigeerimine:** [← Eelmine: Moodul 01 - Sissejuhatus](../01-introduction/README.md) | [Tagasi põhilehele](../README.md) | [Järgmine: Moodul 03 - RAG →](../03-rag/README.md)
+**Navigatsioon:** [← Eelmine: Moodul 01 - Sissejuhatus](../01-introduction/README.md) | [Tagasi põhilehele](../README.md) | [Järgmine: Moodul 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Vastutusest loobumine**:  
-See dokument on tõlgitud kasutades tehisintellekti tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi me püüame tagada täpsust, palun arvestage, et automatiseeritud tõlgetes võib esineda vigu või ebatäpsusi. Originaaldokument oma emakeeles tuleks pidada autoriteetseks allikaks. Kriitilise teabe puhul soovitatakse professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tingitud arusaamatuste või valesti mõistmiste eest.
+**Lahtiütlus**:  
+See dokument on tõlgitud kasutades tehisintellektil põhinevat tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüame täpsust, palun arvestage, et automatiseeritud tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument oma emakeeles tuleks pidada usaldusväärseks allikaks. Kriitilise teabe puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tingitud arusaamatuste või valesti mõistmiste eest.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
