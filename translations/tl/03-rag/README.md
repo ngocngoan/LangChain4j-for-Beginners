@@ -28,111 +28,113 @@
 
 ## Video Walkthrough
 
-Panoorin ang live session na ito na naglalaman ng paliwanag kung paano simulan ang module na ito: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Panoorin ang live session na ito na nagpapaliwanag kung paano magsimula gamit ang module na ito:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
-Sa mga naunang module, natutunan mo kung paano makipag-usap sa AI at ayusin nang maayos ang iyong mga prompt. Ngunit may pangunahing limitasyon: ang mga language model ay alam lamang ang mga natutunan nila sa panahon ng pagsasanay. Hindi nila masasagot ang mga tanong tungkol sa mga patakaran ng iyong kumpanya, dokumentasyon ng iyong proyekto, o anumang impormasyon na hindi nila natutunan.
+Sa mga naunang module, natutunan mo kung paano magkaroon ng pag-uusap sa AI at kung paano epektibong isaayos ang iyong mga prompt. Ngunit may isang pangunahing limitasyon: ang mga language model ay nakakalamang lamang sa kanilang natutunan sa panahon ng pagsasanay. Hindi sila makakasagot ng mga tanong tungkol sa mga patakaran ng iyong kumpanya, dokumentasyon ng proyekto, o anumang impormasyon na hindi nila pinag-aralan.
 
-Nilulutas ng RAG (Retrieval-Augmented Generation) ang problemang ito. Sa halip na subukang turuan ang modelo ng iyong impormasyon (na magastos at hindi praktikal), binibigyan mo ito ng kakayahang maghanap sa iyong mga dokumento. Kapag may nagtanong, hahanapin ng sistema ang may-katuturang impormasyon at isasama ito sa prompt. Sasagot ang modelo base sa nakuhang konteksto.
+Nilulutas ng RAG (Retrieval-Augmented Generation) ang problemang ito. Sa halip na turuan ang modelo tungkol sa iyong impormasyon (na mahal at hindi praktikal), binibigyan mo ito ng kakayahan na maghanap sa iyong mga dokumento. Kapag may nagtanong, hahanapin ng sistema ang kaugnay na impormasyon at isasama ito sa prompt. Sagot ng modelo batay sa kontekstong nakuha.
 
-Isipin ang RAG bilang pagbibigay sa modelo ng isang reference library. Kapag nagtanong ka, ang sistema ay:
+Isipin ang RAG bilang pagbibigay sa modelo ng isang sanggunian na aklatan. Kapag ikaw ay nagtanong:
 
-1. **User Query** - Nagtanong ka ng isang tanong
-2. **Embedding** - Kinoconvert ang iyong tanong sa vector
-3. **Vector Search** - Hinahanap ang mga document chunk na magkakatulad
-4. **Context Assembly** - Idinadagdag ang mga kaugnay na chunks sa prompt
-5. **Response** - Gumagawa ang LLM ng sagot base sa konteksto
+1. **User Query** - Nagtanong ka
+2. **Embedding** - Kinokonvert ang tanong mo sa isang vector
+3. **Vector Search** - Hinahanap ang kahalintulad na mga bahagi ng dokumento
+4. **Context Assembly** - Dinadagdag ang mga kaugnay na bahagi sa prompt
+5. **Response** - Gumagawa ang LLM ng sagot batay sa konteksto
 
-Ito ay nagpapatatag ng mga sagot ng modelo sa iyong aktwal na datos sa halip na umasa lamang sa kaalaman mula sa pagsasanay o gumawa ng sagot.
+Ito ay nag-uugat sa mga sagot ng modelo sa iyong aktwal na datos sa halip na umasa lamang sa kaalaman mula sa pagsasanay o paggawa ng sagot.
 
 ## Prerequisites
 
-- Natapos ang [Module 00 - Quick Start](../00-quick-start/README.md) (para sa Easy RAG example na tinukoy sa itaas)
-- Natapos ang [Module 01 - Introduction](../01-introduction/README.md) (na-deploy ang Azure OpenAI resources, kasama ang `text-embedding-3-small` embedding model)
-- `.env` file sa root directory na may Azure credentials (nalikha ng `azd up` sa Module 01)
+- Nakumpleto ang [Module 00 - Quick Start](../00-quick-start/README.md) (para sa Easy RAG na halimbawa na nabanggit sa itaas)
+- Nakumpleto ang [Module 01 - Introduction](../01-introduction/README.md) (na-deploy ang Azure OpenAI resources, kabilang ang `text-embedding-3-small` embedding model)
+- `.env` file sa root directory na may Azure credentials (nilikha ng `azd up` sa Module 01)
 
-> **Note:** Kung hindi mo pa natatapos ang Module 01, sundin muna ang mga instruksyon sa deployment doon. Nagde-deploy ang `azd up` command ng parehong GPT chat model at embedding model na gamit sa module na ito.
+> **Note:** Kung hindi mo pa natatapos ang Module 01, sundin muna ang mga tagubilin doon para sa deployment. Ang `azd up` na utos ay nagde-deploy ng parehong GPT chat model at embedding model na ginagamit sa module na ito.
 
 ## Understanding RAG
 
-Ipinapakita ng diagram sa ibaba ang pangunahing konsepto: sa halip na umasa lamang sa data ng pagsasanay ng modelo, binibigyan ng RAG ito ng reference library ng iyong mga dokumento upang konsultahin bago gumawa ng sagot.
+Ipinapakita ng diagram sa ibaba ang pangunahing konsepto: sa halip na umasa lamang sa data ng pagsasanay ng modelo, binibigyan ng RAG ang modelo ng isang sangguniang aklatan ng iyong mga dokumento na pwedeng konsultahin bago gumawa ng sagot.
 
 <img src="../../../translated_images/tl/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
 
-*Ipinapakita ng diagram na ito ang pagkakaiba sa pagitan ng karaniwang LLM (na naghuhula mula sa training data) at ng RAG-enhanced LLM (na kumukonsulta muna sa iyong mga dokumento).*
+*Ipinapakita ng diagram na ito ang pagkakaiba sa pagitan ng isang karaniwang LLM (na huhula mula sa data ng pagsasanay) at isang RAG-enhanced LLM (na kumukonsulta muna sa iyong mga dokumento).*
 
-Ganito kumonekta ang mga bahagi mula simula hanggang dulo. Dumadaloy ang tanong ng gumagamit sa apat na yugto — embedding, vector search, context assembly, at answer generation — na ang bawat isa ay sumusunod sa naunang hakbang:
+Ganito ang koneksyon ng mga bahagi mula simula hanggang dulo. Ang tanong ng user ay dumadaan sa apat na yugto — embedding, vector search, context assembly, at answer generation — na bawat isa ay nakabatay sa naunang proseso:
 
 <img src="../../../translated_images/tl/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
 
-*Ipinapakita ng diagram na ito ang end-to-end na RAG pipeline — dumadaloy ang user query sa embedding, vector search, context assembly, at answer generation.*
+*Ipinapakita ng diagram na ito ang end-to-end RAG pipeline — dumadaan ang user query sa embedding, vector search, context assembly, at answer generation.*
 
-Ang natitirang bahagi ng module na ito ay magsasaad ng bawat yugto nang detalyado, kasama ang code na maaari mong patakbuhin at baguhin.
+Ang natitirang bahagi ng module na ito ay naglalahad ng bawat yugto nang detalyado, kasama ang code na maaari mong patakbuhin at baguhin.
 
 ### Which RAG Approach Does This Tutorial Use?
 
-Nag-aalok ang LangChain4j ng tatlong paraan upang ipatupad ang RAG, bawat isa ay may ibang antas ng abstraction. Ikinukumpara ang mga ito sa diagram sa ibaba nang magkahiwalay:
+Nag-aalok ang LangChain4j ng tatlong paraan upang ipatupad ang RAG, bawat isa ay may iba't ibang antas ng abstraksyon. Iina-compare ng diagram sa ibaba ang mga ito nang magkakatabi:
 
 <img src="../../../translated_images/tl/rag-approaches.5b97fdcc626f1447.webp" alt="Three RAG Approaches in LangChain4j" width="800"/>
 
-*Ikinukumpara ng diagram na ito ang tatlong LangChain4j RAG approaches — Easy, Native, at Advanced — na ipinapakita ang kanilang mga pangunahing sangkap at kung kailan gamitin ang bawat isa.*
+*Ipinapakita ng diagram na ito ang tatlong RAG approaches sa LangChain4j — Easy, Native, at Advanced — na may mga pangunahing bahagi at kung kailan gamitin ang bawat isa.*
 
-| Approach | Ano ang Ginagawa Nito | Trade-off |
+| Approach | Ano ang Ginagawa Nito | Kapalit |
 |---|---|---|
-| **Easy RAG** | Awtomatikong kinokonekta ang lahat sa pamamagitan ng `AiServices` at `ContentRetriever`. Nagraranggo ka lamang ng interface, nagdadagdag ng retriever, at ang LangChain4j ang nag-aasikaso ng embedding, paghahanap, at pagpupulong ng prompt sa likod ng eksena. | Minimal na code, ngunit hindi mo nakikita ang nangyayari sa bawat hakbang. |
-| **Native RAG** | Tinatawag mo ang embedding model, naghahanap sa store, bumubuo ng prompt, at gumagawa ng sagot nang direkta — isang malinaw na hakbang bawat pagkakataon. | Mas maraming code, ngunit bawat yugto ay makikita at maaaring baguhin. |
-| **Advanced RAG** | Ginagamit ang `RetrievalAugmentor` framework na may mga pluggable query transformers, routers, re-rankers, at content injectors para sa mga produksyong pipeline. | Pinakamataas na flexibility, ngunit mas komplikado. |
+| **Easy RAG** | Awtomatikong ni-raroute lahat gamit ang `AiServices` at `ContentRetriever`. Naga-annotate ka ng interface, naka-attach ang retriever, at hinahandle ng LangChain4j ang embedding, paghahanap, at pagbuo ng prompt sa likod ng mga eksena. | Minimal na code, pero hindi mo nakikita ang nangyayari sa bawat hakbang. |
+| **Native RAG** | Sinasadya mong tinatawag ang embedding model, hinahanap sa store, binubuo ang prompt, at ginagawa ang sagot — isang hakbang kada panahon. | Mas maraming code, pero makikita at mababago ang bawat yugto. |
+| **Advanced RAG** | Ginagamit ang `RetrievalAugmentor` framework na may pluggable query transformers, routers, re-rankers, at content injectors para sa production-grade na pipelines. | Pinakamataas na flexibility, ngunit mas malaki ang komplikasyon. |
 
-**Ang tutorial na ito ay gumagamit ng Native approach.** Ang bawat hakbang ng RAG pipeline — pag-embed sa query, paghahanap sa vector store, pagpupulong ng konteksto, at paggawa ng sagot — ay nakasulat nang malinaw sa [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Ito ay sinasadya: bilang isang learning resource, mas mahalaga na makita at maintindihan mo ang bawat yugto kaysa ipaikli ang code. Kapag komportable ka na sa pagkakaugnay ng mga bahagi, maaari kang lumipat sa Easy RAG para sa mabilisang prototype o sa Advanced RAG para sa mga sistema sa produksiyon.
+**Gamit ng tutorial na ito ang Native na pamamaraan.** Ang bawat hakbang ng RAG pipeline — pag-embed ng query, paghahanap sa vector store, pagbuo ng konteksto, at paggawa ng sagot — ay malinaw na nakasulat sa [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Sadyang ginawa ito: bilang isang learning resource, mas importante na makita at maintindihan mo ang bawat hakbang kaysa bawasan ang code. Kapag naging komportable ka na sa pagsasama-sama ng mga bahagi, maaari kang lumipat sa Easy RAG para sa mabilisang prototype o sa Advanced RAG para sa production.
 
-> **💡 Nakita mo na ba ang Easy RAG sa aksyon?** Kasama sa [Quick Start module](../00-quick-start/README.md) ang Document Q&A example ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) na gumagamit ng Easy RAG approach — ang LangChain4j ang nangangalaga sa embedding, paghahanap, at pagpupulong ng prompt nang awtomatiko. Ang module na ito ay sumusunod sa susunod na hakbang sa pamamagitan ng paglabas ng pipeline na iyon upang makita at makontrol mo ang bawat yugto.
+> **💡 Nakita mo na ba ang Easy RAG?** Kasama sa [Quick Start module](../00-quick-start/README.md) ang isang Document Q&A na halimbawa ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) na gumagamit ng Easy RAG approach — hinahandle ng LangChain4j ang embedding, paghahanap, at prompt assembly nang awtomatiko. Ang module na ito ang susunod na hakbang na binubuksan ang pipeline para makita at kontrolin mo ang bawat yugto nang sarili mo.
 
 <img src="../../../translated_images/tl/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
-*Ipinapakita ng diagram na ito ang Easy RAG pipeline mula sa `SimpleReaderDemo.java`. Ihambing ito sa Native approach na ginamit sa module na ito: itinatago ng Easy RAG ang embedding, retrieval, at prompt assembly sa likod ng `AiServices` at `ContentRetriever` — naglo-load ka ng dokumento, naglalakip ng retriever, at humihingi ng mga sagot. Ang Native approach sa module na ito ay binubuksan ang pipeline upang tawagin mo mismo ang bawat yugto (embed, search, assemble context, generate), na nagbibigay ng buong visibility at kontrol.*
+*Ipinapakita ng diagram na ito ang Easy RAG pipeline mula sa `SimpleReaderDemo.java`. Ihambing ito sa Native approach na gamit sa module na ito: itinatago ng Easy RAG ang embedding, retrieval, at prompt assembly sa likod ng `AiServices` at `ContentRetriever` — naglo-load ka lang ng dokumento, nag-attach ng retriever, at nakakakuha ng sagot. Binubuksan ng Native approach dito ang pipeline para tawagin mo ang bawat yugto (embed, search, assemble context, generate) nang sarili mo, nagbibigay ng buong visibility at kontrol.*
 
 ## How It Works
 
-Ang RAG pipeline sa module na ito ay nahahati sa apat na yugto na tumatakbo sunod-sunod sa tuwing magtatanong ang isang user. Una, ang na-upload na dokumento ay **pinoproseso at pinaghahati-hati** sa mga piraso na kayang hawakan. Ang mga pirasong ito ay kino-convert sa **vector embeddings** at itinatago upang maikumpara sa matematikal na paraan. Kapag dumating ang query, nagsasagawa ang sistema ng **semantic search** upang mahanap ang pinaka-nauugnay na mga chunk, at sa wakas ay ipinapasa ang mga ito bilang konteksto sa LLM para sa **paggawa ng sagot**. Ang mga seksyon sa ibaba ay naglalakad sa bawat yugto kasama ang aktwal na code at mga diagram. Tingnan muna natin ang unang hakbang.
+Ang RAG pipeline sa module na ito ay nahahati sa apat na yugto na sunod-sunod na gumagana tuwing may tanong ang user. Una, ang ina-upload na dokumento ay **pinoproseso at hinahati-hati** sa mga piraso na madaling pamahalaan. Ang mga pirasong ito ay kinokonvert sa **vector embeddings** at ini-store upang madamuang maikumpara. Kapag dumating ang query, nagsasagawa ang sistema ng **semantic search** upang mahanap ang pinaka-kaugnay na mga piraso, at sa huli ay ipinapasa ito bilang konteksto sa LLM para sa **pagbuo ng sagot**. Nilalakaran ng mga seksyon sa ibaba ang bawat yugto kasama ang aktwal na code at mga diagram. Tingnan natin ang unang hakbang.
 
 ### Document Processing
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Kapag nag-upload ka ng dokumento, pinoproseso ito ng sistema (PDF o plain text), nilalagyan ng metadata tulad ng filename, at pagkatapos ay hinahati sa mga chunk — mas maliliit na piraso na kayang-kayang maipasok sa context window ng modelo. Ang mga chunk na ito ay bahagyang nag-o-overlap upang hindi mawala ang konteksto sa mga hangganan.
+Kapag nag-upload ka ng dokumento, ito ay pini-parse (PDF o plain text), nilalagyan ng metadata tulad ng pangalan ng file, at hinahati sa mga chunks — mga maliit na piraso na kasya nang maayos sa context window ng modelo. Ang mga chunks na ito ay bahagyang nag-o-overlap upang hindi mawala ang konteksto sa mga hangganan.
 
 ```java
-// I-parse ang na-upload na file at balutin ito sa isang LangChain4j Document
+// I-parse ang in-upload na file at balutin ito sa isang LangChain4j Document
 Document document = Document.from(content, metadata);
 
-// Hatiin sa mga 300-token na bahagi na mayroong 30-token na overlap
+// Hatiin sa 300-token na piraso na may 30-token na overlap
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
 
-Ipinapakita ng diagram sa ibaba kung paano ito gumagana nang biswal. Pansinin kung paano nagkakapareho ang mga token ng bawat chunk sa mga kapitbahay nito — ang 30-token overlap ay nagsisiguro na walang mahalagang konteksto ang matutulo sa pagitan:
+Ipinapakita ng diagram sa ibaba kung paano ito gumagana nang biswal. Pansinin kung paano bawat chunk ay may ibinabahaging ilang tokens sa mga kalapit nito — ang 30-token overlap ay nagsisiguro na walang mahalagang konteksto ang mawawala sa pagitan:
 
 <img src="../../../translated_images/tl/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
 
-*Ipinapakita ng diagram na ito ang paghati ng dokumento sa 300-token chunks na may 30-token overlap, na pinapangalagaan ang konteksto sa mga hangganan ng chunk.*
+*Ipinapakita ng diagram na ito ang paghahati sa dokumento sa 300-token chunks na may 30-token overlap, pinapanatili ang konteksto sa mga hangganan ng chunk.*
 
 > **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) at itanong:
-> - "Paano hinahati ng LangChain4j ang mga dokumento sa mga chunk at bakit mahalaga ang overlap?"
+> - "Paano hinahati ng LangChain4j ang mga dokumento sa chunks at bakit mahalaga ang overlap?"
 > - "Ano ang pinakamainam na laki ng chunk para sa iba't ibang uri ng dokumento at bakit?"
-> - "Paano ko pinamamahalaan ang mga dokumento sa maraming lengguwahe o may espesyal na pormat?"
+> - "Paano hawakan ang mga dokumento sa maraming wika o na may espesyal na formatting?"
 
 ### Creating Embeddings
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Ang bawat chunk ay kino-convert sa isang numerical representation na tinatawag na embedding — isang uri ng meaning-to-numbers converter. Ang embedding model ay hindi "matalino" tulad ng chat model; hindi ito sumusunod sa mga utos, hindi nakakapangatuwiran, at hindi sumasagot ng mga tanong. Ang kaya nitong gawin ay i-map ang teksto sa isang matematikal na espasyo kung saan ang magkaugnay na mga kahulugan ay magkakalapit — "car" malapit sa "automobile," "refund policy" malapit sa "return my money." Isipin ang chat model bilang isang tao na maaari mong kausapin; ang embedding model naman ay isang napakahusay na filing system.
+Ang bawat chunk ay kinakabig bilang isang numerikal na representasyon na tinatawag na embedding — sa esensya, isang converter ng kahulugan sa mga numero. Ang embedding model ay hindi "matalino" tulad ng chat model; hindi ito sumusunod sa mga utos, hindi nagrereason, at hindi sumasagot ng mga tanong. Ang kaya lang nito ay i-map ang teksto sa isang matematikal na espasyo kung saan ang magkakatulad na kahulugan ay magkakalapit — "car" malapit sa "automobile," "refund policy" malapit sa "return my money." Isipin ang chat model bilang isang taong pwede mong kausapin; ang embedding model ay isang napakahusay na filing system.
 
 <img src="../../../translated_images/tl/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
 
-*Ipinapakita ng diagram na ito kung paano kino-convert ng embedding model ang teksto sa mga numerical vector, na inilalagay ang magkatulad na kahulugan — tulad ng "car" at "automobile" — na magkakalapit sa vector space.*
+*Ipinapakita ng diagram na ito kung paano kino-convert ng embedding model ang teksto sa numerikal na vector, inilalagay ang magkakatulad na kahulugan — tulad ng "car" at "automobile" — nang magkalapit sa vector space.*
 
 ```java
 @Bean
@@ -148,29 +150,29 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-Ipinapakita ng class diagram sa ibaba ang dalawang hiwalay na daloy sa RAG pipeline at ang mga klaseng LangChain4j na nagpapatupad ng mga ito. Ang **ingestion flow** (tumatakbo isang beses sa oras ng upload) ay naghahati sa dokumento, nag-eembed ng mga chunks, at nagtatago sa pamamagitan ng `.addAll()`. Ang **query flow** (tumatakbo sa bawat tanong ng user) ay nag-eembed sa tanong, naghahanap sa store sa pamamagitan ng `.search()`, at ipinapasa ang tugmang konteksto sa chat model. Nagtutugma ang dalawang daloy sa shared `EmbeddingStore<TextSegment>` interface:
+Ipinapakita ng class diagram sa ibaba ang dalawang hiwalay na daloy sa RAG pipeline at ang mga LangChain4j class na nagpapatupad sa mga ito. Ang **ingestion flow** (tumakbo isang beses sa pag-upload) ay naghahati ng dokumento, nag-e-embed ng mga chunks, at ini-store gamit ang `.addAll()`. Ang **query flow** (tumakbo kada tanong ng user) ay nag-e-embed ng tanong, naghahanap sa store gamit ang `.search()`, at ipinapasa ang tumugmang konteksto sa chat model. Ang dalawang daloy ay nagsasanib sa shared na `EmbeddingStore<TextSegment>` interface:
 
 <img src="../../../translated_images/tl/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
 
-*Ipinapakita ng diagram na ito ang dalawang daloy sa RAG pipeline — ingestion at query — at kung paano sila nagkakonekta sa pamamagitan ng shared na EmbeddingStore.*
+*Ipinapakita ng diagram na ito ang dalawang daloy sa RAG pipeline — ingestion at query — at kung paano sila nag-uugnay sa pamamagitan ng shared EmbeddingStore.*
 
-Kapag naitago na ang embeddings, natural na nagkakaroon ng clustering ng magkaugnay na nilalaman sa vector space. Ipinapakita ng biswal sa ibaba kung paano nauuwi ang mga dokumento tungkol sa magkakaugnay na paksa bilang magkalapit na puntos, na siyang nagpapagana sa semantic search:
+Kapag na-store na ang embeddings, natural na nagsasama-sama ang magkakatulad na nilalaman sa vector space. Ipinapakita ng visualization sa ibaba kung paano nauuwi ang mga dokumento tungkol sa magkaugnay na paksa bilang mga kalapit na puntos, na siyang nagbibigay-daan sa semantic search:
 
 <img src="../../../translated_images/tl/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
 
-*Ipinapakita ng biswal na ito kung paano nagkakluster ang mga magkaugnay na dokumento sa 3D vector space, na may mga paksang tulad ng Technical Docs, Business Rules, at FAQs na bumubuo ng mga natatanging grupo.*
+*Ipinapakita ng visualization na ito kung paano nagsasama-sama ang magkaugnay na dokumento sa 3D vector space, kung saan ang mga paksa tulad ng Technical Docs, Business Rules, at FAQs ay bumubuo ng mga hiwalay na grupo.*
 
-Kapag naghahanap ang user, sinusunod ng sistema ang apat na hakbang: i-embed ang mga dokumento nang isang beses, i-embed ang query sa bawat paghahanap, ikumpara ang query vector laban sa lahat ng itinatag na vector gamit ang cosine similarity, at ibalik ang nangungunang-K mga highest-scoring chunks. Ipinapakita ng diagram sa ibaba ang bawat hakbang at mga klaseng LangChain4j na sangkot:
+Kapag nagsagawa ang user ng paghahanap, sumusunod ang sistema sa apat na hakbang: i-embed ang mga dokumento nang isang beses, i-embed ang query sa bawat paghahanap, i-compare ang query vector laban sa lahat ng naka-store na vector gamit ang cosine similarity, at ibalik ang top-K na pinakamataas ang score na chunks. Ipinapaliwanag ng diagram sa ibaba ang bawat hakbang at ang mga LangChain4j na klase na kasama:
 
 <img src="../../../translated_images/tl/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding Search Steps" width="800"/>
 
-*Ipinapakita ng diagram na ito ang apat na hakbang ng embedding search process: embed ang mga dokumento, embed ang query, ikumpara ang mga vector gamit ang cosine similarity, at ibalik ang top-K na resulta.*
+*Ipinapakita ng diagram na ito ang apat na hakbang sa proseso ng embedding search: i-embed ang mga dokumento, i-embed ang query, i-compare ang vectors gamit ang cosine similarity, at ibalik ang top-K na resulta.*
 
 ### Semantic Search
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Kapag nagtanong ka, ang iyong tanong ay nagiging embedding din. Kinukumpara ng sistema ang embedding ng iyong tanong sa lahat ng embedding ng mga document chunk. Hinahanap nito ang mga chunk na pinaka-magkakatulad ang kahulugan — hindi lang tumutugma sa mga keyword, kundi tunay na semantic similarity.
+Kapag nagtanong ka, ang tanong mo ay nagiging embedding din. Kinukumpara ng sistema ang embedding ng tanong mo laban sa lahat ng embedding ng mga chunks ng dokumento. Hinahanap nito ang mga chunks na may pinakakahalintulad na kahulugan - hindi lamang tumutugma sa mga keywords, kundi tunay na semantic similarity.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
@@ -190,27 +192,27 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
 
-Inihahambing ng diagram sa ibaba ang semantic search sa tradisyunal na keyword search. Ang keyword search para sa "vehicle" ay hindi nakahanap ng chunk tungkol sa "cars and trucks," ngunit nauunawaan ng semantic search na pareho ang ibig sabihin nito at ibinabalik ito bilang mataas ang iskor na tugma:
+Ipinapakita ng diagram sa ibaba ang pinagkaiba ng semantic search at tradisyunal na keyword search. Ang keyword search para sa "vehicle" ay hindi nakakahanap ng chunk tungkol sa "cars and trucks," pero naiintindihan ng semantic search na pareho ang ibig sabihin at ibinabalik ito bilang mataas ang score:
 
 <img src="../../../translated_images/tl/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
-*Ipinapakita ng diagram na ito ang pagkakaiba ng keyword-based search at semantic search, na nagpapakita kung paano kinukuha ng semantic search ang mga konseptong magkakaugnay kahit naiiba ang eksaktong mga keyword.*
+*Ipinapakita ng diagram na ito ang paghahambing ng paghahanap gamit ang keyword at semantic search, na nagpapakita kung paano kinukuha ng semantic search ang konseptuwal na kaugnay na nilalaman kahit magkaiba ang eksaktong keyword.*
 
-Sa ilalim, tinataya ang similarity gamit ang cosine similarity — parang tinatanong "pareho ba ang direksyon ng dalawang arrow na ito?" Puwedeng ganap na magkaibang salita ang dalawang chunk, ngunit kung pareho ang ibig sabihin, ang mga vector nila ay nakaturo sa parehong direksyon at ang iskor ay malapit sa 1.0:
+Sa ilalim, sinusukat ang similarity gamit ang cosine similarity — sa madaling salita, tinatanong kung "pareho bang direksyon ang dalawang arrow?" Puwedeng magkaiba ang mga salita sa dalawang chunks, pero kung pareho ang kahulugan, magkapareho ang direksyon ng mga vector at malapit sa 1.0 ang score:
 
 <img src="../../../translated_images/tl/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
+*Ipinapakita ng diagram na ito ang cosine similarity bilang anggulo sa pagitan ng mga embedding vector — mas magkakatugmang mga vector ang may score na mas malapit sa 1.0, na nagpapahiwatig ng mas mataas na semantic similarity.*
 
-*Ipinapakita ng diagram na ito ang cosine similarity bilang anggulo sa pagitan ng embedding vectors — mas magkapareho ang oryentasyon ng vectors, mas malapit ang score sa 1.0, na naglalarawan ng mas mataas na semantic similarity.*
 > **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) at itanong:
-> - "Paano gumagana ang similarity search gamit ang embeddings at ano ang nagtatalaga ng score?"
+> - "Paano gumagana ang similarity search gamit ang embeddings at ano ang nagtatakda ng score?"
 > - "Anong similarity threshold ang dapat kong gamitin at paano ito nakakaapekto sa mga resulta?"
-> - "Paano ko haharapin ang mga kaso kung saan walang natagpuang relevant na dokumento?"
+> - "Paano ko haharapin ang mga kaso kung walang relevanteng dokumento na makita?"
 
-### Pagbuo ng Sagot
+### Paggawa ng Sagot
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Ang mga pinaka-nauugnay na chunks ay pinagsasama sa isang istrukturadong prompt na naglalaman ng malinaw na mga tagubilin, ang narekober na konteksto, at ang tanong ng user. Binabasa ng modelo ang mga partikular na chunks na iyon at sumasagot base sa impormasyong iyon — maaari lamang nitong gamitin ang nasa harap nito, na pumipigil sa hallucination.
+Ang mga pinaka-naaangkop na chunks ay pinagsasama sa isang istrukturadong prompt na may kasamang malinaw na mga tagubilin, ang nakuha na konteksto, at ang tanong ng gumagamit. Binabasa ng modelo ang mga partikular na chunk na iyon at sumasagot batay sa impormasyong iyon — maaari lamang nitong gamitin ang nasa harap nito, na pumipigil sa hallucination.
 
 ```java
 String context = matches.stream()
@@ -231,17 +233,17 @@ String prompt = String.format("""
 String answer = chatModel.chat(prompt);
 ```
 
-Ipinapakita ng diagram sa ibaba ang prosesong ito — ang mga pinaka mataas ang score na chunks mula sa search step ay inilalagay sa prompt template, at ang `OpenAiOfficialChatModel` ay bumubuo ng makatotohanang sagot:
+Ipinapakita ng diagram sa ibaba ang prosesong ito — ang mga top-scoring chunks mula sa hakbang ng paghahanap ay inilalagay sa prompt template, at ang `OpenAiOfficialChatModel` ay bumubuo ng grounded na sagot:
 
 <img src="../../../translated_images/tl/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
-*Ipinapakita ng diagram na ito kung paano pinagsasama ang mga pinaka mataas ang score na chunks sa isang istrukturadong prompt, na nagpapahintulot sa modelo na makabuo ng makatotohanang sagot mula sa iyong data.*
+*Ipinapakita ng diagram na ito kung paano pinagsasama-sama ang mga top-scoring chunks sa isang istrukturadong prompt, na nagpapahintulot sa modelo na gumawa ng grounded na sagot mula sa iyong datos.*
 
 ## Patakbuhin ang Aplikasyon
 
-**Kumpirmahin ang deployment:**
+**Beripikahin ang deployment:**
 
-Siguraduhing may `.env` file sa root directory na may Azure credentials (nilikha noong Module 01):
+Siguraduhing naroroon ang `.env` file sa root directory na may Azure credentials (nilikha noong Module 01):
 
 **Bash:**
 ```bash
@@ -255,27 +257,27 @@ Get-Content ..\.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYM
 
 **Simulan ang aplikasyon:**
 
-> **Tandaan:** Kung sinimulan mo na ang lahat ng aplikasyon gamit ang `./start-all.sh` mula sa Module 01, ang module na ito ay tumatakbo na sa port 8081. Maaari mong laktawan ang mga simulaang command sa ibaba at pumunta nang direkta sa http://localhost:8081.
+> **Tandaan:** Kung sinimulan mo na ang lahat ng aplikasyon gamit ang `./start-all.sh` mula sa Module 01, tumatakbo na ang module na ito sa port 8081. Maaari mo nang laktawan ang mga start commands sa ibaba at direktang pumunta sa http://localhost:8081.
 
-**Opsyon 1: Paggamit ng Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
+**Opsyon 1: Gamit ang Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
 
-Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual na interface para pamahalaan ang lahat ng Spring Boot applications. Matatagpuan ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang icon ng Spring Boot).
+Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual na interface para pamahalaan ang lahat ng Spring Boot na aplikasyon. Makikita mo ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang icon ng Spring Boot).
 
 Mula sa Spring Boot Dashboard, maaari mong:
-- Tingnan ang lahat ng available na Spring Boot applications sa workspace
+- Tingnan ang lahat ng available na Spring Boot na aplikasyon sa workspace
 - Simulan/hinto ang mga aplikasyon gamit ang isang click lang
-- Tingnan ang mga logs ng aplikasyon nang real-time
-- Subaybayan ang status ng aplikasyon
+- Tingnan ang mga application logs nang real-time
+- I-monitor ang status ng aplikasyon
 
-I-click lang ang play button sa tabi ng "rag" para simulan ang module na ito, o simulan lahat ng mga module nang sabay-sabay.
+Pindutin lang ang play button sa tabi ng "rag" para simulan ang module na ito, o simulan lahat ng modules nang sabay-sabay.
 
 <img src="../../../translated_images/tl/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Ipinapakita ng screenshot na ito ang Spring Boot Dashboard sa VS Code, kung saan maaari mong simulan, tigilan, at subaybayan ang mga aplikasyon nang biswal.*
+*Ipinapakita ng screenshot na ito ang Spring Boot Dashboard sa VS Code, kung saan maaari mong simulan, itigil, at i-monitor ang mga aplikasyon nang biswal.*
 
-**Opsyon 2: Paggamit ng shell scripts**
+**Opsyon 2: Gamit ang shell scripts**
 
-Simulan ang lahat ng web applications (mga module 01-04):
+Simulan ang lahat ng web application (modules 01-04):
 
 **Bash:**
 ```bash
@@ -303,9 +305,9 @@ cd 03-rag
 .\start.ps1
 ```
 
-Awtomatikong nilalagay ng parehong script ang mga environment variables mula sa root `.env` file at magbuo ng mga JAR kung wala pa ito.
+Awtomatikong niloload ng parehong script ang environment variables mula sa root `.env` file at gagawa ng JARs kung wala pa.
 
-> **Tandaan:** Kung gusto mong buuin nang manu-mano ang lahat ng modules bago magsimula:
+> **Tandaan:** Kung nais mong manu-manong i-build lahat ng modules bago simulan:
 >
 > **Bash:**
 > ```bash
@@ -325,14 +327,14 @@ Buksan ang http://localhost:8081 sa iyong browser.
 
 **Bash:**
 ```bash
-./stop.sh  # Module na ito lamang
+./stop.sh  # Para lamang sa module na ito
 # O
 cd .. && ./stop-all.sh  # Lahat ng mga module
 ```
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Sa modulong ito lamang
+.\stop.ps1  # Para sa module na ito lamang
 # O
 cd ..; .\stop-all.ps1  # Lahat ng mga module
 ```
@@ -347,85 +349,85 @@ Nagbibigay ang aplikasyon ng web interface para sa pag-upload ng dokumento at pa
 
 ### Mag-upload ng Dokumento
 
-Magsimula sa pag-upload ng dokumento - pinakaakma ang mga TXT file para sa pagsusulit. Mayroong `sample-document.txt` na ibinigay sa direktoryong ito na naglalaman ng impormasyon tungkol sa mga feature ng LangChain4j, implementasyon ng RAG, at mga pinakamahusay na praktis - perpekto para subukan ang sistema.
+Magsimula sa pag-upload ng dokumento - mas mainam ang mga TXT file para sa testing. May kasamang `sample-document.txt` sa direktoryong ito na naglalaman ng impormasyon tungkol sa mga feature ng LangChain4j, implementasyon ng RAG, at mga best practice - perpekto para subukan ang sistema.
 
-Pinoproseso ng sistema ang iyong dokumento, hinahati ito sa mga chunks, at lumilikha ng embeddings para sa bawat chunk. Nangyayari ito nang awtomatiko kapag nag-upload ka.
+Pinoproseso ng sistema ang iyong dokumento, hinahati-hati ito sa mga chunks, at gumagawa ng embeddings para sa bawat chunk. Nangyayari ito nang awtomatiko kapag nag-upload ka.
 
 ### Magtanong
 
-Ngayon magtanong ng mga partikular na tanong tungkol sa nilalaman ng dokumento. Subukan ang mga factual na tanong na malinaw na nakasaad sa dokumento. Naghahanap ang sistema ng mga kaugnay na chunks, isinama ang mga ito sa prompt, at bumubuo ng sagot.
+Ngayon, magtanong ng mga partikular na katanungan tungkol sa nilalaman ng dokumento. Subukan ang mga factual na tanong na malinaw na nakasaad sa dokumento. Hinahanap ng sistema ang mga relevant na chunks, isinama ang mga ito sa prompt, at bumubuo ng sagot.
 
-### Suriin ang Mga Sanggunian
+### Suriin ang mga Pinagkunan
 
-Mapapansin na bawat sagot ay may kasamang mga sanggunian ng pinagmulan na may mga similarity score. Ipinapakita ng mga score na ito (0 hanggang 1) kung gaano ka-relevant ang bawat chunk sa iyong tanong. Mas mataas ang score, mas maganda ang tugma. Pinapahintulutan ka nitong beripikahin ang sagot batay sa source na materyal.
+Mapapansin mong ang bawat sagot ay may kasamang source references na may similarity scores. Ipinapakita ng mga score na ito (mula 0 hanggang 1) kung gaano kaepektibo ang tugma ng bawat chunk sa iyong tanong. Mas mataas na score ay mas maganda ang tugma. Pinapayagan ka nitong beripikahin ang sagot laban sa source material.
 
 <a href="images/rag-query-results.png"><img src="../../../translated_images/tl/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Ipinapakita ng screenshot na ito ang resulta ng query kasama ang nabuo na sagot, mga sanggunian mula sa pinagmulan, at mga relevance score para sa bawat narekober na chunk.*
+*Ipinapakita ng screenshot na ito ang mga resulta ng query na may pinagbuong sagot, mga reference ng pinagmulan, at mga relevance score para sa bawat nakuha na chunk.*
 
-### Subukan ang Iba't Ibang Tanong
+### Subukan ang mga Tanong
 
 Subukan ang iba't ibang uri ng tanong:
 - Mga espesipikong katotohanan: "Ano ang pangunahing paksa?"
-- Paghahambing: "Ano ang pagkakaiba ng X at Y?"
-- Buod: "Ibuod ang mga pangunahing puntos tungkol sa Z"
+- Pagkumpara: "Ano ang pagkakaiba ng X at Y?"
+- Buod: "Buodin ang mga pangunahing punto tungkol sa Z"
 
-Pansinin kung paano nagbabago ang relevance scores base sa kung gaano kahusay tumutugma ang iyong tanong sa nilalaman ng dokumento.
+Pansinin kung paano nagbabago ang mga relevance scores batay sa kung gaano kaepektibo ang pagtugma ng iyong tanong sa nilalaman ng dokumento.
 
 ## Mga Pangunahing Konsepto
 
-### Chunking Strategy
+### Estratehiya sa Pag-chunk
 
-Hinahati ang mga dokumento sa 300-token na mga chunk na may 30 token na overlap. Ang balanse na ito ay tinitiyak na bawat chunk ay may sapat na konteksto upang maging makahulugan habang nananatiling sapat na maliit upang maisama ang maramihang chunks sa isang prompt.
+Hinahati ang mga dokumento sa 300-token chunks na may 30 token na overlap. Tinitiyak ng balanse na ito na bawat chunk ay may sapat na konteksto upang maging makahulugan habang hindi naman masyadong malaki para isama sa maramihang chunks sa isang prompt.
 
 ### Similarity Scores
 
-Bawat narekober na chunk ay may kasamang similarity score mula 0 hanggang 1 na nagpapakita kung gaano kalapit ito sa tanong ng user. Ipinapakita ng diagram sa ibaba ang mga range ng score at kung paano ginagamit ng sistema ang mga ito upang i-filter ang mga resulta:
+Bawat nakuha na chunk ay may kasamang similarity score mula 0 hanggang 1 na nagpapakita kung gaano ito kahusay na tumutugma sa tanong ng gumagamit. Ipinapakita ng diagram sa ibaba ang mga saklaw ng score at kung paano ito ginagamit ng sistema upang salain ang mga resulta:
 
 <img src="../../../translated_images/tl/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
 
-*Ipinapakita ng diagram na ito ang mga range ng score mula 0 hanggang 1, na may minimum threshold na 0.5 na nagfi-filter ng mga hindi relevant na chunk.*
+*Ipinapakita ng diagram na ito ang mga saklaw ng score mula 0 hanggang 1, na may minimum threshold na 0.5 para salain ang mga hindi kaugnay na chunks.*
 
-Ang mga score ay naglalaro mula 0 hanggang 1:
-- 0.7-1.0: Napakahalaga, eksaktong tugma
-- 0.5-0.7: Kaugnay, magandang konteksto
-- Mababa sa 0.5: Na-filter, masyadong malayo ang pagkakatugma
+Ang mga score ay mula 0 hanggang 1:
+- 0.7-1.0: Lubos na nauugnay, eksaktong tugma
+- 0.5-0.7: Nauugnay, magandang konteksto
+- Mas mababa sa 0.5: Hindi isinama, masyadong malayo
 
-Kinukuha lang ng sistema ang mga chunk na lampas sa minimum threshold para matiyak ang kalidad.
+Kumuha lamang ang sistema ng mga chunks na lampas sa minimum threshold upang matiyak ang kalidad.
 
-Maganda ang performance ng embeddings kapag malinis ang pagkaka-cluster ng kahulugan, ngunit meron itong mga blind spot. Ipinapakita ng diagram sa ibaba ang mga karaniwang failure mode — ang mga chunks na masyadong malaki ay nagbubunga ng malabong vectors, ang mga chunks na masyadong maliit ay kulang sa konteksto, ang mga ambiguous terms ay tumutukoy sa maraming cluster, at ang eksaktong pagtutugma ng lookup (mga ID, part numbers) ay hindi gumagana sa embeddings:
+Maganda ang trabaho ng embeddings kapag malinis ang clustering ng mga kahulugan, ngunit may mga blind spot ito. Ipinapakita ng diagram sa ibaba ang mga karaniwang failure mode — ang masyadong malalaking chunks ay nagbubunga ng malabong vectors, ang masyadong maliliit na chunks ay kulang sa konteksto, ang mga hindi malinaw na termino ay tumutukoy sa maraming cluster, at ang eksaktong pagtutugma (IDs, part numbers) ay hindi gumagana sa embeddings:
 
 <img src="../../../translated_images/tl/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
 
-*Ipinapakita ng diagram na ito ang mga karaniwang failure mode ng embedding: mga sobrang laki o sobrang laki na chunks, mga ambiguous na termino na tumutukoy sa maraming cluster, at mga eksaktong pagtingin tulad ng mga ID.*
+*Ipinapakita ng diagram na ito ang mga karaniwang failure mode sa embeddings: masyadong malalaking chunks, masyadong maliliit na chunks, malabong termino na tumutukoy sa maraming cluster, at eksaktong pagkakatugma tulad ng mga ID.*
 
 ### In-Memory Storage
 
-Gumagamit ang modulong ito ng in-memory storage para sa pagiging simple. Kapag ni-restart mo ang aplikasyon, mawawala ang mga na-upload na dokumento. Gumagamit ang mga production system ng persistent vector databases tulad ng Qdrant o Azure AI Search.
+Gumagamit ang module na ito ng in-memory storage para sa pagiging simple. Kapag ni-restart mo ang aplikasyon, mawawala ang mga na-upload na dokumento. Ang mga production system ay gumagamit ng persistent vector databases tulad ng Qdrant o Azure AI Search.
 
-### Context Window Management
+### Pamamahala ng Context Window
 
-Bawat modelo ay may maximum na context window. Hindi mo maaaring isama lahat ng chunks mula sa isang malaking dokumento. Kinukuha ng sistema ang top N na pinaka-kaugnay na chunks (default ay 5) upang manatili sa loob ng limitasyon habang nagbibigay ng sapat na konteksto para sa tumpak na mga sagot.
+May maximum context window ang bawat modelo. Hindi mo maaaring isama lahat ng chunks mula sa malaking dokumento. Kinukuha ng sistema ang top N pinaka-nauugnay na chunks (default 5) upang hindi lalampas sa limitasyon habang nagbibigay ng sapat na konteksto para sa tama at tumpak na mga sagot.
 
 ## Kailan Mahalaga ang RAG
 
-Hindi palaging angkop ang RAG. Ang gabay sa pagpapasya sa ibaba ay tumutulong sa iyo matukoy kung kailan may halaga ang RAG kumpara sa mga simpleng paraan — tulad ng pagsasama ng nilalaman direkta sa prompt o pag-asa sa built-in na kaalaman ng modelo:
+Hindi palaging tamang paraan ang RAG. Nakakatulong ang gabay sa desisyon sa ibaba upang malaman kung kailan nagdadagdag ng halaga ang RAG kumpara sa mas simpleng paraan — tulad ng direktang pagsasama ng nilalaman sa prompt o pag-asa sa built-in knowledge ng modelo:
 
 <img src="../../../translated_images/tl/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
-*Ipinapakita ng diagram na ito ang gabay sa pagpapasya kung kailan may halaga ang RAG kumpara sa kung kailan sapat ang mga simpleng paraan.*
+*Ipinapakita ng diagram na ito ang gabay sa desisyon kung kailan may halaga ang RAG kumpara sa kapag sapat na ang mas simpleng paraan.*
 
 **Gamitin ang RAG kapag:**
-- Sumagot sa mga tanong tungkol sa proprietary na mga dokumento
-- Madalas nagbabago ang impormasyon (mga polisiya, presyo, espesipikasyon)
-- Nangangailangan ng katumpakan na may pagbanggit ng pinagmulan
-- Masyadong malaki ang nilalaman para maisama sa isang prompt
-- Kailangan ng maireberipikang, nakabatay na mga sagot
+- Sumagot ng mga tanong tungkol sa mga proprietary na dokumento
+- Madalas nagbabago ang impormasyon (mga patakaran, presyo, espesipikasyon)
+- Kinakailangan ang katumpakan na may pagkilala sa pinanggalingan
+- Masyadong malaki ang nilalaman upang ilagay lahat sa isang prompt
+- Kailangan ng mapagkakatiwalaang, grounded na mga sagot
 
 **Huwag gamitin ang RAG kapag:**
-- Mga tanong na nangangailangan ng pangkalahatang kaalaman na mayroon na ang modelo
-- Kailangan ng real-time na datos (gumagana ang RAG sa mga na-upload na dokumento)
-- Maliit lang ang nilalaman kaya maaaring isama direkta sa mga prompt
+- Ang mga tanong ay nangangailangan ng pangkalahatang kaalaman na mayroon na ang modelo
+- Kailangan ng real-time na data (gumagana ang RAG sa mga na-upload na dokumento)
+- Maliit lang ang nilalaman na maaaring direktang isama sa prompt
 
 ## Mga Susunod na Hakbang
 
@@ -433,11 +435,11 @@ Hindi palaging angkop ang RAG. Ang gabay sa pagpapasya sa ibaba ay tumutulong sa
 
 ---
 
-**Navigation:** [← Nakaraan: Module 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Balik sa Pangunahing Pahina](../README.md) | [Susunod: Module 04 - Tools →](../04-tools/README.md)
+**Navigasyon:** [← Nakaraan: Module 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Bumalik sa Pangunahing Pahina](../README.md) | [Susunod: Module 04 - Tools →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Pahayag ng Paunawa**:
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat aming nilalayon ang katumpakan, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o hindi pagkakatugma. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na opisyal na sanggunian. Para sa mahalagang impormasyon, rekomendado ang propesyonal na pagsasaling-tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring magmula sa paggamit ng pagsasaling ito.
+**Paunawa**:  
+Ang dokumentong ito ay isinalin gamit ang serbisyo ng AI na pagsasalin na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat aming pinagsusumikapang maging tama ang pagsasalin, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o di-tiyak na impormasyon. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na pinagmumulan ng tama at opisyal. Para sa mga mahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring magmula sa paggamit ng pagsasaling ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

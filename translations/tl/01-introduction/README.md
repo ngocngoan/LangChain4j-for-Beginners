@@ -1,83 +1,85 @@
 # Module 01: Pagsisimula sa LangChain4j
 
-## Table of Contents
+## Talaan ng Nilalaman
 
-- [Video Walkthrough](../../../01-introduction)
-- [What You'll Learn](../../../01-introduction)
-- [Prerequisites](../../../01-introduction)
-- [Understanding the Core Problem](../../../01-introduction)
-- [Understanding Tokens](../../../01-introduction)
-- [How Memory Works](../../../01-introduction)
-- [How This Uses LangChain4j](../../../01-introduction)
-- [Deploy Azure OpenAI Infrastructure](../../../01-introduction)
-- [Run the Application Locally](../../../01-introduction)
-- [Using the Application](../../../01-introduction)
-  - [Stateless Chat (Left Panel)](../../../01-introduction)
-  - [Stateful Chat (Right Panel)](../../../01-introduction)
-- [Next Steps](../../../01-introduction)
+- [Paglalakad sa Video](../../../01-introduction)
+- [Mga Matututunan Mo](../../../01-introduction)
+- [Mga Kailangan Bago Magsimula](../../../01-introduction)
+- [Pag-unawa sa Pangunahing Suliranin](../../../01-introduction)
+- [Pag-unawa sa mga Token](../../../01-introduction)
+- [Paano Gumagana ang Memorya](../../../01-introduction)
+- [Paano Ito Gumagamit ng LangChain4j](../../../01-introduction)
+- [I-deploy ang Azure OpenAI Infrastructure](../../../01-introduction)
+- [Patakbuhin ang Aplikasyon nang Lokal](../../../01-introduction)
+- [Paggamit ng Aplikasyon](../../../01-introduction)
+  - [Stateless Chat (Kaliwang Panel)](../../../01-introduction)
+  - [Stateful Chat (Kanan na Panel)](../../../01-introduction)
+- [Mga Susunod na Hakbang](../../../01-introduction)
 
-## Video Walkthrough
+## Paglalakad sa Video
 
-Panoorin ang live na sesyon na ito na nagpapaliwanag kung paano magsimula sa module na ito: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
+Panoorin ang live session na ito na nagpapaliwanag kung paano magsimula gamit ang module na ito:
 
-## What You'll Learn
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Getting Started with LangChain4j - Live Session" width="800"/></a>
 
-Kung nakumpleto mo ang quick start, nakita mo kung paano magpadala ng mga prompt at makatanggap ng mga tugon. Ito ang pundasyon, ngunit ang mga totoong aplikasyon ay nangangailangan ng higit pa. Itinuturo ng module na ito kung paano bumuo ng conversational AI na nakakaalala ng konteksto at nagpapanatili ng estado - ang pinagkaiba ng isang one-off na demo at isang handang aplikasyon para sa produksyon.
+## Mga Matututunan Mo
 
-Gagamitin natin ang GPT-5.2 ng Azure OpenAI sa buong gabay na ito dahil sa mga advanced na kakayahan nito sa pangangatwiran na nagpapalinaw ng pag-uugali ng iba't ibang pattern. Kapag nagdagdag ka ng memorya, malinaw mong makikita ang pagkakaiba. Pinapadali nito ang pag-unawa kung ano ang dinadala ng bawat bahagi sa iyong aplikasyon.
+Kung natapos mo na ang quick start, nakita mo kung paano magpadala ng mga prompt at kumuha ng mga tugon. Ito ang pundasyon, ngunit ang totoong mga aplikasyon ay nangangailangan ng higit pa. Itinuturo ng module na ito kung paano bumuo ng conversational AI na nakakaalala ng konteksto at nagpapanatili ng estado — ang pagkakaiba ng isang one-off demo at isang aplikasyon na handa na para sa produksyon.
 
-Magbubuo ka ng isang aplikasyon na nagpapakita ng parehong pattern:
+Gagamitin natin ang Azure OpenAI GPT-5.2 sa buong gabay na ito dahil ang mga advanced na kakayahan nito sa pangangatwiran ay nagpapalinaw ng pag-uugali ng iba't ibang mga pattern. Kapag nagdagdag ka ng memorya, makikita mo nang malinaw ang pagkakaiba. Ginagawa nitong mas madali ang pag-unawa kung ano ang dinadala ng bawat bahagi sa iyong aplikasyon.
 
-**Stateless Chat** - Bawat kahilingan ay independiyente. Walang memorya ng model sa mga naunang mensahe. Ito ang pattern na ginamit mo sa quick start.
+Bubuuin mo ang isang aplikasyon na nagpapakita ng parehong mga pattern:
 
-**Stateful Conversation** - Bawat kahilingan ay may kasamang kasaysayan ng pag-uusap. Pinapanatili ng modelo ang konteksto sa maraming pag-ikot. Ito ang kailangan ng mga aplikasyon para sa produksyon.
+**Stateless Chat** - Bawat kahilingan ay independyente. Walang memorya ang modelo ng mga naunang mensahe. Ito ang pattern na ginamit mo sa quick start.
 
-## Prerequisites
+**Stateful Conversation** - Kasama sa bawat kahilingan ang kasaysayan ng pag-uusap. Pinapanatili ng modelo ang konteksto sa maraming pag-uusap. Ito ang kailangan ng mga aplikasyon sa produksyon.
+
+## Mga Kailangan Bago Magsimula
 
 - Azure subscription na may access sa Azure OpenAI
-- Java 21, Maven 3.9+ 
+- Java 21, Maven 3.9+
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Note:** Java, Maven, Azure CLI at Azure Developer CLI (azd) ay naka-pre-install na sa ibinigay na devcontainer.
+> **Tandaan:** Nakainstall na ang Java, Maven, Azure CLI at Azure Developer CLI (azd) sa ibinigay na devcontainer.
 
-> **Note:** Ginagamit ng module na ito ang GPT-5.2 sa Azure OpenAI. Ang deployment ay awtomatikong naka-configure gamit ang `azd up` - huwag baguhin ang pangalan ng modelo sa code.
+> **Tandaan:** Ginagamit ng module na ito ang GPT-5.2 sa Azure OpenAI. Ang deployment ay naka-configure nang awtomatiko gamit ang `azd up` — huwag baguhin ang pangalan ng modelo sa code.
 
-## Understanding the Core Problem
+## Pag-unawa sa Pangunahing Suliranin
 
-Ang mga language model ay stateless. Bawat tawag sa API ay independiyente. Kung magpadala ka ng "My name is John" at pagkatapos ay magtanong ng "What's my name?", wala itong ideya na ipinakilala mo ang iyong sarili. Tinuturing ng modelo ang bawat kahilingan na parang ito ang unang pag-uusap mo kailanman.
+Ang mga language model ay stateless. Ang bawat tawag sa API ay independyente. Kung ipapadala mo ang "My name is John" at pagkatapos ay tatanungin mo "What's my name?", wala sa modelo ang alam na ipinakilala mo ang iyong sarili. Tinatrato nito ang bawat kahilingan na parang ito ang unang pag-uusap mo kailanman.
 
-Ayos ito para sa simpleng Q&A ngunit walang silbi para sa mga totoong aplikasyon. Kailangan ng mga customer service bot na maalala ang sinasabi mo sa kanila. Kailangan ng mga personal assistant ng konteksto. Anumang multi-turn na pag-uusap ay nangangailangan ng memorya.
+Ayos lang ito para sa simpleng Q&A ngunit walang silbi para sa totoong mga aplikasyon. Kailangan ng mga customer service bots na maalala ang mga sinabi mo sa kanila. Kailangan ng mga personal assistant ang konteksto. Anumang multi-turn na pag-uusap ay nangangailangan ng memorya.
 
 <img src="../../../translated_images/tl/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-*Ang pagkakaiba sa pagitan ng stateless (mga independiyenteng tawag) at stateful (may kamalayan sa konteksto) na mga pag-uusap*
+*Ang pagkakaiba ng stateless (independiyenteng mga tawag) at stateful (may kamalayan sa konteksto) na mga pag-uusap*
 
-## Understanding Tokens
+## Pag-unawa sa mga Token
 
-Bago pumasok sa mga pag-uusap, mahalagang maunawaan ang mga tokens - ang mga pangunahing yunit ng teksto na pinoproseso ng mga language model:
+Bago sumabak sa mga pag-uusap, mahalagang maunawaan ang mga token — mga batayang yunit ng teksto na pinoproseso ng mga language model:
 
 <img src="../../../translated_images/tl/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-*Halimbawa kung paano hinahati ang teksto sa mga tokens - "I love AI!" ay nagiging 4 na magkakahiwalay na yunit na pinoproseso*
+*Halimbawa kung paano hinahati ang teksto sa mga token — "I love AI!" ay nagiging 4 na magkahiwalay na yunit ng proseso*
 
-Ang mga tokens ang ginagamit ng mga AI model para sukatin at iproseso ang teksto. Maaaring maging tokens ang mga salita, bantas, at maging ang mga spaces. May limitasyon ang iyong modelo kung gaano karaming tokens ang kaya nitong iproseso nang sabay-sabay (400,000 para sa GPT-5.2, na may hanggang 272,000 input tokens at 128,000 output tokens). Ang pag-unawa sa tokens ay tumutulong sa'yo para pamahalaan ang haba ng pag-uusap at ang mga gastos.
+Ang mga token ang paraan ng pagsukat at pagproseso ng teksto ng mga AI model. Mga salita, bantas, at maging mga puwang ay maaaring mga token. May limitasyon ang iyong modelo sa dami ng mga token na kayang iproseso nang sabay-sabay (400,000 para sa GPT-5.2, na may hanggang 272,000 input tokens at 128,000 output tokens). Nakakatulong ang pag-unawa sa mga token para pamahalaan ang haba ng pag-uusap at mga gastos.
 
-## How Memory Works
+## Paano Gumagana ang Memorya
 
-Nilulutas ng chat memory ang problemang stateless sa pamamagitan ng pagpapanatili ng kasaysayan ng pag-uusap. Bago ipadala ang iyong kahilingan sa modelo, ipinapasok ng framework ang mga kaugnay na naunang mensahe. Kapag tinanong mo ang "What's my name?", ang sistema ay ipinapadala ang buong kasaysayan ng pag-uusap, kaya nakikita ng modelo na sinabi mo dati ang "My name is John."
+Nilulutas ng chat memory ang stateless na problema sa pamamagitan ng pagpapanatili ng kasaysayan ng pag-uusap. Bago ipadala ang iyong kahilingan sa modelo, idinadagdag ng framework ang mga kaugnay na nakaraang mensahe. Kapag tinanong mo "What's my name?", ang sistema ay aktwal na nagpapadala ng buong kasaysayan ng pag-uusap, kaya nakikita ng modelo na sinabi mo dati na "My name is John."
 
-Nagbibigay ang LangChain4j ng mga implementasyon ng memorya na awtomatikong humahawak nito. Pinipili mo kung ilang mga mensahe ang itatago at pinamamahalaan ng framework ang context window.
+Nagbibigay ang LangChain4j ng mga implementasyon ng memorya na awtomatikong humahawak nito. Pinipili mo kung gaano karaming mga mensahe ang itatago at pinangangasiwaan ng framework ang konteksto sa window.
 
 <img src="../../../translated_images/tl/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*Pinapanatili ng MessageWindowChatMemory ang sliding window ng mga kamakailang mensahe, awtomatikong binubura ang mga luma*
+*Pinapanatili ng MessageWindowChatMemory ang sliding window ng mga kamakailang mensahe, awtomatikong tinatanggal ang mga luma*
 
-## How This Uses LangChain4j
+## Paano Ito Gumagamit ng LangChain4j
 
-Pinalalawak ng module na ito ang quick start sa pamamagitan ng pag-integrate ng Spring Boot at pagdagdag ng memorya sa pag-uusap. Ganito ang pagkakaugnay ng mga bahagi:
+Pinalalawak ng module na ito ang quick start sa pamamagitan ng pag-integrate ng Spring Boot at pagdagdag ng memorya ng pag-uusap. Ganito ang pagkakaayos ng mga bahagi:
 
-**Dependencies** - Magdagdag ng dalawang LangChain4j na libraries:
+**Dependencies** - Magdagdag ng dalawang LangChain4j libraries:
 
 ```xml
 <dependency>
@@ -105,7 +107,7 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Binabasa ng builder ang mga kredensyal mula sa mga environment variable na itinatakda ng `azd up`. Ang pagtatakda ng `baseUrl` sa iyong Azure endpoint ay nagpapaandar ng OpenAI client para sa Azure OpenAI.
+Binabasa ng builder ang mga kredensyal mula sa mga environment variable na na-set ng `azd up`. Ang pagseset ng `baseUrl` sa iyong Azure endpoint ang nagpapagana ng OpenAI client para sa Azure OpenAI.
 
 **Conversation Memory** - Subaybayan ang kasaysayan ng chat gamit ang MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
@@ -120,16 +122,16 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Gumawa ng memorya gamit ang `withMaxMessages(10)` para panatilihin ang huling 10 mensahe. Magdagdag ng mga mensahe mula sa user at AI gamit ang typed wrappers: `UserMessage.from(text)` at `AiMessage.from(text)`. Kunin ang kasaysayan gamit ang `memory.messages()` at ipadala ito sa modelo. Nag-iimbak ang serbisyo ng magkahiwalay na memory instances para sa bawat ID ng pag-uusap, na nagpapahintulot sa maraming user na mag-chat nang sabay-sabay.
+Lumikha ng memorya gamit ang `withMaxMessages(10)` upang itago ang huling 10 mensahe. Magdagdag ng mga mensahe ng user at AI gamit ang typed wrappers: `UserMessage.from(text)` at `AiMessage.from(text)`. Kunin ang kasaysayan gamit ang `memory.messages()` at ipadala ito sa modelo. Nag-iimbak ang serbisyo ng hiwalay na mga instance ng memorya para sa bawat conversation ID, na nagpapahintulot sa maraming mga user na makipag-chat nang sabay-sabay.
 
 > **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) at itanong:
 > - "Paano pinipili ng MessageWindowChatMemory kung aling mga mensahe ang tatanggalin kapag puno na ang window?"
-> - "Pwede ba akong gumamit ng custom memory storage gamit ang database sa halip na in-memory?"
-> - "Paano ako magdadagdag ng summarization para basi kompresin ang lumang kasaysayan ng pag-uusap?"
+> - "Puwede ba akong gumawa ng custom na memory storage gamit ang database imbes na in-memory?"
+> - "Paano ako magdagdag ng summarization para paliitin ang lumang kasaysayan ng pag-uusap?"
 
-Ang stateless chat endpoint ay hindi gumagamit ng memorya - diretso lang `chatModel.chat(prompt)` tulad sa quick start. Ang stateful endpoint ay nagdadagdag ng mga mensahe sa memorya, kinukuha ang kasaysayan, at isinama ang konteksto sa bawat kahilingan. Parehong configuration ng modelo, magkaibang mga pattern.
+Ang stateless chat endpoint ay hindi gumagamit ng memorya — diretso lang `chatModel.chat(prompt)` tulad ng sa quick start. Ang stateful endpoint naman ay nagdadagdag ng mga mensahe sa memorya, kumukuha ng kasaysayan, at isinasama ang kontekstong iyon sa bawat kahilingan. Parehong magkaparehong configuration ng modelo, magkaibang mga pattern.
 
-## Deploy Azure OpenAI Infrastructure
+## I-deploy ang Azure OpenAI Infrastructure
 
 **Bash:**
 ```bash
@@ -143,16 +145,16 @@ cd 01-introduction
 azd up  # Piliin ang subscription at lokasyon (inirerekomenda ang eastus2)
 ```
 
-> **Note:** Kung makaranas ng timeout error (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), isa lang ulit patakbuhin ang `azd up`. Maaaring patuloy pang nagpoprovide ang Azure resources sa background, at ang pag-ulit ay nagpapahintulot matapos ang deployment kapag umabot na ang mga resources sa terminal na estado.
+> **Tandaan:** Kung makatagpo ng timeout error (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), ulitin lang ang `azd up`. Maaaring nagpapatuloy pa ang Azure resources sa background, at ang pag-uulit ay nagpapahintulot sa deployment na matapos kapag ang mga resources ay umabot na sa terminal state.
 
 Ito ay:
 1. Magde-deploy ng Azure OpenAI resource na may GPT-5.2 at text-embedding-3-small models
-2. Awtomatikong gagawa ng `.env` file sa root ng proyekto kasama ang mga kredensyal
-3. Isaayos lahat ng kailangang environment variables
+2. Awtomatikong gagawa ng `.env` file sa root ng proyekto na may mga kredensyal
+3. Ise-set up ang lahat ng kailangang environment variables
 
-**May problema sa deployment?** Tingnan ang [Infrastructure README](infra/README.md) para sa detalyadong troubleshooting kabilang ang mga conflict sa subdomain name, manu-manong deployment gamit ang Azure Portal, at mga gabay sa configuration ng modelo.
+**Nagkakaproblema sa deployment?** Tingnan ang [Infrastructure README](infra/README.md) para sa detalyadong troubleshooting kabilang ang mga subdomain name conflicts, manu-manong deployment sa Azure Portal, at gabay sa configuration ng modelo.
 
-**Siguraduhing matagumpay ang deployment:**
+**I-verify kung matagumpay ang deployment:**
 
 **Bash:**
 ```bash
@@ -164,7 +166,7 @@ cat ../.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, atbp.
 Get-Content ..\.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, atbp.
 ```
 
-> **Note:** Awtomatikong ginagawa ng `azd up` ang `.env` file. Kung kailangan mo itong i-update sa hinaharap, maaari mo itong i-edit nang manu-mano o i-regenerate sa pamamagitan ng pagtakbo ng:
+> **Tandaan:** Ang `azd up` ay awtomatikong gumagawa ng `.env` file. Kung kailangan mo itong i-update sa ibang pagkakataon, maaari mong i-edit ang `.env` nang mano-mano o muling gawin ito sa pamamagitan ng pagtakbo ng:
 >
 > **Bash:**
 > ```bash
@@ -178,11 +180,12 @@ Get-Content ..\.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, atbp.
 > .\.azd-env.ps1
 > ```
 
-## Run the Application Locally
 
-**Siguraduhing matagumpay ang deployment:**
+## Patakbuhin ang Aplikasyon nang Lokal
 
-Tiyaking nandito ang `.env` file sa root directory na may Azure credentials:
+**I-verify ang deployment:**
+
+Siguraduhing nandito ang `.env` file sa root directory na may Azure credentials:
 
 **Bash:**
 ```bash
@@ -194,29 +197,30 @@ cat ../.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 Get-Content ..\.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
+
 **Simulan ang mga aplikasyon:**
 
-**Opsyon 1: Gamit ang Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
+**Opsyon 1: Paggamit ng Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
 
-Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual na interface para pamahalaan lahat ng Spring Boot applications. Makikita ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang Spring Boot icon).
+Kasama sa dev container ang Spring Boot Dashboard extension na nagbibigay ng visual na interface para pamahalaan ang lahat ng Spring Boot apps. Makikita mo ito sa Activity Bar sa kaliwa ng VS Code (hanapin ang Spring Boot icon).
 
 Mula sa Spring Boot Dashboard, maaari mong:
-- Makita lahat ng available na Spring Boot applications sa workspace
-- Simulan/hinto ang mga aplikasyon sa isang click lang
-- Tingnan ang mga logs ng aplikasyon nang real-time
-- I-monitor ang estado ng aplikasyon
+- Makita ang lahat ng magagamit na Spring Boot applications sa workspace
+- Simulan/hinto ang mga apps sa isang click lang
+- Tingnan ang mga logs ng app nang real-time
+- Subaybayan ang status ng app
 
-I-click lang ang play button sa tabi ng "introduction" para simulan ang module na ito, o simulan lahat ng module ng sabay-sabay.
+Pindutin lang ang play button malapit sa "introduction" para simulan ang module na ito, o i-start lahat ng modules nang sabay-sabay.
 
 <img src="../../../translated_images/tl/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Opsyon 2: Gamit ang mga shell script**
+**Opsyon 2: Paggamit ng shell scripts**
 
-Simulan lahat ng web application (modules 01-04):
+Simulan ang lahat ng web apps (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Mula sa root directory
+cd ..  # Mula sa ugat na direktoryo
 ./start-all.sh
 ```
 
@@ -225,6 +229,7 @@ cd ..  # Mula sa root directory
 cd ..  # Mula sa root directory
 .\start-all.ps1
 ```
+
 
 O simulan lang ang module na ito:
 
@@ -240,9 +245,10 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Ang parehong mga script ay awtomatikong naglo-load ng mga environment variable mula sa root `.env` file at magtatayo ng mga JAR kung wala pa.
 
-> **Note:** Kung nais mong gumawa nang manu-mano ng lahat ng module bago simulan:
+Parehong scripts ay awtomatikong naglo-load ng environment variables mula sa root `.env` file at magbi-build ng JARs kung wala pa.
+
+> **Tandaan:** Kung mas gusto mong idevelop nang mano-mano lahat ng modules bago magsimula:
 >
 > **Bash:**
 > ```bash
@@ -256,61 +262,63 @@ Ang parehong mga script ay awtomatikong naglo-load ng mga environment variable m
 > mvn clean package -DskipTests
 > ```
 
+
 Buksan ang http://localhost:8080 sa iyong browser.
 
 **Para itigil:**
 
 **Bash:**
 ```bash
-./stop.sh  # Ang modulong ito lamang
+./stop.sh  # Module na ito lamang
 # O
-cd .. && ./stop-all.sh  # Lahat ng mga module
+cd .. && ./stop-all.sh  # Lahat ng module
 ```
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Para lang sa module na ito
+.\stop.ps1  # Ang module na ito lang
 # O
-cd ..; .\stop-all.ps1  # Lahat ng module
+cd ..; .\stop-all.ps1  # Lahat ng modules
 ```
 
-## Using the Application
 
-Nagbibigay ang aplikasyon ng web interface na may dalawang implementasyon ng chat na magkatabi.
+## Paggamit ng Aplikasyon
+
+Nagbibigay ang aplikasyon ng web interface na may dalawang chat implementations na magkatabi.
 
 <img src="../../../translated_images/tl/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Dashboard na nagpapakita ng pareho'ng Simple Chat (stateless) at Conversational Chat (stateful) na mga opsyon*
+*Dashboard na nagpapakita ng parehong Simple Chat (stateless) at Conversational Chat (stateful) na mga opsyon*
 
-### Stateless Chat (Left Panel)
+### Stateless Chat (Kaliwang Panel)
 
-Subukan ito muna. Sabihin ang "My name is John" at agad na itanong "What's my name?" Hindi ito aalalahanin ng modelo dahil ang bawat mensahe ay independiyente. Ipinapakita nito ang pangunahing problema sa integrasyon ng basic language model - walang konteksto ng pag-uusap.
+Subukan ito muna. Itanong ang "My name is John" at pagkatapos ay agad na itanong "What's my name?" Hindi ito maaalala ng modelo dahil bawat mensahe ay independyente. Ipinapakita nito ang pangunahing problema sa basic na integration ng language model — walang konteksto ng pag-uusap.
 
 <img src="../../../translated_images/tl/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
-*Hindi naaalala ng AI ang pangalan mo mula sa naunang mensahe*
+*Hindi naaalala ng AI ang iyong pangalan mula sa nakaraang mensahe*
 
-### Stateful Chat (Right Panel)
+### Stateful Chat (Kanan na Panel)
 
-Ngayon subukan ang parehong pagkakasunod dito. Sabihin ang "My name is John" at pagkatapos ay "What's my name?" Ngayon ay naaalala nito. Ang pinagkaiba ay ang MessageWindowChatMemory - pinapanatili nito ang kasaysayan ng pag-uusap at isinama ito sa bawat kahilingan. Ganito gumagana ang production conversational AI.
+Ngayon subukan ang parehong pagkakasunod dito. Itanong ang "My name is John" at pagkatapos ay "What's my name?" Ngayon ito ay naaalala. Ang pagkakaiba ay ang MessageWindowChatMemory — pinapanatili nito ang kasaysayan ng pag-uusap at isinasama ito sa bawat kahilingan. Ganito gumagana ang production conversational AI.
 
 <img src="../../../translated_images/tl/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*Naalaala ng AI ang pangalan mo mula sa naunang bahagi ng pag-uusap*
+*Naalaala ng AI ang iyong pangalan mula sa naunang pag-uusap*
 
-Parehong gamit ang GPT-5.2 model ang dalawang panel. Ang tanging pagkakaiba ay ang memorya. Pinapalinaw nito kung ano ang naidudulot ng memorya sa iyong aplikasyon at kung bakit mahalaga ito para sa mga totoong kaso ng paggamit.
+Parehong gumagamit ang dalawang panel ng parehong GPT-5.2 na modelo. Ang tanging pagkakaiba ay ang memorya. Ito ang nagpapalinaw kung ano ang dala ng memorya sa iyong aplikasyon at kung bakit mahalaga ito para sa tunay na paggamit.
 
-## Next Steps
+## Mga Susunod na Hakbang
 
-**Next Module:** [02-prompt-engineering - Prompt Engineering with GPT-5.2](../02-prompt-engineering/README.md)
+**Susunod na Module:** [02-prompt-engineering - Prompt Engineering with GPT-5.2](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigation:** [← Previous: Module 00 - Quick Start](../00-quick-start/README.md) | [Back to Main](../README.md) | [Next: Module 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
+**Navigation:** [← Nakaraan: Module 00 - Quick Start](../00-quick-start/README.md) | [Bumalik sa Pangunahing Bahagi](../README.md) | [Susunod: Module 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Paunawa**:  
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat nagsusumikap kami para sa katumpakan, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o hindi tumpak na impormasyon. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na opisyal na sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasaling pantao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling pagpapakahulugan na nagmumula sa paggamit ng pagsasaling ito.
+**Paalala**:  
+Ang dokumentong ito ay naisalin gamit ang serbisyong AI na pagsasalin na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagama't sinisikap naming maging tumpak ang pagsasalin, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o hindi pagkakatumpak. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na opisyal na sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot para sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring magmula sa paggamit ng pagsasaling ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
