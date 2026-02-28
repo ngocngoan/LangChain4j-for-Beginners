@@ -1,138 +1,140 @@
 # Moduuli 03: RAG (Retrieval-Augmented Generation)
 
-## Sisällysluettelo
+## Sisällys
 
-- [Videokävely](../../../03-rag)
+- [Video- läpikäynti](../../../03-rag)
 - [Mitä opit](../../../03-rag)
 - [Esivaatimukset](../../../03-rag)
 - [RAG:n ymmärtäminen](../../../03-rag)
-  - [Mitä RAG-lähestymistapaa tämä opas käyttää?](../../../03-rag)
-- [Miten se toimii](../../../03-rag)
+  - [Mikä RAG-lähestymistapa tätä opetusohjelmaa käyttää?](../../../03-rag)
+- [Kuinka se toimii](../../../03-rag)
   - [Dokumentin käsittely](../../../03-rag)
-  - [Embeddingien luonti](../../../03-rag)
+  - [Upotusten luominen](../../../03-rag)
   - [Semanttinen haku](../../../03-rag)
-  - [Vastausten generointi](../../../03-rag)
+  - [Vastauksen generointi](../../../03-rag)
 - [Sovelluksen suorittaminen](../../../03-rag)
 - [Sovelluksen käyttäminen](../../../03-rag)
-  - [Dokumentin lataaminen](../../../03-rag)
+  - [Dokumentin lähettäminen](../../../03-rag)
   - [Kysymysten esittäminen](../../../03-rag)
   - [Lähdeviitteiden tarkistaminen](../../../03-rag)
   - [Kokeile kysymyksiä](../../../03-rag)
 - [Keskeiset käsitteet](../../../03-rag)
-  - [Palojen pilkkomisstrategia](../../../03-rag)
-  - [Samankaltaisuuspisteet](../../../03-rag)
-  - [Muistissa tapahtuva tallennus](../../../03-rag)
-  - [Kontekstin hallinta](../../../03-rag)
-- [Milloin RAG on tärkeä](../../../03-rag)
+  - [Pilkunteon strategia](../../../03-rag)
+  - [Samanlaisuuspisteet](../../../03-rag)
+  - [Muistissa säilytys](../../../03-rag)
+  - [Kontekstikehyksen hallinta](../../../03-rag)
+- [Milloin RAG on merkityksellinen](../../../03-rag)
 - [Seuraavat askeleet](../../../03-rag)
 
-## Videokävely
+## Video- läpikäynti
 
-Katso tämä liveistunto, joka selittää, miten moduulin kanssa pääsee alkuun: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Katso tämä live-istunto, joka selittää miten aloittaa tämän moduulin kanssa:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
 ## Mitä opit
 
-Edellisissä moduuleissa opit käymään keskusteluja tekoälyn kanssa ja muodostamaan pyyntöjä tehokkaasti. Mutta niiden perusrajoitus on: kielimallit tietävät vain sen, mitä ne oppivat harjoittelun aikana. Ne eivät voi vastata kysymyksiin yrityksesi politiikoista, projektidokumentaatiostasi tai mistä tahansa tiedosta, jota ne eivät ole oppineet.
+Edellisissä moduuleissa opit käymään keskusteluja tekoälyn kanssa ja jäsentämään kehotteesi tehokkaasti. Mutta siinä on perustavanlaatuinen rajoitus: kielimallit tietävät vain sen, mitä ne oppivat koulutuksen aikana. Ne eivät voi vastata kysymyksiin yrityksesi käytännöistä, projektidokumentaatiostasi tai mistään tiedoista, joita niille ei ole opetettu.
 
-RAG (Retrieval-Augmented Generation) ratkaisee tämän ongelman. Sen sijaan, että mallille opetettaisiin tietosi (mikä on kallista ja epäkäytännöllistä), annat sille kyvyn hakea asiakirjoistasi. Kun joku esittää kysymyksen, järjestelmä löytää siihen liittyvää tietoa ja lisää sen kehoteviestiin. Malli vastaa sitten kootun kontekstin perusteella.
+RAG (Retrieval-Augmented Generation) ratkaisee tämän ongelman. Sen sijaan, että mallille yritettäisiin opettaa tietosi (mikä on kallista ja epäkäytännöllistä), sille annetaan kyky etsiä dokumenteistasi. Kun joku esittää kysymyksen, järjestelmä löytää oleellisen tiedon ja sisällyttää sen kehotteeseen. Malli vastaa sitten haetun kontekstin perusteella.
 
-Ajattele RAG:ia mallille annetuksi viitetietokirjastoksi. Kun kysyt kysymyksen, järjestelmä:
+Ajattele RAG:ia mallille annettuna viitetietokirjastona. Kun kysyt kysymyksen, järjestelmä:
 
-1. **Käyttäjän kysely** - Sinä esität kysymyksen  
-2. **Embedding** - Muuntaa kysymyksesi vektoriksi  
-3. **Vektorihaku** - Löytää samanlaisia dokumenttipaloja  
-4. **Kontekstin kokoaminen** - Lisää aiheeseen liittyvät palat kehoteviestiin  
-5. **Vastaus** - LLM luo vastauksen kontekstin perusteella  
+1. **Käyttäjän kysely** – Esität kysymyksen
+2. **Upotus** – Muuntaa kysymyksen vektoriksi
+3. **Vektori-haku** – Löytää samankaltaisia dokumenttipalasia
+4. **Kontekstin kokoaminen** – Lisää olennaiset palat kehotteeseen
+5. **Vastaus** – LLM tuottaa vastauksen kontekstin perusteella
 
-Tämä sitoo mallin vastaukset todellisiin tietoihisi sen sijaan, että ne perustuisivat pelkkään harjoittelutietoon tai keksittäisiin vastauksia.
+Tämä perustaa mallin vastaukset todellisiin tietoihisi sen sijaan, että luottaisi sen koulutustietoon tai keksisi vastauksia.
 
 ## Esivaatimukset
 
-- Suoritettu [Moduuli 00 - Nopeasti alkuun](../00-quick-start/README.md) (Helpolle RAG-esimerkkille, johon yllä viitataan)  
-- Suoritettu [Moduuli 01 - Johdanto](../01-introduction/README.md) (Azure OpenAI -resurssit käytössä, mukaan lukien `text-embedding-3-small` embedding-malli)  
-- `.env`-tiedosto juuressa, jossa Azure-tunnukset (luotu `azd up` -komennolla Modulissa 01)  
+- Suoritettu [Moduuli 00 - Nopeasti alkuun](../00-quick-start/README.md) (yllä mainitun Easy RAG -esimerkin osalta)
+- Suoritettu [Moduuli 01 - Johdanto](../01-introduction/README.md) (Azure OpenAI -resurssit käyttöönotettu, mukaan lukien `text-embedding-3-small` upotusmalli)
+- Juurikansiossa `.env`-tiedosto Azure-tunnuksilla (luotu `azd up` -komennolla Moduulissa 01)
 
-> **Huom:** Jos et ole vielä suorittanut Moduulia 01, noudata ensin siellä annettuja käyttöönotto-ohjeita. `azd up` -komento ottaa käyttöön sekä GPT-keskustelumallin että tämän moduulin käyttämän embedding-mallin.
+> **Huom:** Jos et ole suorittanut Moduulia 01, seuraa ensin siellä olevia käyttöönotto-ohjeita. `azd up` -komento ottaa käyttöön GPT-chat-mallin ja upotusmallin, jota tämä moduuli käyttää.
 
 ## RAG:n ymmärtäminen
 
-Alla oleva kuva havainnollistaa ydinkäsitettä: sen sijaan, että luotettaisiin vain mallin harjoitteluaineistoon, RAG antaa sille asiakirjasi viitetietokirjastoksi, johon se voi tukeutua ennen jokaista vastauksen generointia.
+Alla oleva kaavio havainnollistaa ydinkäsitettä: sen sijaan että luottaisi mallin koulutusdataan yksinään, RAG antaa sille viitetietokirjaston dokumenteistasi konsultoitavaksi ennen vastauksen luontia.
 
 <img src="../../../translated_images/fi/what-is-rag.1f9005d44b07f2d8.webp" alt="Mikä on RAG" width="800"/>
 
-*Tämä kuva näyttää eron tavallisen LLM:n (joka arvaa harjoitteludatan perusteella) ja RAG-parannetun LLM:n (joka konsultoi ensin asiakirjojasi) välillä.*
+*Tämä kaavio näyttää eron tavallisen LLM:n (joka arvaa koulutusdatan perusteella) ja RAG-parannetun LLM:n välillä (joka keskustelee ensin dokumenttisi kanssa).*
 
-Tässä miten palaset yhdistyvät päästä päähän. Käyttäjän kysymys liikkuu neljän vaiheen läpi — embedding, vektorihaku, kontekstin kokoaminen ja vastausten generointi — jokainen edellisen päälle rakentuva:
+Näin vaiheet yhdistyvät päästä päähän. Käyttäjän kysymys kulkee neljän vaiheen läpi — upotus, vektori-haku, kontekstin kokoaminen ja vastauksen generointi — jokainen edellisen päälle rakennettu:
 
 <img src="../../../translated_images/fi/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG-arkkitehtuuri" width="800"/>
 
-*Tämä kuva näyttää RAG-putken päästä päähän — käyttäjän kysely kulkee embeddingin, vektorihakemisen, kontekstin kokoamisen ja vastausten generoinnin läpi.*
+*Tämä kaavio näyttää päätä päähän RAG-putken — käyttäjän kysely kulkee upotuksen, vektori-haun, kontekstin kokoamisen ja vastauksen generoinnin läpi.*
 
-Tämän moduulin loput osat käyvät läpi jokaisen vaiheen yksityiskohtaisesti koodin kanssa, jota voit ajaa ja muokata.
+Loput tästä moduulista käyvät läpi kukin vaiheen yksityiskohtaisesti, mukana koodi jota voit ajaa ja muokata.
 
-### Mitä RAG-lähestymistapaa tämä opas käyttää?
+### Mikä RAG-lähestymistapa tätä opetusohjelmaa käyttää?
 
-LangChain4j tarjoaa kolme tapaa toteuttaa RAG, jokainen eri abstraktiotasolla. Alla oleva kuva vertaa niitä rinnakkain:
+LangChain4j tarjoaa kolme tapaa toteuttaa RAG, kukin eri abstraktiotason kanssa. Alla oleva kaavio vertaa niitä rinnakkain:
 
 <img src="../../../translated_images/fi/rag-approaches.5b97fdcc626f1447.webp" alt="Kolme RAG-lähestymistapaa LangChain4j:ssa" width="800"/>
 
-*Tämä kuva vertailee Kolmea LangChain4j:n RAG-lähestymistapaa — Helppo, Natiivi ja Edistynyt — ja näyttää niiden keskeiset osat ja käyttötarkoitukset.*
+*Tämä kaavio vertaa kolmea LangChain4j:n RAG-lähestymistapaa — Easy, Native ja Advanced — näyttäen niiden keskeiset osat ja milloin käyttää kutakin.*
 
-| Lähestymistapa | Mitä se tekee | Kompromissi |
+| Lähestymistapa | Toiminto | Vaihtokauppa |
 |---|---|---|
-| **Helppo RAG** | Kytkee kaiken automaattisesti `AiServices`- ja `ContentRetriever`-komponenttien kautta. Merkitset rajapinnan, liität hakutoiminnon, ja LangChain4j hoitaa embeddingin, haun ja kehoteviestin kokoamisen taustalla. | Vähäinen koodi, mutta et näe mitä tapahtuu jokaisessa vaiheessa. |
-| **Natiivi RAG** | Kutsut embedding-mallin, haet tallennuksesta, koot kehoteviestin ja generoit vastauksen itse — yksi selkeä vaihe kerrallaan. | Lisää koodia, mutta jokainen vaihe on näkyvä ja muokattavissa. |
-| **Edistynyt RAG** | Käyttää `RetrievalAugmentor`-kehystä, jossa on liitettäviä kyselyn muuntajia, reitittimiä, uudelleenjärjestäjiä ja sisältöinjektoreita tuotantotason putkia varten. | Maksimaalinen joustavuus, mutta huomattavasti monimutkaisempi. |
+| **Easy RAG** | Kytkee kaiken automaattisesti `AiServices`- ja `ContentRetriever`-komponenttien kautta. Annoit rajapinnan, liität hakijan, ja LangChain4j hoitaa upotuksen, haun ja kehotteen kokoamisen taustalla. | Vähäinen koodi, mutta et näe mitä kussakin vaiheessa tapahtuu. |
+| **Native RAG** | Kutsut itse upotusmallia, haet tietovarastosta, rakennat kehotteen ja generoit vastauksen — yksi eksplisiittinen vaihe kerrallaan. | Enemmän koodia, mutta jokainen vaihe näkyy ja on muokattavissa. |
+| **Advanced RAG** | Käyttää `RetrievalAugmentor`-kehystä, jossa on liitettävissä olevia kyselynmuuntimia, reitittimiä, uudelleenjärjestelijöitä ja sisällönlisääjiä tuotantokelpoisiin putkiin. | Maksimaalinen joustavuus, mutta huomattavasti monimutkaisempi. |
 
-**Tämä opas käyttää Natiivia lähestymistapaa.** Jokainen RAG-putken vaihe — kyselyn embedding, vektorihakeminen, kontekstin kokoaminen ja vastauksen generointi — on kirjoitettu selkeästi tiedostossa [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Tämä on tarkoituksellista: opetusmateriaalina on tärkeämpää, että näet ja ymmärrät jokaisen vaiheen hahmottua, kuin että koodi olisi minimoitu. Kun tunnet palaset ja kuinka ne liittyvät toisiinsa, voit siirtyä Helppoon RAGiin nopeita prototyyppejä varten tai Edistyneeseen RAGiin tuotantojärjestelmiä varten.
+**Tämä opetusohjelma käyttää Native-lähestymistapaa.** RAG-putken jokainen vaihe — kyselyn upotus, vektoritietovaraston haku, kontekstin kokoaminen ja vastauksen generointi — on kirjoitettu eksplisiittisesti tiedostossa [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Tämä on tarkoituksellista: oppimateriaalina on tärkeämpää, että näet ja ymmärrät jokaisen vaiheen kuin että koodi olisi minimoitu. Kun olet tottunut siihen, miten osat sopivat yhteen, voit siirtyä Easy RAG:iin nopeille prototyypeille tai Advanced RAG:iin tuotantojärjestelmille.
 
-> **💡 Oletko jo nähnyt Helpon RAGin toiminnassa?** [Nopeasti alkuun -moduuli](../00-quick-start/README.md) sisältää Document Q&A -esimerkin ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)), joka käyttää Helppoa RAG-lähestymistapaa — LangChain4j hoitaa embeddingin, haun ja kehoteviestin kokoamisen automaattisesti. Tämä moduuli ottaa seuraavan askeleen avaamalla putken niin, että voit nähdä ja hallita kutakin vaihetta itse.
+> **💡 Oletko jo nähnyt Easy RAG:in toiminnassa?** [Nopeasti alkuun -moduuli](../00-quick-start/README.md) sisältää dokumentti Q&A -esimerkin ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)), joka käyttää Easy RAG -lähestymistapaa — LangChain4j hoitaa automaattisesti upotuksen, haun ja kehotteen kokoamisen. Tämä moduuli ottaa seuraavan askeleen avaamalla kyseisen putken, jotta voit nähdä ja hallita jokaista vaihetta itse.
 
-<img src="../../../translated_images/fi/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Helppo RAG-putki - LangChain4j" width="800"/>
+<img src="../../../translated_images/fi/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
-*Tämä kuva näyttää Helpon RAG-putken tiedostosta `SimpleReaderDemo.java`. Vertaa tätä Natiivin lähestymistavan kanssa, jota tämä moduuli käyttää: Helppo RAG piilottaa embeddingin, haun ja kehoteviestin kokoamisen `AiServices`- ja `ContentRetriever`-komponenttien taakse — lataat dokumentin, liität hakutoiminnon ja saat vastaukset. Natiivi lähestymistapa tässä moduulissa avaa putken siten, että kutsut jokaisen vaiheen (embed, haku, kontekstin kokoaminen, generointi) itse, tarjoten täyden näkyvyyden ja hallinnan.*
+*Tämä kaavio näyttää Easy RAG -putken `SimpleReaderDemo.java`-tiedostosta. Vertaa tätä Native-lähestymistapaan tässä moduulissa: Easy RAG piilottaa upotuksen, haun ja kehotteen kokoamisen `AiServices`- ja `ContentRetriever`-komponenttien taakse — lataa dokumentti, liitä hakija ja saat vastaukset. Tämän moduulin Native-lähestymistapa avaa putken siten, että kutsut itse jokaisen vaiheen (upotus, haku, kontekstin kokoaminen, generointi) antaen täyden näkyvyyden ja hallinnan.*
 
-## Miten se toimii
+## Kuinka se toimii
 
-Tämän moduulin RAG-putki jakautuu neljään vaiheeseen, jotka suoritetaan peräkkäin aina kun käyttäjä esittää kysymyksen. Ensin ladattu dokumentti **jäsennetään ja pilkotaan** hallittaviin palasiin. Nämä palat muunnetaan sitten **vektoriedustuksiksi (embeddings)**, jotka tallennetaan vertailun mahdollistamiseksi. Kun kysely saapuu, järjestelmä suorittaa **semanttisen haun** löytääkseen asiaankuuluvimmat palat, ja lopulta välittää ne kontekstina LLM:lle **vastauksen generointia** varten. Seuraavat osiot käyvät läpi jokaisen vaiheen koodin ja kaavioiden kera. Aloitetaan ensimmäisestä vaiheesta.
+Tämän moduulin RAG-putki jakautuu neljään vaiheeseen, jotka suoritetaan peräjälkeen aina kun käyttäjä kysyy jotain. Ensin ladattu dokumentti **jäsennetään ja pilkotaan** hallittaviin osiin. Nuo osat muunnetaan sitten **vektorimuotoisiksi upotuksiksi** ja tallennetaan vertailtaviksi matemaattisesti. Kun kysely saapuu, järjestelmä suorittaa **semanttisen haun** löytääkseen relevantimmat osat ja lopuksi välittää ne kontekstina LLM:lle **vastauksen generointia varten**. Seuraavat osiot käyvät jokaisen vaiheen läpi varsinaisella koodilla ja kaavioilla. Tarkastellaan ensimmäistä vaihetta.
 
 ### Dokumentin käsittely
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Kun lataat dokumentin, järjestelmä jäsentää sen (PDF tai pelkkä teksti), liittää metatietoja kuten tiedostonimen ja pilkkoo sen sitten paloiksi — pienemmiksi osiksi, jotka mahtuvat mukavasti mallin konteksti-ikkunaan. Palaset hieman limittäytyvät, jotta kontekstin rajakohdissa ei menetetä tietoa.
+Kun lähetät dokumentin, järjestelmä jäsentää sen (PDF tai pelkkä teksti), liittää metatietoja kuten tiedostonimen ja pilkkoo sen osiin — pienempiin palasiin, jotka sopivat hyvin mallin kontekstikehykseen. Nämä palaset lomittuvat hieman, jotta rajakohdissa ei menetetä kontekstia.
 
 ```java
-// Jäsennä ladattu tiedosto ja kääri se LangChain4j-dokumentiksi
+// Jäsennä ladattu tiedosto ja kääri se LangChain4j-dokumenttiin
 Document document = Document.from(content, metadata);
 
-// Pilko 300 tokenin paloiksi, joissa on 30 tokenin päällekkäisyys
+// Pilko 300 tokenin osiin, joissa on 30 tokenin päällekkäisyys
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
-  
-Alla oleva kaavio näyttää tämän toiminnan visuaalisesti. Huomaa, kuinka jokainen pala jakaa joitain tokeneita naapureidensa kanssa — 30 tokenin limitys varmistaa, ettei tärkeä konteksti putoa raoista:
 
-<img src="../../../translated_images/fi/document-chunking.a5df1dd1383431ed.webp" alt="Dokumentin pilkkominen" width="800"/>
+Alla oleva kaavio näyttää tämän toiminnan visuaalisesti. Huomaa, miten jokainen pala jakaa joitain tokeneita naapureidensa kanssa — 30-tokenin lomittuminen varmistaa, ettei tärkeä konteksti jää väliin:
 
-*Tämä kaavio osoittaa dokumentin pilkkomisen 300 tokenin paloiksi 30 tokenin limityksellä, jolloin konteksti rajojen välillä säilyy.*
+<img src="../../../translated_images/fi/document-chunking.a5df1dd1383431ed.webp" alt="Dokumentin pilkkominen osiin" width="800"/>
 
-> **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatissa:** Avaa [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) ja kysy:
-> - "Miten LangChain4j pilkkoo dokumentit paloiksi ja miksi limitys on tärkeää?"
-> - "Mikä on optimaalinen palakoko eri dokumenttityypeille ja miksi?"
-> - "Miten käsitellä monikielisiä dokumentteja tai erityistä muotoilua?"
+*Tämä kaavio näyttää dokumentin pilkkomisen 300-tokenin paloiksi 30-tokenin lomittumisella, säilyttäen kontekstin palojen rajalla.*
 
-### Embeddingien luonti
+> **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatin kanssa:** Avaa [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) ja kysy:
+> - "Miten LangChain4j pilkkoo dokumentit paloiksi ja miksi lomittuminen on tärkeää?"
+> - "Mikä on optimaalinen pilkkujen koko eri dokumenttityypeille ja miksi?"
+> - "Miten käsittelen monikielisiä dokumentteja tai erikoismuotoiluja?"
+
+### Upotusten luominen
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Jokainen pala muunnetaan numeeriseksi esitykseksi, jota kutsutaan embeddingiksi — käytännössä merkityksen muuntajaksi numeroiksi. Embedding-malli ei ole "älykäs" kuten keskustelumalli; se ei pysty seuraamaan ohjeita, päättämään tai vastaamaan kysymyksiin. Se voi kuitenkin kartoittaa tekstin matemaattiseen tilaan, jossa samanlaiset merkitykset sijoittuvat lähelle toisiaan — "auto" lähelle "ajoneuvo", "hyvityskäytäntö" lähelle "palauta rahani." Ajattele keskustelumallia ihmisenä, jolle voit puhua; embedding-malli on erinomaisen tehokas arkistointijärjestelmä.
+Jokainen pala muunnetaan numeeriseen esitykseen, jota kutsutaan upotukseksi — käytännössä merkityksen muuntamiseksi numeroiksi. Upotusmalli ei ole "älykäs" samalla tavalla kuin chat-malli; se ei pysty noudattamaan ohjeita, päättämään tai vastaamaan kysymyksiin. Se voi kuitenkin kartoittaa tekstiä matemaattiseen tilaan, jossa samankaltaiset merkitykset asettuvat lähelle toisiaan — "auto" lähelle "ajoneuvoa", "palautuskäytäntö" lähelle "rahojen palautusta". Ajattele chat-mallia henkilönä, johon voi puhua; upotusmalli on erittäin hyvä arkistointijärjestelmä.
 
-<img src="../../../translated_images/fi/embedding-model-concept.90760790c336a705.webp" alt="Embedding-mallin käsite" width="800"/>
+<img src="../../../translated_images/fi/embedding-model-concept.90760790c336a705.webp" alt="Upotusmallin käsite" width="800"/>
 
-*Tämä kuva osoittaa, miten embedding-malli muuntaa tekstin numeerisiksi vektoreiksi, asettaen samanlaiset merkitykset — kuten "auto" ja "ajoneuvo" — lähelle toisiaan vektoritilassa.*
+*Tämä kaavio näyttää, miten upotusmalli muuttaa tekstiä numeerisiksi vektoreiksi, sijoittaen samankaltaiset merkitykset — kuten "auto" ja "ajoneuvo" — lähelle toisiaan vektoritilassa.*
 
 ```java
 @Bean
@@ -147,30 +149,30 @@ public EmbeddingModel embeddingModel() {
 EmbeddingStore<TextSegment> embeddingStore = 
     new InMemoryEmbeddingStore<>();
 ```
-  
-Luokkakaavio alla näyttää kaksi erillistä virtausta RAG-putkessa ja LangChain4j-luokat, jotka toteuttavat ne. **Ingestio-virtaus** (suoritetaan kerran latauksen yhteydessä) pilkkoo dokumentin, luo embeddingit paloille ja tallentaa ne `.addAll()`-kutsulla. **Kyselyvirtaus** (ajetaan jokaisella käyttäjän kyselyllä) luo kyselyn embeddingin, hakee tallennuksesta `.search()`-kutsulla ja välittää vastaavat kontekstit keskustelumallille. Molemmat virrat yhdistyvät jaettuun `EmbeddingStore<TextSegment>` -rajapintaan:
 
-<img src="../../../translated_images/fi/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j:n RAG-luokat" width="800"/>
+Alla oleva luokkakaavio näyttää kaksi erillistä virtausta RAG-putkessa ja LangChain4j-luokat, jotka niitä toteuttavat. **Syöttövirta** (ajetaan kerran lähetyksen yhteydessä) pilkkoo dokumentin, upottaa palaset ja tallentaa ne `.addAll()`-metodilla. **Kyselyvirta** (ajetaan aina kun käyttäjä kysyy) upottaa kysymyksen, hakee tietovarastosta `.search()`-metodilla ja välittää löydetyn kontekstin chat-mallille. Molemmat virtaukset kohtaavat yhteisessä `EmbeddingStore<TextSegment>` -rajapinnassa:
 
-*Tämä kuva näyttää kaksi RAG-putken virtausta — ingestio ja kysely — ja kuinka ne yhdistyvät yhteisen EmbeddingStore-rajapinnan kautta.*
+<img src="../../../translated_images/fi/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG -luokat" width="800"/>
 
-Kun embeddingit on tallennettu, samanlainen sisältö luonnollisesti ryhmittyy vektoritilassa. Alla oleva visualisointi näyttää, miten saman aihepiirin dokumentit päätyvät lähelle toisiaan, mikä tekee semanttisesta hausta mahdollista:
+*Tämä kaavio näyttää RAG-putken kaksi virtausta — syötön ja kyselyn — ja miten ne yhdistyvät yhteisen EmbeddingStore-rajapinnan kautta.*
 
-<img src="../../../translated_images/fi/vector-embeddings.2ef7bdddac79a327.webp" alt="Vektoriedustusten tila" width="800"/>
+Kun upotukset on tallennettu, samankaltainen sisältö ryhmittyy luonnollisesti vektoritilassa. Alla oleva visualisointi näyttää, miten aihepiirit liittyvistä dokumenteista muodostavat lähellä toisiaan olevia pisteitä, mikä mahdollistaa semanttisen haun:
 
-*Tämä visualisointi näyttää, miten samankaltaiset dokumentit ryhmittyvät 3D-vektoritilassa eri aihealueiden, kuten Tekniset dokumentit, Liiketoimintasäännöt ja Usein kysytyt kysymykset, muodostaen erillisiä ryhmiä.*
+<img src="../../../translated_images/fi/vector-embeddings.2ef7bdddac79a327.webp" alt="Vektoriupotusten tila" width="800"/>
 
-Kun käyttäjä hakee, järjestelmä seuraa neljää askelta: embeddingin luonti dokumenteille kerran, kyselyn embedding jokaisella haulla, kyselyvektorin vertailu kaikkia tallennettuja vektoreita vastaan kosinisamanlaisuudella ja sadoista pala-alueista palautetaan top-K parasta osumaa. Alla oleva kaavio käy läpi jokaisen vaiheen ja siihen liittyvät LangChain4j-luokat:
+*Tämä visualisointi näyttää, miten aihepiirit, kuten tekniset dokumentit, liiketoimintasäännöt ja usein kysytyt kysymykset, muodostavat erillisiä ryhmiä 3D-vektoritilassa.*
 
-<img src="../../../translated_images/fi/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding-haun vaiheet" width="800"/>
+Kun käyttäjä hakee, järjestelmä suorittaa neljä vaihetta: upottaa dokumentit kerran, upottaa haun kysely jokaisella haulla, vertaa kyselyvektoria kaikkiin tallennettuihin vektoreihin kosinisamanlaisuuden avulla ja palauttaa kymmenen parasta tulosta. Alla oleva kaavio esittää jokaisen vaiheen ja mukana olevat LangChain4j-luokat:
 
-*Tämä kuva esittää nelivaiheisen embedding-haun prosessin: dokumenttien embedding, kyselyn embedding, vektorien vertailu kosinisamanlaisuudella ja parhaiden top-K tulosten palautus.*
+<img src="../../../translated_images/fi/embedding-search-steps.f54c907b3c5b4332.webp" alt="Upotushaku-vaiheet" width="800"/>
+
+*Tämä kaavio näyttää nelivaiheisen upotushakuprosessin: dokumenttien upotus, kyselyn upotus, vektorien vertailu kosinisamanlaisuudella ja top-K-tulosten palautus.*
 
 ### Semanttinen haku
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Kun esität kysymyksen, myös kysymys muunnetaan embeddingiksi. Järjestelmä vertaa kysymyksesi embeddingiä kaikkien dokumenttipalojen embeddingeihin. Se löytää eniten merkitykseltään samankaltaiset palat — ei pelkästään avainsanojen osumat, vaan todellisen semanttisen samankaltaisuuden.
+Kun esität kysymyksen, kysymyksesi muutetaan myös upotukseksi. Järjestelmä vertaa kysymyksesi upotusta kaikkien dokumenttipalojen upotuksiin. Se löytää palaset, joilla on samankaltaisin merkitys — ei vain avainsanojen vastaavuus, vaan aito semanttinen samankaltaisuus.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
@@ -189,28 +191,28 @@ for (EmbeddingMatch<TextSegment> match : matches) {
     double score = match.score();
 }
 ```
-  
-Alla oleva kaavio vertaa semanttista hakua perinteiseen avainsanahakuun. Avainsanahaku sanalla "ajoneuvo" ei löydä palaa "autot ja kuorma-autot", mutta semanttinen haku ymmärtää, että ne tarkoittavat samaa asiaa ja palauttaa tuloksen korkealla pisteellä:
+
+Alla oleva kaavio vertailee semanttista ja perinteistä avainsanahakua. Avainsanahaku "ajoneuvo" -sanalla jää paitsi palasta, joka käsittelee "autoja ja rekkoja", mutta semanttinen haku ymmärtää niiden tarkoittavan samaa ja palauttaa sen korkean pistemäärän yksikkönä:
 
 <img src="../../../translated_images/fi/semantic-search.6b790f21c86b849d.webp" alt="Semanttinen haku" width="800"/>
 
-*Tämä kuva vertaa avainsanaperusteista hakua ja semanttista hakua, ja näyttää kuinka semanttinen haku löytää käsitteellisesti läheistä sisältöä, vaikka tarkat avainsanat poikkeavat.*
+*Tämä kaavio vertaa avainsanaperusteista hakua semanttiseen hakuun näyttäen miten semanttinen haku löytää käsitteellisesti liittyvää sisältöä, vaikka tarkat avainsanat eivät täsmäisi.*
 
-Taustalla samankaltaisuus mitataan kosinisamanlaisuudella — käytännössä kysyen "osoittavatko nämä kaksi nuolta samaan suuntaan?" Kahdella palalla voi olla täysin erilaiset sanat, mutta jos ne tarkoittavat samaa, niiden vektorit osoittavat samaan suuntaan ja pisteet ovat lähellä 1.0:
+Taustalla samanlaisuutta mitataan kosinisamanlaisuudella — kysyen käytännössä "osoittavatko nämä kaksi nuolta samaan suuntaan?" Kaksi palaa voi käyttää täysin eri sanoja, mutta jos ne tarkoittavat samaa, niiden vektorit osoittavat samaan suuntaan ja saavat pistemäärän lähelle 1.0:
 
 <img src="../../../translated_images/fi/cosine-similarity.9baeaf3fc3336abb.webp" alt="Kosinisamanlaisuus" width="800"/>
+*Tämä kaavio kuvastaa kosinilähisyyttä sisäkkäisvektorien välisenä kulmana — paremmin linjassa olevat vektorit saavat arvosanan lähempänä 1.0, mikä viittaa korkeampaan semanttiseen samankaltaisuuteen.*
 
-*Tämä kuva havainnollistaa kosinisamanlaisuutta embeddausvektorien välisten kulman suuruutena — mitä lähempänä kaksi vektoria ovat toisiaan (pisteet lähellä 1.0), sitä korkeampi on niiden semanttinen samankaltaisuus.*
 > **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatin kanssa:** Avaa [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) ja kysy:
 > - "Miten samankaltaisuushaku toimii upotusten kanssa ja mikä määrää pistemäärän?"
-> - "Mikä samankaltaisuuskynnys pitäisi käyttää ja miten se vaikuttaa tuloksiin?"
-> - "Miten käsitellä tilanteet, joissa ei löydy relevantteja dokumentteja?"
+> - "Minkä samankaltaisuuskynnyksen tulisi olla ja miten se vaikuttaa tuloksiin?"
+> - "Miten käsittelen tilanteita, joissa ei löydy relevantteja dokumentteja?"
 
 ### Vastauksen generointi
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Merkityksellisimmät palat kootaan rakenteelliseksi kehotteeksi, joka sisältää selkeät ohjeet, haetun kontekstin ja käyttäjän kysymyksen. Malli lukee nämä tietyt palat ja vastaa niiden perusteella — se voi käyttää vain sitä, mikä sillä on edessään, mikä estää väärien tietojen keksimisen.
+Merkityksellisimmät palat kootaan rakenteelliseen kehotteeseen, joka sisältää selkeät ohjeet, haetun kontekstin ja käyttäjän kysymyksen. Malli lukee kyseiset palat ja vastaa niiden perusteella — se voi käyttää vain edessään olevaa tietoa, mikä ehkäisee harhakuvien muodostumista.
 
 ```java
 String context = matches.stream()
@@ -231,21 +233,21 @@ String prompt = String.format("""
 String answer = chatModel.chat(prompt);
 ```
 
-Alla oleva kaavio näyttää tämän koostamisen toiminnassa — haun vaiheessa parhaiten pisteytyneet palat upotetaan kehotemalliin, ja `OpenAiOfficialChatModel` generoi perustellun vastauksen:
+Alla oleva kaavio havainnollistaa tätä kokoamisprosessia — hakuvaiheen parhaiten pisteytetyt palat upotetaan kehotemalliin, ja `OpenAiOfficialChatModel` tuottaa perustellun vastauksen:
 
 <img src="../../../translated_images/fi/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
-*Tämä kaavio näyttää, miten parhaiten pisteytyneet palat kootaan rakenteelliseksi kehotteeksi, jolloin malli voi generoida perustellun vastauksen datastasi.*
+*Tämä kaavio näyttää, miten parhaiten pisteytetyt palat kootaan yhteen rakenteelliseen kehotteeseen, mikä mahdollistaa mallin tuottaa perusteltu vastaus datastasi.*
 
-## Suorita sovellus
+## Sovelluksen käynnistäminen
 
 **Varmista käyttöönotto:**
 
-Varmista, että `.env`-tiedosto on olemassa juurihakemistossa Azure-tunnuksilla (luotu Moduulin 01 aikana):
+Varmista, että juurihakemistossa on `.env`-tiedosto, jossa on Azure-valtuustiedot (luotu moduulin 01 aikana):
 
 **Bash:**
 ```bash
-cat ../.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Pitäisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **PowerShell:**
@@ -255,31 +257,31 @@ Get-Content ..\.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYM
 
 **Käynnistä sovellus:**
 
-> **Huom:** Jos olet jo käynnistänyt kaikki sovellukset käyttämällä `./start-all.sh` Moduulista 01, tämä moduuli on jo käynnissä portissa 8081. Voit ohittaa alla olevat käynnistyskomennot ja mennä suoraan osoitteeseen http://localhost:8081.
+> **Huom:** Jos käynnistit jo kaikki sovellukset käyttämällä `./start-all.sh` moduulista 01, tämä moduuli on jo käynnissä portissa 8081. Voit ohittaa alla olevat käynnistyskomennot ja siirtyä suoraan osoitteeseen http://localhost:8081.
 
-**Vaihtoehto 1: Käyttämällä Spring Boot Dashboard -laajennusta (Suositeltu VS Code -käyttäjille)**
+**Vaihtoehto 1: Spring Boot Dashboardin käyttö (suositeltu VS Coden käyttäjille)**
 
-Kehityssäiliö sisältää Spring Boot Dashboard -laajennuksen, joka tarjoaa visuaalisen käyttöliittymän kaikkien Spring Boot -sovellusten hallintaan. Löydät sen Activity Barista vasemmalta puolelta VS Codea (etsi Spring Boot -ikonia).
+Kehitysympäristö sisältää Spring Boot Dashboard -laajennuksen, joka tarjotaan visuaalisen käyttöliittymän kaikille Spring Boot -sovelluksille. Löydät sen VS Coden vasemman puolen Activity Barista (etsi Spring Boot -kuvake).
 
 Spring Boot Dashboardista voit:
-- Näyttää kaikki työtilan saatavilla olevat Spring Boot -sovellukset
+- Näyttää kaikki käytettävissä olevat Spring Boot -sovellukset työtilassa
 - Käynnistää/pysäyttää sovelluksia yhdellä napsautuksella
-- Tarkastella sovelluslokeja reaaliajassa
-- Valvoa sovelluksen tilaa
+- Tarkastella sovellusten lokeja reaaliajassa
+- Valvoa sovellusten tilaa
 
-Napsauta "rag"-kohdan vieressä olevaa toistopainiketta käynnistääksesi tämän moduulin tai käynnistä kaikki moduulit kerralla.
+Klikkaa vain "rag"-kohdan vieressä olevaa play-painiketta käynnistääksesi tämän moduulin, tai käynnistä kaikki moduulit kerralla.
 
 <img src="../../../translated_images/fi/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Tässä kuvakaappauksessa näkyy Spring Boot Dashboard VS Codessa, jossa voit käynnistää, pysäyttää ja valvoa sovelluksia visuaalisesti.*
+*Tämä kuvakaappaus esittää Spring Boot Dashboardin VS Codessa, jossa voit käynnistää, pysäyttää ja valvoa sovelluksia visuaalisesti.*
 
-**Vaihtoehto 2: Käyttämällä komentojonoja**
+**Vaihtoehto 2: Komentosarjojen käyttö**
 
 Käynnistä kaikki web-sovellukset (moduulit 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Juurikansiosta
+cd ..  # Juurihakemistosta
 ./start-all.sh
 ```
 
@@ -289,7 +291,7 @@ cd ..  # Juurihakemistosta
 .\start-all.ps1
 ```
 
-Tai käynnistä vain tämä moduuli:
+Tai käynnistä pelkkä tämä moduuli:
 
 **Bash:**
 ```bash
@@ -303,9 +305,9 @@ cd 03-rag
 .\start.ps1
 ```
 
-Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juurihakemiston `.env`-tiedostosta ja rakentavat JAR-tiedostot, jos niitä ei vielä ole.
+Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juurihakemiston `.env`-tiedostosta ja rakentavat tarvittaessa JAR-tiedostot.
 
-> **Huom:** Jos haluat mieluummin rakentaa kaikki moduulit manuaalisesti ennen käynnistystä:
+> **Huom:** Jos haluat rakentaa kaikki moduulit manuaalisesti ennen käynnistämistä:
 >
 > **Bash:**
 > ```bash
@@ -319,9 +321,9 @@ Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juurihakemiston 
 > mvn clean package -DskipTests
 > ```
 
-Avaa selaimessasi http://localhost:8081.
+Avaa selaimellasi http://localhost:8081.
 
-**Pysäytä sovellus:**
+**Sovelluksen pysäyttäminen:**
 
 **Bash:**
 ```bash
@@ -339,93 +341,93 @@ cd ..; .\stop-all.ps1  # Kaikki moduulit
 
 ## Sovelluksen käyttö
 
-Sovellus tarjoaa verkkokäyttöliittymän dokumenttien lataukseen ja kysymysten esittämiseen.
+Sovellus tarjoaa verkkokäyttöliittymän dokumenttien lataamista ja kysymyksiä varten.
 
 <a href="images/rag-homepage.png"><img src="../../../translated_images/fi/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Tämä kuvakaappaus näyttää RAG-sovelluksen käyttöliittymän, jossa lataat dokumentteja ja esität kysymyksiä.*
+*Tämä kuvakaappaus esittää RAG-sovellusliittymän, jossa lataat dokumentteja ja esität kysymyksiä.*
 
-### Lataa dokumentti
+### Dokumentin lataaminen
 
-Aloita lataamalla dokumentti – TXT-tiedostot toimivat parhaiten testauksessa. Tältä hakemistosta löytyy `sample-document.txt`, joka sisältää tietoa LangChain4j:n ominaisuuksista, RAG-toteutuksesta ja parhaista käytännöistä – täydellinen testaukseen.
+Aloita lataamalla dokumentti — TXT-tiedostot toimivat parhaiten testauksessa. Tässä hakemistossa on `sample-document.txt`, joka sisältää tietoa LangChain4j:n ominaisuuksista, RAG-toteutuksesta ja parhaista käytännöistä — täydellinen järjestelmän testaamiseen.
 
-Järjestelmä käsittelee dokumenttisi, pilkkoo sen paloiksi ja luo upotukset jokaiselle palalle. Tämä tapahtuu automaattisesti latauksen yhteydessä.
+Järjestelmä käsittelee dokumenttisi, jakaa sen paloiksi ja luo kullekin palalle upotukset. Tämä tapahtuu automaattisesti latauksen yhteydessä.
 
-### Esitä kysymyksiä
+### Kysy kysymyksiä
 
-Esitä nyt tarkkoja kysymyksiä dokumentin sisällöstä. Kokeile jotain faktaan perustuvaa, joka on selkeästi dokumentissa mainittu. Järjestelmä etsii relevantteja paloja, lisää ne kehotteeseen ja generoi vastauksen.
+Esitä nyt tarkkoja kysymyksiä dokumentin sisällöstä. Kokeile jotain faktapohjaista, joka on selvästi esitetty dokumentissa. Järjestelmä hakee relevantit palat, sisällyttää ne kehotteeseen ja tuottaa vastauksen.
 
 ### Tarkista lähdeviitteet
 
-Huomaa, että jokainen vastaus sisältää lähdeviitteitä samankaltaisuuspisteineen. Nämä pisteet (0–1) näyttävät, kuinka relevantti kukin pala kysymyksellesi oli. Korkeammat pisteet tarkoittavat parempia osumia. Tämä mahdollistaa vastauksen varmentamisen lähdeaineiston perusteella.
+Huomaa, että jokainen vastaus sisältää lähdeviitteitä samankaltaisuuspisteillä. Nämä pisteet (0–1) kertovat, kuinka relevantti kukin pala oli kysymykseesi nähden. Korkeammat pisteet tarkoittavat parempia osumia. Tämä antaa sinun varmistaa vastauksen alkuperäisen aineiston perusteella.
 
 <a href="images/rag-query-results.png"><img src="../../../translated_images/fi/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Tässä kuvakaappauksessa näkyvät kyselytulokset generoituine vastauksineen, lähdeviitteineen ja merkityspisteineen jokaiselle haetulle palalle.*
+*Tämä kuvakaappaus esittää hakutulokset, generoidun vastauksen, lähdeviitteet ja kunkin haetun palan relevanssipisteet.*
 
 ### Kokeile erilaisia kysymyksiä
 
 Kokeile erilaisia kysymystyyppejä:
 - Tarkat faktat: "Mikä on pääaihe?"
 - Vertailut: "Mikä on ero X:n ja Y:n välillä?"
-- Yhteenvetoja: "Tiivistä keskeiset kohdat Z:stä"
+- Yhteenvedot: "Tiivistä keskeiset kohdat Z:stä"
 
-Seuraa, miten merkityspisteet muuttuvat sen mukaan, kuinka hyvin kysymyksesi vastaa dokumentin sisältöä.
+Seuraa, miten relevanssipisteet muuttuvat sen mukaan, miten hyvin kysymyksesi vastaa dokumentin sisältöä.
 
 ## Keskeiset käsitteet
 
 ### Paloitusstrategia
 
-Dokumentit jaetaan 300 tokenin paloihin, joissa on 30 tokenin päällekkäisyys. Tämä tasapaino takaa, että jokaisella palalla on riittävästi kontekstia ollakseen merkityksellinen, mutta palat pysyvät tarpeeksi pieniä, jotta kehotteeseen mahtuu useita paloja.
+Dokumentit jaetaan 300 tokenin paloihin, joissa on 30 tokenin päällekkäisyys. Tämä tasapaino varmistaa, että jokainen pala sisältää riittävästi kontekstia ollakseen merkityksellinen, mutta pysyy riittävän pienenä, jotta useampi pala mahtuu kehotteeseen.
 
 ### Samankaltaisuuspisteet
 
-Jokaisella haetulla palalla on samankaltaisuuspiste väliltä 0–1, joka kertoo, kuinka läheisesti se vastaa käyttäjän kysymystä. Alla oleva kaavio visualisoi pistealueet ja kuinka järjestelmä käyttää niitä suodattaakseen tuloksia:
+Jokaiselle haetulle palalle annetaan samankaltaisuuspiste 0:n ja 1:n välillä, joka kuvaa kuinka hyvin se vastaa käyttäjän kysymystä. Alla oleva kaavio visualisoi pistemäärien vaihteluvälin ja miten järjestelmä käyttää niitä tulosten suodattamiseen:
 
 <img src="../../../translated_images/fi/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
 
-*Tämä kaavio näyttää pistealueet 0–1 välillä, jossa vähimmäiskynnys 0,5 suodattaa pois epäolennaiset palat.*
+*Tämä kaavio näyttää pistemäärien vaihteluvälin 0:sta 1:een, ja minimikynnyksen 0,5, joka suodattaa pois epäolennaiset palat.*
 
 Pisteet vaihtelevat välillä 0–1:
-- 0,7–1,0: Erittäin relevantti, täsmälleen vastaava
-- 0,5–0,7: Relevantti, hyvä konteksti
-- Alle 0,5: Suodatettu pois, liian erilainen
+- 0.7-1.0: Erittäin relevantti, tarkka osuma
+- 0.5-0.7: Relevantti, hyvä konteksti
+- Alle 0.5: Suodatettu pois, liian erilainen
 
-Järjestelmä hakee vain ne palat, jotka ovat vähimmäiskynnyksen yläpuolella laadun varmistamiseksi.
+Järjestelmä hakee vain palat, jotka ovat minimikynnyksen yläpuolella laadun varmistamiseksi.
 
-Upotukset toimivat hyvin, kun merkitykset ryhmittyvät selkeästi, mutta niissä on myös heikkouksia. Alla oleva kaavio näyttää yleiset epäonnistumistilanteet — liian suuret palat tuottavat epäselviä vektoreita, liian pienet palat eivät tarjoa kontekstia, monitulkintaiset termit viittaavat useaan ryhmään, ja täsmähakuja (esim. tunnisteet, osanumero) ei voi tehdä upotusten avulla lainkaan:
+Upotukset toimivat hyvin, kun merkitykset ryhmittyvät selkeästi, mutta niillä on sokeita kohtia. Alla oleva kaavio näyttää yleiset virhetapaukset — liian suuret palat tuottavat epäselviä vektoreita, liian pienet palat puuttuvat kontekstista, monitulkintaiset termit osoittavat useisiin ryhmiin, ja täsmähaku (ID:t, osanumero) ei toimi upotusten kanssa lainkaan:
 
 <img src="../../../translated_images/fi/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
 
-*Tämä kaavio näyttää yleiset upotusten epäonnistumistilanteet: liian suuret palat, liian pienet palat, monitulkintaiset termit, ja täsmähaut kuten tunnisteet.*
+*Tämä kaavio esittää yleisiä upotusvirheitä: liian suuret palat, liian pienet palat, monitulkintaiset termit jotka osoittavat useisiin ryhmiin, sekä täsmähaku (esim. ID:t).*
 
-### Muistinvarainen tallennus
+### Muistissa säilytys
 
-Tässä moduulissa käytetään yksinkertaisuuden vuoksi muistinvaraista tallennusta. Kun käynnistät sovelluksen uudelleen, ladatut dokumentit häviävät. Tuotantojärjestelmissä käytetään pysyviä vektoritietokantoja, kuten Qdrant tai Azure AI Search.
+Tämä moduuli käyttää yksinkertaisuuden vuoksi muistissa olevaa tallennustilaa. Kun käynnistät sovelluksen uudelleen, ladatut dokumentit katoavat. Tuotantojärjestelmät käyttävät pysyviä vektoritietokantoja, kuten Qdrant tai Azure AI Search.
 
 ### Konteksti-ikkunan hallinta
 
-Jokaisella mallilla on maksimikoko konteksti-ikkunalle. Et voi sisällyttää kaikkia suurten dokumenttien paloja. Järjestelmä hakee viisi (oletus) merkityksellisintä palaa pysyäkseen rajoissa ja tarjotakseen riittävän kontekstin tarkkoihin vastauksiin.
+Jokaisella mallilla on maksimimäärä kontekstitilaa. Et voi sisällyttää jokaista palaa suuresta dokumentista. Järjestelmä hakee top N relevantimpia paloja (oletuksena 5) pysyäkseen rajoissa ja tarjotakseen riittävästi kontekstia tarkkoihin vastauksiin.
 
 ## Milloin RAG on tärkeä
 
-RAG ei ole aina oikea lähestymistapa. Alla oleva päätösopas auttaa sinua päättämään, milloin RAG lisää arvoa verrattuna yksinkertaisempiin tapoihin — kuten sisällön suoraan lisääminen kehotteeseen tai mallin sisäänrakennetun tiedon hyödyntäminen:
+RAG ei aina ole oikea lähestymistapa. Alla oleva päätösohje auttaa sinua tunnistamaan, milloin RAG tuottaa lisäarvoa, kun taas yksinkertaisemmat menetelmät — kuten sisällön suora sisällyttäminen kehotteeseen tai mallin sisäiseen tietoon luottaminen — riittävät:
 
 <img src="../../../translated_images/fi/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
-*Tämä kaavio näyttää päätösoppaan siitä, milloin RAG tuottaa lisäarvoa verrattuna yksinkertaisempiin ratkaisuihin.*
+*Tämä kaavio näyttää päätösohjeen, milloin RAG tuottaa lisäarvoa ja milloin yksinkertaisemmat menetelmät ovat riittäviä.*
 
 **Käytä RAGia, kun:**
 - Vastaat kysymyksiin omista dokumenteista
 - Tiedot muuttuvat usein (käytännöt, hinnat, tekniset tiedot)
-- Tarkkuus vaatii lähdeviitteiden antamista
-- Sisältö on liian laaja mahtuakseen yhteen kehotteeseen
-- Tarvitset todennettavia ja perusteltuja vastauksia
+- Tarkkuus vaatii lähteen ilmoittamista
+- Sisältö on liian laaja mahtumaan yhteen kehotteeseen
+- Tarvitset varmistettavia, perusteltuja vastauksia
 
 **Älä käytä RAGia, kun:**
-- Kysymykset vaativat yleistä tietoa, joka mallilla jo on
-- Tarvitaan reaaliaikaista tietoa (RAG toimii ladatuilla dokumenteilla)
-- Sisältö on niin pieni, että sen voi sisällyttää suoraan kehotteeseen
+- Kysymykset vaativat mallin jo tuntemaa yleistä tietoa
+- Tarvitaan reaaliaikaista dataa (RAG toimii ladatuilla dokumenteilla)
+- Sisältö on sen verran pientä, että se mahtuu suoraan kehotteeseen
 
 ## Seuraavat askeleet
 
@@ -433,11 +435,11 @@ RAG ei ole aina oikea lähestymistapa. Alla oleva päätösopas auttaa sinua pä
 
 ---
 
-**Navigointi:** [← Edellinen: Moduuli 02 - Prompt Engineering](../02-prompt-engineering/README.md) | [Takaisin pääsivulle](../README.md) | [Seuraava: Moduuli 04 - Tools →](../04-tools/README.md)
+**Navigointi:** [← Edellinen: Moduuli 02 - Kehoteinsinöörityö](../02-prompt-engineering/README.md) | [Takaisin pääsivulle](../README.md) | [Seuraava: Moduuli 04 - Työkalut →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty käyttäen tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, huomioithan, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäinen asiakirja sen alkuperäiskielellä tulee pitää ensisijaisena lähteenä. Tärkeissä asioissa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta otathan huomioon, että automaattiset käännökset saattavat sisältää virheitä tai epätarkkuuksia. Alkuperäinen asiakirja sen omalla kielellä tulisi pitää virallisena lähteenä. Tärkeiden tietojen osalta suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
