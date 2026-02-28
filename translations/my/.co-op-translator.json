@@ -6,8 +6,8 @@
     "language_code": "my"
   },
   "01-introduction/README.md": {
-    "original_hash": "d8aa246d7049a9c7ebf53b3aca67249e",
-    "translation_date": "2026-02-27T18:00:40+00:00",
+    "original_hash": "1c8d7660566926fd2ae0d5860dcf83b1",
+    "translation_date": "2026-02-28T20:24:19+00:00",
     "source_file": "01-introduction/README.md",
     "language_code": "my"
   },
@@ -18,14 +18,14 @@
     "language_code": "my"
   },
   "02-prompt-engineering/README.md": {
-    "original_hash": "f658e8af557695218d484021526467ec",
-    "translation_date": "2026-02-27T18:04:27+00:00",
+    "original_hash": "7e74e5448e31021688dd9fd1d77e1c40",
+    "translation_date": "2026-02-28T20:26:01+00:00",
     "source_file": "02-prompt-engineering/README.md",
     "language_code": "my"
   },
   "03-rag/README.md": {
-    "original_hash": "b93c3d41393d131122841993bb7a1edb",
-    "translation_date": "2026-02-27T18:06:40+00:00",
+    "original_hash": "13d2cbc7df1da50e8e007c838500d8ff",
+    "translation_date": "2026-02-28T20:27:45+00:00",
     "source_file": "03-rag/README.md",
     "language_code": "my"
   },
