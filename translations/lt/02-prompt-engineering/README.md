@@ -1,70 +1,75 @@
-# 02 modulis: Promptų inžinerija su GPT-5.2
+# Modulis 02: Užklausų inžinerija su GPT-5.2
 
 ## Turinys
 
-- [Ko sužinosite](../../../02-prompt-engineering)
-- [Išankstiniai reikalavimai](../../../02-prompt-engineering)
-- [Promptų inžinerijos supratimas](../../../02-prompt-engineering)
-- [Promptų inžinerijos pagrindai](../../../02-prompt-engineering)
-  - [Nulinio šūvio promptai](../../../02-prompt-engineering)
-  - [Kelių pavyzdžių promptai](../../../02-prompt-engineering)
-  - [Minties grandinė](../../../02-prompt-engineering)
-  - [Pagal vaidmenį kuriami promptai](../../../02-prompt-engineering)
-  - [Promptų šablonai](../../../02-prompt-engineering)
-- [Pažangūs modeliai](../../../02-prompt-engineering)
-- [Esamų „Azure“ išteklių naudojimas](../../../02-prompt-engineering)
-- [Programėlės ekrano kopijos](../../../02-prompt-engineering)
+- [Vaizdo įrašo pristatymas](../../../02-prompt-engineering)
+- [Ką išmoksite](../../../02-prompt-engineering)
+- [Priešmokymai](../../../02-prompt-engineering)
+- [Kas yra užklausų inžinerija](../../../02-prompt-engineering)
+- [Užklausų inžinerijos pagrindai](../../../02-prompt-engineering)
+  - [Zero-Shot užklausos](../../../02-prompt-engineering)
+  - [Few-Shot užklausos](../../../02-prompt-engineering)
+  - [Mąstymo grandinė](../../../02-prompt-engineering)
+  - [Rolės pagrindu veikianti užklausa](../../../02-prompt-engineering)
+  - [Užklausų šablonai](../../../02-prompt-engineering)
+- [Išplėstiniai modeliai](../../../02-prompt-engineering)
+- [Esamų Azure išteklių naudojimas](../../../02-prompt-engineering)
+- [Programos ekrano nuotraukos](../../../02-prompt-engineering)
 - [Modelių tyrinėjimas](../../../02-prompt-engineering)
-  - [Mažas vs didelis entuziazmas](../../../02-prompt-engineering)
-  - [Užduočių vykdymas (įrankių įvadai)](../../../02-prompt-engineering)
-  - [Savianalizės kodas](../../../02-prompt-engineering)
-  - [Struktūruota analizė](../../../02-prompt-engineering)
-  - [Daugiapakopis pokalbis](../../../02-prompt-engineering)
-  - [Žingsnis po žingsnio samprotavimas](../../../02-prompt-engineering)
-  - [Apribota išvestis](../../../02-prompt-engineering)
-- [Ką iš tiesų mokotės](../../../02-prompt-engineering)
-- [Kiti žingsniai](../../../02-prompt-engineering)
+  - [Mažas prieš didelį entuziazmą](../../../02-prompt-engineering)
+  - [Užduočių vykdymas (Įrankių įvadai)](../../../02-prompt-engineering)
+  - [Savarankiškas reflektavimas](../../../02-prompt-engineering)
+  - [Struktūrinė analizė](../../../02-prompt-engineering)
+  - [Daugiaetapiai pokalbiai](../../../02-prompt-engineering)
+  - [Žingsnis po žingsnio mąstymas](../../../02-prompt-engineering)
+  - [Apribotas išvestis](../../../02-prompt-engineering)
+- [Ką iš tikrųjų išmokstate](../../../02-prompt-engineering)
+- [Tolimesni žingsniai](../../../02-prompt-engineering)
 
-## Ko sužinosite
+## Vaizdo įrašo pristatymas
 
-<img src="../../../translated_images/lt/what-youll-learn.c68269ac048503b2.webp" alt="Ko sužinosite" width="800"/>
+Žiūrėkite šią tiesioginę sesiją, kurioje paaiškinama, kaip pradėti darbą su šiuo moduliu: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
 
-Antrajame modulyje pamatėte, kaip atmintis leidžia naudoti pokalbio DI ir naudojote GitHub modelius pagrindiniams sąveikavimams. Dabar susitelksime į tai, kaip užduoti klausimus — pačius promptus — naudojant „Azure OpenAI“ GPT-5.2. Kaip struktūrizuojate savo promptus, labai paveikia atsakymų kokybę. Pradedame nuo pagrindinių promptų kūrimo technikų apžvalgos, tada pereiname prie aštuonių pažangių modelių, kurie pilnai išnaudoja GPT-5.2 galimybes.
+## Ką išmoksite
 
-Naudosime GPT-5.2, nes jis pristato samprotavimų valdymą – galite nurodyti modeliui, kiek mąstyti prieš atsakant. Tai leidžia aiškiau matyti skirtingas promptų strategijas ir suprasti, kada naudoti kurią. Taip pat pasinaudosime Azure mažesniais GPT-5.2 apribojimais, palyginti su GitHub modeliais.
+<img src="../../../translated_images/lt/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-## Išankstiniai reikalavimai
+Ankstesniame modulyje matėte, kaip atmintis leidžia pokalbių DI ir naudojote GitHub modelius pagrindinėms sąveikoms. Dabar sutelksime dėmesį į klausimų uždavimą – pačias užklausas – naudojant Azure OpenAI GPT-5.2. Kaip struktūruojate savo užklausas, smarkiai įtakoja atsakymų kokybę. Pradedame nuo pagrindinių užklausų technikų apžvalgos, tada judame prie aštuonių pažangių modelių, kurie išnaudoja GPT-5.2 galimybes.
 
-- Užbaigtas 01 modulis (įdiegti „Azure OpenAI“ ištekliai)
-- `.env` failas pagrindiniame kataloge su Azure kredencialais (sukurtas modulio 01 metu naudojant `azd up`)
+Naudosime GPT-5.2, nes jis įveda mąstymo valdymą – galite nustatyti modeliui, kiek ir kaip gilintis prieš atsakant. Tai leidžia aiškiau matyti skirtingas užklausų strategijas ir padeda suprasti, kada naudoti kurį metodą. Taip pat pasinaudosime Azure mažesniais GPT-5.2 greičio apribojimais, palyginti su GitHub modeliais.
 
-> **Pastaba:** Jei dar neužbaigėte 01 modulio, pirmiausia atlikite jame nurodytą diegimą.
+## Priešmokymai
 
-## Promptų inžinerijos supratimas
+- Įvykdytas 01 modulis (parengti Azure OpenAI ištekliai)
+- `.env` failas pagrindiniame kataloge su Azure kredencialais (sukurtas komandą `azd up` 01 modulyje)
 
-<img src="../../../translated_images/lt/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Kas yra promptų inžinerija?" width="800"/>
+> **Pastaba:** Jei dar nebaigėte 01 modulio, pirmiausia sekite ten pateiktas diegimo instrukcijas.
 
-Promptų inžinerija reiškia įvesties teksto kūrimą taip, kad nuosekliai gautumėte reikiamus rezultatus. Tai ne tik klausimų uždavimas – svarbu struktūrizuoti užklausas, kad modelis tiksliai suprastų, ko norite ir kaip tai pateikti.
+## Kas yra užklausų inžinerija
 
-Galvokite apie tai kaip nurodymų davimą kolegai. „Ištaisyk klaidą“ yra neaišku. „Ištaisyk null pointer klaidą UserService.java 45 eilutėje pridėdamas nulio patikrinimą“ yra konkretu. Kalbos modeliai veikia taip pat – svarbi specifika ir struktūra.
+<img src="../../../translated_images/lt/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
-<img src="../../../translated_images/lt/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Kaip veikia LangChain4j" width="800"/>
+Užklausų inžinerija – tai įvesčių tekstų projektavimas, kuris nuosekliai duoda jums reikiamus rezultatus. Tai ne tik klausimų uždavimas – tai prašymų struktūravimas taip, kad modelis tiksliai suprastų, ko norite ir kaip tai pateikti.
 
-LangChain4j suteikia infrastruktūrą — modelių jungtis, atmintį ir žinučių tipus — o promptų modeliai yra tiesiog kruopščiai struktūruotas tekstas, perduodamas per tą infrastruktūrą. Pagrindiniai elementai – `SystemMessage` (kuris nustato DI elgesį ir vaidmenį) bei `UserMessage` (kuris neša jūsų prašymą).
+Įsivaizduokite, kad duodate nurodymus kolegai. „Pataisyk klaidą“ yra neaišku. „Pataisyk null pointer exception UserService.java 45 eilutėje pridėdamas nulio patikrinimą“ yra konkretu. Kalbos modeliai veikia taip pat – svarbu konkretumas ir struktūra.
 
-## Promptų inžinerijos pagrindai
+<img src="../../../translated_images/lt/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
-<img src="../../../translated_images/lt/five-patterns-overview.160f35045ffd2a94.webp" alt="Penki pagrindiniai promptų inžinerijos modeliai" width="800"/>
+LangChain4j suteikia infrastruktūrą — modelių jungtis, atmintį ir žinučių tipus — tuo tarpu užklausų modeliai yra tiesiog atsakingai struktūruotas tekstas, kuris siunčiamas per tą infrastruktūrą. Pagrindiniai blokai yra `SystemMessage` (nustato DI elgesį ir vaidmenį) ir `UserMessage` (kuris neša jūsų faktinį prašymą).
 
-Prieš gilindamiesi į pažangius modelius šiame modulyje, peržiūrėkime penkias pagrindines promptų kūrimo technikas. Tai yra esminiai įrankiai kiekvienam promptų inžinieriui. Jei jau dirbote su [Greitojo starto moduliu](../00-quick-start/README.md#2-prompt-patterns), šias technikas jau matėte – čia conceptualiai išdėstyta jų esmė.
+## Užklausų inžinerijos pagrindai
 
-### Nulinio šūvio promptai
+<img src="../../../translated_images/lt/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
-Paprastasis metodas: pateikite modeliui tiesioginį nurodymą be pavyzdžių. Modelis visiškai pasikliauja savo mokymu suprasti ir vykdyti užduotį. Tai veikia gerai paprastoms užklausoms, kur elgesys yra akivaizdus.
+Prieš pradėdami pažengusių modelių pristatymą šiame modulyje, peržvelkime penkias pagrindines užklausų technikas. Tai yra pagrindiniai blokai, kuriuos turi žinoti kiekvienas užklausų inžinierius. Jei jau dirbote su [Greito pradžios moduliu](../00-quick-start/README.md#2-prompt-patterns), tai matėte jas veiksme – čia pateikiama jų konceptuali sistema.
 
-<img src="../../../translated_images/lt/zero-shot-prompting.7abc24228be84e6c.webp" alt="Nulinio šūvio promptai" width="800"/>
+### Zero-Shot užklausos
 
-*Tiesioginis nurodymas be pavyzdžių – modelis pats supranta užduotį pagal instrukciją*
+Paprastesnis būdas: duokite modeliui tiesioginį nurodymą be pavyzdžių. Modelis visiškai remiasi savo apmokymu užduočiai suprasti ir atlikti. Tai gerai veikia paprastoms užklausoms, kuriose aiškus elgesys yra akivaizdus.
+
+<img src="../../../translated_images/lt/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
+
+*Tiesioginis nurodymas be pavyzdžių – modelis išveda užduotį tik iš nurodymo*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
@@ -72,13 +77,13 @@ String response = model.chat(prompt);
 // Atsakymas: "Teigiamas"
 ```
 
-**Kada naudoti:** Paprastos klasifikacijos, tiesioginiai klausimai, vertimai arba bet kuri užduotis, kurią modelis gali atlikti be papildomų nurodymų.
+**Kada naudoti:** paprastos klasifikacijos, tiesioginiai klausimai, vertimai arba bet kokios užduotys, kurias modelis gali atlikti be papildomų nurodymų.
 
-### Kelių pavyzdžių promptai
+### Few-Shot užklausos
 
-Pateikite pavyzdžius, kurie rodo, kokį modelio elgesį norite matyti. Modelis mokosi iš jūsų pavyzdžių tikėtino įvesties-išvesties formato ir taiko tai naujoms įvestims. Tai žymiai pagerina nuoseklumą užduotyse, kur pageidaujamas formatas ar elgesys nėra aiškus.
+Pateikite pavyzdžius, kurie parodo modelio norimą elgesio modelį. Modelis išmoksta tikėtą įvesties-išvesties formatą iš jūsų pavyzdžių ir taiko jį naujoms įvestims. Tai žymiai pagerina nuoseklumą atliekant užduotis, kai pageidaujamas formatas ar elgesys nėra akivaizdus.
 
-<img src="../../../translated_images/lt/few-shot-prompting.9d9eace1da88989a.webp" alt="Kelių pavyzdžių promptai" width="800"/>
+<img src="../../../translated_images/lt/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
 *Mokymasis iš pavyzdžių – modelis atpažįsta modelį ir taiko jį naujoms įvestims*
 
@@ -97,15 +102,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kada naudoti:** Specifinės klasifikacijos, nuoseklus formatavimas, konkrečios srities užduotys arba kai nulinio šūvio rezultatai yra nenuoseklūs.
+**Kada naudoti:** pasirinktinei klasifikacijai, nuosekliam formatavimui, srities specifinėms užduotims ar kai zero-shot rezultatai yra nesuderinti.
 
-### Minties grandinė
+### Mąstymo grandinė
 
-Prašykite modelio parodyti savo samprotavimą žingsnis po žingsnio. Vietoje tiesaus atsakymo modelis išskaido problemą ir sąmoningai išnagrinėja kiekvieną dalį. Tai pagerina tikslumą matematikos, logikos ir daugiapakopių samprotavimo užduotyse.
+Prašykite modelio parodyti savo mąstymą žingsnis po žingsnio. Užuot iškart pateikęs atsakymą, modelis išskaido problemą ir aiškiai dirba su kiekvienu jos aspektu. Tai pagerina tikslumą matematikos, logikos ir daugiapakopių mąstymo užduočių atvejais.
 
-<img src="../../../translated_images/lt/chain-of-thought.5cff6630e2657e2a.webp" alt="Minties grandinės promptai" width="800"/>
+<img src="../../../translated_images/lt/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*Žingsnis po žingsnio samprotavimas – sudėtingų problemų suskaidymas į aiškius loginius žingsnius*
+*Žingsnis po žingsnio mąstymas – sudėtingų problemų išskaidymas į aiškius loginčius veiksmus*
 
 ```java
 String prompt = """
@@ -118,15 +123,15 @@ String response = model.chat(prompt);
 // Modelis rodo: 15 - 8 = 7, tada 7 + 12 = 19 obuolių
 ```
 
-**Kada naudoti:** Matematikos užduotys, loginiai galvosūkiai, derinimas arba bet kuri užduotis, kurioje matomas samprotavimo procesas gerina tikslumą ir pasitikėjimą.
+**Kada naudoti:** matematikos užduotims, loginėms mįslėms, derinimui arba bet kuriai užduočiai, kur parodytas mąstymo procesas pagerina tikslumą ir pasitikėjimą.
 
-### Pagal vaidmenį kuriami promptai
+### Rolės pagrindu veikianti užklausa
 
-Nustatykite DI personažą ar vaidmenį prieš užduodami klausimą. Tai suteikia kontekstą, kuris formuoja atsakymo toną, gylį ir fokusuotumą. „Programinės įrangos architektas“ duoda kitokias rekomendacijas nei „jaunesnysis programuotojas“ ar „saugumo auditorius“.
+Priskirkite DI asmenybę ar vaidmenį prieš užduodant klausimą. Tai suteikia kontekstą, kuris formuoja atsakymo toną, gylį ir dėmesį. „Programinės įrangos architektas“ pateiks kitokias rekomendacijas nei „jaunesnysis programuotojas“ ar „saugumo auditorius“.
 
-<img src="../../../translated_images/lt/role-based-prompting.a806e1a73de6e3a4.webp" alt="Pagal vaidmenį kuriami promptai" width="800"/>
+<img src="../../../translated_images/lt/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-*Konteksto ir personažo nustatymas – tas pats klausimas gauna skirtingą atsakymą priklausomai nuo priskirto vaidmens*
+*Konteksto ir asmenybės nustatymas – tas pats klausimas gauna skirtingą atsakymą, priklausomai nuo priskirto vaidmens*
 
 ```java
 String prompt = """
@@ -142,15 +147,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kada naudoti:** Kodo peržiūros, mokymas, specifinės srities analizė arba kai reikia atsakymų, pritaikytų konkrečios patirties lygiui ar požiūriui.
+**Kada naudoti:** kodo peržiūroms, mokymui, srities specifinėms analizėms arba kai reikia atsakymų pritaikytų pagristam ekspertizės lygiui arba perspektyvai.
 
-### Promptų šablonai
+### Užklausų šablonai
 
-Sukurkite pakartotinai naudojamus promptus su kintamaisiais vietos laikikliais. Vietoje kiekvieną kartą rašyti naują promptą, apibrėžkite šabloną vieną kartą ir pildykite skirtingomis reikšmėmis. LangChain4j `PromptTemplate` klasė leidžia tai daryti su `{{variable}}` sintakse.
+Sukurkite pakartotinai naudojamus užklausų šablonus su kintamųjų vietomis. Vietoj to, kad rašytumėte naują užklausą kiekvieną kartą, apibrėžkite šabloną vieną kartą ir pildykite skirtingas reikšmes. LangChain4j `PromptTemplate` klasė tai palengvina naudodama `{{variable}}` sintaksę.
 
-<img src="../../../translated_images/lt/prompt-templates.14bfc37d45f1a933.webp" alt="Promptų šablonai" width="800"/>
+<img src="../../../translated_images/lt/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
-*Pakartotiniai promptai su kintamaisiais – vienas šablonas, daug panaudojimų*
+*Pakartotinai naudojamos užklausos su kintamųjų vietomis – vienas šablonas, daug panaudojimų*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,25 +170,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Kada naudoti:** Pasikartojančios užklausos su skirtingomis įvestimis, masinis apdorojimas, pereinamų DI darbo srautų kūrimas arba bet kuri situacija, kur prompto struktūra išlieka nesikeičianti, o duomenys keičiasi.
+**Kada naudoti:** pakartotinėms užklausoms su skirtingomis įvestimis, partijų apdorojimui, kuriant pakartotinai naudojamus DI darbo srautus arba bet kurioje situacijoje, kur užklausos struktūra lieka ta pati, bet keičiasi duomenys.
 
 ---
 
-Šie penki pagrindai suteikia tvirtą įrankių rinkinį daugumai promptų užduočių. Toliau šiame modulyje šie pagrindai plėtojami su **aštuoniais pažangiais modeliais**, kurie išnaudoja GPT-5.2 samprotavimo valdymą, savianalizę ir struktūruotą išvestį.
+Šie penki pagrindai suteikia tvirtą įrankių rinkinį daugumai užklausų užduočių. Likusi modulio dalis grindžiama jais ir pristato **aštuonis pažangius modelius**, kurie išnaudoja GPT-5.2 mąstymo valdymą, saviįvertinimą ir struktūrinės išvesties galimybes.
 
-## Pažangūs modeliai
+## Išplėstiniai modeliai
 
-Įsisavinus pagrindus, pereikime prie aštuonių pažangių modelių, dėl kurių šis modulis išsiskiria. Ne visoms problemoms tinka tas pats metodas. Kai kuriems klausimams reikia greitų atsakymų, kitiems – gilaus mąstymo. Kai kurie reikalauja matomo samprotavimo, kiti – tik rezultatų. Žemiau pateikti modeliai optimizuoti skirtingoms situacijoms – ir GPT-5.2 samprotavimo valdymas akivaizdžiai pabrėžia skirtumus.
+Turėdami pagrindus, pereikime prie aštuonių pažangių modelių, kurie daro šį modulį išskirtinį. Ne visoms problemoms tinka tas pats požiūris. Kai kuriems klausimams reikia greitų atsakymų, kitiems – gilaus apmąstymo. Kai kuriems – matomo mąstymo, o kitiems užtenka tik rezultatų. Kiekvienas modelis žemiau yra optimizuotas skirtingai situacijai – ir GPT-5.2 mąstymo valdymas dar labiau išryškina skirtumus.
 
-<img src="../../../translated_images/lt/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Aštuoni promptų inžinerijos modeliai" width="800"/>
+<img src="../../../translated_images/lt/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
 
-*Aštuoni promptų inžinerijos modeliai ir jų panaudojimo atvejai*
+*Aštuoni užklausų inžinerijos modelių apžvalga ir jų panaudojimo sritys*
 
-<img src="../../../translated_images/lt/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Samprotavimo valdymas su GPT-5.2" width="800"/>
+<img src="../../../translated_images/lt/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
 
-*GPT-5.2 samprotavimo valdymas leidžia nurodyti, kiek modelis turi mąstyti – nuo greitų tiesioginių atsakymų iki gilios analizės*
+*GPT-5.2 mąstymo valdymas leidžia nurodyti, kiek mąstymo turi atlikti modelis – nuo greitų tiesioginių atsakymų iki gilios analizės*
 
-**Mažas entuziazmas (Greiti ir fokusuoti)** – paprastiems klausimams, kai norite greitų tiesioginių atsakymų. Modelis daro minimaliai samprotavimų – daugiausia 2 žingsnius. Naudokite skaičiavimams, paieškoms ar paprastiems klausimams.
+**Mažas entuziazmas (greitai ir fokusas)** – paprastiems klausimams, kur reikia greitų, tiesioginių atsakymų. Modelis atlieka minimalų mąstymą – daugiausiai 2 žingsnius. Naudokite tai skaičiavimams, paieškoms ar paprastiems klausimams.
 
 ```java
 String prompt = """
@@ -202,12 +207,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Išbandykite su GitHub Copilot:** Atidarykite [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) ir paklauskite:
-> - „Kuo skiriasi mažo ir didelio entuziazmo promptų modeliai?“
-> - „Kaip XML žymės promptuose padeda struktūrizuoti DI atsakymą?“
-> - „Kada naudoti savirefleksijos modelius, o kada tiesioginius nurodymus?“
+> 💡 **Išbandykite su GitHub Copilot:** Atverkite [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) ir paklauskite:
+> - „Kuo skiriasi mažo entuziazmo ir didelio entuziazmo užklausų modeliai?“
+> - „Kaip XML žymės užklausose padeda struktūruoti DI atsakymą?“
+> - „Kada naudoti saviįvertinimo modelius, o kada tiesioginius nurodymus?“
 
-**Didelis entuziazmas (Gilus ir kruopštus)** – sudėtingoms problemoms, kai norite išsamios analizės. Modelis kruopščiai nagrinėja ir demonstruoja detalias samprotavimų grandines. Naudokite sistemų projektui, architektūros sprendimams ar sudėtingiems tyrimams.
+**Didelis entuziazmas (gilus ir kruopštus)** – sudėtingoms problemoms, kur norite išsamios analizės. Modelis kruopščiai nagrinėja ir pateikia detalią argumentaciją. Naudokite tai sistemos dizainui, architektūros sprendimams ar sudėtingiems tyrimams.
 
 ```java
 String prompt = """
@@ -221,7 +226,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Užduočių vykdymas (Žingsnis po žingsnio eiga)** – daugiapakopiams darbo srautams. Modelis pateikia pradines gaires, komentuoja kiekvieną žingsnį vykdymo metu, o pabaigoje pateikia santrauką. Naudokite migracijoms, įgyvendinimams ar bet kuriam procesui su keliomis stadijomis.
+**Užduočių vykdymas (žingsnis po žingsnio)** – daugiažingsniams darbo srautams. Modelis pateikia planą iš anksto, pasakoja apie kiekvieną žingsnį darbo metu ir galiausiai pateikia santrauką. Naudokite migracijoms, įgyvendinimams ar bet kokiems daugiažingsniams procesams.
 
 ```java
 String prompt = """
@@ -259,18 +264,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Minties grandinės promptai aiškiai prašo modelio parodyti samprotavimų procesą, kas padidina tikslumą sudėtingose užduotyse. Žingsnių išskaidymas padeda tiek žmonėms, tiek DI suprasti logiką.
+Mąstymo grandinės užklausa tiesiogiai reikalauja, kad modelis parodytų savo mąstymo procesą, kas pagerina sudėtingų užduočių tikslumą. Žingsnis po žingsnio išskaidymas padeda tiek žmonėms, tiek DI suprasti logiką.
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbiu:** Paklauskite apie šį modelį:
-> - „Kaip pritaikyti užduoties vykdymo modelį ilgai trunkančioms operacijoms?“
-> - „Kokios gerosios praktikos yra dėl įrankių įvadų struktūrizavimo gamybinėse programėlėse?“
-> - „Kaip sugauti ir parodyti tarpinius pažangos atnaujinimus naudotojo sąsajoje?“
+> - „Kaip adaptuoti užduočių vykdymo modelį ilgalaikėms operacijoms?“
+> - „Kokios geriausios praktikos kuriant įrankių įvadus gamybos aplikacijose?“
+> - „Kaip UI fiksuoti ir rodyti tarpinę pažangos informaciją?“
 
-<img src="../../../translated_images/lt/task-execution-pattern.9da3967750ab5c1e.webp" alt="Užduočių vykdymo modelis" width="800"/>
+<img src="../../../translated_images/lt/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
-*Planavimas → Vykdymas → Santrauka daugiapakopėms užduotims*
+*Planavimas → Vykdymas → Santrauka daugiažingsnių užduočių darbo srautui*
 
-**Savianalizės kodas** – gamybinės kokybės kodo generavimui. Modelis kuria kodą pagal gamybinės kokybės standartus su tinkamu klaidų valdymu. Naudokite naujų funkcijų ar servisų kūrimui.
+**Saviįvertinantis kodas** – gamybos klasės kodo generavimui. Modelis kuria kodą laikydamasis gamybos standartų su tinkamu klaidų valdymu. Naudokite tai kuriant naujas funkcijas ar paslaugas.
 
 ```java
 String prompt = """
@@ -281,11 +286,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/lt/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Savianalizės ciklas" width="800"/>
+<img src="../../../translated_images/lt/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
-*Iteracinis tobulinimo ciklas – generuoti, vertinti, rasti trūkumus, tobulinti, kartoti*
+*Iteracinio tobulėjimo ciklas – generuoti, vertinti, identifikuoti problemas, gerinti, kartoti*
 
-**Struktūruota analizė** – nuosekliai vertinant. Modelis peržiūri kodą naudodamas fiksuotą sistemą (teisingumas, praktikos, našumas, saugumas, palaikymas). Naudokite kodo peržiūroms ar kokybės vertinimui.
+**Struktūrinė analizė** – nuosekliam vertinimui. Modelis peržiūri kodą pagal nustatytą schemą (tikslumas, praktikos, našumas, saugumas, palaikymas). Naudokite kodo peržiūroms arba kokybės vertinimams.
 
 ```java
 String prompt = """
@@ -333,16 +338,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbiu:** Paklauskite apie struktūruotą analizę:
-> - „Kaip pritaikyti analizės sistemą skirtingoms kodo peržiūrų rūšims?“
-> - „Koks geriausias būdas programiškai apdoroti struktūruotą išvestį?“
-> - „Kaip užtikrinti nuoseklius sunkumo lygius skirtingose peržiūrų sesijose?“
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbiu:** Paklauskite apie struktūrinę analizę:
+> - „Kaip pritaikyti analizės sistemą skirtingų tipų kodo peržiūroms?“
+> - „Koks geriausias būdas programiškai apdoroti ir veikti pagal struktūrinės išvesties duomenis?“
+> - „Kaip užtikrinti nuoseklius rimtumo lygius per skirtingas peržiūros sesijas?“
 
-<img src="../../../translated_images/lt/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Struktūruotos analizės modelis" width="800"/>
+<img src="../../../translated_images/lt/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
-*Sistema nuoseklioms kodo peržiūroms su sunkumo laipsniais*
+*Sistema nuoseklioms kodo peržiūroms su rimtumo lygiais*
 
-**Daugiapakopis pokalbis** – pokalbiams, kuriems reikalingas kontekstas. Modelis prisimena ankstesnes žinutes ir juo remiasi. Naudokite interaktyvioms pagalbos sesijoms ar sudėtingoms klausimų-atsakymų sesijoms.
+**Daugiaetapiai pokalbiai** – pokalbiams, kuriems reikia konteksto. Modelis prisimena ankstesnes žinutes ir jas naudoja. Naudokite interaktyvioms pagalbos sesijoms arba sudėtingiems klausimams-atsakymams.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -356,11 +361,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/lt/context-memory.dff30ad9fa78832a.webp" alt="Konteksto atmintis" width="800"/>
+<img src="../../../translated_images/lt/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
-*Kaip pokalbių kontekstas kaupiasi per kelis ciklus, kol pasiekiamas žetonų limitas*
+*Kaip pokalbio kontekstas kaupiasi per kelis ciklus, kol pasiekiamas tokenų limitas*
 
-**Žingsnis po žingsnio samprotavimas** – problemoms, kurios reikalauja matomos logikos. Modelis parodo aiškų kiekvieno žingsnio samprotavimą. Naudokite matematikos užduotims, loginėms mįslėms arba kai norite suprasti mąstymo procesą.
+**Žingsnis po žingsnio mąstymas** – užduotims, kurioms reikia matomos logikos. Modelis rodo aiškią argumentaciją kiekvienam etapui. Naudokite matematikos užduotims, logikos mįslėms arba kai reikia suprasti mąstymo procesą.
 
 ```java
 String prompt = """
@@ -374,11 +379,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/lt/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Žingsnis po žingsnio modelis" width="800"/>
+<img src="../../../translated_images/lt/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
-*Problemų suskaidymas į aiškius loginius žingsnius*
+*Sudėtingų problemų išskaidymas į aiškius loginčius veiksmus*
 
-**Apribota išvestis** – atsakymams, kuriems taikomi specifiniai formato reikalavimai. Modelis griežtai laikosi formato ir ilgio taisyklių. Naudokite santraukoms arba kai reikia tikslios struktūros.
+**Apribotas išvestis** – atsakymams su konkrečiais formato reikalavimais. Modelis griežtai laikosi formato ir ilgio taisyklių. Naudokite santraukoms arba kai reikia tikslios išvesties struktūros.
 
 ```java
 String prompt = """
@@ -394,49 +399,49 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/lt/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Apribotos išvesties modelis" width="800"/>
+<img src="../../../translated_images/lt/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
-*Specifinių formato, ilgio ir struktūros reikalavimų užtikrinimas*
+*Konkrečių formato, ilgio ir struktūros reikalavimų užtikrinimas*
 
-## Esamų „Azure“ išteklių naudojimas
+## Esamų Azure išteklių naudojimas
 
 **Patikrinkite diegimą:**
 
-Įsitikinkite, kad `.env` failas yra pagrindiniame kataloge su Azure kredencialais (sukurtas modulio 01 metu):
+Įsitikinkite, kad pagrindiniame kataloge yra `.env` failas su Azure kredencialais (sukurtas 01 modulio metu):
 ```bash
 cat ../.env  # Turėtų parodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Paleiskite programą:**
 
-> **Pastaba:** Jei jau paleidote visas programėles naudodami `./start-all.sh` iš modulio 01, šis modulis jau veikia 8083 porte. Galite praleisti toliau pateiktas paleidimo komandas ir eiti tiesiai į http://localhost:8083.
+> **Pastaba:** Jei jau paleidote visas programas naudodami `./start-all.sh` 01 modulyje, šis modulis jau veikia 8083 prievade. Galite praleisti žemiau pateiktas starto komandas ir eiti tiesiai į http://localhost:8083.
 
-**1 variantas: naudokite „Spring Boot Dashboard“ (rekomenduojama VS Code naudotojams)**
+**1 variantas: naudokite Spring Boot valdymo priemonę (rekomenduojama VS Code vartotojams)**
+Dev konteineryje yra pridėta Spring Boot valdymo skydelio plėtinys, kuris suteikia vizualią sąsają visoms Spring Boot programoms valdyti. Jį rasite veiklos juostoje kairėje VS Code pusėje (ieškokite Spring Boot ikonos).
 
-Dev konteineryje įdiegta „Spring Boot Dashboard“ plėtinys, kuris suteikia vizualią sąsają valdyti visas Spring Boot programėles. Jį rasite veiklos juostoje kairėje VS Code pusėje (pažymėtas Spring Boot piktograma).
+Iš Spring Boot valdymo skydelio galite:
+- Matyti visas darbo erdvėje esančias Spring Boot programas
+- Vienu spustelėjimu paleisti/stabdyti programas
+- Realio laiko režimu peržiūrėti programų žurnalus
+- Stebėti programų būklę
 
-Iš „Spring Boot Dashboard“ galite:
-- Matyti visas prieinamas Spring Boot programėles darbinėje aplinkoje
-- Pradėti/stabdyti programėles vienu paspaudimu
-- Realizuotai matyti programėlių žurnalus
-- Stebėti programėlių būseną
 Tiesiog spustelėkite paleidimo mygtuką šalia „prompt-engineering“, kad paleistumėte šį modulį, arba paleiskite visus modulius iš karto.
 
-<img src="../../../translated_images/lt/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot pagrindinis ekranas" width="400"/>
+<img src="../../../translated_images/lt/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**2 variantas: naudojant shell skriptus**
+**2 variantas: Naudojant shell scenarijus**
 
-Paleiskite visas žiniatinklio programas (1-4 moduliai):
+Paleiskite visas žiniatinklio programas (modulius 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Iš šakninių katalogų
+cd ..  # Iš šakniniame kataloge
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Iš šakninių direktorijų
+cd ..  # Iš šakninių katalogo
 .\start-all.ps1
 ```
 
@@ -454,9 +459,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Abu skriptai automatiškai užkrauna aplinkos kintamuosius iš .env failo šakniniame kataloge ir sukuria JAR failus, jei jų nėra.
+Abu scenarijai automatiškai įkelia aplinkos kintamuosius iš šakniniame lygmenyje esančio `.env` failo ir sukurs JAR failus, jei jų nėra.
 
-> **Pastaba:** Jei norite rankiniu būdu sukompiliuoti visus modulius prieš paleidžiant:
+> **Pastaba:** Jei norite paleisti visų modulių statymą rankiniu būdu prieš paleidžiant:
 >
 > **Bash:**
 > ```bash
@@ -470,7 +475,7 @@ Abu skriptai automatiškai užkrauna aplinkos kintamuosius iš .env failo šakni
 > mvn clean package -DskipTests
 > ```
 
-Ataikykite adresą http://localhost:8083 savo naršyklėje.
+Naršyklėje atidarykite http://localhost:8083.
 
 **Norėdami sustabdyti:**
 
@@ -488,71 +493,71 @@ cd .. && ./stop-all.sh  # Visi moduliai
 cd ..; .\stop-all.ps1  # Visi moduliai
 ```
 
-## Programos ekrano vaizdai
+## Programos ekrano kopijos
 
-<img src="../../../translated_images/lt/dashboard-home.5444dbda4bc1f79d.webp" alt="Pagrindinis valdymo skydelis" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
+<img src="../../../translated_images/lt/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Pagrindinis valdymo skydelis, rodantis visus 8 promptų inžinerijos modelius su jų savybėmis ir naudojimo atvejais*
+*Pagrindinis valdymo skydelis, rodantis visas 8 promptų inžinerijos schemas su jų savybėmis ir panaudojimo atvejais*
 
-## Tyrinėjame modelius
+## Schemos tyrinėjimas
 
-Žiniatinklio sąsaja leidžia eksperimentuoti su įvairiomis paskatinimo strategijomis. Kiekvienas modelis sprendžia skirtingas problemas – išbandykite juos, kad pamatytumėte, kada kiekvienas metodas veikia geriausiai.
+Žiniatinklio sąsaja leidžia eksperimentuoti su skirtingomis prašymų strategijomis. Kiekviena schema sprendžia skirtingas problemas – išbandykite jas, kad pamatytumėte, kada kiekvienas metodas geriausiai veikia.
 
-> **Pastaba: Srautinė ir nesrautinė eiga** — Kiekviename modelio puslapyje yra du mygtukai: **🔴 Srautinis atsakymas (gyvai)** ir **Nesrautinė** opcija. Srautinė eiga naudoja Server-Sent Events (SSE), kad parodytų žodžius realiu laiku modelio generavimo metu, tad iš karto matote eigą. Nesrautinė opcija laukia viso atsakymo, kol jį parodo. Sudėtingiems užklausoms (pvz., Didelis noras, Savirefleksinis kodas) nesrautinis kvietimas gali užtrukti labai ilgai – kartais net minutes – be jokios matomos reakcijos. **Naudokite srautinį režimą, kai eksperimentuojate su sudėtingais prašymais**, kad matytumėte, kaip modelis dirba, ir išvengtumėte įspūdžio, jog užklausa užstrigo.
+> **Pastaba: Srautinė transliacija prieš nesrautinę** — Kiekviename schemos puslapyje yra du mygtukai: **🔴 Srautinė atsakymo transliacija (tiesioginė)** ir **Nesrautinė** parinktis. Srautinė naudoja Server-Sent Events (SSE), kad rodytų žodžius realiu laiku, kol modelis juos generuoja, todėl matote pažangą iš karto. Nesrautinė parinktis laukia pilno atsakymo prieš jį rodant. Prašymams, kurie sukelia gilų mąstymą (pvz., Didelis entuziazmas, Savianalitinė kodo vertinimas), nesrautinė užklausa gali užtrukti labai ilgai – kartais minutes – be jokios matomos reakcijos. **Naudokite srautinę transliaciją, kai eksperimentuojate su sudėtingais prašymais**, kad galėtumėte matyti modelio darbą ir išvengtumėte įspūdžio, kad užklausa užstrigo.
 >
-> **Pastaba: Naršyklės reikalavimai** — Srautinė funkcija naudoja Fetch Streams API (`response.body.getReader()`), kurią palaiko tik pilnos naršyklės (Chrome, Edge, Firefox, Safari). Ji **neveikia** VS Code integruotoje Simple Browser, nes jo webview nepalaiko ReadableStream API. Jei naudojate Simple Browser, nesrautiniai mygtukai veiks, o srautiniai neveiks. Pilnai patirčiai atidarykite `http://localhost:8083` išorinėje naršyklėje.
+> **Pastaba: Naršyklės reikalavimas** — Srautinė funkcija naudoja Fetch Streams API (`response.body.getReader()`), kuri reikalauja pilnos naršyklės (Chrome, Edge, Firefox, Safari). Ji **neveikia** VS Code įmontuotame Simple Browser, nes jo webview nepalaiko ReadableStream API. Jei naudojate Simple Browser, nesrautiniai mygtukai veiks įprastai – paveikia tik srautinės transliacijos mygtukai. Pilnai patirčiai atidarykite `http://localhost:8083` išorinėje naršyklėje.
 
-### Mažas ir didelis noras (Low vs High Eagerness)
+### Mažas prieš didelį entuziazmą
 
-Užduokite paprastą klausimą „Kiek yra 15 % nuo 200?“ naudodami Mažą norą. Gaunate greitą, tiesioginį atsakymą. Dabar užduokite sudėtingą klausimą „Sukurkite kešavimo strategiją itin apkrautam API“ su Dideliu noru. Spustelėkite **🔴 Srautinis atsakymas (gyvai)** ir stebėkite išsamų modelio samprotavimą žodis po žodžio. Tas pats modelis, ta pati klausimo struktūra – bet užklausa nurodo, kiek giliai galvoti.
+Užduokite paprastą klausimą, pavyzdžiui, „Kiek yra 15 % iš 200?“ naudodami Mažą entuziazmą. Gaunate greitą ir tiesioginį atsakymą. Dabar užduokite sudėtingesnį klausimą, pavyzdžiui, „Sukurkite talpyklos strategiją didelio eismo API“ naudodami Didelį entuziazmą. Spustelėkite **🔴 Srautinė atsakymo transliacija (tiesioginė)** ir stebėkite, kaip atsiranda detalus modelio samprotavimas žodis po žodžio. Tas pats modelis, ta pati klausimo struktūra – bet prašymas nurodo, kiek mąstymo atlikti.
 
-### Užduočių vykdymas (Įrankių įvadas)
+### Užduoties vykdymas (priemonės pradinės eilutės)
 
-Daugiapakopiai darbų srautai naudoja išankstinį planavimą ir progresijos aprašymą. Modelis nusako, ką darys, komentuoja kiekvieną žingsnį ir vėliau apibendrina rezultatus.
+Daugiažingsniai darbo procesai naudingesni dėl išankstinio planavimo ir proceso aprašymo. Modelis išdėsto, ką darys, pasakoja apie kiekvieną žingsnį, tada apibendrina rezultatus.
 
-### Savirefleksinis kodas
+### Savianalitinė kodo refleksija
 
-Išbandykite „Sukurti el. pašto validavimo paslaugą“. Vietoj to, kad tiesiog sugeneruotų kodą ir sustotų, modelis generuoja, vertina pagal kokybės kriterijus, aptinka silpnas vietas ir tobulina. Matysite, kaip jis iteruoja, kol kodas atitinka gamybos standartus.
+Išbandykite „Sukurkite el. pašto tikrinimo paslaugą“. Vietoje tik generuoti kodą ir sustoti, modelis generuoja, vertina pagal kokybės kriterijus, identifikuoja silpnybes ir tobulina. Matysite, kaip jis iteruoja, kol kodas atitinka gamybos standartus.
 
-### Struktūruota analizė
+### Struktūrinė analizė
 
-Kodo peržiūroms reikalingi nuoseklūs vertinimo pagrindai. Modelis analizuoja kodą pagal nustatytas kategorijas (teisingumas, praktikos, našumas, saugumas) su rimtumo lygiais.
+Kodo peržiūrai reikalingi nuoseklūs vertinimo pagrindai. Modelis analizuoja kodą naudojant fiksuotas kategorijas (teisingumas, praktikos, našumas, saugumas) su svarbių lygių klasifikacija.
 
-### Daugiakartinis pokalbis
+### Daugkartinis pokalbis
 
-Paklauskite „Kas yra Spring Boot?“ ir iš karto pridėkite „Parodyk man pavyzdį“. Modelis prisimena pirmą klausimą ir pateikia specialų Spring Boot pavyzdį. Be atminties antras klausimas būtų per neaiškus.
+Paklauskite „Kas yra Spring Boot?“ tada nedelsdami tęskite „Pateikite pavyzdį“. Modelis prisimena pirmą klausimą ir pateikia konkretų Spring Boot pavyzdį. Be atminties antras klausimas būtų pernelyg bendras.
 
 ### Žingsnis po žingsnio samprotavimas
 
-Pasirinkite matematikos uždavinį ir išbandykite jį tiek su Žingsnis po žingsnio samprotavimu, tiek su Mažu noru. Mažas noras pateikia tik atsakymą – greitai, bet neaiškiai. Žingsnis po žingsnio parodo kiekvieną skaičiavimą ir sprendimą.
+Pasirinkite matematinę užduotį ir išbandykite tiek Žingsnis po žingsnio samprotavimą, tiek Mažą entuziazmą. Mažas entuziazmas duoda tik atsakymą – greitą, bet neaiškų. Žingsnis po žingsnio parodo kiekvieną skaičiavimą ir sprendimą.
 
 ### Apribotas išvesties formatas
 
-Kai reikia specifinių formatų ar žodžių skaičiaus, šis modelis užtikrina griežtą laikymąsi. Išbandykite sukurti santrauką tiksliai iš 100 žodžių punktų formatu.
+Kai reikia specifinių formatų ar žodžių skaičiaus, ši schema užtikrina griežtą laikymąsi. Išbandykite sugeneruoti santrauką su tiksliai 100 žodžių punktų formatu.
 
-## Ko iš tikrųjų mokotės
+## Ko jūs iš tikrųjų mokotės
 
 **Samprotavimo pastangos keičia viską**
 
-GPT-5.2 leidžia valdyti skaičiavimo pastangas per savo užklausas. Mažos pastangos reiškia greitą atsakymą su minimalia paieška. Didelės pastangos – gilų, apgalvotą atsakymą. Mokotės atitikti pastangas užduoties sudėtingumui – nešvaistykite laiko paprastiems klausimams, bet neskubėkite sudėtingų sprendimų.
+GPT-5.2 leidžia valdyti skaičiavimo pastangas per jūsų prašymus. Mažos pastangos reiškia greitus atsakymus su minimaliu tyrimu. Didelės pastangos reiškia, kad modelis rimtai apmąsto. Mokotės pritaikyti pastangas prie užduoties sudėtingumo – nešvaistykite laiko paprastiems klausimams, bet ir neskubėkite su sudėtingais sprendimais.
 
-**Struktūra nukreipia elgesį**
+**Struktūra valdo elgesį**
 
-Pastebėjote XML žymes užklausoje? Jos nėra dekoratyvios. Modeliai patikimiau atlieka struktūrizuotas instrukcijas nei laisvo teksto. Kai reikia daugiapakopių procesų ar sudėtingos logikos, struktūra padeda modeliui sekti, kur jis yra ir kas laukia.
+Pastebėjote XML žymes prašymuose? Jos nėra dekoratyvios. Modeliai laikosi struktūruotų nurodymų patikimiau nei laisvo teksto. Kai reikalingi daugiažingsniai procesai ar sudėtinga logika, struktūra padeda modeliui sekti, kur jis yra ir kas bus toliau.
 
-<img src="../../../translated_images/lt/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt struktūra" width="800"/>
+<img src="../../../translated_images/lt/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Gerai struktūrizuoto užklausos anatomija su aiškiomis sekcijomis ir XML stiliaus organizacija*
+*Gerai struktūruoto prašymo anatomija su aiškiomis dalimis ir XML stiliaus organizacija*
 
-**Kokybė per savęs vertinimą**
+**Kokybė per savianalizę**
 
-Savirefleksiniai modeliai veikia išreikšdami kokybės kriterijus. Vietoj to, kad tikėtumėtės, jog modelis „atliks gerai“, tiksliai nurodote, ką reiškia „gerai“: teisinga logika, klaidų valdymas, našumas, saugumas. Tada modelis gali įvertinti savo išvestį ir tobulinti. Tai paverčia kodo generavimą procesu, o ne loterija.
+Savianalitinės schemos veikia, padarydamos kokybės kriterijus akivaizdžius. Vietoje to, kad tikėtumėtės, jog modelis „pavyks“, jūs tiksliai nurodote, ką reiškia „teisinga“: taisyklinga logika, klaidų valdymas, našumas, saugumas. Modelis gali įvertinti savo išvestį ir tobulinti. Tai paverčia kodo generavimą iš loterijos į procesą.
 
 **Kontekstas yra ribotas**
 
-Daugiakartiniai pokalbiai veikia perduodant žinučių istoriją kiekviename užklausoje. Tačiau yra riba – kiekvienas modelis turi maksimalų tokenų skaičių. Didėjant pokalbiams reikalingos strategijos, leidžiančios išlaikyti svarbią informaciją, nepasiekiant ribos. Šis modulis parodo, kaip veikia atmintis; vėliau sužinosite, kada apibendrinti, kada pamiršti ir kada atsigauti informaciją.
+Daugkartiniai pokalbiai veikia įtraukiant žinučių istoriją su kiekvienu užsakymu. Bet yra riba – kiekvienas modelis turi maksimalią žodžių/ištraukoms ribą. Augant pokalbiams, reikės strategijų svarbiam kontekstui išlaikyti, neperžengiant ribos. Šis modulis parodo, kaip veikia atmintis; vėliau išmoksite, kada santrumuoti, kada pamiršti ir kada atsinešti informaciją.
 
-## Sekantys žingsniai
+## Kiti žingsniai
 
 **Kitas modulis:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
 
@@ -563,6 +568,6 @@ Daugiakartiniai pokalbiai veikia perduodant žinučių istoriją kiekviename už
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Atsakomybės apribojimas**:
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, prašome atkreipti dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Pirminis dokumentas originalo kalba laikomas pagrindiniu šaltiniu. Svarbiai informacijai rekomenduojama naudoti profesionalų žmogaus vertimą. Mes neatsakome už jokius nesusipratimus ar neteisingus interpretavimus, kilusius dėl šio vertimo naudojimo.
+**Atsakomybės apribojimas**:  
+Šis dokumentas buvo išverstas naudojant AI vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatizuoti vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas gimtąja kalba turi būti laikomas pagrindiniu šaltiniu. Kritinei informacijai rekomenduojama naudoti profesionalų žmogiškąjį vertimą. Mes neatsakome už bet kokius nesusipratimus ar klaidingas interpretacijas, kylančias dėl šio vertimo naudojimo.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

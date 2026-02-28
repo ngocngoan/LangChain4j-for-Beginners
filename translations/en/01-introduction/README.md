@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../01-introduction)
 - [What You'll Learn](../../../01-introduction)
 - [Prerequisites](../../../01-introduction)
 - [Understanding the Core Problem](../../../01-introduction)
@@ -14,6 +15,10 @@
   - [Stateless Chat (Left Panel)](../../../01-introduction)
   - [Stateful Chat (Right Panel)](../../../01-introduction)
 - [Next Steps](../../../01-introduction)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
 ## What You'll Learn
 
@@ -264,7 +269,7 @@ cd .. && ./stop-all.sh  # All modules
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Only this module
+.\stop.ps1  # This module only
 # Or
 cd ..; .\stop-all.ps1  # All modules
 ```

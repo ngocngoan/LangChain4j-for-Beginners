@@ -1,53 +1,53 @@
-# Module 00: မြန်ဆန်စွာ စတင်ခြင်း
+# Module 00: အလျင်အမြန် စတင်ခြင်း
 
-## အကြောင်းအရာ ဇယား
+## Table of Contents
 
 - [နိဒါန်း](../../../00-quick-start)
-- [LangChain4j ဆိုတာဘာလဲ?](../../../00-quick-start)
-- [LangChain4j အခြေခံလိုအပ်ချက်များ](../../../00-quick-start)
+- [LangChain4j ဆိုတာ ဘာလဲ?](../../../00-quick-start)
+- [LangChain4j မှာ လိုအပ်တဲ့ ကုဒ်များ](../../../00-quick-start)
 - [လိုအပ်ချက်များ](../../../00-quick-start)
 - [တပ်ဆင်ခြင်း](../../../00-quick-start)
-  - [1. GitHub Token ကိုရယူရန်](../../../00-quick-start)
-  - [2. Token ကိုတပ်ဆင်ရန်](../../../00-quick-start)
-- [ဥပမာများကို လည်ပတ်ရန်](../../../00-quick-start)
-  - [1. အခြေခံ စကားပြောခြင်း](../../../00-quick-start)
-  - [2. Prompt နမူနာများ](../../../00-quick-start)
-  - [3. Function ခေါ်ဆိုခြင်း](../../../00-quick-start)
-  - [4. စာရွက်စာတမ်း မေးမြန်း-ဖြေကြားခြင်း (RAG)](../../../00-quick-start)
-  - [5. တာဝန်ခံ AI](../../../00-quick-start)
-- [ဥပမာတစ်ခုစီ ပြသမှုများ](../../../00-quick-start)
-- [နောက်တစ်ဆင့်များ](../../../00-quick-start)
-- [ပြဿနာဖြေရှင်းခြင်း](../../../00-quick-start)
+  - [1. ကိုယ်ပိုင် GitHub Token ရယူရန်](../../../00-quick-start)
+  - [2. ကိုယ်ပိုင် Token မှတ်ပုံတင်ရန်](../../../00-quick-start)
+- [ဥပမာများ ကို လုပ်ဆောင်ရန်](../../../00-quick-start)
+  - [1. အခြေခံ စကားပြော](../../../00-quick-start)
+  - [2. Prompt ပုံစံများ](../../../00-quick-start)
+  - [3. Function အမိန့်ခေါ်ခြင်း](../../../00-quick-start)
+  - [4. စာရွက်စာတမ်း Q&A (Easy RAG)](../../../00-quick-start)
+  - [5. တာဝန်ယူပြီး AI](../../../00-quick-start)
+- [ဥပမာတိုင်း ဖော်ပြထားသည့်အချက်များ](../../../00-quick-start)
+- [နောက်တတ်လမ်းများ](../../../00-quick-start)
+- [ပြဿနာပြုပြင်ခြင်း](../../../00-quick-start)
 
 ## နိဒါန်း
 
-ဒီ quickstart ဟာ LangChain4j နဲ့ ပြီးပြည့်စုံစွာ လည်ပတ်စေဖို့ ရည်ရွယ်ထားတာဖြစ်ပြီး LangChain4j နဲ့ GitHub Models ကို အသုံးပြုပြီး AI အပလီကေးရှင်းများ တည်ဆောက်ရာမှာ အခြေခံအချက်များကို အကျဉ်းချုပ် ဖော်ပြထားပါတယ်။ နောက် modules တွင် Azure OpenAI နဲ့ LangChain4j ကို အသုံးပြုကာ ပိုပြီး အဆင့်မြင့်အပလီကေးရှင်းများ တည်ဆောက်မှာဖြစ်ပါတယ်။
+ဒီ quickstart သည် LangChain4j နှင့် အဆင်ပြေမြန်ဆန်စွာ စတင်အသုံးပြုနိုင်ရန်ရည်ရွယ်သည်။ LangChain4j နှင့် GitHub Models အသုံးပြုပြီး AI အပလီကေးရှင်းများ ဖန်တီးခြင်း၏ အခြေခံအချက်များသာ ပါဝင်သည်။ နောက် Module များတွင် Azure OpenAI နှင့် LangChain4j ကို အသုံးပြုကာ ပိုမိုတိုးတက်သော အပလီကေးရှင်းများ တည်ဆောက်ပါမည်။
 
-## LangChain4j ဆိုတာဘာလဲ?
+## LangChain4j ဆိုတာ ဘာလဲ?
 
-LangChain4j သည် AI စွမ်းရည် ပါဝင်သော အပလီကေးရှင်းများကို တည်ဆောက်ရင်းတွင် အခက်အခဲများဖြေရှင်းပေးသော Java 라이ဘราရီတစ်ခုဖြစ်သည်။ HTTP client များနှင့် JSON parsing များကို ကိုင်တွယ်ရန် အစား သန့်ရှင်းသော Java API များဖြင့် အလုပ်လုပ်နိုင်သည်။
+LangChain4j သည် AI ပါဝင်သော အပလီကေးရှင်းများ တည်ဆောက်ရာတွင် ရိုးရှင်းအဆင်ပြေ သော Java 라이ဘရာရီတစ်ခု ဖြစ်သည်။ HTTP client များနှင့် JSON ပားစင်အား ကိုင်တွယ်ရန် မလိုဘဲ သန့်ရှင်းသော Java API များဖြင့် လုပ်ဆောင်နိုင်သည်။
 
-LangChain ၏ "chain" ဆိုသည်မှာ အစိတ်အပိုင်းများစီစဉ် ချိတ်ဆက်ခြင်းကို ရည်ညွှန်းသည်။ ဥပမာ prompt တစ်ခုကို model တစ်ခုဆီ ဆက်သွယ်၊ နောက်ဆက်တွဲ parser တစ်ခုသို့ ချိတ်ဆက်ခြင်း၊ သို့မဟုတ် အတန်းလိုက် AI ခေါ်ဆိုမှုများကို တစ်ခုထဲထွက်သော အချက်အလက်ကို နောက်ထပ် input အဖြစ် သုံးခြင်း စသည်ဖြင့်။ ဒီ quickstart မှာ အခြေခံများအပေါ် ဦးတည်ပြီး ကွဲပြားသော chain များကို နည်းနည်းအရင်လေ့လာမှာ ဖြစ်သည်။
+LangChain ၏ “chain” ဆိုသည်မှာ အစိတ်အပိုင်းများကို တန်းတူချိတ်ဆက်ခြင်းဖြစ်သည်။ ဥပမာ prompt ကို model သို့ parser သို့ချိတ်ဆက်ခြင်း၊ ဒါမှမဟုတ် AI ခေါ်ဆိုမှုများစွာကို တန်းစီချိတ်ဆက်၍ တစ်ခု၏ output ကို နောက်ထပ် input အဖြစ် သုံးပြီး ဆက်လက် လုပ်ဆောင်ခြင်းတို့ ဖြစ်နိုင်သည်။ ဒီ quick start မှာ အခြေခံအချက်များအပေါ် ဂရုစိုက်ပြီး ပိုမိုရှုပ်ထွေးသော chain များကို မကြာမီ လေ့လာပါမည်။
 
 <img src="../../../translated_images/my/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*LangChain4j တွင် component များ ချိတ်ဆက်ခြင်း - အဆောက်အအုံများ ချိတ်ဆက်ကာ အစွမ်းထက် AI လုပ်ငန်းစဉ်များ အတည်ပြုသည်*
+*LangChain4j မှာ component များကို ချိတ်ဆက်ပုံ - အင်အားကြီး AI လုပ်ငန်းစဉ်များ ဖန်တီးခြင်းအတွက် အဆောက်အအုံ*
 
-ကျွန်ုပ်တို့ သုံးမည့် အဓိက component သုံးခုမှာ -
+ကျွန်ုပ်တို့ ယခု သုံးမည့် အဓိက component သုံးခုမှာ -
 
-**ChatLanguageModel** - AI model နှင့် ဆက်သွယ်ရန် interface တစ်ခု။ `model.chat("prompt")` ကိုခေါ်ပြီး ဖြေကြားချက် စာကြောင်း တစ်ခု ရရှိနိုင်သည်။ ကျွန်ုပ်တို့သည် OpenAI နှင့်တိုက်ဆိုင်သော API များ (GitHub Models လည်းပါဝင်သည်) နှင့် အလုပ်လုပ်နိုင်သည့် `OpenAiOfficialChatModel` ကို အသုံးပြုသည်။
+**ChatModel** - AI model နှင့် ကွက်တိခွဲဆက်ဆံမှုအတွက် interface ပါ။ `model.chat("prompt")` ကို ခေါ်ပြီး တုံ့ပြန်မှု string ရယူနိုင်သည်။ OpenAI နှင့် ကိုက်ညီသည့် endpoints တွင် အသုံးပြုနိုင်သည့် `OpenAiOfficialChatModel` ကို သုံးသည်။
 
-**AiServices** - Type-safe AI service interfaces များ ဖန်တီးပေးသည်။ method များကို သတ်မှတ်ပြီး `@Tool` ဖြင့် မှတ်သားပါက LangChain4j က လိုအပ်သလို စနစ်ဆွဲပေးသည်။ AI ဟာ လိုအပ်သည့်အခါ Java method များကို ကိုယ်တိုင် ခေါ်ယူသွားသည်။
+**AiServices** - အမျိုးအစားလုံခြုံသော AI ဝန်ဆောင်မှု interface များ ဖန်တီးပေးသည်။ method များကို `@Tool` ဖြင့် အမှတ်အသားပြု၍ LangChain4j သည် orchestration ကို ကိုင်တွယ်ပေးသည်။ AI သည် လိုအပ်သလို သင့် Java method များကို အလိုအလျောက် ခေါ်ယူပေးသည်။
 
-**MessageWindowChatMemory** - စကားပြော အမှတ်တရ ကို ထိန်းသိမ်းသည်။ ဤ memory မရှိမဖြစ်ဖြင့် တစ်ခုချင်းစီသော မေးခွန်းတွေဟာ လွတ်လပ်ပြီး ရှေ့ဆုံး ပြောခဲ့တာကို မမှတ်မိပါ။ MessageWindowChatMemory ပါဝင်သည်နှင့် AI သည် ယခင် စကားများကို မှတ်မိကာ context ထိန်းသိမ်းထားနိုင်သည်။
+**MessageWindowChatMemory** - စကားပြောသမိုင်းကို သိမ်းဆည်းထားပေးသည်။ မရှိလျှင် တစ်ခုချင်းစီ အဆိုပြုချက်များသည် အချိုးမျှမရှိပါ။ ရှိလျှင် AI သည် ယခင်စာများကို မှတ်မိပြီး စိတ်ဝင်စားရန်အဆိုပြုချက်များကို ကြိုးပမ်းဆက်လက် ထိန်းသိမ်းပေးသည်။
 
 <img src="../../../translated_images/my/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*LangChain4j architecture - အဓိက component များပေါင်းစပ်၍ သင်၏ AI အပလီကေးရှင်းများကို လုပ်ဆောင်ပေးသည်*
+*LangChain4j architecture - AI application များအား အဓိက component များ ပေါင်းစပ်လုပ်ဆောင်ခြင်း*
 
-## LangChain4j အခြေခံလိုအပ်ချက်များ
+## LangChain4j မှာ လိုအပ်တဲ့ ကုဒ်များ
 
-ဒီ quickstart တွင် Maven dependency နှစ်ခုကို [`pom.xml`](../../../00-quick-start/pom.xml) မှာ အသုံးပြုသည်။
+ဒီ quick start တွင် Maven သုံးခုကို [`pom.xml`](../../../00-quick-start/pom.xml) မှ တင်ပြထားသည်-
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -61,51 +61,59 @@ LangChain ၏ "chain" ဆိုသည်မှာ အစိတ်အပိုင
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
+
+<!-- Easy RAG: automatic splitting, embedding, and retrieval -->
+<dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
+</dependency>
 ```
 
-`langchain4j-open-ai-official` module ဟာ OpenAI-compatible API များနှင့် ဆက်သွယ်နိုင်သည့် `OpenAiOfficialChatModel` class ကို ပေးဆောင်သည်။ GitHub Models များသည် API ပုံစံ တူညီသောကြောင့် အထူး adapter မလိုတော့ပါ - base URL ကို `https://models.github.ai/inference` သို့ သတ်မှတ်ပေးရုံ ဖြစ်သည်။
+`langchain4j-open-ai-official` module မှ `OpenAiOfficialChatModel` class ကို ပေးပြီး OpenAI နှင့် ကိုက်ညီသည့် API များနှင့် ဆက်သွယ်သည်။ GitHub Models သည် API ပုံစံတူဖြစ်သောကြောင့် မည်သည့် အထူး adapter မလိုပဲ `https://models.github.ai/inference` ကို base URL အဖြစ် သတ်မှတ်ခြင်းဖြင့် အသုံးပြုနိုင်သည်။
+
+`langchain4j-easy-rag` module မှ စာရွက်စာတမ်းဖြတ်ခြင်း၊ embedding နှင့် retrieval များကို အလိုအလျောက် ပြုလုပ်ပေး၍ RAG application များကို လက်ဖြင့်တစ်ဆင့်ချုပ်ရန် မလိုပဲ ဖန်တီးနိုင်သည်။
 
 ## လိုအပ်ချက်များ
 
-**Dev Container သုံးနေပါသလား?** Java နှင့် Maven များက တပ်ဆင်ပြီးသား ဖြစ်ပြီး GitHub Personal Access Token တစ်ခုသာ လိုအပ်သည်။
+**Dev Container အသုံးပြုပါသလား?** Java နှင့် Maven များ အပြီးအစီး ထည့်သွင်းထားပြီး ဖြစ်သည်။ GitHub Personal Access Token တစ်ခုသာ လိုအပ်သည်။
 
 **Local Development:**
-- Java 21+ နှင့် Maven 3.9+
-- GitHub Personal Access Token (အောက်တွင် အသေးစိတ် ဖော်ပြထားသည်)
+- Java 21+ ၊ Maven 3.9+
+- GitHub Personal Access Token (အောက်ရှိ လမ်းညွှန်အတိုင်း)
 
-> **မှတ်ချက် -** ဒီ module မှာ GitHub Models ၏ `gpt-4.1-nano` ကို အသုံးပြုထားသည်။ ကုဒ်အတွင်း မော်ဒယ်အမည်ကို ပြောင်းလဲမပြင်ပါနှင့် - GitHub ရှိ မော်ဒယ်များနှင့် ပတ်သက်သည့် စနစ်ဖြင့် လုပ်ဆောင်ထားသောကြောင့် ဖြစ်သည်။
+> **မှတ်ချက်:** ဒီ module တွင် GitHub Models မှ `gpt-4.1-nano` ကို အသုံးပြုသည်။ လိုအပ်ချက်မရှိဘဲ ကိုးဒ်ထဲ၊ model name ကို ပြင်ဆင်မလုပ်ပါနှင့်- GitHub Models မှ အသုံးပြုနိုင်သော model များနှင့် သင့်တော်အောင် အသင့်တော်သောနေရာမှာ 이미 설정되어 있습니다။
 
-## တပ်ဆင်ခြင်း
+## Setup
 
-### 1. GitHub Token ကိုရယူရန်
+### 1. ကိုယ်ပိုင် GitHub Token ရယူရန်
 
 1. [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens) သို့ သွားပါ
 2. "Generate new token" ကို နှိပ်ပါ
-3. အမည်တစ်ခု သတ်မှတ်ပေးပါ (ဥပမာ - "LangChain4j Demo")
-4. သက်တမ်းသတ်မှတ်ပါ (7 ရက် အကြံပြုသည်)
-5. "Account permissions" အောက်တွင် "Models" ကို "Read-only" သတ်မှတ်ပါ
+3. အသုံးပြုရန် အမည်တစ်ခုပေးပါ (ဥပမာ "LangChain4j Demo")
+4. သက်တမ်း သတ်မှတ်ပါ (7 ရက် အကြံပြု)
+5. "Account permissions" အောက် "Models" ကို ရွေးပြီး "Read-only" သတ်မှတ်ပါ
 6. "Generate token" ကို နှိပ်ပါ
-7. Token ကို ကူးယူထားပြီး ပြန်မမြင်ရတော့ပါ
+7. token ကို မျက်နှာပြင်ပေါ် တွေ့ရမည့် အချိန် တစ်ကြိမ်တည်းဖြစ်သောကြောင့် ကူးယူပြီး သိမ်းဆည်းထားပါ
 
-### 2. Token ကိုတပ်ဆင်ရန်
+### 2. ကိုယ်ပိုင် Token မှတ်ပုံတင်ရန်
 
-**ရွေးချယ်မှု ၁: VS Code အသုံးပြုခြင်း (အကြံပြုသည်)**
+**ရွေးချယ်စရာ 1 - VS Code အသုံးပြုခြင်း (အကြံပြု)**
 
-VS Code အသုံးပြုပါက project အခြေခံ `.env` ဖိုင်ထဲသို့ သင်၏ Token ကို ထည့်သည်။
+VS Code အသုံးပြုပါက project root တွင် `.env` ဖိုင်ထဲတွင် token ထည့်ပါ-
 
-`.env` ဖိုင် မရှိလျှင် `.env.example` ကို ကူးယူ၍ `.env` အမည်ဖြင့်ထားပါ၊ မဟုတ်လျှင် project အခြေခံတွင် `.env` ဖိုင်သစ် ဖန်တီးပါ။
+`.env` ဖိုင် မရှိပါက `.env.example` ကို `.env` ဟု ကူးယူပါ၊ သို့မဟုတ် project root တွင် အသစ်တစ်ခု ဖန်တီးပါ။
 
 **ဥပမာ `.env` ဖိုင်:**
 ```bash
-# /workspaces/LangChain4j-for-Beginners/.env မှာ
+# /workspaces/LangChain4j-for-Beginners/.env တွင်
 GITHUB_TOKEN=your_token_here
 ```
 
-ထို့နောက် Explorer မှ မည်သည့် demo ဖိုင်ကိုမဆို တစ်ချက်နှိပ်ပြီး **"Run Java"** ကို ရွေးချယ်နိုင်ပြီး Run and Debug panel မှာ ပါသော launch configurations များကို အသုံးပြုနိုင်သည်။
+ထို့နောက် Explorer တွင် မည်သည့် demo ဖိုင် (ဥပမာ `BasicChatDemo.java`) ကို မာယာကိုနှိပ်ပြီး **"Run Java"** ရွေးပါ။ သို့မဟုတ် Run and Debug panel မှ launch configuration များကို အသုံးပြုနိုင်သည်။
 
-**ရွေးချယ်မှု ၂: Terminal သုံးခြင်း**
+**ရွေးချယ်စရာ 2 - Terminal အသုံးပြုခြင်း**
 
-Token ကို environment variable အဖြစ် သတ်မှတ်ပါ -
+Token ကို environment variable အဖြစ် သတ်မှတ်ပါ-
 
 **Bash:**
 ```bash
@@ -117,13 +125,13 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-## ဥပမာများကို လည်ပတ်ရန်
+## ဥပမာများ ကို လုပ်ဆောင်ရန်
 
-**VS Code အသုံးပြုပါက:** Explorer တွင် မည်သည့် demo ဖိုင်ကိုမဆို right-click လုပ်ပြီး **"Run Java"** ရွေးချယ်ပါ၊ ဒါမှမဟုတ် Run and Debug panel မှ launch configurations များကို အသုံးပြုပါ (Token ကို `.env` မှာ ထည့်ထားပြီးဖြစ်ရပါမည်)။
+**VS Code အသုံးပြုခြင်း:** Explorer တွင် demo ဖိုင် တစ်ခုအား မာယာကို နှိပ်ပြီး **"Run Java"** ရွေးပါ၊ သို့မဟုတ် Run and Debug panel မှ launch config များကို သုံးပါ (token ကို `.env` ဖိုင်ထဲ ထည့်ထားပြီးဖြစ်ရန် သေချာပါစေ)။
 
-**Maven အသုံးပြုပါက:** Command line မှ အောက်ပါအတိုင်း လည်ပတ်နိုင်သည်-
+**Maven အသုံးပြုခြင်း:** Command line မှလည်း အောက်ပါအတိုင်း လုပ်ဆောင်နိုင်သည်-
 
-### 1. အခြေခံ စကားပြောခြင်း
+### 1. အခြေခံ စကားပြော
 
 **Bash:**
 ```bash
@@ -135,7 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-### 2. Prompt နမူနာများ
+### 2. Prompt ပုံစံများ
 
 **Bash:**
 ```bash
@@ -147,9 +155,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-zero-shot, few-shot, chain-of-thought နှင့် role-based prompting များ ပြသထားသည်။
+Zero-shot၊ few-shot၊ chain-of-thought နှင့် role-based prompting များ ပြသထားသည်။
 
-### 3. Function ခေါ်ဆိုခြင်း
+### 3. Function အမိန့်ခေါ်ခြင်း
 
 **Bash:**
 ```bash
@@ -161,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-လိုအပ်သည့်အခါ AI က ကိုယ့် Java method များကို ကိုယ်တိုင် ခေါ်ယူသည်။
+AI သည် လိုအပ်သလို သင့် Java method များကို အလိုအလျောက်ခေါ်သည်။
 
-### 4. စာရွက်စာတမ်း မေးမြန်း-ဖြေကြားခြင်း (RAG)
+### 4. စာရွက်စာတမ်း Q&A (Easy RAG)
 
 **Bash:**
 ```bash
@@ -175,9 +183,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-`document.txt` ထဲရှိ အကြောင်းအရာအပေါ် မေးခွန်းများ မေးနိုင်သည်။
+စာရွက်စာတမ်းများအပေါ် မေးခွန်းများ မေးနိုင်ရန် Easy RAG နည်းလမ်းဖြင့် အလိုအလျောက် embedding နှင့် retrieval ပြုလုပ်သည်။
 
-### 5. တာဝန်ခံ AI
+### 5. တာဝန်ယူပြီး AI
 
 **Bash:**
 ```bash
@@ -189,16 +197,16 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-AI ဘေးကင်းမှု filter များက အန္တရာယ်မှ content များကို ဘာသာစကားဖြင့် ကာကွယ်ပေးသည်။
+AI လုံခြုံရေး စစ်ဆေးမှုများကြောင့် အန္တရာယ်ရှိသော အကြောင်းအရာများကို ကျိတ်လိုက်ပုံကို ကြည့်ရှုပါ။
 
-## ဥပမာတစ်ခုစီ ပြသမှုများ
+## ဥပမာတိုင်း ဖော်ပြထားသည့်အချက်များ
 
-**အခြေခံ စကားပြောခြင်း** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
+**အခြေခံ စကားပြော** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-LangChain4j ၏ အခြေခံကို ဒီနေရာမှာ စတင်မြင်ရပါမယ်။ `OpenAiOfficialChatModel` တည်ဆောက်ပြီး `.chat()` ဖြင့် prompt ပို့ကာ ဖြေကြားချက် မက်ဆေ့ချ် ရယူခြင်းကို ပြသသည်။ မော်ဒယ်သတ်မှတ်ခြင်း၊ custom endpoint များ နှင့် API key များ ဖြင့် စတင်အသုံးပြုနည်းကို ဖော်ပြထားသည်။ ဒီနမူနာကို နားလည်ပြီးနောက် အခြား အရာများကို သင်ယူနိုင်ပါမယ်။
+LangChain4j ကို အခြေခံပုံစံဖြင့် စတင်ကြည့်ရှုရန်။ `OpenAiOfficialChatModel` တည်ဆောက်ပြီး `.chat()` ဖြင့် prompt ပို့ကာ တုံ့ပြန်မှုရယူသည်။ ဤသည်သည် custom endpoint များနှင့် API key များဖြင့် model များ initialized လုပ်နည်းကို ပြသသော အခြေခံ ဖြစ်သည်။ ဒီပုံစံကို နားလည်လိုက်ရင် နောက်ပိုင်း အရာအားလုံးလည်း ထူထောင်နိုင်ပါသည်။
 
 ```java
-ChatLanguageModel model = OpenAiOfficialChatModel.builder()
+OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
     .baseUrl("https://models.github.ai/inference")
     .apiKey(System.getenv("GITHUB_TOKEN"))
     .modelName("gpt-4.1-nano")
@@ -208,17 +216,18 @@ String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ဖြင့် စမ်းသပ်ကြည့်ပါ:** [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) ကိုဖွင့်ပြီး မေးမြန်းပါ-
-> - "GitHub Models မှ Azure OpenAI သို့ ဘယ်လိုပြောင်းလဲရမလဲ?"
-> - "OpenAiOfficialChatModel.builder() ထဲမှာ ဘယ်လို parameter တွေ configure လုပ်လို့ရပါသလဲ?"
-> - "Streaming response တွေကို စောင့်မနေဘဲ ဘယ်လို ထည့်သွင်းရမလဲ?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat နှင့် ကြိုးစားကြည့်ရန်:** [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) ဖြင့် ဖွင့်ပြီး မေးမြန်းပါ-
+> - "ဒီ code မှ GitHub Models ကနေ Azure OpenAI ကို ဘယ်လိုပြောင်းမလဲ?"
+> - "OpenAiOfficialChatModel.builder() မှာ ဘာ parameter တွေ configure လုပ်လို့ရလဲ?"
+> - "တုံ့ပြန်မှု ပြည့်စုံစောင့်ရှောက်စေဖို့ streaming responses ဖြည့်စွက် ဘယ်လိုလုပ်မလဲ?"
 
 **Prompt Engineering** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-အခု သင်ဟာ မော်ဒယ်နဲ့ စကားပြောတယ်ဆိုတော့ ဘာနည်းလမ်း နဲ့ ပြောဆိုရမလဲဆိုတာ ရှာဖွေကြမယ်။ ဒီ demo မှာ မော်ဒယ်တူညီပုံစံဖြင့် ဟာ လုပ်ပုံမှန်ဖြစ်နေပြီး prompt patterns ငါးမျိုးကို ပြသထားသည်။ zero-shot တိုက်ရိုက်ညွှန်ကြားမှု၊ few-shot နမူနာများမှ သင်ကြားမှု, chain-of-thought အတွေးလမ်းကြောင်းဖော်ပြမှု၊ role-based prompting စသည်ဖြင့် လုပ်ဆောင်မှုဖြစ်သည်။ မည်သို့ ပြုပြင်၍ မော်ဒယ်မှ ထွက်ရှိချက်မတူညီမှု သိရပါမည်။
+Model နှင့် စကားပြောနည်းအတိုင်း သိသွားရင်၊ ယူဆချက်ပုံစံတွေကို လေ့လာကြမယ်။ ဤ demo တွင် အတူတူ model setup ကို သုံးပြီး prompt အမျိုးမျိုး(၅) များကို ပြသထားသည်။ zero-shot prompts ဖြင့် တိုက်ရိုက် ညွှန်ကြားချက်များ၊ few-shot prompts ဖြင့် ဥပမာများမှ သင်ယူခြင်း၊ chain-of-thought prompts ဖြင့် တွေးခေါ်မှုအဆင့်များဖော်ပြခြင်း၊ role-based prompts ဖြင့် context သတ်မှတ်ခြင်းတို့ပါဝင်သည်။ ခုနကတော့ model တူပေမယ့် prompt ပုံစံအလိုက် ရလာဒ်က အတော်ကွာခြားမှု ရှိတယ်ဆိုတာ တွေ့မြင်ရပါမယ်။
 
-ဒီ demo သည် prompt templates များကိုလည်း ပြသထားသည်။ PromptTemplate သည် စွမ်းဆောင်ရည်မြင့်နှင့် variable များဖြင့် ပြန်လည်အသုံးပြုနိုင်သော prompt များ ဖန်တီးပုံဖြစ်သည်။
-အောက်မှာ LangChain4j ၏ `PromptTemplate` ကို အသုံးပြု၍ variable များထည့်သွင်းထားသော prompt ပုံစံတစ်ခုကို ဥပမာပြထားသည်။ AI က မြို့နယ်နှင့် လှုပ်ရှားမှုရပ်များအပေါ် အခြေခံ၍ ဖြေကြားမည်ဖြစ်သည်။
+ဒီ demo မှာ prompt template များလည်း ပြသထားပြီး ဥပမာအီဒီယာနဲ့ ပြန်လည် အသုံးပြုနိုင်သော prompt များ ဖန်တီးသည်။
+
+အောက်တွင် LangChain4j `PromptTemplate` ကို သုံးပြီး variable များ ဖြည့်သွင်းထားသော prompt ကို နမူနာပြထားသည်။ AI သည် ပေးထားသော destination နှင့် activity အရ တုံ့ပြန်ပေးမည်။
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -233,15 +242,15 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ဖြင့် စမ်းသပ်ကြည့်ပါ:** [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) ကိုဖွင့်ပြီး မေးပါ-
-> - "zero-shot နဲ့ few-shot prompting ကြားဘာကွာခြားချက်ရှိသလဲ၊ ဘယ်မှာ ဘာသုံးသင့်လဲ?"
-> - "temperature parameter ကို မော်ဒယ်ထွက်လေ့လာမှုဘယ်လိုသက်ရောက်သလဲ?"
-> - "prompt injection တိုက်ခိုက်မှု ကာကွယ်နည်း ဘာတွေရှိသလဲ?"
-> - "ပုံမှန်မျိုးကို ပြန်လည်အသုံးပြုနိုင်သော PromptTemplate နည်းလမ်းများ ပြုလုပ်နည်း ဘာလဲ?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat နှင့် ကြိုးစားကြည့်ရန်:** [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) ဖြင့် ဖွင့်ပြီး မေးမြန်းပါ-
+> - "zero-shot နဲ့ few-shot prompting မတူတာ ဘာလဲ၊ ဘယ်တော့သုံးသင့်လဲ?"
+> - "temperature parameter က model တုံ့ပြန်မှုကို ဘယ်လိုသက်ရောက်သလဲ?"
+> - "production မှာ prompt injection ရှောင်ရန် နည်းလမ်းများ ဘာတွေရှိသလဲ?"
+> - "Common patterns များအတွက် PromptTemplate objects ကို ပြန်လည်အသုံးပြုဖို့ ဘယ်လိုဖန်တီးမလဲ?"
 
 **Tool Integration** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-ဒီနေရာမှာ LangChain4j သည် ပြင်းထန်သည်။ AiServices ကိုအသုံးပြု၍ Java method များကို ခေါ်ယူနိုင်သော AI အကူ助手 တစ်ခု ဖန်တီးမည်။ method များတွင် `@Tool("ဖော်ပြချက်")` ကို မှတ်သားပေးရုံအစား LangChain4j မှ တာဝန်ယူပြုစုပေးသည် - user မေးလိုက်တော့ AI က tool တစ်ခုချင်းစီကို အလိုအလျောက်ခေါ်ယူသည်။ ဒီနမူနာတွင် function calling ဆိုသည်မှာ AI အရာများကို လုပ်ဆောင်စေရန်နည်းလမ်း ဖြစ်ပြီး မေးခွန်းတို့ကိုသာ ဖြေကာမဟုတ်ဘဲ လုပ်ဆောင်ချက်ယူပေးသည်။
+LangChain4j ၏ အထူးအားသာချက် တစ်ခု ဖြစ်သည်။ `AiServices` ကို အသုံးပြုကာ AI မိတ်ဆက်သူတစ်ဦး ဖန်တီးနိုင်သည်။ သင့် Java method များကို `@Tool("ဖော်ပြချက်")` ဖြင့် အမှတ်အသားဖြစ်အောင် သတ်မှတ်လိုက်ပါ။ LangChain4j သည် user မေးခွန်းအရ tool များကို သုံးရန်ဆုံးဖြတ်ပေးသည်။ ဤနည်းလမ်းသည် လုပ်ဆောင်ချက် ခေါ်ယူမှု နည်းစနစ်တစ်ခုဖြစ်ပြီး AI ကို မေးခွန်းများသာ မဖြေသည့် နည်းလမ်းတစ်ခု ဖြစ်သည်။
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -249,42 +258,49 @@ public double add(double a, double b) {
     return a + b;
 }
 
-MathAssistant assistant = AiServices.create(MathAssistant.class, model);
+MathAssistant assistant = AiServices.builder(MathAssistant.class)
+    .chatModel(model)
+    .tools(new Calculator())
+    .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+    .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ဖြင့် စမ်းသပ်ကြည့်ပါ:** [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) ကိုဖွင့်ပြီး မေးပါ-
-> - "@Tool annotation ဘယ်လိုအလုပ်လုပ်ပြီး LangChain4j က ဘာလုပ်ကြသလဲ?"
-> - "AI က tool များစွာကို အဆက်မပြတ်ဖြေရှင်းနိုင်လား?"
-> - "Tool က Exception လွှတ်တင်ခဲ့ရင် ဘယ်လို error များကို ကိုင်တွယ်မလဲ?"
-> - "ဒီ calculator နမူနာ အစား API တကယ်ကို ဘယ်လိုပေါင်းချိတ်မလဲ?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat နှင့် ကြိုးစားကြည့်ရန်:** [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) ဖြင့် ဖွင့်ပြီး မေးမြန်းပါ-
+> - "@Tool အမှတ်အသားက ဘယ်လို အလုပ်လုပ်သလဲ၊ LangChain4j က အဖွဲ့အစည်းကို ဖော်ပြပါ။"
+> - "AI သည် မျိုးစုံသော tool များကို အစဉ်လိုက်ခေါ်ပြီး ခက်ခဲတဲ့ ပြဿနာများကို ဖြေရှင်းနိုင်မလား?"
+> - "Tool မှ exception တက်လာရင် အဘယ်သို့ ကုစားသင့်သလဲ?"
+> - "ဒီ calculator ဥပမာအစား စစ်မှန်သော API နဲ့ ဂဟေဆက်ရန် ဘယ်လိုလုပ်မလဲ?"
 
-**စာရွက်စာတမ်း မေးမြန်း-ဖြေကြားခြင်း (RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**စာရွက်စာတမ်း Q&A (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-ဒီနေရာမှာ RAG (retrieval-augmented generation) အခြေခံ ကို မြင်ရမယ်။ မော်ဒယ် ကျွမ်းကျင်မှု ဒေတာအစား `document.txt` ထဲရှိ အကြောင်းအရာကို prompt တွင် ထည့်သွင်းထားပြီး AI ကို အခြေခံအနေဖြင့် ဖြေကြားပေးသည်။ ဒီ စနစ်သည် သင်၏တည်ဆောက်ထားသော ဒေတာကို အသုံးပြုကာ လုပ်ဆောင်နိုင်သည်။
+LangChain4j ၏ Easy RAG နည်းလမ်းဖြင့် RAG (retrieval-augmented generation) ကို မြင်တွေ့ရမည်။ စာရွက်စာတမ်းများကို ပေးပြီး အလိုအလျောက် ဖြတ်ခြားခြင်း၊ embedding ပြုလုပ်၍ memory တွင် သိမ်းဆည်းထားသည်။ ထို့နောက် content retriever တစ်ခုမှ AI ထံ မေးခွန်းစဉ်အချိန်တွင် သင့်တော်သော အပိုင်းများကို ထုတ်ပေးသည်။ AI သည် ထိုစာရွက်စာတမ်းအပေါ် မူတည်၍ မေးခွန်းများ တုံ့ပြန်သည်၊ ၎င်း၏ ယေဘုယျ သတင်းအချက်အလက် မဟုတ်ပါ။
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("document.txt");
-String content = document.text();
+Document document = loadDocument(Paths.get("document.txt"));
 
-String prompt = "Based on this document: " + content + 
-                "\nQuestion: What is the main topic?";
-String response = model.chat(prompt);
+InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
+
+Assistant assistant = AiServices.builder(Assistant.class)
+        .chatModel(chatModel)
+        .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+        .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore))
+        .build();
+
+String answer = assistant.chat("What is the main topic?");
 ```
 
-> **မှတ်ပုံတွေ့:** ဒီနည်းလမ်းအရ စာရွက်စာတမ်းအားလုံးကို prompt ထဲသို့ ထည့်သွင်းသည်။ ဖိုင်ကြီးများ (>10KB) အတွက် context ကန့်သတ်ချက်ကျော်လွန်နိုင်သည်။ Module 03 မှာ chunking နဲ့ vector search ကို အသေးစိတ်ရှင်းပြပါမည်။
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat နှင့် ကြိုးစားကြည့်ရန်:** [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) ဖြင့် ဖွင့်ပြီး မေးမြန်းပါ-
+> - "RAG သည် AI hallucinations မဖြစ်စေရန် မူလ model training data သုံးခြင်းနှင့် ဘယ်လိုကွာခြားသလဲ?"
+> - "ဒီ Easy method နဲ့ custom RAG pipeline မတူတာ ဘာလဲ?"
+> - "စာရွက်စာတမ်း များစွာ သို့မဟုတ် သိပ္ပံဗဟုသုတ ကဏ္ဍ ကြီးများ ဖြစ်စေရန် ဘယ်လိုခန့်မှန်းမလဲ?"
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ဖြင့် စမ်းသပ်ကြည့်ပါ:** [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) ကိုဖွင့်ပြီး မေးပါ-
-> - "RAG က AI hallucination ကာကွယ်ပေးမှု မော်ဒယ် ကျွမ်းကျင်မှုဒေတာအသုံးပြုမှုထက် ဘယ်လိုကွာခြားသလဲ?"
-> - "ဒီနည်းနှင့် vector embeddings အသုံးပြုမှု ကြားကွာခြားချက်ဘာလဲ?"
-> - "စာရွက်စာတမ်း များစွာသိုလှောင်ရန် သို့မဟုတ် အသိပညာအဆောက်အအုံကြီးများ များစွာကို ဘယ်လိုလည်ပတ်သင့်သလဲ?"
-> - "AI သည် ရေးထိုးသော context ကိုသာ အသုံးပြုဖို့ prompt ဖွဲ့စည်းမှုအတွက် အကောင်းဆုံးနည်းလမ်းဘာလဲ?"
+**တာဝန်ယူပြီး AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-**တာဝန်ခံ AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+AI လုံခြုံရေးကို အဆင့်ဆင့်ကာကွယ်မှုဖြင့် တည်ဆောက်ပါ။ ဒီ demo သည် လုံခြုံရေး များလွှာ ၂ ဆင့် အတူ လုပ်ဆောင်မှုကို ဖော်ပြသည်။
 
-AI လုံခြုံရေးကို တပ်ဆင်ပါ။ ဒီ demo မှာ ကာကွယ်မှု အလွှာ နှစ်ခုကို ဖော်ပြထားသည်။
-
-**ပိုင်း ၁: LangChain4j Input Guardrails** - LLM ထံ မပို့မီ အန္တရာယ်ရှိသော prompts များကို ပိတ်ပင်သည်။ custom guardrails များ ဖန်တီး၍ မလိုအပ်သော keyword များ သို့မဟုတ် pattern များကို စစ်ဆေးကြသည်။ ဤ guardrails များ code တွင် ဆောင်ရွက်သဖြင့် မြန်ဆန်ပြီး အခမဲ့ဖြစ်သည်။
+**အပိုင်း ၁ - LangChain4j Input Guardrails** - အန္တရာယ်ရှိသော prompt များကို LLM သို့ မသွားမီ ပိတ်ဆို့ခြင်း။ custom guardrails များ ဖန်တီးကာ တားမြစ်ချက် keyword များ သို့မဟုတ် နမူနာ pattern များ စစ်ဆေးနိုင်သည်။ ဒီ guardrails များကို သင်၏ code မှာ ပြုလုပ်သည့်အတွက် မြန်နှုန်းမြင့်ပြီး အခမဲ့ဖြစ်သည်။
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -299,39 +315,39 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**ပိုင်း ၂: Provider Safety Filters** - GitHub Models ရဲ့ built-in filter များသည် guardrails မတွေ့ရသေးသောအရာများကို ဖမ်းဆီးသည်။ ပြစ်ဒဏ်စိုးရိမ်ဖွယ်မူကြီးများအတွက် hard blocks (HTTP 400 error များ) နှင့် AI က သေချာ ငြင်းဆန်သည့် soft refusals များကို ပြသသည်။
+**အပိုင်း ၂ - Provider Safety Filters** - GitHub Models တွင်စနစ်တကျ ကာကွယ်စောင့်ကြည့်မှု filters ပါဝင်ပြီး သင်၏ guardrails မဖမ်းမရသော အရာများကို တားဆီးသည်။  ပြင်းထန်သော ချို့ယွင်းမှုများအတွက် hard block (HTTP 400 error) များနှင့် AI သည် နူးညံ့စွာ ငြင်းဆန်သည့် soft refusal များကို တွေ့မြင်ရမည်။
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ဖြင့် စမ်းသပ်ကြည့်ပါ:** [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) ကိုဖွင့်ပြီး မေးပါ-
-> - "InputGuardrail ဆိုတာဘာလဲ၊ ကိုယ့်ကိုယ်ကို ဘယ်လိုဖန်တီးမလဲ?"
-> - "hard block နဲ့ soft refusal ကြားကွာခြားချက် ဘာလဲ?"
-> - "guardrails နဲ့ provider filters ကို အတူသုံးရခြင်း အကျိုး နေရာရောပါသလဲ?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat နှင့် ကြိုးစားကြည့်ရန်:** [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) ဖြင့် ဖွင့်ပြီး မေးမြန်းပါ-
+> - "InputGuardrail ဆိုတာဘာလဲ၊ ကိုယ်ပိုင် guardrail ဘယ်လို ဖန်တီးမလဲ?"
+> - "hard block နဲ့ soft refusal ကွာခြားချက် ဘာလဲ?"
+> - "guardrails နဲ့ provider filters တို့ကို တူတူအသုံးပြုရတဲ့ အကျိုးရှိချက် ဘာလဲ?"
 
-## နောက်တစ်ဆင့်များ
+## နောက်တတ်လမ်းများ
 
-**နောက်တစ် module:** [01-introduction - LangChain4j နှင့် gpt-5 အတွက် Azure တွင် စတင်ခြင်း](../01-introduction/README.md)
-
----
-
-**Navigation:** [← မူလစာမျက်နှာသို့ ပြန်သွားရန်](../README.md) | [နောက်တစ် module: Module 01 - နိဒါန်း →](../01-introduction/README.md)
+**နောက်တတ် Module:** [01-introduction - LangChain4j နှင့် Azure ရုပ်ပုံ gpt-5 နှင့် စတင်အသုံးပြုခြင်း](../01-introduction/README.md)
 
 ---
 
-## ပြဿနာဖြေရှင်းခြင်း
+**နောက်ရှေ့လမ်းညွှန်:** [← နောက်သို့ Main page](../README.md) | [Next: Module 01 - နိဒါန်း →](../01-introduction/README.md)
+
+---
+
+## ပြဿနာပြုပြင်ခြင်း
 
 ### ပထမဆုံး Maven Build
 
-**ပြဿနာ**: ပထမဆုံး `mvn clean compile` သို့မဟုတ် `mvn package` လည်ပတ်စဉ် အချိန်ကြာသည် (10-15 မိနစ်)
+**ပြဿနာ:** ပထမဆုံး `mvn clean compile` သို့မဟုတ် `mvn package` လိုက်လံပါက ကြာမြင့်သည် (၁၀-၁၅ မိနစ်)
 
-**အကြောင်းအရင်း**: Maven သည် ပထမဆုံးသုံးတွင် စီမံကိန်းလိုအပ်ချက်များ (Spring Boot, LangChain4j libraries, Azure SDK များ) ကို ဒေါင်းလုပ်လုပ်ရန် လိုအပ်သည်။
+**အကြောင်း:** Maven သည် ပထမဆုံး build အတွက် project အားလုံး dependency များ (Spring Boot, LangChain4j libraries၊ Azure SDKs စသည်) ကို ဒေါင်းလုပ် ဆွဲထားရမည်။
 
-**ဖြေရှင်းနည်း**: ဤအပြုအမူသည် သဘာဝဖြစ်ပုံ ဖြစ်သည်။ နောက်တစ်ကြိမ်များ ကျော်သွားလျှင် ဒေါင်းလုပ်ရတတ်သောအရာများကို cache ထားပြီး ပိုမြန်သည်။ ဒေါင်းလုပ်အချိန်သည် သင့်ကွန်ရက် မြန်နှုန်းပေါ် မူတည်သည်။
-### PowerShell Maven အမိန့် စာနယ်ဇင်း
+**ဖြေရှင်းနည်း:** ဒီတုန်းက အဆင်ပြေသည်။ နောက်တစ်ခါ build များတွင် dependency များ cache ထားပြီး ဖြစ်သောကြောင့် ပိုမိုလျင်မြန်ပေါ့။ ဒေါင်းလုပ်အချိန်သည် သင့်ကွန်ယက်အင်တာနက်အရှိန်ပေါ် မူတည်သည်။
 
-**ပြသနာ**: Maven အမိန့်များသည် error `Unknown lifecycle phase ".mainClass=..."` ဖြင့် မအောင်မြင်ခြင်း
+### PowerShell Maven Command Syntax
 
-**အကြောင်းရင်း**: PowerShell သည် `=` ကို variable သတ်မှတ်ခြင်း operator အဖြစ် ထောက်လှမ်းကာ Maven property စာ法ကို ခြေဖျက်သည်
+**ပြဿနာ:** Maven command များ ပြုလုပ်ရာတွင် `Unknown lifecycle phase ".mainClass=..."` မှားယွင်းချက်ဖြစ်ပေါ်သည်။
+**အကြောင်းအရင်း** - PowerShell သည် `=` ကို အမျိုးအစားသတ်မှတ်မှု ဂဏန်းသတ်မှတ်ချက်အဖြစ် သဘောပေါက်သော်လည်း Maven property syntax ကို ချိုးဖောက်လွန်းသည်။
 
-**ဖြေရှင်းနည်း**: Maven အမိန့်မတိုင်မှီ stop-parsing operator `--%` ကို အသုံးပြုပါ။
+**ဖြေရှင်းနည်း** - Maven command မစလုပ်ခင် stop-parsing operator `--%` ကို အသုံးပြုပါ။
 
 **PowerShell:**
 ```powershell
@@ -343,30 +359,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-`--%` operator သည် PowerShell ကို လက်ကျန် argument များအားလုံးကို အဓိပ္ပါယ်မပြောင်းလဲဘဲ Maven ဆီသို့ တိုက်ရိုက် ပေးပို့ရန် အားပေးသည်။
+`--%` operator သည် PowerShell အတွက် ကျန်ရှိသော argument များအားလုံးကို literal အဖြစ် Maven သို့ ဘာမှ အဓိပ္ပါယ်မပြောင်းပေးဘဲ ဖြတ်ပို့ရန် သတ်မှတ်ပေးသည်။
 
 ### Windows PowerShell Emoji ပြသမှု
 
-**ပြသနာ**: PowerShell တွင် AI တုန့်ပြန်ချက်များသည် emoji များအစား အချို့ ပျက်ပြီး စာလုံးများ (ဥပမာ `????` သို့မဟုတ် `â??`) ပြသခြင်း
+**ပြဿနာ** - PowerShell တွင် emoji များအစား ကောင်းကင်အက္ခရာများ (ဥပမာ `????` သို့မဟုတ် `â??`) ပြသခြင်း
 
-**အကြောင်းရင်း**: PowerShell ၏ ပုံမှန် အင်ကုဒင်းစနစ်သည် UTF-8 emoji များကို ထောက်ပံ့မှုမရှိခြင်း
+**အကြောင်းအရင်း** - PowerShell ၏ ပုံမှန် encoding သည် UTF-8 emoji များကို ထောက်ခံမှုမရှိခြင်း
 
-**ဖြေရှင်းနည်း**: Java application များ ပြေးသည့် မတိုင်မှီ ဤ command ကို အကောင်အထည်ဖော်ပါ။
+**ဖြေရှင်းနည်း** - Java လုပ်ဆောင်မှုများမလုပ်ခင် ဒီ command ကို run ပါ။
 ```cmd
 chcp 65001
 ```
 
-ဤကိစ္စသည် terminal တွင် UTF-8 အင်ကုဒင်းအား ဖိအားပေးပါသည်။ မဟုတ်လျှင် Unicode ကို ပိုမိုထောက်ပံ့သော Windows Terminal ကို အသုံးပြုပါ။
+ဤကောက်နုတ်ချက်သည် terminal တွင် UTF-8 encoding ကို စောင့်ဆောင်ပေးသည်။ ဒါမှမဟုတ် Unicode ထောက်ခံမှုကောင်းမွန်သော Windows Terminal ကို အသုံးပြုပါ။
 
-### API Call များကို စစ်ဆေးခြင်း
+### API ခေါ်ဆိုမှုများ အမှားရှာခြင်း
 
-**ပြသနာ**: Authentication error များ၊ rate limit များ သို့မဟုတ် မမျှော်လင့်သော တုန့်ပြန်ချက်များ AI မော်ဒယ်ထံမှ ရရှိခြင်း
+**ပြဿနာ** - Authentication errors, rate limits, သို့မဟုတ် AI မော်ဒယ်ထံမှ မမျှော်လင့်သည့်တုံ့ပြန်မှုများ
 
-**ဖြေရှင်းနည်း**: ဥပမာများတွင် `.logRequests(true)` နှင့် `.logResponses(true)` ကို console တွင် API call များ ပြသရန် ထည့်သွင်းထားသည်။ ယင်းသည် authentication error များ၊ rate limit များ သို့မဟုတ် မမျှော်လင့်သော တုန့်ပြန်ချက်များကို ပြဿနာရှာဖွေရန် အထောက်အကူပြုသည်။ ထုတ်လုပ်ရေးတွင် အဆိုပါ flag များကို ဖယ်ရှားရန် log အငြင်းပွားမှုကို လျှော့ချပေးရန် ဖြစ်သည်။
+**ဖြေရှင်းနည်း** - ဥပမာများသည် `.logRequests(true)` နှင့် `.logResponses(true)` ကို ထည့်သွင်းထားပြီး console တွင် API ခေါ်ဆိုမှုများကို ပြသကူညီသည်။ ဤကိစ္စသည် authentication အမှားများ၊ rate limits သို့မဟုတ် မမျှော်လင့်သည့်တုံ့ပြန်မှု များကို ပြဿနာရှာထောက်ကူညီသည်။ ထုတ်လုပ်မှုတွင် မလိုအပ်သဖြင့် log အဆူညံသံများ လျှော့ချရန် ဤ flags များကို ဖယ်ရှားပါ။
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**အကြောင်းကြားချက်**  
-ဤစာရွက်စာတမ်းကို AI ဘာသာပြန်မှုဆော့ဖ်ဝဲဖြစ်သည့် [Co-op Translator](https://github.com/Azure/co-op-translator) အသုံးပြု၍ ဘာသာပြန်ထားပါသည်။ ကျွန်ုပ်တို့သည်မှန်ကန်မှုအတွက် ကြိုးပမ်းထားသော်လည်း၊ အလိုအလျောက် ဘာသာပြန်မှုတွင် အမှားများ သို့မဟုတ် မှန်ကန်မှုမရှိမှုများ ပါဝင်နိုင်ကြောင်း သတိပြုပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။ မူရင်းစာရွက်စာတမ်းကို မိမိဘာသာစကားဖြင့် စီးပွားရေးအချက်အလက်အဖြစ် သတ်မှတ်သင့်ပါသည်။ အရေးကြီးသော သတင်းအချက်အလက်များအတွက် သမားရိုးကျ လူသားဘာသာပြန်ခြင်းကို အကြံပြုပါသည်။ ဤဘာသာပြန်မှုကို အသုံးပြုသောကြောင့် ဖြစ်ပေါ်လာသော ငြင်းပယ်မှုများ သို့မဟုတ် မမှန်ကန်သော နားလည်မှုများအတွက် ကျွန်ုပ်တို့ တာဝန်မကျေပါ။
+**ပယ်ချထားချက်**:
+ဤစာတမ်းကို AI ဘာသာပြန်မှုဝန်ဆောင်မှု [Co-op Translator](https://github.com/Azure/co-op-translator) ကိုသုံးပြီး ဘာသာပြန်ထားခြင်းဖြစ်သည်။ ကျွန်ုပ်တို့သည်တိကျမှန်ကန်မှုအတွက် ကြိုးစားသော်လည်း အလိုအလျောက် ဘာသာပြန်မှုတွင် အမှားများ သို့မဟုတ် မှားယွင်းချက်များ ပါဝင်နိုင်သည်ကို သတိပြုပါရန် လိုအပ်ပါသည်။ မူရင်းစာတမ်းသည် မူရင်းဘာသာစကားဖြင့် ရှိသည့် အတည်ပြုရင်းမြစ်အဖြစ် လက်ခံသင့်ပါသည်။ အရေးပါသော အချက်အလက်များအတွက်တော့ ပရော်ဖက်ရှင်နယ် လူ့ဘာသာပြန်မှုကို တိုက်တွန်းအပ်ပါသည်။ ဤဘာသာပြန်မှု၏ အသုံးပြုမှုကြောင့် ဖြစ်ပေါ်လာသော နားမလည်မှုများ သို့မဟုတ် မှားဖတ်နားလည်မှုများအတွက် ကျွန်ုပ်တို့သည် တာဝန်မပေးပါ။
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

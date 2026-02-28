@@ -1,53 +1,53 @@
-# Module 00: Bắt đầu Nhanh
+# Module 00: Bắt Đầu Nhanh
 
 ## Mục Lục
 
 - [Giới thiệu](../../../00-quick-start)
 - [LangChain4j là gì?](../../../00-quick-start)
-- [Phụ thuộc của LangChain4j](../../../00-quick-start)
+- [Các phụ thuộc của LangChain4j](../../../00-quick-start)
 - [Yêu cầu trước](../../../00-quick-start)
-- [Cài đặt](../../../00-quick-start)
-  - [1. Lấy Token GitHub của bạn](../../../00-quick-start)
-  - [2. Đặt Token của bạn](../../../00-quick-start)
-- [Chạy các ví dụ](../../../00-quick-start)
+- [Thiết lập](../../../00-quick-start)
+  - [1. Lấy Mã Token GitHub của bạn](../../../00-quick-start)
+  - [2. Đặt Mã Token của bạn](../../../00-quick-start)
+- [Chạy Các Ví Dụ](../../../00-quick-start)
   - [1. Trò chuyện cơ bản](../../../00-quick-start)
-  - [2. Mẫu nhắc](../../../00-quick-start)
+  - [2. Mẫu Lời nhắc](../../../00-quick-start)
   - [3. Gọi Hàm](../../../00-quick-start)
-  - [4. Hỏi đáp Tài liệu (RAG)](../../../00-quick-start)
-  - [5. AI có Trách nhiệm](../../../00-quick-start)
-- [Mỗi ví dụ trình bày gì](../../../00-quick-start)
-- [Bước tiếp theo](../../../00-quick-start)
-- [Khắc phục sự cố](../../../00-quick-start)
+  - [4. Hỏi Đáp Văn Bản (Easy RAG)](../../../00-quick-start)
+  - [5. AI Có Trách Nhiệm](../../../00-quick-start)
+- [Mỗi Ví Dụ Cho Thấy Điều Gì](../../../00-quick-start)
+- [Bước Tiếp Theo](../../../00-quick-start)
+- [Khắc Phục Sự Cố](../../../00-quick-start)
 
 ## Giới thiệu
 
-Bắt đầu nhanh này nhằm giúp bạn khởi động và chạy với LangChain4j nhanh nhất có thể. Nó bao gồm những kiến thức cơ bản tuyệt đối để xây dựng ứng dụng AI với LangChain4j và GitHub Models. Trong các module tiếp theo, bạn sẽ sử dụng Azure OpenAI cùng LangChain4j để xây dựng các ứng dụng nâng cao hơn.
+Khởi động nhanh này nhằm giúp bạn bắt đầu với LangChain4j nhanh nhất có thể. Nó bao gồm những điều cơ bản nhất về xây dựng ứng dụng AI với LangChain4j và GitHub Models. Trong các module tiếp theo, bạn sẽ dùng Azure OpenAI với LangChain4j để xây dựng các ứng dụng nâng cao hơn.
 
 ## LangChain4j là gì?
 
-LangChain4j là một thư viện Java giúp đơn giản hóa việc xây dựng các ứng dụng sử dụng AI. Thay vì phải xử lý các HTTP client và phân tích JSON, bạn làm việc với các API Java rõ ràng.
+LangChain4j là một thư viện Java giúp đơn giản hóa việc xây dựng các ứng dụng AI. Thay vì phải xử lý các client HTTP và phân tích JSON, bạn làm việc với các API Java rõ ràng.
 
-“Từ khóa chain trong LangChain nói về việc nối các thành phần lại với nhau” - bạn có thể nối một prompt tới một model rồi tới một parser, hoặc nối nhiều lời gọi AI để đầu ra của lời gọi này làm đầu vào cho lời gọi tiếp theo. Bắt đầu nhanh này tập trung vào những nền tảng cơ bản trước khi khám phá các chuỗi phức tạp hơn.
+“Chain” trong LangChain ám chỉ việc liên kết nhiều thành phần - bạn có thể liên kết một lời nhắc với một mô hình, rồi đến bộ phân tích cú pháp, hoặc liên kết nhiều lần gọi AI với nhau, nơi đầu ra của lần này là đầu vào cho lần tiếp theo. Khởi động nhanh này tập trung vào các nguyên tắc cơ bản trước khi khám phá các chuỗi phức tạp hơn.
 
-<img src="../../../translated_images/vi/langchain-concept.ad1fe6cf063515e1.webp" alt="Khái niệm Chuỗi LangChain4j" width="800"/>
+<img src="../../../translated_images/vi/langchain-concept.ad1fe6cf063515e1.webp" alt="Khái niệm Liên kết trong LangChain4j" width="800"/>
 
-*Kết nối các thành phần trong LangChain4j - các khối xây dựng kết nối tạo ra quy trình làm việc AI mạnh mẽ*
+*Liên kết các thành phần trong LangChain4j - các khối xây dựng kết nối để tạo ra quy trình AI mạnh mẽ*
 
 Chúng ta sẽ sử dụng ba thành phần cốt lõi:
 
-**ChatLanguageModel** - Giao diện cho các tương tác với mô hình AI. Gọi `model.chat("prompt")` và nhận về chuỗi phản hồi. Chúng ta dùng `OpenAiOfficialChatModel` làm việc với các endpoint tương thích OpenAI như GitHub Models.
+**ChatModel** - Giao diện tương tác với mô hình AI. Gọi `model.chat("prompt")` và nhận chuỗi phản hồi. Chúng ta dùng `OpenAiOfficialChatModel` làm việc với các điểm cuối tương thích OpenAI như GitHub Models.
 
-**AiServices** - Tạo ra các giao diện dịch vụ AI có kiểu an toàn. Định nghĩa các phương thức, chú thích chúng với `@Tool`, và LangChain4j sẽ điều phối. AI tự động gọi các phương thức Java của bạn khi cần.
+**AiServices** - Tạo các giao diện dịch vụ AI an toàn về kiểu. Định nghĩa phương thức, chú thích bằng `@Tool`, và LangChain4j sẽ xử lý phần điều phối. AI tự động gọi các phương thức Java của bạn khi cần thiết.
 
-**MessageWindowChatMemory** - Duy trì lịch sử hội thoại. Nếu không có nó, mỗi yêu cầu là độc lập. Có nó, AI nhớ các tin nhắn trước và duy trì ngữ cảnh qua nhiều lượt.
+**MessageWindowChatMemory** - Duy trì lịch sử hội thoại. Nếu không có nó, mỗi yêu cầu là độc lập. Với nó, AI nhớ các tin nhắn trước và duy trì ngữ cảnh qua nhiều lượt nói chuyện.
 
 <img src="../../../translated_images/vi/architecture.eedc993a1c576839.webp" alt="Kiến trúc LangChain4j" width="800"/>
 
-*Kiến trúc LangChain4j - các thành phần cốt lõi làm việc cùng để cung cấp sức mạnh cho ứng dụng AI của bạn*
+*Kiến trúc LangChain4j - các thành phần cốt lõi phối hợp cùng nhau để chạy các ứng dụng AI của bạn*
 
-## Phụ thuộc của LangChain4j
+## Các phụ thuộc của LangChain4j
 
-Bắt đầu nhanh này sử dụng hai phụ thuộc Maven trong [`pom.xml`](../../../00-quick-start/pom.xml):
+Khởi động nhanh này sử dụng ba phụ thuộc Maven trong file [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -61,144 +61,152 @@ Bắt đầu nhanh này sử dụng hai phụ thuộc Maven trong [`pom.xml`](..
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
-```
 
-Module `langchain4j-open-ai-official` cung cấp lớp `OpenAiOfficialChatModel` kết nối với các API tương thích OpenAI. GitHub Models dùng cùng định dạng API, nên không cần adapter đặc biệt - chỉ cần trỏ base URL tới `https://models.github.ai/inference`.
+<!-- Easy RAG: automatic splitting, embedding, and retrieval -->
+<dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
+</dependency>
+```
+  
+Module `langchain4j-open-ai-official` cung cấp lớp `OpenAiOfficialChatModel` kết nối với API tương thích OpenAI. GitHub Models dùng cùng định dạng API nên không cần adapter đặc biệt - chỉ cần trỏ đường dẫn cơ sở đến `https://models.github.ai/inference`.
+
+Module `langchain4j-easy-rag` cung cấp tự động chia nhỏ tài liệu, nhúng, và truy xuất giúp bạn xây dựng ứng dụng RAG mà không cần cấu hình thủ công từng bước.
 
 ## Yêu cầu trước
 
-**Dùng Dev Container?** Java và Maven đã được cài đặt sẵn. Bạn chỉ cần một GitHub Personal Access Token.
+**Dùng Dev Container?** Java và Maven đã được cài sẵn. Bạn chỉ cần có Token Truy Cập Cá Nhân GitHub.
 
-**Phát triển cục bộ:**
-- Java 21+, Maven 3.9+
-- GitHub Personal Access Token (hướng dẫn dưới đây)
+**Phát triển cục bộ:**  
+- Java 21+, Maven 3.9+  
+- Token Truy Cập Cá Nhân GitHub (hướng dẫn bên dưới)
 
-> **Lưu ý:** Module này dùng `gpt-4.1-nano` từ GitHub Models. Không chỉnh sửa tên model trong code - nó đã được cấu hình để làm việc với các model có sẵn của GitHub.
+> **Lưu ý:** Module này sử dụng `gpt-4.1-nano` từ GitHub Models. Không thay đổi tên mô hình trong mã - nó đã được cấu hình để hoạt động với các mô hình hiện có của GitHub.
 
-## Cài đặt
+## Thiết lập
 
-### 1. Lấy Token GitHub của bạn
+### 1. Lấy Mã Token GitHub của bạn
 
-1. Vào [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
-2. Nhấn “Generate new token”
-3. Đặt tên mô tả (ví dụ: “LangChain4j Demo”)
-4. Đặt hạn dùng (khuyên dùng 7 ngày)
-5. Dưới “Account permissions”, tìm “Models” và đặt thành “Read-only”
-6. Nhấn “Generate token”
-7. Sao chép và lưu token của bạn - bạn sẽ không thấy lại nó
+1. Vào [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens)  
+2. Nhấn "Generate new token"  
+3. Đặt tên mô tả (ví dụ: "LangChain4j Demo")  
+4. Chọn thời hạn hết hạn (khuyên dùng 7 ngày)  
+5. Dưới "Account permissions", tìm "Models" và đặt quyền "Read-only"  
+6. Nhấn "Generate token"  
+7. Sao chép và lưu lại mã token - bạn sẽ không thấy lại lần nữa
 
-### 2. Đặt Token của bạn
+### 2. Đặt Mã Token của bạn
 
 **Tùy chọn 1: Dùng VS Code (Khuyến nghị)**
 
 Nếu bạn dùng VS Code, thêm token vào file `.env` trong thư mục gốc dự án:
 
-Nếu file `.env` chưa tồn tại, sao chép `.env.example` thành `.env` hoặc tạo mới file `.env` trong thư mục gốc.
+Nếu file `.env` chưa tồn tại, bạn sao chép từ `.env.example` sang `.env` hoặc tạo file `.env` mới tại thư mục gốc.
 
-**Ví dụ file `.env`:**
+**Ví dụ file `.env`:**  
 ```bash
 # Trong /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
-
-Sau đó bạn có thể nhấn chuột phải trên bất kỳ file demo nào (ví dụ, `BasicChatDemo.java`) trong Explorer và chọn **"Run Java"** hoặc dùng cấu hình chạy trong panel Run and Debug.
+  
+Sau đó bạn chỉ việc click chuột phải vào bất kỳ file demo nào (ví dụ `BasicChatDemo.java`) trong Explorer và chọn **"Run Java"** hoặc dùng cấu hình khởi chạy trong bảng Run and Debug.
 
 **Tùy chọn 2: Dùng Terminal**
 
-Đặt token thành biến môi trường:
+Đặt token làm biến môi trường:
 
-**Bash:**
+**Bash:**  
 ```bash
 export GITHUB_TOKEN=your_token_here
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 $env:GITHUB_TOKEN=your_token_here
 ```
+  
+## Chạy Các Ví Dụ
 
-## Chạy các ví dụ
+**Dùng VS Code:** Nhấp chuột phải vào bất kỳ file demo nào trong Explorer và chọn **"Run Java"**, hoặc dùng cấu hình khởi chạy trong Run and Debug (đảm bảo thêm token vào file `.env` trước).
 
-**Dùng VS Code:** Nhấn chuột phải vào bất kỳ file demo nào trong Explorer và chọn **"Run Java"** hoặc dùng cấu hình chạy trong panel Run and Debug (đảm bảo bạn đã thêm token vào file `.env` trước).
-
-**Dùng Maven:** Bạn cũng có thể chạy từ dòng lệnh:
+**Dùng Maven:** Bạn cũng có thể chạy trên dòng lệnh:
 
 ### 1. Trò chuyện cơ bản
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
+  
+### 2. Mẫu Lời nhắc
 
-### 2. Mẫu nhắc
-
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-
-Hiển thị các kiểu prompt zero-shot, few-shot, chuỗi suy nghĩ và theo vai trò.
+  
+Hiển thị các mẫu zero-shot, few-shot, chain-of-thought, và role-based prompting.
 
 ### 3. Gọi Hàm
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
-
+  
 AI tự động gọi các phương thức Java của bạn khi cần.
 
-### 4. Hỏi đáp Tài liệu (RAG)
+### 4. Hỏi Đáp Văn Bản (Easy RAG)
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
+  
+Hỏi các câu về tài liệu của bạn dùng Easy RAG với nhúng và truy xuất tự động.
 
-Hỏi về nội dung trong `document.txt`.
+### 5. AI Có Trách Nhiệm
 
-### 5. AI có Trách nhiệm
-
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
+  
+Xem cách bộ lọc an toàn AI ngăn chặn nội dung có hại.
 
-Xem bộ lọc an toàn AI chặn nội dung gây hại như thế nào.
-
-## Mỗi ví dụ trình bày gì
+## Mỗi Ví Dụ Cho Thấy Điều Gì
 
 **Trò chuyện cơ bản** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Bắt đầu ở đây để thấy LangChain4j đơn giản nhất. Bạn tạo một `OpenAiOfficialChatModel`, gửi prompt với `.chat()`, và nhận về phản hồi. Điều này trình bày nền tảng: cách khởi tạo model với endpoint và API key tùy chỉnh. Khi hiểu mẫu này, mọi thứ khác sẽ dựa trên đó.
+Bắt đầu từ đây để xem LangChain4j cơ bản nhất. Bạn sẽ tạo `OpenAiOfficialChatModel`, gửi một lời nhắc với `.chat()`, và nhận về phản hồi. Đây là nền tảng: cách khởi tạo mô hình với các điểm cuối tùy chỉnh và khóa API. Khi hiểu được mẫu này, mọi thứ khác sẽ được xây dựng trên đó.
 
 ```java
-ChatLanguageModel model = OpenAiOfficialChatModel.builder()
+OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
     .baseUrl("https://models.github.ai/inference")
     .apiKey(System.getenv("GITHUB_TOKEN"))
     .modelName("gpt-4.1-nano")
@@ -207,18 +215,17 @@ ChatLanguageModel model = OpenAiOfficialChatModel.builder()
 String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
+  
+> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) và hỏi:  
+> - "Làm sao để chuyển từ GitHub Models sang Azure OpenAI trong mã này?"  
+> - "Có những tham số nào khác tôi có thể cấu hình trong OpenAiOfficialChatModel.builder()?"  
+> - "Làm sao để thêm phản hồi theo dạng streaming thay vì chờ phản hồi đầy đủ?"
 
-> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) và hỏi:
-> - "Làm thế nào để chuyển từ GitHub Models sang Azure OpenAI trong code này?"
-> - "Có những tham số nào khác tôi có thể cấu hình trong OpenAiOfficialChatModel.builder()?"
-> - "Làm cách nào để thêm phản hồi luồng thay vì chờ phản hồi hoàn chỉnh?"
+**Kỹ thuật Lời nhắc** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-**Kỹ thuật Prompt** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+Giờ bạn đã biết cách nói chuyện với mô hình, hãy khám phá bạn nói gì với nó. Demo này dùng cùng một thiết lập mô hình nhưng trình bày năm mẫu lời nhắc khác nhau. Thử zero-shot để chỉ dẫn trực tiếp, few-shot học từ ví dụ, chain-of-thought để hiển thị các bước suy nghĩ, và role-based để thiết lập bối cảnh. Bạn sẽ thấy cùng một mô hình trả về kết quả rất khác dựa trên cách bạn định hình yêu cầu.
 
-Giờ bạn đã biết cách trò chuyện với model, hãy khám phá bạn nói gì với nó. Demo này dùng cùng thiết lập model nhưng trình bày năm mẫu prompt khác nhau. Thử zero-shot cho hướng dẫn trực tiếp, few-shot học từ ví dụ, chuỗi suy nghĩ đưa ra các bước lý luận, và prompt theo vai trò để đặt bối cảnh. Bạn sẽ thấy cùng một model tạo ra kết quả rất khác nhau tùy cách bạn thiết lập yêu cầu.
-
-Demo cũng minh họa các mẫu template prompt, cách mạnh mẽ để tạo prompt tái sử dụng với biến.
-Ví dụ dưới đây là prompt dùng `PromptTemplate` của LangChain4j để điền biến. AI trả lời dựa trên điểm đến và hoạt động được cung cấp.
+Demo còn thể hiện các mẫu lời nhắc (prompt templates), một cách mạnh mẽ để tạo lời nhắc tái sử dụng với biến số. Ví dụ dưới đây cho thấy một lời nhắc dùng `PromptTemplate` của LangChain4j để điền biến. AI sẽ trả lời dựa trên điểm đến và hoạt động cho trước.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -232,16 +239,16 @@ Prompt prompt = template.apply(Map.of(
 
 String response = model.chat(prompt.text());
 ```
-
-> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) và hỏi:
-> - "Sự khác biệt giữa zero-shot và few-shot prompting là gì, và khi nào nên dùng cái nào?"
-> - "Tham số nhiệt độ ảnh hưởng như thế nào đến phản hồi của model?"
-> - "Có những kỹ thuật nào giúp ngăn chặn tấn công chèn prompt trong sản xuất?"
-> - "Làm sao để tạo đối tượng PromptTemplate tái sử dụng cho các mẫu phổ biến?"
+  
+> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) và hỏi:  
+> - "Sự khác biệt giữa zero-shot và few-shot prompting là gì, và khi nào nên dùng mỗi loại?"  
+> - "Tham số nhiệt độ ảnh hưởng như thế nào đến phản hồi của mô hình?"  
+> - "Các kỹ thuật nào giúp ngăn tấn công tiêm lời nhắc (prompt injection) trong sản xuất?"  
+> - "Làm sao để tạo các đối tượng PromptTemplate có thể tái sử dụng cho các mẫu phổ biến?"
 
 **Tích hợp Công cụ** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Đây là lúc LangChain4j trở nên mạnh mẽ. Bạn sử dụng `AiServices` để tạo một trợ lý AI có thể gọi các phương thức Java của bạn. Chỉ cần chú thích phương thức bằng `@Tool("mô tả")` và LangChain4j lo hết - AI tự quyết định khi nào dùng công cụ dựa trên yêu cầu người dùng. Đây là minh họa gọi hàm, kỹ thuật quan trọng để xây dựng AI có thể thực hiện hành động, chứ không chỉ trả lời câu hỏi.
+Đây là nơi LangChain4j thực sự mạnh mẽ. Bạn sẽ dùng `AiServices` để tạo trợ lý AI có thể gọi các phương thức Java của bạn. Chỉ cần chú thích các phương thức với `@Tool("mô tả")` và LangChain4j sẽ xử lý phần còn lại - AI tự động quyết định khi nào dùng từng công cụ dựa trên yêu cầu người dùng. Đây là kỹ thuật gọi hàm, rất quan trọng để xây dựng AI không chỉ trả lời mà còn có thể thực thi hành động.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -249,42 +256,49 @@ public double add(double a, double b) {
     return a + b;
 }
 
-MathAssistant assistant = AiServices.create(MathAssistant.class, model);
+MathAssistant assistant = AiServices.builder(MathAssistant.class)
+    .chatModel(model)
+    .tools(new Calculator())
+    .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+    .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
+  
+> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) và hỏi:  
+> - "Chú thích @Tool hoạt động như thế nào và LangChain4j làm gì với nó phía sau hậu trường?"  
+> - "AI có thể gọi nhiều công cụ theo thứ tự để giải quyết vấn đề phức tạp không?"  
+> - "Nếu một công cụ ném ra lỗi thì sao - tôi nên xử lý lỗi như thế nào?"  
+> - "Làm sao để tích hợp API thật thay vì ví dụ về máy tính này?"
 
-> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) và hỏi:
-> - "@Tool annotation hoạt động như thế nào và LangChain4j làm gì phía sau?"
-> - "AI có thể gọi nhiều công cụ theo trình tự để giải quyết vấn đề phức tạp không?"
-> - "Nếu một công cụ ném ra ngoại lệ thì sao - tôi nên xử lý lỗi thế nào?"
-> - "Làm sao để tích hợp một API thật thay vì ví dụ máy tính này?"
+**Hỏi Đáp Văn Bản (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-**Hỏi đáp Tài liệu (RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
-
-Ở đây bạn sẽ thấy nền tảng của RAG (generation tăng cường truy xuất). Thay vì dựa vào dữ liệu huấn luyện của model, bạn tải nội dung từ [`document.txt`](../../../00-quick-start/document.txt) và đưa vào prompt. AI trả lời dựa trên tài liệu của bạn, không phải kiến thức chung. Đây là bước đầu xây dựng hệ thống làm việc với dữ liệu riêng của bạn.
+Ở đây, bạn sẽ thấy RAG (retrieval-augmented generation) dùng phương pháp "Easy RAG" của LangChain4j. Tài liệu được tải lên, tự động chia nhỏ và nhúng vào bộ nhớ trong, sau đó bộ truy xuất nội dung cung cấp các đoạn liên quan cho AI khi truy vấn. AI trả lời dựa trên tài liệu của bạn, không phải kiến thức tổng quát.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("document.txt");
-String content = document.text();
+Document document = loadDocument(Paths.get("document.txt"));
 
-String prompt = "Based on this document: " + content + 
-                "\nQuestion: What is the main topic?";
-String response = model.chat(prompt);
+InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
+
+Assistant assistant = AiServices.builder(Assistant.class)
+        .chatModel(chatModel)
+        .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+        .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore))
+        .build();
+
+String answer = assistant.chat("What is the main topic?");
 ```
+  
+> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) và hỏi:  
+> - "Làm sao RAG ngăn chặn ảo giác AI so với việc dùng dữ liệu huấn luyện của mô hình?"  
+> - "Phân biệt cách tiếp cận này với pipeline RAG tùy chỉnh là gì?"  
+> - "Làm sao để mở rộng cho nhiều tài liệu hoặc các cơ sở tri thức lớn hơn?"
 
-> **Lưu ý:** Cách đơn giản này nạp toàn bộ tài liệu vào prompt. Với file lớn (>10KB), bạn sẽ vượt quá giới hạn ngữ cảnh. Module 03 sẽ trình bày phân đoạn và tìm kiếm vector cho hệ thống RAG trong sản xuất.
+**AI Có Trách Nhiệm** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) và hỏi:
-> - "RAG phòng tránh việc AI tưởng tượng ra thông tin sai so với dùng dữ liệu huấn luyện của model như thế nào?"
-> - "Khác biệt giữa cách đơn giản này và dùng vector embedding để truy xuất là gì?"
-> - "Làm sao để mở rộng xử lý nhiều tài liệu hoặc cơ sở tri thức lớn hơn?"
-> - "Thực hành tốt nhất để cấu trúc prompt đảm bảo AI chỉ dùng ngữ cảnh được cung cấp là gì?"
+Xây dựng an toàn AI với phòng thủ nhiều lớp. Demo này cho thấy hai lớp bảo vệ phối hợp:
 
-**AI có Trách nhiệm** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
-
-Xây dựng tính an toàn AI với phòng thủ đa lớp. Demo này trình bày hai lớp bảo vệ phối hợp:
-
-**Phần 1: LangChain4j Input Guardrails** - Chặn các prompt nguy hiểm trước khi gửi đến LLM. Tạo các guardrail tùy chỉnh kiểm tra từ khóa hay mẫu bị cấm. Chúng chạy trong code của bạn, nhanh và miễn phí.
+**Phần 1: LangChain4j Input Guardrails** - Ngăn lời nhắc nguy hiểm trước khi đến LLM. Tạo các guardrail tùy chỉnh kiểm tra từ khóa hoặc mẫu bị cấm. Chạy trong mã của bạn nên nhanh và miễn phí.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -298,40 +312,40 @@ class DangerousContentGuardrail implements InputGuardrail {
     }
 }
 ```
+  
+**Phần 2: Bộ lọc An toàn Nhà cung cấp** - GitHub Models có bộ lọc tích hợp giúp phát hiện những gì guardrail có thể bỏ sót. Bạn sẽ thấy các chặn cứng (lỗi HTTP 400) cho vi phạm nghiêm trọng và từ chối nhẹ nhàng khi AI lịch sự từ chối.
 
-**Phần 2: Bộ Lọc An toàn của Nhà cung cấp** - GitHub Models có bộ lọc sẵn bắt những gì guardrail có thể bỏ sót. Bạn sẽ thấy chặn cứng (lỗi HTTP 400) với vi phạm nghiêm trọng và từ chối mềm khi AI lịch sự từ chối.
+> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) và hỏi:  
+> - "InputGuardrail là gì và làm sao tôi tạo guardrail riêng?"  
+> - "Khác nhau giữa chặn cứng và từ chối nhẹ thế nào?"  
+> - "Tại sao cần dùng cả guardrail và bộ lọc nhà cung cấp cùng lúc?"
 
-> **🤖 Thử với [GitHub Copilot](https://github.com/features/copilot) Chat:** Mở [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) và hỏi:
-> - "InputGuardrail là gì và làm sao tạo guardrail riêng?"
-> - "Khác biệt giữa chặn cứng và từ chối mềm là gì?"
-> - "Tại sao nên dùng cả guardrails và bộ lọc của nhà cung cấp cùng nhau?"
+## Bước Tiếp Theo
 
-## Bước tiếp theo
-
-**Module tiếp theo:** [01-introduction - Bắt đầu với LangChain4j và gpt-5 trên Azure](../01-introduction/README.md)
-
----
-
-**Điều hướng:** [← Quay lại Chính](../README.md) | [Tiếp theo: Module 01 - Giới thiệu →](../01-introduction/README.md)
+**Module tiếp:** [01-introduction - Bắt đầu với LangChain4j và gpt-5 trên Azure](../01-introduction/README.md)
 
 ---
 
-## Khắc phục sự cố
+**Điều hướng:** [← Quay về chính](../README.md) | [Tiếp: Module 01 - Giới thiệu →](../01-introduction/README.md)
 
-### Xây dựng Maven lần đầu
+---
 
-**Vấn đề**: Lệnh `mvn clean compile` hoặc `mvn package` ban đầu mất rất lâu (10-15 phút)
+## Khắc Phục Sự Cố
 
-**Nguyên nhân**: Maven cần tải tất cả phụ thuộc dự án (Spring Boot, thư viện LangChain4j, Azure SDK, v.v.) trong lần build đầu tiên.
+### Lần Đầu Dùng Maven Build
 
-**Giải pháp**: Đây là hành vi bình thường. Các lần build sau sẽ nhanh hơn nhiều do phụ thuộc đã được lưu trong bộ nhớ cache cục bộ. Thời gian tải còn tùy tốc độ mạng của bạn.
-### Cú pháp lệnh Maven trong PowerShell
+**Vấn đề:** Lệnh `mvn clean compile` hoặc `mvn package` đầu tiên mất nhiều thời gian (10-15 phút)
 
-**Vấn đề**: Các lệnh Maven thất bại với lỗi `Unknown lifecycle phase ".mainClass=..."`
+**Nguyên nhân:** Maven cần tải về tất cả các phụ thuộc dự án (Spring Boot, thư viện LangChain4j, SDK Azure, v.v.) khi build lần đầu.
 
-**Nguyên nhân**: PowerShell hiểu `=` là toán tử gán biến, làm hỏng cú pháp thuộc tính Maven
+**Giải pháp:** Đây là hành vi bình thường. Các lần build tiếp theo sẽ nhanh hơn nhiều vì phụ thuộc được lưu cache cục bộ. Thời gian tải phụ thuộc vào tốc độ mạng của bạn.
 
-**Giải pháp**: Sử dụng toán tử dừng phân tích cú pháp `--%` trước lệnh Maven:
+### Cú pháp Lệnh Maven trong PowerShell
+
+**Vấn đề:** Lệnh Maven báo lỗi `Unknown lifecycle phase ".mainClass=..."`
+**Nguyên nhân**: PowerShell hiểu `=` là toán tử gán biến, làm hỏng cú pháp thuộc tính của Maven
+
+**Giải pháp**: Sử dụng toán tử ngừng phân tích cú pháp `--%` trước lệnh Maven:
 
 **PowerShell:**
 ```powershell
@@ -343,30 +357,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Toán tử `--%` báo cho PowerShell truyền tất cả các đối số còn lại một cách nguyên văn cho Maven mà không phân tích.
+Toán tử `--%` chỉ thị PowerShell truyền tất cả các tham số còn lại một cách nguyên văn cho Maven mà không phân tích.
 
-### Hiển thị Biểu tượng cảm xúc trong Windows PowerShell
+### Hiển thị Emoji trên Windows PowerShell
 
-**Vấn đề**: Các phản hồi AI hiển thị ký tự rác (ví dụ: `????` hoặc `â??`) thay vì biểu tượng cảm xúc trong PowerShell
+**Vấn đề**: Phản hồi AI hiển thị các ký tự rác (ví dụ `????` hoặc `â??`) thay vì emoji trong PowerShell
 
-**Nguyên nhân**: Mã hóa mặc định của PowerShell không hỗ trợ biểu tượng cảm xúc UTF-8
+**Nguyên nhân**: Mã hóa mặc định của PowerShell không hỗ trợ emoji UTF-8
 
-**Giải pháp**: Chạy lệnh này trước khi thực thi các ứng dụng Java:
+**Giải pháp**: Chạy lệnh này trước khi thực thi ứng dụng Java:
 ```cmd
 chcp 65001
 ```
 
-Điều này bắt buộc mã hóa UTF-8 trong terminal. Ngoài ra, bạn có thể sử dụng Windows Terminal, hỗ trợ Unicode tốt hơn.
+Điều này bắt buộc mã hóa UTF-8 trong terminal. Ngoài ra, hãy sử dụng Windows Terminal có hỗ trợ Unicode tốt hơn.
 
 ### Gỡ lỗi các cuộc gọi API
 
-**Vấn đề**: Lỗi xác thực, giới hạn tần suất hoặc phản hồi không mong muốn từ mô hình AI
+**Vấn đề**: Lỗi xác thực, giới hạn tần suất, hoặc phản hồi không mong đợi từ mô hình AI
 
-**Giải pháp**: Các ví dụ bao gồm `.logRequests(true)` và `.logResponses(true)` để hiển thị các cuộc gọi API trên bảng điều khiển. Điều này giúp xử lý lỗi xác thực, giới hạn tần suất hoặc phản hồi không mong muốn. Hãy loại bỏ các tùy chọn này trong môi trường sản xuất để giảm bớt tiếng ồn của nhật ký.
+**Giải pháp**: Các ví dụ bao gồm `.logRequests(true)` và `.logResponses(true)` để hiển thị các cuộc gọi API trên console. Điều này giúp khắc phục lỗi xác thực, giới hạn tần suất hoặc phản hồi không mong muốn. Hãy loại bỏ các cờ này trong môi trường sản xuất để giảm nhiễu log.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Tuyên bố miễn trừ trách nhiệm**:
-Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo độ chính xác, xin lưu ý rằng bản dịch tự động có thể chứa lỗi hoặc thiếu sót. Văn bản gốc bằng ngôn ngữ gốc của nó nên được coi là nguồn tham khảo chính xác nhất. Đối với thông tin quan trọng, khuyến nghị sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu lầm hoặc giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
+**Tuyên bố từ chối trách nhiệm**:  
+Tài liệu này đã được dịch bằng dịch vụ dịch thuật AI [Co-op Translator](https://github.com/Azure/co-op-translator). Mặc dù chúng tôi cố gắng đảm bảo độ chính xác, xin lưu ý rằng bản dịch tự động có thể chứa lỗi hoặc không chính xác. Tài liệu gốc bằng ngôn ngữ bản địa của nó nên được xem là nguồn chính thức. Đối với các thông tin quan trọng, khuyên bạn nên sử dụng dịch vụ dịch thuật chuyên nghiệp do con người thực hiện. Chúng tôi không chịu trách nhiệm về bất kỳ sự hiểu nhầm hay giải thích sai nào phát sinh từ việc sử dụng bản dịch này.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

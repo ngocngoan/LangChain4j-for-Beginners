@@ -1,53 +1,53 @@
-# Module 00: Kuanzia Haraka
+# Module 00: Anza Haraka
 
-## Jedwali la Yaliyomo
+## Orodha ya Yaliyomo
 
 - [Utangulizi](../../../00-quick-start)
 - [LangChain4j ni Nini?](../../../00-quick-start)
-- [Mategemeo ya LangChain4j](../../../00-quick-start)
-- [Mahitaji ya Msingi](../../../00-quick-start)
-- [Mazingira](../../../00-quick-start)
+- [Mtegemezi wa LangChain4j](../../../00-quick-start)
+- [Vitagizo](../../../00-quick-start)
+- [Usanidi](../../../00-quick-start)
   - [1. Pata Tokeni Yako ya GitHub](../../../00-quick-start)
   - [2. Weka Tokeni Yako](../../../00-quick-start)
 - [Endesha Mifano](../../../00-quick-start)
-  - [1. Mazungumzo ya Msingi](../../../00-quick-start)
-  - [2. Mifumo ya Maelekezo](../../../00-quick-start)
-  - [3. Kupiga Msimbo wa Kazi](../../../00-quick-start)
-  - [4. Maswali na Majibu ya Nyaraka (RAG)](../../../00-quick-start)
+  - [1. Chat Msingi](../../../00-quick-start)
+  - [2. Mifumo ya Prompt](../../../00-quick-start)
+  - [3. Kupiga Simu ya Kifunction](../../../00-quick-start)
+  - [4. Maswali na Majibu ya Hati (Easy RAG)](../../../00-quick-start)
   - [5. AI Inayewajibika](../../../00-quick-start)
-- [Kila Mfano Unaonyeshaje](../../../00-quick-start)
+- [Kila Mfano Unaonyesha Nini](../../../00-quick-start)
 - [Hatua Zifuatazo](../../../00-quick-start)
 - [Kutatua Matatizo](../../../00-quick-start)
 
 ## Utangulizi
 
-Kuanzia haraka hii imelenga kukupeleka haraka kwenye matumizi ya LangChain4j. Inashughulikia msingi kabisa wa kujenga programu za AI kwa kutumia LangChain4j na Modeli za GitHub. Katika moduli zinazofuata utatumia Azure OpenAI pamoja na LangChain4j kujenga programu za hali ya juu zaidi.
+Anza haraka hii imelenga kukupeleka haraka kutumia LangChain4j. Inashughulikia misingi kabisa ya kujenga programu za AI kwa kutumia LangChain4j na GitHub Models. Katika moduli zinazofuata utatumia Azure OpenAI na LangChain4j kujenga programu za hali ya juu zaidi.
 
 ## LangChain4j ni Nini?
 
-LangChain4j ni maktaba ya Java inayorahisisha ujenzi wa programu zinazotumia nguvu za AI. Badala ya kushughulikia wateja wa HTTP na uchambuzi wa JSON, unatumia API za Java zilizo safi.
+LangChain4j ni maktaba ya Java inayorahisisha ujenzi wa programu zinazotumia AI. Badala ya kushughulika na wateja wa HTTP na uchambuzi wa JSON, unatumia APIs safi za Java.
 
-"Nanga" katika LangChain inamaanisha kuunganisha vipengele vingi pamoja - unaweza kuunganisha maelekezo kwa mfano, kisha kwa kichambuzi, au kuunganisha simu nyingi za AI ambapo toleo la moja linaingiza data kwa ingizo la linalofuata. Kuanzia haraka hii inalenga misingi kabla ya kuchunguza nanga ngumu zaidi.
+"Namba" katika LangChain inamaanisha kuunganisha sehemu nyingi pamoja - unaweza kuunganisha prompt kwa mfano, kisha kwa parser, au kuunganisha simu za AI nyingi ambapo pato la moja linaingia kama ingizo la ijayo. Anza haraka hii inalenga misingi kabla ya kuchunguza nambahati za ugumu zaidi.
 
 <img src="../../../translated_images/sw/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*Kuunganisha vipengele ndani ya LangChain4j - vipande vya msingi vinavyoungana kuunda mtiririko mzuri wa AI*
+*Kuunganisha sehemu za LangChain4j - vipande vya ujenzi vinaunganishwa kuunda mtiririko mzuri wa AI*
 
-Tutatumia vipengele vitatu vikuu:
+Tutatumia sehemu kuu tatu:
 
-**ChatLanguageModel** - Muingiliano wa mawasiliano na mfano wa AI. Piga `model.chat("prompt")` na upate mfuatano wa majibu. Tunatumia `OpenAiOfficialChatModel` ambayo hufanya kazi na vifungua vyenye ukaribu wa OpenAI kama Modeli za GitHub.
+**ChatModel** - Kiolesura cha maingiliano ya mfano wa AI. Itaje `model.chat("prompt")` na upate jibu la maandishi. Tunatumia `OpenAiOfficialChatModel` inayofanya kazi na vituo zinazofanana na OpenAI kama GitHub Models.
 
-**AiServices** - Huunda interfaz salama za huduma za AI. Eleza njia, ziweke alama na `@Tool`, na LangChain4j hutunziza usimamizi. AI huajibu kwa njia za Java kiotomatiki unapo hitaji.
+**AiServices** - Hutoa interfaces salama katika aina za huduma za AI. Tambua njia, ziandike na `@Tool`, na LangChain4j huendesha mchakato mzima. AI huita moja kwa moja njia zako za Java inapohitajika.
 
-**MessageWindowChatMemory** - Huhifadhi kumbukumbu za mazungumzo. Bila hii, kila ombi ni huru. Na hii, AI huzingatia ujumbe wa awali na huendelea na muktadha katika zamu nyingi.
+**MessageWindowChatMemory** - Huweka kumbukumbu ya mazungumzo. Bila hii, kila ombi ni huru. Ukiwa nayo, AI inakumbuka ujumbe wa awali na inaendelea na muktadha kwenye zamu nyingi.
 
 <img src="../../../translated_images/sw/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*Miundo ya LangChain4j - vipengele vikuu vinavyofanya kazi pamoja kuimarisha programu zako za AI*
+*Muundo wa LangChain4j - sehemu kuu zinazoshirikiana kuendesha programu zako za AI*
 
-## Mategemeo ya LangChain4j
+## Mtegemezi wa LangChain4j
 
-Kuanzia haraka hii inatumia utegemezi wa Maven mbili kwenye [`pom.xml`](../../../00-quick-start/pom.xml):
+Anza haraka hii inatumia utegemezi tatu wa Maven katika [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -61,39 +61,47 @@ Kuanzia haraka hii inatumia utegemezi wa Maven mbili kwenye [`pom.xml`](../../..
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-open-ai-official</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
+
+<!-- Easy RAG: automatic splitting, embedding, and retrieval -->
+<dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
+</dependency>
 ```
 
-Moduli ya `langchain4j-open-ai-official` hutoa darasa la `OpenAiOfficialChatModel` linalounganisha na API za ukaribu wa OpenAI. Modeli za GitHub zinatumia muundo sawa wa API, hivyo hakuna hitaji la kiambatisho maalum - tuelekeze URL msingi kwa `https://models.github.ai/inference`.
+Moduli `langchain4j-open-ai-official` hutoa darasa la `OpenAiOfficialChatModel` linalounganisha na API zinazofanana na OpenAI. GitHub Models hutumia muundo huo huo wa API, kwa hivyo hakuna hitaji la kiunganishi maalum - tuelekeze URL ya msingi kwa `https://models.github.ai/inference`.
 
-## Mahitaji ya Msingi
+Moduli `langchain4j-easy-rag` hutoa mgawanyiko wa hati kiotomatiki, kuingiza, na utafutaji ili uweze kujenga programu za RAG bila kusanidi kila hatua kwa mkono.
 
-**Unatumia Dev Container?** Java na Maven tayari vimesakinishwa. Unahitaji Tokeni ya Upatikanaji Binafsi ya GitHub pekee.
+## Vitaguzi
 
-**Maendeleo ya Kwenye Mitaa:**
+**Unatumia Dev Container?** Java na Maven vimeshatangazwa. Unahitaji tu Tokeni ya Ufikiaji wa Binafsi ya GitHub.
+
+**Maendeleo ya Kwendanenti:**
 - Java 21+, Maven 3.9+
-- Tokeni ya Upatikanaji Binafsi ya GitHub (maelekezo chini)
+- Tokeni ya Ufikiaji wa Binafsi wa GitHub (maelekezo chini)
 
-> **Kumbuka:** Moduli hii inatumia `gpt-4.1-nano` kutoka Modeli za GitHub. Usibadilishe jina la mfano katika msimbo - limesanidiwa kufanya kazi na modeli zinazopatikana GitHub.
+> **Kumbuka:** Moduli hii inatumia `gpt-4.1-nano` kutoka GitHub Models. Usibadilishe jina la mfano kwenye msimbo - limesanidiwa kufanya kazi na mifano iliyopo ya GitHub.
 
-## Mazingira
+## Usanidi
 
 ### 1. Pata Tokeni Yako ya GitHub
 
-1. Nenda kwenye [Mipangilio ya GitHub → Tokeni za Upatikanaji Binafsi](https://github.com/settings/personal-access-tokens)
-2. Bonyeza "Generate new token"
-3. Weka jina la kufafanua (mfano, "Onyesho la LangChain4j")
-4. Weka muda wa kumalizika (siku 7 zinapendekezwa)
-5. Chini ya "Account permissions", tafuta "Models" na weka "Read-only"
-6. Bonyeza "Generate token"
-7. Nakili na uhifadhi tokeni yako - hautaiona tena
+1. Nenda [Mipangilio ya GitHub → Tokeni za Ufikiaji wa Binafsi](https://github.com/settings/personal-access-tokens)
+2. Bonyeza "Tengeneza tokeni mpya"
+3. Weka jina linaloelezea (kwa mfano, "LangChain4j Demo")
+4. Weka wakati wa kumalizika (siku 7 zinapendekezwa)
+5. Chini ya "Ruhusa za Akaunti", tafuta "Models" na weka "Soma tu"
+6. Bonyeza "Tengeneza tokeni"
+7. Nakili na hifadhi tokeni yako - hautai ona tena
 
 ### 2. Weka Tokeni Yako
 
 **Chaguo 1: Kutumia VS Code (Inapendekezwa)**
 
-Ikiwa unatumia VS Code, ongeza tokeni yako kwenye faili `.env` kwenye mzizi wa mradi:
+Ikiwa unatumia VS Code, ongeza tokeni yako kwenye faili `.env` kwenye mizizi ya mradi:
 
-Ikiwa faili `.env` haipo, nakili `.env.example` kuwa `.env` au unda faili mpya `.env` kwenye mzizi wa mradi.
+Kama faili `.env` halipo, nakili `.env.example` hadi `.env` au tengeneza faili mpya `.env` kwenye mizizi ya mradi.
 
 **Mfano wa faili `.env`:**
 ```bash
@@ -101,7 +109,7 @@ Ikiwa faili `.env` haipo, nakili `.env.example` kuwa `.env` au unda faili mpya `
 GITHUB_TOKEN=your_token_here
 ```
 
-Kisha unaweza bonyeza kulia kwenye faili lolote la maonyesho (mfano, `BasicChatDemo.java`) kwenye Explorer na uchague **"Run Java"** au tumia mipangilio ya kuanzisha kutoka kwenye paneli ya Run and Debug.
+Kisha unaweza bonyeza kulia juu ya faili yoyote ya onyesho (mfano, `BasicChatDemo.java`) kwenye Explorer na chagua **"Run Java"** au tumia usanidi wa anzishaji kutoka Jopo la Run and Debug.
 
 **Chaguo 2: Kutumia Terminal**
 
@@ -119,11 +127,11 @@ $env:GITHUB_TOKEN=your_token_here
 
 ## Endesha Mifano
 
-**Kutumia VS Code:** Bonyeza kulia kwenye faili lolote la maonyesho kwenye Explorer na uchague **"Run Java"**, au tumia mipangilio ya kuanzisha kutoka kwenye paneli ya Run and Debug (hakikisha umeongeza tokeni yako kwenye faili `.env` kwanza).
+**Kutumia VS Code:** Bonyeza kulia faili yoyote ya onyesho kwenye Explorer na chagua **"Run Java"**, au tumia usanidi wa anzishaji kutoka Jopo la Run and Debug (hakikisha umeongeza tokeni yako kwenye faili `.env` kwanza).
 
-**Kutumia Maven:** Vinginevyo, unaweza kuendesha kutoka mstari wa amri:
+**Kutumia Maven:** Mbali na hapo, unaweza kuendesha kutoka mstari wa amri:
 
-### 1. Mazungumzo ya Msingi
+### 1. Chat Msingi
 
 **Bash:**
 ```bash
@@ -135,7 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-### 2. Mifumo ya Maelekezo
+### 2. Mifumo ya Prompt
 
 **Bash:**
 ```bash
@@ -147,9 +155,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-Inaonyesha maelekezo ya zero-shot, few-shot, chain-of-thought, na role-based.
+Inaonyesha zero-shot, few-shot, chain-of-thought, na prompt za sehemu za majukumu.
 
-### 3. Kupiga Msimbo wa Kazi
+### 3. Kupiga Simu ya Kifunction
 
 **Bash:**
 ```bash
@@ -161,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-AI hujipigia njia za Java kiotomatiki inapohitajika.
+AI huita moja kwa moja njia zako za Java inapobidi.
 
-### 4. Maswali na Majibu ya Nyaraka (RAG)
+### 4. Maswali na Majibu ya Hati (Easy RAG)
 
 **Bash:**
 ```bash
@@ -175,7 +183,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Uliza maswali kuhusu maudhui katika `document.txt`.
+Uliza maswali kuhusu nyaraka zako kwa kutumia Easy RAG yenye kuingiza na utafutaji kiotomatiki.
 
 ### 5. AI Inayewajibika
 
@@ -191,14 +199,14 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Re
 
 Tazama jinsi vichujio vya usalama vya AI vinavyozuia maudhui hatarishi.
 
-## Kila Mfano Unaonyeshaje
+## Kila Mfano Unaonyesha Nini
 
-**Mazungumzo ya Msingi** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
+**Chat Msingi** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Anza hapa kuona LangChain4j kwa urahisi wake kabisa. Utaunda `OpenAiOfficialChatModel`, utatuma maelekezo kwa `.chat()`, na upate jibu. Hii inaonyesha msingi: jinsi ya kuanzisha modeli kwa vitu maalum na funguo za API. Ukifahamu mtindo huu, kila kitu kingine kinajengwa juu yake.
+Anza hapa kuona LangChain4j kwa njia rahisi kabisa. Utaunda `OpenAiOfficialChatModel`, tuma prompt kwa `.chat()`, na upate jibu. Hii inaonyesha msingi: jinsi ya kuanzisha mifano na vituo maalum na funguo za API. Mara tu unapofahamu mtindo huu, kila kitu kingine kinajengwa juu yake.
 
 ```java
-ChatLanguageModel model = OpenAiOfficialChatModel.builder()
+OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
     .baseUrl("https://models.github.ai/inference")
     .apiKey(System.getenv("GITHUB_TOKEN"))
     .modelName("gpt-4.1-nano")
@@ -209,16 +217,16 @@ System.out.println(response);
 ```
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) na uliza:
-> - "Nitabadilisha vipi kutoka Modeli za GitHub kwenda Azure OpenAI katika msimbo huu?"
-> - "Ni vigezo gani vingine ninavyoweza kuandaa katika OpenAiOfficialChatModel.builder()?"
-> - "Ninawezaje kuongeza majibu ya moja kwa moja badala ya kusubiri jibu kamili?"
+> - "Nitabadilishaje kutoka GitHub Models hadi Azure OpenAI kwenye msimbo huu?"
+> - "Ni vigezo gani vingine vinaweza kusanidiwa katika OpenAiOfficialChatModel.builder()?"
+> - "Ninawezaje kuongeza majibu yanayotiririka badala ya kusubiri jibu kamili?"
 
-**Uhandisi wa Maelekezo** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+**Uhandisi wa Prompt** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Sasa unajua jinsi ya kuzungumza na mfano, hebu tuchunguze unachomwambia. Onyesho hili linatumia usanidi mmoja wa mfano lakini linaonyesha mifumo mitano tofauti ya maelekezo. Jaribu maelekezo ya zero-shot kwa maagizo moja kwa moja, few-shot yanayojifunza kutoka mifano, chain-of-thought kueleza hatua za hoja, na role-based kuweka muktadha. Utaona jinsi mfano mmoja unavyotoa matokeo tofauti kabisa kulingana na jinsi unavyowasilisha ombi lako.
+Sasa kama unajua jinsi ya kuzungumza na mfano, tuchunguze unachomwambia. Onyesho hili linatumia usanidi sawa wa mfano lakini linaonyesha mifumo mitano ya prompt. Jaribu zero-shot kwa maagizo ya moja kwa moja, few-shot inayojifunza kutokana na mifano, chain-of-thought inayofunua hatua za kufikiri, na prompt za sehemu za majukumu zinazoweka muktadha. Utaona jinsi mfano mmoja unavyotoa matokeo tofauti sana kulingana na jinsi unavyoelekeza ombi lako.
 
-Demo pia inaonyesha templates za maelekezo, njia yenye nguvu ya kutengeneza maelekezo yanayoweza kutumika tena na vigezo.
-Mfano ufuatao unaonyesha maelekezo ukitumia LangChain4j `PromptTemplate` kujaza vigezo. AI itajibu kulingana na mahali na shughuli zilizotolewa.
+Onyesho pia linaonyesha template za prompt, njia yenye nguvu ya kutengeneza prompt zinazotumika tena kwa vigezo.
+Mfano hapa chini unaonyesha prompt inayotumia `PromptTemplate` ya LangChain4j kujaza vigezo. AI itajibu kulingana na mahali na shughuli zilizotolewa.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -234,14 +242,14 @@ String response = model.chat(prompt.text());
 ```
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) na uliza:
-> - "Nini tofauti kati ya maelekezo ya zero-shot na few-shot, na nitumie lini kila moja?"
-> - "Vigezo vya joto vinaathirije majibu ya mfano?"
-> - "Ni mbinu gani za kuzuia mashambulizi ya sindano ya maelekezo katika utengenezaji?"
-> - "Ninawezaje kutengeneza vitu vya PromptTemplate vinavyoweza kutumika tena kwa mifumo ya kawaida?"
+> - "Ni tofauti gani kati ya zero-shot na few-shot prompting, na ni lini nitumie kila moja?"
+> - "Jinsi gani kidhibiti cha joto kinavyowaathiri majibu ya mfano?"
+> - "Ni mbinu gani kuchukua tahadhari dhidi ya mashambulizi ya sindano ya prompt katika uzalishaji?"
+> - "Ninawezaje kutengeneza vitu vya PromptTemplate vinavyotumika tena kwa mifumo ya kawaida?"
 
-**Ushirikishwaji wa Zana** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
+**Uunganishaji wa Zana** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Hapa ndipo LangChain4j inaanza kuonyesha nguvu zake. Utatumia `AiServices` kuunda msaidizi wa AI anayeweza kupiga simu njia za Java zako. Tuweke alama njia na `@Tool("description")` na LangChain4j hutatua mengine - AI huamua kiotomatiki lini kutumia kila chombo kulingana na mteja anavyoomba. Hii inaonyesha kupiga simu za kazi, mbinu muhimu ya kujenga AI inayoweza kuchukua hatua, siyo kujibu maswali tu.
+Hapa ndiko LangChain4j inakuwa yenye nguvu. Utatumia `AiServices` kuunda msaidizi wa AI anayeweza kuita njia zako za Java. Tuandike njia na `@Tool("description")` na LangChain4j itaendesha mengine yote - AI huchagua pande zote lini kutumia zana kulingana na mahitaji ya mtumiaji. Hii inaonyesha kupiga simu kwa function, mbinu kuu ya kuunda AI inayochukua hatua, si tu jibu maswali.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -249,42 +257,49 @@ public double add(double a, double b) {
     return a + b;
 }
 
-MathAssistant assistant = AiServices.create(MathAssistant.class, model);
+MathAssistant assistant = AiServices.builder(MathAssistant.class)
+    .chatModel(model)
+    .tools(new Calculator())
+    .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+    .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) na uliza:
-> - "Vipengele vya @Tool vinavyofanya kazi vipi na LangChain4j hufanya nini nyuma ya pazia?"
-> - "Je, AI inaweza kupiga zana nyingi mfululizo kutatua matatizo magumu?"
-> - "Nifanyeje ikiwa chombo kitatoa kosa - ni jinsi gani namshughulikia makosa?"
-> - "Nitang'anisha API halisi vipi badala ya mfano wa kifaa hiki cha kalkuleta?"
+> - "Anuani ya @Tool inavyofanya kazi na LangChain4j hufanya nini nyuma ya pazia?"
+> - "AI inaweza kuitisha zana nyingi kwa mpangilio kutatua matatizo magumu?"
+> - "Nini kinatokea kama zana itatoa makosa - ni jinsi gani nipange kushughulikia makosa?"
+> - "Ningeiunganisha API halisi tofauti na mfano huu wa kalkuletaje?"
 
-**Maswali na Majibu ya Nyaraka (RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Maswali na Majibu ya Hati (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Hapa utaona msingi wa RAG (uzalishaji unaoimarishwa kwa utafutaji). Badala ya kutegemea data za mafunzo za mfano, unapakia maudhui kutoka [`document.txt`](../../../00-quick-start/document.txt) na kuingiza kwenye maelekezo. AI hutoa majibu kulingana na nyaraka yako, si maarifa yake ya jumla. Hii ni hatua ya kwanza kuelekea kujenga mifumo inayofanya kazi na data zako mwenyewe.
+Hapa utaona RAG (uzi wa matokeo unaotegemea utafutaji) kupitia njia ya "Easy RAG" ya LangChain4j. Nyaraka huzilipwa, kugawanywa kiotomatiki na kuingizwa kwenye duka la kumbukumbu, kisha mtafuta hupeleka vipande vinavyohitajika kwa AI wakati wa kuuliza. AI huitikia kulingana na nyaraka zako, si maarifa yake ya jumla.
 
 ```java
-Document document = FileSystemDocumentLoader.loadDocument("document.txt");
-String content = document.text();
+Document document = loadDocument(Paths.get("document.txt"));
 
-String prompt = "Based on this document: " + content + 
-                "\nQuestion: What is the main topic?";
-String response = model.chat(prompt);
+InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+EmbeddingStoreIngestor.ingest(List.of(document), embeddingStore);
+
+Assistant assistant = AiServices.builder(Assistant.class)
+        .chatModel(chatModel)
+        .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+        .contentRetriever(EmbeddingStoreContentRetriever.from(embeddingStore))
+        .build();
+
+String answer = assistant.chat("What is the main topic?");
 ```
 
-> **Kumbuka:** Njia hii rahisi inapakia nyaraka yote kwenye maelekezo. Kwa faili kubwa (>10KB), utaivuka mipaka ya muktadha. Moduli 03 itahusu kugawanya na utafutaji wa vector kwa mifumo ya RAG ya uzalishaji.
-
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) na uliza:
-> - "RAG inazuia vipi mawazo ya uwongo ya AI ikilinganishwa na kutumia data za mafunzo za mfano?"
-> - "Tofauti gani kati ya njia hii rahisi na kutumia embeddings za vector kwa utafutaji?"
-> - "Nitapanuaje hili kushughulikia nyaraka nyingi au misingi mikubwa ya maarifa?"
-> - "Ni mbinu gani bora za kuunda maelekezo kuhakikisha AI inatumia muktadha uliotolewa pekee?"
+> - "RAG inazuiaje kuhalucinishaji kwa AI ikilinganishwa na kutumia data ya mafunzo ya mfano?"
+> - "Tofauti gani kati ya njia hii rahisi na pipeline iliyobinafsishwa ya RAG?"
+> - "Ningepanuaje hili kushughulikia nyaraka nyingi au hifadhi kubwa za maarifa?"
 
 **AI Inayewajibika** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Jenga usalama wa AI kwa kinga nyingi. Demo hii inaonyesha ngazi mbili za ulinzi zinazofanya kazi pamoja:
+Jenga usalama wa AI kwa kinga kwenye sababu nyingi. Onyesho hili linaonyesha ngazi mbili za ulinzi zinazofanya kazi pamoja:
 
-**Sehemu 1: LangChain4j Input Guardrails** - Zuia maelekezo hatarishi kabla hayajafikia LLM. Tengeneza guardrails maalum zinazoangalia maneno au mifumo isiyoruhusiwa. Hizi hufanyika kwa msimbo wako, hivyo ni haraka na haina gharama.
+**Sehemu ya 1: LangChain4j Input Guardrails** - Zuia prompt hatari kabla haijafika kwa LLM. Tengeneza lango za ulinzi maalum zinazokagua maneno au mifumo inayoruhusiwa. Hizi zinakimbia kwenye msimbo wako, hivyo ni haraka na haina gharama.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -299,39 +314,39 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**Sehemu 2: Vichujio vya Usalama vya Mtoa Huduma** - Modeli za GitHub zina vichujio vilivyojengwa vinavyokamata kile ambacho guardrails zako zinaweza kukosa. Utaona vizuizi vikali (makosa ya HTTP 400) kwa ukiukaji mkubwa na kukataa kwa heshima ambapo AI hushindwa kuendelea.
+**Sehemu ya 2: Vichujio vya Usalama vya Mtoa Huduma** - GitHub Models ina vichujio vilivyojengwa ambavyo huvizia kile ambacho lango lako la ulinzi linaweza kukosa. Utaona vizuizi thabiti (makosa ya HTTP 400) kwa ukiukaji mkubwa na kukataa upole ambapo AI kinakataa kwa heshima.
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) na uliza:
-> - "Ni nini InputGuardrail na ninawezaje kutengeneza yangu?"
-> - "Tofauti gani kati ya kizuizi kikali na kukataa kwa heshima?"
-> - "Kwa nini nitumie guardrails na vichujio vya mtoa huduma pamoja?"
+> - "InputGuardrail ni nini na ningeitengenezaje yangu mwenyewe?"
+> - "Tofauti kati ya vizuizi thabiti na kukataa kwa upole ni ipi?"
+> - "Kwa nini kutumia lango za ulinzi na vichujio vya mtoa huduma pamoja?"
 
 ## Hatua Zifuatazo
 
-**Moduli Ifuatayo:** [01-introduction - Kuanzia na LangChain4j na gpt-5 kwenye Azure](../01-introduction/README.md)
+**Moduli Ifuatayo:** [01-introduction - Kuanzisha na LangChain4j na gpt-5 kwenye Azure](../01-introduction/README.md)
 
 ---
 
-**Uelekezaji:** [← Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Moduli 01 - Utangulizi →](../01-introduction/README.md)
+**Utengezaji:** [← Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Module 01 - Utangulizi →](../01-introduction/README.md)
 
 ---
 
 ## Kutatua Matatizo
 
-### Ujenzi wa Kwanza kwa Maven
+### Kujenga kwa Mara ya Kwanza kwa Maven
 
-**Tatizo**: Mvutano wa awali wa `mvn clean compile` au `mvn package` unachukua muda mrefu (dakika 10-15)
+**Tatizo:** `mvn clean compile` au `mvn package` ya kwanza huchukua muda mrefu (dakika 10-15)
 
-**Sababu**: Maven inahitaji kupakua utegemezi wote wa mradi (Spring Boot, maktaba za LangChain4j, SDK za Azure, nk) kwenye ujenzi wa kwanza.
+**Sababu:** Maven inahitaji kupakua utegemezi wote wa mradi (Spring Boot, maktaba za LangChain4j, Azure SDK, n.k.) katika kujenga kwa mara ya kwanza.
 
-**Suluhisho**: Hali hii ni ya kawaida. Majengo yanayofuata yatakuwa ya haraka zaidi kwa sababu utegemezi unahifadhiwa ndani ya kompyuta. Muda wa kupakua unategemea kasi ya mtandao wako.
-### Syntax ya Amri ya PowerShell Maven
+**Msimamo:** Hali hii ni ya kawaida. Majaribio ya baadaye yatakuwa haraka zaidi kwani utegemezi huhifadhiwa ndani. Muda wa kupakua unategemea kasi ya mtandao wako.
 
-**Tatizo**: Amri za Maven zinashindwa na kosa `Unknown lifecycle phase ".mainClass=..."`
+### Muundo wa Amri za Maven kwa PowerShell
 
-**Sababu**: PowerShell huelewa `=` kama kiendeshaji cha kuweka thamani ya variable, na kuvunja syntax ya mali za Maven
+**Tatizo:** Amri za Maven zinashindwa na kosa `Unknown lifecycle phase ".mainClass=..."`
+**Sababu**: PowerShell huchukulia `=` kama mtoaji wa mabadiliko ya thamani (variable assignment operator), na kuvunja muundo wa mali ya Maven
 
-**Suluhisho**: Tumia kiendeshaji cha kusimamisha uchambuzi `--%` kabla ya amri ya Maven:
+**Suluhisho**: Tumia operator ya kuacha utoaji wa amri `--%` kabla ya amri ya Maven:
 
 **PowerShell:**
 ```powershell
@@ -343,13 +358,13 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Kiendeshaji `--%` kinaeleza PowerShell kupitisha hoja zote zilizobaki kwa herufi halisi kwa Maven bila uchambuzi.
+Operator `--%` huambia PowerShell kupitisha hoja zote zilizobaki kwa Maven moja kwa moja bila tafsiri.
 
 ### Onyesho la Emoji la Windows PowerShell
 
-**Tatizo**: Majibu ya AI yanaonyesha herufi za takataka (mfano, `????` au `â??`) badala ya emoji kwenye PowerShell
+**Tatizo**: Majibu ya AI yanaonesha herufi zisizoeleweka (mfano, `????` au `â??`) badala ya emoji katika PowerShell
 
-**Sababu**: Usanidi wa kawaida wa PowerShell hauungi mkono emoji za UTF-8
+**Sababu**: Usimbaji wa chaguo-msingi wa PowerShell hauwezi kuunga mkono emoji za UTF-8
 
 **Suluhisho**: Endesha amri hii kabla ya kuendesha programu za Java:
 ```cmd
@@ -358,15 +373,15 @@ chcp 65001
 
 Hii inalazimisha usimbaji wa UTF-8 kwenye terminal. Vinginevyo, tumia Windows Terminal ambayo ina msaada bora wa Unicode.
 
-### Kurekebisha Makosa ya Mitoaji ya API
+### Kufuatilia Simu za API
 
-**Tatizo**: Makosa ya uthibitishaji, vizingiti vya kiwango, au majibu yasiyotegemewa kutoka kwa mfano wa AI
+**Tatizo**: Makosa ya uthibitishaji, mipaka ya kiwango, au majibu yasiyotarajiwa kutoka kwa mfano wa AI
 
-**Suluhisho**: Mifano inajumuisha `.logRequests(true)` na `.logResponses(true)` kuonyesha mitoaji ya API kwenye koni. Hii husaidia kutatua makosa ya uthibitishaji, vizingiti vya kiwango, au majibu yasiyotegemewa. Ondoa alama hizi katika uzalishaji ili kupunguza kelele za kumbukumbu.
+**Suluhisho**: Mifano ina `.logRequests(true)` na `.logResponses(true)` kuonyesha simu za API kwenye console. Hii husaidia kutatua matatizo ya uthibitishaji, mipaka ya kiwango, au majibu yasiyotarajiwa. Ondoa bendera hizi katika uzalishaji ili kupunguza kelele za kumbukumbu.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Tangazo la Kutokuwajibika**:
-Hati hii imetafsiriwa kwa kutumia huduma ya kutafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi usahihi, tafadhali fahamu kuwa tafsiri zilizofanywa kiotomatiki zinaweza kuwa na makosa au upungufu wa usahihi. Hati ya asili katika lugha yake ya asili inapaswa kuzingatiwa kama chanzo cha mamlaka. Kwa taarifa muhimu, tafsiri ya kitaalamu inayofanywa na wanadamu inashauriwa. Hatuwezi kuwajibika kwa uelewa au tafsiri potofu kutokana na matumizi ya tafsiri hii.
+**Kiarifa cha Kutotegemea**:
+Hati hii imetafsiriwa kwa kutumia huduma ya tafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kwa usahihi, tafadhali fahamu kwamba tafsiri za kiotomatiki zinaweza kuwa na makosa au kasoro. Hati ya asili katika lugha yake ya asili inapaswa kuchukuliwa kama chanzo halali. Kwa taarifa muhimu, tafsiri ya kitaalamu na ya binadamu inahimizwa. Hatubeba dhamana kwa maelewano yoyote au tafsiri isiyo sahihi inayotokana na matumizi ya tafsiri hii.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

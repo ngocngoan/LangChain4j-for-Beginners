@@ -1,4 +1,4 @@
-# Module 05: Mallin kontekstiprotokolla (MCP)
+# Module 05: Mallikontekstiprotokolla (MCP)
 
 ## Sisällysluettelo
 
@@ -11,8 +11,10 @@
 - [Nopea aloitus](../../../05-mcp)
   - [Tiedostotoiminnot (Stdio)](../../../05-mcp)
   - [Valvoja-agentti](../../../05-mcp)
-    - [Tulosten ymmärtäminen](../../../05-mcp)
+    - [Demonstration suorittaminen](../../../05-mcp)
+    - [Miten valvoja toimii](../../../05-mcp)
     - [Vastausstrategiat](../../../05-mcp)
+    - [Tulosteen ymmärtäminen](../../../05-mcp)
     - [Agenttimoduulin ominaisuuksien selitys](../../../05-mcp)
 - [Keskeiset käsitteet](../../../05-mcp)
 - [Onnittelut!](../../../05-mcp)
@@ -20,31 +22,35 @@
 
 ## Mitä opit
 
-Olet rakentanut keskustelevaa tekoälyä, hallinnut kehotteita, perustanut vastaukset dokumentteihin ja luonut agentteja työkaluilla. Mutta kaikki nämä työkalut olivat räätälöityjä juuri sinun sovellukseesi. Entä jos voisit antaa tekoälyllesi pääsyn standardoituihin työkaluekosysteemeihin, joita kuka tahansa voi luoda ja jakaa? Tässä moduulissa opit tekemään juuri niin Mallin kontekstiprotokollan (MCP) ja LangChain4j:n agenttimoduulin avulla. Esittelemme ensin yksinkertaisen MCP-tiedostonlukijan ja näytämme sitten, kuinka se helposti integroidaan kehittyneisiin agenttiprosesseihin Supervisor Agent -mallin avulla.
+Olet rakentanut keskustelevaa tekoälyä, hallinnut kehotteita, perustanut vastaukset dokumentteihin ja luonut agentteja työkaluilla. Mutta kaikki nuo työkalut oli räätälöity juuri sinun sovellustasi varten. Entä jos voisit antaa tekoälyllesi pääsyn standardoituun työkaluekosysteemiin, jonka kuka tahansa voi luoda ja jakaa? Tässä moduulissa opit tekemään juuri niin Model Context Protocolin (MCP) ja LangChain4j:n agenttimoduulin avulla. Näytämme ensin yksinkertaisen MCP-tiedostonlukijan ja sitten, miten se helposti integroituu edistyneisiin agenttiprosesseihin Supervisor Agent -mallin avulla.
 
 ## Mikä on MCP?
 
-Mallin kontekstiprotokolla (MCP) tarjoaa juuri tämän - standardoidun tavan tekoälysovelluksille löytää ja käyttää ulkoisia työkaluja. Sen sijaan, että kirjoittaisit räätälöityjä integraatioita jokaiselle tietolähteelle tai palvelulle, yhdistät MCP-palvelimiin, jotka tarjoavat kykynsä yhtenäisessä muodossa. Tekoälyagenttisi voi sitten automaattisesti löytää ja käyttää näitä työkaluja.
+Model Context Protocol (MCP) tarjoaa juuri tämän – standardoidun tavan tekoälysovelluksille löytää ja käyttää ulkoisia työkaluja. Sen sijaan, että kirjoittaisit mukautettuja integrointeja jokaista tietolähdettä tai palvelua varten, yhdistät MCP-palvelimiin, jotka tarjoavat toimintonsa johdonmukaisessa muodossa. Tekoälyagenttisi voi sitten automaattisesti löytää ja käyttää näitä työkaluja.
 
-<img src="../../../translated_images/fi/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP-vertailu" width="800"/>
+<img src="../../../translated_images/fi/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Vertailu" width="800"/>
 
-*Ennen MCP:tä: Monimutkaiset pisteestä pisteeseen integraatiot. MCP:n jälkeen: Yksi protokolla, loputtomat mahdollisuudet.*
+*Ennen MCP:tä: Monimutkaiset pisteestä pisteeseen integroitumiset. MCP:n jälkeen: Yksi protokolla, loputtomat mahdollisuudet.*
 
-MCP ratkaisee tekoälyn kehityksen perusongelman: jokainen integraatio on räätälöity. Haluatko päästä GitHubiin? Räätälöity koodi. Haluatko lukea tiedostoja? Räätälöity koodi. Haluatko kysellä tietokantaa? Räätälöity koodi. Eikä mikään näistä integroidu muihin tekoälysovelluksiin.
+MCP ratkaisee perusongelman tekoälyn kehityksessä: jokainen integraatio on räätälöity. Haluatko käyttää GitHubia? Oma koodisi. Haluatko lukea tiedostoja? Oma koodisi. Haluatko tehdä kyselyjä tietokantaan? Oma koodisi. Eikä mikään näistä integroidu muihin tekoälysovelluksiin.
 
-MCP standardisoi tämän. MCP-palvelin tarjoaa työkalut selkeillä kuvauksilla ja skeemoilla. Mikä tahansa MCP-asiakas voi muodostaa yhteyden, löytää käytettävissä olevat työkalut ja käyttää niitä. Rakenna kerran, käytä kaikkialla.
+MCP standardoi tämän. MCP-palvelin esittelee työkalut selkeillä kuvauksilla ja skeemoilla. Mikä tahansa MCP-asiakas voi yhdistää, löytää käytettävissä olevat työkalut ja käyttää niitä. Rakenna kerran, käytä kaikkialla.
 
-<img src="../../../translated_images/fi/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP-arkkitehtuuri" width="800"/>
+<img src="../../../translated_images/fi/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Arkkitehtuuri" width="800"/>
 
-*Mallin kontekstiprotokollan arkkitehtuuri - standardoitu työkalujen löytäminen ja suoritus*
+*Model Context Protocol -arkkitehtuuri – standardoitu työkalujen löytäminen ja suorittaminen*
 
 ## Miten MCP toimii
 
+<img src="../../../translated_images/fi/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP-protokollan yksityiskohdat" width="800"/>
+
+*Miten MCP toimii teknisesti — asiakkaat löytävät työkalut, vaihtavat JSON-RPC-viestejä ja suorittavat operaatioita kuljetuskerroksen kautta.*
+
 **Palvelin-asiakasarkkitehtuuri**
 
-MCP käyttää asiakas-palvelin-mallia. Palvelimet tarjoavat työkaluja – tiedostojen lukemista, tietokantakyselyjä, API-kutsuja. Asiakkaat (tekoälysovelluksesi) yhdistävät palvelimiin ja käyttävät niiden työkaluja.
+MCP käyttää asiakas-palvelin-mallia. Palvelimet tarjoavat työkaluja – tiedostojen lukemista, tietokantakyselyitä, API-kutsuja. Asiakkaat (tekoälysovelluksesi) yhdistyvät palvelimiin ja käyttävät niiden työkaluja.
 
-Käyttääksesi MCP:tä LangChain4j:n kanssa, lisää tämä Maven-riippuvuus:
+Käyttääksesi MCP:tä LangChain4j:ssä, lisää tämä Maven-riippuvuus:
 
 ```xml
 <dependency>
@@ -54,22 +60,25 @@ Käyttääksesi MCP:tä LangChain4j:n kanssa, lisää tämä Maven-riippuvuus:
 </dependency>
 ```
 
-
 **Työkalujen löytäminen**
 
-Kun asiakkaasi yhdistyy MCP-palvelimeen, se kysyy "Mitä työkaluja sinulla on?" Palvelin vastaa listalla käytettävissä olevista työkaluista, joilla on kuvaukset ja parametrien skeemat. Tekoälyagenttisi voi sitten päätellä, mitä työkaluja käyttää käyttäjän pyyntöjen perusteella.
+Kun asiakkaasi yhdistää MCP-palvelimeen, se kysyy "Mitä työkaluja sinulla on?" Palvelin vastaa listalla käytettävissä olevista työkaluista, jokaisella kuvaus ja parametriskeema. Tekoälyagenttisi voi päättää, mitä työkaluja käyttää käyttäjän pyyntöjen perusteella.
 
-**Siirtomekanismit**
+<img src="../../../translated_images/fi/tool-discovery.07760a8a301a7832.webp" alt="MCP Työkalujen löytäminen" width="800"/>
 
-MCP tukee erilaisia siirtomekanismeja. Tämä moduuli demonstroi paikallisten prosessien Stdio-siirtoa:
+*Tekoäly löytää käytettävissä olevat työkalut käynnistyksen yhteydessä – se tietää nyt, mitä kyvykkyyksiä on saatavilla ja voi päättää, mitä käyttää.*
 
-<img src="../../../translated_images/fi/transport-mechanisms.2791ba7ee93cf020.webp" alt="Siirtomekanismit" width="800"/>
+**Kuljetusmekanismit**
 
-*MCP:n siirtomekanismit: HTTP etäpalvelimille, Stdio paikallisprosesseille*
+MCP tukee erilaisia kuljetusmekanismeja. Tässä moduulissa demonstroidaan Stdio-kuljetusta paikallisille prosesseille:
 
-**Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
+<img src="../../../translated_images/fi/transport-mechanisms.2791ba7ee93cf020.webp" alt="Kuljetusmekanismit" width="800"/>
 
-Paikallisille prosesseille. Sovelluksesi käynnistää palvelimen aliprosessina ja viestii sen kanssa standardin sisääntulon/uloskäynnin kautta. Kätevä tiedostojärjestelmän käyttöön tai komentorivityökaluihin.
+*MCP-kuljetusmekanismit: HTTP etäpalvelimille, Stdio paikallisille prosesseille*
+
+**Stdio** – [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
+
+Paikallisille prosesseille. Sovelluksesi käynnistää palvelimen aliprosessina ja kommunikoi standardin tulon/menon kautta. Hyödyllinen tiedostojärjestelmän käytössä tai komentorivityökaluissa.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -82,17 +91,20 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
+<img src="../../../translated_images/fi/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio-kuljetuksen kulku" width="800"/>
+
+*Stdio-kuljetus käytännössä – sovelluksesi käynnistää MCP-palvelimen lapsiprosessina ja kommunikoi stdin/stdout-putkien kautta.*
 
 > **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatin kanssa:** Avaa [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) ja kysy:
-> - "Miten Stdio-siirto toimii ja milloin sitä tulee käyttää verrattuna HTTP:hen?"
-> - "Miten LangChain4j hallitsee MCP-palvelinprosessien elinkaaren?"
-> - "Mitkä ovat turvallisuusvaikutukset, kun tekoälylle annetaan pääsy tiedostojärjestelmään?"
+> - "Miten Stdio-kuljetus toimii ja milloin sitä pitäisi käyttää verrattuna HTTP:hen?"
+> - "Miten LangChain4j hallitsee käynnistettyjen MCP-palvelinprosessien elinkaaren?"
+> - "Mitkä ovat turvallisuusnäkökohdat, kun annetaan tekoälylle pääsy tiedostojärjestelmään?"
 
 ## Agenttimoduuli
 
-Vaikka MCP tarjoaa standardisoidut työkalut, LangChain4j:n **agenttimoduuli** tarjoaa deklaratiivisen tavan rakentaa agenteja, jotka orkestroivat näitä työkaluja. `@Agent`-annotaatio ja `AgenticServices` antavat määritellä agenttien käyttäytymisen rajapintojen kautta imperatiivisen koodin sijaan.
+Vaikka MCP tarjoaa standardoidut työkalut, LangChain4j:n **agenttimoduuli** tarjoaa deklaratiivisen tavan rakentaa agentteja, jotka orkestroivat niitä työkaluja. `@Agent`-annotaatio ja `AgenticServices` antavat sinun määritellä agenttien käyttäytymisen rajapintojen avulla imperatiivisen koodin sijaan.
 
-Tässä moduulissa tutustut **Valvoja-agentti**-malliin — kehittyneeseen agenttipohjaiseen tekoälyyn, jossa "valvoja" agentti päättää dynaamisesti, mitä ali-agentteja kutsutaan käyttäjän pyyntöjen perusteella. Yhdistämme molemmat käsitteet antamalla yhdelle ali-agentistamme MCP:n avulla toimivan tiedostojen käyttömahdollisuuden.
+Tässä moduulissa tutkitaan **Supervisor Agent** -mallia—edistynyttä agenttiperustaista tekoälysovellusta, jossa "valvoja" agentti päättää dynaamisesti, mitä alitason agentteja kutsutaan käyttäjän pyyntöjen perusteella. Yhdistämme molemmat konseptit antamalla yhdelle alitason agentista MCP:n voimin toimivat tiedostojen käyttökaynnit.
 
 Käyttääksesi agenttimoduulia, lisää tämä Maven-riippuvuus:
 
@@ -104,8 +116,7 @@ Käyttääksesi agenttimoduulia, lisää tämä Maven-riippuvuus:
 </dependency>
 ```
 
-
-> **⚠️ Kokeellinen:** `langchain4j-agentic`-moduuli on **kokeellinen** ja saattaa muuttua. Vakaa tapa rakentaa tekoälyavustajia on edelleen `langchain4j-core` räätälöidyillä työkaluilla (Module 04).
+> **⚠️ Kokeellinen:** `langchain4j-agentic`-moduuli on **kokeellinen** ja voi muuttua. Vakaampi tapa rakentaa tekoälyapulaisia on edelleen `langchain4j-core` mukautetuilla työkaluilla (Moduulit 01-04).
 
 ## Esimerkkien suorittaminen
 
@@ -113,26 +124,26 @@ Käyttääksesi agenttimoduulia, lisää tämä Maven-riippuvuus:
 
 - Java 21+, Maven 3.9+
 - Node.js 16+ ja npm (MCP-palvelimille)
-- Ympäristömuuttujat määritelty `.env`-tiedostossa (juurihakemistosta):
-  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (kuten Moduleissa 01-04)
+- Ympäristömuuttujat määriteltynä `.env`-tiedostossa (projektin juurihakemistosta):
+  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (kuten Moduulit 01–04)
 
-> **Huom:** Jos et ole vielä asettanut ympäristömuuttujia, katso [Module 00 - Quick Start](../00-quick-start/README.md) ohjeet, tai kopioi `.env.example` tiedostoksi `.env` juurihakemistossa ja täytä arvot.
+> **Huom:** Jos et ole vielä määritellyt ympäristömuuttujia, katso ohjeet [Module 00 - Nopea aloitus](../00-quick-start/README.md) tai kopioi `.env.example` tiedostoksi `.env` juurihakemistoon ja täytä arvot.
 
 ## Nopea aloitus
 
-**VS Code -käyttäjille:** Oikeaklikkaa mitä tahansa demotiedostoa Resurssienhallinnassa ja valitse **"Run Java"**, tai käytä Käynnistys- ja debuggauspaneelin käynnistysasetuksia (muista ensin lisätä tokenisi `.env` tiedostoon).
+**VS Code -käytössä:** Napsauta hiiren oikealla mitä tahansa demo-tiedostoa Explorerissa ja valitse **"Run Java"**, tai käytä ajo- ja vianmääritysikonista löytyviä käynnistyksiä (lisää ensin tunnuksesi `.env`-tiedostoon).
 
-**Mavenilla käytettäessä:** Voit myös suorittaa komentoriviltä alla olevilla esimerkeillä.
+**Mavenin kanssa:** Vaihtoehtoisesti voit ajaa suoraan komentoriviltä alla olevilla komennoilla.
 
 ### Tiedostotoiminnot (Stdio)
 
 Tämä demonstroi paikallisiin aliprosesseihin perustuvia työkaluja.
 
-**✅ Ei esivaatimuksia** - MCP-palvelin käynnistyy automaattisesti.
+**✅ Ei esivaatimuksia** – MCP-palvelin käynnistyy automaattisesti.
 
-**Käyttämällä käynnistyskriptit (suositeltu):**
+**Käyttämällä käynnistysskriptejä (Suositeltu):**
 
-Käynnistyskriptit lataavat automaattisesti ympäristömuuttujat juurihakemiston `.env`-tiedostosta:
+Skriptit lataavat automaattisesti ympäristömuuttujat juurihakemistossa olevasta `.env`-tiedostosta:
 
 **Bash:**
 ```bash
@@ -141,48 +152,43 @@ chmod +x start-stdio.sh
 ./start-stdio.sh
 ```
 
-
 **PowerShell:**
 ```powershell
 cd 05-mcp
 .\start-stdio.ps1
 ```
 
+**VS Code -käyttö:** Napsauta `StdioTransportDemo.java` tiedostoa hiiren oikealla ja valitse **"Run Java"** (varmista, että `.env`-tiedosto on kunnossa).
 
-**VS Code käyttäen:** Oikeaklikkaa `StdioTransportDemo.java` ja valitse **"Run Java"** (Varmista, että `.env` tiedostosi on määritelty).
+Sovellus käynnistää tiedostojärjestelmän MCP-palvelimen automaattisesti ja lukee paikallisen tiedoston. Huomaa, miten aliprosessien hallinta hoidetaan automaattisesti.
 
-Sovellus käynnistää tiedostojärjestelmän MCP-palvelimen automaattisesti ja lukee paikallisen tiedoston. Huomaa, miten aliprosessin hallinta hoituu puolestasi.
-
-**Odotettu tulos:**
+**Odotettu tuloste:**
 ```
 Assistant response: The file provides an overview of LangChain4j, an open-source Java library
 for integrating Large Language Models (LLMs) into Java applications...
 ```
 
-
 ### Valvoja-agentti
 
-**Valvoja-agentti -malli** on **joustava** agenttipohjaisen tekoälyn muoto. Valvoja käyttää LLM:ää päättämään itsenäisesti, mitä agentteja kutsutaan käyttäjän pyynnön perusteella. Seuraavassa esimerkissä yhdistämme MCP:n mahdollistaman tiedoston käytön LLM-agenttiin, luoden valvotun tiedoston lukemisen → raportin laatimisen työnkulun.
+**Supervisor Agent** -malli on **joustava** agenttipohjaisen tekoälyn muoto. Valvoja käyttää LLM:ää päättäen autonomisesti, mitä agentteja kutsutaan käyttäjän pyynnön perusteella. Seuraavassa esimerkissä yhdistämme MCP:n voimin toimivan tiedostokäytön LLM-agenttiin luodaksemme valvojan ohjaaman tiedoston lukemisen → raportin tekemisen työnkulun.
 
-Demossa `FileAgent` lukee tiedoston MCP:n tiedostojärjestelmätyökaluilla ja `ReportAgent` tuottaa jäsennellyn raportin, jonka osina ovat tiivistelmä (1 lause), 3 keskeistä kohtaa ja suositukset. Valvoja orkestroi tämän työnkulun automaattisesti:
+Demossa `FileAgent` lukee tiedoston MCP:n tiedostojärjestelmätyökaluilla, ja `ReportAgent` luo rakenteellisen raportin, jossa on tiivistelmä (1 lause), 3 keskeistä kohtaa ja suosituksia. Valvoja orkestraa tämän työnkulun automaattisesti:
 
-<img src="../../../translated_images/fi/agentic.cf84dcda226374e3.webp" alt="Agenttimoduuli" width="800"/>
+<img src="../../../translated_images/fi/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Valvoja-agenttimalli" width="800"/>
 
-```
-┌─────────────┐      ┌──────────────┐
-│  FileAgent  │ ───▶ │ ReportAgent  │
-│ (MCP tools) │      │  (pure LLM)  │
-└─────────────┘      └──────────────┘
-   outputKey:           outputKey:
-  'fileContent'         'report'
-```
+*Valvoja käyttää LLM:ää päättääkseen, mitä agentteja kutsutaan ja missä järjestyksessä — ei tarvetta kovakoodatulle reititykselle.*
 
+Näin konkreettinen työnkulku näyttää tiedostosta raporttiin:
 
-Jokainen agentti tallentaa tuloksensa **Agentic Scopeen** (jaettuun muistiin), mikä mahdollistaa seuraavien agenttien pääsyn aiempiin tuloksiin. Tämä osoittaa, miten MCP-työkalut integroituvat saumattomasti agenttiprosesseihin — Valvojan ei tarvitse tietää *miten* tiedostot luetaan, vaan pelkästään että `FileAgent` pystyy siihen.
+<img src="../../../translated_images/fi/file-report-workflow.649bb7a896800de9.webp" alt="Tiedostosta raporttiin työnkulku" width="800"/>
+
+*FileAgent lukee tiedoston MCP-työkaluilla, sitten ReportAgent muuntaa raakasisällön rakenteelliseksi raportiksi.*
+
+Jokainen agentti tallentaa tuloksensa **Agentic Scopeen** (jaettu muisti), jolloin alitason agentit voivat käyttää aiempia tuloksia. Tämä osoittaa, miten MCP-työkalut integroituvat luontevasti agenttiprosesseihin – valvojan ei tarvitse tietää *miten* tiedostot luetaan, vaan vain että `FileAgent` osaa sen tehdä.
 
 #### Demon suorittaminen
 
-Käynnistyskriptit lataavat automaattisesti ympäristömuuttujat juurihakemiston `.env`-tiedostosta:
+Käynnistysskriptit lataavat automaattisesti ympäristömuuttujat juurihakemistossa olevasta `.env`-tiedostosta:
 
 **Bash:**
 ```bash
@@ -191,62 +197,65 @@ chmod +x start-supervisor.sh
 ./start-supervisor.sh
 ```
 
-
 **PowerShell:**
 ```powershell
 cd 05-mcp
 .\start-supervisor.ps1
 ```
 
+**VS Code -käyttö:** Napsauta `SupervisorAgentDemo.java` tiedostoa hiiren oikealla ja valitse **"Run Java"** (varmista, että `.env`-tiedosto on kunnossa).
 
-**VS Code käyttäen:** Oikeaklikkaa `SupervisorAgentDemo.java` ja valitse **"Run Java"** (varmista, että `.env` on kunnossa).
-
-#### Miten Valvoja toimii
+#### Miten valvoja toimii
 
 ```java
 // Vaihe 1: FileAgent lukee tiedostoja käyttäen MCP-työkaluja
 FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .chatModel(model)
-        .toolProvider(mcpToolProvider)  // Sisältää MCP-työkaluja tiedosto-operaatioihin
+        .toolProvider(mcpToolProvider)  // Sisältää MCP-työkaluja tiedostojen käsittelyyn
         .build();
 
-// Vaihe 2: ReportAgent luo rakenteellisia raportteja
+// Vaihe 2: ReportAgent luo jäsenneltyjä raportteja
 ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// Supervisor ohjaa tiedosto → raportti työnkulkua
+// Supervisor ohjaa tiedosto → raportti -työnkulkua
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
         .responseStrategy(SupervisorResponseStrategy.LAST)  // Palauta lopullinen raportti
         .build();
 
-// Supervisor päättää, mitä agentteja kutsutaan pyynnön perusteella
+// Supervisor päättää, mitkä agentit kutsutaan pyynnön perusteella
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
-
 #### Vastausstrategiat
 
-Kun määrität `SupervisorAgent`-instanssin, määrittelet miten sen tulee muodostaa lopullinen vastaus käyttäjälle, kun ali-agentit ovat suorittaneet tehtävänsä. Saatavilla olevat strategiat ovat:
+Kun määrittelet `SupervisorAgent`in, määrittelet, miten se muodostaa lopullisen vastauksen käyttäjälle alitason agenttien saatua tehtävänsä valmiiksi.
+
+<img src="../../../translated_images/fi/response-strategies.3d0cea19d096bdf9.webp" alt="Vastausstrategiat" width="800"/>
+
+*Kolme strategiaa, joilla valvoja muodostaa lopullisen vastauksen – valitse sen mukaan, haluatko viimeisen agentin tulosteen, yhdistelevän yhteenvedon vai parhaan pistetyn vaihtoehdon.*
+
+Saatavilla olevat strategiat ovat:
 
 | Strategia | Kuvaus |
 |----------|-------------|
-| **LAST** | Valvoja palauttaa viimeksi kutsutun ali-agentin tai työkalun tuloksen. Tämä on hyödyllistä, kun työnkulun viimeinen agentti on erityisesti suunniteltu tuottamaan täydellinen lopullinen vastaus (esim. "Tiivistelmä-agentti" tutkimusputkessa). |
-| **SUMMARY** | Valvoja käyttää omaa sisäistä kieltämalliaan (LLM) synteettisen tiivistelmän koko vuorovaikutuksesta ja kaikista ali-agenttien tuloksista, ja palauttaa tämän tiivistelmän lopullisena vastauksena. Tämä tarjoaa käyttäjälle selkeän, koontivastauksen. |
-| **SCORED** | Järjestelmä käyttää sisäistä LLM:ää pisteyttämään sekä VIIMEISEN vastauksen että TIIVISTELMÄN alkuperäisen käyttäjäpyynnön perusteella ja palauttaa korkeamman pistemäärän saanut vastauksen. |
+| **LAST** | Valvoja palauttaa viimeisen kutsutun alitason agentin tai työkalun tuloksen. Tämä on hyödyllistä, kun työnkulun viimeinen agentti on suunniteltu tuottamaan täydellisen, lopullisen vastauksen (esim. "Yhteenveto-agentti" tutkimusprosessissa). |
+| **SUMMARY** | Valvoja käyttää omaa sisäistä kielimalliaan (LLM) yhdistelemään yhteenvedon koko vuorovaikutuksesta ja kaikista alitason agenttien tuloksista, ja palauttaa tämän yhteenvedon lopullisena vastauksena. Tämä tarjoaa käyttäjälle selkeän, koottun vastauksen. |
+| **SCORED** | Järjestelmä käyttää sisäistä LLM:ää pisteyttämään sekä VIIMEISEN vastauksen että YHTEENVEDON suhteessa alkuperäiseen käyttäjäpyyntöön ja palauttaa korkeamman pistemäärän saanutta vaihtoehtoa. |
 
-Katso toteutus [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java).
+Katso [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) täydellinen toteutus.
 
 > **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatin kanssa:** Avaa [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) ja kysy:
-> - "Miten Valvoja päättää, mitä agenteja kutsutaan?"
-> - "Mikä on ero Valvoja- ja Sequential-työnkulkujen välillä?"
-> - "Miten voin mukauttaa Valvojan suunnittelukäyttäytymistä?"
+> - "Miten valvoja päättää, mitä agentteja kutsua?"
+> - "Mikä on ero Supervisor- ja Sekventiaalisen työnkulun välillä?"
+> - "Miten voin muokata valvojan suunnittelukäyttäytymistä?"
 
-#### Tulosten ymmärtäminen
+#### Tulosteen ymmärtäminen
 
-Kun ajat demon, näet jäsennellyn läpikäynnin siitä, miten Valvoja orkestroi useita agenteja. Tässä mitä kukin osio tarkoittaa:
+Kun suoritat demon, näet rakenteellisen katsauksen, miten valvoja orkestroi useita agentteja. Tässä mitä kukin osa tarkoittaa:
 
 ```
 ======================================================================
@@ -257,8 +266,7 @@ This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
 
-
-**Otsikko** esittelee työnkulun konseptin: kohdennettu putki tiedoston lukemisesta raportin tuottamiseen.
+**Otsikko** esittelee työnkulun käsitteen: kohdennettu putki tiedoston lukemisesta raportin tuottamiseen.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -274,18 +282,16 @@ The Supervisor orchestrates the agents automatically based on the request.
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
 
-
-**Työnkulun kaavio** näyttää datan virtauksen agenttien välillä. Jokaisella agentilla on oma roolinsa:
-- **FileAgent** lukee tiedostoja MCP-työkaluilla ja tallentaa raakasisällön `fileContent`-avainsanaan
-- **ReportAgent** käyttää tätä sisältöä ja tuottaa rakenteellisen raportin `report`-avainsanaan
+**Työnkulun kaavio** näyttää tiedon kulun agenttien välillä. Jokaisella agentilla on tietty rooli:
+- **FileAgent** lukee tiedostoja MCP-työkaluilla ja tallentaa raakasisällön `fileContent`-muuttujaan
+- **ReportAgent** käyttää tätä sisältöä ja tuottaa rakenteellisen raportin `report`-muuttujaan
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
 
-
-**Käyttäjän pyyntö** näyttää tehtävän. Valvoja jäsentää pyynnön ja päättää kutsua FileAgentin → ReportAgentin.
+**Käyttäjän pyyntö** näyttää tehtävän. Valvoja jäsentää tämän ja päättää kutsua FileAgent → ReportAgent.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -306,10 +312,9 @@ The Supervisor orchestrates the agents automatically based on the request.
   +-- [OK] ReportAgent (generating structured report) completed
 ```
 
-
 **Valvojan orkestrointi** näyttää kahden vaiheen työnkulun toiminnassa:
 1. **FileAgent** lukee tiedoston MCP:n kautta ja tallentaa sisällön
-2. **ReportAgent** vastaanottaa sisällön ja tuottaa jäsennellyn raportin
+2. **ReportAgent** vastaanottaa sisällön ja luo rakenteellisen raportin
 
 Valvoja teki nämä päätökset **itsenäisesti** käyttäjän pyynnön perusteella.
 
@@ -330,28 +335,34 @@ Recommendations
   * report: Executive Summary...
 ```
 
-
 #### Agenttimoduulin ominaisuuksien selitys
 
-Esimerkki demonstroi useita agenttimoduulin kehittyneitä ominaisuuksia. Tutkitaan tarkemmin Agentic Scopea ja Agent Kuuntelijoita.
+Esimerkki näyttää useita agenttimoduulin edistyneitä ominaisuuksia. Tarkastellaan tarkemmin Agentic Scopea ja Agent Listener -kuuntelijoita.
 
-**Agentic Scope** näyttää jaetun muistin, johon agentit tallensivat tuloksensa `@Agent(outputKey="...")` avulla. Tämä mahdollistaa:
-- Myöhemmät agentit pääsevät aiempien agenttien tuloksiin
-- Valvojan voi koostaa lopullisen vastauksen
-- Sinä voit tarkastella, mitä kukin agentti tuotti
+**Agentic Scope** näyttää jaetun muistin, johon agentit tallensivat tulokset käyttäen `@Agent(outputKey="...")`. Tämä sallii:
+- Myöhempien agenttien käyttää aiempien agenttien tuloksia
+- Valvojan koota lopullisen vastauksen
+- Sinun tarkastella, mitä kukin agentti on tuottanut
+
+<img src="../../../translated_images/fi/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Jaettu Muisti" width="800"/>
+
+*Agentic Scope toimii jaettuna muistina – FileAgent kirjoittaa `fileContent`-kenttää, ReportAgent lukee sen ja kirjoittaa `report`-kenttää, ja koodisi lukee lopputuloksen.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
-String fileContent = scope.readState("fileContent");  // Raakadatatiedosto FileAgentilta
-String report = scope.readState("report");            // Jäsennelty raportti ReportAgentilta
+String fileContent = scope.readState("fileContent");  // Raakatiedot tiedostosta FileAgent
+String report = scope.readState("report");            // Rakenteinen raportti ReportAgentilta
 ```
 
+**Agent Listenerit** mahdollistavat agenttien suorituksen seurannan ja virheenkorjauksen. Demon askel askeleelta tuloste tulee AgentListenerilta, joka kuuntelee jokaisen agenttikutsun:
+- **beforeAgentInvocation** - Kutsutaan, kun valvoja valitsee agentin, jolloin näet, mikä agentti valittiin ja miksi
+- **afterAgentInvocation** - Kutsutaan, kun agentti suorittaa tehtävän, näyttäen sen tuloksen
+- **inheritedBySubagents** - Kun tosi, kuulija valvoo kaikkia agentteja hierarkiassa
 
-**Agent Kuuntelijat** mahdollistavat agenttien suorituksen seurannan ja virheiden etsinnän. Demossa näkyvä vaiheittainen tuloste syntyy AgentListenerista, joka kytkeytyy jokaiseen agenttikutsuun:
-- **beforeAgentInvocation** - Kutsutaan, kun Valvoja valitsee agentin, jolloin näet, mikä agentti valittiin ja miksi
-- **afterAgentInvocation** - Kutsutaan, kun agentti on suorittanut, näyttää tuloksen
-- **inheritedBySubagents** - Kun true, kuuntelija seuraa kaikkia aliorganisaation agenteja
+<img src="../../../translated_images/fi/agent-listeners.784bfc403c80ea13.webp" alt="Agenttien kuuntelijoiden elinkaari" width="800"/>
+
+*Agenttien kuuntelijat liittyvät suorituksen elinkaareen — valvovat, kun agentit alkavat, päättyvät tai kohtaavat virheitä.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -375,54 +386,70 @@ AgentListener monitor = new AgentListener() {
 };
 ```
 
+Valvojakuviota laajemmin `langchain4j-agentic`-moduuli tarjoaa useita tehokkaita työnkulkujen kuvioita ja ominaisuuksia:
 
-Valvoja-mallin lisäksi `langchain4j-agentic`-moduuli tarjoaa useita tehokkaita työnkulku- ja ominaisuusmalleja:
+<img src="../../../translated_images/fi/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agenttien työnkulkujen kuviot" width="800"/>
 
-| Malli | Kuvaus | Käyttötapaus |
+*Viisi työnkulun kuviota agenttien orkestrointiin — yksinkertaisista peräkkäisistä putkistoista ihmisen hyväksyntää vaativiin työnkulkuihin.*
+
+| Kuvio | Kuvaus | Käyttötapaus |
 |---------|-------------|----------|
-| **Sequential** | Suorita agentit järjestyksessä, tuloste siirtyy seuraavalle | Putket: tutkimus → analyysi → raportti |
-| **Parallel** | Suorita agentit samanaikaisesti | Riippumattomat tehtävät: sää + uutiset + osakkeet |
-| **Loop** | Toista, kunnes ehto täyttyy | Laadunarviointi: hienosäädä kunnes pistemäärä ≥ 0.8 |
-| **Conditional** | Reititä ehtojen perusteella | Luokitus → reititys erikoisagentille |
-| **Human-in-the-Loop** | Lisää ihmistarkistuspisteitä | Hyväksyntäprosessit, sisällön tarkastus |
+| **Peräkkäinen** | Suorita agentit järjestyksessä, tulos virtaa seuraavalle | Putkistot: tutkimus → analyysi → raportti |
+| **Rinnakkainen** | Suorita agentit samanaikaisesti | Riippumattomat tehtävät: sää + uutiset + osakkeet |
+| **Silmukka** | Toista, kunnes ehto täyttyy | Laadunarviointi: hio kunnes pistemäärä ≥ 0,8 |
+| **Ehdollinen** | Reititä ehtojen perusteella | Luokittelu → ohjaa asiantuntija-agentille |
+| **Ihminen-silmukassa** | Lisää ihmisen tarkistuspisteitä | Hyväksyntätyönkulut, sisällön tarkistus |
 
 ## Keskeiset käsitteet
 
-Nyt kun olet tutustunut MCP:hen ja agenttimoduuliin käytännössä, tiivistetään milloin kannattaa käyttää kumpaakin lähestymistapaa.
+Nyt kun olet tutustunut MCP:hen ja agentic-moduuliin käytännössä, kerrataan milloin käyttää kumpaakin lähestymistapaa.
 
-**MCP** sopii parhaiten, kun haluat hyödyntää olemassa olevia työkaluekosysteemejä, rakentaa työkaluja joita useat sovellukset voivat käyttää, integroida kolmannen osapuolen palveluita standardiprotokollilla tai vaihtaa työkalujen toteutuksia ilman koodimuutoksia.
+<img src="../../../translated_images/fi/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP-ekosysteemi" width="800"/>
 
-**Agenttimoduuli** toimii parhaiten, kun haluat deklaratiiviset agenttimäärittelyt `@Agent`-annotaatioilla, tarvitset työnkulkujen orkestrointia (peräkkäinen, silmukka, rinnakkainen), suositte rajapintapohjaista agenttisuunnittelua imperatiivisen koodin sijaan, tai yhdistät useita agenteja, jotka jakavat tuloksia `outputKey` avulla.
+*MCP rakentaa universaalin protokollaekosysteemin — mikä tahansa MCP-yhteensopiva palvelin toimii minkä tahansa MCP-yhteensopivan asiakkaan kanssa mahdollistaen työkalujen jakamisen sovellusten välillä.*
 
-**Valvoja-agentti-malli** loistaa, kun työnkulku ei ole ennustettavissa etukäteen ja haluat LLM:n päättävän, kun sinulla on useita erikoistuneita agenteja, jotka tarvitsevat dynaamista orkestrointia, kun rakennat keskustelujärjestelmiä, jotka reitittävät eri kyvykkyyksille, tai kun haluat joustavan, sopeutuvan agenttikäyttäytymisen.
+**MCP** on ihanteellinen, kun haluat hyödyntää olemassa olevia työkaluekoksia, rakentaa työkaluja, joita useat sovellukset voivat jakaa, integroida kolmannen osapuolen palveluita standardiprotokollilla tai vaihtaa työkaluimplementointeja ilman koodimuutoksia.
+
+**Agentic-moduuli** sopii parhaiten, kun haluat deklaratiiviset agenttimäärittelyt `@Agent`-annotaatioilla, tarvitset työnkulkujen orkestrointia (peräkkäinen, silmukka, rinnakkainen), suosittelet rajapintapohjaista agenttisuunnittelua imperatiivisen koodin sijaan tai yhdistät useita agentteja, jotka jakavat tuloksia `outputKey`-avaimen kautta.
+
+**Valvoja-agenttimalli** loistaa, kun työnkulku ei ole ennalta ennustettavissa ja haluat LLM:n tekevän päätökset, kun sinulla on useita erikoistuneita agentteja, jotka tarvitsevat dynaamista orkestrointia, kun rakennat keskustelujärjestelmiä, jotka ohjaavat eri kyvykkyyksiin, tai kun haluat joustavimman, adaptiivisimman agenttikäytöksen.
+
+<img src="../../../translated_images/fi/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Mukautetut työkalut vs MCP-työkalut" width="800"/>
+
+*Milloin käyttää mukautettuja @Tool-menetelmiä vs MCP-työkaluja — mukautetut työkalut sovelluskohtaiselle logiikalle täydellä tyyppiturvallisuudella, MCP-työkalut standardoiduille integraatioille, jotka toimivat sovellusten välillä.*
+
 ## Onnittelut!
+
+<img src="../../../translated_images/fi/course-completion.48cd201f60ac7570.webp" alt="Kurssin läpäisy" width="800"/>
+
+*Oppimismatka kaikkien viiden moduulin läpi — perustason chatista MCP-vetoisiin agenttijärjestelmiin.*
 
 Olet suorittanut LangChain4j for Beginners -kurssin. Olet oppinut:
 
-- Kuinka rakentaa keskustelevaa tekoälyä muistilla (Moduuli 01)
-- Prompt-suunnittelumalleja eri tehtäviin (Moduuli 02)
-- Vastausten perustamisen dokumentteihisi RAG:llä (Moduuli 03)
-- Perustason tekoälyagenttien (avustajien) luomisen räätälöidyillä työkaluilla (Moduuli 04)
-- Standardoitujen työkalujen integroinnin LangChain4j MCP:n ja Agentic-moduulien kanssa (Moduuli 05)
+- Kuinka rakentaa keskusteleva tekoäly muistilla (Moduuli 01)
+- Kehoteengineering-malleja eri tehtäviin (Moduuli 02)
+- Kuinka perustaa vastaukset dokumentteihisi RAG:n avulla (Moduuli 03)
+- Perus tekoälyagenttien (avustajien) luomisen mukautetuilla työkaluilla (Moduuli 04)
+- Standardoitujen työkalujen integroinnin LangChain4j MCP- ja Agentic-moduuleihin (Moduuli 05)
 
 ### Mitä seuraavaksi?
 
-Moduulien suorittamisen jälkeen tutustu [Testing Guide](../docs/TESTING.md) -oppaaseen nähdäksesi LangChain4j:n testauskonsepteja toiminnassa.
+Suorittamisen jälkeen tutustu [Testausoppaaseen](../docs/TESTING.md) nähdäksesi LangChain4j:n testauskonsepteja käytännössä.
 
 **Viralliset resurssit:**
-- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Kattavat oppaat ja API-viitteet
+- [LangChain4j-dokumentaatio](https://docs.langchain4j.dev/) - Kattavat oppaat ja API-viite
 - [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Lähdekoodi ja esimerkit
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Askeltavat opetusohjelmat erilaisiin käyttötapauksiin
+- [LangChain4j-oppaat](https://docs.langchain4j.dev/tutorials/) - Askellusohjeita eri käyttötapauksiin
 
-Kiitos, että suoristit tämän kurssin!
+Kiitos kurssin suorittamisesta!
 
 ---
 
-**Navigointi:** [← Edellinen: Moduuli 04 - Työkalut](../04-tools/README.md) | [Takaisin alkuun](../README.md)
+**Navigointi:** [← Edellinen: Moduuli 04 - Työkalut](../04-tools/README.md) | [Takaisin päävalikkoon](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta huomioithan, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäinen asiakirja omalla kielellään on virallinen lähde. Tärkeissä asioissa suositellaan ammattimaista ihmiskäännöstä. Emme ota vastuuta tämän käännöksen käytöstä aiheutuvista väärinkäsityksistä tai virhetulkinoista.
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta huomioithan, että automaattikäännöksissä saattaa esiintyä virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäiskielellä tulee pitää ensisijaisena lähteenä. Tärkeissä asioissa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai tulkinnoista.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

@@ -1,31 +1,36 @@
-# Modul 01: LangChain4j használatának elkezdése
+# Modul 01: Kezdés a LangChain4j-vel
 
 ## Tartalomjegyzék
 
-- [Mit tanulhatsz meg](../../../01-introduction)
+- [Videós bemutató](../../../01-introduction)
+- [Mit fogsz tanulni](../../../01-introduction)
 - [Előfeltételek](../../../01-introduction)
 - [Az alapvető probléma megértése](../../../01-introduction)
 - [A tokenek megértése](../../../01-introduction)
 - [Hogyan működik a memória](../../../01-introduction)
-- [Hogyan használja ezt LangChain4j](../../../01-introduction)
+- [Hogyan használja ezt a LangChain4j](../../../01-introduction)
 - [Azure OpenAI infrastruktúra telepítése](../../../01-introduction)
-- [Az alkalmazás helyi futtatása](../../../01-introduction)
+- [Alkalmazás futtatása helyben](../../../01-introduction)
 - [Az alkalmazás használata](../../../01-introduction)
-  - [Állapotmentes csevegés (bal panel)](../../../01-introduction)
-  - [Állapottartó csevegés (jobb panel)](../../../01-introduction)
+  - [Állapot nélküli chat (bal panel)](../../../01-introduction)
+  - [Állapotfüggő chat (jobb panel)](../../../01-introduction)
 - [Következő lépések](../../../01-introduction)
 
-## Mit tanulhatsz meg
+## Videós bemutató
 
-Ha elvégezted a gyors kezdő lépéseket, láttad, hogyan küldhetsz promptokat és kaphatsz válaszokat. Ez az alap, de a valódi alkalmazások többet igényelnek. Ez a modul megtanít arra, hogyan építs fel olyan konverzációs AI-t, amely emlékszik a kontextusra és állapotot tart fenn – ez a különbség egy egyszeri demo és egy éles alkalmazás között.
+Nézd meg ezt az élő bemutatót, amely elmagyarázza, hogyan kezdj neki ennek a modulnak: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
 
-Ebben az útmutatóban az Azure OpenAI GPT-5.2-t használjuk, mert fejlett érvelési képességei révén jobban láthatóvá teszik a különböző minták viselkedését. Amikor memóriát adsz hozzá, egyértelműen látni fogod a különbséget. Ez megkönnyíti annak megértését, hogy mit ad hozzá az egyes komponens az alkalmazásodhoz.
+## Mit fogsz tanulni
 
-Egy alkalmazást építesz, amely mindkét mintát bemutatja:
+Ha befejezted a gyors kezdést, láthattad, hogyan küldhetsz promptokat és hogyan kapsz választ. Ez az alap, de a valódi alkalmazások ennél többre van szükségük. Ebben a modulban megtanulod, hogyan építs olyan csevegő AI-t, amely emlékszik a kontextusra és fenntartja az állapotot – ez a különbség egy egyszeri demo és egy éles környezetre kész alkalmazás között.
 
-**Állapotmentes csevegés** – Minden kérés független. A modell nem emlékszik a korábbi üzenetekre. Ez a minta, amit a gyors kezdés során használtál.
+Az útmutató során végig az Azure OpenAI GPT-5.2-t használjuk, mert fejlett érvelési képességei világossá teszik a különböző minták viselkedését. Amikor memóriát adsz hozzá, egyértelműen látod a különbséget. Ez megkönnyíti megérteni, hogy az egyes komponensek mit hoznak az alkalmazásodhoz.
 
-**Állapottartó beszélgetés** – Minden kérés tartalmazza a beszélgetés előzményét. A modell több körön át tartja a kontextust. Erre van szükség az éles alkalmazásoknál.
+Egyetlen alkalmazást fogsz építeni, amely mindkét mintát demonstrálja:
+
+**Állapot nélküli chat** – Minden kérés független. A modell nem emlékszik az előző üzenetekre. Ez az a minta, amit a gyors kezdésben használtál.
+
+**Állapotfüggő beszélgetés** – Minden kérés tartalmazza az előzményeket. A modell fenntartja a kontextust több körön át. Ezt igénylik az éles alkalmazások.
 
 ## Előfeltételek
 
@@ -34,45 +39,45 @@ Egy alkalmazást építesz, amely mindkét mintát bemutatja:
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Megjegyzés:** A Java, Maven, Azure CLI és Azure Developer CLI (azd) előre telepítve van a biztosított fejlesztői konténerben.
+> **Megjegyzés:** Java, Maven, Azure CLI és az Azure Developer CLI (azd) előre telepítve van a biztosított fejlesztői konténerben.
 
-> **Megjegyzés:** Ez a modul az Azure OpenAI GPT-5.2-t használja. A telepítés automatikusan beállítódik az `azd up` paranccsal – ne módosítsd a modell nevét a kódban.
+> **Megjegyzés:** Ez a modul GPT-5.2-t használ Azure OpenAI-n. A telepítés automatikusan konfigurálódik az `azd up` parancs által – ne módosítsd a modell nevét a kódban.
 
 ## Az alapvető probléma megértése
 
-A nyelvi modellek állapotmentesek. Minden API hívás független. Ha elküldöd, hogy „A nevem John”, majd megkérdezed, „Mi a nevem?”, a modellnek fogalma sincs arról, hogy előzőleg bemutatkoztál. Minden kérésnél úgy jár el, mintha ez lenne az első beszélgetésed.
+A nyelvi modellek állapot nélküli működésűek. Minden API-hívás független. Ha elküldöd, hogy „A nevem John”, majd megkérdezed, „Mi a nevem?”, a modellnek fogalma sincs arról, hogy éppen bemutatkoztál. Úgy kezeli minden kérést, mintha ez lenne az első beszélgetésed.
 
-Ez egyszerű kérdés-válasz esetén rendben van, de valódi alkalmazásokhoz használhatatlan. Az ügyfélszolgálati chatbotoknak emlékezniük kell arra, amit mondtál. A személyi asszisztenseknek kontextus kell. Bármilyen többkörös beszélgetés memóriát igényel.
+Ez egyszerű kérdések-válaszok esetén rendben van, de a valódi alkalmazásokhoz használhatatlan. Az ügyfélszolgálati chatbotoknak emlékezniük kell arra, amit mondtál nekik. A személyi asszisztenseknek szükségük van kontextusra. Bármely többszöri beszélgetés memóriát igényel.
 
-<img src="../../../translated_images/hu/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Állapotmentes vs állapottartó beszélgetések" width="800"/>
+<img src="../../../translated_images/hu/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Állapot nélküli kontra állapotfüggő beszélgetések" width="800"/>
 
-*Az állapotmentes (független hívások) és állapottartó (kontekstusérzékeny) beszélgetések közti különbség*
+*Az állapot nélküli (független hívások) és állapotfüggő (kontextusérzékeny) beszélgetések közötti különbség*
 
 ## A tokenek megértése
 
-Mielőtt belevágnánk a beszélgetésekbe, fontos megérteni a tokeneket – az alapvető szövegegységeket, amelyeket a nyelvi modellek feldolgoznak:
+Mielőtt belemerülnénk a beszélgetésekbe, fontos megérteni a tokeneket – a szöveg alapegységeit, amelyeket a nyelvi modellek feldolgoznak:
 
 <img src="../../../translated_images/hu/token-explanation.c39760d8ec650181.webp" alt="Token magyarázat" width="800"/>
 
-*Példa arra, hogyan bontják a szöveget tokenekre – az "I love AI!" négy külön feldolgozási egység lesz*
+*Példa arra, hogyan törik szét a szöveg tokenekre – az „I love AI!” 4 különálló feldolgozási egységgé válik*
 
-A tokenekkel mérik és dolgozzák fel a szöveget az AI modellek. A szavak, írásjelek és még a szóközök is lehetnek tokenek. A modellednek van egy limitje, hogy egyszerre hány tokent tud feldolgozni (GPT-5.2 esetén 400,000, maximum 272,000 bemeneti token és 128,000 kimeneti token). A tokenek ismerete segít kezelni a beszélgetések hosszát és a költségeket.
+A tokenek segítségével mérik és dolgozzák fel a szöveget az AI modellek. Szavak, írásjelek és akár szóközök is lehetnek tokenek. A modellednek van egy korlátja, hogy egyszerre hány tokent tud feldolgozni (GPT-5.2 esetén 400 000, ebből maximum 272 000 bemeneti és 128 000 kimeneti token). A tokenek megértése segít kezelni a beszélgetések hosszát és a költségeket.
 
 ## Hogyan működik a memória
 
-A csevegés memóriája megoldja az állapotmentesség problémáját azzal, hogy megtartja a beszélgetés előzményeit. Mielőtt elküldené a kérést a modellnek, a keretrendszer előre hozzáfűzi a releváns korábbi üzeneteket. Amikor megkérdezed „Mi a nevem?”, a rendszer tulajdonképpen az egész beszélgetés előzményt elküldi, így a modell "láthatja", hogy korábban azt mondtad, „A nevem John”.
+A chat memória megoldja az állapot nélküli problémát azáltal, hogy fenntartja a beszélgetés előzményeit. Mielőtt elküldenéd a kérelmet a modellnek, a keretrendszer hozzáfűzi a releváns korábbi üzeneteket. Amikor megkérdezed, hogy „Mi a nevem?”, a rendszer valójában az egész beszélgetési előzményt elküldi, lehetővé téve, hogy a modell lássa: korábban azt mondtad, „A nevem John.”
 
-A LangChain4j memória implementációkat kínál, amelyek ezt automatikusan kezelik. Te választod meg, hogy hány üzenetet tartson meg, a keretrendszer pedig kezeli a kontextusablakot.
+A LangChain4j memória megvalósításokat biztosít, amelyek ezt automatikusan kezelik. Te választod ki, hogy hány üzenetet akarsz megőrizni, a keretrendszer pedig kezeli a kontextusablakot.
 
 <img src="../../../translated_images/hu/memory-window.bbe67f597eadabb3.webp" alt="Memória ablak koncepció" width="800"/>
 
-*A MessageWindowChatMemory egy csúszó ablakot tart fenn a legfrissebb üzenetekből, automatikusan eltávolítva a régieket*
+*MessageWindowChatMemory egy gördülő ablakot tart fenn a legutóbbi üzenetekből, automatikusan eltávolítva a régieket*
 
-## Hogyan használja ezt LangChain4j
+## Hogyan használja ezt a LangChain4j
 
-Ez a modul kibővíti a gyors kezdést Spring Boot integrációval és konverzációs memória hozzáadásával. Így illeszkednek össze az elemek:
+Ez a modul kiterjeszti a gyors kezdést a Spring Boot integrációjával és a beszélgetés memóriával. Így illeszkednek össze az elemek:
 
-**Függőségek** – Adjunk hozzá két LangChain4j könyvtárat:
+**Függőségek** – Két LangChain4j könyvtárat adj hozzá:
 
 ```xml
 <dependency>
@@ -85,7 +90,7 @@ Ez a modul kibővíti a gyors kezdést Spring Boot integrációval és konverzá
 </dependency>
 ```
 
-**Chat modell** – Konfiguráld az Azure OpenAI-t Spring bean-ként ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Chat modell** – Azure OpenAI konfigurálása Spring bean-ként ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -100,9 +105,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-A builder a hitelesítő adatokat az `azd up` által beállított környezeti változókból olvassa. Az `baseUrl` beállítása az Azure végpontodra teszi az OpenAI klienst Azure támogatásúvá.
+A builder a hitelesítő adatokat az `azd up` által beállított környezeti változókból olvassa. A `baseUrl` beállítása az Azure végpontra teszi az OpenAI klienst Azure OpenAI-kompatibilissé.
 
-**Beszélgetési memória** – Kövesd a chat előzményeket MessageWindowChatMemory-val ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Beszélgetés memória** – Beszélgetési előzmények követése a MessageWindowChatMemory-vel ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -115,51 +120,51 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-A memóriát a `withMaxMessages(10)`-nel hozd létre, hogy megtartsd az utolsó 10 üzenetet. A felhasználói és AI üzeneteket típusos csomagolókkal add hozzá: `UserMessage.from(text)` és `AiMessage.from(text)`. Az előzményt `memory.messages()`-sel kapod vissza, amit a modellhez küldesz. A szolgáltatás minden beszélgetési azonosítóhoz külön memóriapéldányt tárol, így párhuzamosan több felhasználó is cseveghet.
+Memóriát hozol létre a `withMaxMessages(10)`-zel, hogy az utolsó 10 üzenetet tartsd meg. Felhasználói és AI üzeneteket típusos wrapperrel adhatsz hozzá: `UserMessage.from(text)` és `AiMessage.from(text)`. Az előzményeket `memory.messages()`-sel lekérheted, és elküldheted a modellnek. A szolgáltatás külön memória példányokat tárol beszélgetési azonosítónként, így több felhasználó is párhuzamosan cseveghet.
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chat segítségével:** Nyisd meg a [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) fájlt és kérdezd meg:
-> - "Hogyan dönt a MessageWindowChatMemory, hogy mely üzeneteket dobja el, amikor az ablak megtelik?"
-> - "Megvalósíthatok egyedi memória tárolást adatbázissal az in-memory helyett?"
-> - "Hogyan adhatnék hozzá összegzést a régi beszélgetés előzmény tömörítésére?"
+> **🤖 Próbáld ki a [GitHub Copilottal](https://github.com/features/copilot) Chat-en:** Nyisd meg a [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) fájlt, és kérdezd meg:
+> - „Hogyan dönt a MessageWindowChatMemory, hogy mely üzeneteket dobja el, amikor a memória ablak megtelik?”
+> - „Megvalósíthatok egyedi memória tárolást adatbázis használatával memóriabeli helyett?”
+> - „Hogyan adhatnék hozzá összegzést a régi beszélgetési előzmények tömörítéséhez?”
 
-Az állapotmentes chat végpont teljesen kihagyja a memóriát – csak `chatModel.chat(prompt)`-ot hív, mint a gyors kezdésben. Az állapottartó végpont viszont üzeneteket ad a memóriához, lekéri az előzményt, és minden kéréshez mellékeli a kontextust. Ugyanaz a modellkonfiguráció, eltérő minták.
+Az állapot nélküli chat végpont teljesen kihagyja a memóriát – csak `chatModel.chat(prompt)` hívás, mint a gyors kezdésben. Az állapotfüggő végpont hozzáadja az üzeneteket a memóriához, lekéri az előzményeket, és ezen kontextust mindegyik kéréshez belefoglalja. Ugyanaz a modell konfiguráció, más minták.
 
 ## Azure OpenAI infrastruktúra telepítése
 
 **Bash:**
 ```bash
 cd 01-introduction
-azd up  # Válassza ki a feliratkozást és a helyet (az eastus2 ajánlott)
+azd up  # Válassza ki az előfizetést és a helyszínt (az eastus2 ajánlott)
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction
-azd up  # Válassza ki az előfizetést és a helyszínt (az eastus2 ajánlott)
+azd up  # Válassza ki az előfizetést és a helyet (eastus2 ajánlott)
 ```
 
-> **Megjegyzés:** Ha időtúllépési hiba lép fel (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), egyszerűen futtasd újra az `azd up` parancsot. Az Azure erőforrások még mindig települhetnek a háttérben, és az ismétlés lehetővé teszi a telepítés befejezését, amikor az erőforrások elérik a végső állapotot.
+> **Megjegyzés:** Ha időtúllépési hibát tapasztalsz (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), egyszerűen futtasd az `azd up` parancsot újra. Az Azure erőforrások még háttérben települhetnek, az ismétlés lehetővé teszi, hogy a telepítés befejeződjön, amikor az erőforrások elérik a végleges állapotot.
 
-Ez megteszi a következőket:
-1. Telepíti az Azure OpenAI erőforrást a GPT-5.2 és text-embedding-3-small modellekkel
-2. Automatikusan generál egy `.env` fájlt a projekt gyökérkönyvtárába hitelesítő adatokkal
-3. Beállítja az összes szükséges környezeti változót
+Ez:
+1. Telepíti az Azure OpenAI erőforrást GPT-5.2 és text-embedding-3-small modellekkel
+2. Automatikusan generál `.env` fájlt a projekt gyökérkönyvtárába a hitelesítő adatokkal
+3. Beállít minden szükséges környezeti változót
 
-**Telepítési problémák?** Lásd az [Infrastructure README](infra/README.md) fájlt részletes hibaelhárításhoz, beleértve az alkönyvtár névütközéseket, kézi Azure Portal telepítési lépéseket és modellkonfigurációs útmutatást.
+**Telepítési problémád van?** Nézd meg az [infrastruktúra README](infra/README.md) fájlt részletes hibakezelésért, beleértve az aldomain névütközéseket, manuális Azure Portál telepítési lépéseket és modellkonfigurációs útmutatót.
 
-**Ellenőrizd, hogy a telepítés sikeres volt-e:**
+**Ellenőrizd, hogy sikerült-e a telepítés:**
 
 **Bash:**
 ```bash
-cat ../.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY stb. értékeket.
+cat ../.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY, stb. értékeket.
 ```
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY stb. értékeket.
+Get-Content ..\.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY, stb. értékeket.
 ```
 
-> **Megjegyzés:** Az `azd up` parancs automatikusan generálja a `.env` fájlt. Ha később frissíteni kell, vagy szerkesztheted a `.env` fájlt kézzel, vagy újragenerálhatod az alábbi parancsokkal:
+> **Megjegyzés:** Az `azd up` parancs automatikusan generálja a `.env` fájlt. Ha később frissíteni szeretnéd, vagy manuálisan szerkesztheted a `.env`-t, vagy újragenerálhatod a következőkkel:
 >
 > **Bash:**
 > ```bash
@@ -173,11 +178,11 @@ Get-Content ..\.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY s
 > .\.azd-env.ps1
 > ```
 
-## Az alkalmazás helyi futtatása
+## Alkalmazás futtatása helyben
 
-**Telepítés ellenőrzése:**
+**Ellenőrizd a telepítést:**
 
-Győződj meg róla, hogy a `.env` fájl létezik a gyökérkönyvtárban az Azure hitelesítő adatokkal:
+Győződj meg róla, hogy a `.env` fájl létezik a gyökérkönyvtárban, és tartalmazza az Azure hitelesítő adatokat:
 
 **Bash:**
 ```bash
@@ -186,32 +191,32 @@ cat ../.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYME
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Meg kell jelenítenie az AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT értékeket
+Get-Content ..\.env  # Meg kell jeleníteni az AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT értékeket
 ```
 
 **Indítsd el az alkalmazásokat:**
 
 **1. lehetőség: Spring Boot Dashboard használata (ajánlott VS Code felhasználóknak)**
 
-A fejlesztői konténer tartalmazza a Spring Boot Dashboard bővítményt, amely vizuális felületet biztosít az összes Spring Boot alkalmazás kezeléséhez. Megtalálod a VS Code bal oldali Activity Bar-ján (keresd a Spring Boot ikont).
+A fejlesztői konténer tartalmazza a Spring Boot Dashboard kiterjesztést, amely vizuális felületet biztosít az összes Spring Boot alkalmazás kezeléséhez. A VS Code bal oldali tevékenységsávjában találod (keresd a Spring Boot ikont).
 
 A Spring Boot Dashboard segítségével:
-- Megnézheted az összes elérhető Spring Boot alkalmazást a workspace-ben
-- Egyszerű kattintással indíthatsz/leállíthatsz alkalmazásokat
-- Valós időben nézheted az alkalmazás naplóit
-- Követheted az alkalmazás állapotát
+- Láthatod az összes elérhető Spring Boot alkalmazást a munkaterületen
+- Egy kattintással indíthatsz/leállíthatsz alkalmazásokat
+- Élőben nézheted az alkalmazás naplóit
+- Figyelemmel kísérheted az alkalmazás állapotát
 
-Egyszerűen kattints a lejátszás gombra az „introduction” modul mellett az indításhoz, vagy indíts el egyszerre minden modult.
+Egyszerűen kattints a „play” gombra az „introduction” mellett ennek a modulnak az elindításához, vagy indítsd el az összes modult egyszerre.
 
 <img src="../../../translated_images/hu/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**2. lehetőség: Shell szkriptek használata**
+**2. lehetőség: Shell script-ek használata**
 
-Indítsd el az összes webalkalmazást (modulok 01-04):
+Indítsd el az összes webalkalmazást (01-04 modulok):
 
 **Bash:**
 ```bash
-cd ..  # Gyökérkönyvtárból
+cd ..  # A gyökérkönyvtárból
 ./start-all.sh
 ```
 
@@ -221,7 +226,7 @@ cd ..  # A gyökérkönyvtárból
 .\start-all.ps1
 ```
 
-Vagy csak ezt a modult indítsd:
+Vagy csak ezt a modult:
 
 **Bash:**
 ```bash
@@ -235,9 +240,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Mindkét szkript automatikusan betölti a környezeti változókat a gyökér `.env` fájlból, és ha a JAR fájlok nem léteznek, felépíti azokat.
+Mindkét script automatikusan betölti a környezeti változókat a gyökér `.env` fájljából, és elkészíti a JAR fájlokat, ha még nem léteznek.
 
-> **Megjegyzés:** Ha előnyben részesíted, hogy kézzel építsd fel az összes modult az indítás előtt:
+> **Megjegyzés:** Ha inkább manuálisan akarod megépíteni az összes modult indulás előtt:
 >
 > **Bash:**
 > ```bash
@@ -251,9 +256,9 @@ Mindkét szkript automatikusan betölti a környezeti változókat a gyökér `.
 > mvn clean package -DskipTests
 > ```
 
-Nyisd meg a http://localhost:8080 címet a böngésződben.
+Nyisd meg böngészőben a http://localhost:8080 címet.
 
-**Leállításhoz:**
+**Leállítás:**
 
 **Bash:**
 ```bash
@@ -271,29 +276,29 @@ cd ..; .\stop-all.ps1  # Minden modul
 
 ## Az alkalmazás használata
 
-Az alkalmazás egy webes felületet biztosít két párhuzamosan futó csevegés implementációval.
+Az alkalmazás webes felületet biztosít két párhuzamos chat megvalósítással.
 
-<img src="../../../translated_images/hu/home-screen.121a03206ab910c0.webp" alt="Alkalmazás kezdőképernyő" width="800"/>
+<img src="../../../translated_images/hu/home-screen.121a03206ab910c0.webp" alt="Alkalmazás főképernyője" width="800"/>
 
-*Irányítópult, ahol mind az egyszerű csevegés (állapotmentes), mind a beszélgetés alapú csevegés (állapottartó) opciók megjelennek*
+*Irányítópult a Simpla Chat (állapot nélküli) és a Beszélgetés alapú Chat (állapotfüggő) opciókkal*
 
-### Állapotmentes csevegés (bal panel)
+### Állapot nélküli chat (bal panel)
 
-Ezt próbáld ki először. Kérdezd meg: „A nevem John”, majd azonnal „Mi a nevem?” A modell nem fog emlékezni, mert minden üzenet független. Ez jól bemutatja a nyelvi modell egyszerű integrációjának alapvető problémáját – nincs beszélgetési kontextus.
+Először próbáld ki ezt. Írd be, hogy „A nevem John”, majd azonnal kérdezd meg, „Mi a nevem?” A modell nem fog emlékezni, mert minden üzenet független. Ez demonstrálja az alapvető nyelvi modell integrációk problémáját – nincs beszélgetési kontextus.
 
-<img src="../../../translated_images/hu/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Állapotmentes csevegés bemutató" width="800"/>
+<img src="../../../translated_images/hu/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Állapot nélküli chat demó" width="800"/>
 
-*Az AI nem emlékszik a nevedre az előző üzenetből*
+*Az AI nem emlékszik az előző üzenetből a nevedre*
 
-### Állapottartó csevegés (jobb panel)
+### Állapotfüggő chat (jobb panel)
 
-Most próbáld meg ugyanazt itt is. Kérdezd meg: „A nevem John”, majd „Mi a nevem?” Ezúttal emlékszik. A különbség a MessageWindowChatMemory – ez megőrzi a beszélgetés előzményét és minden kéréshez mellékeli. Így működik az éles beszélgetési AI.
+Most próbáld meg ugyanazt itt. Írd be, hogy „A nevem John”, majd „Mi a nevem?” Most emlékszik. A különbség a MessageWindowChatMemory – fenntartja a beszélgetési előzményeket, és ehhez minden kéréshez hozzáadja azokat. Így működik az éles környezetben használt beszélgető AI.
 
-<img src="../../../translated_images/hu/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Állapottartó csevegés bemutató" width="800"/>
+<img src="../../../translated_images/hu/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Állapotfüggő chat demó" width="800"/>
 
-*Az AI emlékszik korábbi beszélgetésből a nevedre*
+*Az AI emlékszik a beszélgetés korábbi pontján mondott nevedre*
 
-Mindkét panel ugyanazt a GPT-5.2 modellt használja. Az egyetlen különbség a memória. Ez világossá teszi, mit ad hozzá a memória az alkalmazásodhoz és miért elengedhetetlen az éles felhasználási esetekhez.
+Mindkét panel ugyanazt a GPT-5.2 modellt használja. Az egyetlen különbség a memória. Ez világossá teszi, hogy mit ad hozzá az alkalmazásodhoz a memória, és miért elengedhetetlen a valódi felhasználási esetekhez.
 
 ## Következő lépések
 
@@ -306,6 +311,6 @@ Mindkét panel ugyanazt a GPT-5.2 modellt használja. Az egyetlen különbség a
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Jogi nyilatkozat**:
-Ez a dokumentum az AI fordítási szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével készült. Bár a pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti, anyanyelvi dokumentum tekintendő hivatalos forrásnak. Kiemelten fontos információk esetén professzionális emberi fordítást javaslunk. Nem vállalunk felelősséget semmilyen félreértésért vagy téves értelmezésért, amely ebből a fordításból ered.
+**Jogi nyilatkozat**:  
+Ez a dokumentum az AI fordító szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) használatával készült. Bár a pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum, az anyanyelvi változat tekintendő hivatalos forrásnak. Fontos információk esetén professzionális emberi fordítást javaslunk. Nem vállalunk felelősséget a fordítás használatából eredő félreértésekért vagy téves értelmezésekért.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

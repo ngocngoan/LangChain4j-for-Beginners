@@ -1,86 +1,91 @@
-# Module 02 : Ingénierie des prompts avec GPT-5.2
+# Module 02 : Ingénierie des Prompts avec GPT-5.2
 
-## Table des matières
+## Table des Matières
 
-- [Ce que vous apprendrez](../../../02-prompt-engineering)
+- [Présentation Vidéo](../../../02-prompt-engineering)
+- [Ce que Vous Apprendrez](../../../02-prompt-engineering)
 - [Prérequis](../../../02-prompt-engineering)
-- [Comprendre l'ingénierie des prompts](../../../02-prompt-engineering)
-- [Fondamentaux de l'ingénierie des prompts](../../../02-prompt-engineering)
+- [Comprendre l'Ingénierie des Prompts](../../../02-prompt-engineering)
+- [Fondamentaux de l'Ingénierie des Prompts](../../../02-prompt-engineering)
   - [Zero-Shot Prompting](../../../02-prompt-engineering)
   - [Few-Shot Prompting](../../../02-prompt-engineering)
-  - [Chaîne de pensée](../../../02-prompt-engineering)
-  - [Prompting basé sur le rôle](../../../02-prompt-engineering)
-  - [Modèles de prompts](../../../02-prompt-engineering)
-- [Schémas avancés](../../../02-prompt-engineering)
-- [Utilisation des ressources Azure existantes](../../../02-prompt-engineering)
-- [Captures d'écran de l'application](../../../02-prompt-engineering)
-- [Exploration des schémas](../../../02-prompt-engineering)
-  - [Faible vs forte empressement](../../../02-prompt-engineering)
-  - [Exécution de tâche (préambules d'outil)](../../../02-prompt-engineering)
-  - [Code auto-réfléchissant](../../../02-prompt-engineering)
-  - [Analyse structurée](../../../02-prompt-engineering)
-  - [Chat multi-tour](../../../02-prompt-engineering)
-  - [Raisonnement étape par étape](../../../02-prompt-engineering)
-  - [Sortie contrainte](../../../02-prompt-engineering)
-- [Ce que vous apprenez vraiment](../../../02-prompt-engineering)
-- [Prochaines étapes](../../../02-prompt-engineering)
+  - [Chaîne de Raisonnement](../../../02-prompt-engineering)
+  - [Prompt Basé sur un Rôle](../../../02-prompt-engineering)
+  - [Modèles de Prompts](../../../02-prompt-engineering)
+- [Schémas Avancés](../../../02-prompt-engineering)
+- [Utilisation des Ressources Azure Existantes](../../../02-prompt-engineering)
+- [Captures d’Écran de l'Application](../../../02-prompt-engineering)
+- [Exploration des Schémas](../../../02-prompt-engineering)
+  - [Faible vs Forte Implication](../../../02-prompt-engineering)
+  - [Exécution de Tâches (Préambules d'Outils)](../../../02-prompt-engineering)
+  - [Code Auto-réfléchissant](../../../02-prompt-engineering)
+  - [Analyse Structurée](../../../02-prompt-engineering)
+  - [Conversation Multi-Tours](../../../02-prompt-engineering)
+  - [Raisonnement Pas à Pas](../../../02-prompt-engineering)
+  - [Sortie Contraintes](../../../02-prompt-engineering)
+- [Ce que Vous Apprenez Vraiment](../../../02-prompt-engineering)
+- [Prochaines Étapes](../../../02-prompt-engineering)
 
-## Ce que vous apprendrez
+## Présentation Vidéo
 
-<img src="../../../translated_images/fr/what-youll-learn.c68269ac048503b2.webp" alt="Ce que vous apprendrez" width="800"/>
+Regardez cette session en direct qui explique comment débuter avec ce module : [Ingénierie des Prompts avec LangChain4j - Session en Direct](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
 
-Dans le module précédent, vous avez vu comment la mémoire permet l'IA conversationnelle et utilisé les modèles GitHub pour des interactions basiques. Nous allons maintenant nous concentrer sur la façon dont vous posez des questions — les prompts eux-mêmes — en utilisant GPT-5.2 d'Azure OpenAI. La manière dont vous structurez vos prompts influence considérablement la qualité des réponses obtenues. Nous commençons par une revue des techniques fondamentales de prompting, puis passons à huit schémas avancés qui exploitent pleinement les capacités de GPT-5.2.
+## Ce que Vous Apprendrez
 
-Nous utilisons GPT-5.2 car il introduit le contrôle du raisonnement — vous pouvez indiquer au modèle combien de réflexion il doit effectuer avant de répondre. Cela rend les différentes stratégies de prompting plus évidentes et vous aide à comprendre quand utiliser chaque approche. Nous bénéficions également des limites de taux moindres d'Azure pour GPT-5.2 comparé aux modèles GitHub.
+<img src="../../../translated_images/fr/what-youll-learn.c68269ac048503b2.webp" alt="Ce que Vous Apprendrez" width="800"/>
+
+Dans le module précédent, vous avez vu comment la mémoire permet l’IA conversationnelle et utilisé les modèles GitHub pour des interactions basiques. Nous allons maintenant nous concentrer sur la façon dont vous posez des questions — les prompts eux-mêmes — en utilisant GPT-5.2 d’Azure OpenAI. La manière dont vous structurez vos prompts influence considérablement la qualité des réponses. Nous commençons par revoir les techniques fondamentales de prompt, puis passons à huit schémas avancés qui tirent pleinement parti des capacités de GPT-5.2.
+
+Nous utilisons GPT-5.2 car il introduit un contrôle du raisonnement — vous pouvez indiquer au modèle la quantité de réflexion avant de répondre. Cela rend les différentes stratégies de prompting plus apparentes et vous aide à comprendre quand utiliser chaque approche. Nous profiterons également des limites de taux moindres d’Azure sur GPT-5.2 comparé aux modèles GitHub.
 
 ## Prérequis
 
-- Module 01 terminé (ressources Azure OpenAI déployées)
-- Fichier `.env` à la racine avec les identifiants Azure (créé par `azd up` dans le module 01)
+- Module 01 complété (ressources Azure OpenAI déployées)  
+- Fichier `.env` dans le répertoire racine avec les identifiants Azure (créé par `azd up` dans le Module 01)  
 
-> **Note :** Si vous n’avez pas terminé le module 01, suivez d’abord les instructions de déploiement qui y sont indiquées.
+> **Note :** Si vous n’avez pas encore terminé le Module 01, suivez d’abord les instructions de déploiement là-bas.
 
-## Comprendre l'ingénierie des prompts
+## Comprendre l'Ingénierie des Prompts
 
-<img src="../../../translated_images/fr/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Qu'est-ce que l'ingénierie des prompts ?" width="800"/>
+<img src="../../../translated_images/fr/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Qu’est-ce que l’Ingénierie des Prompts ?" width="800"/>
 
-L'ingénierie des prompts consiste à concevoir un texte d'entrée qui vous donne systématiquement les résultats dont vous avez besoin. Ce n’est pas simplement poser des questions — c’est structurer les requêtes afin que le modèle comprenne exactement ce que vous voulez et comment le fournir.
+L’ingénierie des prompts consiste à concevoir un texte d’entrée qui vous donne de manière cohérente les résultats dont vous avez besoin. Il ne s’agit pas seulement de poser des questions — c’est structurer les requêtes pour que le modèle comprenne exactement ce que vous voulez et comment le fournir.
 
-Pensez-y comme donner des instructions à un collègue. « Corrige le bug » est vague. « Corrige l'exception de pointeur nul dans UserService.java ligne 45 en ajoutant une vérification de null » est spécifique. Les modèles de langage fonctionnent de la même façon — la spécificité et la structure sont importantes.
+Pensez-y comme donner des instructions à un collègue. « Corrige le bug » est vague. « Corrige l’exception de pointeur nul dans UserService.java ligne 45 en ajoutant une vérification nulle » est précis. Les modèles linguistiques fonctionnent de la même manière — la spécificité et la structure comptent.
 
-<img src="../../../translated_images/fr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Comment LangChain4j s'intègre" width="800"/>
+<img src="../../../translated_images/fr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Comment LangChain4j s’intègre" width="800"/>
 
-LangChain4j fournit l'infrastructure — connexions aux modèles, mémoire, et types de messages — tandis que les schémas de prompts ne sont que du texte soigneusement structuré que vous envoyez via cette infrastructure. Les éléments clés sont `SystemMessage` (qui définit le comportement et le rôle de l'IA) et `UserMessage` (qui porte votre demande réelle).
+LangChain4j fournit l’infrastructure — connexions au modèle, mémoire, types de messages — tandis que les schémas de prompt sont simplement des textes soigneusement structurés que vous envoyez via cette infrastructure. Les blocs de construction clés sont `SystemMessage` (qui définit le comportement et le rôle de l’IA) et `UserMessage` (qui porte votre requête réelle).
 
-## Fondamentaux de l'ingénierie des prompts
+## Fondamentaux de l'Ingénierie des Prompts
 
-<img src="../../../translated_images/fr/five-patterns-overview.160f35045ffd2a94.webp" alt="Vue d'ensemble des cinq schémas d'ingénierie des prompts" width="800"/>
+<img src="../../../translated_images/fr/five-patterns-overview.160f35045ffd2a94.webp" alt="Aperçu des Cinq Schémas d’Ingénierie des Prompts" width="800"/>
 
-Avant de plonger dans les schémas avancés de ce module, passons en revue cinq techniques fondamentales de prompting. Ce sont les blocs de construction que chaque ingénieur de prompts doit connaître. Si vous avez déjà suivi le [module de démarrage rapide](../00-quick-start/README.md#2-prompt-patterns), vous les avez vus en action — voici le cadre conceptuel qui les sous-tend.
+Avant de plonger dans les schémas avancés de ce module, passons en revue cinq techniques fondamentales de prompting. Ce sont les bases que tout ingénieur de prompt devrait connaître. Si vous avez déjà travaillé avec le [module de démarrage rapide](../00-quick-start/README.md#2-prompt-patterns), vous les avez vues en action — voici le cadre conceptuel qui les sous-tend.
 
 ### Zero-Shot Prompting
 
-L'approche la plus simple : donner au modèle une instruction directe sans exemples. Le modèle s’appuie entièrement sur son entraînement pour comprendre et exécuter la tâche. Cela fonctionne bien pour les requêtes simples où le comportement attendu est évident.
+L’approche la plus simple : donnez une instruction directe au modèle sans exemple. Le modèle s’appuie entièrement sur son entraînement pour comprendre et exécuter la tâche. Cela fonctionne bien pour des requêtes simples dont le comportement attendu est évident.
 
 <img src="../../../translated_images/fr/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-*Instruction directe sans exemples — le modèle déduit la tâche uniquement à partir de l'instruction*
+*Instruction directe sans exemples — le modèle déduit la tâche à partir de l’instruction seule*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// Réponse : "Positif"
+// Réponse : « Positif »
 ```
-
-**Quand l'utiliser :** classifications simples, questions directes, traductions, ou toute tâche que le modèle peut gérer sans guide supplémentaire.
+  
+**Quand l’utiliser :** Classifications simples, questions directes, traductions, ou toute tâche que le modèle peut gérer sans guide supplémentaire.
 
 ### Few-Shot Prompting
 
-Fournir des exemples qui démontrent le schéma que vous souhaitez que le modèle suive. Le modèle apprend le format attendu entrée-sortie à partir de vos exemples et l'applique aux nouvelles entrées. Cela améliore considérablement la cohérence pour les tâches où le format ou comportement désiré n’est pas évident.
+Fournissez des exemples qui démontrent le schéma que vous voulez que le modèle suive. Le modèle apprend le format d’entrée-sortie attendu à partir de vos exemples et l’applique aux nouvelles entrées. Cela améliore grandement la cohérence pour les tâches où le format ou le comportement attendu n’est pas évident.
 
 <img src="../../../translated_images/fr/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
-*Apprentissage à partir d'exemples — le modèle identifie le schéma et l’applique aux nouvelles entrées*
+*Apprentissage depuis des exemples — le modèle identifie le schéma et l’applique à de nouvelles entrées*
 
 ```java
 String prompt = """
@@ -96,16 +101,16 @@ String prompt = """
     """;
 String response = model.chat(prompt);
 ```
+  
+**Quand l’utiliser :** Classifications personnalisées, formatage cohérent, tâches spécifiques au domaine ou lorsque les résultats zero-shot sont inconsistants.
 
-**Quand l'utiliser :** classifications personnalisées, formatage cohérent, tâches spécifiques au domaine, ou lorsque les résultats zero-shot sont incohérents.
+### Chaîne de Raisonnement
 
-### Chaîne de pensée
+Demandez au modèle de montrer son raisonnement pas à pas. Au lieu de passer directement à la réponse, le modèle décompose le problème et travaille explicitement chaque partie. Cela améliore la précision sur les tâches de mathématiques, logique et raisonnement en plusieurs étapes.
 
-Demander au modèle de montrer son raisonnement étape par étape. Au lieu de donner directement une réponse, le modèle décompose le problème et analyse chaque partie explicitement. Cela améliore la précision sur les tâches de mathématiques, logique, et raisonnement à plusieurs étapes.
+<img src="../../../translated_images/fr/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-<img src="../../../translated_images/fr/chain-of-thought.5cff6630e2657e2a.webp" alt="Chaîne de pensée (Chain of Thought)" width="800"/>
-
-*Raisonnement étape par étape — décomposer les problèmes complexes en étapes logiques explicites*
+*Raisonnement pas à pas — décomposer les problèmes complexes en étapes logiques explicites*
 
 ```java
 String prompt = """
@@ -117,16 +122,16 @@ String prompt = """
 String response = model.chat(prompt);
 // Le modèle montre : 15 - 8 = 7, puis 7 + 12 = 19 pommes
 ```
+  
+**Quand l’utiliser :** Problèmes mathématiques, énigmes logiques, débogage ou toute tâche où montrer le processus de raisonnement améliore la précision et la confiance.
 
-**Quand l'utiliser :** problèmes mathématiques, énigmes logiques, débogage, ou toute tâche où montrer le raisonnement améliore la précision et la confiance.
+### Prompt Basé sur un Rôle
 
-### Prompting basé sur le rôle
+Attribuez une persona ou un rôle à l’IA avant de poser votre question. Cela fournit un contexte qui façonne le ton, la profondeur et le focus de la réponse. Un « architecte logiciel » donne des conseils différents d’un « développeur junior » ou d’un « auditeur sécurité ».
 
-Définir une persona ou un rôle pour l’IA avant de poser votre question. Cela fournit un contexte qui façonne le ton, la profondeur, et le focus de la réponse. Un « architecte logiciel » donne des conseils différents d’un « développeur junior » ou d’un « auditeur sécurité ».
+<img src="../../../translated_images/fr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-<img src="../../../translated_images/fr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Prompting basé sur le rôle" width="800"/>
-
-*Définir contexte et persona — la même question reçoit une réponse différente selon le rôle assigné*
+*Définir le contexte et la persona — la même question obtient une réponse différente selon le rôle assigné*
 
 ```java
 String prompt = """
@@ -141,14 +146,14 @@ String prompt = """
     """;
 String response = model.chat(prompt);
 ```
+  
+**Quand l’utiliser :** Revues de code, tutorat, analyses spécifiques au domaine ou lorsque vous avez besoin de réponses adaptées à un niveau d’expertise ou perspective particulière.
 
-**Quand l'utiliser :** revues de code, tutorat, analyses spécifiques au domaine, ou lorsque vous avez besoin de réponses adaptées à un niveau d’expertise ou perspective particulière.
+### Modèles de Prompts
 
-### Modèles de prompts
+Créez des prompts réutilisables avec des espaces réservés variables. Au lieu d’écrire un nouveau prompt à chaque fois, définissez un modèle une fois et remplissez différentes valeurs. La classe `PromptTemplate` de LangChain4j facilite cela avec la syntaxe `{{variable}}`.
 
-Créer des prompts réutilisables avec des espaces réservés variables. Au lieu d’écrire un nouveau prompt à chaque fois, définissez un modèle une fois et remplissez-le avec différentes valeurs. La classe `PromptTemplate` de LangChain4j facilite cela avec la syntaxe `{{variable}}`.
-
-<img src="../../../translated_images/fr/prompt-templates.14bfc37d45f1a933.webp" alt="Modèles de prompts" width="800"/>
+<img src="../../../translated_images/fr/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
 *Prompts réutilisables avec espaces réservés variables — un modèle, plusieurs usages*
 
@@ -164,26 +169,26 @@ Prompt prompt = template.apply(Map.of(
 
 String response = model.chat(prompt.text());
 ```
-
-**Quand l'utiliser :** requêtes répétées avec différentes entrées, traitement par lot, création de workflows IA réutilisables, ou tout scénario où la structure du prompt reste la même mais les données changent.
+  
+**Quand l’utiliser :** Requêtes répétées avec différentes entrées, traitement par lots, construction de flux de travail IA réutilisables ou tout scénario où la structure du prompt reste la même mais les données changent.
 
 ---
 
-Ces cinq fondamentaux vous offrent une boîte à outils solide pour la plupart des tâches de prompting. La suite de ce module s’appuie dessus avec **huit schémas avancés** qui exploitent le contrôle du raisonnement, l’auto-évaluation, et les capacités de sortie structurée de GPT-5.2.
+Ces cinq fondamentaux vous donnent une boîte à outils solide pour la plupart des tâches de prompting. Le reste de ce module s’appuie dessus avec **huit schémas avancés** qui exploitent le contrôle du raisonnement, l’auto-évaluation et les capacités de sortie structurée de GPT-5.2.
 
-## Schémas avancés
+## Schémas Avancés
 
-Avec les fondamentaux couverts, passons aux huit schémas avancés qui rendent ce module unique. Tous les problèmes ne nécessitent pas la même approche. Certaines questions appellent des réponses rapides, d’autres des réflexions approfondies. Certaines demandent un raisonnement visible, d’autres seulement des résultats. Chaque schéma ci-dessous est optimisé pour un scénario différent — et le contrôle du raisonnement de GPT-5.2 accentue encore ces différences.
+Avec les fondamentaux en place, passons aux huit schémas avancés qui rendent ce module unique. Tous les problèmes ne nécessitent pas la même approche. Certaines questions demandent des réponses rapides, d’autres une réflexion approfondie. Certaines doivent montrer le raisonnement, d’autres ont juste besoin du résultat. Chaque schéma ci-dessous est optimisé pour un scénario différent — et le contrôle du raisonnement de GPT-5.2 rend ces différences encore plus marquées.
 
-<img src="../../../translated_images/fr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Huit schémas de prompting" width="800"/>
+<img src="../../../translated_images/fr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Huit Schémas de Prompting" width="800"/>
 
-*Vue d'ensemble des huit schémas d'ingénierie des prompts et leurs cas d’usage*
+*Aperçu des huit schémas d’ingénierie des prompts et leurs cas d’usage*
 
-<img src="../../../translated_images/fr/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Contrôle du raisonnement avec GPT-5.2" width="800"/>
+<img src="../../../translated_images/fr/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Contrôle du Raisonnement avec GPT-5.2" width="800"/>
 
-*Le contrôle du raisonnement de GPT-5.2 vous permet de spécifier la quantité de réflexion que doit faire le modèle — des réponses rapides et directes à une exploration approfondie*
+*Le contrôle de raisonnement de GPT-5.2 vous permet de spécifier la quantité de réflexion effectuée par le modèle — des réponses rapides directes à une exploration approfondie*
 
-**Faible empressement (rapide et ciblé)** - Pour les questions simples où vous souhaitez des réponses rapides et directes. Le modèle effectue un raisonnement minimal — maximum 2 étapes. Utilisez cela pour les calculs, recherches, ou questions simples.
+**Faible Implication (Rapide & Ciblé)** - Pour les questions simples où vous voulez des réponses rapides et directes. Le modèle effectue un raisonnement minimal — maximum 2 étapes. Utilisez ceci pour des calculs, recherches ou questions simples.
 
 ```java
 String prompt = """
@@ -201,13 +206,13 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+> 💡 **Explorez avec GitHub Copilot :** Ouvrez [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) et demandez :  
+> - « Quelle est la différence entre les schémas de prompting à faible et haute implication ? »  
+> - « Comment les balises XML dans les prompts aident-elles à structurer la réponse de l’IA ? »  
+> - « Quand devrais-je utiliser les schémas d’autoréflexion vs l’instruction directe ? »
 
-> 💡 **Explorez avec GitHub Copilot :** Ouvrez [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) et demandez :
-> - « Quelle est la différence entre les schémas de prompting à faible et haute empressement ? »
-> - « Comment les balises XML dans les prompts aident-elles à structurer la réponse de l'IA ? »
-> - « Quand devrais-je utiliser les schémas d’auto-réflexion par rapport à l'instruction directe ? »
-
-**Haut empressement (profond et complet)** - Pour les problèmes complexes où vous souhaitez une analyse complète. Le modèle explore en profondeur et montre un raisonnement détaillé. Utilisez cela pour la conception système, décisions d’architecture, ou recherches complexes.
+**Haute Implication (Profond & Approfondi)** - Pour les problèmes complexes où vous voulez une analyse complète. Le modèle explore en profondeur et montre un raisonnement détaillé. Utilisez ce mode pour la conception système, décisions d’architecture ou recherches complexes.
 
 ```java
 String prompt = """
@@ -220,8 +225,8 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
-
-**Exécution de tâche (progression étape par étape)** - Pour les workflows à plusieurs étapes. Le modèle fournit un plan initial, narre chaque étape pendant qu’il travaille, puis donne un résumé. Utilisez cela pour les migrations, implémentations, ou tout processus multi-étapes.
+  
+**Exécution de Tâches (Progression Pas à Pas)** - Pour les workflows multi-étapes. Le modèle fournit un plan initial, narre chaque étape pendant qu’il travaille, puis donne un résumé. Utilisez ceci pour les migrations, implémentations, ou tout processus multi-étapes.
 
 ```java
 String prompt = """
@@ -258,19 +263,19 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+Le prompting en chaîne de raisonnement demande explicitement au modèle de montrer son processus de réflexion, améliorant la précision pour les tâches complexes. La décomposition pas à pas aide humains et IA à comprendre la logique.
 
-Le prompting Chaîne de pensée demande explicitement au modèle de montrer son raisonnement, améliorant la précision sur les tâches complexes. La décomposition étape par étape aide aussi bien les humains que l’IA à comprendre la logique.
+> **🤖 Essayez avec le Chat [GitHub Copilot](https://github.com/features/copilot) :** Posez des questions sur ce schéma :  
+> - « Comment adapterais-je le schéma d’exécution de tâches pour des opérations longues ? »  
+> - « Quelles sont les bonnes pratiques pour structurer les préambules d’outils dans les applications en production ? »  
+> - « Comment capturer et afficher des mises à jour de progrès intermédiaires dans une interface utilisateur ? »
 
-> **🤖 Essayez avec [GitHub Copilot](https://github.com/features/copilot) Chat :** Posez des questions sur ce schéma :
-> - « Comment adapter le schéma d’exécution de tâche pour les opérations longues ? »
-> - « Quelles sont les bonnes pratiques pour structurer les préambules d’outil en production ? »
-> - « Comment capturer et afficher les mises à jour de progression intermédiaires dans une interface utilisateur ? »
+<img src="../../../translated_images/fr/task-execution-pattern.9da3967750ab5c1e.webp" alt="Schéma d’Exécution de Tâche" width="800"/>
 
-<img src="../../../translated_images/fr/task-execution-pattern.9da3967750ab5c1e.webp" alt="Schéma d’exécution de tâche" width="800"/>
+*Flux Planifier → Exécuter → Résumer pour des tâches multi-étapes*
 
-*Planifier → Exécuter → Résumer pour les tâches multi-étapes*
-
-**Code auto-réfléchissant** - Pour générer du code qualité production. Le modèle génère du code respectant les normes de production avec gestion appropriée des erreurs. Utilisez cela pour créer de nouvelles fonctionnalités ou services.
+**Code Auto-réfléchissant** - Pour générer du code de qualité production. Le modèle génère du code respectant les normes de production avec une gestion appropriée des erreurs. Utilisez ce schéma pour créer de nouvelles fonctionnalités ou services.
 
 ```java
 String prompt = """
@@ -280,12 +285,12 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+<img src="../../../translated_images/fr/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Cycle d’Auto-Réflexion" width="800"/>
 
-<img src="../../../translated_images/fr/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Cycle d’auto-réflexion" width="800"/>
+*Boucle d’amélioration itérative — générer, évaluer, identifier les problèmes, améliorer, répéter*
 
-*Boucle d'amélioration itérative - générer, évaluer, identifier les problèmes, améliorer, répéter*
-
-**Analyse structurée** - Pour une évaluation cohérente. Le modèle examine le code en suivant un cadre fixe (correction, pratiques, performance, sécurité, maintenabilité). Utilisez cela pour les revues de code ou évaluations qualité.
+**Analyse Structurée** - Pour évaluation cohérente. Le modèle passe en revue le code selon un cadre fixe (correction, bonnes pratiques, performances, sécurité, maintenabilité). Utilisez ce schéma pour des revues de code ou évaluations qualité.
 
 ```java
 String prompt = """
@@ -332,17 +337,17 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+> **🤖 Essayez avec le Chat [GitHub Copilot](https://github.com/features/copilot) :** Posez des questions sur l’analyse structurée :  
+> - « Comment personnaliser le cadre d’analyse pour différents types de revues de code ? »  
+> - « Quelle est la meilleure méthode pour analyser et agir sur une sortie structurée de façon programmatique ? »  
+> - « Comment garantir la cohérence des niveaux de gravité entre différentes sessions de revue ? »
 
-> **🤖 Essayez avec [GitHub Copilot](https://github.com/features/copilot) Chat :** Posez des questions sur l'analyse structurée :
-> - « Comment personnaliser le cadre d’analyse pour différents types de revues de code ? »
-> - « Quelle est la meilleure façon de parser et d'agir sur la sortie structurée de manière programmatique ? »
-> - « Comment garantir une cohérence des niveaux de gravité entre différentes sessions de revue ? »
-
-<img src="../../../translated_images/fr/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Schéma d’analyse structurée" width="800"/>
+<img src="../../../translated_images/fr/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Schéma d’Analyse Structurée" width="800"/>
 
 *Cadre pour des revues de code cohérentes avec niveaux de gravité*
 
-**Chat multi-tour** - Pour les conversations nécessitant du contexte. Le modèle se souvient des messages précédents et construit dessus. Utilisez cela pour des sessions d’aide interactives ou Q&A complexes.
+**Conversation Multi-Tours** - Pour des échanges nécessitant du contexte. Le modèle se souvient des messages précédents et construit sur ces derniers. Utilisez cela pour des sessions d’aide interactives ou Q&A complexes.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -355,12 +360,12 @@ memory.add(UserMessage.from("Show me an example"));
 AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
+  
+<img src="../../../translated_images/fr/context-memory.dff30ad9fa78832a.webp" alt="Mémoire de Contexte" width="800"/>
 
-<img src="../../../translated_images/fr/context-memory.dff30ad9fa78832a.webp" alt="Mémoire du contexte" width="800"/>
+*Comment le contexte de conversation s’accumule sur plusieurs tours jusqu’à atteindre la limite de tokens*
 
-*Comment le contexte de conversation s’accumule sur plusieurs tours jusqu’à atteindre la limite des tokens*
-
-**Raisonnement étape par étape** - Pour les problèmes exigeant une logique visible. Le modèle montre un raisonnement explicite pour chaque étape. Utilisez cela pour les problèmes mathématiques, énigmes logiques, ou quand vous devez comprendre le processus de réflexion.
+**Raisonnement Pas à Pas** - Pour les problèmes nécessitant une logique visible. Le modèle montre un raisonnement explicite à chaque étape. Utilisez ce schéma pour des problèmes mathématiques, énigmes logiques, ou lorsque vous avez besoin de comprendre le processus de pensée.
 
 ```java
 String prompt = """
@@ -373,12 +378,12 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+<img src="../../../translated_images/fr/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Schéma Pas à Pas" width="800"/>
 
-<img src="../../../translated_images/fr/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Schéma étape par étape" width="800"/>
+*Décomposition des problèmes en étapes logiques explicites*
 
-*Décomposer les problèmes en étapes logiques explicites*
-
-**Sortie contrainte** - Pour des réponses avec des exigences de format spécifiques. Le modèle suit strictement les règles de format et longueur. Utilisez cela pour des résumés ou quand vous avez besoin d’une structure de sortie précise.
+**Sortie Contraintes** - Pour des réponses avec exigences de format spécifiques. Le modèle suit rigoureusement les règles de format et de longueur. Utilisez cela pour des résumés ou lorsque vous avez besoin d’une structure de sortie précise.
 
 ```java
 String prompt = """
@@ -393,38 +398,38 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+  
+<img src="../../../translated_images/fr/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Schéma de Sortie Contraintes" width="800"/>
 
-<img src="../../../translated_images/fr/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Schéma de sortie contrainte" width="800"/>
+*Application stricte de règles de format, longueur et structure*
 
-*Application stricte des exigences de format, longueur et structure*
+## Utilisation des Ressources Azure Existantes
 
-## Utilisation des ressources Azure existantes
+**Vérifier le déploiement :**
 
-**Vérifiez le déploiement :**
-
-Assurez-vous que le fichier `.env` existe à la racine avec les identifiants Azure (créé durant le Module 01) :
+Assurez-vous que le fichier `.env` existe dans le répertoire racine avec les identifiants Azure (créé pendant le Module 01) :  
 ```bash
-cat ../.env  # Doit afficher AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
+  
+**Démarrer l’application :**
 
-**Démarrez l'application :**
-
-> **Note :** Si vous avez déjà démarré toutes les applications avec la commande `./start-all.sh` du Module 01, ce module est déjà en fonctionnement sur le port 8083. Vous pouvez passer les commandes de démarrage ci-dessous et aller directement à http://localhost:8083.
+> **Note :** Si vous avez déjà démarré toutes les applications avec `./start-all.sh` depuis le Module 01, ce module tourne déjà sur le port 8083. Vous pouvez alors ignorer les commandes de démarrage ci-dessous et aller directement sur http://localhost:8083.
 
 **Option 1 : Utilisation du Spring Boot Dashboard (recommandé pour les utilisateurs VS Code)**
-
-Le conteneur de développement inclut l’extension Spring Boot Dashboard, qui fournit une interface visuelle pour gérer toutes les applications Spring Boot. Vous pouvez la trouver dans la barre d’activité à gauche de VS Code (cherchez l'icône Spring Boot).
+Le conteneur de développement inclut l'extension Spring Boot Dashboard, qui fournit une interface visuelle pour gérer toutes les applications Spring Boot. Vous pouvez la trouver dans la barre d’activités sur le côté gauche de VS Code (cherchez l'icône Spring Boot).
 
 Depuis le Spring Boot Dashboard, vous pouvez :
 - Voir toutes les applications Spring Boot disponibles dans l’espace de travail
-- Démarrer/arrêter les applications d’un clic
-- Visualiser les logs des applications en temps réel
+- Démarrer/arrêter les applications en un seul clic
+- Visualiser les journaux des applications en temps réel
 - Surveiller l’état des applications
-Il vous suffit de cliquer sur le bouton de lecture à côté de "prompt-engineering" pour démarrer ce module, ou de lancer tous les modules en même temps.
+
+Il vous suffit de cliquer sur le bouton lecture à côté de « prompt-engineering » pour démarrer ce module, ou de lancer tous les modules en même temps.
 
 <img src="../../../translated_images/fr/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Option 2 : Utilisation des scripts shell**
+**Option 2 : Utilisation de scripts shell**
 
 Démarrer toutes les applications web (modules 01-04) :
 
@@ -440,7 +445,7 @@ cd ..  # Depuis le répertoire racine
 .\start-all.ps1
 ```
 
-Ou ne démarrer que ce module :
+Ou démarrer juste ce module :
 
 **Bash :**
 ```bash
@@ -456,7 +461,7 @@ cd 02-prompt-engineering
 
 Les deux scripts chargent automatiquement les variables d’environnement depuis le fichier `.env` à la racine et construiront les JARs s’ils n’existent pas.
 
-> **Note :** Si vous préférez construire manuellement tous les modules avant de démarrer :
+> **Note :** Si vous préférez compiler tous les modules manuellement avant de lancer :
 >
 > **Bash :**
 > ```bash
@@ -492,65 +497,65 @@ cd ..; .\stop-all.ps1  # Tous les modules
 
 <img src="../../../translated_images/fr/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Le tableau de bord principal affichant les 8 modèles d’ingénierie de prompt avec leurs caractéristiques et cas d’utilisation*
+*Le tableau de bord principal affichant les 8 modèles d’ingénierie de prompt avec leurs caractéristiques et cas d’usage*
 
-## Exploration des modèles
+## Explorer les modèles
 
-L’interface web vous permet d’expérimenter différentes stratégies de prompt. Chaque modèle résout différents problèmes – essayez-les pour voir à quel moment chaque approche brille.
+L’interface web vous permet d’expérimenter différentes stratégies de prompt. Chaque modèle résout des problèmes différents – essayez-les pour voir dans quels cas chaque approche brille.
 
-> **Note : Streaming vs Non-Streaming** — Chaque page de modèle propose deux boutons : **🔴 Stream Response (Live)** et une option **Non-streaming**. Le streaming utilise les Server-Sent Events (SSE) pour afficher les tokens en temps réel au fur et à mesure que le modèle les génère, vous voyez donc le progrès immédiatement. L’option non-streaming attend la réponse complète avant de l’afficher. Pour les prompts qui déclenchent un raisonnement approfondi (ex : High Eagerness, Code auto-réfléchi), l’appel non-streaming peut prendre très longtemps – parfois plusieurs minutes – sans retour visible. **Utilisez le streaming lors d’expérimentations avec des prompts complexes** afin de voir le modèle travailler et éviter de penser que la requête a expiré.
+> **Note : Streaming vs Non-Streaming** — Chaque page de modèle propose deux boutons : **🔴 Stream Response (Live)** et une option **Non-streaming**. Le streaming utilise les Server-Sent Events (SSE) pour afficher les jetons en temps réel pendant que le modèle les génère, vous permettant de voir la progression immédiatement. L’option non-streaming attend la réponse complète avant de l’afficher. Pour des prompts qui déclenchent un raisonnement profond (par exemple, High Eagerness, Self-Reflecting Code), l’appel non-streaming peut prendre très longtemps – parfois des minutes – sans aucun retour visible. **Utilisez le streaming lors de l’expérimentation avec des prompts complexes** pour voir le modèle en action et éviter de penser que la requête a expiré.
 >
-> **Note : Navigateur requis** — La fonctionnalité streaming utilise l’API Fetch Streams (`response.body.getReader()`) qui nécessite un navigateur complet (Chrome, Edge, Firefox, Safari). Elle ne fonctionne **pas** dans le Simple Browser intégré de VS Code, car sa webview ne supporte pas l’API ReadableStream. Si vous utilisez le Simple Browser, les boutons non-streaming fonctionneront normalement – seuls les boutons streaming sont impactés. Ouvrez `http://localhost:8083` dans un navigateur externe pour une expérience complète.
+> **Note : Exigence du navigateur** — La fonctionnalité de streaming utilise l’API Fetch Streams (`response.body.getReader()`) qui requiert un navigateur complet (Chrome, Edge, Firefox, Safari). Elle ne fonctionne **pas** dans le navigateur Simple Browser intégré à VS Code, car sa webview ne supporte pas l’API ReadableStream. Si vous utilisez le Simple Browser, les boutons non-streaming fonctionneront normalement – seuls les boutons de streaming sont affectés. Ouvrez `http://localhost:8083` dans un navigateur externe pour une expérience complète.
 
-### Faible vs Forte implication (Eagerness)
+### Faible vs Forte énergie (Eagerness)
 
-Posez une question simple comme « Quel est 15 % de 200 ? » avec Faible Implication. Vous obtiendrez une réponse instantanée et directe. Maintenant, posez une question complexe comme « Concevez une stratégie de mise en cache pour une API à fort trafic » avec Forte Implication. Cliquez sur **🔴 Stream Response (Live)** et regardez le raisonnement détaillé du modèle s’afficher token par token. Même modèle, même structure de question – mais le prompt lui indique combien de réflexion faire.
+Posez une question simple comme « Quelle est 15 % de 200 ? » avec Faible énergie. Vous obtiendrez une réponse directe et instantanée. Maintenant posez une question complexe comme « Concevez une stratégie de mise en cache pour une API à fort trafic » avec Forte énergie. Cliquez sur **🔴 Stream Response (Live)** et regardez le raisonnement détaillé du modèle apparaître jeton par jeton. Même modèle, même structure de question – mais le prompt lui dit combien de réflexion appliquer.
 
-### Exécution de tâche (Préambules d’outil)
+### Exécution de tâches (Préambules d’outils)
 
-Les workflows à étapes multiples bénéficient d’une planification préalable et d’une narration du progrès. Le modèle décrit ce qu’il va faire, raconte chaque étape, puis résume les résultats.
+Les workflows en plusieurs étapes bénéficient d’une planification préalable et d’une narration des progrès. Le modèle décrit ce qu’il va faire, narre chaque étape, puis résume les résultats.
 
-### Code auto-réfléchi
+### Code à auto-réflexion
 
-Essayez « Créez un service de validation d’email ». Au lieu de simplement générer du code et s’arrêter, le modèle génère, évalue selon des critères de qualité, identifie les faiblesses, puis améliore. Vous le verrez itérer jusqu’à ce que le code respecte les standards de production.
+Essayez « Créez un service de validation d’email ». Au lieu de simplement générer du code et s’arrêter, le modèle génère, évalue selon des critères de qualité, identifie des faiblesses, et améliore. Vous le verrez itérer jusqu’à ce que le code réponde aux standards de production.
 
 ### Analyse structurée
 
-Les revues de code nécessitent des cadres d’évaluation cohérents. Le modèle analyse le code selon des catégories fixes (justesse, bonnes pratiques, performance, sécurité) avec des niveaux de gravité.
+Les revues de code nécessitent des cadres d’évaluation cohérents. Le modèle analyse le code selon des catégories fixes (justesse, pratiques, performance, sécurité) avec des niveaux de gravité.
 
-### Discussion multi-tours
+### Chat multi-tour
 
-Demandez « Qu’est-ce que Spring Boot ? » puis enchaînez immédiatement avec « Montrez-moi un exemple ». Le modèle se souvient de votre première question et vous fournit un exemple Spring Boot spécifique. Sans mémoire, la deuxième question serait trop vague.
+Demandez « Qu’est-ce que Spring Boot ? » puis enchaînez immédiatement avec « Montre-moi un exemple ». Le modèle se rappelle de votre première question et vous donne un exemple Spring Boot spécifique. Sans mémoire, cette deuxième question serait trop vague.
 
-### Raisonnement étape par étape
+### Raisonnement pas à pas
 
-Choisissez un problème mathématique et essayez-le avec Raisonnement étape par étape et Faible Implication. Faible implication vous donne juste la réponse – rapide mais opaque. Le raisonnement étape par étape vous montre chaque calcul et décision.
+Choisissez un problème mathématique et essayez-le avec Raisonnement pas à pas et Faible énergie. Faible énergie vous donne juste la réponse – rapide mais opaque. Le raisonnement pas à pas vous montre chaque calcul et décision.
 
 ### Sortie contrainte
 
-Quand vous avez besoin de formats ou de comptes de mots précis, ce modèle impose une stricte conformité. Essayez de générer un résumé avec exactement 100 mots sous forme de points.
+Lorsque vous avez besoin de formats ou de compte de mots spécifiques, ce modèle impose un strict respect. Essayez de générer un résumé avec exactement 100 mots sous forme de points.
 
 ## Ce que vous apprenez vraiment
 
 **L’effort de raisonnement change tout**
 
-GPT-5.2 vous permet de contrôler l’effort de calcul via vos prompts. Faible effort signifie des réponses rapides avec une exploration minimale. Fort effort signifie que le modèle prend du temps pour réfléchir profondément. Vous apprenez à adapter l’effort à la complexité de la tâche – ne perdez pas de temps sur des questions simples, mais ne vous précipitez pas non plus pour des décisions complexes.
+GPT-5.2 vous permet de contrôler l’effort computationnel via vos prompts. Un faible effort signifie des réponses rapides avec une exploration minimale. Un effort élevé signifie que le modèle prend du temps pour réfléchir en profondeur. Vous apprenez à adapter l’effort à la complexité de la tâche – ne perdez pas de temps sur des questions simples, mais ne précipitez pas les décisions complexes non plus.
 
 **La structure guide le comportement**
 
-Vous avez remarqué les balises XML dans les prompts ? Elles ne sont pas décoratives. Les modèles suivent des instructions structurées plus efficacement que du texte libre. Lorsque vous avez besoin de processus multi-étapes ou de logique complexe, la structure aide le modèle à suivre où il en est et ce qui vient ensuite.
+Vous remarquez les balises XML dans les prompts ? Elles ne sont pas décoratives. Les modèles suivent des instructions structurées plus fiablement que du texte libre. Quand vous avez besoin de processus multi-étapes ou de logique complexe, la structure aide le modèle à suivre où il en est et ce qui vient ensuite.
 
 <img src="../../../translated_images/fr/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomie d’un prompt bien structuré avec des sections claires et une organisation de type XML*
+*Anatomie d’un prompt bien structuré avec des sections claires et une organisation de style XML*
 
 **Qualité par auto-évaluation**
 
-Les modèles auto-réfléchissants fonctionnent en rendant explicites les critères de qualité. Au lieu d’espérer que le modèle « fasse bien », vous lui dites exactement ce que signifie « bien » : logique correcte, gestion des erreurs, performance, sécurité. Le modèle peut alors évaluer sa propre sortie et s’améliorer. Cela transforme la génération de code en un processus contrôlé.
+Les modèles auto-réfléchissants fonctionnent en rendant explicites les critères de qualité. Au lieu d’espérer que le modèle « fasse bien », vous lui dites exactement ce que « bien » signifie : logique correcte, gestion des erreurs, performance, sécurité. Le modèle peut alors évaluer sa propre sortie et s’améliorer. Cela transforme la génération de code en un processus au lieu d’une loterie.
 
 **Le contexte est fini**
 
-Les conversations multi-tours fonctionnent en incluant l’historique des messages à chaque requête. Mais il y a une limite – chaque modèle possède un nombre maximal de tokens. À mesure que les conversations grandissent, vous devrez adopter des stratégies pour conserver un contexte pertinent sans dépasser ce plafond. Ce module vous montre comment fonctionne la mémoire ; plus tard, vous apprendrez quand résumer, quand oublier, et quand récupérer.
+Les conversations multi-tours fonctionnent en incluant l’historique des messages à chaque requête. Mais il y a une limite – chaque modèle a un nombre maximal de jetons. À mesure que les conversations grandissent, vous aurez besoin de stratégies pour garder le contexte pertinent sans atteindre ce plafond. Ce module vous montre comment la mémoire fonctionne ; plus tard vous apprendrez quand résumer, quand oublier, et quand récupérer.
 
 ## Prochaines étapes
 
@@ -564,5 +569,5 @@ Les conversations multi-tours fonctionnent en incluant l’historique des messag
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Avertissement** :  
-Ce document a été traduit à l’aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer l’exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue d’origine doit être considéré comme la source faisant autorité. Pour les informations critiques, il est recommandé de recourir à une traduction professionnelle réalisée par un humain. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l’utilisation de cette traduction.
+Ce document a été traduit à l’aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer la précision, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue d’origine doit être considéré comme la source officielle. Pour les informations critiques, une traduction professionnelle humaine est recommandée. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l’utilisation de cette traduction.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

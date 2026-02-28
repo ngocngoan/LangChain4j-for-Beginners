@@ -2,49 +2,55 @@
 
 ## Table of Contents
 
-- [Wetyn You Go Learn](../../../05-mcp)
-- [Wetyn Be MCP?](../../../05-mcp)
-- [How MCP Dey Work](../../../05-mcp)
-- [The Agentic Module](../../../05-mcp)
-- [How To Run The Examples Dem](../../../05-mcp)
-  - [Wetyn You Gotta Get Before](../../../05-mcp)
+- [Wet you go learn](../../../05-mcp)
+- [Wetin be MCP?](../../../05-mcp)
+- [How MCP dey work](../../../05-mcp)
+- [Di Agentic Module](../../../05-mcp)
+- [How to Run Di Examples](../../../05-mcp)
+  - [Wet you need first](../../../05-mcp)
 - [Quick Start](../../../05-mcp)
   - [File Operations (Stdio)](../../../05-mcp)
   - [Supervisor Agent](../../../05-mcp)
-    - [How To Understand The Output](../../../05-mcp)
+    - [How to Run Di Demo](../../../05-mcp)
+    - [How di Supervisor dey work](../../../05-mcp)
     - [Response Strategies](../../../05-mcp)
-    - [Explanation of Agentic Module Features](../../../05-mcp)
+    - [How to Understand di Output](../../../05-mcp)
+    - [Explanation of di Agentic Module Features](../../../05-mcp)
 - [Key Concepts](../../../05-mcp)
 - [Congrats!](../../../05-mcp)
-  - [Wetyn Next?](../../../05-mcp)
+  - [Wetin you go do next?](../../../05-mcp)
 
-## Wetyn You Go Learn
+## Wet you go learn
 
-You don already build conversational AI, sabi prompts well, fit ground responses for documents, and create agents wey sabi use tools. But all those tools dem na custom-build for your own application. Wetin if you fit give your AI access to one kind standardized ecosystem of tools wey anybody fit create and share? For this module, you go learn how to fit do am with the Model Context Protocol (MCP) and LangChain4j agentic module. First, we go show simple MCP file reader then show how e dey join advanced agentic workflows sharp sharp with Supervisor Agent pattern.
+You don build conversational AI, sabi prompts well, fit base responses for documents, and create agents wey get tools. But na custom tools you use build am for your application only. Wetin if you fit give your AI access to one kain standard ecosystem of tools wey anybody fit create and share? For this module, you go learn how to do just that with Model Context Protocol (MCP) plus LangChain4j agentic module. We go first show simple MCP file reader then show how e easy to join am inside advanced agentic workflows with Supervisor Agent pattern.
 
-## Wetyn Be MCP?
+## Wetin be MCP?
 
-The Model Context Protocol (MCP) na exactly dis kain thing - one standard way for AI applications to discover and use external tools. Instead make you go write custom integration for each data source or service, you go connect to MCP servers wey dey show their capabilities for one uniform way. Your AI agent go fit discover and use those tools automatically.
+Model Context Protocol (MCP) na exactly dat – e be standard way for AI applications to find and use outside tools. Instead make you write custom integration for every data source or service, you go connect to MCP servers wey show their abilities for one kain consistent format. Your AI agent fit then discover and use those tools automatically.
 
 <img src="../../../translated_images/pcm/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
 *Before MCP: Complex point-to-point integrations. After MCP: One protocol, endless possibilities.*
 
-MCP solve one big kasala for AI development: every integration na custom work. You want access GitHub? You go write custom code. You want read files? Custom code again. You want query database? Custom code too. And none of these integration dem fit work with other AI applications.
+MCP solve one fundamental wahala for AI development: every integration na custom. You want access GitHub? Custom code. You want read files? Custom code. You want query database? Custom code. And none of these integration fit work with other AI applications.
 
-MCP make am standardized. One MCP server go show tools with clear description and schema. Any MCP client fit connect, find tools wey dey, and use am. Build once, use everywhere.
+MCP standardize am. MCP server dey expose tools with clear description and schemas. Any MCP client fit connect, find available tools, and use dem. Build once, use everywhere.
 
 <img src="../../../translated_images/pcm/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
 *Model Context Protocol architecture - standardized tool discovery and execution*
 
-## How MCP Dey Work
+## How MCP dey work
+
+<img src="../../../translated_images/pcm/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
+
+*How MCP dey work under di hood — clients find tools, exchange JSON-RPC messages, and run operations through one transport layer.*
 
 **Server-Client Architecture**
 
-MCP dey use client-server model. Servers dey provide tools - dey read files, query databases, call APIs. Clients (your AI application) go connect to servers and use their tools.
+MCP dey use client-server model. Servers dey give tools - reading files, querying databases, calling APIs. Clients (na your AI application) go connect to servers and use their tools.
 
-To use MCP with LangChain4j, add dis Maven dependency:
+To use MCP with LangChain4j, add this Maven dependency:
 
 ```xml
 <dependency>
@@ -56,11 +62,15 @@ To use MCP with LangChain4j, add dis Maven dependency:
 
 **Tool Discovery**
 
-When your client connect to MCP server, e go ask "Which tools you get?" Server go respond with list of tools wey dey available, each get description and parameter schema. Your AI agent fit decide which tools e go use based on wetin user ask.
+When your client connect MCP server, e go ask "Wetin tools you get?" Server go answer with list of available tools, each get description and parameter schemas. Your AI agent fit decide which tools to use based on user requests.
+
+<img src="../../../translated_images/pcm/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
+
+*AI find available tools at startup — e don sabi wetin tools dey there and fit choose which one to use.*
 
 **Transport Mechanisms**
 
-MCP fit use different transport mechanism. This module show Stdio transport for local processes:
+MCP support different transport mechanism dem. This module show Stdio transport for local processes:
 
 <img src="../../../translated_images/pcm/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
@@ -68,7 +78,7 @@ MCP fit use different transport mechanism. This module show Stdio transport for 
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Na for local processes. Your application go spawn server as subprocess and dey communicate through standard input/output. E good for filesystem access or command-line tools.
+Na for local processes. Your app go spawn server as subprocess and communicate through standard input/output. Good for filesystem access or command-line tools.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -81,16 +91,20 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
+<img src="../../../translated_images/pcm/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
+
+*Stdio transport dey waka — your app go spawn MCP server as child process and communicate through stdin/stdout pipes.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) and ask:
-> - "How Stdio transport dey work and wen I suppose use am instead of HTTP?"
-> - "How LangChain4j dey manage life cycle of spawned MCP server processes?"
-> - "Wetin be the security things wey I suppose consider before I give AI access to my file system?"
+> - "How Stdio transport dey work and when I suppose use am instead of HTTP?"
+> - "How LangChain4j dey manage lifecycle of spawned MCP server processes?"
+> - "Wetin be the security risk for giving AI access to file system?"
 
 ## The Agentic Module
 
-Even though MCP dey provide standardized tools, LangChain4j **agentic module** dey give declarative way to build agents wey fit orchestrate those tools. The `@Agent` annotation and `AgenticServices` dey allow you to define agent behavior using interfaces, no be imperative code.
+Even though MCP dey provide standardized tools, LangChain4j's **agentic module** dey provide one kind declarative way to build agents wey go control those tools. The `@Agent` annotation and `AgenticServices` make you fit define agent behavior with interfaces instead of imperative code.
 
-For this module, you go check **Supervisor Agent** pattern — na advanced agentic AI approach wey one "supervisor" agent dey decide dynamically which sub-agents to call based on wetin user wan do. We go join both concepts by giving one of our sub-agents MCP-powered file access power.
+For this module, you go explore **Supervisor Agent** pattern — advanced agentic AI way wey "supervisor" agent dey dynamically decide which sub-agents to call based on user requests. We go join both ideas by giving one of our sub-agents MCP-powered file access powers.
 
 To use agentic module, add this Maven dependency:
 
@@ -102,34 +116,34 @@ To use agentic module, add this Maven dependency:
 </dependency>
 ```
 
-> **⚠️ Experimental:** `langchain4j-agentic` module still dey experimental and e fit change. The stable way to build AI assistants still be `langchain4j-core` with custom tools (Module 04).
+> **⚠️ Experimental:** The `langchain4j-agentic` module still **experimental** and fit change. The stable way to build AI assistant still na `langchain4j-core` with custom tools (Module 04).
 
-## How To Run The Examples
+## How to Run Di Examples
 
-### Wetyn You Gotta Get Before
+### Wet you need first
 
 - Java 21+, Maven 3.9+
 - Node.js 16+ and npm (for MCP servers)
-- Environment variables set for `.env` file (from root directory):
-  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (same like Modules 01-04)
+- Environment variables dem set inside `.env` file (from root directory):
+  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (like Modules 01-04)
 
-> **Note:** If you never set your environment variables, check [Module 00 - Quick Start](../00-quick-start/README.md) for instructions, or copy `.env.example` to `.env` from root directory and fill am properly.
+> **Note:** If you never set your environment variables yet, check [Module 00 - Quick Start](../00-quick-start/README.md) for how-to, or copy `.env.example` go `.env` for root and put your values.
 
 ## Quick Start
 
-**If You dey Use VS Code:** Just right-click any demo file inside Explorer and choose **"Run Java"**, or use the launch configurations inside Run and Debug panel (make sure say you don put your token inside `.env` file first).
+**If you dey use VS Code:** Just right-click demo file for Explorer and choose **"Run Java"**, or use launch configurations pick from Run and Debug panel (make sure you don add your token to `.env` file first).
 
-**If You dey Use Maven:** You fit still run from command line with examples wey dey below.
+**If you dey use Maven:** You fit also run from command line with examples below.
 
 ### File Operations (Stdio)
 
-This one dey show local subprocess-based tools.
+This one show local subprocess-based tools.
 
-**✅ No prerequisites necessary** - MCP server go spawn by itself.
+**✅ No prerequisite needed** - MCP server go spawn automatically.
 
-**Using Start Scripts (Recommended):**
+**Using the Start Scripts (Recommended):**
 
-Start scripts go automatically load environment variables from root `.env` file:
+Start scripts go automatically add environment variables from root `.env`:
 
 **Bash:**
 ```bash
@@ -144,9 +158,9 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
-**Using VS Code:** Right-click on `StdioTransportDemo.java` and choose **"Run Java"** (make sure your `.env` file correct).
+**Using VS Code:** Right click `StdioTransportDemo.java` and select **"Run Java"** (make sure `.env` file well configured).
 
-The application go spawn MCP filesystem server automatically and read one local file. Look how the subprocess management dey work for you.
+App go spawn filesystem MCP server automatically and read local file. See how subprocess management dey handled for you.
 
 **Expected output:**
 ```
@@ -156,26 +170,25 @@ for integrating Large Language Models (LLMs) into Java applications...
 
 ### Supervisor Agent
 
-The **Supervisor Agent pattern** na **flexible** kind agentic AI. Supervisor go use LLM to decide on him own which agents to call based on wetin user request. For next example, we go join MCP-powered file access with LLM agent to do supervised file read → report workflow.
+The **Supervisor Agent pattern** na **flexible** form of agentic AI. Supervisor dey use LLM to decide anyhow which agents dem go call based on user request. For next example, we combine MCP-powered file access with LLM agent to create supervised file read → report workflow.
 
-For demo, `FileAgent` go read file using MCP filesystem tools, `ReportAgent` go create structured report with executive summary (1 sentence), 3 key points, and recommendations. Supervisor go dey run dis flow na him self:
+For demo, `FileAgent` go read file with MCP filesystem tools, and `ReportAgent` go make structured report with executive summary (1 sentence), 3 main points, and recommendations. Supervisor go arrange this flow automatic:
 
-<img src="../../../translated_images/pcm/agentic.cf84dcda226374e3.webp" alt="Agentic Module" width="800"/>
+<img src="../../../translated_images/pcm/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-```
-┌─────────────┐      ┌──────────────┐
-│  FileAgent  │ ───▶ │ ReportAgent  │
-│ (MCP tools) │      │  (pure LLM)  │
-└─────────────┘      └──────────────┘
-   outputKey:           outputKey:
-  'fileContent'         'report'
-```
+*Supervisor dey use im LLM to decide which agents to call and in which order — no hardcoded routing needed.*
 
-Each agent dey save their output inside **Agentic Scope** (shared memory), so downstream agents fit access previous results. This one show how MCP tools fit join agentic workflows well well — Supervisor no need know *how* file dem dey read, e just need know say `FileAgent` fit do am.
+Dis na how the pipeline file-to-report flow go look like:
 
-#### How To Run The Demo
+<img src="../../../translated_images/pcm/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
-Start scripts go load environment variables from root `.env` file automatically:
+*FileAgent read file via MCP tools, then ReportAgent turn raw content to structured report.*
+
+Every agent go store their output for **Agentic Scope** (shared memory), make downstream agents fit read previous result. Dis show how MCP tools fit joint properly inside agentic workflows — Supervisor no need sabi *how* files dey read, just know say `FileAgent` fit do am.
+
+#### How to Run Di Demo
+
+Start scripts go automatically load environment variables from root `.env`:
 
 **Bash:**
 ```bash
@@ -190,18 +203,18 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
-**Using VS Code:** Right-click `SupervisorAgentDemo.java` and select **"Run Java"** (make sure `.env` file set well).
+**Using VS Code:** Right click `SupervisorAgentDemo.java` and choose **"Run Java"** (make sure `.env` file configured).
 
-#### How The Supervisor Dey Work
+#### How di Supervisor dey work
 
 ```java
-// Step 1: FileAgent go read files with MCP tools
+// Step 1: FileAgent dey read files wit MCP tools
 FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .chatModel(model)
         .toolProvider(mcpToolProvider)  // Get MCP tools for file operations
         .build();
 
-// Step 2: ReportAgent go generate structured reports
+// Step 2: ReportAgent dey generate structured reports
 ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
@@ -213,30 +226,36 @@ SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .responseStrategy(SupervisorResponseStrategy.LAST)  // Return the final report
         .build();
 
-// The Supervisor go decide which agents to call based on the request
+// The Supervisor go decide which agents to call based on di request
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
 #### Response Strategies
 
-When you set up `SupervisorAgent`, you go tell am how e suppose form final answer for user after the sub-agents don finish their work. The strategies wey dey are:
+When you set `SupervisorAgent`, you go talk how e go formulate final answer for user after sub-agents finish their work.
+
+<img src="../../../translated_images/pcm/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
+
+*Three ways how Supervisor fit take formulate final response — choose based on if you want last agent output, summary, or best scored option.*
+
+Strategies wey dey:
 
 | Strategy | Description |
 |----------|-------------|
-| **LAST** | Supervisor go bring output from the last sub-agent or tool wey e call. This good when the final agent for workflow na the one wey dem design specially to produce the complete, final answer (like "Summary Agent" for research pipeline). |
-| **SUMMARY** | Supervisor go use im own internal Language Model (LLM) to synthesize summary of the whole interaction and all sub-agent outputs, then e go return that summary as the final answer. This one dey give clean, combined answer to user. |
-| **SCORED** | System go use internal LLM to score both LAST response and SUMMARY of interaction against original user request, then e go return the output wey get higher score. |
+| **LAST** | Supervisor go return output from last sub-agent or tool wey e call. Use am if last agent for workflow na the one wey dem design to produce full final answer (like "Summary Agent" for research pipeline). |
+| **SUMMARY** | Supervisor go use im own Language Model (LLM) to combine summary of all interaction and sub-agent outputs, then give that summary as final response. E make answer dey clean and combined for user. |
+| **SCORED** | System go use internal LLM to score LAST response and SUMMARY of interaction against original user request, then return the one wey get higher score. |
 
 See [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) for full implementation.
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) and ask:
-> - "How Supervisor dey decide which agents to invoke?"
-> - "Wetin be difference between Supervisor and Sequential workflow patterns?"
-> - "How I fit customize Supervisor planning behavior?"
+> - "How Supervisor dey decide which agents to call?"
+> - "What's di difference between Supervisor and Sequential workflow patterns?"
+> - "How I fit customize Supervisor's planning behavior?"
 
-#### How To Understand The Output
+#### How to Understand di Output
 
-When you run the demo, you go see how Supervisor dey organize multiple agents. Here na wetin each section mean:
+When you run the demo, you go see structured walkthrough how Supervisor dey arrange many agents. This na the meaning of every section:
 
 ```
 ======================================================================
@@ -247,7 +266,7 @@ This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
 
-**The header** dey introduce workflow idea: pipeline wey focus from file reading to report generation.
+**The header** dey introduce workflow concept: focused pipeline from file reading to report making.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -263,9 +282,9 @@ The Supervisor orchestrates the agents automatically based on the request.
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
 
-**Workflow Diagram** dey show how data dey flow between agents. Each agent get specific role:
-- **FileAgent** dey read files using MCP tools and dey keep raw content for `fileContent`
-- **ReportAgent** go use that content and produce structured report for `report`
+**Workflow Diagram** dey show how data flow between agents. Every agent get specific role:
+- **FileAgent** dey read files with MCP tools and store raw content for `fileContent`
+- **ReportAgent** go use dat content and produce structured report for `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
@@ -293,11 +312,11 @@ The Supervisor orchestrates the agents automatically based on the request.
   +-- [OK] ReportAgent (generating structured report) completed
 ```
 
-**Supervisor Orchestration** dey show the 2-step flow for action:
-1. **FileAgent** dey read file via MCP and keep content
-2. **ReportAgent** go get content and generate structured report
+**Supervisor Orchestration** dey show 2-step flow for action:
+1. **FileAgent** read file via MCP and store content
+2. **ReportAgent** receive content and make structured report
 
-Supervisor do all these decisions **autonomously** based on user request.
+Supervisor na im decide all this **on im own** based on user request.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -316,14 +335,18 @@ Recommendations
   * report: Executive Summary...
 ```
 
-#### Explanation of Agentic Module Features
+#### Explanation of di Agentic Module Features
 
-The example show several advanced features of agentic module. Make we look closer at Agentic Scope and Agent Listeners.
+This example dey show some advanced features of agentic module. Make we check Agentic Scope and Agent Listeners.
 
-**Agentic Scope** na the shared memory where agents store their results using `@Agent(outputKey="...")`. This one allow:
-- Later agents fit access outputs from earlier agents
-- Supervisor fit synthesize final response
-- You fit inspect wetin each agent produce
+**Agentic Scope** na shared memory where agents store their results using `@Agent(outputKey="...")`. E allow:
+- Later agents to access results from earlier agents
+- Supervisor to create final summarized response
+- You fit check wetin each agent produce
+
+<img src="../../../translated_images/pcm/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
+
+*Agentic Scope na like shared memory — FileAgent dey write `fileContent`, ReportAgent dey read am and write `report`, your code go read final output.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
@@ -332,10 +355,15 @@ String fileContent = scope.readState("fileContent");  // Raw file data from File
 String report = scope.readState("report");            // Structured report from ReportAgent
 ```
 
-**Agent Listeners** dey allow monitoring and debugging of agent execution. The step-by-step output you dey see for demo na from AgentListener wey attach for each agent invocation:
-- **beforeAgentInvocation** - Call when Supervisor pick agent, so you fit see which agent e select and why
-- **afterAgentInvocation** - Call as agent finish work, showing result
-- **inheritedBySubagents** - If true, listener dey monitor all agents inside hierarchy
+**Agent Listeners** make monitoring and debugging agent execution easy. Step-by-step output you dey see for demo na from AgentListener wey dey hook into every agent call:
+
+- **beforeAgentInvocation** - Dem go call am when Supervisor select agent, e dey let you see which agent dem choose and why
+- **afterAgentInvocation** - Dem go call am when agent don finish, e dey show di result
+- **inheritedBySubagents** - If true, di listener go monitor all agents for di hierarchy
+
+<img src="../../../translated_images/pcm/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
+
+*Agent Listeners dey hook join di execution lifecycle — dem dey monitor when agents start, finish, or when dem get error.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -354,50 +382,67 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Carry am go all sub-agents dem
+        return true; // Make e spread go all sub-agents dem
     }
 };
 ```
+  
+Beyond di Supervisor pattern, di `langchain4j-agentic` module get plenty strong workflow patterns and features:
 
-Beyond Supervisor pattern, `langchain4j-agentic` module get plenty powerful workflow patterns and features:
+<img src="../../../translated_images/pcm/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
+
+*Five workflow patterns for how to manage agents — from simple order waka pipelines go reach human-in-the-loop approval workflows.*
 
 | Pattern | Description | Use Case |
 |---------|-------------|----------|
-| **Sequential** | Run agents one one, output go flow to next | Pipelines: research → analyze → report |
-| **Parallel** | Run agents for the same time | Independent tasks: weather + news + stocks |
-| **Loop** | Repeat until condition meet | Quality scoring: refine until score ≥ 0.8 |
-| **Conditional** | Route based on conditions | Classify → send to specialist agent |
+| **Sequential** | Make agents run one after the other, output go follow enter the next | Pipelines: research → analyze → report |
+| **Parallel** | Make agents run at the same time | Independent tasks: weather + news + stocks |
+| **Loop** | Run again and again till condition satisfy | Quality scoring: keep improve till score reach ≥ 0.8 |
+| **Conditional** | Make decision based on condition | Classify → send to specialist agent |
 | **Human-in-the-Loop** | Add human checkpoints | Approval workflows, content review |
 
 ## Key Concepts
 
-Now we don check MCP and agentic module for action, make we summarize when you suppose use each.
+Now wey you don explore MCP and di agentic module for use, make we summarize when you go use each approach.
 
-**MCP** good when you wan use existing tool ecosystems, build tools wey multiple applications fit share, integrate third-party services wit standard protocols, or fit change tool implementation without changing code.
+<img src="../../../translated_images/pcm/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
 
-**The Agentic Module** best when you want declarative agent definitions with `@Agent` annotations, need to orchestrate workflow (sequential, loop, parallel), prefer interface-based agent design over imperative code, or you dey combine multiple agents wey dey share outputs via `outputKey`.
+*MCP dey create universal protocol ecosystem — any MCP-compatible server fit work with any MCP-compatible client, make e easy to share tools across different apps.*
 
-**The Supervisor Agent pattern** sharp when workflow no too clear beforehand and you want LLM make decision, when you get many specialized agents wey need dynamic orchestration, when you dey build conversational systems wey route to different capabilities, or when you want most flexible and adaptive agent behavior.
+**MCP** good when you want use existing tool ecosystem, build tools wey plenty apps fit share, join third-party services with standard protocols, or change tool implementation without to change code.
+
+**The Agentic Module** dey best when you want declarative agent definitions with `@Agent` annotations, need workflow orchestration (sequential, loop, parallel), prefer interface-based agent design pass imperative code, or you dey join many agents wey dey share output through `outputKey`.
+
+**The Supervisor Agent pattern** dey shine when workflow no too predictable before hand and you want make LLM decide, when you get many specialized agents wey need dynamic orchestration, when you dey build conversational systems wey route to different capabilities, or when you want flexible and adaptive agent behavior.
+
+<img src="../../../translated_images/pcm/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
+
+*When to use custom @Tool methods vs MCP tools — custom tools good for app-specific logic with full type safety, MCP tools good for standard integrations wey fit work across apps.*
+
 ## Congratulations!
 
-You don complete LangChain4j for Beginners course. You don learn:
+<img src="../../../translated_images/pcm/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
 
-- How to build conversational AI with memory (Module 01)
+*You don complete learning journey through all five modules — from basic chat go MCP-powered agentic systems.*
+
+You don finish di LangChain4j for Beginners course. You don sabi:
+
+- How to build conversational AI wey get memory (Module 01)
 - Prompt engineering patterns for different tasks (Module 02)
-- Grounding responses inside your documents with RAG (Module 03)
-- Creating basic AI agents (assistants) with custom tools (Module 04)
-- Integrating standardized tools with the LangChain4j MCP and Agentic modules (Module 05)
+- How to ground responses inside your documents with RAG (Module 03)
+- How to create basic AI agents (assistants) with custom tools (Module 04)
+- How to join standardized tools with LangChain4j MCP and Agentic modules (Module 05)
 
 ### Wetin Next?
 
-After you finish the modules, try the [Testing Guide](../docs/TESTING.md) to see LangChain4j testing ideas in action.
+After you don finish all modules, try check the [Testing Guide](../docs/TESTING.md) to see LangChain4j testing concepts for action.
 
-**Official Resources:**
-- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Complete guides and API reference
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for different use cases
+**Official Resources:**  
+- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Complete guides and API reference  
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples  
+- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for many kinds use cases  
 
-Thank you for completing this course!
+Thank you for finishing this course!
 
 ---
 
@@ -406,6 +451,6 @@ Thank you for completing this course!
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:  
-Dis dokument don translate wit AI translation service wey dem call [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we dey try make am correct, abeg note say automated translation fit get some mistakes or no too correct. Di original dokument wey dey im own language na im get correct tori. If na serious matter, make person use professional human translator. We no go responsible if person wey use dis translation waka enter wrong understanding or misinterpret am.
+**Warning**:
+Dis document don translate wit AI translation service wey dem dey call [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we dey try make am correct, abeg remember say automated translation fit get some mistakes or no too correct. Di original document wey e dey for inside dia own language na di real source. If na serious info, e good make human professional translate am. We no go responsible for any misunderstanding or wrong sense wey fit come from using dis translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

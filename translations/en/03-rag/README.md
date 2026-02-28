@@ -2,9 +2,11 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../03-rag)
 - [What You'll Learn](../../../03-rag)
-- [Understanding RAG](../../../03-rag)
 - [Prerequisites](../../../03-rag)
+- [Understanding RAG](../../../03-rag)
+  - [Which RAG Approach Does This Tutorial Use?](../../../03-rag)
 - [How It Works](../../../03-rag)
   - [Document Processing](../../../03-rag)
   - [Creating Embeddings](../../../03-rag)
@@ -24,6 +26,10 @@
 - [When RAG Matters](../../../03-rag)
 - [Next Steps](../../../03-rag)
 
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+
 ## What You'll Learn
 
 In the previous modules, you learned how to have conversations with AI and structure your prompts effectively. But there's a fundamental limitation: language models only know what they learned during training. They can't answer questions about your company's policies, your project documentation, or any information they weren't trained on.
@@ -40,27 +46,55 @@ Think of RAG as giving the model a reference library. When you ask a question, t
 
 This grounds the model's responses in your actual data instead of relying on its training knowledge or making up answers.
 
+## Prerequisites
+
+- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
+- Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
+- `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
+
+> **Note:** If you haven't completed Module 01, follow the deployment instructions there first. The `azd up` command deploys both the GPT chat model and the embedding model used by this module.
+
 ## Understanding RAG
 
 The diagram below illustrates the core concept: instead of relying on the model's training data alone, RAG gives it a reference library of your documents to consult before generating each answer.
 
 <img src="../../../translated_images/en/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
 
+*This diagram shows the difference between a standard LLM (which guesses from training data) and a RAG-enhanced LLM (which consults your documents first).*
+
 Here's how the pieces connect end-to-end. A user's question flows through four stages — embedding, vector search, context assembly, and answer generation — each building on the previous one:
 
 <img src="../../../translated_images/en/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
 
+*This diagram shows the end-to-end RAG pipeline — a user query flows through embedding, vector search, context assembly, and answer generation.*
+
 The rest of this module walks through each stage in detail, with code you can run and modify.
 
-## Prerequisites
+### Which RAG Approach Does This Tutorial Use?
 
-- Completed Module 01 (Azure OpenAI resources deployed)
-- `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
+LangChain4j offers three ways to implement RAG, each with a different level of abstraction. The diagram below compares them side by side:
 
-> **Note:** If you haven't completed Module 01, follow the deployment instructions there first.
+<img src="../../../translated_images/en/rag-approaches.5b97fdcc626f1447.webp" alt="Three RAG Approaches in LangChain4j" width="800"/>
 
+*This diagram compares the three LangChain4j RAG approaches — Easy, Native, and Advanced — showing their key components and when to use each one.*
+
+| Approach | What It Does | Trade-off |
+|---|---|---|
+| **Easy RAG** | Wires everything automatically through `AiServices` and `ContentRetriever`. You annotate an interface, attach a retriever, and LangChain4j handles embedding, searching, and prompt assembly behind the scenes. | Minimal code, but you don't see what's happening at each step. |
+| **Native RAG** | You call the embedding model, search the store, build the prompt, and generate the answer yourself — one explicit step at a time. | More code, but every stage is visible and modifiable. |
+| **Advanced RAG** | Uses the `RetrievalAugmentor` framework with pluggable query transformers, routers, re-rankers, and content injectors for production-grade pipelines. | Maximum flexibility, but significantly more complexity. |
+
+**This tutorial uses the Native approach.** Each step of the RAG pipeline — embedding the query, searching the vector store, assembling the context, and generating the answer — is written out explicitly in [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). This is intentional: as a learning resource, it's more important that you see and understand every stage than that the code is minimized. Once you're comfortable with how the pieces fit together, you can graduate to Easy RAG for quick prototypes or Advanced RAG for production systems.
+
+> **💡 Already seen Easy RAG in action?** The [Quick Start module](../00-quick-start/README.md) includes a Document Q&A example ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) that uses the Easy RAG approach — LangChain4j handles embedding, searching, and prompt assembly automatically. This module takes the next step by breaking open that pipeline so you can see and control each stage yourself.
+
+<img src="../../../translated_images/en/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
+
+*This diagram shows the Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
 
 ## How It Works
+
+The RAG pipeline in this module breaks down into four stages that run in sequence every time a user asks a question. First, an uploaded document is **parsed and chunked** into manageable pieces. Those chunks are then converted into **vector embeddings** and stored so they can be compared mathematically. When a query arrives, the system performs a **semantic search** to find the most relevant chunks, and finally passes them as context to the LLM for **answer generation**. The sections below walk through each stage with the actual code and diagrams. Let's look at the first step.
 
 ### Document Processing
 
@@ -69,10 +103,10 @@ The rest of this module walks through each stage in detail, with code you can ru
 When you upload a document, the system parses it (PDF or plain text), attaches metadata such as the filename, and then breaks it into chunks — smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
 
 ```java
-// Parse the uploaded file and wrap it in a LangChain4j Document
+// Pars the hochgeladene Datei und verpacke sie in ein LangChain4j-Dokument
 Document document = Document.from(content, metadata);
 
-// Split into 300-token chunks with 30-token overlap
+// In 300-Token-Chunks mit 30-Token-Überlappung aufteilen
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
@@ -83,6 +117,8 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 
 <img src="../../../translated_images/en/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
 
+*This diagram shows a document being split into 300-token chunks with 30-token overlap, preserving context at chunk boundaries.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) and ask:
 > - "How does LangChain4j split documents into chunks and why is overlap important?"
 > - "What's the optimal chunk size for different document types and why?"
@@ -92,7 +128,11 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Each chunk is converted into a numerical representation called an embedding - essentially a mathematical fingerprint that captures the meaning of the text. Similar text produces similar embeddings.
+Each chunk is converted into a numerical representation called an embedding — essentially a meaning-to-numbers converter. The embedding model isn't "intelligent" the way a chat model is; it can't follow instructions, reason, or answer questions. What it can do is map text into a mathematical space where similar meanings land near each other — "car" near "automobile," "refund policy" near "return my money." Think of a chat model as a person you can talk to; an embedding model is an ultra-good filing system.
+
+<img src="../../../translated_images/en/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
+
+*This diagram shows how an embedding model converts text into numerical vectors, placing similar meanings — like "car" and "automobile" — near each other in vector space.*
 
 ```java
 @Bean
@@ -108,13 +148,23 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-The class diagram below shows how these LangChain4j components connect. `OpenAiOfficialEmbeddingModel` converts text into vectors, `InMemoryEmbeddingStore` holds the vectors alongside their original `TextSegment` data, and `EmbeddingSearchRequest` controls retrieval parameters like `maxResults` and `minScore`:
+The class diagram below shows the two separate flows in a RAG pipeline and the LangChain4j classes that implement them. The **ingestion flow** (runs once at upload time) splits the document, embeds the chunks, and stores them via `.addAll()`. The **query flow** (runs each time a user asks) embeds the question, searches the store via `.search()`, and passes the matched context to the chat model. Both flows meet at the shared `EmbeddingStore<TextSegment>` interface:
 
 <img src="../../../translated_images/en/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
+
+*This diagram shows the two flows in a RAG pipeline — ingestion and query — and how they connect through a shared EmbeddingStore.*
 
 Once embeddings are stored, similar content naturally clusters together in vector space. The visualization below shows how documents about related topics end up as nearby points, which is what makes semantic search possible:
 
 <img src="../../../translated_images/en/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
+
+*This visualization shows how related documents cluster together in 3D vector space, with topics like Technical Docs, Business Rules, and FAQs forming distinct groups.*
+
+When a user searches, the system follows four steps: embed the documents once, embed the query on each search, compare the query vector against all stored vectors using cosine similarity, and return the top-K highest-scoring chunks. The diagram below walks through each step and the LangChain4j classes involved:
+
+<img src="../../../translated_images/en/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding Search Steps" width="800"/>
+
+*This diagram shows the four-step embedding search process: embed documents, embed the query, compare vectors with cosine similarity, and return the top-K results.*
 
 ### Semantic Search
 
@@ -144,6 +194,13 @@ The diagram below contrasts semantic search with traditional keyword search. A k
 
 <img src="../../../translated_images/en/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
+*This diagram compares keyword-based search with semantic search, showing how semantic search retrieves conceptually related content even when exact keywords differ.*
+
+Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
+
+<img src="../../../translated_images/en/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
+
+*This diagram illustrates cosine similarity as the angle between embedding vectors — more aligned vectors score closer to 1.0, indicating higher semantic similarity.*
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
 > - "What similarity threshold should I use and how does it affect results?"
@@ -178,13 +235,22 @@ The diagram below shows this assembly in action — the top-scoring chunks from 
 
 <img src="../../../translated_images/en/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
+*This diagram shows how the top-scoring chunks are assembled into a structured prompt, allowing the model to generate a grounded answer from your data.*
+
 ## Run the Application
 
 **Verify deployment:**
 
 Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+
+**Bash:**
 ```bash
 cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+```
+
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Start the application:**
@@ -204,6 +270,8 @@ From the Spring Boot Dashboard, you can:
 Simply click the play button next to "rag" to start this module, or start all modules at once.
 
 <img src="../../../translated_images/en/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
+
+*This screenshot shows the Spring Boot Dashboard in VS Code, where you can start, stop, and monitor applications visually.*
 
 **Option 2: Using shell scripts**
 
@@ -275,7 +343,7 @@ The application provides a web interface for document upload and questioning.
 
 <a href="images/rag-homepage.png"><img src="../../../translated_images/en/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*The RAG application interface - upload documents and ask questions*
+*This screenshot shows the RAG application interface where you upload documents and ask questions.*
 
 ### Upload a Document
 
@@ -293,7 +361,7 @@ Notice each answer includes source references with similarity scores. These scor
 
 <a href="images/rag-query-results.png"><img src="../../../translated_images/en/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Query results showing answer with source references and relevance scores*
+*This screenshot shows query results with the generated answer, source references, and relevance scores for each retrieved chunk.*
 
 ### Experiment with Questions
 
@@ -316,12 +384,20 @@ Every retrieved chunk comes with a similarity score between 0 and 1 that indicat
 
 <img src="../../../translated_images/en/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
 
+*This diagram shows score ranges from 0 to 1, with a minimum threshold of 0.5 that filters out irrelevant chunks.*
+
 Scores range from 0 to 1:
 - 0.7-1.0: Highly relevant, exact match
 - 0.5-0.7: Relevant, good context
 - Below 0.5: Filtered out, too dissimilar
 
 The system only retrieves chunks above the minimum threshold to ensure quality.
+
+Embeddings work well when meaning clusters cleanly, but they have blind spots. The diagram below shows the common failure modes — chunks that are too large produce muddy vectors, chunks that are too small lack context, ambiguous terms point to multiple clusters, and exact-match lookups (IDs, part numbers) don't work with embeddings at all:
+
+<img src="../../../translated_images/en/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
+
+*This diagram shows common embedding failure modes: chunks too large, chunks too small, ambiguous terms that point to multiple clusters, and exact-match lookups like IDs.*
 
 ### In-Memory Storage
 
@@ -336,6 +412,8 @@ Each model has a maximum context window. You can't include every chunk from a la
 RAG isn't always the right approach. The decision guide below helps you determine when RAG adds value versus when simpler approaches — like including content directly in the prompt or relying on the model's built-in knowledge — are sufficient:
 
 <img src="../../../translated_images/en/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
+
+*This diagram shows a decision guide for when RAG adds value versus when simpler approaches are sufficient.*
 
 **Use RAG when:**
 - Answering questions about proprietary documents

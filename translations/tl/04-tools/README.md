@@ -1,70 +1,76 @@
-# Module 04: AI Agents with Tools
+# Module 04: Mga AI Agent na may Mga Tool
 
 ## Table of Contents
 
-- [What You'll Learn](../../../04-tools)
-- [Prerequisites](../../../04-tools)
-- [Understanding AI Agents with Tools](../../../04-tools)
-- [How Tool Calling Works](../../../04-tools)
-  - [Tool Definitions](../../../04-tools)
-  - [Decision Making](../../../04-tools)
-  - [Execution](../../../04-tools)
-  - [Response Generation](../../../04-tools)
-- [Tool Chaining](../../../04-tools)
-- [Run the Application](../../../04-tools)
-- [Using the Application](../../../04-tools)
-  - [Try Simple Tool Usage](../../../04-tools)
-  - [Test Tool Chaining](../../../04-tools)
-  - [See Conversation Flow](../../../04-tools)
-  - [Experiment with Different Requests](../../../04-tools)
-- [Key Concepts](../../../04-tools)
-  - [ReAct Pattern (Reasoning and Acting)](../../../04-tools)
-  - [Tool Descriptions Matter](../../../04-tools)
-  - [Session Management](../../../04-tools)
-  - [Error Handling](../../../04-tools)
-- [Available Tools](../../../04-tools)
-- [When to Use Tool-Based Agents](../../../04-tools)
-- [Next Steps](../../../04-tools)
+- [Ano ang Malalaman Mo](../../../04-tools)
+- [Mga Kinakailangan](../../../04-tools)
+- [Pag-unawa sa Mga AI Agent na may Mga Tool](../../../04-tools)
+- [Paano Gumagana ang Pagtawag ng Tool](../../../04-tools)
+  - [Mga Depinisyon ng Tool](../../../04-tools)
+  - [Pagpapasya](../../../04-tools)
+  - [Pagpapatupad](../../../04-tools)
+  - [Paggawa ng Tugon](../../../04-tools)
+  - [Arkitektura: Spring Boot Auto-Wiring](../../../04-tools)
+- [Pagkakadena ng Tool](../../../04-tools)
+- [Patakbuhin ang Aplikasyon](../../../04-tools)
+- [Paggamit ng Aplikasyon](../../../04-tools)
+  - [Subukan ang Simpleng Paggamit ng Tool](../../../04-tools)
+  - [Subukan ang Pagkakadena ng Tool](../../../04-tools)
+  - [Tingnan ang Daloy ng Usapan](../../../04-tools)
+  - [Mag-eksperimento sa Iba't Ibang Kahilingan](../../../04-tools)
+- [Mga Pangunahing Konsepto](../../../04-tools)
+  - [ReAct Pattern (Pangangatwiran at Pagsasakilos)](../../../04-tools)
+  - [Mahalaga ang Mga Deskripsyon ng Tool](../../../04-tools)
+  - [Pamamahala ng Session](../../../04-tools)
+  - [Paghawak ng Error](../../../04-tools)
+- [Mga Magagamit na Tool](../../../04-tools)
+- [Kailan Gamitin ang Mga Agent na Batay sa Tool](../../../04-tools)
+- [Mga Tool kumpara sa RAG](../../../04-tools)
+- [Mga Susunod na Hakbang](../../../04-tools)
 
-## What You'll Learn
+## Ano ang Malalaman Mo
 
-So far, natutunan mo kung paano makipag-usap sa AI, paano maayos na istraktura ang mga prompt, at ikabit ang mga sagot sa iyong mga dokumento. Ngunit may pangunahing limitasyon pa rin: ang mga language model ay makagagawa lamang ng teksto. Hindi nila kayang mag-check ng panahon, magsagawa ng kalkulasyon, mag-query sa mga database, o makipag-ugnayan sa mga panlabas na sistema.
+Sa ngayon, natutunan mo kung paano makipag-usap sa AI, ayusin nang maayos ang mga prompt, at gawing batayan ang mga tugon sa iyong mga dokumento. Ngunit may isang pangunahing limitasyon pa rin: ang mga language model ay kaya lamang gumawa ng teksto. Hindi nila kayang tingnan ang lagay ng panahon, magsagawa ng kalkulasyon, mag-query ng mga database, o makipag-ugnayan sa mga panlabas na sistema.
 
-Binabago ito ng mga tools. Sa pagbibigay ng access sa model ng mga function na maaari nitong tawagin, napapalitan mo ito mula sa isang tagagawa ng teksto patungo sa isang ahente na kayang kumilos. Ang model ang nagpapasya kung kailan kailangan nito ng tool, kung aling tool ang gagamitin, at anong mga parameter ang ipapasa. Isinasagawa ng iyong code ang function at ibinabalik ang resulta. Isinasama ng model ang resulta sa sagot nito.
+Binabago ito ng mga tool. Sa pagbibigay ng access sa model sa mga function na maaari nitong tawagan, binabago mo ito mula sa isang tagagawa ng teksto tungo sa isang agent na kayang gumawa ng mga aksyon. Ang model ay nagdedesisyon kung kailan kailangan nito ng tool, kung aling tool ang gagamitin, at kung ano ang mga parameter na ipapasa. Ang iyong code ang nagpapatupad ng function at nagbabalik ng resulta. Isinasama ng model ang resulta sa kanyang tugon.
 
-## Prerequisites
+## Mga Kinakailangan
 
-- Natapos ang Module 01 (Azure OpenAI resources na-deploy na)
-- `.env` file sa root directory na may Azure credentials (nalikha ng `azd up` sa Module 01)
+- Natapos na ang Module 01 (na-deploy na ang mga Azure OpenAI resources)
+- May `.env` file sa root directory na may mga kredensyal ng Azure (nagawa ng `azd up` sa Module 01)
 
-> **Note:** Kung hindi mo pa natatapos ang Module 01, sundin muna ang mga tagubilin para sa deployment doon.
+> **Tandaan:** Kung hindi mo pa natatapos ang Module 01, sundin muna ang mga tagubilin sa deployment doon.
 
-## Understanding AI Agents with Tools
+## Pag-unawa sa Mga AI Agent na may Mga Tool
 
-> **📝 Note:** Ang salitang "agents" sa module na ito ay tumutukoy sa mga AI assistant na pinalakas ng kakayahang tumawag ng mga tool. Iba ito sa **Agentic AI** na mga pattern (mga autonomous agent na may planning, memorya, at multi-step reasoning) na tatalakayin natin sa [Module 05: MCP](../05-mcp/README.md).
+> **📝 Tandaan:** Ang terminong "agents" sa module na ito ay tumutukoy sa mga AI assistant na pinalakas ng kakayahang tumawag ng mga tool. Iba ito sa mga **Agentic AI** na pattern (mga autonomous agents na may pagpaplano, alaala, at multi-step na pangangatwiran) na tatalakayin natin sa [Module 05: MCP](../05-mcp/README.md).
 
-Ang AI agent na may mga tools ay sumusunod sa isang pattern na reasoning at acting (ReAct):
+Kung walang mga tool, ang isang language model ay makakagawa lamang ng teksto mula sa mga datos ng pagsasanay nito. Kung tatanungin mo ito tungkol sa kasalukuyang panahon, huhulaan lang nito. Sa pagbibigay ng mga tool, maaari itong tumawag ng weather API, magsagawa ng kalkulasyon, o mag-query ng database — pagkatapos ay isinalin ang mga totoong resulta sa tugon nito.
 
-1. Nagtanong ang user ng isang katanungan
-2. Nagrereason ang agent kung ano ang kailangang malaman
-3. Nagpapasya ang agent kung kailangan nito ng tool para sagutin
-4. Kung oo, tinatawag ng agent ang angkop na tool gamit ang tamang mga parameter
-5. Isinasagawa ng tool ang gawain at nagbabalik ng datos
-6. Isinasama ng agent ang resulta at nagbibigay ng panghuling sagot
+<img src="../../../translated_images/tl/what-are-tools.724e468fc4de64da.webp" alt="Without Tools vs With Tools" width="800"/>
 
-<img src="../../../translated_images/tl/react-pattern.86aafd3796f3fd13.webp" alt="ReAct Pattern" width="800"/>
+*Kung walang mga tool ay huhulaan lamang ng model — sa mga tool maaari itong tumawag ng API, magsagawa ng kalkulasyon, at magbalik ng totoong datos sa takdang oras.*
 
-*Ang ReAct pattern - kung paano nagpapalitan ang AI agents ng pangangatwiran at pagkilos para lutasin ang mga problema*
+Isang AI agent na may mga tool ay sumusunod sa **Reasoning and Acting (ReAct)** na pattern. Hindi lamang tumutugon ang model — iniisip nito kung ano ang kailangan, kumikilos sa pamamagitan ng pagtawag ng tool, pinagmamasdan ang resulta, at pagkatapos ay nagdedesisyon kung uulitin ang aksyon o ibigay ang pangwakas na sagot:
 
-Ito ay nangyayari nang awtomatiko. Iyon ang iyong itinakda na mga tool at ang kanilang mga deskripsyon. Ang model ang humahawak sa pagpapasya kung kailan at paano gamitin ang mga ito.
+1. **Pangangatwiran** — Sinusuri ng agent ang tanong ng gumagamit at tinutukoy kung anong impormasyon ang kailangan
+2. **Pagsasakilos** — Pinipili ng agent ang tamang tool, gumagawa ng wastong mga parameter, at tinatawag ito
+3. **Pagmamasid** — Tinatanggap ng agent ang output ng tool at sinusuri ang resulta
+4. **Ulitin o Tugunan** — Kung kailangan pa ng karagdagang datos, bumabalik ang agent; kung hindi, bumubuo ito ng sagot sa natural na wika
 
-## How Tool Calling Works
+<img src="../../../translated_images/tl/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct Pattern" width="800"/>
 
-### Tool Definitions
+*Ang siklo ng ReAct — ang agent ay nag-iisip kung ano ang gagawin, kumikilos sa pagtawag ng tool, pinagmamasdan ang resulta, at uulitin hanggang maibigay ang pangwakas na sagot.*
+
+Awtomatikong nangyayari ito. Dine-define mo ang mga tool at ang kanilang mga deskripsyon. Ang model ang humahawak ng pagpapasya kung kailan at paano ito gagamitin.
+
+## Paano Gumagana ang Pagtawag ng Tool
+
+### Mga Depinisyon ng Tool
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Nagde-define ka ng mga function na may malinaw na mga deskripsyon at mga espesipikasyon ng parameter. Nakikita ng model ang mga deskripsyong ito sa system prompt at nauunawaan kung ano ang ginagawa ng bawat tool.
+Dine-define mo ang mga function na may malinaw na mga deskripsyon at mga pagtukoy ng parameter. Nakikita ng model ang mga deskripsyong ito sa system prompt nito at nauunawaan kung ano ang ginagawa ng bawat tool.
 
 ```java
 @Component
@@ -72,7 +78,7 @@ public class WeatherTool {
     
     @Tool("Get the current weather for a location")
     public String getCurrentWeather(@P("Location name") String location) {
-        // Ang iyong lohika sa paghahanap ng panahon
+        // Ang iyong lohika sa pagtingin ng panahon
         return "Weather in " + location + ": 22°C, cloudy";
     }
 }
@@ -82,105 +88,137 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Ang Assistant ay awtomatikong nakakabit ng Spring Boot sa:
-// - Bean ng ChatModel
-// - Lahat ng @Tool na mga pamamaraan mula sa mga @Component na klase
+// Ang Assistant ay awtomatikong konektado ng Spring Boot sa:
+// - ChatModel na bean
+// - Lahat ng @Tool na mga metodo mula sa mga klase na may @Component
 // - ChatMemoryProvider para sa pamamahala ng session
 ```
 
-> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) at itanong:
-> - "Paano ko i-iintegrate ang totoong weather API tulad ng OpenWeatherMap imbes na mock data?"
-> - "Ano ang gumagawa ng magandang tool description na tumutulong sa AI na gamitin ito nang tama?"
-> - "Paano ako humahandle ng mga error sa API at rate limits sa implementasyon ng tool?"
+Pinapaliwanag ng diagram sa ibaba ang bawat anotasyon at ipinapakita kung paano tumutulong ang bawat bahagi upang maunawaan ng AI kung kailan tatawagin ang tool at anong mga argumento ang ipapasa:
 
-### Decision Making
+<img src="../../../translated_images/tl/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomy of Tool Definitions" width="800"/>
 
-Kapag nagtanong ang user ng "What's the weather in Seattle?", nakikilala ng model na kailangan nito ang weather tool. Gumagawa ito ng tawag sa function na may parameter ng lokasyon na "Seattle".
+*Anatomiya ng isang depinisyon ng tool — sinasabi ng @Tool sa AI kung kailan ito gagamitin, inilarawan ng @P ang bawat parameter, at ang @AiService ang nag-uugnay sa lahat sa pagsisimula.*
 
-### Execution
+> **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) at itanong:
+> - "Paano ko isasama ang totoong weather API tulad ng OpenWeatherMap sa halip na mock data?"
+> - "Ano ang bumubuo ng magandang deskripsyon ng tool na tumutulong sa AI na gamitin ito nang tama?"
+> - "Paano ko haharapin ang mga error ng API at mga rate limit sa mga implementasyon ng tool?"
+
+### Pagpapasya
+
+Kapag tinanong ng gumagamit na "Ano ang lagay ng panahon sa Seattle?", hindi basta-basta pumipili ang model ng isang tool. Inihahambing nito ang intensyon ng gumagamit sa bawat deskripsyon ng tool na mayroon ito, sinusuri ang mga ito para sa kaugnayan, at pinipili ang pinakamahusay na tugma. Pagkatapos, gumagawa ito ng istrakturadong pagtawag ng function na may tamang mga parameter — sa kasong ito, itinakda ang `location` sa `"Seattle"`.
+
+Kung walang tool na tumutugma sa kahilingan ng gumagamit, bumabalik ang model upang sumagot mula sa sarili nitong kaalaman. Kung maraming tool ang tumutugma, pinipili nito ang pinakaespesipiko.
+
+<img src="../../../translated_images/tl/decision-making.409cd562e5cecc49.webp" alt="How the AI Decides Which Tool to Use" width="800"/>
+
+*Sinusuri ng model ang bawat magagamit na tool laban sa intensyon ng gumagamit at pinipili ang pinakamahusay na tugma — kaya mahalaga ang pagsulat ng malinaw at espesipikong mga deskripsyon ng tool.*
+
+### Pagpapatupad
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Awtomatikong ina-auto-wire ng Spring Boot ang deklaratibong `@AiService` interface sa lahat ng nairehistrong mga tool, at awtomatikong isinasagawa ng LangChain4j ang mga tawag ng tool.
+Ang Spring Boot ay awtomatikong nag-uugnay sa deklaratibong `@AiService` interface gamit ang lahat ng rehistradong tool, at pinapatupad ng LangChain4j ang mga pagtawag sa tool nang awtomatiko. Sa likod ng eksena, dumadaan sa anim na yugto ang kumpletong pagtawag ng tool — mula sa tanong ng gumagamit hanggang sa isang natural na sagot:
 
-> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) at itanong:
-> - "Paano gumagana ang ReAct pattern at bakit ito epektibo para sa mga AI agents?"
-> - "Paano nagpapasya ang agent kung aling tool ang gagamitin at sa anong pagkakasunod?"
-> - "Ano ang nangyayari kapag pumalya ang pagsasagawa ng isang tool - paano ko hahandle nang maayos ang mga error?"
+<img src="../../../translated_images/tl/tool-calling-flow.8601941b0ca041e6.webp" alt="Tool Calling Flow" width="800"/>
 
-### Response Generation
+*Ang end-to-end na daloy — nagtatanong ang user, pumipili ang model ng tool, pinapatupad ito ng LangChain4j, at isinisingit ng model ang resulta sa natural na tugon.*
 
-Tinatanggap ng model ang mga datos ng panahon at ini-format ito sa isang natural na wikang sagot para sa user.
+> **🤖 Subukan gamit ang [GitHub Copilot](https://github.com/features/copilot) Chat:** Buksan ang [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) at itanong:
+> - "Paano gumagana ang ReAct pattern at bakit ito epektibo para sa mga AI agent?"
+> - "Paano pinipili ng agent kung aling tool ang gagamitin at sa anong pagkakasunod?"
+> - "Ano ang nangyayari kung mabigo ang pagpapatupad ng tool — paano ko dapat robust na hawakan ang mga error?"
 
-### Why Use Declarative AI Services?
+### Paggawa ng Tugon
 
-Ginagamit ng module na ito ang integrasyon ng LangChain4j sa Spring Boot gamit ang deklaratibong `@AiService` interfaces:
+Tinatanggap ng model ang datos ng panahon at ini-format ito bilang natural na tugon para sa gumagamit.
 
-- **Spring Boot auto-wiring** - Awtomatikong ini-inject ang ChatModel at mga tools
-- **@MemoryId pattern** - Awtomatikong session-based na pamamahala ng memorya
-- **Isang instance lang** - Assistant ay ginawa lamang minsan at nire-reuse para sa mas mahusay na performance
-- **Type-safe execution** - Direktang pagtawag sa mga Java method na may type conversion
-- **Multi-turn orchestration** - Awtomatikong humahandle ng tool chaining
-- **Zero boilerplate** - Walang kailangang manwal na AiServices.builder() calls o memory HashMap
+### Arkitektura: Spring Boot Auto-Wiring
 
-Ang mga alternatibong paraan (manwal na `AiServices.builder()`) ay nangangailangan ng mas maraming code at nawawala ang mga benepisyo ng Spring Boot integration.
+Ginagamit ng module na ito ang integrasyon ng LangChain4j sa Spring Boot na may deklaratibong `@AiService` interfaces. Sa pagsisimula, nadidiskubre ng Spring Boot ang bawat `@Component` na may mga `@Tool` method, ang iyong `ChatModel` bean, at ang `ChatMemoryProvider` — pagkatapos ay ini-uugnay lahat sa isang `Assistant` interface nang walang dagdag na boilerplate.
 
-## Tool Chaining
+<img src="../../../translated_images/tl/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Auto-Wiring Architecture" width="800"/>
 
-**Tool Chaining** - Maaaring tumawag ang AI ng sunud-sunod na maraming mga tool. Tanungin ang "What's the weather in Seattle and should I bring an umbrella?" at panoorin itong ikabit ang `getCurrentWeather` na may pangangatwiran tungkol sa rain gear.
+*Pinag-uugnay ng @AiService interface ang ChatModel, mga component ng tool, at memory provider — awtomatikong inaasikaso ng Spring Boot ang lahat ng wiring.*
+
+Pangunahing benepisyo ng ganitong paraan:
+
+- **Spring Boot auto-wiring** — Awtomatikong ini-inject ang ChatModel at mga tool
+- **@MemoryId pattern** — Awtomatikong pamamahala ng session-based memory
+- **Isang instance lang** — Assistant ay nililikha nang minsan at ginagamit muli para sa mas mahusay na performance
+- **Type-safe na pagpapatupad** — Direktang tinatawag ang mga Java method na may type conversion
+- **Multi-turn orchestration** — Awtomatikong humahawak sa pagkakadena ng tool
+- **Walang dagdag na boilerplate** — Walang manual na `AiServices.builder()` na tawag o memory HashMap
+
+Mas maraming code ang kailangan sa alternatibong paraan (manwal na `AiServices.builder()`) at nawawala ang mga benepisyo ng Spring Boot integration.
+
+## Pagkakadena ng Tool
+
+**Pagkakadena ng Tool** — Ang tunay na kapangyarihan ng mga agent na batay sa tool ay makikita kapag ang isang tanong ay nangangailangan ng maraming tool. Kapag tinanong na "Ano ang lagay ng panahon sa Seattle sa Fahrenheit?" awtomatikong magkakadena ang agent ng dalawang tool: una nitong tinatawag ang `getCurrentWeather` para makuha ang temperatura sa Celsius, pagkatapos ay ipinasok nito ang halagang iyon sa `celsiusToFahrenheit` para sa conversion — lahat ito ay sa isang pag-uusap lang.
+
+<img src="../../../translated_images/tl/tool-chaining-example.538203e73d09dd82.webp" alt="Tool Chaining Example" width="800"/>
+
+*Pagkakadena ng tool sa aksyon — tinatawag ng agent ang getCurrentWeather muna, pagkatapos ay ipinapasa ang resulta ng Celsius sa celsiusToFahrenheit, at naghahatid ng pinagsamang sagot.*
+
+Ganito ang hitsura nito sa tumatakbong aplikasyon — ang agent ay magkakadena ng dalawang pagtawag ng tool sa isang pag-uusap:
 
 <a href="images/tool-chaining.png"><img src="../../../translated_images/tl/tool-chaining.3b25af01967d6f7b.webp" alt="Tool Chaining" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Sunud-sunod na tawag ng tool - ang output ng isang tool ay ginagamit sa susunod na desisyon*
+*Aktwal na output ng aplikasyon — awtomatikong magkakadena ng getCurrentWeather → celsiusToFahrenheit ang agent sa isang pag-uusap.*
 
-**Graceful Failures** - Humingi ng forecast sa isang lungsod na wala sa mock data. Nagbabalik ang tool ng error message, at ipinaliliwanag ng AI na hindi ito makakatulong. Ligtas ang mga pagkabigo ng tool.
+**Magaan na Pagkabigo** — Humiling ng panahon sa isang lungsod na wala sa mock data. Nagbabalik ng mensahe ng error ang tool, at ipinaliliwanag ng AI na hindi ito makakatulong sa halip na mag-crash. Ang mga tool ay ligtas na nabibigo.
 
-Ito ay nangyayari sa iisang pag-uusap lang. Awtomatikong inaayos ng agent ang maraming tool calls.
+<img src="../../../translated_images/tl/error-handling-flow.9a330ffc8ee0475c.webp" alt="Error Handling Flow" width="800"/>
 
-## Run the Application
+*Kapag nabigo ang isang tool, nahuhuli ng agent ang error at sumasagot nang may kapaki-pakinabang na paliwanag sa halip na mag-crash.*
 
-**Verify deployment:**
+Nangyayari ito sa isang pag-uusap lang. Awtomatikong naisasaayos ng agent ang maraming pagtawag sa tool.
 
-Siguraduhin na ang `.env` file ay nandiyan sa root directory na may Azure credentials (nalikha sa Module 01):
+## Patakbuhin ang Aplikasyon
+
+**Suriin ang deployment:**
+
+Siguraduhin na may `.env` file sa root directory na may mga kredensyal ng Azure (nagawa sa Module 01):
 ```bash
 cat ../.env  # Dapat ipakita ang AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Start the application:**
+**Simulan ang aplikasyon:**
 
-> **Note:** Kung sinimulan mo na ang lahat ng applications gamit ang `./start-all.sh` mula sa Module 01, ang module na ito ay tumatakbo na sa port 8084. Maaari mong laktawan ang mga start command sa ibaba at pumunta diretso sa http://localhost:8084.
+> **Tandaan:** Kung sinimulan mo na lahat ng aplikasyon gamit ang `./start-all.sh` mula sa Module 01, tumatakbo na ang module na ito sa port 8084. Maaari mo nang laktawan ang mga start na utos sa ibaba at diretsong pumunta sa http://localhost:8084.
 
-**Option 1: Using Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
+**Opsyon 1: Paggamit ng Spring Boot Dashboard (Inirerekomenda para sa mga gumagamit ng VS Code)**
 
-Kasama sa dev container ang Spring Boot Dashboard extension, na nagbibigay ng visual interface para pamahalaan ang lahat ng Spring Boot applications. Makikita mo ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang Spring Boot icon).
+Kasama sa dev container ang extension ng Spring Boot Dashboard, na nagbibigay ng visual na interface para pamahalaan lahat ng Spring Boot na aplikasyon. Makikita ito sa Activity Bar sa kaliwang bahagi ng VS Code (hanapin ang icon ng Spring Boot).
 
 Mula sa Spring Boot Dashboard, maaari mong:
-- Tingnan ang lahat ng available na Spring Boot applications sa workspace
-- Simulan/hintuin ang mga application gamit ang isang click lang
-- Tingnan ang mga application logs nang real-time
-- Subaybayan ang status ng application
+- Tingnan lahat ng magagamit na Spring Boot na aplikasyon sa workspace
+- Simulan/hintuin ang mga aplikasyon sa isang click lang
+- Tingnan ang mga log ng aplikasyon nang realtime
+- Subaybayan ang status ng aplikasyon
 
-Pindutin lamang ang play button sa tabi ng "tools" para simulan ang module na ito, o simulan lahat ng module nang sabay.
+I-click lamang ang play button sa tabi ng "tools" para simulan ang module na ito, o simulan lahat ng module nang sabay-sabay.
 
 <img src="../../../translated_images/tl/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Option 2: Using shell scripts**
+**Opsyon 2: Paggamit ng shell scripts**
 
-Simulan lahat ng web application (modules 01-04):
+Simulan lahat ng web aplikasyon (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Mula sa pangunahing direktoryo
+cd ..  # Mula sa root directory
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Mula sa ugat na direktoryo
+cd ..  # Mula sa root na direktoryo
 .\start-all.ps1
 ```
 
-O simulan lang ang module na ito:
+O simulan lamang ang module na ito:
 
 **Bash:**
 ```bash
@@ -194,9 +232,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Awtomatikong niloload ng mga script ang environment variables mula sa root `.env` file at itatayo ang mga JAR kung wala pa.
+Parehong awtomatikong naglo-load ng environment variables mula sa root `.env` file ang mga scripts at gagawin ang pag-build ng mga JAR kung wala pa ang mga ito.
 
-> **Note:** Kung gusto mong i-build lahat ng module nang manu-mano bago magsimula:
+> **Tandaan:** Kung nais mong i-build manual ang lahat ng module bago simulan:
 >
 > **Bash:**
 > ```bash
@@ -212,114 +250,123 @@ Awtomatikong niloload ng mga script ang environment variables mula sa root `.env
 
 Buksan ang http://localhost:8084 sa iyong browser.
 
-**Para itigil:**
+**Para ihinto:**
 
 **Bash:**
 ```bash
-./stop.sh  # Sa module na ito lang
+./stop.sh  # Para lamang sa module na ito
 # O
 cd .. && ./stop-all.sh  # Lahat ng module
 ```
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Sa module na ito lamang
+.\stop.ps1  # Para lamang sa module na ito
 # O
-cd ..; .\stop-all.ps1  # Lahat ng modules
+cd ..; .\stop-all.ps1  # Lahat ng mga module
 ```
 
-## Using the Application
+## Paggamit ng Aplikasyon
 
-Nagbibigay ang application ng web interface kung saan maaari kang makipag-ugnayan sa AI agent na may access sa weather at temperature conversion tools.
+Nagbibigay ang aplikasyon ng web interface kung saan maaari kang makipag-ugnayan sa isang AI agent na may access sa mga tool para sa panahon at conversion ng temperatura.
 
 <a href="images/tools-homepage.png"><img src="../../../translated_images/tl/tools-homepage.4b4cd8b2717f9621.webp" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Ang AI Agent Tools interface - mabilisang mga halimbawa at chat interface para makipag-interact sa mga tools*
+*Interface ng AI Agent Tools - mabilisang mga halimbawa at chat interface para makipag-ugnayan sa mga tool*
 
-### Try Simple Tool Usage
+### Subukan ang Simpleng Paggamit ng Tool
+Magsimula sa isang tuwirang kahilingan: "I-convert ang 100 degrees Fahrenheit sa Celsius". Nakikilala ng ahente na kailangan nito ang temperature conversion tool, tinatawag ito gamit ang tamang mga parametro, at ibinabalik ang resulta. Pansinin kung gaano ito kadali — hindi mo tinukoy kung aling tool ang gagamitin o kung paano ito tatawagin.
 
-Magsimula sa simpleng utos: "Convert 100 degrees Fahrenheit to Celsius". Nakikilala ng agent na kailangan nito ang temperature conversion tool, tinatawag ito gamit ang tamang mga parameter, at ibinabalik ang resulta. Pansinin kung gaano ito likas na pakiramdam - hindi mo kailangang sabihing aling tool ang gagamitin o paano ito tatawagin.
+### Subukan ang Tool Chaining
 
-### Test Tool Chaining
+Ngayon subukan ang isang mas kumplikadong bagay: "Ano ang panahon sa Seattle at i-convert ito sa Fahrenheit?" Panoorin ang pagkilos ng ahente sa mga hakbang. Una nitong kinukuha ang panahon (na nagbabalik ng Celsius), nakikilala na kailangan nitong i-convert sa Fahrenheit, tinatawag ang conversion tool, at pinagsasama ang parehong resulta sa isang tugon.
 
-Subukan ang mas kumplikadong tanong: "What's the weather in Seattle and convert it to Fahrenheit?" Panoorin ang agent na magtrabaho nang hakbang-hakbang. Una itong kukuha ng weather (na nagbabalik ng Celsius), napagtatanto na kailangang i-convert sa Fahrenheit, tinatawag ang conversion tool, at pinagsasama ang dalawang resulta sa isang sagot.
+### Tingnan ang Daloy ng Usapan
 
-### See Conversation Flow
+Pinananatili ng chat interface ang kasaysayan ng usapan, na nagpapahintulot sa iyo na magkaroon ng multi-turn interactions. Makikita mo ang lahat ng mga naunang tanong at sagot, na nagpapadali upang masubaybayan ang pag-uusap at maunawaan kung paano bumubuo ang ahente ng konteksto sa maraming palitan.
 
-Pinapanatili ng chat interface ang kasaysayan ng pag-uusap, kaya maaari kang gumawa ng multi-turn na usapan. Makikita mo lahat ng mga nakaraang tanong at sagot, na nagpapadali para subaybayan ang pag-uusap at maintindihan kung paano bumubuo ng konteksto ang agent sa maraming palitan.
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/tl/tools-conversation-demo.89f2ce9676080f59.webp" alt="Pag-uusap na may Maramihang Tawag sa Tool" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/tl/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation with Multiple Tool Calls" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+*Multi-turn na pag-uusap na nagpapakita ng simpleng mga konbersyon, paghahanap ng panahon, at tool chaining*
 
-*Multi-turn na pag-uusap na nagpapakita ng simpleng conversion, paghahanap ng panahon, at tool chaining*
-
-### Experiment with Different Requests
+### Mag-eksperimento sa Iba’t ibang Kahilingan
 
 Subukan ang iba't ibang kumbinasyon:
-- Mga paghahanap ng panahon: "What's the weather in Tokyo?"
-- Mga conversion ng temperatura: "What is 25°C in Kelvin?"
-- Pinagsamang mga tanong: "Check the weather in Paris and tell me if it's above 20°C"
+- Paghahanap ng panahon: "Ano ang panahon sa Tokyo?"
+- Pag-convert ng temperatura: "Ano ang 25°C sa Kelvin?"
+- Pinagsamang mga tanong: "Suriin ang panahon sa Paris at sabihin kung ito ay higit sa 20°C"
 
-Pansinin kung paano binibigyang-kahulugan ng agent ang natural na wika at iniaakma ito sa mga tamang tawag ng tool.
+Pansinin kung paano ininterpret ng ahente ang natural na wika at ini-map ito sa angkop na pagtawag ng tool.
 
-## Key Concepts
+## Pangunahing Konsepto
 
-### ReAct Pattern (Reasoning and Acting)
+### ReAct Pattern (Pangangatwiran at Pagkilos)
 
-Nagpapalitan ang agent ng pangangatwiran (nagpapasya kung ano ang gagawin) at pagkilos (paggamit ng mga tool). Pinapagana ng pattern na ito ang autonomous na paglutas ng problema kaysa basta sumagot lang ng instruksyon.
+Palitan ng ahente ang pagitan ng pangangatwiran (pagpapasya kung ano ang gagawin) at pagkilos (paggamit ng mga tool). Pinapagana ng pattern na ito ang autonomous na paglutas ng problema kaysa sa simpleng pagsagot sa mga utos.
 
-### Tool Descriptions Matter
+### Mahalaga ang Mga Deskripsyon ng Tool
 
-Ang kalidad ng iyong mga deskripsyon ng tool ay direktang nakakaapekto kung paano ito ginagamit ng agent. Ang malinaw at espesipikong deskripsyon ay tumutulong sa modelo na maintindihan kung kailan at paano tawagin ang bawat tool.
+Direktang naaapektuhan ng kalidad ng iyong mga deskripsyon ng tool kung gaano kahusay magagamit ng ahente ang mga ito. Ang malinaw at espesipikong mga deskripsyon ay tumutulong sa modelo na maunawaan kung kailan at paano tatawagin ang bawat tool.
 
-### Session Management
+### Pamamahala ng Session
 
-Pinapagana ng anotasyong `@MemoryId` ang awtomatikong session-based na pamamahala ng memorya. Bawat session ID ay nakakakuha ng sariling `ChatMemory` instance na pinamamahalaan ng `ChatMemoryProvider` bean, kaya hindi na kailangan ng manwal na pagsubaybay ng memorya.
+Pinapagana ng anotasyon na `@MemoryId` ang awtomatikong session-based na pamamahala ng memorya. Bawat session ID ay nakakakuha ng sarili nitong `ChatMemory` na pinamamahalaan ng `ChatMemoryProvider` bean, kaya maraming gumagamit ang maaaring makipag-usap sa ahente nang sabay-sabay nang hindi nagkakagulo ang kanilang mga pag-uusap.
 
-### Error Handling
+<img src="../../../translated_images/tl/session-management.91ad819c6c89c400.webp" alt="Pamamahala ng Session gamit ang @MemoryId" width="800"/>
 
-Maaaring pumalya ang mga tool - mga API ay timeout, maaaring mali ang mga parameter, bumagsak ang mga panlabas na serbisyo. Kailangan ng mga production agent ng error handling para maipaliwanag ng model ang mga problema o subukan ang mga alternatibo.
+*Bawat session ID ay nagmamapa sa isang hiwalay na kasaysayan ng pag-uusap — hindi nakikita ng mga user ang mga mensahe ng isa't isa.*
 
-## Available Tools
+### Pag-handle ng Error
 
-**Weather Tools** (mock data para sa demonstrasyon):
-- Kunin ang kasalukuyang panahon para sa isang lokasyon
-- Kunin ang multi-day forecast
+Maaaring pumalya ang mga tool — mga API ay time-out, maaaring hindi wasto ang mga parametro, bumibigay ang mga panlabas na serbisyo. Nangangailangan ng pag-handle ng error ang mga production agents para maipaliwanag ng modelo ang mga problema o subukan ang mga alternatibo sa halip na mag-crash ang buong aplikasyon. Kapag nag-throw ng exception ang tool, hinahawakan ito ng LangChain4j at ibinabalik ang error message sa modelo, na maaring ipaliwanag ang problema sa natural na wika.
 
-**Temperature Conversion Tools**:
-- Celsius papuntang Fahrenheit
-- Fahrenheit papuntang Celsius
-- Celsius papuntang Kelvin
-- Kelvin papuntang Celsius
-- Fahrenheit papuntang Kelvin
-- Kelvin papuntang Fahrenheit
+## Mga Available na Tool
 
-Ito ay simpleng mga halimbawa lang, pero ang pattern ay puwedeng palawakin sa anumang function: mga database query, tawag sa API, kalkulasyon, file operation, o mga utos ng sistema.
+Ipinapakita ng diagram sa ibaba ang malawak na ekosistema ng mga tool na maaari mong buuin. Ipinapakita ng module na ito ang weather at temperature tools, ngunit ang parehong `@Tool` pattern ay gumagana para sa anumang Java method — mula sa mga database query hanggang sa pagproseso ng bayad.
 
-## When to Use Tool-Based Agents
+<img src="../../../translated_images/tl/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ecosystem ng Tool" width="800"/>
 
-**Gamitin ang mga tools kapag:**
-- Kailangan ang real-time na datos (panahon, presyo ng stock, imbentaryo)
-- Kailangan gumawa ng kalkulasyon lampas sa simpleng matematika
-- Pag-access ng databases o APIs
-- Pagsasagawa ng aksyon (magpadala ng email, gumawa ng ticket, i-update ang mga record)
-- Pagsasama-sama ng maraming pinagkukunan ng datos
+*Anumang Java method na may anotasyon na @Tool ay nagiging available sa AI — ang pattern ay nagsasaklaw sa databases, APIs, email, file operations, at iba pa.*
 
-**Huwag gamitin ang mga tools kapag:**
+## Kailan Gagamit ng Tool-Based Agents
+
+<img src="../../../translated_images/tl/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Kailan Gagamitin ang Mga Tool" width="800"/>
+
+*Isang mabilis na gabay sa pagdedesisyon — ang mga tool ay para sa real-time na data, kalkulasyon, at mga aksyon; ang pangkalahatang kaalaman at malikhaing gawain ay hindi nangangailangan nito.*
+
+**Gamitin ang mga tool kapag:**
+- Ang pagsagot ay nangangailangan ng real-time na data (panahon, presyo ng stock, imbentaryo)
+- Kailangang magsagawa ng kalkulasyon na higit pa sa simpleng matematika
+- Pag-access sa mga database o API
+- Paggawa ng mga aksyon (pagpapadala ng email, paggawa ng tickets, pag-update ng mga tala)
+- Pagsasama-sama ng maraming pinagkukunan ng data
+
+**Huwag gumamit ng mga tool kapag:**
 - Ang mga tanong ay masasagot mula sa pangkalahatang kaalaman
-- Puro pag-uusap lang ang sagot
+- Ang sagot ay purong pag-uusap lang
 - Ang latency ng tool ay magpapabagal ng karanasan
 
-## Next Steps
+## Tools laban sa RAG
 
-**Next Module:** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
+Parehong pinapalawak ng Modules 03 at 04 kung ano ang kaya ng AI, ngunit sa mga pangunahing magkaibang paraan. Binibigyan ng RAG ang modelo ng access sa **kaalaman** sa pamamagitan ng pagkuha ng dokumento. Binibigyan naman ng mga Tool ang modelo ng kakayahang gumawa ng **aksiyon** sa pamamagitan ng pagtawag ng mga function.
+
+<img src="../../../translated_images/tl/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Paghahambing ng Tools at RAG" width="800"/>
+
+*Kinukuha ng RAG ang impormasyon mula sa static na mga dokumento — Ang mga Tool ay nagpapatupad ng mga aksyon at kumukuha ng dynamic, real-time na data. Maraming production system ang pinagsasama ang dalawa.*
+
+Sa praktika, maraming production system ang pinagsasama ang dalawang paraan: RAG para gawing matibay ang mga sagot sa iyong dokumentasyon, at Tools para kumuha ng live na data o magsagawa ng mga operasyon.
+
+## Mga Susunod na Hakbang
+
+**Susunod na Module:** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
 
 ---
 
-**Navigation:** [← Previous: Module 03 - RAG](../03-rag/README.md) | [Back to Main](../README.md) | [Next: Module 05 - MCP →](../05-mcp/README.md)
+**Navigation:** [← Nakaraang: Module 03 - RAG](../03-rag/README.md) | [Bumalik sa Main](../README.md) | [Susunod: Module 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Paunawa**:
-Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat nagsusumikap kami para sa katumpakan, pakitandaan na ang awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o hindi pagkakatugma. Ang orihinal na dokumento sa kanyang likas na wika ang dapat ituring na pangunahing sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasalin ng tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring mangyari mula sa paggamit ng pagsasaling ito.
+**Pahayag ng Pagwawaksi**:  
+Ang dokumentong ito ay isinalin gamit ang AI translation service na [Co-op Translator](https://github.com/Azure/co-op-translator). Bagamat nagsusumikap kami para sa katumpakan, pakatandaan na ang mga awtomatikong pagsasalin ay maaaring maglaman ng mga pagkakamali o hindi pagkakatugma. Ang orihinal na dokumento sa orihinal nitong wika ang dapat ituring na opisyal na sanggunian. Para sa mahahalagang impormasyon, inirerekomenda ang propesyonal na pagsasaling-tao. Hindi kami mananagot sa anumang hindi pagkakaunawaan o maling interpretasyon na maaaring magmula sa paggamit ng salin na ito.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

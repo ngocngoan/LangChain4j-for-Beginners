@@ -2,85 +2,90 @@
 
 ## İçindekiler
 
+- [Video Yürütme](../../../02-prompt-engineering)
 - [Neler Öğreneceksiniz](../../../02-prompt-engineering)
 - [Ön Koşullar](../../../02-prompt-engineering)
 - [Prompt Mühendisliğini Anlamak](../../../02-prompt-engineering)
-- [Prompt Mühendisliği Temelleri](../../../02-prompt-engineering)
-  - [Sıfır-Atış Promptlama](../../../02-prompt-engineering)
-  - [Az-Atış Promptlama](../../../02-prompt-engineering)
+- [Prompt Mühendisliğinin Temelleri](../../../02-prompt-engineering)
+  - [Sıfır-Örnek İstek](../../../02-prompt-engineering)
+  - [Az-Örnek İstek](../../../02-prompt-engineering)
   - [Düşünce Zinciri](../../../02-prompt-engineering)
-  - [Rol Temelli Promptlama](../../../02-prompt-engineering)
-  - [Prompt Şablonları](../../../02-prompt-engineering)
-- [İleri Düzey Desenler](../../../02-prompt-engineering)
+  - [Rol Bazlı İstek](../../../02-prompt-engineering)
+  - [İstek Şablonları](../../../02-prompt-engineering)
+- [Gelişmiş Desenler](../../../02-prompt-engineering)
 - [Mevcut Azure Kaynaklarının Kullanımı](../../../02-prompt-engineering)
 - [Uygulama Ekran Görüntüleri](../../../02-prompt-engineering)
 - [Desenleri Keşfetmek](../../../02-prompt-engineering)
-  - [Düşük vs Yüksek Heves](../../../02-prompt-engineering)
-  - [Görev Yürütme (Araç Ön Açıklamaları)](../../../02-prompt-engineering)
-  - [Özünü Yansıtıcı Kod](../../../02-prompt-engineering)
+  - [Düşük ve Yüksek İsteklilik](../../../02-prompt-engineering)
+  - [Görev Yürütme (Araç Girişleri)](../../../02-prompt-engineering)
+  - [Kendi Kendini Yansıtan Kod](../../../02-prompt-engineering)
   - [Yapılandırılmış Analiz](../../../02-prompt-engineering)
-  - [Çok Turlu Sohbet](../../../02-prompt-engineering)
-  - [Adım Adım Mantıklı Düşünme](../../../02-prompt-engineering)
+  - [Çok Tur Sohbet](../../../02-prompt-engineering)
+  - [Adım Adım Muhakeme](../../../02-prompt-engineering)
   - [Kısıtlı Çıktı](../../../02-prompt-engineering)
-- [Gerçekte Neler Öğreniyorsunuz](../../../02-prompt-engineering)
+- [Gerçekten Ne Öğreniyorsunuz](../../../02-prompt-engineering)
 - [Sonraki Adımlar](../../../02-prompt-engineering)
+
+## Video Yürütme
+
+Bu modülün başlangıcını anlatan canlı oturumu izleyin: [LangChain4j ile Prompt Mühendisliği - Canlı Oturum](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
 
 ## Neler Öğreneceksiniz
 
 <img src="../../../translated_images/tr/what-youll-learn.c68269ac048503b2.webp" alt="Neler Öğreneceksiniz" width="800"/>
 
-Önceki modülde, hafızanın sohbet bazlı yapay zekayı nasıl mümkün kıldığına ve temel etkileşimler için GitHub Modellerini nasıl kullandığınıza baktınız. Şimdi soruları nasıl sorduğunuza — yani promptlara — Azure OpenAI'nin GPT-5.2'sini kullanarak odaklanacağız. Promptları nasıl yapılandırdığınız, aldığınız yanıtların kalitesini önemli ölçüde etkiler. Temel prompt tekniklerini gözden geçirip, ardından GPT-5.2'nin yeteneklerinden tam olarak yararlanan sekiz ileri düzey desene geçeceğiz.
+Önceki modülde, hafızanın konuşma tabanlı yapay zekayı nasıl etkinleştirdiğini gördünüz ve temel etkileşimler için GitHub Modellerini kullandınız. Şimdi soruları nasıl sorduğunuza — yani prompt’lara — odaklanacağız; Azure OpenAI'nın GPT-5.2’sini kullanarak promptların kendisini yapılandırmayı inceleyeceğiz. Promptlarınızı nasıl yapılandırdığınız, aldığınız yanıtların kalitesini önemli ölçüde etkiler. Öncelikle temel prompt tekniklerini gözden geçiriyoruz, sonra GPT-5.2’nin olanaklarını tam anlamıyla kullanan sekiz gelişmiş desene geçiyoruz.
 
-GPT-5.2'yi kullanacağız çünkü bu sürüm akıl yürütme kontrolü getiriyor — modele cevap vermeden önce ne kadar düşünmesi gerektiğini söyleyebilirsiniz. Bu, farklı promptlama stratejilerini daha belirgin hale getirir ve her yaklaşımı ne zaman kullanacağınızı anlamanıza yardımcı olur. Ayrıca GPT-5.2 için Azure'un GitHub Modellerine göre daha az oran sınırı avantajından faydalanacağız.
+GPT-5.2’yi kullanacağız çünkü muhakeme kontrolünü getiriyor - modelin cevap vermeden önce ne kadar düşünmesi gerektiğini belirtebiliyorsunuz. Bu, farklı prompt stratejilerini daha belirgin kılıyor ve hangi yöntemin ne zaman kullanılacağını anlamanızı sağlıyor. Ayrıca, GPT-5.2 için Azure’un GitHub Modellerine kıyasla daha az hız sınırlaması avantajından yararlanıyoruz.
 
 ## Ön Koşullar
 
-- Modül 01 tamamlanmış (Azure OpenAI kaynakları dağıtıldı)
-- Ana dizinde `.env` dosyası, Azure kimlik bilgilerini içerir (Modül 01'de `azd up` komutu tarafından oluşturulmuş)
+- Modül 01’in tamamlanmış olması (Azure OpenAI kaynakları dağıtıldı)
+- Kök dizinde Azure kimlik bilgileri içeren `.env` dosyası (Modül 01’de `azd up` komutu ile oluşturuldu)
 
-> **Not:** Eğer Modül 01'i tamamlamadıysanız, önce oradaki dağıtım talimatlarını takip edin.
+> **Not:** Modül 01’i tamamlamadıysanız önce oradaki dağıtım talimatlarını izleyin.
 
 ## Prompt Mühendisliğini Anlamak
 
 <img src="../../../translated_images/tr/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Prompt Mühendisliği Nedir?" width="800"/>
 
-Prompt mühendisliği, ihtiyacınız olan sonuçları tutarlı şekilde almanızı sağlayan girdi metinlerini tasarlamakla ilgilidir. Sadece soru sormak değildir — modelin tam olarak ne istediğinizi ve nasıl sunacağını anlaması için talepleri yapılandırmaktır.
+Prompt mühendisliği, ihtiyacınız olan sonuçları tutarlı şekilde almanızı sağlayan giriş metnini tasarlamakla ilgilidir. Sadece soru sormak değil — istekleri o kadar yapılandırmak ki model tam olarak ne istediğinizi ve nasıl sunacağını anlasın.
 
-Bunu bir iş arkadaşına talimat vermek gibi düşünün. "Hattı düzelt" belirsizdir. "UserService.java dosyasının 45. satırındaki null pointer istisnasını null kontrolü ekleyerek düzelt" ise spesifiktir. Dil modelleri de aynı şekilde çalışır — özgüllük ve yapı önemlidir.
+Bir meslektaşınıza talimat vermek gibi düşünün. "Hatayı düzelt" belirsizdir. "UserService.java dosyasının 45. satırındaki null pointer hatasını null kontrolü ekleyerek düzelt" ise spesifiktir. Dil modelleri de aynı şekilde çalışır — açıklık ve yapı önemlidir.
 
-<img src="../../../translated_images/tr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="LangChain4j Nasıl Uyum Sağlar" width="800"/>
+<img src="../../../translated_images/tr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="LangChain4j Nasıl Uyuyor" width="800"/>
 
-LangChain4j, altyapıyı sağlar — model bağlantıları, bellek ve mesaj türleri — prompt desenleri ise bu altyapı üzerinden gönderdiğiniz dikkatle yapılandırılmış metinlerdir. Temel yapı taşları `SystemMessage` (AI'nın davranışını ve rolünü belirler) ve `UserMessage` (gerçek isteğinizi taşır) bileşenleridir.
+LangChain4j, altyapıyı — model bağlantıları, hafıza ve mesaj türleri — sağlar; prompt desenleri ise bu altyapı üzerinden gönderdiğiniz dikkatlice yapılandırılmış metindir. Ana yapı taşları `SystemMessage` (Yapay zekanın davranışı ve rolünü belirler) ve `UserMessage` (gerçek isteğinizi taşır) bileşenleridir.
 
-## Prompt Mühendisliği Temelleri
+## Prompt Mühendisliğinin Temelleri
 
 <img src="../../../translated_images/tr/five-patterns-overview.160f35045ffd2a94.webp" alt="Beş Prompt Mühendisliği Deseninin Genel Görünümü" width="800"/>
 
-Bu modüldeki ileri desenlere geçmeden önce, beş temel promptlama tekniğini gözden geçirelim. Bunlar her prompt mühendisinin bilmesi gereken yapı taşlarıdır. [Hızlı Başlangıç modülünde](../00-quick-start/README.md#2-prompt-patterns) bu tekniklerin uygulamalarını gördüyseniz, burada kavramsal çerçeveyi bulacaksınız.
+Bu modüldeki gelişmiş desenlere dalmadan önce beş temel prompt tekniğini gözden geçirelim. Bunlar her prompt mühendisi için bilinmesi gereken yapı taşlarıdır. Eğer [Hızlı Başlangıç modülünü](../00-quick-start/README.md#2-prompt-patterns) deneyimlediyseniz, bunları uygulamada görmüşsünüzdür — işte bunların arkasındaki kavramsal çerçeve.
 
-### Sıfır-Atış Promptlama
+### Sıfır-Örnek İstek
 
-En basit yaklaşım: modele örnek vermeden doğrudan bir talimat verirsiniz. Model tamamen eğitimi üzerinden görevi anlamaya ve yerine getirmeye dayanır. Beklenen davranışın açık olduğu basit istekler için uygundur.
+En basit yaklaşım: modele örneksiz doğrudan talimat verilir. Model, görevi anlamak ve yerine getirmek için tamamen eğitimine dayanır. Beklenen davranışın açık olduğu basit istekler için iyidir.
 
-<img src="../../../translated_images/tr/zero-shot-prompting.7abc24228be84e6c.webp" alt="Sıfır-Atış Promptlama" width="800"/>
+<img src="../../../translated_images/tr/zero-shot-prompting.7abc24228be84e6c.webp" alt="Sıfır-Örnek İstek" width="800"/>
 
-*Örnek olmadan doğrudan talimat — model görevi yalnızca talimattan çıkarır*
+*Örnek olmadan doğrudan talimat — model görevi sadece talimattan çıkarır*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
 String response = model.chat(prompt);
-// Yanıt: "Olumlu"
+// Yanıt: "Pozitif"
 ```
 
-**Ne zaman kullanılır:** Basit sınıflandırmalar, doğrudan sorular, çeviriler ya da modelin ek rehberlik olmadan yapabileceği herhangi bir görev.
+**Ne zaman kullanılır:** Basit sınıflandırmalar, doğrudan sorular, çeviriler veya ek kılavuz olmadan modelin halledebileceği tüm görevler.
 
-### Az-Atış Promptlama
+### Az-Örnek İstek
 
-Modelin izlemesini istediğiniz deseni gösteren örnekler sunarsınız. Model, örneklerinizden beklenen giriş-çıkış formatını öğrenir ve bunu yeni girdilere uygular. İstenen format veya davranışın açık olmadığı görevlerde tutarlılığı önemli ölçüde artırır.
+Modelin izlemesini istediğiniz deseni gösteren örnekler verilir. Model örneklerden giriş-çıkış formatını öğrenir ve yeni girdilere uygular. Bu, istenen format veya davranışın açık olmadığı görevlerde tutarlılığı önemli ölçüde artırır.
 
-<img src="../../../translated_images/tr/few-shot-prompting.9d9eace1da88989a.webp" alt="Az-Atış Promptlama" width="800"/>
+<img src="../../../translated_images/tr/few-shot-prompting.9d9eace1da88989a.webp" alt="Az-Örnek İstek" width="800"/>
 
-*Örneklerden öğrenme — model deseni tanır ve yeni girdilere uygular*
+*Örneklerden öğrenme — model paterni tanır ve yeni girdilere uygular*
 
 ```java
 String prompt = """
@@ -97,15 +102,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Ne zaman kullanılır:** Özel sınıflandırmalar, tutarlı biçimlendirme, alan spesifik görevler ya da sıfır-atış sonuçlarının tutarsız olduğu durumlarda.
+**Ne zaman kullanılır:** Özel sınıflandırmalar, tutarlı biçimlendirme, alan-spesifik görevler veya sıfır-örnek sonuçların tutarsız olduğu durumlar.
 
 ### Düşünce Zinciri
 
-Modelden akıl yürütmesini adım adım göstermesini istersiniz. Doğrudan cevaba atlamak yerine model problemi parçalar ve her kısmı açıkça işler. Matematik, mantık ve çok adımlı akıl yürütme görevlerinde doğruluğu artırır.
+Modelin muhakemesini adım adım göstermesini ister. Cevaba doğrudan atlamak yerine, model problemi açıkça parçalara ayırır ve her adımı açıklar. Matematik, mantık ve çok adımlı muhakeme görevlerinde doğruluğu artırır.
 
-<img src="../../../translated_images/tr/chain-of-thought.5cff6630e2657e2a.webp" alt="Düşünce Zinciri Promptlama" width="800"/>
+<img src="../../../translated_images/tr/chain-of-thought.5cff6630e2657e2a.webp" alt="Düşünce Zinciri İsteği" width="800"/>
 
-*Adım adım mantıklı düşünme — karmaşık problemleri açık mantıksal adımlara bölmek*
+*Adım adım muhakeme — karmaşık problemleri açıkça mantıksal adımlara bölmek*
 
 ```java
 String prompt = """
@@ -118,15 +123,15 @@ String response = model.chat(prompt);
 // Model gösteriyor: 15 - 8 = 7, sonra 7 + 12 = 19 elma
 ```
 
-**Ne zaman kullanılır:** Matematik problemleri, mantık bulmacaları, hata ayıklama veya akıl yürütme sürecini göstermek doğruluk ve güveni artırdığında.
+**Ne zaman kullanılır:** Matematik problemleri, mantık bulmacaları, hata ayıklama veya muhakeme süreçlerinin güvenilirliği artırdığı tüm görevlerde.
 
-### Rol Temelli Promptlama
+### Rol Bazlı İstek
 
-Sorunuzdan önce AI için bir kişilik ya da rol belirleyin. Bu, yanıtın tonunu, derinliğini ve odak noktasını şekillendirir. Bir "yazılım mimarı", "genç geliştirici" ya da "güvenlik denetçisi" farklı tavsiyeler verir.
+Sorunuzu sormadan önce Yapay zekaya bir rol veya kişilik belirleyin. Bu, yanıtın tonu, derinliği ve odak noktasını şekillendirir. Bir "yazılım mimarı" farklı, bir "genç geliştirici" veya "güvenlik denetçisi" farklı öneriler verir.
 
-<img src="../../../translated_images/tr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Rol Temelli Promptlama" width="800"/>
+<img src="../../../translated_images/tr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Rol Bazlı İstek" width="800"/>
 
-*Bağlam ve kişilik belirleme — aynı soru atanmış role göre farklı yanıtlar alır*
+*Bağlam ve kişilik belirleme — atanan role göre aynı soru farklı yanıtlar alır*
 
 ```java
 String prompt = """
@@ -142,15 +147,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Ne zaman kullanılır:** Kod incelemeleri, eğitim, alan spesifik analiz veya yanıtların belirli bir uzmanlık seviyesi veya perspektife göre uyarlanması gereken durumlarda.
+**Ne zaman kullanılır:** Kod incelemeleri, eğitim, alan-spesifik analiz veya belirli uzmanlık seviyesine ya da bakış açısına göre yanıtlar gerektiğinde.
 
-### Prompt Şablonları
+### İstek Şablonları
 
-Değişken yer tutucularla yeniden kullanılabilir promptlar oluşturun. Her seferinde yeni bir prompt yazmak yerine bir şablon tanımlayıp farklı değerlerle doldurun. LangChain4j'nin `PromptTemplate` sınıfı bunu `{{variable}}` sözdizimiyle kolaylaştırır.
+Değişken yer tutucularıyla yeniden kullanılabilir promptlar oluşturun. Her seferinde yeni prompt yazmak yerine, bir şablon tanımlayıp farklı değerler girin. LangChain4j'nin `PromptTemplate` sınıfı `{{variable}}` sözdizimi ile bunu kolaylaştırır.
 
-<img src="../../../translated_images/tr/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Şablonları" width="800"/>
+<img src="../../../translated_images/tr/prompt-templates.14bfc37d45f1a933.webp" alt="İstek Şablonları" width="800"/>
 
-*Değişken yer tutucularla yeniden kullanılabilir promptlar — tek şablon, çok kullanım*
+*Değişken yer tutuculu yeniden kullanılabilir promptlar — bir şablon, birçok kullanım*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -165,25 +170,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Ne zaman kullanılır:** Farklı girdilerle tekrar eden sorgular, toplu işleme, yeniden kullanılabilir AI iş akışları ya da prompt yapısının aynı kalıp verinin değiştiği senaryolar.
+**Ne zaman kullanılır:** Farklı girdilerle tekrarlanan sorgular, toplu işlem, yeniden kullanılabilir yapay zeka iş akışları oluşturmak veya yapısı aynı kalan ancak verisi değişen senaryolar.
 
 ---
 
-Bu beş temel teknik, çoğu promptlama görevi için sağlam bir araç seti sunar. Bu modülün geri kalanı, GPT-5.2'nin akıl yürütme kontrolü, öz değerlendirme ve yapılandırılmış çıktı özelliklerini kullanan **sekiz ileri düzey desenle** devam eder.
+Bu temel beş teknik çoğu prompt görevinde sağlam bir araç seti sunar. Bu modülün geri kalanı GPT-5.2’nin muhakeme kontrolü, kendi kendini değerlendirme ve yapılandırılmış çıktı özelliklerini kullanan **sekiz gelişmiş desen** üzerine inşa edilir.
 
-## İleri Düzey Desenler
+## Gelişmiş Desenler
 
-Temelleri tamamladık, şimdi bu modülü benzersiz kılan sekiz ileri düzey desene geçelim. Tüm problemler aynı yaklaşımı gerektirmez. Bazı sorular hızlı yanıt ister, bazıları derin düşünme. Bazıları görünür akıl yürütme ister, bazıları sadece sonucu. Aşağıdaki her desen farklı bir senaryoya optimize edilmiştir — ve GPT-5.2'nin akıl yürütme kontrolü farkları daha da belirgin yapar.
+Temelleri kavradıktan sonra, bu modülü benzersiz kılan sekiz gelişmiş desene geçelim. Tüm problemler aynı yaklaşımı gerektirmez. Bazı sorular hızlı cevap ister, bazıları derin düşünme. Bazıları görünür muhakeme ister, bazıları sadece sonucu. Aşağıdaki her desen farklı senaryolar için optimize edilmiştir — ve GPT-5.2’nin muhakeme kontrolü farkları çok daha belirgin kılar.
 
-<img src="../../../translated_images/tr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Sekiz Promptlama Deseni" width="800"/>
+<img src="../../../translated_images/tr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Sekiz İstek Mühendisliği Deseni" width="800"/>
 
-*Sekiz prompt mühendisliği deseninin genel görünümü ve kullanım durumları*
+*Sekiz prompt mühendisliği deseni ve kullanım durumlarına genel bakış*
 
-<img src="../../../translated_images/tr/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="GPT-5.2 ile Akıl Yürütme Kontrolü" width="800"/>
+<img src="../../../translated_images/tr/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="GPT-5.2 ile Muhakeme Kontrolü" width="800"/>
 
-*GPT-5.2'nin akıl yürütme kontrolü, modelin ne kadar düşünmesi gerektiğini belirlemenizi sağlar — hızlı doğrudan yanıtlardan derin keşfe*
+*GPT-5.2'nin muhakeme kontrolü, modelin ne kadar düşünmesi gerektiğini belirtmenizi sağlar - hızlı, doğrudan cevaplardan derin keşfe kadar*
 
-**Düşük Heves (Hızlı ve Odaklı)** - Basit sorular için hızlı, doğrudan yanıtlar istediğinizde. Model minimum akıl yürütme yapar - maksimum 2 adım. Hesaplama, hızlı sorgular veya basit sorular için tercih edin.
+**Düşük İsteklilik (Hızlı ve Odaklı)** - Basit sorular için hızlı, doğrudan cevaplar istersiniz. Model minimal muhakeme yapar - maksimum 2 adım. Hesaplamalar, sorgular veya basit sorular için kullanın.
 
 ```java
 String prompt = """
@@ -202,12 +207,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **GitHub Copilot ile keşfedin:** [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) dosyasını açıp sorun:
-> - "Düşük heves ve yüksek hevesli promptlama desenleri arasındaki fark nedir?"
-> - "Promptlardaki XML etiketleri AI yanıtını nasıl yapılandırmaya yardımcı olur?"
-> - "Öz yansıtma desenlerini ne zaman doğrudan talimatlarla kıyaslayarak kullanmalıyım?"
+> 💡 **GitHub Copilot ile Keşfedin:** [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) dosyasını açın ve sorun:
+> - "Düşük isteklilik ve yüksek isteklilik prompt desenleri arasındaki fark nedir?"
+> - "Promptlarda XML etiketleri AI yanıtını nasıl yapılandırmaya yardım eder?"
+> - "Kendini yansıtma desenlerini ne zaman doğrudan talimatlarla kullanmalıyım?"
 
-**Yüksek Heves (Derin ve Kapsamlı)** - Kapsamlı analiz istediğiniz karmaşık problemler için. Model derinlemesine keşfeder ve detaylı akıl yürütme gösterir. Sistem tasarımı, mimari kararlar veya karmaşık araştırmalar için kullanın.
+**Yüksek İsteklilik (Derin ve Kapsamlı)** - Kapsamlı analiz istediğiniz karmaşık problemler için. Model detaylı inceler, kapsamlı muhakeme gösterir. Sistem tasarımı, mimari kararlar veya karmaşık araştırmada kullanın.
 
 ```java
 String prompt = """
@@ -221,7 +226,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Görev Yürütme (Adım Adım İlerleme)** - Çok adımlı iş akışları için. Model önceden bir plan sunar, çalışırken her adımı açıklar, sonunda özet verir. Taşınmalar, uygulamalar veya çok adımlı süreçlerde tercih edin.
+**Görev Yürütme (Adım Adım İlerleme)** - Çok adımlı iş akışları için. Model önceden plan sunar, çalışırken her adımı anlatır, ardından özet verir. Geçişler, uygulamalar ya da çok adımlı süreçlerde tercih edilir.
 
 ```java
 String prompt = """
@@ -259,18 +264,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Düşünce Zinciri promptlaması, modelden akıl yürütme sürecini açıkça göstermesini ister ve karmaşık görevlerde doğruluğu artırır. Adım adım ayrım hem insanlar hem de AI için mantığı anlamayı kolaylaştırır.
+Düşünce Zinciri istemi, modelin muhakeme sürecini göstermek için açıkça talimat verir, karmaşık görevlerde doğruluğu artırır. Adım adım parçalama hem insanlar hem AI için mantığı anlamayı kolaylaştırır.
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** Bu desen hakkında sorun:
-> - "Uzun süren işlemler için görev yürütme deseni nasıl uyarlanır?"
-> - "Üretim uygulamalarında araç ön açıklamalarını yapılandırmanın en iyi uygulamaları nelerdir?"
-> - "Bir arayüzde ara ilerleme güncellemelerini nasıl yakalayıp gösterebilirim?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Sohbet ile deneyin:** Bu desen hakkında sorun:
+> - "Uzun süren işlemler için görev yürütme desenini nasıl adapte ederim?"
+> - "Üretim uygulamalarında araç girişlerini yapılandırmanın en iyi uygulamaları nelerdir?"
+> - "Bir UI’da ara ilerleme güncellemelerini nasıl yakalayıp gösterebilirim?"
 
 <img src="../../../translated_images/tr/task-execution-pattern.9da3967750ab5c1e.webp" alt="Görev Yürütme Deseni" width="800"/>
 
-*Adım Adım: Planla → Yürüt → Özetle iş akışı*
+*Planla → Yürüt → Özetle iş akışı çok adımlı görevler için*
 
-**Özünü Yansıtıcı Kod** - Üretim kalitesinde kod üretmek için. Model, üretim standartlarına uygun, hata yönetimi içeren kodlar oluşturur. Yeni özellikler veya servisler geliştirirken kullanılır.
+**Kendi Kendini Yansıtan Kod** - Üretim kalitesinde kod üretmek için. Model, üretim standartlarına uygun hata yönetimi ile kod oluşturur. Yeni özellikler ya da servisler kurarken kullanılır.
 
 ```java
 String prompt = """
@@ -281,11 +286,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/tr/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Öz Yansıtma Döngüsü" width="800"/>
+<img src="../../../translated_images/tr/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Kendi Kendini Yansıtma Döngüsü" width="800"/>
 
-*İteratif gelişim döngüsü - oluştur, değerlendir, sorunları tespit et, geliştir, tekrarla*
+*Yinelemeli iyileştirme döngüsü - üret, değerlendir, sorunları belirle, geliştir, tekrarla*
 
-**Yapılandırılmış Analiz** - Tutarlı değerlendirme için. Model, sabit bir çerçeve kullanarak kodu inceler (doğruluk, uygulamalar, performans, güvenlik, sürdürülebilirlik). Kod incelemeleri veya kalite değerlendirmelerinde tercih edin.
+**Yapılandırılmış Analiz** - Tutarlı değerlendirme için. Model kodu sabit bir çerçevede inceler (doğruluk, uygulamalar, performans, güvenlik, sürdürülebilirlik). Kod incelemeleri veya kalite değerlendirmelerinde kullanılır.
 
 ```java
 String prompt = """
@@ -333,16 +338,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** Yapılandırılmış analiz ile ilgili sorun:
-> - "Farklı kod inceleme türleri için analiz çerçevesi nasıl özelleştirilir?"
-> - "Yapılandırılmış çıktıyı programatik olarak nasıl ayrıştırır ve işlem yaparım?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Sohbet ile deneyin:** Yapılandırılmış analiz hakkında sorun:
+> - "Farklı kod inceleme türleri için analiz çerçevesini nasıl özelleştiririm?"
+> - "Yapılandırılmış çıktıyı programatik olarak ayrıştırıp kullanmanın en iyi yolu nedir?"
 > - "Farklı inceleme oturumlarında tutarlı şiddet seviyeleri nasıl sağlanır?"
 
 <img src="../../../translated_images/tr/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Yapılandırılmış Analiz Deseni" width="800"/>
 
-*Tutarlı kod incelemeleri için şiddet seviyesi içeren çerçeve*
+*Tutarlı kod incelemeleri için şiddet seviyeleri ile çerçeve*
 
-**Çok Turlu Sohbet** - Bağlam gerektiren konuşmalar için. Model önceki mesajları hatırlar ve üzerine inşa eder. Etkileşimli yardım seansları veya karmaşık soru-cevaplarda kullanın.
+**Çok Tur Sohbet** - Bağlam gerektiren konuşmalar için. Model önceki mesajları hatırlar ve bunların üzerine inşa eder. Etkileşimli yardım oturumları veya karmaşık S.S.S. için idealdir.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -356,11 +361,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/tr/context-memory.dff30ad9fa78832a.webp" alt="Bağlam Belleği" width="800"/>
+<img src="../../../translated_images/tr/context-memory.dff30ad9fa78832a.webp" alt="Bağlam Hafızası" width="800"/>
 
-*Konuşma bağlamının çok tur boyunca birikmesi, token limitine ulaşana kadar devam eder*
+*Konuşma bağlamı çoklu turlar boyunca token sınırına ulaşana kadar birikir*
 
-**Adım Adım Mantıklı Düşünme** - Görünür mantık gerektiren sorunlar için. Model her adımın açık akıl yürütmesini gösterir. Matematik problemleri, mantık bulmacaları veya düşünme sürecini anlamak istediğinizde kullanılır.
+**Adım Adım Muhakeme** - Görünür mantık gerektiren problemlerde. Model her adım için açık muhakeme gösterir. Matematik problemleri, mantık bulmacaları veya düşünce sürecini anlamak istediğinizde kullanılır.
 
 ```java
 String prompt = """
@@ -374,11 +379,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/tr/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Adım Adım Deseni" width="800"/>
+<img src="../../../translated_images/tr/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Adım Adım Desen" width="800"/>
 
-*Problemleri açık mantıksal adımlara bölmek*
+*Karmaşık problemleri açık mantıksal adımlara bölmek*
 
-**Kısıtlı Çıktı** - Belirli format gereksinimlerine sahip yanıtlar için. Model, biçim ve uzunluk kurallarına sıkı uyar. Özetler veya kesin çıktı yapısı gereken durumlarda kullanılır.
+**Kısıtlı Çıktı** - Belirli format gereklilikleri olan yanıtlar için. Model format ve uzunluk kurallarına sıkı sıkıya uyar. Özetler veya kesin çıktı yapısı gereken durumlarda kullanılır.
 
 ```java
 String prompt = """
@@ -396,35 +401,35 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/tr/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Kısıtlı Çıktı Deseni" width="800"/>
 
-*Belirli biçim, uzunluk ve yapı kurallarının uygulanması*
+*Belirli format, uzunluk ve yapı gerekliliklerini zorunlu kılma*
 
 ## Mevcut Azure Kaynaklarının Kullanımı
 
 **Dağıtımı doğrulayın:**
 
-Ana dizinde Azure kimlik bilgilerini içeren `.env` dosyasının var olduğundan emin olun (Modül 01 sırasında oluşturulmuş):  
+Kök dizinde Azure kimlik bilgileri içeren `.env` dosyasının var olduğundan emin olun (Modül 01 sırasında oluşturuldu):
 ```bash
-cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermelidir
+cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 ```
 
 **Uygulamayı başlatın:**
 
-> **Not:** Eğer Modül 01'de `./start-all.sh` komutuyla tüm uygulamaları zaten başlattıysanız, bu modül 8083 portunda çalışıyor demektir. Aşağıdaki başlatma komutlarını atlayıp doğrudan http://localhost:8083 adresine gidebilirsiniz.
+> **Not:** Modül 01’den `./start-all.sh` ile tüm uygulamaları zaten başlattıysanız bu modül 8083 portunda çalışmaktadır. Aşağıdaki başlatma komutlarını atlayıp doğrudan http://localhost:8083 adresine gidebilirsiniz.
 
-**Seçenek 1: Spring Boot Dashboard Kullanımı (VS Code kullanıcıları için önerilir)**
+**Seçenek 1: Spring Boot Panelini Kullanma (VS Code kullanıcıları için önerilir)**
+Geliştirici konteyneri, tüm Spring Boot uygulamalarını yönetmek için görsel bir arayüz sağlayan Spring Boot Dashboard uzantısını içerir. VS Code’un sol tarafındaki Aktivite Çubuğunda (Spring Boot simgesine bakın) bulabilirsiniz.
 
-Geliştirme konteyneri, tüm Spring Boot uygulamalarını yönetmek için görsel arayüz sağlayan Spring Boot Dashboard uzantısını içerir. VS Code'un sol tarafındaki Aktivite Çubuğunda (Spring Boot simgesini arayın) bulabilirsiniz.
+Spring Boot Dashboard'dan şunları yapabilirsiniz:
+- Çalışma alanındaki tüm mevcut Spring Boot uygulamalarını görme
+- Uygulamaları tek tıklamayla başlatma/durdurma
+- Uygulama günlüklerini gerçek zamanlı görüntüleme
+- Uygulama durumunu izleme
 
-Spring Boot Dashboard'dan şunları yapabilirsiniz:  
-- Çalışma alanındaki tüm Spring Boot uygulamalarını görmek  
-- Uygulamaları tek tıklamayla başlatmak/durdurmak  
-- Uygulama günlüklerini gerçek zamanlı izlemek  
-- Uygulama durumunu takip etmek  
-Yalnızca "prompt-engineering" yanındaki oynat düğmesine tıklayarak bu modülü başlatabilir veya tüm modülleri aynı anda çalıştırabilirsiniz.
+Bu modülü başlatmak için "prompt-engineering" yanındaki oynat düğmesine tıklayın veya tüm modülleri aynı anda başlatın.
 
-<img src="../../../translated_images/tr/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Kontrol Paneli" width="400"/>
+<img src="../../../translated_images/tr/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Seçenek 2: Shell komut dosyalarını kullanma**
+**Seçenek 2: Shell betikleri kullanma**
 
 Tüm web uygulamalarını (modüller 01-04) başlatın:
 
@@ -440,7 +445,7 @@ cd ..  # Kök dizinden
 .\start-all.ps1
 ```
 
-Ya da sadece bu modülü başlatın:
+Veya sadece bu modülü başlatın:
 
 **Bash:**
 ```bash
@@ -454,9 +459,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Her iki komut dosyası da otomatik olarak kök `.env` dosyasından ortam değişkenlerini yükler ve JAR dosyaları yoksa oluşturur.
+Her iki betik de otomatik olarak kök `.env` dosyasından ortam değişkenlerini yükler ve JAR dosyaları yoksa oluşturur.
 
-> **Not:** Başlatmadan önce tüm modülleri elle derlemeyi tercih ederseniz:
+> **Not:** Başlatmadan önce tüm modülleri manuel olarak oluşturmayı tercih ederseniz:
 >
 > **Bash:**
 > ```bash
@@ -483,86 +488,86 @@ cd .. && ./stop-all.sh  # Tüm modüller
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Yalnızca bu modül
+.\stop.ps1  # Sadece bu modül
 # Veya
 cd ..; .\stop-all.ps1  # Tüm modüller
 ```
 
 ## Uygulama Ekran Görüntüleri
 
-<img src="../../../translated_images/tr/dashboard-home.5444dbda4bc1f79d.webp" alt="Kontrol Paneli Ana Sayfası" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
+<img src="../../../translated_images/tr/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Özellikleri ve kullanım alanlarıyla birlikte tüm 8 prompt mühendisliği desenini gösteren ana kontrol paneli*
+*Tüm 8 prompt mühendisliği desenini, özelliklerini ve kullanım durumlarını gösteren ana kontrol paneli*
 
 ## Desenleri Keşfetmek
 
-Web arayüzü farklı istem stratejileriyle denemeler yapmanıza olanak tanır. Her desen farklı problemleri çözer - hangi yaklaşımın ne zaman öne çıktığını görmek için deneyin.
+Web arayüzü, farklı prompt verme stratejileriyle deneme yapmanızı sağlar. Her desen farklı sorunları çözer - hangi yaklaşımın ne zaman parladığını görmek için deneyin.
 
-> **Not: Akışlı (Streaming) vs Akışsız (Non-Streaming)** — Her desen sayfasında iki düğme bulunur: **🔴 Akış Yanıtı (Canlı)** ve **Akışsız** seçeneği. Akışlı yöntem, modelin oluşturduğu tokenleri gerçek zamanlı göstermek için Server-Sent Events (SSE) kullanır; böylece ilerlemeyi anında görürsünüz. Akışsız seçenek ise tüm yanıt gelene kadar bekler. Derin düşünme gerektiren istemlerde (örneğin, Yüksek Heves, Kendini Değerlendiren Kod) akışsız çağrı çok uzun sürebilir — bazen dakikalarca — ve görünür geri bildirim olmaz. **Karışık istemler üzerinde deneme yaparken akışlı modu kullanın** böylece modelin çalıştığını görebilir ve isteğin zaman aşımına uğradığı izlenimini önlersiniz.
+> **Not: Akışlı vs Akışsız** — Her desen sayfası iki düğme sunar: **🔴 Canlı Yanıt Akışı** (Stream Response (Live)) ve **Akışsız** (Non-streaming) seçeneği. Akışlı, model tarafından üretilen tokenları gerçek zamanlı göstermek için Server-Sent Events (SSE) kullanır, böylece ilerlemeyi anında görürsünüz. Akışsız seçenek ise yanıtın tamamını bekler ve sonra gösterir. Derin düşünme gerektiren promptlar (örneğin, High Eagerness, Self-Reflecting Code) için akışsız çağrı çok uzun sürebilir - bazen dakikalarca - ve görünür bir geri bildirim olmaz. **Karmaşık promptları denerken akışlı kullanın** ki modelin çalıştığını görebilin ve isteğin zaman aşımına uğradığı izleniminden kaçının.
 >
-> **Not: Tarayıcı Gereksinimi** — Akış özelliği, Fetch Streams API (`response.body.getReader()`) kullanır ve tam bir tarayıcı (Chrome, Edge, Firefox, Safari) gerektirir. VS Code'un yerleşik Basit Tarayıcısında çalışmaz çünkü onun web görüntüleyicisi ReadableStream API'sini desteklemez. Basit Tarayıcı kullanırsanız, akışsız düğmeler normal çalışmaya devam eder — sadece akışlı düğmeler etkilenir. Tam deneyim için `http://localhost:8083` adresini harici bir tarayıcıda açın.
+> **Not: Tarayıcı Gereksinimi** — Akış özelliği Fetch Streams API'sini (`response.body.getReader()`) kullanır ve tam bir tarayıcı (Chrome, Edge, Firefox, Safari) gerekir. VS Code’un yerleşik Simple Browser'ında çalışmaz, çünkü onun webview’u ReadableStream API’sini desteklemez. Simple Browser kullanırsanız, akışsız düğmeler normal şekilde çalışır — yalnızca akış düğmeleri etkilenir. Tam deneyim için `http://localhost:8083` adresini harici bir tarayıcıda açın.
 
-### Düşük ve Yüksek Heves
+### Düşük vs Yüksek Heves
 
-"Düşük Heves" kullanarak "200'ün %15'i nedir?" gibi basit bir soru sorun. Anında, doğrudan cevap alırsınız. Şimdi "Yüksek trafikli bir API için önbellekleme stratejisi tasarla" gibi karmaşık bir soru sorun. **🔴 Akış Yanıtı (Canlı)** düğmesine tıklayın ve modelin ayrıntılı düşüncesinin token token ortaya çıkışını izleyin. Aynı model, aynı soru yapısı - ama istem ona ne kadar düşünmesi gerektiğini söylüyor.
+"Düşük Heves" kullanarak "200'ün %15'i nedir?" gibi basit bir soru sorun. Anında, doğrudan yanıt alırsınız. Şimdi "Yüksek Trafikli API için önbellekleme stratejisi tasarla" gibi karmaşık bir şey sorun, Yüksek Heves kullanarak. **🔴 Canlı Yanıt Akışı** düğmesine tıklayın ve modelin detaylı akıl yürütmesini token token izleyin. Aynı model, aynı soru yapısı - ama prompt ona ne kadar düşünmesi gerektiğini söyler.
 
-### Görev Yürütme (Araç Önizlemeleri)
+### Görev Yürütme (Araç Girişleri)
 
-Çok adımlı iş akışları, ön planlama ve ilerleme anlatımı sayesinde daha verimlidir. Model ne yapacağını özetler, her adımı anlatır, sonra sonuçları toparlar.
+Çok adımlı iş akışları, önceden planlama ve ilerleme anlatımı ile fayda sağlar. Model ne yapacağını özetler, her adımı anlatır ve sonra sonuçları özetler.
 
-### Kendini Değerlendiren Kod
+### Kendini Yansıtan Kod
 
-"Bir e-posta doğrulama servisi oluştur"u deneyin. Sadece kod oluşturup durmak yerine model, kalite kriterlerine göre değerlendirir, zayıflıkları bulur ve geliştirir. Kod üretimi üretim standartlarına ulaşana kadar yinelemeyi göreceksiniz.
+"Bir e-posta doğrulama servisi oluştur" deneyin. Model sadece kod üretmekle kalmaz, kalite kriterlerine göre değerlendirir, zayıf yönleri belirler ve geliştirir. Kod üretim standartlarına ulaşana kadar yinelemeleri görürsünüz.
 
-### Yapılandırılmış Analiz
+### Yapısal Analiz
 
-Kod incelemeleri için tutarlı değerlendirme çerçeveleri gereklidir. Model kodu, doğruluk, uygulamalar, performans, güvenlik gibi sabit kategorilerle ve şiddet dereceleriyle analiz eder.
+Kod incelemeleri tutarlı değerlendirme çerçeveleri gerektirir. Model, kodu doğruluk, uygulama şekilleri, performans, güvenlik gibi sabit kategoriler altında ve şiddet düzeyleriyle analiz eder.
 
 ### Çok Turlu Sohbet
 
-"Spring Boot nedir?" diye sorun, ardından hemen "Bana bir örnek göster" deyin. Model ilk soruyu hatırlar ve size özel bir Spring Boot örneği verir. Hafıza olmasaydı, ikinci soru çok belirsiz olurdu.
+"Spring Boot nedir?" diye sorun, sonra hemen "Bana bir örnek göster" deyin. Model ilk soruyu hatırlar ve size özel bir Spring Boot örneği verir. Bellek yoksa bu ikinci soru çok belirsiz olurdu.
 
 ### Adım Adım Akıl Yürütme
 
-Bir matematik problemi seçin ve hem Adım Adım Akıl Yürütme hem de Düşük Heves ile deneyin. Düşük heves size sadece cevabı verir - hızlı ama şeffaf değil. Adım adım her hesaplama ve kararı gösterir.
+Bir matematik problemi seçin ve hem Adım Adım Akıl Yürütme hem de Düşük Heves ile deneyin. Düşük heves sadece cevabı hızlı verir, ama kapalıdır. Adım adım hesaplamaları ve kararları size gösterir.
 
 ### Kısıtlanmış Çıktı
 
-Belirli format veya kelime sayısı gerektiğinde bu desen sıkı uyum sağlar. Tam olarak 100 kelimelik madde işaretli bir özet üretmeyi deneyin.
+Belirli formatlarda veya kelime sayısında çıktı isterseniz, bu desen sıkı uyumu zorunlu kılar. Tam olarak 100 kelimelik madde işaretleriyle bir özet oluşturmayı deneyin.
 
-## Gerçekte Ne Öğreniyorsunuz
+## Gerçekten Ne Öğreniyorsunuz
 
 **Akıl Yürütme Çabası Her Şeyi Değiştirir**
 
-GPT-5.2, istemleriniz aracılığıyla hesaplama çabasını kontrol etmenizi sağlar. Düşük çaba, hızlı yanıtlar ve az keşif demektir. Yüksek çaba, modelin derin düşünmek için zaman ayırması anlamına gelir. Siz görevin karmaşıklığına göre çabayı ayarlamayı öğreniyorsunuz - basit sorularda zaman kaybetmeyin, ama karmaşık kararlarda da acele etmeyin.
+GPT-5.2, promptlarınız aracılığıyla hesaplama çabasını kontrol etmenizi sağlar. Düşük çaba, minimal keşifle hızlı yanıtlar demektir. Yüksek çaba, modelin derin düşünmek için zaman harcamasıdır. Görev karmaşıklığına uygun çabayı eşlemeyi öğreniyorsunuz - basit sorular için zaman kaybetmeyin ama karmaşık kararlarda acele etmeyin.
 
 **Yapı Davranışı Yönlendirir**
 
-İstemlerdeki XML etiketlerini fark ettiniz mi? Süs amaçlı değiller. Modeller yapılandırılmış talimatları serbest metinden daha güvenilir uygular. Çok adımlı işlemler veya karmaşık mantık gerektiğinde yapı, modelin nerede olduğunu ve sıradaki adımı takip etmesine yardımcı olur.
+Promptlardaki XML etiketlerine dikkat ettiniz mi? Süs değil. Modeller, serbest metinden daha güvenilir şekilde yapılandırılmış talimatları izler. Çok adımlı süreçler veya karmaşık mantık gerektiğinde, yapı modelin nerede olduğunu ve sıradaki adımı takip etmesine yardım eder.
 
-<img src="../../../translated_images/tr/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Yapısı" width="800"/>
+<img src="../../../translated_images/tr/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Açık bölümler ve XML tarzı organizasyon ile iyi yapılandırılmış bir istemin anatomisi*
+*Açık bölümler ve XML tarzı düzeni olan iyi yapılandırılmış bir prompt anatomisi*
 
-**Kendini Değerlendirme Yoluyla Kalite**
+**Kalite Kendi Kendini Değerlendirme İle Gelir**
 
-Kendini değerlendiren desenler kalite ölçütlerini açığa çıkarır. Modelin "doğru yapmasını" ummak yerine neyin "doğru" olduğunu kesin olarak belirtirsiniz: doğru mantık, hata yönetimi, performans, güvenlik. Model kendi çıktısını değerlendirebilir ve iyileştirebilir. Bu kod üretimini bir piyango olmaktan çıkarıp bir sürece dönüştürür.
+Kendini yansıtan desenler, kalite kriterlerini açık hale getirir. Modelin "doğru yapmasını" umut etmek yerine, ona "doğru"nun ne olduğunu tam olarak söylersiniz: doğru mantık, hata işleme, performans, güvenlik. Sonra model kendi çıktısını değerlendirebilir ve geliştirebilir. Bu, kod üretimini bir şans oyunundan bir sürece dönüştürür.
 
 **Bağlam Sınırlıdır**
 
-Çok turlu sohbetler her istekle mesaj geçmişini içerir. Ancak bir sınır vardır - her modelde maksimum token sayısı vardır. Konuşmalar büyüdükçe ilgili bağlamı korumak için stratejiler geliştirmeniz gerekir. Bu modül size hafızanın nasıl çalıştığını gösterir; ileride ne zaman özetleyeceğinizi, ne zaman unutacağınızı ve ne zaman geri çağıracağınızı öğreneceksiniz.
+Çok turlu sohbetler, her istekte mesaj geçmişini içerir. Ama bir sınır vardır - her modelin maksimum token sayısı vardır. Sohbetler büyüdükçe, ilgili bağlamı korumak ama bu sınırı aşmamak için stratejiler gerekir. Bu modül size belleğin nasıl çalıştığını gösterir; sonra ne zaman özetlemeniz, ne zaman unutmanız ve ne zaman geri getirme yapmanız gerektiğini öğreneceksiniz.
 
 ## Sonraki Adımlar
 
-**Sonraki Modül:** [03-rag - RAG (Bilgi Tabanlı Üretim)](../03-rag/README.md)
+**Sonraki Modül:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
 
 ---
 
-**Navigasyon:** [← Önceki: Modül 01 - Giriş](../01-introduction/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 03 - RAG →](../03-rag/README.md)
+**Gezinme:** [← Önceki: Modül 01 - Giriş](../01-introduction/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Feragatname**:  
-Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluğa özen gösterilse de, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal belge, kendi ana dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucunda oluşabilecek yanlış anlamalar veya yorumlamalar nedeniyle sorumluluk kabul edilmemektedir.
+Bu belge, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluğu sağlamaya çalışsak da, otomatik çeviriler hata veya yanlışlık içerebilir. Orijinal belgenin kendi dili, yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımıyla ortaya çıkabilecek yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

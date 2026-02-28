@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../02-prompt-engineering)
 - [What You'll Learn](../../../02-prompt-engineering)
 - [Prerequisites](../../../02-prompt-engineering)
 - [Understanding Prompt Engineering](../../../02-prompt-engineering)
@@ -24,6 +25,10 @@
   - [Constrained Output](../../../02-prompt-engineering)
 - [What You're Really Learning](../../../02-prompt-engineering)
 - [Next Steps](../../../02-prompt-engineering)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
 
 ## What You'll Learn
 
@@ -412,7 +417,6 @@ cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 > **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
 
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
-
 The dev container includes the Spring Boot Dashboard extension, which provides a visual interface to manage all Spring Boot applications. You can find it in the Activity Bar on the left side of VS Code (look for the Spring Boot icon).
 
 From the Spring Boot Dashboard, you can:
@@ -420,6 +424,7 @@ From the Spring Boot Dashboard, you can:
 - Start/stop applications with a single click
 - View application logs in real-time
 - Monitor application status
+
 Simply click the play button next to "prompt-engineering" to start this module, or start all modules at once.
 
 <img src="../../../translated_images/en/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
@@ -564,5 +569,5 @@ Multi-turn conversations work by including message history with each request. Bu
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please note that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not responsible for any misunderstandings or misinterpretations arising from the use of this translation.
+This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
