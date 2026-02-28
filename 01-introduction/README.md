@@ -51,6 +51,8 @@ Language models are stateless. Each API call is independent. If you send "My nam
 
 This is fine for simple Q&A but useless for real applications. Customer service bots need to remember what you told them. Personal assistants need context. Any multi-turn conversation requires memory.
 
+The following diagram contrasts the two approaches — on the left, a stateless call that forgets your name; on the right, a stateful call backed by ChatMemory that remembers it.
+
 <img src="images/stateless-vs-stateful.png" alt="Stateless vs Stateful Conversations" width="800"/>
 
 *The difference between stateless (independent calls) and stateful (context-aware) conversations*
@@ -69,7 +71,7 @@ Tokens are how AI models measure and process text. Words, punctuation, and even 
 
 Chat memory solves the stateless problem by maintaining conversation history. Before sending your request to the model, the framework prepends relevant previous messages. When you ask "What's my name?", the system actually sends the entire conversation history, allowing the model to see you previously said "My name is John."
 
-LangChain4j provides memory implementations that handle this automatically. You choose how many messages to retain and the framework manages the context window.
+LangChain4j provides memory implementations that handle this automatically. You choose how many messages to retain and the framework manages the context window. The diagram below shows how MessageWindowChatMemory maintains a sliding window of recent messages.
 
 <img src="images/memory-window.png" alt="Memory Window Concept" width="800"/>
 
@@ -211,6 +213,8 @@ From the Spring Boot Dashboard, you can:
 Simply click the play button next to "introduction" to start this module, or start all modules at once.
 
 <img src="images/dashboard.png" alt="Spring Boot Dashboard" width="400"/>
+
+*The Spring Boot Dashboard in VS Code — start, stop, and monitor all modules from one place*
 
 **Option 2: Using shell scripts**
 

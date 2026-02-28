@@ -90,6 +90,8 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 
 > **💡 Already seen Easy RAG in action?** The [Quick Start module](../00-quick-start/README.md) includes a Document Q&A example ([`SimpleReaderDemo.java`](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) that uses the Easy RAG approach — LangChain4j handles embedding, searching, and prompt assembly automatically. This module takes the next step by breaking open that pipeline so you can see and control each stage yourself.
 
+The diagram below shows the Easy RAG pipeline from that Quick Start example. Notice how `AiServices` and `EmbeddingStoreContentRetriever` hide all the complexity — you load a document, attach a retriever, and get answers. The Native approach in this module breaks each of those hidden steps open:
+
 <img src="images/easy-rag-pipeline.png" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
 *This diagram shows the Easy RAG pipeline from `SimpleReaderDemo.java`. Compare this with the Native approach used in this module: Easy RAG hides the embedding, retrieval, and prompt assembly behind `AiServices` and `ContentRetriever` — you load a document, attach a retriever, and get answers. The Native approach in this module breaks that pipeline open so you call each stage (embed, search, assemble context, generate) yourself, giving you full visibility and control.*
@@ -131,6 +133,8 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 [LangChainRagConfig.java](src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
 Each chunk is converted into a numerical representation called an embedding — essentially a meaning-to-numbers converter. The embedding model isn't "intelligent" the way a chat model is; it can't follow instructions, reason, or answer questions. What it can do is map text into a mathematical space where similar meanings land near each other — "car" near "automobile," "refund policy" near "return my money." Think of a chat model as a person you can talk to; an embedding model is an ultra-good filing system.
+
+The diagram below visualizes this concept — text goes in, numerical vectors come out, and similar meanings produce nearby vectors:
 
 <img src="images/embedding-model-concept.png" alt="Embedding Model Concept" width="800"/>
 
@@ -417,18 +421,6 @@ RAG isn't always the right approach. The decision guide below helps you determin
 <img src="images/when-to-use-rag.png" alt="When to Use RAG" width="800"/>
 
 *This diagram shows a decision guide for when RAG adds value versus when simpler approaches are sufficient.*
-
-**Use RAG when:**
-- Answering questions about proprietary documents
-- Information changes frequently (policies, prices, specifications)
-- Accuracy requires source attribution
-- Content is too large to fit in a single prompt
-- You need verifiable, grounded responses
-
-**Don't use RAG when:**
-- Questions require general knowledge the model already has
-- Real-time data is needed (RAG works on uploaded documents)
-- Content is small enough to include directly in prompts
 
 ## Next Steps
 

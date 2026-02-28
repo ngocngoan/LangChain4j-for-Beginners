@@ -28,6 +28,8 @@ You've built conversational AI, mastered prompts, grounded responses in document
 
 The Model Context Protocol (MCP) provides exactly that - a standard way for AI applications to discover and use external tools. Instead of writing custom integrations for each data source or service, you connect to MCP servers that expose their capabilities in a consistent format. Your AI agent can then discover and use these tools automatically.
 
+The diagram below shows the difference — without MCP, every integration requires custom point-to-point wiring; with MCP, a single protocol connects your app to any tool:
+
 <img src="images/mcp-comparison.png" alt="MCP Comparison" width="800"/>
 
 *Before MCP: Complex point-to-point integrations. After MCP: One protocol, endless possibilities.*
@@ -36,11 +38,15 @@ MCP solves a fundamental problem in AI development: every integration is custom.
 
 MCP standardizes this. An MCP server exposes tools with clear descriptions and schemas. Any MCP client can connect, discover available tools, and use them. Build once, use everywhere.
 
+The diagram below illustrates this architecture — a single MCP client (your AI application) connects to multiple MCP servers, each exposing their own set of tools through the standard protocol:
+
 <img src="images/mcp-architecture.png" alt="MCP Architecture" width="800"/>
 
 *Model Context Protocol architecture - standardized tool discovery and execution*
 
 ## How MCP Works
+
+Under the hood, MCP uses a layered architecture. Your Java application (the MCP client) discovers available tools, sends JSON-RPC requests through a transport layer (Stdio or HTTP), and the MCP server executes operations and returns results. The following diagram breaks down each layer of this protocol:
 
 <img src="images/mcp-protocol-detail.png" alt="MCP Protocol Detail" width="800"/>
 
@@ -62,7 +68,7 @@ To use MCP with LangChain4j, add this Maven dependency:
 
 **Tool Discovery**
 
-When your client connects to an MCP server, it asks "What tools do you have?" The server responds with a list of available tools, each with descriptions and parameter schemas. Your AI agent can then decide which tools to use based on user requests.
+When your client connects to an MCP server, it asks "What tools do you have?" The server responds with a list of available tools, each with descriptions and parameter schemas. Your AI agent can then decide which tools to use based on user requests. The diagram below shows this handshake — the client sends a `tools/list` request and the server returns its available tools with descriptions and parameter schemas:
 
 <img src="images/tool-discovery.png" alt="MCP Tool Discovery" width="800"/>
 
@@ -70,7 +76,7 @@ When your client connects to an MCP server, it asks "What tools do you have?" Th
 
 **Transport Mechanisms**
 
-MCP supports different transport mechanisms. This module demonstrates the Stdio transport for local processes:
+MCP supports different transport mechanisms. The two options are Stdio (for local subprocess communication) and Streamable HTTP (for remote servers). This module demonstrates the Stdio transport:
 
 <img src="images/transport-mechanisms.png" alt="Transport Mechanisms" width="800"/>
 
@@ -104,6 +110,8 @@ The `@modelcontextprotocol/server-filesystem` server exposes the following tools
 | `get_file_info` | Get file metadata (size, timestamps, permissions) |
 | `create_directory` | Create a directory (including parent directories) |
 | `move_file` | Move or rename a file or directory |
+
+The following diagram shows how Stdio transport works at runtime — your Java application spawns the MCP server as a child process and they communicate through stdin/stdout pipes, with no network or HTTP involved:
 
 <img src="images/stdio-transport-flow.png" alt="Stdio Transport Flow" width="800"/>
 
@@ -262,7 +270,7 @@ String response = supervisor.invoke("Read the file at /path/file.txt and generat
 
 #### Response Strategies
 
-When you configure a `SupervisorAgent`, you specify how it should formulate its final answer to the user after the sub-agents have completed their tasks.
+When you configure a `SupervisorAgent`, you specify how it should formulate its final answer to the user after the sub-agents have completed their tasks. The diagram below shows the three available strategies — LAST returns the final agent's output directly, SUMMARY synthesizes all outputs through an LLM, and SCORED picks whichever scores higher against the original request:
 
 <img src="images/response-strategies.png" alt="Response Strategies" width="800"/>
 
@@ -374,6 +382,8 @@ The example demonstrates several advanced features of the agentic module. Let's 
 - The Supervisor to synthesize a final response
 - You to inspect what each agent produced
 
+The diagram below shows how Agentic Scope works as shared memory in the file-to-report workflow — FileAgent writes its output under the key `fileContent`, ReportAgent reads that and writes its own output under `report`:
+
 <img src="images/agentic-scope.png" alt="Agentic Scope Shared Memory" width="800"/>
 
 *Agentic Scope acts as shared memory — FileAgent writes `fileContent`, ReportAgent reads it and writes `report`, and your code reads the final result.*
@@ -389,6 +399,8 @@ String report = scope.readState("report");            // Structured report from 
 - **beforeAgentInvocation** - Called when the Supervisor selects an agent, letting you see which agent was chosen and why
 - **afterAgentInvocation** - Called when an agent completes, showing its result
 - **inheritedBySubagents** - When true, the listener monitors all agents in the hierarchy
+
+The following diagram shows the full Agent Listener lifecycle, including how `onError` handles failures during agent execution:
 
 <img src="images/agent-listeners.png" alt="Agent Listeners Lifecycle" width="800"/>
 
@@ -416,7 +428,7 @@ AgentListener monitor = new AgentListener() {
 };
 ```
 
-Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several powerful workflow patterns and features:
+Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several powerful workflow patterns. The diagram below shows all five — from simple sequential pipelines to human-in-the-loop approval workflows:
 
 <img src="images/workflow-patterns.png" alt="Agent Workflow Patterns" width="800"/>
 
@@ -434,6 +446,8 @@ Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several
 
 Now that you've explored MCP and the agentic module in action, let's summarize when to use each approach.
 
+One of MCP's biggest advantages is its growing ecosystem. The diagram below shows how a single universal protocol connects your AI application to a wide variety of MCP servers — from filesystem and database access to GitHub, email, web scraping, and more:
+
 <img src="images/mcp-ecosystem.png" alt="MCP Ecosystem" width="800"/>
 
 *MCP creates a universal protocol ecosystem — any MCP-compatible server works with any MCP-compatible client, enabling tool sharing across applications.*
@@ -444,11 +458,15 @@ Now that you've explored MCP and the agentic module in action, let's summarize w
 
 **The Supervisor Agent pattern** shines when the workflow isn't predictable in advance and you want the LLM to decide, when you have multiple specialized agents that need dynamic orchestration, when building conversational systems that route to different capabilities, or when you want the most flexible, adaptive agent behavior.
 
+To help you decide between the custom `@Tool` methods from Module 04 and MCP tools from this module, the following comparison highlights the key trade-offs — custom tools give you tight coupling and full type safety for app-specific logic, while MCP tools offer standardized, reusable integrations:
+
 <img src="images/custom-vs-mcp-tools.png" alt="Custom Tools vs MCP Tools" width="800"/>
 
 *When to use custom @Tool methods vs MCP tools — custom tools for app-specific logic with full type safety, MCP tools for standardized integrations that work across applications.*
 
 ## Congratulations!
+
+You've made it through all five modules of the LangChain4j for Beginners course! Here's a look at the full learning journey you've completed — from basic chat all the way to MCP-powered agentic systems:
 
 <img src="images/course-completion.png" alt="Course Completion" width="800"/>
 
