@@ -149,11 +149,11 @@ To use the agentic module, add this Maven dependency:
 - Environment variables configured in `.env` file (from the root directory):
   - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (same as Modules 01-04)
 
-> **Note:** If you haven't set up your environment variables yet, see [Module 00 - Quick Start](../00-quick-start/README.md) for instructions, or copy `.env.example` to `.env` in the root directory and fill in your values.
+> **Note:** If you haven't set up your environment variables yet, see [Module 01 - Introduction](../01-introduction/README.md) for deployment instructions (`azd up` creates the `.env` file automatically), or copy `.env.example` to `.env` in the root directory and fill in your values.
 
 ## Quick Start
 
-**Using VS Code:** Simply right-click on any demo file in the Explorer and select **"Run Java"**, or use the launch configurations from the Run and Debug panel (make sure you've added your token to the `.env` file first).
+**Using VS Code:** Simply right-click on any demo file in the Explorer and select **"Run Java"**, or use the launch configurations from the Run and Debug panel (make sure your `.env` file is configured with Azure credentials first).
 
 **Using Maven:** Alternatively, you can run from the command line with the examples below.
 

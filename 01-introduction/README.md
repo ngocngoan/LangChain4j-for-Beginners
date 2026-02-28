@@ -24,7 +24,7 @@ Watch this live session that explains how to get started with this module:
 
 ## What You'll Learn
 
-If you completed the quick start, you saw how to send prompts and get responses. That's the foundation, but real applications need more. This module teaches you how to build conversational AI that remembers context and maintains state - the difference between a one-off demo and a production-ready application.
+In the quick start, you used GitHub Models to send prompts, call tools, build a RAG pipeline, and test guardrails. Those demos showed what's possible — now we switch to Azure OpenAI and GPT-5.2 and start building production-style applications. This module focuses on conversational AI that remembers context and maintains state — the concepts those quick start demos used behind the scenes but didn't explain.
 
 We'll use Azure OpenAI's GPT-5.2 throughout this guide because its advanced reasoning capabilities make the behavior of different patterns more apparent. When you add memory, you'll clearly see the difference. This makes it easier to understand what each component brings to your application.
 
@@ -186,7 +186,7 @@ Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials:
+Ensure the `.env` file exists in the root directory with Azure credentials. Run this from the module directory (`01-introduction/`):
 
 **Bash:**
 ```bash
