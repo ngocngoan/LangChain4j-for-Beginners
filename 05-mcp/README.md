@@ -91,6 +91,20 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
+The `@modelcontextprotocol/server-filesystem` server exposes the following tools, all sandboxed to the directories you specify:
+
+| Tool | Description |
+|------|-------------|
+| `read_file` | Read the contents of a single file |
+| `read_multiple_files` | Read multiple files in one call |
+| `write_file` | Create or overwrite a file |
+| `edit_file` | Make targeted find-and-replace edits |
+| `list_directory` | List files and directories at a path |
+| `search_files` | Recursively search for files matching a pattern |
+| `get_file_info` | Get file metadata (size, timestamps, permissions) |
+| `create_directory` | Create a directory (including parent directories) |
+| `move_file` | Move or rename a file or directory |
+
 <img src="images/stdio-transport-flow.png" alt="Stdio Transport Flow" width="800"/>
 
 *Stdio transport in action — your application spawns the MCP server as a child process and communicates through stdin/stdout pipes.*
@@ -206,6 +220,22 @@ cd 05-mcp
 **Using VS Code:** Right-click on `SupervisorAgentDemo.java` and select **"Run Java"** (ensure your `.env` file is configured).
 
 #### How the Supervisor Works
+
+Before building agents, you need to connect the MCP transport to a client and wrap it as a `ToolProvider`. This is how the MCP server's tools become available to your agents:
+
+```java
+// Create an MCP client from the transport
+McpClient mcpClient = new DefaultMcpClient.Builder()
+        .transport(stdioTransport)
+        .build();
+
+// Wrap the client as a ToolProvider — this bridges MCP tools into LangChain4j
+ToolProvider mcpToolProvider = McpToolProvider.builder()
+        .mcpClients(List.of(mcpClient))
+        .build();
+```
+
+Now you can inject `mcpToolProvider` into any agent that needs MCP tools:
 
 ```java
 // Step 1: FileAgent reads files using MCP tools
