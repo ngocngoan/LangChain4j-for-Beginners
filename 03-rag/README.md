@@ -50,7 +50,7 @@ This grounds the model's responses in your actual data instead of relying on its
 
 ## Prerequisites
 
-- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
+- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced later in this module)
 - Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
 - `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
 
@@ -262,7 +262,7 @@ Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **Start the application:**
 
-> **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8081. You can skip the start commands below and go directly to http://localhost:8081.
+> **Note:** If you already started all applications using `./start-all.sh` from the root directory (as described in Module 01), this module is already running on port 8081. You can skip the start commands below and go directly to http://localhost:8081.
 
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 

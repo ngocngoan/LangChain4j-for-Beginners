@@ -13,7 +13,7 @@
   - [Role-Based Prompting](#role-based-prompting)
   - [Prompt Templates](#prompt-templates)
 - [Advanced Patterns](#advanced-patterns)
-- [Using Existing Azure Resources](#using-existing-azure-resources)
+- [Run the Application](#run-the-application)
 - [Application Screenshots](#application-screenshots)
 - [Exploring the Patterns](#exploring-the-patterns)
   - [Low vs High Eagerness](#low-vs-high-eagerness)
@@ -427,7 +427,7 @@ The following diagram shows how constraints guide the model to produce output th
 
 *Enforcing specific format, length, and structure requirements*
 
-## Using Existing Azure Resources
+## Run the Application
 
 **Verify deployment:**
 
@@ -438,7 +438,7 @@ cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **Start the application:**
 
-> **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
+> **Note:** If you already started all applications using `./start-all.sh` from the root directory (as described in Module 01), this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
 
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
