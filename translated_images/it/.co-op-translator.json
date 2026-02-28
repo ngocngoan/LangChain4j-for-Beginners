@@ -23,6 +23,12 @@
     "source_file": "00-quick-start/images/architecture.png",
     "language_code": "it"
   },
+  "autonomous-streaming.97449e0afd3eba0b.webp": {
+    "original_hash": "03c7b1ba574efd177a8eac96b7e81c0b",
+    "translation_date": "2026-02-28T22:00:02+00:00",
+    "source_file": "02-prompt-engineering/images/autonomous-streaming.png",
+    "language_code": "it"
+  },
   "chain-of-thought.5cff6630e2657e2a.webp": {
     "original_hash": "c396f6bd0295f2bda88ba3ccaaa0f39b",
     "translation_date": "2026-02-16T11:36:01+00:00",
@@ -93,6 +99,12 @@
     "original_hash": "3c10f2ac0c216bb86a974f56fe2120a5",
     "translation_date": "2026-01-16T10:12:03+00:00",
     "source_file": "02-prompt-engineering/images/dashboard-home.png",
+    "language_code": "it"
+  },
+  "dashboard-showcase.3126afab3a886e19.webp": {
+    "original_hash": "9f6fc3c139b4fbcc5c8f9bd7b9567cf5",
+    "translation_date": "2026-02-28T21:59:07+00:00",
+    "source_file": "02-prompt-engineering/images/dashboard-showcase.png",
     "language_code": "it"
   },
   "dashboard.69c7479aef09ff6b.webp": {
@@ -183,6 +195,12 @@
     "original_hash": "1f17703fd26e2973d60778e39fd656bb",
     "translation_date": "2026-02-16T11:35:27+00:00",
     "source_file": "02-prompt-engineering/images/five-patterns-overview.png",
+    "language_code": "it"
+  },
+  "focused-streaming.87db30d52346279c.webp": {
+    "original_hash": "b8528ddb13ed566fe336f8e0563164f5",
+    "translation_date": "2026-02-28T22:01:48+00:00",
+    "source_file": "02-prompt-engineering/images/focused-streaming.png",
     "language_code": "it"
   },
   "high-eagerness-demo.4ac93e7786c5a376.webp": {
