@@ -153,7 +153,7 @@ To use the agentic module, add this Maven dependency:
 
 ## Quick Start
 
-**Using VS Code:** Simply right-click on any demo file in the Explorer and select **"Run Java"**, or use the launch configurations from the Run and Debug panel (make sure you've added your token to the `.env` file first).
+**Using VS Code:** Simply right-click on any demo file in the Explorer and select **"Run Java"**, or use the launch configurations from the Run and Debug panel (make sure your `.env` file is configured with Azure credentials first).
 
 **Using Maven:** Alternatively, you can run from the command line with the examples below.
 

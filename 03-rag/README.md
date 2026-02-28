@@ -248,7 +248,7 @@ The diagram below shows this assembly in action — the top-scoring chunks from 
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+Ensure the `.env` file exists in the root directory with Azure credentials (created during Module 01). Run this from the module directory (`03-rag/`):
 
 **Bash:**
 ```bash

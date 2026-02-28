@@ -186,7 +186,7 @@ Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials:
+Ensure the `.env` file exists in the root directory with Azure credentials. Run this from the module directory (`01-introduction/`):
 
 **Bash:**
 ```bash

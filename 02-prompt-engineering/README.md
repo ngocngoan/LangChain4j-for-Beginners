@@ -38,7 +38,7 @@ The following diagram provides an overview of the key topics and skills you'll d
 
 <img src="images/what-youll-learn.png" alt="What You'll Learn" width="800"/>
 
-In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
+In the previous modules, you explored basic LangChain4j interactions with GitHub Models and saw how memory enables conversational AI with Azure OpenAI. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
 
 We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
 
@@ -431,9 +431,16 @@ The following diagram shows how constraints guide the model to produce output th
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+Ensure the `.env` file exists in the root directory with Azure credentials (created during Module 01). Run this from the module directory (`02-prompt-engineering/`):
+
+**Bash:**
 ```bash
 cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+```
+
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Start the application:**
