@@ -28,7 +28,9 @@
 
 ## Video Walkthrough
 
-Watch this live session that explains how to get started with this module: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
@@ -415,8 +417,8 @@ cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 **Start the application:**
 
 > **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
-
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
+
 The dev container includes the Spring Boot Dashboard extension, which provides a visual interface to manage all Spring Boot applications. You can find it in the Activity Bar on the left side of VS Code (look for the Spring Boot icon).
 
 From the Spring Boot Dashboard, you can:
