@@ -115,11 +115,13 @@ public class SupervisorAgentDemo {
             printScopeValue(scope, "report");
             
             System.out.println("\n" + "=".repeat(70));
+
+            // Force exit: OkHttp connection pool threads from the chat model (and possibly MCP stdio transport threads)
+            // keep non-daemon threads alive, so we terminate the JVM explicitly for this demo.
+            // Must be called INSIDE the try block — mcpClient.close() can hang waiting for the
+            // stdio child process to terminate, which would prevent System.exit() from being reached.
+            System.exit(0);
         }
-        
-        // Force exit: OkHttp connection pool threads from the chat model (and possibly MCP stdio transport threads)
-        // keep non-daemon threads alive, so we terminate the JVM explicitly for this demo.
-        System.exit(0);
     }
 
     private static void validateEnvironment() {
