@@ -161,13 +161,7 @@ Alternative approaches (manual `AiServices.builder()`) require more code and mis
 
 *Tool chaining in action — the agent calls getCurrentWeather first, then pipes the Celsius result into celsiusToFahrenheit, and delivers a combined answer.*
 
-Here's what this looks like in the running application — the agent chains two tool calls in a single conversation turn:
-
-<a href="images/tool-chaining.png"><img src="images/tool-chaining.png" alt="Tool Chaining" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
-
-*Actual application output — the agent automatically chains getCurrentWeather → celsiusToFahrenheit in one turn.*
-
-**Graceful Failures** — Ask for weather in a city that's not in the mock data. The tool returns an error message, and the AI explains it can't help rather than crashing. Tools fail safely.
+**Graceful Failures** — Ask for weather in a city that's not in the mock data. The tool returns an error message, and the AI explains it can't help rather than crashing. Tools fail safely. The diagram below contrasts the two approaches — with proper error handling, the agent catches the exception and responds helpfully, while without it the entire application crashes:
 
 <img src="images/error-handling-flow.png" alt="Error Handling Flow" width="800"/>
 
@@ -199,6 +193,8 @@ From the Spring Boot Dashboard, you can:
 - Monitor application status
 
 Simply click the play button next to "tools" to start this module, or start all modules at once.
+
+Here's what the Spring Boot Dashboard looks like in VS Code:
 
 <img src="images/dashboard.png" alt="Spring Boot Dashboard" width="400"/>
 
@@ -268,7 +264,7 @@ cd ..; .\stop-all.ps1  # All modules
 
 ## Using the Application
 
-The application provides a web interface where you can interact with an AI agent that has access to weather and temperature conversion tools.
+The application provides a web interface where you can interact with an AI agent that has access to weather and temperature conversion tools. Here's what the interface looks like — it includes quick-start examples and a chat panel for sending requests:
 
 <a href="images/tools-homepage.png"><img src="images/tools-homepage.png" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
@@ -311,7 +307,7 @@ The quality of your tool descriptions directly affects how well the agent uses t
 
 ### Session Management
 
-The `@MemoryId` annotation enables automatic session-based memory management. Each session ID gets its own `ChatMemory` instance managed by the `ChatMemoryProvider` bean, so multiple users can interact with the agent simultaneously without their conversations mixing together.
+The `@MemoryId` annotation enables automatic session-based memory management. Each session ID gets its own `ChatMemory` instance managed by the `ChatMemoryProvider` bean, so multiple users can interact with the agent simultaneously without their conversations mixing together. The following diagram shows how multiple users are routed to isolated memory stores based on their session IDs:
 
 <img src="images/session-management.png" alt="Session Management with @MemoryId" width="800"/>
 
@@ -331,25 +327,15 @@ The diagram below shows the broad ecosystem of tools you can build. This module 
 
 ## When to Use Tool-Based Agents
 
+Not every request needs tools. The decision comes down to whether the AI needs to interact with external systems or can answer from its own knowledge. The following guide summarizes when tools add value and when they're unnecessary:
+
 <img src="images/when-to-use-tools.png" alt="When to Use Tools" width="800"/>
 
 *A quick decision guide — tools are for real-time data, calculations, and actions; general knowledge and creative tasks don't need them.*
 
-**Use tools when:**
-- Answering requires real-time data (weather, stock prices, inventory)
-- You need to perform calculations beyond simple math
-- Accessing databases or APIs
-- Taking actions (sending emails, creating tickets, updating records)
-- Combining multiple data sources
-
-**Don't use tools when:**
-- Questions can be answered from general knowledge
-- Response is purely conversational
-- Tool latency would make the experience too slow
-
 ## Tools vs RAG
 
-Modules 03 and 04 both extend what the AI can do, but in fundamentally different ways. RAG gives the model access to **knowledge** by retrieving documents. Tools give the model the ability to take **actions** by calling functions.
+Modules 03 and 04 both extend what the AI can do, but in fundamentally different ways. RAG gives the model access to **knowledge** by retrieving documents. Tools give the model the ability to take **actions** by calling functions. The diagram below compares these two approaches side by side — from how each workflow operates to the trade-offs between them:
 
 <img src="images/tools-vs-rag.png" alt="Tools vs RAG Comparison" width="800"/>
 
