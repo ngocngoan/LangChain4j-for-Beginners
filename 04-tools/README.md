@@ -36,7 +36,8 @@ Tools change this. By giving the model access to functions it can call, you tran
 
 ## Prerequisites
 
-- Completed Module 01 (Azure OpenAI resources deployed)
+- Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed)
+- Completed previous modules recommended (this module references [RAG concepts from Module 03](../03-rag/README.md) in the Tools vs RAG comparison)
 - `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
 
 > **Note:** If you haven't completed Module 01, follow the deployment instructions there first.
@@ -204,6 +205,8 @@ Simply click the play button next to "tools" to start this module, or start all 
 Here's what the Spring Boot Dashboard looks like in VS Code:
 
 <img src="images/dashboard.png" alt="Spring Boot Dashboard" width="400"/>
+
+*The Spring Boot Dashboard in VS Code — start, stop, and monitor all modules from one place*
 
 **Option 2: Using shell scripts**
 
