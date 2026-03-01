@@ -136,9 +136,8 @@ To use the agentic module, add this Maven dependency:
     <artifactId>langchain4j-agentic</artifactId>
     <version>${langchain4j.mcp.version}</version>
 </dependency>
-
-> **Note:** The `langchain4j-agentic` module uses a separate version property (`langchain4j.mcp.version`) because it is released on a different schedule than the core LangChain4j libraries.
 ```
+> **Note:** The `langchain4j-agentic` module uses a separate version property (`langchain4j.mcp.version`) because it is released on a different schedule than the core LangChain4j libraries.
 
 > **⚠️ Experimental:** The `langchain4j-agentic` module is **experimental** and subject to change. The stable way to build AI assistants remains `langchain4j-core` with custom tools (Module 04).
 
