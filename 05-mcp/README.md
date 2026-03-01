@@ -136,6 +136,8 @@ To use the agentic module, add this Maven dependency:
     <artifactId>langchain4j-agentic</artifactId>
     <version>${langchain4j.mcp.version}</version>
 </dependency>
+
+> **Note:** The `langchain4j-agentic` module uses a separate version property (`langchain4j.mcp.version`) because it is released on a different schedule than the core LangChain4j libraries.
 ```
 
 > **⚠️ Experimental:** The `langchain4j-agentic` module is **experimental** and subject to change. The stable way to build AI assistants remains `langchain4j-core` with custom tools (Module 04).
@@ -144,10 +146,10 @@ To use the agentic module, add this Maven dependency:
 
 ### Prerequisites
 
+- Completed [Module 04 - Tools](../04-tools/README.md) (this module builds on custom tool concepts and compares them with MCP tools)
+- `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
 - Java 21+, Maven 3.9+
 - Node.js 16+ and npm (for MCP servers)
-- Environment variables configured in `.env` file (from the root directory):
-  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (same as Modules 01-04)
 
 > **Note:** If you haven't set up your environment variables yet, see [Module 01 - Introduction](../01-introduction/README.md) for deployment instructions (`azd up` creates the `.env` file automatically), or copy `.env.example` to `.env` in the root directory and fill in your values.
 
