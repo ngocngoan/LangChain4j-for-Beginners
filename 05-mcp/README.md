@@ -13,6 +13,7 @@
   - [Supervisor Agent](#supervisor-agent)
     - [Running the Demo](#running-the-demo)
     - [How the Supervisor Works](#how-the-supervisor-works)
+    - [How FileAgent Discovers MCP Tools at Runtime](#how-fileagent-discovers-mcp-tools-at-runtime)
     - [Response Strategies](#response-strategies)
     - [Understanding the Output](#understanding-the-output)
     - [Explanation of Agentic Module Features](#explanation-of-agentic-module-features)
@@ -268,6 +269,25 @@ SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
 // The Supervisor decides which agents to invoke based on the request
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
+
+#### How FileAgent Discovers MCP Tools at Runtime
+
+You may wonder: **how does `FileAgent` know how to use the npm filesystem tools?** The answer is that it doesn't — the **LLM** figures it out at runtime through tool schemas.
+
+The `FileAgent` interface is just a **prompt definition**. It has no hardcoded knowledge of `read_file`, `list_directory`, or any other MCP tool. Here's what happens end-to-end:
+
+1. **Server spawns:** `StdioMcpTransport` launches the `@modelcontextprotocol/server-filesystem` npm package as a child process
+2. **Tool discovery:** The `McpClient` sends a `tools/list` JSON-RPC request to the server, which responds with tool names, descriptions, and parameter schemas (e.g., `read_file` — *"Read the complete contents of a file"* — `{ path: string }`)
+3. **Schema injection:** `McpToolProvider` wraps these discovered schemas and makes them available to LangChain4j
+4. **LLM decides:** When `FileAgent.readFile(path)` is called, LangChain4j sends the system message, user message, **and the list of tool schemas** to the LLM. The LLM reads the tool descriptions and generates a tool call (e.g., `read_file(path="/some/file.txt")`)
+5. **Execution:** LangChain4j intercepts the tool call, routes it through the MCP client back to the Node.js subprocess, gets the result, and feeds it back to the LLM
+
+This is the same [Tool Discovery](#tool-discovery) mechanism described above, but applied specifically to the agent workflow. The `@SystemMessage` and `@UserMessage` annotations guide the LLM's behavior, while the injected `ToolProvider` gives it the **capabilities** — the LLM bridges the two at runtime.
+
+> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) and ask:
+> - "How does this agent know which MCP tool to call?"
+> - "What would happen if I removed the ToolProvider from the agent builder?"
+> - "How do tool schemas get passed to the LLM?"
 
 #### Response Strategies
 
