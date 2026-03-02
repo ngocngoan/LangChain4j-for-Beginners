@@ -6,11 +6,11 @@
 - [Mida testid katavad](../../../docs)
 - [Testide käivitamine](../../../docs)
 - [Testide käivitamine VS Code'is](../../../docs)
-- [Testimise mustrid](../../../docs)
+- [Testimismustrid](../../../docs)
 - [Testimise filosoofia](../../../docs)
 - [Järgmised sammud](../../../docs)
 
-See juhend tutvustab teste, mis näitavad, kuidas testida AI rakendusi ilma API võtmete või väliste teenusteta.
+See juhend juhendab sind läbi testide, mis näitavad, kuidas testida tehisintellekti rakendusi ilma API võtmete või väliste teenusteta.
 
 ## Kiire algus
 
@@ -26,26 +26,28 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/et/test-results.ea5c98d8f3642043.webp" alt="Edukad testitulemused" width="800"/>
+Kui kõik testid läbivad, peaksid nägema väljundit nagu alloleval ekraanipildil — testid jooksid ilma ühegi veata.
 
-*Eduka testi käivitamine, kus kõik testid on läbitud, puuduvad vead*
+<img src="../../../translated_images/et/test-results.ea5c98d8f3642043.webp" alt="Edukas testide tulemus" width="800"/>
+
+*Edasijõudnud testide käivitamine, kus kõik testid läbisid ilma vigadeta*
 
 ## Mida testid katavad
 
-See kursus keskendub **üksustestidele**, mis jooksevad kohalikult. Iga test demonstreerib kindlat LangChain4j kontseptsiooni isoleeritult.
+See kursus keskendub **ühikutestidele**, mis jooksevad lokaalselt. Iga test demonstreerib konkreetset LangChain4j kontseptsiooni isoleeritult. Allolev testimise püramiid näitab, kus ühikutestid sobituvad — need moodustavad kiire ja usaldusväärse aluse, millele ülejäänud testistrateegia tugineb.
 
 <img src="../../../translated_images/et/testing-pyramid.2dd1079a0481e53e.webp" alt="Testimise püramiid" width="800"/>
 
-*Testimise püramiid, mis näitab tasakaalu üksustestide (kiired, isoleeritud), integratsioonitestide (tõelised komponendid) ja lõpp-lõpuni testide vahel. See koolitus käsitleb üksustestimist.*
+*Testimise püramiid näitab tasakaalu ühikutestide (kiired, isoleeritud), integratsioonitestide (päris komponendid) ja lõpuni-testide vahel. See koolitus käsitleb ühikutestimist.*
 
-| Moodul | Testid | Fookus | Olulisemad failid |
-|--------|--------|--------|-------------------|
-| **00 - Kiire algus** | 6 | Prompti mallid ja muutujate asendamine | `SimpleQuickStartTest.java` |
-| **01 - Sissejuhatus** | 8 | Vestluse mälu ja järjepidev vestlus | `SimpleConversationTest.java` |
-| **02 - Promptide inseneritöö** | 12 | GPT-5.2 mustrid, innukuse tasemed, struktureeritud väljund | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Dokumendi sisestamine, manused, sarnasuse otsing | `DocumentServiceTest.java` |
-| **04 - Tööriistad** | 12 | Funktsioonikutsed ja tööriistade ühendamine | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Mudeli konteksti protokoll koos Stdio transpordiga | `SimpleMcpTest.java` |
+| Moodul | Testid | Fookus | Olulised failid |
+|--------|--------|--------|-----------------|
+| **00 - Kiire algus** | 6 | Käsu mallid ja muutujate asendamine | `SimpleQuickStartTest.java` |
+| **01 - Sissejuhatus** | 8 | Vestlusmälu ja olekupõhine vestlus | `SimpleConversationTest.java` |
+| **02 - Käsu inseneriteadus** | 12 | GPT-5.2 mustrid, innukuse tasemed, struktureeritud väljund | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Dokumendi importimine, vektorid, sarnasuse otsing | `DocumentServiceTest.java` |
+| **04 - Tööriistad** | 12 | Funktsioonikutsed ja tööriistade kettimine | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Mudeli konteksti protokoll StdIO transpordiga | `SimpleMcpTest.java` |
 
 ## Testide käivitamine
 
@@ -61,7 +63,7 @@ mvn test
 mvn --% test
 ```
 
-**Käivita testid konkreetsele moodulile:**
+**Käivita testid konkreetse mooduli jaoks:**
 
 **Bash:**
 ```bash
@@ -73,7 +75,7 @@ mvn test -pl 01-introduction
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Või juurest
+# Või juurtest
 mvn --% test -pl 01-introduction
 ```
 
@@ -89,11 +91,11 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Käivita konkreetne testmeetod:**
+**Käivita konkreetne testimeetod:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#tuleks säilitada vestluse ajalugu
+mvn test -Dtest=SimpleConversationTest#peaks säilitama vestluse ajaloo
 ```
 
 **PowerShell:**
@@ -103,31 +105,31 @@ mvn --% test -Dtest=SimpleConversationTest#peaks säilitama vestluse ajaloo
 
 ## Testide käivitamine VS Code'is
 
-Kui kasutad Visual Studio Code'i, siis Test Explorer pakub graafilist kasutajaliidest testide käivitamiseks ja silumiseks.
+Kui kasutad Visual Studio Code'i, pakub Test Explorer graafilise liidese testide käivitamiseks ja silumiseks.
 
-<img src="../../../translated_images/et/vscode-testing.f02dd5917289dced.webp" alt="VS Code testieksplorer" width="800"/>
+<img src="../../../translated_images/et/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Exploreri vaade" width="800"/>
 
-*VS Code testieksplorer kuvab testipuu koos kõigi Java testiklasside ja individuaalsete testmeetoditega*
+*VS Code Test Explorer näitab testipuu kõigi Java testiklasside ja üksikute testimeetoditega*
 
 **Testide käivitamiseks VS Code'is:**
 
-1. Ava Test Explorer, klõpsates tegevusribal klaasipudeli ikooni
-2. Laienda testipuud, et näha kõiki mooduleid ja testiklasse
-3. Klõpsa suvalise testi juures mängunupule, et test käivitada eraldi
-4. Klõpsa "Run All Tests", et käivitada kogu komplekt
-5. Paremklõpsa testi peal ja vali "Debug Test", et seada katkestuspunkte ning samm-sammult koodi siluda
+1. Ava Test Explorer, klõpsates tegevusriba klaasikese ikoonile
+2. Laienda testipuu, et näha kõiki mooduleid ja testiklasse
+3. Klõpsa käivitusnupul mistahes testi kõrval, et seda üksikult käivitada
+4. Klõpsa "Run All Tests", et käivitada kõik testid korraga
+5. Paremklõpsa mistahes testil ja vali "Debug Test", et seada murdepunkte ja sammuda koodi läbi
 
-Testieksplorer näitab rohelist linnukest edukate testide puhul ning annab veateated täpse info kohta, kui test ebaõnnestub.
+Test Explorer näitab rohelisi linnukesi läbitud testide juures ja kuvab detailseid tõrketeateid vigade korral.
 
-## Testimise mustrid
+## Testimismustrid
 
-### Muster 1: Prompti mallide testimine
+### Muster 1: Käsu mallide testimine
 
-Kõige lihtsam muster testib prompti malle ilma AI mudelit kutsumata. Sa kontrollid, et muutujate asendamine toimiks õigesti ja promptid on soovitud formaadis.
+Lihtsaim muster testib käsu malli ilma, et kutsutakse AI mudelit. Kontrollid, et muutujate asendamine toimib korrektselt ja käsud formeeritakse ootuspäraselt.
 
-<img src="../../../translated_images/et/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompti malli testimine" width="800"/>
+<img src="../../../translated_images/et/prompt-template-testing.b902758ddccc8dee.webp" alt="Käsu malli testimine" width="800"/>
 
-*Prompti mallide testimine, mis näitab muutujate asendamise protsessi: mall koos kohatäitjatega → väärtused rakendatud → vormindatud väljund kontrollitud*
+*Käsu mallide testimine näitab muutujate asenduse protsessi: mall koos kohatäidetega → väärtused rakendatud → vormindatud väljund kontrollitud*
 
 ```java
 @Test
@@ -148,25 +150,25 @@ void testPromptTemplateFormatting() {
 
 See test asub failis `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
-**Käivita:**
+**Käivita see:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testimisePromptMallideVormindamine
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testiPromptMallimiseVormindamine
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testPromptMallideFormaatimine
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testiPromptMallideFormaatimine
 ```
 
-### Muster 2: Keelemudelite imiteerimine (mockimine)
+### Muster 2: Keelemudelite nõelimine (mockimine)
 
-Vestlusloogika testimisel kasuta Mockito't, et luua võltsmudelid, mis tagastavad etteantud vastuseid. See muudab testid kiired, tasuta ja deterministlikud.
+Vestlusloogika testimisel kasuta Mockito’t võltsmudelite loomiseks, mis tagastavad etteantud vastuseid. See teeb testid kiired, tasuta ja määratletavad.
 
-<img src="../../../translated_images/et/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Võltsitud vs tõeline API võrdlus" width="800"/>
+<img src="../../../translated_images/et/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Reaalne API võrdlus" width="800"/>
 
-*Võrdlus, mis näitab, miks testimiseks kasutatakse eelistatult moke: need on kiired, tasuta, deterministlikud ja ei vaja API võtmeid*
+*Võrdlus, miks testimiseks eelistatakse mocke: need on kiired, tasuta, määratletavad ja ei vaja API võtmeid*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -216,15 +218,15 @@ class SimpleConversationTest {
 }
 ```
 
-See muster ilmub failis `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock tagab järjepideva käitumise, nii et saad kontrollida mälu haldust tõhusalt.
+See muster ilmub failis `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock tagab järjepideva käitumise, et kontrollida mälu haldamist korrektselt.
 
-### Muster 3: Vestluse isolatsiooni testimine
+### Muster 3: Vestluse isoleerimise testimine
 
-Vestluse mälu peab hoidma mitme kasutaja andmed eraldi. See test kontrollib, et vestlused ei sega omavahel konteksti.
+Vestlusmälul peab olema võime hoida erinevate kasutajate andmed eraldi. See test kontrollib, et vestlused ei sega kontekste omavahel.
 
-<img src="../../../translated_images/et/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Vestluse isolatsioon" width="800"/>
+<img src="../../../translated_images/et/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Vestluse isoleerimine" width="800"/>
 
-*Vestluse isolatsiooni testimine, mis näitab erinevate kasutajate eraldatud mälu hoidlaid, et vältida konteksti segunemist*
+*Vestluse isoleerimise testimine, näidates eraldi mäluhoidlaid erinevate kasutajate jaoks, et vältida kontekstide juhtumist*
 
 ```java
 @Test
@@ -248,15 +250,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Iga vestlus hoiab iseseisvat ajalugu. Tootmissüsteemides on see isolatsioon ülioluline mitme kasutajaga rakendustes.
+Iga vestlus säilitab oma sõltumatu ajaloo. Tootmissüsteemides on see isoleeritus kriitiline mitme kasutajaga rakenduste jaoks.
 
-### Muster 4: Tööriistade testimine iseseisvalt
+### Muster 4: Tööriistade sõltumatu testimine
 
-Tööriistad on funktsioonid, mida AI võib kutsuda. Testi neid otse, et veenduda, et need töötavad kõigis olukordades, sõltumata AI otsustest.
+Tööriistad on AI poolt kutsutavad funktsioonid. Testi neid otse, et tagada nende korrektsus sõltumata AI otsustest.
 
 <img src="../../../translated_images/et/tools-testing.3e1706817b0b3924.webp" alt="Tööriistade testimine" width="800"/>
 
-*Tööriistade iseseisev testimine näitab võlts tööriistade kasutamist ilma AI-interaktsioonita, et kontrollida äriloogikat*
+*Tööriistade sõltumatu testimine, kus mock-tööriistad töötavad ilma AI kutseta, kontrollimaks äri loogikat*
 
 ```java
 @Test
@@ -279,15 +281,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Need testid failist `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` valideerivad tööriistade loogikat ilma AI kaasamiseta. Kettimise näide toob välja, kuidas ühe tööriista väljund söödetakse teise sisendiks.
+Need testid failis `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` valideerivad tööriistade loogikat ilma AI kaasamiseta. Kettimise näide näitab, kuidas ühe tööriista väljund suunatakse teise sisendiks.
 
-### Muster 5: Mälu-põhine RAG testimine
+### Muster 5: Mälu-põhise RAG testimine
 
-RAG süsteemid vajavad tavaliselt vektorandmebaase ja manustusteenuseid. Mälu-põhine muster võimaldab testida kogu töövoogu ilma väliste sõltuvusteta.
+RAG süsteemid vajavad tavaliselt vektorandmebaase ja manustusteenuseid. Mälu-põhine muster lubab testida kogu töövoogu ilma väliste sõltuvusteta.
 
 <img src="../../../translated_images/et/rag-testing.ee7541b1e23934b1.webp" alt="Mälu-põhine RAG testimine" width="800"/>
 
-*Mälu-põhine RAG testimise voog näitab dokumendi analüüsi, manuste salvestamist ja sarnasuse otsingut ilma andmebaasi vajaduseta*
+*Mälu-põhise RAG testimise töövoog, kus toimub dokumendi analüüs, manuste salvestus ja sarnasuse otsing ilma andmebaasi nõudmata*
 
 ```java
 @Test
@@ -304,15 +306,15 @@ void testProcessTextDocument() {
 }
 ```
 
-See test failist `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` loob dokumendi mällu ning kontrollib selle lõikamist ja metaandmete haldust.
+See test failist `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` loob dokumendi mälus ja kontrollib tükkideks jaotust ja metaandmete töötlemist.
 
-### Muster 6: MCP integratsioonitesti tegemine
+### Muster 6: MCP integratsioonitestimine
 
-MCP moodul testib Mudeli Konteksti Protokolli integreerimist stdio transpordiga. Need testid kontrollivad, et sinu rakendus saab käivitada ning suhelda MCP serveritega alamsidemuna.
+MCP moodul testib Mudeli konteksti protokolli (Model Context Protocol) integreerimist stdio transpordi abil. Need testid kinnitavad, et sinu rakendus suudab käivitada ning suhelda MCP serveritega alamprotsessidena.
 
 Testid failis `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` valideerivad MCP kliendi käitumist.
 
-**Neid käivitada:**
+**Käivita need:**
 
 **Bash:**
 ```bash
@@ -326,36 +328,36 @@ cd 05-mcp; mvn --% test
 
 ## Testimise filosoofia
 
-Testeeri oma koodi, mitte AI-d. Sinu testid peaksid valideerima kirjutatud koodi, kontrollides, kuidas promptid konstrueeritakse, kuidas mälu hallatakse ja kuidas tööriistad töötavad. AI vastused varieeruvad ja neid ei tohiks osa testide kinnitusest teha. Küsi endalt, kas su prompti mall asendab muutujad õigesti, mitte kas AI annab õige vastuse.
+Testeeri oma koodi, mitte AI-d. Sinu testid peaksid valideerima kirjutatud koodi kontrollides, kuidas käske konstrueeritakse, kuidas mälu hallatakse ja kuidas tööriistad täidetakse. AI vastused varieeruvad ega tohiks olla testide väidetes osa. Küsi endalt, kas sinu käsu mall asendab muutujad õigesti, mitte kas AI annab õige vastuse.
 
-Kasuta keelemudelite puhul moke. Need on välised sõltuvused, mis on aeglased, kallid ja mittedeterministlikud. Mockimine teeb testid kiired (millisekundites, mitte sekundites), tasuta (ilma API kuludeta) ja deterministlikud (iga kord sama tulemus).
+Kasuta mocks’i keelemudelite jaoks. Need on välised sõltuvused, mis on aeglased, kulukad ja määratlematud. Mockimine teeb testid kiired (millisekunditega sekundite asemel), tasuta ilma API kuludeta ja määratletavad iga kord sama tulemusega.
 
-Hoidke testid sõltumatud. Iga test peaks üles seadma oma andmed, mitte loota teistele testidele, ning puhastama enda järel. Testid peaksid lõppema edukalt sõltumata käivitamise järjekorrast.
+Hoidke testid sõltumatud. Iga test peaks seadistama oma andmed, mitte lootma teistele testidele ja pärast oma tööd koristama. Testid peaksid läbima sõltumata käivitamise järjekorrast.
 
-Testeeri servajuhtumeid tavapärasest kasutusest erinevalt. Proovi tühje sisendeid, väga suuri sisendeid, erimärke, kehtetuid parameetreid ja piirilisi tingimusi. Need paljastavad tihti vead, mida tavaline kasutus ei avalda.
+Testeeri äärejuhtumeid üle normaalse kasutuse. Proovi tühje sisendeid, väga suuri sisendeid, erimärke, sobimatuid parameetreid ja piirtingimusi. Need paljastavad sageli vigu, mida tavaline kasutus ei näita.
 
-Kasuta kirjeldavaid nimesid. Võrdle `shouldMaintainConversationHistoryAcrossMultipleMessages()` ja `test1()`. Esimene ütleb täpselt, mida testitakse, muutes tõrgete silumise palju lihtsamaks.
+Kasuta kirjeldavaid nimesid. Võrdle `shouldMaintainConversationHistoryAcrossMultipleMessages()` ja `test1()`. Esimene ütleb täpselt, mida testitakse, tehnikavigade parandamine on palju lihtsam.
 
 ## Järgmised sammud
 
-Nüüd, kui tunned testimise mustreid, süvenda iga moodulit:
+Nüüd, kui sa mõistad testimismustreid, süüvi iga mooduli põhjalikumalt:
 
-- **[00 - Kiire algus](../00-quick-start/README.md)** - Alusta prompti mallide põhialustest
-- **[01 - Sissejuhatus](../01-introduction/README.md)** - Õpi vestluse mäluhalduse kohta
-- **[02 - Promptide inseneritöö](../02/prompt-engineering/README.md)** - Saa valdajaks GPT-5.2 prompting mustrites
-- **[03 - RAG](../03-rag/README.md)** - Ehita taasesituspõhiseid süsteeme
+- **[00 - Kiire algus](../00-quick-start/README.md)** - Alusta käsu mallide alustest
+- **[01 - Sissejuhatus](../01-introduction/README.md)** - Õpi vestlusmälu haldust
+- **[02 - Käsu inseneriteadus](../02/prompt-engineering/README.md)** - Master GPT-5.2 käsu mustrid
+- **[03 - RAG](../03-rag/README.md)** - Ehita väljatoomisvõimendusega generaatorisüsteeme
 - **[04 - Tööriistad](../04-tools/README.md)** - Rakenda funktsioonikutsed ja tööriistade kettimine
-- **[05 - MCP](../05-mcp/README.md)** - Integreeri Mudeli Konteksti Protokoll
+- **[05 - MCP](../05-mcp/README.md)** - Integreeri Model Context Protocol
 
-Iga mooduli README jagab siin ülevaadetest põhjalikumaid seletusi.
+Iga mooduli README annab üksikasjaliku selgituse siin testitavate kontseptsioonide kohta.
 
 ---
 
-**Navigatsioon:** [← Tagasi pealehele](../README.md)
+**Navigeerimine:** [← Tagasi avalehele](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Lahtiütlus**:
-See dokument on tõlgitud kasutades tehisintellekti tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüame tagada täpsust, palun arvestage, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles tuleks pidada ametlikuks allikaks. Olulise teabe puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tingitud arusaamatuste või väärkohtlemiste eest.
+**Vastutusest loobumine**:
+See dokument on tõlgitud kasutades tehisintellekti tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüame täpsust, palun pange tähele, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles tuleks pidada autoriteetseks allikaks. Olulise teabe puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tingitud võimalikest arusaamatustest või väärarusaamadest.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
