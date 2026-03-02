@@ -1,53 +1,53 @@
-# Module 00: Pikakäynnistys
+# Module 00: Quick Start
 
-## Sisällysluettelo
+## Table of Contents
 
-- [Johdanto](../../../00-quick-start)
-- [Mikä on LangChain4j?](../../../00-quick-start)
-- [LangChain4j Riippuvuudet](../../../00-quick-start)
-- [Edellytykset](../../../00-quick-start)
-- [Asetus](../../../00-quick-start)
-  - [1. Hanki GitHub-tunnuksesi](../../../00-quick-start)
-  - [2. Aseta tunnuksesi](../../../00-quick-start)
-- [Suorita esimerkit](../../../00-quick-start)
-  - [1. Peruschat](../../../00-quick-start)
-  - [2. Kehotekuviot](../../../00-quick-start)
-  - [3. Funktiokutsut](../../../00-quick-start)
-  - [4. Dokumenttikysymykset (Easy RAG)](../../../00-quick-start)
-  - [5. Vastuullinen tekoäly](../../../00-quick-start)
-- [Mitä kukin esimerkki näyttää](../../../00-quick-start)
-- [Seuraavat askeleet](../../../00-quick-start)
-- [Vianmääritys](../../../00-quick-start)
+- [Introduction](../../../00-quick-start)
+- [What is LangChain4j?](../../../00-quick-start)
+- [LangChain4j Dependencies](../../../00-quick-start)
+- [Prerequisites](../../../00-quick-start)
+- [Setup](../../../00-quick-start)
+  - [1. Get Your GitHub Token](../../../00-quick-start)
+  - [2. Set Your Token](../../../00-quick-start)
+- [Run the Examples](../../../00-quick-start)
+  - [1. Basic Chat](../../../00-quick-start)
+  - [2. Prompt Patterns](../../../00-quick-start)
+  - [3. Function Calling](../../../00-quick-start)
+  - [4. Document Q&A (Easy RAG)](../../../00-quick-start)
+  - [5. Responsible AI](../../../00-quick-start)
+- [What Each Example Shows](../../../00-quick-start)
+- [Next Steps](../../../00-quick-start)
+- [Troubleshooting](../../../00-quick-start)
 
-## Johdanto
+## Introduction
 
-Tämä pikakäynnistys on tarkoitettu saamaan sinut nopeasti alkuun LangChain4j:n kanssa. Se kattaa tekoälysovellusten rakentamisen kaikkein perusasiat LangChain4j:llä ja GitHub-malleilla. Seuraavissa moduuleissa käytät Azure OpenAI:ta LangChain4j:n kanssa rakentaaksesi edistyneempiä sovelluksia.
+Tämä pikaopas on tarkoitettu saamaan sinut nopeasti käyntiin LangChain4j:n kanssa. Se kattaa AI-sovellusten rakentamisen aivan perusteet LangChain4j:n ja GitHub-mallien avulla. Seuraavissa moduuleissa siirryt Azure OpenAI:hin ja GPT-5.2:een ja sukellat syvemmälle jokaiseen käsitteeseen.
 
-## Mikä on LangChain4j?
+## What is LangChain4j?
 
-LangChain4j on Java-kirjasto, joka yksinkertaistaa tekoälyllä käytettävien sovellusten rakentamista. Sen sijaan, että käsittelisit HTTP-asiakkaita ja JSONin jäsentämistä, työskentelet puhtaiden Java-rajapintojen kanssa. 
+LangChain4j on Java-kirjasto, joka yksinkertaistaa tekoälyllä varustettujen sovellusten rakentamista. HTTP-asiakkaiden ja JSON-jäsentämisen sijaan työskentelet puhtaiden Java-rajapintojen kanssa.
 
-LangChainin "ketju" viittaa useiden komponenttien ketjuttamiseen - voit yhdistää kehotemallin parseriin tai ketjuttaa useita tekoälykutsuja, joissa yhden tulos syötetään seuraavaan syötteeseen. Tämä pikakäynnistys keskittyy perusteisiin ennen monimutkaisempien ketjujen tutkimista.
+LangChainin "ketju" tarkoittaa useiden komponenttien ketjuttamista yhteen – voit ketjuttaa esimerkiksi kehotteen malliin ja sieltä jäsentimeen, tai ketjuttaa useita tekoälykutsuja, joissa yksi lähtö syöttää seuraavaa syötettä. Tämä pikaopas keskittyy perusteisiin ennen monimutkaisempien ketjujen tutkimista.
 
-<img src="../../../translated_images/fi/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Ketjutuskonsepti" width="800"/>
+<img src="../../../translated_images/fi/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*Komponenttien ketjuttaminen LangChain4j:ssä – rakennuspalikat yhdistyvät luomaan tehokkaita tekoälytyönkulkuja*
+*Komponenttien ketjuttaminen LangChain4j:ssä – rakennuspalikat yhdistyvät luoden tehokkaita tekoälytyönkulkuja*
 
 Käytämme kolmea ydinkomponenttia:
 
-**ChatModel** - Rajapinta tekoälymallien vuorovaikutukseen. Kutsu `model.chat("kehotus")` ja saat vastausmerkkijonon. Käytämme `OpenAiOfficialChatModel`-luokkaa, joka toimii OpenAI-yhteensopivien rajapintojen, kuten GitHub-mallien, kanssa.
+**ChatModel** – Rajapinta tekoälymallien vuorovaikutukseen. Kutsu `model.chat("prompt")` ja saat vastausmerkkijonon. Käytämme `OpenAiOfficialChatModel`-luokkaa, joka toimii OpenAI-yhteensopivien rajapintojen kuten GitHub-mallien kanssa.
 
-**AiServices** - Luo tyyppiturvallisia tekoälypalvelujen rajapintoja. Määrittele metodit, merkitse ne `@Tool`-annotaatiolla, ja LangChain4j huolehtii orkestroinnista. Tekoäly kutsuu automaattisesti Java-metodejasi tarpeen mukaan.
+**AiServices** – Luo tyyppiturvallisia tekoälypalvelunrajapintoja. Määrittele metodit, merkkaa ne `@Tool`-annotaatiolla, ja LangChain4j hoitaa orkestroinnin. Tekoäly kutsuu automaattisesti Java-menetelmiäsi tarpeen mukaan.
 
-**MessageWindowChatMemory** - Ylläpitää keskusteluhistoriaa. Ilman tätä jokainen pyyntö on erillinen. Tämän avulla tekoäly muistaa aiemmat viestit ja ylläpitää kontekstia useamman vuorovaikutuksen ajan.
+**MessageWindowChatMemory** – Säilyttää keskusteluhistorian. Ilman tätä jokainen pyyntö on itsenäinen. Tämän kanssa tekoäly muistaa edelliset viestit ja ylläpitää kontekstia useiden vuorojen yli.
 
-<img src="../../../translated_images/fi/architecture.eedc993a1c576839.webp" alt="LangChain4j arkkitehtuuri" width="800"/>
+<img src="../../../translated_images/fi/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*LangChain4j arkkitehtuuri – ydinkomponentit työskentelevät yhdessä voimaannuttamaan tekoälysovelluksiasi*
+*LangChain4j-arkkitehtuuri – ydinkomponentit toimivat yhdessä tehostaen tekoälysovelluksiasi*
 
-## LangChain4j Riippuvuudet
+## LangChain4j Dependencies
 
-Tämä pikakäynnistys käyttää kolmea Maven-riippuvuutta tiedostossa [`pom.xml`](../../../00-quick-start/pom.xml):
+Tämä pikaopas käyttää kolmea Maven-riippuvuutta tiedostossa [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -69,49 +69,49 @@ Tämä pikakäynnistys käyttää kolmea Maven-riippuvuutta tiedostossa [`pom.xm
 </dependency>
 ```
 
-`langchain4j-open-ai-official`-moduuli tarjoaa `OpenAiOfficialChatModel`-luokan, joka yhdistää OpenAI-yhteensopiviin API:hin. GitHub-mallit käyttävät samaa API-muotoa, joten erillistä sovitinta ei tarvita - vain määritä perus-URL osoittamaan `https://models.github.ai/inference`.
+`langchain4j-open-ai-official`-moduuli tarjoaa `OpenAiOfficialChatModel`-luokan, joka yhdistää OpenAI-yhteensopiviin rajapintoihin. GitHub-mallit käyttävät samaa rajapintamuotoa, joten erityistä sovitinta ei tarvita – osoita vain perus-URL `https://models.github.ai/inference`.
 
-`langchain4j-easy-rag`-moduuli tarjoaa automaattisen dokumenttien pilkkomisen, upotuksen ja haun, jotta voit rakentaa RAG-sovelluksia ilman manuaalista jokaisen vaiheen konfigurointia.
+`langchain4j-easy-rag`-moduuli tarjoaa automaattisen asiakirjojen pilkkomisen, upotuksen ja haun, jotta voit rakentaa RAG-sovelluksia ilman manuaalista konfigurointia jokaiseen vaiheeseen.
 
-## Edellytykset
+## Prerequisites
 
-**Käytätkö Dev Containeria?** Java ja Maven ovat jo asennettuina. Tarvitset vain GitHubin henkilökohtaisen käyttötunnuksen.
+**Käytätkö Dev Containeria?** Java ja Maven on jo asennettu. Tarvitset vain GitHubin henkilökohtaisen käyttöoikeustunnuksen.
 
 **Paikallinen kehitys:**
 - Java 21+, Maven 3.9+
-- GitHubin henkilökohtainen käyttötunnus (ohjeet alla)
+- GitHubin henkilökohtainen käyttöoikeustunnus (ohjeet alla)
 
-> **Huom:** Tämä moduuli käyttää GitHub-mallien `gpt-4.1-nano`-mallia. Älä muuta mallin nimeä koodissa – se on määritetty toimimaan GitHubin käytettävissä olevien mallien kanssa.
+> **Huom:** Tässä moduulissa käytetään `gpt-4.1-nano` GitHub-malleista. Älä muuta mallin nimeä koodissa – se on määritetty toimimaan GitHubin saatavilla olevien mallien kanssa.
 
-## Asetus
+## Setup
 
-### 1. Hanki GitHub-tunnuksesi
+### 1. Get Your GitHub Token
 
-1. Mene kohtaan [GitHub-asetukset → Henkilökohtaiset käyttötunnukset](https://github.com/settings/personal-access-tokens)
-2. Klikkaa "Luo uusi tunnus"
+1. Mene osoitteeseen [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
+2. Klikkaa "Generate new token"
 3. Anna kuvaava nimi (esim. "LangChain4j Demo")
-4. Aseta vanhenemisaika (7 päivää suositeltu)
-5. Kohdassa "Tilin oikeudet" etsi "Models" ja aseta se "Vain luku"
-6. Klikkaa "Luo tunnus"
+4. Aseta vanhenemisaika (suositus 7 päivää)
+5. "Account permissions" kohdassa etsi "Models" ja aseta "Read-only"
+6. Klikkaa "Generate token"
 7. Kopioi ja tallenna tunnuksesi – et näe sitä enää uudelleen
 
-### 2. Aseta tunnuksesi
+### 2. Set Your Token
 
-**Vaihtoehto 1: Käytä VS Codea (suositeltu)**
+**Vaihtoehto 1: VS Code (suositus)**
 
 Jos käytät VS Codea, lisää tunnuksesi `.env`-tiedostoon projektin juureen:
 
-Jos `.env`-tiedostoa ei ole, kopioi `.env.example` tiedostoksi `.env` tai luo uusi `.env` tiedosto projektin juureen.
+Jos `.env`-tiedostoa ei ole, kopioi `.env.example` nimellä `.env` tai luo uusi `.env` projektiin.
 
 **Esimerkki `.env`-tiedostosta:**
 ```bash
-# Kansiossa /workspaces/LangChain4j-for-Beginners/.env
+# Tiedostossa /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
 
-Sitten voit yksinkertaisesti klikata hiiren oikealla mitä tahansa demotiedostoa (esim. `BasicChatDemo.java`) Explorerissa ja valita **"Run Java"** tai käyttää suorituksen asetuksia Run and Debug -paneelista.
+Sitten voit yksinkertaisesti klikata hiiren oikealla mitä tahansa demotiedostoa (esim. `BasicChatDemo.java`) Explorerissa ja valita **"Run Java"** tai käyttää Run and Debug -paneelin käynnistyskonfiguraatioita.
 
-**Vaihtoehto 2: Käytä päätettä**
+**Vaihtoehto 2: Terminaali**
 
 Aseta tunnus ympäristömuuttujaksi:
 
@@ -125,13 +125,13 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-## Suorita esimerkit
+## Run the Examples
 
-**VS Codea käyttäen:** Klikkaa hiiren oikealla mitä tahansa demotiedostoa Explorerissa ja valitse **"Run Java"**, tai käytä suorituksen asetuksia Run and Debug -paneelista (varmista, että olet lisännyt tunnuksesi `.env`-tiedostoon ensin).
+**VS Code:** Klikkaa hiiren oikealla mitä tahansa demotiedostoa Explorerissa ja valitse **"Run Java"**, tai käytä Run and Debug -paneelin käynnistyskonfiguraatioita (muista lisätä token ensin `.env`-tiedostoon).
 
-**Mavenia käyttäen:** Vaihtoehtoisesti voit suorittaa komentoriviltä:
+**Mavenilla:** Vaihtoehtoisesti voit ajaa komentoriviltä:
 
-### 1. Peruschat
+### 1. Basic Chat
 
 **Bash:**
 ```bash
@@ -143,7 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-### 2. Kehotekuviot
+### 2. Prompt Patterns
 
 **Bash:**
 ```bash
@@ -155,9 +155,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-Näyttää zero-shot, few-shot, chain-of-thought, ja roolipohjaiset kehotteet.
+Näyttää zero-shot, few-shot, chain-of-thought ja roolipohjaiset kehotteet.
 
-### 3. Funktiokutsut
+### 3. Function Calling
 
 **Bash:**
 ```bash
@@ -169,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-Tekoäly kutsuu automaattisesti Java-metodejasi tarpeen mukaan.
+Tekoäly kutsuu automaattisesti Java-menetelmiäsi tarvittaessa.
 
-### 4. Dokumenttikysymykset (Easy RAG)
+### 4. Document Q&A (Easy RAG)
 
 **Bash:**
 ```bash
@@ -183,9 +183,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Esitä kysymyksiä dokumenteistasi Easy RAG:n avulla automaattisen upotuksen ja haun kanssa.
+Kysy kysymyksiä dokumenteistasi Easy RAG:n avulla, jossa upotus ja haku tapahtuvat automaattisesti.
 
-### 5. Vastuullinen tekoäly
+### 5. Responsible AI
 
 **Bash:**
 ```bash
@@ -197,13 +197,13 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-Näet kuinka tekoälyn turvallisuussuodattimet estävät haitallista sisältöä.
+Katso miten tekoälyn turvallisuussuodattimet estävät haitallista sisältöä.
 
-## Mitä kukin esimerkki näyttää
+## What Each Example Shows
 
-**Peruschat** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
+**Basic Chat** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Aloita tästä nähdäksesi LangChain4j:n yksinkertaisimmillaan. Luot `OpenAiOfficialChatModel`-olion, lähetät kehoteen `.chat()`-metodilla ja saat vastauksen. Tämä näyttää perustan: miten mallit alustetaan mukautetuilla rajapinnoilla ja API-avaimilla. Kun ymmärrät tämän mallin, kaikki muu rakentuu sen päälle.
+Aloita tästä nähdäksesi LangChain4j:n yksinkertaisimmillaan. Luo `OpenAiOfficialChatModel`, lähetä kehotteella `.chat()` ja saa vastaus. Tämä näyttää perustan: miten mallin alustus custom-päätepisteillä ja API-avaimilla tehdään. Kun ymmärrät tämän mallin, kaikki muu rakentuu sen varaan.
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -216,17 +216,17 @@ String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
 
-> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) ja kysy:
-> - "Miten vaihtaisin GitHub-malleista Azure OpenAI:hin tässä koodissa?"
-> - "Mitä muita parametreja voin konfiguroida OpenAiOfficialChatModel.builder()-metodissa?"
-> - "Miten lisään striimaavat vastaukset odottamisen sijaan?"
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatilla:** Avaa [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) ja kysy:
+> - "Miten vaihtaisin koodissa GitHub-malleista Azure OpenAI:hin?"
+> - "Mitä muita parametreja voin määrittää OpenAiOfficialChatModel.builder()-metodissa?"
+> - "Miten lisäisin streaming-vastaukset sen sijaan että odotan koko vastausta?"
 
-**Kehotetekniikat** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+**Prompt Engineering** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Nyt kun tiedät, miten puhut mallille, tutustutaan siihen, mitä sanot sille. Tämä demo käyttää samaa mallin asetusta mutta näyttää viisi erilaista kehotemallia. Kokeile zero-shot-kehotteita suorina ohjeina, few-shot-kehotteita esimerkkien perusteella, ketjutettua ajattelua paljastavia kehotteita ja roolipohjaisia kehotteita kontekstin asettamiseksi. Näet, miten sama malli antaa dramaattisesti erilaisia tuloksia pyynnön muotoilusta riippuen.
+Nyt kun tiedät, miten puhut mallille, tutki mitä sanot sille. Tämä demo käyttää samaa mallikonfiguraatiota mutta näyttää viisi erilaista kehotemallia. Kokeile zero-shot-kehotteita suorille ohjeille, few-shot-kehotteita jotka oppivat esimerkeistä, chain-of-thought-kehotteita jotka paljastavat päättelyvaiheita ja roolipohjaisia kehotteita, jotka määrittävät kontekstin. Näet miten sama malli antaa dramaattisen erilaisia vastauksia kehotteen asettelun perusteella.
 
-Demo näyttää myös kehotepohjat, jotka ovat tehokas tapa luoda uudelleenkäytettäviä kehotteita muuttujilla.
-Alla oleva esimerkki näyttää kehotteen käyttäen LangChain4j:n `PromptTemplate`-luokkaa muuttujien täyttämiseen. Tekoäly vastaa annetun määränpään ja toiminnan perusteella.
+Demo näyttää myös kehotepohjat, jotka ovat tehokas tapa luoda uudelleen käytettäviä kehotteita muuttujilla.
+Alla oleva esimerkki näyttää kehotteen LangChain4j `PromptTemplate`-objektia käyttäen, jossa täytetään muuttujia. Tekoäly vastaa annetun kohteen ja aktiviteetin perusteella.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -241,15 +241,15 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) ja kysy:
-> - "Mikä on ero zero-shotin ja few-shotin välillä ja milloin kumpaakin pitäisi käyttää?"
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatilla:** Avaa [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) ja kysy:
+> - "Mikä ero on zero-shot- ja few-shot-kehotteilla, ja milloin käytän kumpaakin?"
 > - "Miten lämpötila-parametri vaikuttaa mallin vastauksiin?"
-> - "Mitkä ovat tekniikoita estää kehotteiden injektiohyökkäyksiä tuotannossa?"
-> - "Miten luon uudelleenkäytettäviä PromptTemplate-olioita yleisille malleille?"
+> - "Mitkä ovat tekniikoita estää kehotepohjien injektointihyökkäykset tuotannossa?"
+> - "Miten luon uudelleenkäytettäviä PromptTemplate-objekteja yleisiin malleihin?"
 
-**Työkalujen integrointi** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
+**Tool Integration** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Tässä LangChain4j todellakin vahvistuu. Käytät `AiServices`-luokkaa luodaksesi tekoälyavustajan, joka voi kutsua Java-metodejasi. Merkitse metodit vain `@Tool("kuvaus")` -annotaatiolla ja LangChain4j hoitaa loput – tekoäly päättää automaattisesti, mitä työkaluja käyttää käyttäjän kysymyksen perusteella. Tämä demonstroi funktiokutsuja, avaintekniikkaa rakentaa tekoälyä, joka voi toimia eikä pelkästään vastata kysymyksiin.
+Tässä LangChain4j muuttuu tehokkaaksi. Käytät `AiServices`-luokkaa tekoälyavustajan luomiseen, joka voi kutsua Java-metodejasi. Riittää, että merkitset metodit `@Tool("kuvaus")`-annotaatiolla ja LangChain4j hoitaa loput – tekoäly päättää automaattisesti, milloin käyttää mitäkin työkalua käyttäjän pyynnön mukaan. Tämä esittelee funktiokutsut, keskeisen tekniikan tekoälyn rakentamiseen, joka voi suorittaa toimintoja eikä vain vastata kysymyksiin.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -265,15 +265,15 @@ MathAssistant assistant = AiServices.builder(MathAssistant.class)
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
-> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) ja kysy:
-> - "Miten @Tool-annotaatio toimii ja mitä LangChain4j tekee sen kanssa taustalla?"
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatilla:** Avaa [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) ja kysy:
+> - "Miten @Tool-annotaatio toimii ja mitä LangChain4j tekee sillä taustalla?"
 > - "Voiko tekoäly kutsua useita työkaluja peräkkäin ratkaistakseen monimutkaisia ongelmia?"
-> - "Mitä tapahtuu jos työkalu heittää poikkeuksen – miten virheet pitäisi käsitellä?"
-> - "Miten integroin oikean API:n tämän laskin-esimerkin sijaan?"
+> - "Mitä tapahtuu, jos työkalu heittää poikkeuksen – miten virheet pitäisi käsitellä?"
+> - "Miten integroisin oikean API:n tämän laskuesimerkin sijaan?"
 
-**Dokumenttikysymykset (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Document Q&A (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Tässä näet RAG:n (retrieval-augmented generation) LangChain4j:n "Easy RAG" -lähestymistavalla. Dokumentit ladataan, pilkotaan ja upotetaan automaattisesti muistinvaraiselle tallennusalueelle, josta sisällönhakija toimittaa sopivia osuuksia tekoälylle kyselyhetkellä. Tekoäly vastaa dokumenttiesi perusteella, ei yleisen tietämyksensä pohjalta.
+Tässä näet RAG:n (retrieval-augmented generation) käyttäen LangChain4j:n "Easy RAG" -menetelmää. Asiakirjat ladataan, pilkotaan automaattisesti ja upotetaan muistiin, minkä jälkeen sisältöhaku toimittaa relevanteimmat palat tekoälylle kyselyhetkellä. Tekoäly vastaa asiakirjojesi perusteella, ei yleisen tietämyksensä.
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -290,16 +290,16 @@ Assistant assistant = AiServices.builder(Assistant.class)
 String answer = assistant.chat("What is the main topic?");
 ```
 
-> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) ja kysy:
-> - "Miten RAG estää tekoälyharhoja verrattuna mallin koulutusdataan perustuvaan käyttöön?"
-> - "Mikä ero on tämän helpon lähestymistavan ja räätälöidyn RAG-putken välillä?"
-> - "Miten skaalaan tämän käsittelemään useita dokumentteja tai suurempia tietopohjia?"
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatilla:** Avaa [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) ja kysy:
+> - "Miten RAG estää tekoälyn harhaluulot verrattuna mallin koulutusdataan?"
+> - "Mikä ero on tässä helpossa lähestymistavassa ja mukautetussa RAG-putkessa?"
+> - "Miten skaalaisin tämän käsittelemään useita asiakirjoja tai isompia tietovarastoja?"
 
-**Vastuullinen tekoäly** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+**Responsible AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Rakenna tekoälyturvallisuutta syvyyssuodattimilla. Tämä demo näyttää kaksi suojaustasoa työskentelemässä yhdessä:
+Rakenna tekoälyn turvallisuus kerrospintaisesti. Tämä demo näyttää kaksi suojaustasoa, jotka toimivat yhdessä:
 
-**Osa 1: LangChain4j Syötteen suojakaiteet** – Estä vaaralliset kehoteet ennen kuin ne saavuttavat LLM:n. Luo omia suojakaiteita, jotka tarkistavat kielletyt avainsanat tai mallit. Nämä toimivat koodissasi, joten ne ovat nopeita ja ilmaisia.
+**Osa 1: LangChain4j Input Guardrails** – Estää vaaralliset kehotteet ennen niiden pääsyä LLM:ään. Luo omat suojakaiteet, jotka tarkistavat kielletyt avainsanat tai kaavat. Nämä toimivat koodissasi, joten ne ovat nopeita ja ilmaisia.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -314,37 +314,37 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**Osa 2: Tarjoajan turvallisuussuodattimet** – GitHub-malleissa on sisäänrakennetut suodattimet, jotka pysäyttävät sen, minkä suojakaiteet saattavat jättää huomaamatta. Näet kovia estojärjestelmiä (HTTP 400 -virheitä) vakavissa rikkomuksissa ja pehmeitä kieltäytymisiä, joissa tekoäly kohteliaasti kieltäytyy.
+**Osa 2: Tarjoajan turvafiltterit** – GitHub-malleissa on sisäänrakennetut suodattimet, jotka tarttuvat siihen, mitä suojakaiteesi voivat jäädä huomaamatta. Näet tiukat estot (HTTP 400 -virheet) vakavissa rikkomuksissa ja pehmeät kieltäytymiset, joissa tekoäly kohteliaasti kieltäytyy.
 
-> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) ja kysy:
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatilla:** Avaa [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) ja kysy:
 > - "Mikä on InputGuardrail ja miten luon oman?"
 > - "Mikä ero on kovalla estolla ja pehmeällä kieltäytymisellä?"
 > - "Miksi käyttää sekä suojakaiteita että tarjoajan suodattimia yhdessä?"
 
-## Seuraavat askeleet
+## Next Steps
 
-**Seuraava moduuli:** [01-introduction - Aloittaminen LangChain4j:n ja gpt-5:n kanssa Azurella](../01-introduction/README.md)
-
----
-
-**Navigointi:** [← Takaisin pääsivulle](../README.md) | [Seuraava: Moduuli 01 - Johdanto →](../01-introduction/README.md)
+**Seuraava moduuli:** [01-introduction - Getting Started with LangChain4j](../01-introduction/README.md)
 
 ---
 
-## Vianmääritys
+**Navigointi:** [← Takaisin pääsivulle](../README.md) | [Seuraava: Module 01 - Introduction →](../01-introduction/README.md)
 
-### Ensimmäinen Maven-kokoitus
+---
 
-**Ongelma:** Ensimmäinen `mvn clean compile` tai `mvn package` kestää kauan (10-15 minuuttia)
+## Troubleshooting
 
-**Syy:** Mavenin täytyy ladata kaikki projektin riippuvuudet (Spring Boot, LangChain4j-kirjastot, Azure SDK:t jne.) ensimmäisellä kerralla.
+### First-Time Maven Build
 
-**Ratkaisu:** Tämä on normaalia käytöstä. Seuraavat kerrat ovat paljon nopeampia, koska riippuvuudet ovat välimuistissa paikallisesti. Latausaika riippuu verkkoyhteyden nopeudesta.
+**Ongelma**: Ensimmäinen `mvn clean compile` tai `mvn package` kestää kauan (10–15 minuuttia)
 
-### PowerShellin Maven-komentojen syntaksi
+**Syy**: Mavenin täytyy ladata kaikki projektin riippuvuudet (Spring Boot, LangChain4j-kirjastot, Azure SDK:t jne.) ensimmäisellä kerralla.
 
-**Ongelma:** Maven-komennot epäonnistuvat virheilmoituksella `Unknown lifecycle phase ".mainClass=..."`
-**Syy**: PowerShell tulkitsee `=` muuttujan arvon määrityksen operaattorina, mikä rikkoo Mavenin ominaisuussyntaksin
+**Ratkaisu**: Tämä on normaalia käyttäytymistä. Seuraavat kerrat ovat paljon nopeampia, kun riippuvuudet on tallennettu paikallisesti. Latausaika riippuu verkkoyhteyden nopeudesta.
+
+### PowerShell Maven Command Syntax
+
+**Ongelma:** Maven-komennot epäonnistuvat virheellä `Unknown lifecycle phase ".mainClass=..."`
+**Syy**: PowerShell tulkitsee `=` muuttujan määrittämisen operaattorina, mikä rikkoo Maven-ominaisuussyntaksin
 
 **Ratkaisu**: Käytä pysäytyksen jäsentämisoperaattoria `--%` ennen Maven-komentoa:
 
@@ -358,30 +358,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-`--%`-operaattori kertoo PowerShellille, että kaikki jäljellä olevat argumentit välitetään Mavenille kirjaimellisesti ilman tulkintaa.
+`--%`-operaattori kertoo PowerShellille, että kaikki jäljellä olevat argumentit annetaan kirjaimellisesti Mavenille ilman tulkintaa.
 
-### Windows PowerShellin emojien näyttö
+### Windows PowerShellin emojeiden näyttö
 
-**Ongelma**: AI-vastaukset näyttävät roskamerkkejä (esim. `????` tai `â??`) emojien sijaan PowerShellissä
+**Ongelma**: AI-vastauksissa näkyy roska merkkeinä (esim. `????` tai `â??`) PowerShellissä emojien sijaan
 
 **Syy**: PowerShellin oletuskoodaus ei tue UTF-8-emojia
 
-**Ratkaisu**: Suorita tämä komento ennen Java-sovellusten käynnistämistä:
+**Ratkaisu**: Suorita tämä komento ennen Java-sovellusten käynnistystä:
 ```cmd
 chcp 65001
 ```
 
-Tämä pakottaa UTF-8-koodauksen terminaalissa. Vaihtoehtoisesti käytä Windows Terminalia, jossa on parempi Unicode-tuki.
+Tämä pakottaa UTF-8-koodauksen terminaaliin. Vaihtoehtoisesti käytä Windows Terminalia, jossa on parempi Unicode-tuki.
 
-### API-kutsujen virheenkorjaus
+### API-pyyntöjen virheenkorjaus
 
-**Ongelma**: Todennusvirheitä, nopeusrajoituksia tai odottamattomia vastauksia AI-mallilta
+**Ongelma**: Todennusvirheitä, pyyntörajoituksia tai odottamattomia vastauksia AI-mallilta
 
-**Ratkaisu**: Esimerkeissä käytetään `.logRequests(true)` ja `.logResponses(true)`, jotka näyttävät API-kutsut konsolissa. Tämä auttaa selvittämään todennusvirheitä, nopeusrajoituksia tai odottamattomia vastauksia. Poista nämä liput tuotannossa, jotta lokit eivät täyty liiaksi.
+**Ratkaisu**: Esimerkeissä on `.logRequests(true)` ja `.logResponses(true)` näyttääksesi API-kutsut konsolissa. Tämä auttaa ratkaisemaan todennusvirheitä, pyyntörajoituksia tai odottamattomia vastauksia. Poista nämä liput tuotannossa vähentääksesi lokiääntä.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty tekoälypohjaisella käännöspalvelulla [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta otathan huomioon, että automaattiset käännökset saattavat sisältää virheitä tai epätarkkuuksia. Alkuperäinen asiakirja sen alkuperäiskielellä on virallinen lähde. Tärkeissä tiedoissa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä johtuvista väärinymmärryksistä tai virhetulkinnoista.
+Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Vaikka pyrimme tarkkuuteen, otathan huomioon, että automaattiset käännökset voivat sisältää virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäiskielellä tulisi pitää virallisena lähteenä. Tärkeiden tietojen osalta suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinkäsityksistä tai virhetulkinnoista.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
