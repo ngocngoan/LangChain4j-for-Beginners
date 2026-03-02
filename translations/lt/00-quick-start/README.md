@@ -1,53 +1,53 @@
-# Modulis 00: Greitas pradžia
+# Modulis 00: Greitas pradėjimas
 
 ## Turinys
 
 - [Įvadas](../../../00-quick-start)
 - [Kas yra LangChain4j?](../../../00-quick-start)
 - [LangChain4j priklausomybės](../../../00-quick-start)
-- [Išankstiniai reikalavimai](../../../00-quick-start)
-- [Nustatymai](../../../00-quick-start)
-  - [1. Gaukite savo GitHub tokeną](../../../00-quick-start)
-  - [2. Nustatykite savo tokeną](../../../00-quick-start)
-- [Vykdykite pavyzdžius](../../../00-quick-start)
+- [Reikalavimai](../../../00-quick-start)
+- [Sąranka](../../../00-quick-start)
+  - [1. Gaukite savo GitHub raktą](../../../00-quick-start)
+  - [2. Nustatykite savo raktą](../../../00-quick-start)
+- [Paleiskite pavyzdžius](../../../00-quick-start)
   - [1. Pagrindinis pokalbis](../../../00-quick-start)
-  - [2. Šablonų pavyzdžiai](../../../00-quick-start)
-  - [3. Funkcijų kvietimas](../../../00-quick-start)
+  - [2. Prompto šablonai](../../../00-quick-start)
+  - [3. Funkcijų iškvietimas](../../../00-quick-start)
   - [4. Dokumentų klausimai ir atsakymai (Easy RAG)](../../../00-quick-start)
-  - [5. Atsakingas AI](../../../00-quick-start)
+  - [5. Atsakingas DI](../../../00-quick-start)
 - [Ką rodo kiekvienas pavyzdys](../../../00-quick-start)
-- [Tolimesni žingsniai](../../../00-quick-start)
-- [Klaidų taisymas](../../../00-quick-start)
+- [Kitos veiksmų gairės](../../../00-quick-start)
+- [Trikčių šalinimas](../../../00-quick-start)
 
 ## Įvadas
 
-Šis greito pradžios vadovas skirtas kuo greičiau pradėti dirbti su LangChain4j. Jame aptariamos absoliučios pagrindai, kaip kurti AI programas su LangChain4j ir GitHub modeliais. Kitose moduliuose naudosite Azure OpenAI su LangChain4j, kad kurtumėte pažangesnes programas.
+Šis greitas pradžios vadovas skirtas kuo greičiau pradėti naudotis LangChain4j. Jame aptariami absoliučiai pagrindai, kaip kurti DI programas su LangChain4j ir GitHub Modeliais. Kitose moduliuose pereisite prie Azure OpenAI ir GPT-5.2 bei gilinsitės į kiekvieną koncepciją.
 
 ## Kas yra LangChain4j?
 
-LangChain4j yra Java biblioteka, palengvinanti AI pagrįstų programų kūrimą. Vietoje to, kad dirbtumėte su HTTP klientais ir JSON analizavimu, jūs naudojate švarias Java API sąsajas.
+LangChain4j yra Java biblioteka, kuri supaprastina DI varomų programų kūrimą. Vietoje darbo su HTTP klientais ir JSON analizavimu, jūs dirbate su švariais Java API.
 
-Žodis "chain" LangChain reiškia kelių komponentų jungimą grandine – galite sujungti šabloną su modeliu ir su parseriu, arba surišti kelis AI kvietimus, kur vieno išvestis perduodama kitam įėjimui. Šis greitas pradžios vadovas orientuojasi į pagrindus prieš nagrinėjant sudėtingesnes grandines.
+„Chain“ LangChain pavadinime reiškia kelių komponentų sujungimą – galite sujungti promptą su modeliu, parseriu ar sujungti kelis DI kvietimus, kur vienas išvestis tampa kito įvestimi. Šis greitas pradžios vadovas fokusuojasi į pagrindus, prieš pereinant prie sudėtingesnių grandinių.
 
 <img src="../../../translated_images/lt/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*LangChain4j komponentų jungimas grandine – statybiniai blokai sujungiami siekiant kurti galingas AI darbo eigos*
+*Komponentų sujungimas LangChain4j – blokai jungiasi, kad sukurtų galingus DI darbo srautus*
 
 Naudosime tris pagrindinius komponentus:
 
-**ChatModel** – sąsaja dirbti su AI modeliais. Paskambinkite `model.chat("prompt")` ir gaukite atsakymo eilutę. Mes naudojame `OpenAiOfficialChatModel`, kuris veikia su OpenAI suderinamais galiniais taškais, pvz., GitHub Modeliais.
+**ChatModel** – sąsaja DI modelio sąveikoms. Iškvieskite `model.chat("prompt")` ir gaukite atsakymą kaip eilutę. Naudojame `OpenAiOfficialChatModel`, kuris veikia su OpenAI suderinamais galais, tokiais kaip GitHub Modeliai.
 
-**AiServices** – sukuria tipų saugias AI paslaugų sąsajas. Apibrėžkite metodus, pažymėkite juos `@Tool`, o LangChain4j pasirūpina orkestravimu. AI automatiškai kviečia jūsų Java metodus, kai reikia.
+**AiServices** – sukuria tipo saugias DI paslaugų sąsajas. Apibrėžkite metodus, paženklinkite juos `@Tool`, ir LangChain4j valdo orkestraciją. DI automatiškai kviečia jūsų Java metodus prireikus.
 
-**MessageWindowChatMemory** – palaiko pokalbio istoriją. Be jo kiekvienas užklausimas yra nepriklausomas. Su juo AI prisimena ankstesnius pranešimus ir palaiko kontekstą per kelis atsakymus.
+**MessageWindowChatMemory** – išlaiko pokalbio istoriją. Be to, kiekvienas užklausimas yra nepriklausomas. Su ja DI prisimena ankstesnius pranešimus ir palaiko kontekstą per kelis etapus.
 
 <img src="../../../translated_images/lt/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*LangChain4j architektūra – pagrindiniai komponentai kartu veikia, kad suteiktų jūsų AI programoms galią*
+*LangChain4j architektūra – pagrindiniai komponentai kartu suteikia jūsų DI programoms galią*
 
 ## LangChain4j priklausomybės
 
-Ši greito pradžios pamoka naudoja tris Maven priklausomybes faile [`pom.xml`](../../../00-quick-start/pom.xml):
+Šis greitas pradžios vadovas naudoja tris Maven priklausomybes [`pom.xml`](../../../00-quick-start/pom.xml):
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -69,51 +69,51 @@ Naudosime tris pagrindinius komponentus:
 </dependency>
 ```
 
-Modulis `langchain4j-open-ai-official` suteikia klasę `OpenAiOfficialChatModel`, jungiančią prie OpenAI suderinamų API. GitHub Modeliai naudoja tą pačią API struktūrą, todėl nereikia jokio specialaus adapterio – tiesiog nurodykite bazinį URL kaip `https://models.github.ai/inference`.
+Modulis `langchain4j-open-ai-official` suteikia klasę `OpenAiOfficialChatModel`, kuri jungiasi prie OpenAI suderinamų API. GitHub Modeliai naudoja tą patį API formatą, tad nereikia specialaus adapterio – tiesiog nurodykite bazinį URL `https://models.github.ai/inference`.
 
-Modulis `langchain4j-easy-rag` suteikia automatizuotą dokumentų skaidymą, įterpimą ir paiešką, todėl galite kurti RAG programas nereikia rankiniu būdu konfigūruoti kiekvieno žingsnio.
+Modulis `langchain4j-easy-rag` suteikia automatinį dokumentų skaidymą, įterpimą ir traukimą, kad galėtumėte kurti RAG programas be rankinio kiekvieno žingsnio konfigūravimo.
 
-## Išankstiniai reikalavimai
+## Reikalavimai
 
-**Naudojate Dev Container?** Java ir Maven jau įdiegtas. Reikia tik GitHub personalinio prieigos tokeno.
+**Naudojate Dev konteinerį?** Java ir Maven jau įdiegti. Jums reikia tik GitHub Asmeninio Prieigos Rakto.
 
-**Vietinis vystymas:**
+**Vietiniam kūrimui:**
 - Java 21+, Maven 3.9+
-- GitHub personalinio prieigos tokenas (instrukcijos žemiau)
+- GitHub Asmeninis Prieigos Raktas (instrukcijos žemiau)
 
-> **Pastaba:** Šiame modulyje naudojamas `gpt-4.1-nano` iš GitHub Modelių. Nesikeiskite modelio pavadinimo kode – jis sukonfigūruotas dirbti su GitHub prieinamais modeliais.
+> **Pastaba:** Šiame modulyje naudojamas `gpt-4.1-nano` GitHub Modelių modelis. Nekeiskite modelio pavadinimo kode – jis nustatytas dirbti su GitHub turimais modeliais.
 
-## Nustatymai
+## Sąranka
 
-### 1. Gaukite savo GitHub tokeną
+### 1. Gaukite savo GitHub raktą
 
-1. Eikite į [GitHub nustatymai → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
-2. Spauskite "Generate new token"
-3. Nustatykite vardą (pvz., "LangChain4j demo")
+1. Eikite į [GitHub Nustatymai → Asmeniniai prieigos raktai](https://github.com/settings/personal-access-tokens)
+2. Paspauskite „Sukurti naują raktą“
+3. Nustatykite aprašomą pavadinimą (pvz., "LangChain4j Demo")
 4. Nustatykite galiojimo laiką (rekomenduojama 7 dienos)
-5. Skiltyje "Account permissions" raskite "Models" ir nustatykite kaip "Read-only"
-6. Spauskite "Generate token"
-7. Nukopijuokite ir išsaugokite tokeną – jo daugiau nematysite
+5. Skiltyje „Sąskaitos leidimai“ raskite „Models“ ir nustatykite „Tik skaitymas“
+6. Spauskite „Sukurti raktą“
+7. Nukopijuokite ir išsaugokite raktą – jo daugiau nepamatysite
 
-### 2. Nustatykite savo tokeną
+### 2. Nustatykite savo raktą
 
-**1 variantas: Naudojant VS Code (rekomenduojama)**
+**1 pasirinkimas: Naudojant VS Code (rekomenduojama)**
 
-Jei naudositės VS Code, pridėkite savo tokeną į `.env` failą projekto šaknyje:
+Jei naudojate VS Code, pridėkite savo raktą `.env` faile projekto šaknyje:
 
-Jei `.env` failas neegzistuoja, nukopijuokite `.env.example` į `.env` arba sukurkite naują `.env` failą projekto šaknyje.
+Jei `.env` failo nėra, nukopijuokite `.env.example` į `.env` arba sukurkite naują `.env` failą projekto šaknyje.
 
-**.env failo pavyzdys:**
+**Pavyzdys `.env` failo:**
 ```bash
-# Faile /workspaces/LangChain4j-for-Beginners/.env
+# Failas /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
 
-Tada galite tiesiog dešiniuoju pelės mygtuku spustelėti bet kurį demonstracinį failą (pvz., `BasicChatDemo.java`) Explorer lange ir pasirinkti **"Run Java"** arba naudoti paleidimo konfigūracijas Run ir Debug skydelyje.
+Tuomet galite tiesiog dešiniuoju pelės mygtuku spustelėti bet kurį demonstracinį failą (pvz., `BasicChatDemo.java`) naršyklėje ir pasirinkti **„Run Java“** arba naudoti paleidimo konfigūracijas Run and Debug skydelyje.
 
-**2 variantas: Naudojant terminalą**
+**2 pasirinkimas: Naudojant terminalą**
 
-Nustatykite tokeną kaip aplinkos kintamąjį:
+Nustatykite raktą kaip aplinkos kintamąjį:
 
 **Bash:**
 ```bash
@@ -125,11 +125,11 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-## Vykdykite pavyzdžius
+## Paleiskite pavyzdžius
 
-**Naudojant VS Code:** Tiesiog dešiniuoju pelės klavišu spustelėkite bet kurį demonstracinį failą Explorer lange ir pasirinkite **"Run Java"**, arba naudokite paleidimo konfigūracijas Run ir Debug skydelyje (įsitikinkite, kad jau pridėjote tokeną į `.env` failą).
+**Naudojant VS Code:** Tiesiog dešiniuoju pelės mygtuku spustelėkite bet kurį demonstracinį failą naršyklėje ir pasirinkite **„Run Java“**, arba naudokite paleidimo konfigūracijas Run and Debug skydelyje (įsitikinkite, kad iš pradžių pridėjote savo raktą į `.env` failą).
 
-**Naudojant Maven:** Taip pat galite paleisti iš komandų eilutės:
+**Naudojant Maven:** Taip pat galite paleisti komandinėje eilutėje:
 
 ### 1. Pagrindinis pokalbis
 
@@ -143,7 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-### 2. Šablonų pavyzdžiai
+### 2. Prompto šablonai
 
 **Bash:**
 ```bash
@@ -155,9 +155,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-Rodo zero-shot, few-shot, chain-of-thought ir role-based šablonus.
+Rodo zero-shot, few-shot, chain-of-thought ir roliniu pagrindu paremtus promptus.
 
-### 3. Funkcijų kvietimas
+### 3. Funkcijų iškvietimas
 
 **Bash:**
 ```bash
@@ -169,7 +169,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-AI automatiškai kviečia jūsų Java metodus, kai reikia.
+DI automatiškai kviečia jūsų Java metodus prireikus.
 
 ### 4. Dokumentų klausimai ir atsakymai (Easy RAG)
 
@@ -183,9 +183,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Klauskite apie savo dokumentus naudodami Easy RAG su automatiniu įterpimu ir paieška.
+Užduokite klausimus apie savo dokumentus naudodami Easy RAG su automatiniu įterpimu ir traukimu.
 
-### 5. Atsakingas AI
+### 5. Atsakingas DI
 
 **Bash:**
 ```bash
@@ -197,13 +197,13 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-Pamatykite, kaip AI saugumo filtrai blokuoja kenksmingą turinį.
+Žiūrėkite, kaip DI saugumo filtrai blokuoja kenksmingą turinį.
 
 ## Ką rodo kiekvienas pavyzdys
 
 **Pagrindinis pokalbis** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Pradėkite čia, kad pamatytumėte LangChain4j paprastą esmę. Sukursite `OpenAiOfficialChatModel`, išsiųsite šabloną su `.chat()`, ir gausite atsakymą. Tai parodo pagrindus: kaip inicializuoti modelius su pasirinktiniu galiniu tašku ir API raktu. Kai suprasite šį šabloną, viskas kita bus paremta juo.
+Pradėkite čia, kad pamatytumėte LangChain4j paprastumą. Sukursite `OpenAiOfficialChatModel`, išsiųsite promptą su `.chat()` ir gausite atsakymą. Tai rodo pagrindą: kaip inicijuoti modelius su pasirinktais galais ir API raktais. Supratus šį modelį, visa kita statoma remiantis juo.
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -217,16 +217,16 @@ System.out.println(response);
 ```
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) ir paklauskite:
-> - "Kaip pakeisiu iš GitHub Modelių į Azure OpenAI šiame kode?"
-> - "Kokius kitus parametrus galiu konfigūruoti OpenAiOfficialChatModel.builder()?"
-> - "Kaip pridėti srautinį atsakymą, o ne laukti viso atsakymo?"
+> - „Kaip pakeisčiau šį kodą, kad naudotų GitHub Modelius vietoje Azure OpenAI?“
+> - „Kokius kitus parametrus galiu konfigūruoti OpenAiOfficialChatModel.builder()?“
+> - „Kaip pridėti transliuojamus atsakymus vietoje laukimo viso atsakymo?“
 
-**Šablonų inžinerija** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+**Prompto inžinerija** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Dabar, kai žinote, kaip kalbėtis su modeliu, pažiūrėkime, ką jam sakote. Ši demonstracija naudoja tą patį modelį, bet rodo penkis skirtingus šablonus. Išbandykite zero-shot tiesioginius nurodymus, few-shot mokymąsi iš pavyzdžių, chain-of-thought parodos loginio mąstymo žingsnius ir role-based, nustatant kontekstą. Pamatysite, kaip tas pats modelis duoda dramatiškai skirtingus rezultatus, priklausomai nuo prašymo formulavimo.
+Dabar, kai žinote, kaip bendrauti su modeliu, pažvelkime, ką jam sakote. Ši demonstracija naudoja tą patį modelio nustatymą, bet rodo penkis skirtingus promptų šablonus. Išbandykite zero-shot promptus tiesioginiams nurodymams, few-shot promptus, kurie mokosi iš pavyzdžių, chain-of-thought promptus, kurie atskleidžia loginio mąstymo žingsnius, ir rolinių vaidmenų promptus, nustatančius kontekstą. Matysite, kaip tas pats modelis duoda drastiškai skirtingus rezultatus, priklausomai nuo to, kaip formuluojate užklausą.
 
-Demonstracija taip pat parodo šablonų šablonus (prompt templates), kurie leidžia kurti pakartotinai naudojamus šablonus su kintamaisiais.
-Žemiau pateiktas pavyzdys rodo šabloną naudojant LangChain4j `PromptTemplate` užpildant kintamuosius. AI atsakys remdamasis pateikta paskirties vieta ir veikla.
+Demonstracija taip pat rodo promptų šablonus, kurie yra galingas būdas kurti pakartotinai naudojamus promptus su kintamaisiais.
+Toliau pateiktas pavyzdys naudoja LangChain4j `PromptTemplate`, kad užpildytų kintamuosius. DI atsakys remdamasis nurodyta paskirties vieta ir veikla.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -242,14 +242,14 @@ String response = model.chat(prompt.text());
 ```
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) ir paklauskite:
-> - "Kuo skiriasi zero-shot ir few-shot šablonai, ir kada naudoti kiekvieną?"
-> - "Kaip temperatūros parametras veikia modelio atsakymus?"
-> - "Kokios priemonės apsaugo nuo šablonų įterpimo (prompt injection) atakų gamyboje?"
-> - "Kaip sukurti pakartotinai naudojamus PromptTemplate objektus dažnai naudojamiems šablonams?"
+> - „Kuo skiriasi zero-shot ir few-shot promptai ir kada naudoti kiekvieną?“
+> - „Kaip temperatūros parametras veikia modelių atsakymus?“
+> - „Kokios yra technikos, kad išvengti promptų injekcijos atakų gamyboje?“
+> - „Kaip sukurti pakartotinai naudojamus PromptTemplate objektus dažniausiai naudojamiems šablonams?“
 
 **Įrankių integracija** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Čia LangChain4j tampa galingas. Naudosite `AiServices` sukurti AI asistentą, kuris gali kviesti jūsų Java metodus. Tiesiog pažymėkite metodus `@Tool("aprašymas")` ir LangChain4j pasirūpina visa kita – AI automatiškai nusprendžia, kada naudoti kiekvieną įrankį, remiantis vartotojo klausimais. Tai demonstruoja funkcijų kvietimą, svarbią techniką kuriant AI, galinčius išlaikyti veiksmus, o ne tik atsakyti į klausimus.
+Čia LangChain4j tampa galingas. Naudosite `AiServices`, kad sukurtumėte DI pagalbininką, kuris gali iškvietinėti jūsų Java metodus. Tiesiog paženklinkite metodus `@Tool("aprašymas")` ir LangChain4j rūpinasi likusiu – DI automatiškai nusprendžia, kada naudoti kiekvieną įrankį, pagal tai, ko vartotojas paprašo. Tai demonstruoja funkcijų iškvietimą – svarbią techniką kurti DI, kuris gali imtis veiksmų, o ne tik atsakyti į klausimus.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -266,14 +266,14 @@ String response = assistant.chat("What is 25 plus 17?");
 ```
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) ir paklauskite:
-> - "Kaip veikia @Tool anotacija ir ką LangChain4j daro su ja užkulisiuose?"
-> - "Ar AI gali kviesti kelis įrankius iš eilės, sprendžiant sudėtingas problemas?"
-> - "Kas nutinka, jei įrankis meta išimtį – kaip turėčiau tvarkyti klaidas?"
-> - "Kaip integruočiau realų API vietoje šio skaičiuoklio pavyzdžio?"
+> - „Kaip veikia @Tool anotacija ir ką LangChain4j daro su ja užkulisiuose?“
+> - „Ar DI gali iškviesti kelis įrankius iš eilės, kad išspręstų sudėtingas problemas?“
+> - „Kas atsitinka, jei įrankis meta išimtį – kaip turėčiau tvarkyti klaidas?“
+> - „Kaip integruočiau tikrą API vietoje šio skaičiuotuvo pavyzdžio?“
 
 **Dokumentų klausimai ir atsakymai (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Čia matysite RAG (retrieval-augmented generation) naudojant LangChain4j "Easy RAG" metodą. Dokumentai įkelti, automatiškai suskaidyti ir įterpti į atmintinę skirtą saugojimui, o turinio paieškotojas pateikia aktualias dalis AI užklausos metu. AI atsako remdamasis jūsų dokumentais, o ne savo bendromis žiniomis.
+Čia matysite RAG (retrieval-augmented generation) naudojant LangChain4j „Easy RAG“ metodą. Dokumentai įkeliami, automatiškai suskaidomi ir įterpiami į atminties saugyklą, tada turinio paieškos įrankis pateikia susijusius fragmentus DI užklausos metu. DI atsako remdamasis jūsų dokumentais, o ne bendromis žiniomis.
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -291,15 +291,15 @@ String answer = assistant.chat("What is the main topic?");
 ```
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) ir paklauskite:
-> - "Kaip RAG padeda išvengti AI haliucinacijų, palyginti su modelio mokymo duomenimis?"
-> - "Kuo skiriasi šis lengvas metodas nuo specialaus RAG proceso?"
-> - "Kaip masteliais pritaikysiu tai keliems dokumentams ar didesnėms žinių bazėms?"
+> - „Kaip RAG sumažina DI haliucinacijas, palyginti su modelio mokymo duomenimis?“
+> - „Kuo skiriasi šis paprastas metodas nuo individualaus RAG vamzdyno?“
+> - „Kaip išplėsti tai keliems dokumentams ar didesnėms žinių bazėms?“
 
-**Atsakingas AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+**Atsakingas DI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Kurkite AI saugumą gynybos sluoksniais. Ši demonstracija rodo du apsaugos sluoksnius, veikiančius kartu:
+Statykite DI saugumą gynybiniu sluoksniu. Ši demonstracija rodo dvi apsaugos sluoksnio funkcijas kartu:
 
-**1 dalis: LangChain4j įėjimo apsaugos (Input Guardrails)** – Blokuokite pavojingus šablonus prieš jie pasiekia LLM. Kurkite pasirinktines apsaugas, tikrinančias draudžiamus žodžius ar šablonus. Jos vykdomos jūsų kode, tad yra greitos ir nemokamos.
+**1 dalis: LangChain4j naudojimo ribojimai (Input Guardrails)** – Blokuoja pavojingus promptus prieš jiems pasiekiant LLM. Sukurkite savo ribojimus, kurie tikrina uždraustus raktinius žodžius ar šablonus. Jie veikia jūsų kode, todėl greiti ir nemokami.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -314,16 +314,16 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**2 dalis: Teikėjo saugumo filtrai** – GitHub Modeliai turi įmontuotus filtrus, kurie sugautų tai, ką apsaugos galėjo praleisti. Matysite griežtus blokavimus (HTTP 400 klaidas) rimtiems pažeidimams ir švelnius atsisakymus, kai AI mandagiai atsisako.
+**2 dalis: Tiekėjo saugumo filtrai** – GitHub Modeliai turi įmontuotus filtrus, kurie pagauna tai, ką jūsų ribojimai gali praleisti. Matysite griežtus blokus (HTTP 400 klaidas) už rimtus pažeidimus ir švelnius atsisakymus, kai DI mandagiai atsisako.
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) ir paklauskite:
-> - "Kas yra InputGuardrail ir kaip sukurti savo?"
-> - "Kuo skiriasi griežtas blokavimas nuo švelnaus atsisakymo?"
-> - "Kodėl naudoti ir apsaugas, ir teikėjo filtrus kartu?"
+> - „Kas yra InputGuardrail ir kaip sukurti savo?“
+> - „Kuo skiriasi griežtas užblokavimas nuo švelnaus atsisakymo?“
+> - „Kodėl naudoti ir ribojimus, ir tiekėjo filtrus kartu?“
 
-## Tolimesni žingsniai
+## Kitos veiksmų gairės
 
-**Kitas modulis:** [01-introduction - Pradžia su LangChain4j ir gpt-5 Azure](../01-introduction/README.md)
+**Kitas modulis:** [01-introduction - Pradžia su LangChain4j](../01-introduction/README.md)
 
 ---
 
@@ -331,22 +331,22 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ---
 
-## Klaidų taisymas
+## Trikčių šalinimas
 
-### Pirmas kartas Maven kompiluojant
+### Pirmas Maven sukūrimas
 
-**Problema:** Pirmas `mvn clean compile` arba `mvn package` užtrunka ilgai (10-15 minučių)
+**Problema:** Pirmas `mvn clean compile` arba `mvn package` vykdymas užtrunka (10-15 minučių)
 
-**Priežastis:** Maven pirmą kartą atsisiunčia visas projekto priklausomybes (Spring Boot, LangChain4j bibliotekas, Azure SDK ir t.t.).
+**Priežastis:** Maven pirmą kartą turi atsisiųsti visas projekto priklausomybes (Spring Boot, LangChain4j bibliotekas, Azure SDK ir kt.).
 
-**Sprendimas:** Tai normalu. Vėlesni kompiliavimai bus daug greitesni, nes priklausomybės yra kešuojamos lokaliai. Atsisiuntimo greitis priklauso nuo jūsų interneto ryšio.
+**Sprendimas:** Tai normalu. Tolimesni kūrimai bus ženkliai greitesni, nes priklausomybės bus talpinamos vietoje. Atsisiuntimo laikas priklauso nuo jūsų tinklo greičio.
 
-### PowerShell Maven komandų sintaksės klaida
+### PowerShell Maven komandos sintaksės klaida
 
 **Problema:** Maven komandos nepavyksta su klaida `Unknown lifecycle phase ".mainClass=..."`
-**Priežastis**: PowerShell interpretuoja `=` kaip kintamojo priskyrimo operatorių, kuris pažeidžia Maven savybių sintaksę
+**Priežastis**: PowerShell interpretuoja `=` kaip kintamojo priskyrimo operatorių, todėl Maven savybių sintaksė sugadinama
 
-**Sprendimas**: Naudokite stabdymo analizės operatorių `--%` prieš Maven komandą:
+**Sprendimas**: Naudokite sustabdymo interpretavimą operatorių `--%` prieš Maven komandą:
 
 **PowerShell:**
 ```powershell
@@ -358,30 +358,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Operatorius `--%` nurodo PowerShell perduoti visus likusius argumentus tiesiogiai Maven be interpretacijos.
+Operatorius `--%` nurodo PowerShell perduoti visas likusias argumentų dalis pažodžiui Maven be interpretacijos.
 
-### Windows PowerShell emocijų rodymas
+### Windows PowerShell emoji rodymas
 
-**Problema**: AI atsakymai rodo šiukšlinį tekstą (pvz., `????` arba `â??`), o ne emocijas PowerShell
+**Problema**: AI atsakymai PowerShell rodomi kaip nesuprantami simboliai (pvz., `????` arba `â??`) vietoje emoji
 
-**Priežastis**: PowerShell numatytasis kodavimas nepalaiko UTF-8 emocijų
+**Priežastis**: PowerShell numatytoji koduotė nepalaiko UTF-8 emoji
 
 **Sprendimas**: Paleiskite šią komandą prieš vykdant Java programas:
 ```cmd
 chcp 65001
 ```
 
-Tai verčia terminalą naudoti UTF-8 koduotę. Alternatyviai naudokite Windows Terminal, kuris geriau palaiko Unicode.
+Tai privers terminalą naudoti UTF-8 koduotę. Alternatyviai naudokite Windows Terminal, kuris geriau palaiko Unicode.
 
 ### API kvietimų derinimas
 
-**Problema**: Autentifikacijos klaidos, ribojimai ar netikėti AI modelio atsakymai
+**Problema**: Autentifikacijos klaidos, užklausų limitai arba netikėti AI modelio atsakymai
 
-**Sprendimas**: Pavyzdžiuose įtrauktos `.logRequests(true)` ir `.logResponses(true)`, kad API kvietimai būtų matomi konsolėje. Tai padeda spręsti autentifikacijos klaidas, ribojimus ar netikėtus atsakymus. Produkcijoje pašalinkite šias parinktis, kad sumažintumėte žurnalų triukšmą.
+**Sprendimas**: Pavyzdžiai naudoja `.logRequests(true)` ir `.logResponses(true)`, kad parodytų API kvietimus konsolėje. Tai padeda tirti autentifikacijos klaidas, užklausų limitus ar netikėtus atsakymus. Pašalinkite šias parinktis gamybai, kad sumažintumėte žurnalų triukšmą.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Atsakomybės apribojimas**:  
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, prašome atkreipti dėmesį, kad automatizuoti vertimai gali turėti klaidų arba netikslumų. Originalus dokumentas jo gimtąja kalba laikomas autoritetingu šaltiniu. Svarbiai informacijai rekomenduojama naudoti profesionalų žmogaus atliktą vertimą. Mes neatsakome už jokius nesusipratimus ar neteisingus aiškinimus, kurie gali kilti naudojantis šiuo vertimu.
+**Atsakomybės apribojimas**:
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, atkreipkite dėmesį, kad automatizuoti vertimai gali turėti klaidų arba netikslumų. Originalus dokumentas jo gimtąja kalba laikomas autoritetingu šaltiniu. Esant svarbiai informacijai, rekomenduojamas profesionalus žmogaus vertimas. Mes neatsakome už bet kokius nesusipratimus ar klaidingus interpretavimus, atsiradusius dėl šio vertimo naudojimo.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
