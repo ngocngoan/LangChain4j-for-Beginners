@@ -2,84 +2,86 @@
 
 ## İçindekiler
 
-- [Video Yürütme](../../../01-introduction)
-- [Neler Öğreneceksiniz](../../../01-introduction)
-- [Önkoşullar](../../../01-introduction)
-- [Temel Problemi Anlama](../../../01-introduction)
-- [Tokenları Anlama](../../../01-introduction)
-- [Belleğin Nasıl Çalıştığı](../../../01-introduction)
-- [LangChain4j'in Kullanımı](../../../01-introduction)
-- [Azure OpenAI Altyapısını Dağıtma](../../../01-introduction)
-- [Uygulamayı Yerel Çalıştırma](../../../01-introduction)
-- [Uygulamayı Kullanma](../../../01-introduction)
+- [Video Turu](../../../01-introduction)
+- [Öğrenecekleriniz](../../../01-introduction)
+- [Ön Koşullar](../../../01-introduction)
+- [Temel Problemi Anlamak](../../../01-introduction)
+- [Token'ları Anlamak](../../../01-introduction)
+- [Bellek Nasıl Çalışır](../../../01-introduction)
+- [Bunun LangChain4j ile Kullanımı](../../../01-introduction)
+- [Azure OpenAI Altyapısını Yayınla](../../../01-introduction)
+- [Uygulamayı Yerel Olarak Çalıştır](../../../01-introduction)
+- [Uygulamanın Kullanımı](../../../01-introduction)
   - [Durumsuz Sohbet (Sol Panel)](../../../01-introduction)
   - [Durumlu Sohbet (Sağ Panel)](../../../01-introduction)
 - [Sonraki Adımlar](../../../01-introduction)
 
-## Video Yürütme
+## Video Turu
 
-Bu modülle başlamayı açıklayan canlı oturumu izleyin:
+Bu modüle nasıl başlanacağını anlatan canlı oturumu izleyin:
 
 <a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="LangChain4j ile Başlarken - Canlı Oturum" width="800"/></a>
 
-## Neler Öğreneceksiniz
+## Öğrenecekleriniz
 
-Hızlı başlangıcı tamamladıysanız, istemler göndermeyi ve yanıtlar almayı gördünüz. Bu temel, ancak gerçek uygulamalar daha fazlasını gerektirir. Bu modül, bağlamı hatırlayan ve durumu koruyan sohbet AI'sı oluşturmayı öğretir - tek seferlik demo ile üretime hazır uygulama arasındaki fark.
+Hızlı başlangıçta, GitHub Modellerini kullanarak istemler gönderdiniz, araçları çağırdınız, bir RAG hattı kurdunuz ve güvenlik sınırlarını test ettiniz. Bu demolar olanakları gösterdi — şimdi Azure OpenAI ve GPT-5.2'ye geçip üretim tarzı uygulamalar geliştirmeye başlıyoruz. Bu modül, bağlamı hatırlayan ve durumu koruyan konuşma yapay zekasına odaklanıyor — hızlı başlangıç demolarının perde arkasında kullandığı ama açıklamadığı kavramlar.
 
-Bu rehber boyunca Azure OpenAI'nin GPT-5.2'sini kullanacağız çünkü gelişmiş akıl yürütme yetenekleri farklı desenlerin davranışını daha belirgin yapıyor. Bellek eklediğinizde farkı net göreceksiniz. Bu, uygulamanıza her bileşenin ne kattığını anlamayı kolaylaştırır.
+Bu kılavuz boyunca Azure OpenAI'nin GPT-5.2'sini kullanacağız çünkü gelişmiş akıl yürütme yetenekleri farklı desenlerin davranışlarını daha belirgin kılıyor. Bellek eklediğinizde farkı açıkça göreceksiniz. Bu, uygulamanıza her bir bileşenin ne kattığını anlamayı kolaylaştırır.
 
-İki deseni gösteren bir uygulama inşa edeceksiniz:
+Her iki deseni gösteren bir uygulama geliştireceksiniz:
 
-**Durumsuz Sohbet** - Her istek bağımsızdır. Model önceki mesajları hatırlamaz. Hızlı başlangıçta kullandığınız desen budur.
+**Durumsuz Sohbet** - Her istek bağımsız. Model önceki mesajları hatırlamaz. Hızlı başlangıçta kullandığınız desen budur.
 
-**Durumlu Sohbet** - Her istek sohbet geçmişini içerir. Model birden çok tur boyunca bağlamı korur. Üretim uygulamaları için gereklidir.
+**Durumlu Konuşma** - Her istek, konuşma geçmişini içerir. Model birden fazla adımlı konuşmada bağlamı korur. Üretim uygulamalarının gerektirdiği budur.
 
-## Önkoşullar
+## Ön Koşullar
 
 - Azure aboneliği ve Azure OpenAI erişimi
-- Java 21, Maven 3.9+
+- Java 21, Maven 3.9+ 
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 > **Not:** Java, Maven, Azure CLI ve Azure Developer CLI (azd) sağlanan geliştirme konteynerinde önceden yüklüdür.
 
-> **Not:** Bu modül Azure OpenAI üzerinde GPT-5.2 kullanır. Dağıtım `azd up` komutu ile otomatik yapılandırılır - kodda model adını değiştirmeyin.
+> **Not:** Bu modül Azure OpenAI üzerinde GPT-5.2 kullanır. Dağıtım `azd up` ile otomatik yapılandırılır — koddaki model adını değiştirmeyin.
 
-## Temel Problemi Anlama
+## Temel Problemi Anlamak
 
-Dil modelleri durumsuzdur. Her API çağrısı bağımsızdır. "Benim adım John" yazıp sonra "Adım ne?" diye sorarsanız, model kendinizi tanıttığınızı bilmez. Her isteği sanki şimdi başlanan ilk sohbetmiş gibi işler.
+Dil modelleri durumsuzdur. Her API çağrısı bağımsızdır. "Adım John" dediğinizde ve sonra "Adım ne?" diye sorduğunuzda, model kendinizi tanıttığınızı bilmez. Her isteği yaşayabileceğiniz ilk konuşma gibi değerlendirir.
 
-Basit Soru-Cevap için kabul edilebilir, ancak gerçek uygulamalar için yetersizdir. Müşteri hizmeti botları size ne söylediğinizi hatırlamalı. Kişisel asistanlar bağlama ihtiyaç duyar. Her çok tur sohbet bellek gerektirir.
+Bu, basit soru-cevaplar için sorun olmaz ancak gerçek uygulamalar için işe yaramaz. Müşteri hizmeti botları size söylediklerinizi hatırlamalıdır. Kişisel asistanlar bağlama ihtiyaç duyar. Her çok adımlı konuşma belleğe ihtiyaç duyar.
 
-<img src="../../../translated_images/tr/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Durumsuz ve Durumlu Sohbetler" width="800"/>
+Aşağıdaki diagram iki yaklaşımı karşılaştırır — solda, isminizi unutan durumsuz çağrı; sağda ise isminizi hatırlayan ChatMemory destekli durumlu çağrı.
 
-*Durumsuz (bağımsız çağrılar) ve durumlu (bağlam farkında) sohbetler arasındaki fark*
+<img src="../../../translated_images/tr/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Durumsuz ve Durumlu Konuşmalar" width="800"/>
 
-## Tokenları Anlama
+*Durumsuz (bağımsız çağrılar) ve durumlu (bağlam farkında) konuşmalar arasındaki fark*
 
-Sohbetlere başlamadan önce tokenları anlamak önemlidir - dil modellerinin işlediği temel metin birimleri:
+## Token'ları Anlamak
+
+Konuşmalara dalmadan önce, dil modellerinin işlediği temel metin birimleri olan token’ları anlamak önemlidir:
 
 <img src="../../../translated_images/tr/token-explanation.c39760d8ec650181.webp" alt="Token Açıklaması" width="800"/>
 
-*Metnin tokenlara bölünme örneği - "I love AI!" 4 ayrı işleme birimine dönüşür*
+*Metnin token’lara nasıl bölündüğüne örnek - "I love AI!" 4 ayrı işleme birimine dönüşür*
 
-Tokenlar, AI modellerinin metni ölçme ve işleme şeklidir. Kelimeler, noktalama işaretleri ve hatta boşluklar token olabilir. Modelinizin aynı anda işleyebileceği token sayısı (GPT-5.2 için 400.000, 272.000 giriş ve 128.000 çıkış tokenı) bir sınırlamadır. Tokenları anlamak sohbet uzunluğunu ve maliyetleri yönetmenize yardımcı olur.
+Token’lar yapay zeka modellerinin metni ölçme ve işleme yöntemidir. Kelimeler, noktalama işaretleri ve hatta boşluklar token olabilir. Modelinizin bir kerede işleyebileceği token sayısı sınırlıdır (GPT-5.2 için 400.000, 272.000 giriş token’ı ve 128.000 çıkış token’ı ile). Token’ları anlamak konuşma uzunluğunu ve maliyetleri yönetmenize yardımcı olur.
 
-## Belleğin Nasıl Çalıştığı
+## Bellek Nasıl Çalışır
 
-Sohbet belleği, durumsuz sorunu, sohbet geçmişini koruyarak çözer. İsteğinizi modele göndermeden önce, çerçeve ilgili önceki mesajları ekler. "Adım ne?" dediğinizde sistem tüm sohbet geçmişini gönderir ve model "Benim adım John" dediğinizi görür.
+Konuşma belleği, durumsuz problemi, konuşma geçmişini koruyarak çözer. Modele isteğinizi göndermeden önce, çerçeve ilgili önceki mesajları başa ekler. "Adım ne?" diye sorduğunuzda, sistem tüm konuşma geçmişini gönderir; böylece model sizin daha önce "Adım John" dediğinizi görür.
 
-LangChain4j, bunu otomatik yapan bellek uygulamaları sağlar. Kaç mesaj saklayacağınızı seçersiniz, çerçeve bağlam penceresini yönetir.
+LangChain4j bunu otomatik yapan bellek uygulamaları sağlar. Kaç mesaj korunacağını siz seçersiniz, çerçeve bağlam penceresini yönetir. Aşağıdaki diagram MessageWindowChatMemory’nin yakın zamandaki mesajların kayan penceresini nasıl yönettiğini gösterir.
 
 <img src="../../../translated_images/tr/memory-window.bbe67f597eadabb3.webp" alt="Bellek Penceresi Kavramı" width="800"/>
 
-*MessageWindowChatMemory, yakın zamanda gönderilen mesajların kayan penceresini tutar, eski mesajları otomatik düşürür*
+*MessageWindowChatMemory, eski mesajları otomatik atarak yakın zamandaki mesajlar için kayan bir pencere tutar*
 
-## LangChain4j Kullanımı
+## Bunun LangChain4j ile Kullanımı
 
-Bu modül hızlı başlangıcı Spring Boot entegrasyonu ve sohbet belleği ekleyerek genişletir. Parçalar şöyle birleşir:
+Bu modül, hızlı başlangıcı genişleterek Spring Boot entegrasyonu ve konuşma belleği ekler. Parçalar şu şekilde birleşir:
 
-**Bağımlılıklar** - İki LangChain4j kütüphanesi ekleyin:
+**Bağımlılıklar** — İki LangChain4j kütüphanesi ekleyin:
 
 ```xml
 <dependency>
@@ -92,7 +94,7 @@ Bu modül hızlı başlangıcı Spring Boot entegrasyonu ve sohbet belleği ekle
 </dependency>
 ```
 
-**Sohbet Modeli** - Azure OpenAI'yi Spring bean olarak yapılandırın ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Sohbet Modeli** - Azure OpenAI’yi Spring bean olarak yapılandırın ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -107,9 +109,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Builder, `azd up` komutuyla ayarlanan ortam değişkenlerinden kimlik bilgilerini okur. `baseUrl`'i Azure uç noktanıza ayarlamak, OpenAI istemcisinin Azure OpenAI ile çalışmasını sağlar.
+Builder, `azd up` ile ayarlanmış ortam değişkenlerinden kimlik bilgilerini okur. `baseUrl`’i Azure uç noktanıza ayarlamak, OpenAI istemcisinin Azure OpenAI ile çalışmasını sağlar.
 
-**Sohbet Belleği** - Sohbet geçmişini MessageWindowChatMemory ile izleyin ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Konuşma Belleği** - Mesaj geçmişini MessageWindowChatMemory ile izleyin ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -122,21 +124,21 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-`withMaxMessages(10)` ile son 10 mesajı tutacak bellek oluşturun. Kullanıcı ve AI mesajlarını `UserMessage.from(text)` ve `AiMessage.from(text)` ile ekleyin. Geçmişe `memory.messages()` ile erişip modele gönderin. Servis, her sohbet kimliği için ayrı bellek örnekleri tutar, böylece birden çok kullanıcı eşzamanlı sohbet edebilir.
+`withMaxMessages(10)` ile belleği son 10 mesajı tutacak şekilde oluşturun. Kullanıcı ve yapay zeka mesajlarını tipli sarmalayıcılarla ekleyin: `UserMessage.from(text)` ve `AiMessage.from(text)`. Geçmişi `memory.messages()` ile alın ve modele gönderin. Servis, her konuşma kimliği için ayrı bellek örnekleri tutar; böylece birden çok kullanıcı aynı anda sohbet edebilir.
 
-> **🤖 GitHub Copilot Chat ile Deneyin:** [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) dosyasını açın ve sorun:
-> - "MessageWindowChatMemory pencere dolduğunda hangi mesajları atmaya nasıl karar verir?"
-> - "Belleği hafıza içi yerine veritabanı kullanarak özel olarak nasıl uygularım?"
-> - "Eski sohbet geçmişini sıkıştırmak için özetleme nasıl eklenir?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) dosyasını açın ve sorun:
+> - "MessageWindowChatMemory pencere dolduğunda hangi mesajların atılmasına nasıl karar veriyor?"
+> - "Belleği bellek içi yerine veritabanı kullanarak özel olarak nasıl uygularım?"
+> - "Eski konuşma geçmişini sıkıştırmak için özetlemeyi nasıl eklerim?"
 
-Durumsuz sohbet uç noktası belleği tamamen atlar - sadece hızlı başlangıç gibi `chatModel.chat(prompt)`. Durumlu uç nokta mesajları belleğe ekler, geçmişi alır ve bağlamla birlikte her isteğe dahil eder. Aynı model yapılandırması, farklı desenler.
+Durumsuz sohbet uç noktası belleği tamamen atlar — hızlı başlangıçta olduğu gibi sadece `chatModel.chat(prompt)`. Durumlu uç noktada mesajlar belleğe eklenir, geçmiş alınır ve her istekle o bağlam dahil edilir. Aynı model yapılandırması, farklı desenler.
 
-## Azure OpenAI Altyapısını Dağıtma
+## Azure OpenAI Altyapısını Yayınla
 
 **Bash:**
 ```bash
 cd 01-introduction
-azd up  # Aboneliği ve konumu seçin (eastus2 önerilir)
+azd up  # Abonelik ve konumu seçin (eastus2 önerilir)
 ```
 
 **PowerShell:**
@@ -145,28 +147,28 @@ cd 01-introduction
 azd up  # Aboneliği ve konumu seçin (eastus2 önerilir)
 ```
 
-> **Not:** Eğer zaman aşımı hatası alırsanız (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), `azd up` komutunu tekrar çalıştırın. Azure kaynakları arka planda hala hazırlanıyor olabilir ve yeniden denemek dağıtımın tamamlanmasını sağlar.
+> **Not:** Eğer zaman aşımı hatası (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`) alırsanız, `azd up` komutunu tekrar çalıştırın. Azure kaynakları arka planda hâlâ dağıtılıyor olabilir; yeniden denemek, kaynaklar terminal duruma geldiğinde dağıtımın tamamlanmasını sağlar.
 
-Bu şunları yapar:
-1. GPT-5.2 ve text-embedding-3-small modelleri ile Azure OpenAI kaynağı dağıtır
-2. Kimlik bilgileriyle `.env` dosyasını proje köküne otomatik oluşturur
+Bu işlemler:
+1. GPT-5.2 ve text-embedding-3-small modelleriyle Azure OpenAI kaynağı dağıtır
+2. Proje kökünde kimlik bilgileriyle `.env` dosyasını otomatik oluşturur
 3. Gerekli tüm ortam değişkenlerini ayarlar
 
-**Dağıtım sorunları mı yaşıyorsunuz?** Alt alan adı çakışmaları, manuel Azure Portal dağıtım adımları ve model yapılandırma rehberi için [Altyapı README'sine](infra/README.md) bakın.
+**Dağıtım sorunları mı yaşıyorsunuz?** Alt alan adı adı çatışmaları, manuel Azure Portal dağıtım adımları ve model yapılandırma rehberi dahil ayrıntılı hata giderme için [Altyapı README dosyasına](infra/README.md) bakın.
 
 **Dağıtımın başarılı olup olmadığını doğrulayın:**
 
 **Bash:**
 ```bash
-cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, vb. gösterilmeli.
+cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, vb. gösterilmelidir.
 ```
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY vb. gösterilmeli.
+Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY vb. gösterilmelidir.
 ```
 
-> **Not:** `azd up` komutu `.env` dosyasını otomatik oluşturur. Daha sonra güncelleme gerekirse ya dosyayı manuel düzenleyin ya da şu komutla yeniden üretin:
+> **Not:** `azd up` komutu `.env` dosyasını otomatik oluşturur. Daha sonra güncellemeniz gerekirse, `.env` dosyasını manuel olarak düzenleyebilir veya yeniden oluşturmak için şu komutları çalıştırabilirsiniz:
 >
 > **Bash:**
 > ```bash
@@ -180,12 +182,11 @@ Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY vb. gösterilmeli.
 > .\.azd-env.ps1
 > ```
 
-
-## Uygulamayı Yerel Çalıştırma
+## Uygulamayı Yerel Olarak Çalıştır
 
 **Dağıtımı doğrulayın:**
 
-Azure kimlik bilgileri bulunan `.env` dosyasının kök dizinde olduğundan emin olun:
+Azure kimlik bilgileriyle `.env` dosyasının kök dizinde olduğundan emin olun. Modül dizininden (`01-introduction/`) şu komutları çalıştırın:
 
 **Bash:**
 ```bash
@@ -194,28 +195,30 @@ cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermelidir
+Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 ```
 
 **Uygulamaları başlatın:**
 
-**Seçenek 1: Spring Boot Panosu kullanmak (VS Code kullanıcıları için önerilir)**
+**Seçenek 1: Spring Boot Dashboard kullanımı (VS Code kullanıcıları için önerilir)**
 
-Geliştirme konteynerinde Spring Boot Panosu uzantısı mevcuttur, bu uzantı tüm Spring Boot uygulamalarını yönetmek için görsel arayüz sağlar. VS Code'da sol taraftaki Etkinlik Çubuğunda (Spring Boot simgesine bakın) bulunur.
+Geliştirme konteynerinde, tüm Spring Boot uygulamalarını görsel olarak yönetmek için Spring Boot Dashboard eklentisi vardır. VS Code’un solundaki Aktivite Çubuğunda (Spring Boot simgesini arayın) bulunabilir.
 
-Spring Boot Panosu'ndan:
-- Tüm mevcut Spring Boot uygulamalarını görün
-- Uygulamaları tek tıklamayla başlat/durdur
-- Gerçek zamanlı uygulama günlüklerini izleyin
-- Uygulama durumunu takip edin
+Spring Boot Dashboard’dan:
+- Çalışma alanındaki tüm Spring Boot uygulamalarını görebilirsiniz
+- Uygulamaları tek tıklamayla başlat/durdurabilirsiniz
+- Uygulama günlüklerini gerçek zamanlı izleyebilirsiniz
+- Uygulama durumunu izleyebilirsiniz
 
-Sadece "introduction" modülünün yanındaki oynat düğmesine tıklayarak modülü başlatabilir veya tüm modülleri aynı anda başlatabilirsiniz.
+`introduction` modülünün yanındaki oynat düğmesine basarak bu modülü başlatın veya tüm modülleri aynı anda çalıştırın.
 
-<img src="../../../translated_images/tr/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Panosu" width="400"/>
+<img src="../../../translated_images/tr/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Seçenek 2: Shell scriptleri kullanmak**
+*VS Code’da Spring Boot Dashboard — tüm modülleri bir yerden başlat, durdur ve izle*
 
-Tüm web uygulamalarını başlatın (modüller 01-04):
+**Seçenek 2: Kabuk betikleri kullanımı**
+
+Tüm web uygulamalarını (modüller 01-04) başlat:
 
 **Bash:**
 ```bash
@@ -229,7 +232,7 @@ cd ..  # Kök dizinden
 .\start-all.ps1
 ```
 
-Ya da sadece bu modülü başlatın:
+Ya da sadece bu modülü başlat:
 
 **Bash:**
 ```bash
@@ -243,9 +246,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Her iki script, ortam değişkenlerini kök `.env` dosyasından otomatik yükler ve JAR dosyaları yoksa oluşturur.
+Her iki betik de kök `.env` dosyasından ortam değişkenlerini otomatik yükler ve JAR dosyaları yoksa oluşturur.
 
-> **Not:** Başlatmadan önce tüm modülleri manuel derlemek isterseniz:
+> **Not:** Başlatmadan önce tüm modülleri manuel olarak derlemek isterseniz:
 >
 > **Bash:**
 > ```bash
@@ -265,7 +268,7 @@ Tarayıcınızda http://localhost:8080 adresini açın.
 
 **Bash:**
 ```bash
-./stop.sh  # Sadece bu modül
+./stop.sh  # Yalnızca bu modül
 # Veya
 cd .. && ./stop-all.sh  # Tüm modüller
 ```
@@ -277,32 +280,31 @@ cd .. && ./stop-all.sh  # Tüm modüller
 cd ..; .\stop-all.ps1  # Tüm modüller
 ```
 
+## Uygulamanın Kullanımı
 
-## Uygulamayı Kullanma
-
-Uygulama, yan yana iki sohbet uygulaması içeren bir web arayüzü sunar.
+Uygulama, yan yana iki sohbet uygulamasıyla web arayüzü sağlar.
 
 <img src="../../../translated_images/tr/home-screen.121a03206ab910c0.webp" alt="Uygulama Ana Ekranı" width="800"/>
 
-*Basit Sohbet (durumsuz) ve Konuşmalı Sohbet (durumlu) seçeneklerini gösteren gösterge paneli*
+*Hem Basit Sohbet (durumsuz) hem de Konuşmalı Sohbet (durumlu) seçeneklerini gösteren pano*
 
 ### Durumsuz Sohbet (Sol Panel)
 
-Önce bunu deneyin. "Adım John" deyin ve hemen ardından "Adım ne?" diye sorun. Model hatırlamayacak çünkü her mesaj bağımsız. Bu, temel dil modeli entegrasyonunun ana problemini gösterir - sohbet bağlamı yok.
+Önce bunu deneyin. "Adım John" deyin ve hemen ardından "Adım ne?" diye sorun. Model hatırlamaz çünkü her mesaj bağımsızdır. Bu, temel dil modeli entegrasyonundaki ana sorunu gösterir — konuşma bağlamı yok.
 
 <img src="../../../translated_images/tr/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Durumsuz Sohbet Demo" width="800"/>
 
-*AI önceki mesajdaki adınızı hatırlamaz*
+*Yapay zeka önceki mesajdaki isminizi hatırlamaz*
 
 ### Durumlu Sohbet (Sağ Panel)
 
-Şimdi aynı diziyi burada deneyin. "Adım John" deyin ve sonra "Adım ne?" Bu kez hatırlıyor. Fark, MessageWindowChatMemory - sohbet geçmişini tutar ve her istekle birlikte gönderir. Üretim sohbet AI'sı böyle çalışır.
+Şimdi aynı diziyi burada deneyin. "Adım John" deyin ve sonra "Adım ne?" diye sorun. Bu sefer hatırlar. Fark MessageWindowChatMemory'dir — konuşma geçmişini tutar ve her istekle birlikte gönderir. Üretim konuşma yapay zekası böyle çalışır.
 
 <img src="../../../translated_images/tr/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Durumlu Sohbet Demo" width="800"/>
 
-*AI, sohbetin başında söylediklerinizi hatırlar*
+*Yapay zeka önceki konuşmadan isminizi hatırlar*
 
-Her iki panel de aynı GPT-5.2 modelini kullanır. Tek fark bellek. Bu, belleğin uygulamanıza ne kattığını ve gerçek senaryolarda neden gerekli olduğunu açıkça gösterir.
+Her iki panelde de aynı GPT-5.2 modeli kullanılır. Tek fark bellek. Bu, belleğin uygulamanıza ne kattığını ve gerçek kullanım durumları için neden gerekli olduğunu açıkça gösterir.
 
 ## Sonraki Adımlar
 
@@ -310,11 +312,11 @@ Her iki panel de aynı GPT-5.2 modelini kullanır. Tek fark bellek. Bu, belleği
 
 ---
 
-**Gezinme:** [← Önceki: Modül 00 - Hızlı Başlangıç](../00-quick-start/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 02 - İstem Mühendisliği →](../02-prompt-engineering/README.md)
+**Geçiş:** [← Önceki: Modül 00 - Hızlı Başlangıç](../00-quick-start/README.md) | [Ana Sayfaya Dön](../README.md) | [Sonraki: Modül 02 - İstem Mühendisliği →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Feragatname**:  
-Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de, otomatik çevirilerin hata veya yanlışlık içerebileceğini lütfen unutmayınız. Orijinal belge, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çeviri kullanımı sonucunda oluşabilecek yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
+**Feragatname**:
+Bu belge, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de, otomatik çevirilerde hatalar veya yanlışlıklar olabileceğini lütfen unutmayın. Orijinal belge, kendi ana dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi tavsiye edilir. Bu çevirinin kullanımıyla ortaya çıkabilecek yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
