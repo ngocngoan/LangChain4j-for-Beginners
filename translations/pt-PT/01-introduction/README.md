@@ -7,79 +7,81 @@
 - [Pré-requisitos](../../../01-introduction)
 - [Compreender o Problema Central](../../../01-introduction)
 - [Compreender Tokens](../../../01-introduction)
-- [Como Funciona a Memória](../../../01-introduction)
-- [Como Isto Usa LangChain4j](../../../01-introduction)
+- [Como a Memória Funciona](../../../01-introduction)
+- [Como Isto Utiliza LangChain4j](../../../01-introduction)
 - [Desplegar Infraestrutura Azure OpenAI](../../../01-introduction)
 - [Executar a Aplicação Localmente](../../../01-introduction)
-- [Usar a Aplicação](../../../01-introduction)
+- [Utilizar a Aplicação](../../../01-introduction)
   - [Chat Sem Estado (Painel Esquerdo)](../../../01-introduction)
   - [Chat Com Estado (Painel Direito)](../../../01-introduction)
 - [Próximos Passos](../../../01-introduction)
 
 ## Vídeo Explicativo
 
-Assista a esta sessão ao vivo que explica como começar com este módulo:
+Veja esta sessão ao vivo que explica como começar com este módulo:
 
 <a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Getting Started with LangChain4j - Live Session" width="800"/></a>
 
 ## O Que Vai Aprender
 
-Se completou o início rápido, viu como enviar prompts e obter respostas. Essa é a base, mas aplicações reais precisam de mais. Este módulo ensina como construir IA conversacional que lembra o contexto e mantém estado – a diferença entre uma demo pontual e uma aplicação pronta para produção.
+No início rápido, usou os Modelos do GitHub para enviar prompts, chamar ferramentas, construir um pipeline RAG e testar guardrails. Essas demonstrações mostraram o que é possível — agora mudamos para Azure OpenAI e GPT-5.2 e começamos a construir aplicações estilo produção. Este módulo foca em IA conversacional que lembra contexto e mantém estado — os conceitos que os demos do início rápido usavam nos bastidores, mas que não foram explicados.
 
-Vamos usar o GPT-5.2 da Azure OpenAI ao longo deste guia porque as suas capacidades avançadas de raciocínio tornam o comportamento dos vários padrões mais evidente. Ao adicionar memória, verá claramente a diferença. Isto facilita a compreensão do que cada componente traz à sua aplicação.
+Vamos usar o GPT-5.2 do Azure OpenAI ao longo deste guia porque as suas capacidades avançadas de raciocínio tornam o comportamento dos diferentes padrões mais evidente. Quando adicionar memória, verá claramente a diferença. Isso facilita compreender o que cada componente traz para a sua aplicação.
 
-Construirá uma aplicação que demonstra ambos os padrões:
+Vai construir uma aplicação que demonstra ambos os padrões:
 
-**Chat Sem Estado** – Cada pedido é independente. O modelo não tem memória das mensagens anteriores. Este é o padrão usado no início rápido.
+**Chat Sem Estado** - Cada pedido é independente. O modelo não tem memória das mensagens anteriores. Este é o padrão que usou no início rápido.
 
-**Conversa Com Estado** – Cada pedido inclui o histórico da conversa. O modelo mantém o contexto ao longo de múltiplas interações. É isto que as aplicações de produção necessitam.
+**Conversa Com Estado** - Cada pedido inclui o histórico da conversa. O modelo mantém o contexto ao longo de múltiplos turnos. Isto é o que as aplicações em produção requerem.
 
 ## Pré-requisitos
 
-- Subscrição Azure com acesso ao Azure OpenAI
-- Java 21, Maven 3.9+
+- Subscrição Azure com acesso a Azure OpenAI
+- Java 21, Maven 3.9+ 
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 > **Nota:** Java, Maven, Azure CLI e Azure Developer CLI (azd) estão pré-instalados no devcontainer fornecido.
 
-> **Nota:** Este módulo usa GPT-5.2 no Azure OpenAI. O deployment é configurado automaticamente via `azd up` – não modifique o nome do modelo no código.
+> **Nota:** Este módulo usa GPT-5.2 no Azure OpenAI. O despliege está configurado automaticamente através de `azd up` - não modifique o nome do modelo no código.
 
 ## Compreender o Problema Central
 
-Os modelos de linguagem são stateless. Cada chamada API é independente. Se disser "Chamo-me John" e depois perguntar "Qual é o meu nome?", o modelo não tem ideia de que acabou de se apresentar. Trata cada pedido como se fosse a primeira conversa que já teve.
+Os modelos de linguagem são sem estado. Cada chamada API é independente. Se enviar "O meu nome é John" e depois perguntar "Qual é o meu nome?", o modelo não tem ideia que acabou de se apresentar. Trata cada pedido como se fosse a primeira conversa que alguma vez teve.
 
-Isto é aceitável para perguntas e respostas simples mas inútil para aplicações reais. Bots de atendimento ao cliente precisam de lembrar o que lhes disse. Assistentes pessoais precisam de contexto. Qualquer conversa com múltiplos turnos requer memória.
+Isto é aceitável para Q&A simples, mas inútil para aplicações reais. Bots de serviço ao cliente precisam lembrar o que lhes disse. Assistentes pessoais precisam de contexto. Qualquer conversa com múltiplos turnos requer memória.
+
+O diagrama seguinte contrasta as duas abordagens — à esquerda, uma chamada sem estado que esquece o seu nome; à direita, uma chamada com estado suportada por ChatMemory que o lembra.
 
 <img src="../../../translated_images/pt-PT/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-*A diferença entre conversas stateless (chamadas independentes) e stateful (com consciência de contexto)*
+*A diferença entre conversas sem estado (chamadas independentes) e com estado (com conhecimento do contexto)*
 
 ## Compreender Tokens
 
-Antes de mergulhar nas conversas, é importante compreender tokens – as unidades básicas de texto que os modelos de linguagem processam:
+Antes de mergulhar nas conversas, é importante compreender tokens - as unidades básicas de texto que os modelos de linguagem processam:
 
 <img src="../../../translated_images/pt-PT/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-*Exemplo de como o texto é separado em tokens – "I love AI!" torna-se 4 unidades distintas para processamento*
+*Exemplo de como o texto é dividido em tokens - "I love AI!" torna-se 4 unidades separadas de processamento*
 
-Os tokens são como os modelos de IA medem e processam texto. Palavras, pontuação e até espaços podem ser tokens. O seu modelo tem um limite de tokens que pode processar de cada vez (400.000 para GPT-5.2, com até 272.000 tokens de entrada e 128.000 tokens de saída). Compreender os tokens ajuda a gerir o comprimento da conversa e os custos.
+Tokens são como os modelos de IA medem e processam texto. Palavras, pontuação e até espaços podem ser tokens. O seu modelo tem um limite sobre quantos tokens pode processar de cada vez (400.000 para o GPT-5.2, com até 272.000 tokens de entrada e 128.000 tokens de saída). Compreender tokens ajuda a gerir o comprimento da conversa e os custos.
 
-## Como Funciona a Memória
+## Como a Memória Funciona
 
-A memória de chat resolve o problema stateless ao manter o histórico da conversa. Antes de enviar o seu pedido ao modelo, a framework antepõe mensagens anteriores relevantes. Quando pergunta "Qual é o meu nome?", o sistema envia na verdade todo o histórico da conversa, permitindo ao modelo ver que disse anteriormente "Chamo-me John."
+A memória de chat resolve o problema de ser sem estado mantendo o histórico da conversa. Antes de enviar o seu pedido para o modelo, o framework adiciona mensagens anteriores relevantes. Quando pergunta "Qual é o meu nome?", o sistema envia na verdade todo o histórico da conversa, permitindo que o modelo veja que disse anteriormente "O meu nome é John."
 
-O LangChain4j fornece implementações de memória que tratam disto automaticamente. Escolhe quantas mensagens reter e a framework gere a janela de contexto.
+LangChain4j fornece implementações de memória que tratam disso automaticamente. Escolhe quantas mensagens reter e o framework gere a janela de contexto. O diagrama abaixo mostra como MessageWindowChatMemory mantém uma janela deslizante das mensagens recentes.
 
 <img src="../../../translated_images/pt-PT/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory mantém uma janela deslizante das mensagens recentes, excluindo automaticamente as antigas*
+*MessageWindowChatMemory mantém uma janela deslizante das mensagens recentes, eliminando automaticamente as mais antigas*
 
-## Como Isto Usa LangChain4j
+## Como Isto Utiliza LangChain4j
 
-Este módulo estende o início rápido integrando Spring Boot e adicionando memória à conversa. Eis como as peças encaixam:
+Este módulo estende o início rápido integrando Spring Boot e adicionando memória de conversa. Eis como as peças se encaixam:
 
-**Dependências** – Adicione duas bibliotecas LangChain4j:
+**Dependências** - Adicione duas bibliotecas LangChain4j:
 
 ```xml
 <dependency>
@@ -92,7 +94,7 @@ Este módulo estende o início rápido integrando Spring Boot e adicionando mem�
 </dependency>
 ```
 
-**Modelo de Chat** – Configure Azure OpenAI como um bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Modelo de Chat** - Configure Azure OpenAI como um bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -107,9 +109,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-O construtor lê as credenciais das variáveis de ambiente definidas por `azd up`. Definir `baseUrl` para o seu endpoint Azure faz o cliente OpenAI funcionar com Azure OpenAI.
+O builder lê as credenciais das variáveis de ambiente definidas por `azd up`. Definir `baseUrl` para o seu endpoint Azure faz o cliente OpenAI funcionar com Azure OpenAI.
 
-**Memória da Conversa** – Rastreie o histórico do chat com MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Memória de Conversa** - Faça o tracking do histórico de chat com MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -122,14 +124,14 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Crie a memória com `withMaxMessages(10)` para reter as últimas 10 mensagens. Adicione mensagens do utilizador e da IA com wrappers tipados: `UserMessage.from(text)` e `AiMessage.from(text)`. Recupere o histórico com `memory.messages()` e envie-o ao modelo. O serviço armazena instâncias de memória separadas por ID de conversa, permitindo múltiplos utilizadores conversarem simultaneamente.
+Crie a memória com `withMaxMessages(10)` para manter as últimas 10 mensagens. Adicione mensagens do utilizador e da IA com wrappers tipados: `UserMessage.from(text)` e `AiMessage.from(text)`. Recupere o histórico com `memory.messages()` e envie-o para o modelo. O serviço armazena instâncias de memória separadas por ID da conversa, permitindo que múltiplos utilizadores conversem simultaneamente.
 
-> **🤖 Experimente com o [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) e pergunte:
-> - "Como é que o MessageWindowChatMemory decide quais mensagens descartar quando a janela está cheia?"
-> - "Posso implementar armazenamento de memória personalizado usando uma base de dados em vez da memória em RAM?"
-> - "Como poderia adicionar sumarização para comprimir o histórico antigo da conversa?"
+> **🤖 Experimente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) e pergunte:
+> - "Como é que o MessageWindowChatMemory decide quais mensagens eliminar quando a janela está cheia?"
+> - "Posso implementar armazenamento de memória personalizado usando uma base de dados em vez de memória volátil?"
+> - "Como adicionaria sumarização para comprimir o histórico antigo da conversa?"
 
-O endpoint de chat stateless ignora totalmente a memória – apenas `chatModel.chat(prompt)` como no início rápido. O endpoint stateful adiciona mensagens à memória, recupera o histórico e inclui o contexto com cada pedido. Mesma configuração do modelo, padrões diferentes.
+O endpoint de chat sem estado ignora totalmente a memória - apenas `chatModel.chat(prompt)` tal como no início rápido. O endpoint com estado adiciona mensagens à memória, recupera o histórico e inclui esse contexto em cada pedido. Mesma configuração do modelo, padrões diferentes.
 
 ## Desplegar Infraestrutura Azure OpenAI
 
@@ -145,16 +147,16 @@ cd 01-introduction
 azd up  # Selecionar subscrição e localização (eastus2 recomendado)
 ```
 
-> **Nota:** Se encontrar erro de timeout (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), execute `azd up` novamente. Os recursos Azure podem ainda estar a ser provisionados em segundo plano, e tentar novamente permite que o deployment termine quando os recursos alcançarem um estado terminal.
+> **Nota:** Se encontrar um erro de timeout (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), basta executar `azd up` novamente. Os recursos Azure podem ainda estar a ser provisionados em segundo plano, e tentar outra vez permite que o despliege seja concluído assim que os recursos chegarem a um estado terminal.
 
-Isto fará:
-1. Desplegar o recurso Azure OpenAI com os modelos GPT-5.2 e text-embedding-3-small
+Isto irá:
+1. Desplegar o recurso Azure OpenAI com modelos GPT-5.2 e text-embedding-3-small
 2. Gerar automaticamente o ficheiro `.env` na raiz do projeto com as credenciais
 3. Configurar todas as variáveis de ambiente necessárias
 
-**Está a ter problemas no deployment?** Consulte o [README da Infraestrutura](infra/README.md) para resolução detalhada, incluindo conflitos de nome de subdomínio, passos manuais no portal Azure, e orientação sobre configuração do modelo.
+**Tem problemas no despliege?** Veja o [README da Infraestrutura](infra/README.md) para resolução detalhada incluindo conflitos de nome de subdomínio, passos manuais no Portal Azure, e orientações para configuração do modelo.
 
-**Verifique se o deployment teve sucesso:**
+**Verifique se o despliege teve sucesso:**
 
 **Bash:**
 ```bash
@@ -166,7 +168,7 @@ cat ../.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 Get-Content ..\.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 ```
 
-> **Nota:** O comando `azd up` gera automaticamente o ficheiro `.env`. Se precisar de atualizá-lo mais tarde, pode editar manualmente o `.env` ou regenerá-lo executando:
+> **Nota:** O comando `azd up` gera automaticamente o ficheiro `.env`. Se precisar de o atualizar mais tarde, pode editar manualmente o ficheiro `.env` ou regenerá-lo executando:
 >
 > **Bash:**
 > ```bash
@@ -182,9 +184,9 @@ Get-Content ..\.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 ## Executar a Aplicação Localmente
 
-**Verificar deployment:**
+**Verifique o despliege:**
 
-Assegure-se que o ficheiro `.env` existe na diretoria raiz com as credenciais Azure:
+Assegure-se que o ficheiro `.env` existe na diretoria raiz com as credenciais Azure. Execute isto a partir da diretoria do módulo (`01-introduction/`):
 
 **Bash:**
 ```bash
@@ -196,21 +198,23 @@ cat ../.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 Get-Content ..\.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Iniciar as aplicações:**
+**Inicie as aplicações:**
 
 **Opção 1: Usar o Spring Boot Dashboard (Recomendado para utilizadores VS Code)**
 
-O dev container inclui a extensão Spring Boot Dashboard, que fornece uma interface visual para gerir todas as aplicações Spring Boot. Pode encontrá-la na Barra de Atividades à esquerda do VS Code (procure o ícone do Spring Boot).
+O dev container inclui a extensão Spring Boot Dashboard, que fornece uma interface visual para gerir todas as aplicações Spring Boot. Pode encontrá-la na Barra de Atividades à esquerda do VS Code (procure o ícone Spring Boot).
 
-A partir do Spring Boot Dashboard, pode:
-- Ver todas as aplicações Spring Boot disponíveis na workspace
+No Spring Boot Dashboard pode:
+- Ver todas as aplicações Spring Boot disponíveis no workspace
 - Iniciar/parar aplicações com um clique
-- Ver logs da aplicação em tempo real
-- Monitorizar o estado das aplicações
+- Visualizar logs da aplicação em tempo real
+- Monitorizar o estado da aplicação
 
 Basta clicar no botão de play junto a "introduction" para iniciar este módulo, ou iniciar todos os módulos de uma vez.
 
 <img src="../../../translated_images/pt-PT/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
+
+*O Spring Boot Dashboard no VS Code — iniciar, parar e monitorizar todos os módulos num só lugar*
 
 **Opção 2: Usar scripts shell**
 
@@ -242,9 +246,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Ambos os scripts carregam automaticamente as variáveis de ambiente do ficheiro `.env` na raiz e constroem os JARs caso ainda não existam.
+Ambos os scripts carregam automaticamente as variáveis de ambiente do ficheiro `.env` da raiz e irão construir os JARs se estes não existirem.
 
-> **Nota:** Se preferir construir todos os módulos manualmente antes de iniciar:
+> **Nota:** Se preferir compilar todos os módulos manualmente antes de iniciar:
 >
 > **Bash:**
 > ```bash
@@ -276,31 +280,31 @@ cd .. && ./stop-all.sh  # Todos os módulos
 cd ..; .\stop-all.ps1  # Todos os módulos
 ```
 
-## Usar a Aplicação
+## Utilizar a Aplicação
 
-A aplicação fornece uma interface web com duas implementações de chat lado a lado.
+A aplicação oferece uma interface web com duas implementações de chat lado a lado.
 
 <img src="../../../translated_images/pt-PT/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Dashboard mostrando as opções de Chat Simples (sem estado) e Chat Conversacional (com estado)*
+*Painel mostrando as opções Simples Chat (sem estado) e Conversational Chat (com estado)*
 
 ### Chat Sem Estado (Painel Esquerdo)
 
-Experimente primeiro. Pergunte "Chamo-me John" e depois imediatamente pergunte "Qual é o meu nome?" O modelo não vai lembrar porque cada mensagem é independente. Isto demonstra o problema central da integração básica de modelos de linguagem – falta de contexto na conversa.
+Experimente primeiro. Pergunte "O meu nome é John" e depois imediatamente pergunte "Qual é o meu nome?". O modelo não irá lembrar porque cada mensagem é independente. Isto demonstra o problema central da integração básica com modelos de linguagem - nenhum contexto de conversa.
 
 <img src="../../../translated_images/pt-PT/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
-*A IA não lembra o seu nome da mensagem anterior*
+*IA não se lembra do seu nome da mensagem anterior*
 
 ### Chat Com Estado (Painel Direito)
 
-Agora experimente a mesma sequência aqui. Pergunte "Chamo-me John" e depois "Qual é o meu nome?" Desta vez lembra-se. A diferença é o MessageWindowChatMemory – mantém o histórico da conversa e inclui-o em cada pedido. É assim que a IA conversacional de produção funciona.
+Agora experimente a mesma sequência aqui. Pergunte "O meu nome é John" e depois "Qual é o meu nome?". Desta vez lembra-se. A diferença é MessageWindowChatMemory - esta mantém o histórico da conversa e inclui-o em cada pedido. É assim que a IA conversacional em produção funciona.
 
 <img src="../../../translated_images/pt-PT/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*A IA lembra o seu nome de conversas anteriores*
+*IA lembra-se do seu nome do início da conversa*
 
-Ambos os painéis usam o mesmo modelo GPT-5.2. A única diferença é a memória. Isto torna claro o que a memória traz à sua aplicação e porque é essencial para casos de uso reais.
+Ambos os painéis usam o mesmo modelo GPT-5.2. A única diferença é a memória. Isto torna claro o que a memória traz para a sua aplicação e porque é essencial para casos reais.
 
 ## Próximos Passos
 
@@ -313,6 +317,6 @@ Ambos os painéis usam o mesmo modelo GPT-5.2. A única diferença é a memória
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Aviso Legal**:
-Este documento foi traduzido utilizando o serviço de tradução automática [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos por garantir a precisão, por favor esteja ciente de que traduções automáticas podem conter erros ou imprecisões. O documento original na sua língua nativa deve ser considerado a fonte oficial. Para informações críticas, recomenda-se tradução profissional humana. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações erradas decorrentes da utilização desta tradução.
+**Aviso legal**:  
+Este documento foi traduzido usando o serviço de tradução automática [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos pela precisão, por favor, tenha em mente que traduções automáticas podem conter erros ou imprecisões. O documento original na sua língua nativa deve ser considerado a fonte autoritativa. Para informações críticas, recomenda-se a tradução profissional feita por um ser humano. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações incorretas decorrentes do uso desta tradução.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
