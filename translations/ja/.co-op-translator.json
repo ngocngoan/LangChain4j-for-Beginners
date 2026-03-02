@@ -1,13 +1,13 @@
 {
   "00-quick-start/README.md": {
-    "original_hash": "151207abac7dfe9c2986c33ee0fc1b71",
-    "translation_date": "2026-02-27T15:34:32+00:00",
+    "original_hash": "571d1be1c8cc887e0eafb7fa61e96141",
+    "translation_date": "2026-03-02T22:53:54+00:00",
     "source_file": "00-quick-start/README.md",
     "language_code": "ja"
   },
   "01-introduction/README.md": {
-    "original_hash": "1c8d7660566926fd2ae0d5860dcf83b1",
-    "translation_date": "2026-02-28T22:04:37+00:00",
+    "original_hash": "9973acb599099b6ebad23063fcfc5739",
+    "translation_date": "2026-03-02T22:53:02+00:00",
     "source_file": "01-introduction/README.md",
     "language_code": "ja"
   },
@@ -18,26 +18,26 @@
     "language_code": "ja"
   },
   "02-prompt-engineering/README.md": {
-    "original_hash": "7e74e5448e31021688dd9fd1d77e1c40",
-    "translation_date": "2026-02-28T22:05:47+00:00",
+    "original_hash": "7dc83a7a5b158f7e34adcc04042d370d",
+    "translation_date": "2026-03-02T22:55:27+00:00",
     "source_file": "02-prompt-engineering/README.md",
     "language_code": "ja"
   },
   "03-rag/README.md": {
-    "original_hash": "13d2cbc7df1da50e8e007c838500d8ff",
-    "translation_date": "2026-02-28T22:07:03+00:00",
+    "original_hash": "a965d4e6009b5bbce2033e9618b6a896",
+    "translation_date": "2026-03-02T22:56:54+00:00",
     "source_file": "03-rag/README.md",
     "language_code": "ja"
   },
   "04-tools/README.md": {
-    "original_hash": "d9bd1d8e3b479d2df11beaf2f4821854",
-    "translation_date": "2026-02-27T15:41:01+00:00",
+    "original_hash": "43dbe178c22ddeb6732950e1b12ef5d3",
+    "translation_date": "2026-03-02T22:59:40+00:00",
     "source_file": "04-tools/README.md",
     "language_code": "ja"
   },
   "05-mcp/README.md": {
-    "original_hash": "74652625929cac8d060bdeefe07e5e70",
-    "translation_date": "2026-02-27T15:39:25+00:00",
+    "original_hash": "96cf83980e37e3a13e264387a6e0f1d2",
+    "translation_date": "2026-03-02T22:58:20+00:00",
     "source_file": "05-mcp/README.md",
     "language_code": "ja"
   },
@@ -72,14 +72,14 @@
     "language_code": "ja"
   },
   "docs/GLOSSARY.md": {
-    "original_hash": "6c2c1a7c0031f05cb3a895bcb888d1c6",
-    "translation_date": "2026-02-10T10:41:24+00:00",
+    "original_hash": "f8fbe9fb0f3adc92eb3cd3835d140a4a",
+    "translation_date": "2026-03-02T23:00:19+00:00",
     "source_file": "docs/GLOSSARY.md",
     "language_code": "ja"
   },
   "docs/TESTING.md": {
-    "original_hash": "f995b470278adfca321ca988b42e0c56",
-    "translation_date": "2026-02-10T10:42:14+00:00",
+    "original_hash": "608e564906adcffddb1033c48d76934e",
+    "translation_date": "2026-03-02T23:01:11+00:00",
     "source_file": "docs/TESTING.md",
     "language_code": "ja"
   }
