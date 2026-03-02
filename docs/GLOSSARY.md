@@ -24,7 +24,7 @@ Quick reference for terms and concepts used throughout the course.
 
 **Chunking** - Breaking documents into smaller pieces. Typical: 300-500 tokens with overlap. [Module 03](../03-rag/README.md)
 
-**Context Window** - Maximum tokens a model can process. GPT-5.2: 400K tokens.
+**Context Window** - Maximum tokens a model can process. GPT-5.2: 400K tokens (up to 272K input, 128K output).
 
 **Embeddings** - Numerical vectors representing text meaning. [Module 03](../03-rag/README.md)
 

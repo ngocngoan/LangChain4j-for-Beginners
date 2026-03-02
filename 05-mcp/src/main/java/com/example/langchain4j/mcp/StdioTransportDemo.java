@@ -85,10 +85,11 @@ public class StdioTransportDemo {
             );
             String result = assistant.chat(query);
             System.out.println("Assistant response: " + result);
+
+            // Force exit: must be INSIDE the try block because mcpClient.close()
+            // can hang waiting for the stdio child process to terminate.
+            System.exit(0);
         }
-        
-        // Force exit to cleanup OkHttp connection pool threads
-        System.exit(0);
     }
 
     private static void validateEnvironment() {

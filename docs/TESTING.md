@@ -26,13 +26,15 @@ mvn test
 mvn --% test
 ```
 
+When all tests pass, you should see output like the screenshot below — tests run with zero failures.
+
 <img src="images/test-results.png" alt="Successful Test Results" width="800"/>
 
 *Successful test execution showing all tests passing with zero failures*
 
 ## What the Tests Cover
 
-This course focuses on **unit tests** that run locally. Each test demonstrates a specific LangChain4j concept in isolation.
+This course focuses on **unit tests** that run locally. Each test demonstrates a specific LangChain4j concept in isolation. The testing pyramid below shows where unit tests fit — they form the fast, reliable foundation that the rest of your test strategy builds on.
 
 <img src="images/testing-pyramid.png" alt="Testing Pyramid" width="800"/>
 
