@@ -4,72 +4,74 @@
 
 - [Video průvodce](../../../02-prompt-engineering)
 - [Co se naučíte](../../../02-prompt-engineering)
-- [Požadavky](../../../02-prompt-engineering)
-- [Pochopení Prompt Engineering](../../../02-prompt-engineering)
-- [Základy Prompt Engineering](../../../02-prompt-engineering)
+- [Předpoklady](../../../02-prompt-engineering)
+- [Pochopení prompt engineeringu](../../../02-prompt-engineering)
+- [Základy prompt engineeringu](../../../02-prompt-engineering)
   - [Zero-Shot Prompting](../../../02-prompt-engineering)
   - [Few-Shot Prompting](../../../02-prompt-engineering)
   - [Chain of Thought](../../../02-prompt-engineering)
   - [Role-Based Prompting](../../../02-prompt-engineering)
-  - [Prompt Templates](../../../02-prompt-engineering)
+  - [Šablony promptů](../../../02-prompt-engineering)
 - [Pokročilé vzory](../../../02-prompt-engineering)
 - [Použití existujících Azure zdrojů](../../../02-prompt-engineering)
 - [Snímky obrazovky aplikace](../../../02-prompt-engineering)
 - [Prozkoumání vzorů](../../../02-prompt-engineering)
-  - [Nízká vs Vysoká ochota](../../../02-prompt-engineering)
-  - [Vykonávání úkolů (preambly nástrojů)](../../../02-prompt-engineering)
-  - [Sebereflektující kód](../../../02-prompt-engineering)
+  - [Nízká vs vysoká horlivost](../../../02-prompt-engineering)
+  - [Provádění úloh (úvody k nástrojům)](../../../02-prompt-engineering)
+  - [Sebe-reflexivní kód](../../../02-prompt-engineering)
   - [Strukturovaná analýza](../../../02-prompt-engineering)
-  - [Vícekolová konverzace](../../../02-prompt-engineering)
+  - [Vícekolový chat](../../../02-prompt-engineering)
   - [Krok za krokem uvažování](../../../02-prompt-engineering)
   - [Omezený výstup](../../../02-prompt-engineering)
-- [Co se opravdu učíte](../../../02-prompt-engineering)
+- [Co opravdu získáváte](../../../02-prompt-engineering)
 - [Další kroky](../../../02-prompt-engineering)
 
 ## Video průvodce
 
-Sledujte živé vysílání, které vysvětluje, jak začít s tímto modulem: [Prompt Engineering s LangChain4j - živá relace](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
+Sledujte živou relaci, která vysvětluje, jak začít s tímto modulem:
+
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
 
 ## Co se naučíte
 
 <img src="../../../translated_images/cs/what-youll-learn.c68269ac048503b2.webp" alt="Co se naučíte" width="800"/>
 
-V předchozím modulu jste viděli, jak paměť umožňuje konverzační AI a používali jste GitHub Modely pro základní interakce. Nyní se zaměříme na to, jak klást otázky — samotné prompty — pomocí Azure OpenAI GPT-5.2. Způsob, jakým strukturalizujete své prompty, výrazně ovlivňuje kvalitu odpovědí, které dostanete. Začneme přehledem základních technik promptování a poté přejdeme k osmi pokročilým vzorům, které plně využívají schopnosti GPT-5.2.
+V předchozím modulu jste viděli, jak paměť umožňuje konverzační AI a použili GitHub Models pro základní interakce. Nyní se zaměříme na to, jak klást otázky — tedy samotné prompty — pomocí Azure OpenAI GPT-5.2. Způsob, jakým strukturalizujete své prompty, zásadně ovlivňuje kvalitu odpovědí, které získáte. Začneme přehledem základních technik promptování a poté přejdeme k osmi pokročilým vzorům, které plně využívají schopnosti GPT-5.2.
 
-Použijeme GPT-5.2, protože zavádí kontrolu uvažování – můžete modelu říct, kolik přemýšlení má před odpovědí udělat. To dělá různé strategie promptování více zřetelnými a pomáhá porozumět, kdy použít který přístup. Také využijeme méně limitů Azure pro GPT-5.2 ve srovnání s GitHub Modely.
+Použijeme GPT-5.2, protože zavádí kontrolu uvažování – můžete modelu říct, kolik přemýšlení má před odpovědí udělat. To činí různé strategie promptování zřetelnějšími a pomáhá pochopit, kdy kterou použít. Také využijeme nižší omezení rychlosti pro GPT-5.2 na Azure v porovnání s GitHub Models.
 
-## Požadavky
+## Předpoklady
 
 - Dokončený Modul 01 (nasazení Azure OpenAI zdrojů)
-- Soubor `.env` v kořenovém adresáři s Azure přihlašovacími údaji (vytvořený příkazem `azd up` v Modulu 01)
+- `.env` soubor v kořenovém adresáři s Azure přihlašovacími údaji (vytvořeno pomocí `azd up` v Modulu 01)
 
-> **Poznámka:** Pokud jste nezvládli Modul 01, nejprve postupujte podle tamních instrukcí pro nasazení.
+> **Poznámka:** Pokud jste Modul 01 nedokončili, nejdříve postupujte podle jeho pokynů k nasazení.
 
-## Pochopení Prompt Engineering
+## Pochopení prompt engineeringu
 
-<img src="../../../translated_images/cs/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Co je Prompt Engineering?" width="800"/>
+<img src="../../../translated_images/cs/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Co je prompt engineering?" width="800"/>
 
-Prompt engineering znamená navrhování vstupního textu, který vám konzistentně přináší požadované výsledky. Nejde jen o kladení otázek – jde o strukturování požadavků tak, aby model přesně rozuměl tomu, co chcete, a jak to má dodat.
+Prompt engineering spočívá v návrhu vstupního textu, který vám konzistentně přinese potřebné výsledky. Nejde jen o kladení otázek — jde o strukturování požadavků tak, aby model přesně pochopil, co chcete a jak to dodat.
 
-Představte si to jako dávání instrukcí kolegovi. „Oprav chybu“ je vágní. „Oprav nulovou referenci v UserService.java na řádku 45 přidáním kontroly null“ je specifické. Jazykové modely fungují stejně – důležitá je specifičnost a struktura.
+Představte si to jako dávání pokynů kolegovi. "Oprav chybu" je vágní. "Oprav null pointer výjimku v UserService.java na řádku 45 přidáním kontroly null" je konkrétní. Jazykové modely fungují stejně – záleží na konkrétnosti a struktuře.
 
-<img src="../../../translated_images/cs/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Jak zapadá LangChain4j" width="800"/>
+<img src="../../../translated_images/cs/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Jak LangChain4j zapadá" width="800"/>
 
-LangChain4j poskytuje infrastrukturu — připojení k modelům, paměť a typy zpráv — zatímco vzory promptů jsou jen pečlivě strukturované texty, které touto infrastrukturou posíláte. Klíčovými stavebními kameny jsou `SystemMessage` (nastavující chování a roli AI) a `UserMessage` (která nese váš skutečný požadavek).
+LangChain4j poskytuje infrastrukturu — propojení s modelem, paměť a typy zpráv — zatímco promptové vzory jsou jen pečlivě strukturovaný text, který jím posíláte. Klíčovými stavebními bloky jsou `SystemMessage` (nastavuje chování a roli AI) a `UserMessage` (nese váš skutečný požadavek).
 
-## Základy Prompt Engineering
+## Základy prompt engineeringu
 
-<img src="../../../translated_images/cs/five-patterns-overview.160f35045ffd2a94.webp" alt="Pět základních vzorů Prompt Engineering" width="800"/>
+<img src="../../../translated_images/cs/five-patterns-overview.160f35045ffd2a94.webp" alt="Přehled pěti vzorů prompt engineeringu" width="800"/>
 
-Než přejdeme k pokročilým vzorům v tomto modulu, pojďme si zopakovat pět základních technik promptování. To jsou stavební kameny, které by měl znát každý prompt engineer. Pokud jste už prošli [Quick Start modul](../00-quick-start/README.md#2-prompt-patterns), viděli jste je v akci — zde je jejich koncepční rámec.
+Než se pustíme do pokročilých vzorů v tomto modulu, shrňme si pět základních technik promptování. Jsou to stavební kameny, které by měl znát každý prompt inženýr. Pokud jste již prošli [Quick Start modulem](../00-quick-start/README.md#2-prompt-patterns), viděli jste je už v praxi — zde je konceptuální rámec.
 
 ### Zero-Shot Prompting
 
-Nejsnazší přístup: dejte modelu přímý příkaz bez příkladů. Model se spoléhá výhradně na své trénování, aby úkol pochopil a vykonal. Funguje to dobře pro jednoduché požadavky, kde je očekávané chování zřejmé.
+Nejpřímější přístup: dejte modelu přímo instrukci bez příkladů. Model je zcela odkázán na své tréninky, aby pochopil a provedl úlohu. Funguje to dobře pro jednoduché požadavky, kde je očekávané chování jasné.
 
 <img src="../../../translated_images/cs/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot Prompting" width="800"/>
 
-*Přímý příkaz bez příkladů — model odvozuje úkol pouze z instrukce*
+*Přímá instrukce bez příkladů — model odvozuje úlohu jen z instrukce*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
@@ -77,11 +79,11 @@ String response = model.chat(prompt);
 // Odpověď: "Pozitivní"
 ```
 
-**Kdy použít:** Jednoduché klasifikace, přímé otázky, překlady nebo jakýkoli úkol, který model zvládne bez dalšího vedení.
+**Kdy použít:** Jednoduché klasifikace, přímé otázky, překlady nebo jakákoli úloha, kterou model zvládne bez dalšího vedení.
 
 ### Few-Shot Prompting
 
-Poskytněte příklady, které ilustrují vzor, kterým má model postupovat. Model se naučí očekávaný vstup-výstup formát z vašich příkladů a aplikuje jej na nové vstupy. To výrazně zlepšuje konzistenci u úkolů, kde požadovaný formát nebo chování není zřejmé.
+Poskytněte příklady, které ukazují vzor, podle kterého má model postupovat. Model se učí očekávaný vstup-výstup formát z vašich příkladů a aplikuje ho na nové vstupy. To výrazně zlepšuje konzistenci u úloh, kde není formát nebo chování zřejmé.
 
 <img src="../../../translated_images/cs/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
@@ -102,15 +104,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kdy použít:** Vlastní klasifikace, konzistentní formátování, doménově specifické úkoly nebo když jsou výsledky zero-shot nekonzistentní.
+**Kdy použít:** Vlastní klasifikace, konzistentní formátování, specifické doménové úlohy, nebo když jsou výsledky zero-shot nepřesné.
 
 ### Chain of Thought
 
-Požádejte model, aby ukázal své uvažování krok za krokem. Místo aby skočil rovnou k odpovědi, model problém rozloží a otevřeně projde každou část. To zlepšuje přesnost v matematice, logice a vícekrokovém uvažování.
+Požádejte model, aby ukázal své uvažování krok za krokem. Místo skoku rovnou k odpovědi model rozebírá problém a pracuje s jednotlivými částmi explicitně. To zlepšuje přesnost u matematických, logických a vícestupňových úloh.
 
 <img src="../../../translated_images/cs/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*Krok za krokem uvažování — rozkládání složitých problémů na jasné logické kroky*
+*Krok za krokem uvažování — rozklad složitých problémů do explicitních logických kroků*
 
 ```java
 String prompt = """
@@ -123,15 +125,15 @@ String response = model.chat(prompt);
 // Model ukazuje: 15 - 8 = 7, pak 7 + 12 = 19 jablek
 ```
 
-**Kdy použít:** Matematické problémy, logické hádanky, ladění chyb nebo jakýkoli úkol, kde zobrazení procesu uvažování zvyšuje přesnost a důvěru.
+**Kdy použít:** Matematické problémy, logické hádanky, debugging nebo jakákoli úloha, kde zobrazení uvažovacího procesu zvyšuje přesnost a důvěru.
 
 ### Role-Based Prompting
 
-Nastavte pro AI personu nebo roli před tím, než položíte otázku. To poskytuje kontext, který ovlivňuje tón, hloubku a zaměření odpovědi. „Softwarový architekt“ poskytne jinou radu než „junior vývojář“ nebo „security auditor“.
+Než položíte otázku, nastavte AI personu nebo roli. Ta poskytuje kontext, který formuje tón, hloubku a zaměření odpovědi. „Softwarový architekt“ dává jiné rady než „junior developer“ nebo „security auditor“.
 
 <img src="../../../translated_images/cs/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
 
-*Nastavení kontextu a persony — ta samá otázka dostane jinou odpověď podle přiřazené role*
+*Nastavení kontextu a persony — stejná otázka dostane odlišnou odpověď podle přiřazené role*
 
 ```java
 String prompt = """
@@ -147,11 +149,11 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Kdy použít:** Kontroly kódu, doučování, doménově specifické analýzy nebo když potřebujete odpovědi přizpůsobené určité úrovni odbornosti či perspektivy.
+**Kdy použít:** Revize kódu, doučování, specifická doménová analýza, nebo když potřebujete odpovědi přizpůsobené určité úrovni odbornosti či pohledu.
 
-### Prompt Templates
+### Šablony promptů
 
-Vytvářejte znovupoužitelné prompty s proměnnými zástupnými symboly. Místo psaní nového promptu pokaždé definujte jednou šablonu a doplňujte různé hodnoty. Třída `PromptTemplate` v LangChain4j to usnadňuje pomocí syntaxe `{{variable}}`.
+Vytvářejte znovupoužitelné prompty s proměnnými zástupnými symboly. Místo psaní nového promptu pokaždé definujte šablonu jednou a vyplňte různé hodnoty. Třída `PromptTemplate` v LangChain4j to usnadňuje pomocí syntaxe `{{variable}}`.
 
 <img src="../../../translated_images/cs/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
 
@@ -170,25 +172,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Kdy použít:** Opakované dotazy s různými vstupy, dávkové zpracování, budování znovupoužitelných AI workflow nebo scénáře, kde struktura promptu zůstává stejná, ale mění se data.
+**Kdy použít:** Opakované dotazy s různými vstupy, dávkové zpracování, budování opakovatelných AI workflow nebo scénáře, kde struktura promptu zůstává stejná, mění se jen data.
 
 ---
 
-Těchto pět základů vám dává pevný nástrojový set pro většinu promptovacích úkolů. Zbytek tohoto modulu na ně navazuje pomocí **osmi pokročilých vzorů**, které využívají kontrolu uvažování, sebehodnocení a strukturované výstupy GPT-5.2.
+Těchto pět základů vám dává pevný nástrojový rámec pro většinu promptovacích úloh. Zbytek tohoto modulu na ně navazuje s **osmou pokročilými vzory** využívajícími řízení uvažování GPT-5.2, sebehodnocení a schopnosti strukturovaného výstupu.
 
 ## Pokročilé vzory
 
-Po zvládnutí základů přejdeme k osmi pokročilým vzorům, které činí tento modul jedinečným. Ne všechny problémy vyžadují stejný přístup. Některé otázky si žádají rychlé odpovědi, jiné hluboké přemýšlení. Některé potřebují viditelné uvažování, jiné jen výsledky. Každý níže uvedený vzor je optimalizován pro jiný scénář – a kontrola uvažování GPT-5.2 tyto rozdíly ještě více zvýrazňuje.
+Po zvládnutí základů přejdeme k osmi pokročilým vzorům, které tento modul činí jedinečným. Ne všechny problémy vyžadují stejný přístup. Některé otázky potřebují rychlé odpovědi, jiné hluboké přemýšlení. Některé vyžadují viditelné uvažování, jiné jen výsledky. Každý vzor níže je optimalizován pro jiný scénář — a řízení uvažování GPT-5.2 tyto rozdíly ještě zřetelněji předvádí.
 
 <img src="../../../translated_images/cs/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Osm vzorů promptování" width="800"/>
 
-*Přehled osmi vzorů prompt engineering a jejich použití*
+*Přehled osmi vzorů prompt engineeringu a jejich použití*
 
-<img src="../../../translated_images/cs/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Kontrola uvažování s GPT-5.2" width="800"/>
+<img src="../../../translated_images/cs/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Řízení uvažování s GPT-5.2" width="800"/>
 
-*Kontrola uvažování GPT-5.2 vám umožňuje určit, kolik přemýšlení má model udělat — od rychlých přímých odpovědí po hluboké zkoumání*
+*Řízení uvažování GPT-5.2 vám umožní specifikovat, kolik přemýšlení by model měl udělat — od rychlých přímých odpovědí po hluboký průzkum*
 
-**Nízká ochota (rychlé a zaměřené)** – Pro jednoduché otázky, kde chcete rychlé a přímé odpovědi. Model dělá minimální uvažování – maximálně 2 kroky. Použijte pro výpočty, dotazy nebo přímé otázky.
+**Nízká horlivost (rychlé a zaměřené)** - Pro jednoduché otázky, kde chcete rychlé a přímé odpovědi. Model dělá minimální uvažování – maximálně 2 kroky. Použijte u výpočtů, hledání nebo přímočarých otázek.
 
 ```java
 String prompt = """
@@ -208,11 +210,11 @@ String response = chatModel.chat(prompt);
 ```
 
 > 💡 **Prozkoumejte s GitHub Copilot:** Otevřete [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) a zeptejte se:
-> - „Jaký je rozdíl mezi vzory nízké a vysoké ochoty promptování?“
-> - „Jak XML tagy v prompty pomáhají strukturovat odpověď AI?“
-> - „Kdy mám používat vzory sebereflexe vs přímé instrukce?“
+> - „Jaký je rozdíl mezi nízkou a vysokou horlivostí u vzorů promptování?“
+> - „Jak XML tagy v promptech pomáhají strukturovat odpověď AI?“
+> - „Kdy použít vzory sebe-reflexe vs přímé instrukce?“
 
-**Vysoká ochota (hluboké a důkladné)** – Pro složité problémy, kde chcete komplexní analýzu. Model důkladně zkoumá a ukazuje detailní uvažování. Použijte pro návrh systémů, architektonická rozhodnutí nebo složitý výzkum.
+**Vysoká horlivost (hluboké a důkladné)** - Pro složité problémy, kde chcete komplexní analýzu. Model prozkoumává důkladně a ukazuje podrobné uvažování. Použijte u návrhu systémů, architektonických rozhodnutí nebo složitého výzkumu.
 
 ```java
 String prompt = """
@@ -226,7 +228,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Vykonávání úkolů (postup krok za krokem)** – Pro vícekrokové pracovní postupy. Model poskytne plán předem, komentuje každý krok během práce a nakonec shrne. Použijte pro migrace, implementace nebo jakýkoli vícekrokový proces.
+**Provádění úloh (postup krok za krokem)** - Pro vícestupňové workflow. Model poskytne plán předem, vysvětluje každý krok při práci a pak shrne. Použijte u migrací, implementací nebo jakéhokoli vícestupňového procesu.
 
 ```java
 String prompt = """
@@ -264,18 +266,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Chain-of-Thought prompting explicitně žádá model, aby ukázal svůj process uvažování, což zlepšuje přesnost u složitých úkolů. Postupné rozložení pomáhá pochopit logiku jak lidem, tak AI.
+Promptování pomocí Chain-of-Thought explicitně žádá model, aby ukázal svůj uvažovací proces, což zlepšuje přesnost u složitých úloh. Krok za krokem rozklad pomáhá pochopit logiku jak lidem, tak AI.
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Zeptejte se na tento vzor:
-> - „Jak bych přizpůsobil vzor vykonávání úkolu pro dlouhotrvající operace?“
-> - „Jaké jsou nejlepší postupy pro strukturování preamblů nástrojů v produkčních aplikacích?“
-> - „Jak zachytit a zobrazit průběžné aktualizace v uživatelském rozhraní?“
+> - „Jak bych adaptoval vzor provádění úloh pro dlouhodobé operace?“
+> - „Jaké jsou osvědčené postupy pro strukturování úvodu k nástrojům v produkčních aplikacích?“
+> - „Jak mohu zachytit a zobrazit průběžné aktualizace postupu v uživatelském rozhraní?“
 
-<img src="../../../translated_images/cs/task-execution-pattern.9da3967750ab5c1e.webp" alt="Vzor vykonávání úkolů" width="800"/>
+<img src="../../../translated_images/cs/task-execution-pattern.9da3967750ab5c1e.webp" alt="Vzor provádění úloh" width="800"/>
 
-*Workflow Plánuj → Vykonej → Shrň pro vícekrokové úkoly*
+*Workflow Plán → Provedení → Shrnutí pro vícestupňové úlohy*
 
-**Sebereflektující kód** – Pro generování produkčního kódu. Model generuje kód dle produkčních standardů s odpovídajícím zpracováním chyb. Použijte při vývoji nových funkcí či služeb.
+**Sebe-reflexivní kód** - Pro generování produkčního kódu. Model generuje kód podle produkčních standardů s náležitou správou chyb. Použijte při budování nových funkcí nebo služeb.
 
 ```java
 String prompt = """
@@ -286,11 +288,11 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/cs/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Cyklus sebereflexe" width="800"/>
+<img src="../../../translated_images/cs/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Cyklus sebe-reflexe" width="800"/>
 
-*Iterativní smyčka zlepšení – generuj, vyhodnoť, identifikuj problémy, vylepši, opakuj*
+*Iterační smyčka zlepšování - generuj, vyhodnoť, identifikuj problémy, zlepši, opakuj*
 
-**Strukturovaná analýza** – Pro konzistentní hodnocení. Model kontroluje kód dle pevného rámce (správnost, postupy, výkon, bezpečnost, udržovatelnost). Použijte pro code review nebo hodnocení kvality.
+**Strukturovaná analýza** - Pro konzistentní hodnocení. Model reviduje kód podle pevného rámce (správnost, praktiky, výkon, bezpečnost, udržovatelnost). Použijte na revize kódu nebo hodnocení kvality.
 
 ```java
 String prompt = """
@@ -339,15 +341,15 @@ String response = chatModel.chat(prompt);
 ```
 
 > **🤖 Vyzkoušejte s [GitHub Copilot](https://github.com/features/copilot) Chat:** Zeptejte se na strukturovanou analýzu:
-> - „Jak přizpůsobit analýzu pro různé typy code review?“
-> - „Jak programově zpracovat a reagovat na strukturovaný výstup?“
-> - „Jak zajistit konzistentní úrovně závažnosti mezi různými kontrolními sezeními?“
+> - „Jak mohu přizpůsobit rámec analýzy pro různé typy revizí kódu?“
+> - „Jak nejlépe zpracovat a programově využít strukturovaný výstup?“
+> - „Jak zajistit konzistentní úrovně závažnosti v různých sezeních revize?“
 
 <img src="../../../translated_images/cs/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Vzor strukturované analýzy" width="800"/>
 
-*Rámec pro konzistentní code review se stupni závažnosti*
+*Rámec pro konzistentní revize kódu s úrovněmi závažnosti*
 
-**Vícekolová konverzace** – Pro rozhovory vyžadující kontext. Model si pamatuje předchozí zprávy a navazuje na ně. Použijte pro interaktivní pomoc nebo složité otázky a odpovědi.
+**Vícekolový chat** - Pro konverzace vyžadující kontext. Model si pamatuje předchozí zprávy a staví na nich. Použijte na interaktivní pomoc nebo složité otázky a odpovědi.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -363,9 +365,9 @@ memory.add(aiMessage2);
 
 <img src="../../../translated_images/cs/context-memory.dff30ad9fa78832a.webp" alt="Paměť kontextu" width="800"/>
 
-*Jak se konverzační kontext nahromadí přes více kol až do dosažení limitu tokenů*
+*Jak se kontext konverzace hromadí během více kol, až do dosažení limitu tokenů*
 
-**Krok za krokem uvažování** – Pro problémy vyžadující viditelnou logiku. Model ukazuje jasné uvažování pro každý krok. Použijte u matematických problémů, logických hádanek nebo tam, kde chcete pochopit proces myšlení.
+**Krok za krokem uvažování** - Pro problémy vyžadující viditelnou logiku. Model ukazuje explicitní uvažování u každého kroku. Použijte na matematické problémy, logické hádanky nebo kdykoliv potřebujete pochopit myšlenkový proces.
 
 ```java
 String prompt = """
@@ -381,9 +383,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/cs/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Vzor krok za krokem" width="800"/>
 
-*Rozklad problémů na explicitní logické kroky*
+*Rozklad problémů do explicitních logických kroků*
 
-**Omezený výstup** – Pro odpovědi s požadavky na specifický formát. Model přísně dodržuje pravidla formátu a délky. Použijte pro shrnutí nebo když potřebujete přesnou strukturu výstupu.
+**Omezený výstup** - Pro odpovědi s konkrétními formátovými požadavky. Model přísně dodržuje pravidla formátu a délky. Použijte na shrnutí nebo kdy potřebujete přesnou strukturu výstupu.
 
 ```java
 String prompt = """
@@ -401,29 +403,29 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/cs/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Vzor omezeného výstupu" width="800"/>
 
-*Dodržování specifických požadavků na formát, délku a strukturu*
+*Vynucování specifických požadavků na formát, délku a strukturu*
 
 ## Použití existujících Azure zdrojů
 
 **Ověření nasazení:**
 
-Ujistěte se, že soubor `.env` v kořenovém adresáři obsahuje Azure přihlašovací údaje (vytvořeno během Modulu 01):
+Ujistěte se, že `.env` soubor existuje v kořenovém adresáři s Azure přihlašovacími údaji (vytvořený během Modulu 01):
 ```bash
-cat ../.env  # Mělo by ukázat AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Mělo by zobrazit AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Spuštění aplikace:**
 
-> **Poznámka:** Pokud jste již spustili všechny aplikace pomocí `./start-all.sh` z Modulu 01, tento modul již běží na portu 8083. Můžete přeskočit spouštěcí příkazy níže a jít přímo na http://localhost:8083.
-
+> **Poznámka:** Pokud jste již spustili všechny aplikace pomocí `./start-all.sh` z Modulu 01, tento modul už běží na portu 8083. Můžete přeskočit startovací příkazy níže a přejít přímo na http://localhost:8083.
 **Možnost 1: Použití Spring Boot Dashboard (doporučeno pro uživatele VS Code)**
-Vývojové kontejner zahrnuje rozšíření Spring Boot Dashboard, které poskytuje vizuální rozhraní pro správu všech aplikací Spring Boot. Najdete ho na postranním panelu vlevo ve VS Code (hledejte ikonu Spring Boot).
 
-Ve Spring Boot Dashboard můžete:
+Vývojové prostředí obsahuje rozšíření Spring Boot Dashboard, které poskytuje vizuální rozhraní pro správu všech aplikací Spring Boot. Najdete ho na liště aktivit vlevo ve VS Code (hledejte ikonu Spring Boot).
+
+Ze Spring Boot Dashboard můžete:
 - Vidět všechny dostupné aplikace Spring Boot v pracovním prostoru
-- Spustit/zastavit aplikace jediným kliknutím
-- Zobrazovat protokoly aplikací v reálném čase
-- Monitorovat stav aplikace
+- Spustit/zastavit aplikace jedním kliknutím
+- Zobrazit protokoly aplikací v reálném čase
+- Sledovat stav aplikací
 
 Jednoduše klikněte na tlačítko přehrávání vedle „prompt-engineering“ pro spuštění tohoto modulu, nebo spusťte všechny moduly najednou.
 
@@ -431,21 +433,21 @@ Jednoduše klikněte na tlačítko přehrávání vedle „prompt-engineering“
 
 **Možnost 2: Použití shell skriptů**
 
-Spusťte všechny webové aplikace (moduly 01-04):
+Spuštění všech webových aplikací (moduly 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Ze kořenového adresáře
+cd ..  # Z kořenového adresáře
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Ze kořenového adresáře
+cd ..  # Z kořenového adresáře
 .\start-all.ps1
 ```
 
-Nebo spusťte pouze tento modul:
+Nebo spusťte jen tento modul:
 
 **Bash:**
 ```bash
@@ -459,9 +461,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Oba skripty automaticky načtou proměnné prostředí z kořenového souboru `.env` a zkompilují JARy, pokud neexistují.
+Oba skripty automaticky načítají proměnné prostředí ze souboru `.env` v kořenovém adresáři a sestaví JARy, pokud ještě neexistují.
 
-> **Poznámka:** Pokud dáváte přednost ručnímu sestavení všech modulů před spuštěním:
+> **Poznámka:** Pokud chcete všechny moduly nejprve manuálně sestavit před spuštěním:
 >
 > **Bash:**
 > ```bash
@@ -475,7 +477,7 @@ Oba skripty automaticky načtou proměnné prostředí z kořenového souboru `.
 > mvn clean package -DskipTests
 > ```
 
-Otevřete v prohlížeči http://localhost:8083.
+Otevřete http://localhost:8083 ve svém prohlížeči.
 
 **Pro zastavení:**
 
@@ -497,65 +499,65 @@ cd ..; .\stop-all.ps1  # Všechny moduly
 
 <img src="../../../translated_images/cs/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Hlavní dashboard zobrazující všech 8 vzorů promptového inženýrství s jejich charakteristikami a použitím*
+*Hlavní dashboard zobrazující všech 8 vzorů prompt engineering s jejich charakteristikami a použitím*
 
-## Prozkoumání vzorů
+## Prozkoumávání vzorů
 
-Webové rozhraní vám umožňuje experimentovat s různými strategiemi promptování. Každý vzor řeší jiné problémy – vyzkoušejte je a uvidíte, kdy každý přístup opravdu vyniká.
+Webové rozhraní vám umožňuje experimentovat s různými strategiemi promptování. Každý vzor řeší různé problémy – vyzkoušejte je a zjistěte, kdy který přístup funguje nejlépe.
 
-> **Poznámka: Streaming vs Nesynchronní** — Každá stránka vzoru nabízí dvě tlačítka: **🔴 Streamovat odpověď (naživo)** a možnost **Nesynchronní**. Streaming používá Server-Sent Events (SSE) k zobrazení tokenů v reálném čase, jak je model generuje, takže vidíte postup okamžitě. Nesynchronní režim čeká na celou odpověď, než ji zobrazí. U promptů vyžadujících hluboké uvažování (např. High Eagerness, Self-Reflecting Code) může nesynchronní volání trvat velmi dlouho – někdy i minuty – bez viditelné odezvy. **Používejte streaming při experimentování s komplexními prompty**, abyste viděli model pracovat a vyhnuli se dojmu, že požadavek vypršel.
+> **Poznámka: Streaming vs Nestringové zpracování** — Každá stránka vzoru nabízí dvě tlačítka: **🔴 Stream Response (Live)** a možnost **Non-streaming**. Streaming používá Server-Sent Events (SSE) k zobrazení tokenů v reálném čase během generování modelem, takže okamžitě vidíte průběh. Non-streaming čeká na celou odpověď, než ji zobrazí. U promptů, které vyžadují hluboké uvažování (např. High Eagerness, Self-Reflecting Code), může non-streaming volání trvat velmi dlouho — někdy minuty — bez viditelné zpětné vazby. **Při experimentování s komplexními prompty používejte streaming**, abyste viděli práci modelu a vyhnuli se dojmu, že požadavek vypršel.
 >
-> **Poznámka: Požadavek na prohlížeč** — Funkce streamingu využívá Fetch Streams API (`response.body.getReader()`), které vyžaduje plnohodnotný prohlížeč (Chrome, Edge, Firefox, Safari). Nepracuje ve vestavěném jednoduchém prohlížeči VS Code, protože jeho webview nepodporuje ReadableStream API. Pokud používáte Simple Browser, nesynchronní tlačítka fungují normálně – pouze streamovací tlačítka jsou ovlivněna. Pro plný zážitek otevřete `http://localhost:8083` v externím prohlížeči.
+> **Poznámka: Požadavek na prohlížeč** — Funkce streamingu používá Fetch Streams API (`response.body.getReader()`), které vyžaduje plnohodnotný prohlížeč (Chrome, Edge, Firefox, Safari). Nepracuje ve vestavěném Simple Browser ve VS Code, protože jeho webové zobrazení nepodporuje API ReadableStream. Pokud používáte Simple Browser, tlačítka non-streaming budou fungovat normálně — pouze tlačítka streaming jsou ovlivněna. Otevřete `http://localhost:8083` v externím prohlížeči pro plný zážitek.
 
-### Nízká vs Vysoká Eagerness (ochota)
+### Nízká vs Vysoká Eagerness
 
-Zeptejte se jednoduché otázky jako „Kolik je 15 % z 200?“ s Nízkou Eagerness. Získáte okamžitou, přímou odpověď. Teď zeptejte složitější otázku „Navrhni cachingovou strategii pro API s vysokou návštěvností“ s Vysokou Eagerness. Klikněte na **🔴 Streamovat odpověď (naživo)** a sledujte, jak model zobrazuje detailní uvažování token po tokenu. Stejný model, stejná struktura otázky – ale prompt mu říká, kolik má přemýšlet.
+Zeptejte se jednoduchou otázku, například „Co je 15 % z 200?“ s nízkou eagerností. Dostanete okamžitou, přímou odpověď. Nyní se zeptejte na něco složitého, například „Navrhni strategii kešování pro API s vysokým zatížením“ s vysokou eagerností. Klikněte na **🔴 Stream Response (Live)** a sledujte podrobné uvažování modelu, které se zobrazuje token po tokenu. Stejný model, stejná struktura otázky – ale prompt mu říká, kolik má přemýšlet.
 
-### Provádění úkolů (preambly nástrojů)
+### Provádění úkolů (Tool Preambles)
 
-Vícekrokové pracovní postupy profitují z předběžného plánování a vyprávění průběhu. Model nastíní, co udělá, popisuje každý krok a pak shrne výsledky.
+Vícekrokové pracovní postupy těží z předběžného plánování a komentování průběhu. Model načrtne, co bude dělat, komentuje každý krok a nakonec shrne výsledky.
 
-### Sebereflexivní kód
+### Self-Reflecting Code
 
-Vyzkoušejte „Vytvoř službu ověřování e-mailů“. Místo toho, aby pouze generoval kód a skončil, model generuje, hodnotí podle kvalitativních kritérií, identifikuje slabiny a zlepšuje. Uvidíte, jak iteruje, dokud kód nesplní produkční standardy.
+Vyzkoušejte „Vytvoř službu pro validaci e-mailu“. Místo pouhého generování kódu a zastavení model generuje, hodnotí podle kvalitativních kritérií, identifikuje slabiny a zlepšuje kód. Uvidíte, jak iteruje, dokud kód nesplní produkční standardy.
 
 ### Strukturovaná analýza
 
-Code review potřebuje konzistentní hodnotící rámce. Model analyzuje kód podle pevných kategorií (správnost, postupy, výkon, bezpečnost) s úrovněmi závažnosti.
+Kontroly kódu vyžadují konzistentní hodnotící rámec. Model analyzuje kód podle pevných kategorií (správnost, praktiky, výkon, bezpečnost) s úrovněmi závažnosti.
 
-### Vícekolový chat
+### Vícekroková konverzace (Multi-Turn Chat)
 
-Zeptejte se „Co je Spring Boot?“ a pak hned pokračujte „Ukázat mi příklad“. Model si pamatuje první otázku a dává vám konkrétní příklad Spring Boot. Bez paměti by druhá otázka byla příliš vágní.
+Zeptejte se „Co je Spring Boot?“ a hned poté pokračujte otázkou „Ukaž mi příklad“. Model si pamatuje první otázku a poskytně vám konkrétní příklad Spring Bootu. Bez paměti by druhá otázka byla příliš obecná.
 
-### Krok za krokem uvažování
+### Krok za krokem (Step-by-Step Reasoning)
 
-Vyberte matematický problém a zkuste ho řešit jak Krok za krokem, tak Nízkou Eagerness. Nízká eagerness vám dá jen odpověď – rychle, ale neprůhledně. Krok za krokem ukazuje každý výpočet a rozhodnutí.
+Vyberte matematický problém a vyzkoušejte ho s krokovým uvažováním i nízkou eagerností. Nízká eagernost dává odpověď rychle, ale nejasně. Krokové uvažování ukazuje každý výpočet a rozhodnutí.
 
-### Omezovaný výstup
+### Omezující výstup (Constrained Output)
 
-Když potřebujete přesné formáty nebo počet slov, tento vzor vynucuje přísné dodržení. Zkuste generovat shrnutí přesně o 100 slovech v bodech.
+Pokud potřebujete specifické formáty nebo počet slov, tento vzor vynucuje přesné dodržení. Vyzkoušejte generování souhrnu přesně s 100 slovy v odrážkovém formátu.
 
-## Co se opravdu učíte
+## Co se skutečně učíte
 
-**Úsilí v uvažování mění všechno**
+**Úsilí při uvažování mění vše**
 
-GPT-5.2 vám umožňuje řídit výpočetní úsilí prostřednictvím vašich promptů. Nízké úsilí znamená rychlé odpovědi bez větší prozkoumávání. Vysoké úsilí znamená, že model tráví čas hlubokým uvažováním. Učíte se přizpůsobit úsilí složitosti úkolu – neplýtvejte časem na jednoduché otázky, ale ani nespěchejte při složitých rozhodnutích.
+GPT-5.2 vám umožňuje kontrolovat výpočetní úsilí pomocí promptů. Nízké úsilí znamená rychlé odpovědi s minimálním průzkumem. Vysoké úsilí znamená, že model si dává čas na hluboké přemýšlení. Učíte se přizpůsobit úsilí složitosti úkolu – neztrácejte čas s jednoduchými otázkami, ale ani nespěchejte u složitých rozhodnutí.
 
 **Struktura řídí chování**
 
-Všimli jste si XML tagů v promptech? Nejsou dekorativní. Modely spolehlivěji dodržují strukturované instrukce než volný text. Když potřebujete vícekrokové postupy nebo složitou logiku, struktura pomáhá modelu sledovat, kde je a co přijde dále.
+Všimli jste si XML značek v promptech? Nejsou jen ozdobou. Modely spolehlivěji následují strukturované instrukce než volný text. Když potřebujete vícekrokové procesy nebo komplexní logiku, struktura pomáhá modelu sledovat, kde je a co přijde dál.
 
 <img src="../../../translated_images/cs/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomie dobře strukturovaného promptu s jasnými sekcemi a organizací ve stylu XML*
+*Anatomie dobře strukturovaného promptu s jasnými sekcemi a XML-style organizací*
 
 **Kvalita skrze sebehodnocení**
 
-Sebereflexivní vzory fungují tak, že explicitně udávají kvalitativní kritéria. Místo aby model „doufal, že to udělá správně“, přesně mu říkáte, co znamená „správně“: korektní logika, zpracování chyb, výkon, bezpečnost. Model pak dokáže vyhodnotit svůj výstup a zlepšit ho. To proměňuje generování kódu z loterie na proces.
+Self-reflecting vzory fungují tak, že činí kritéria kvality explicitními. Místo toho, abyste doufali, že model „to udělá správně“, přesně mu řeknete, co znamená „správně“: správná logika, zpracování chyb, výkon, bezpečnost. Model pak může vyhodnotit svůj vlastní výstup a zlepšit ho. To proměňuje generování kódu z loterie na proces.
 
 **Kontext je omezený**
 
-Vícekolové konverzace fungují tak, že každé žádosti přidávají historii zpráv. Ale je tu limit – každý model má maximální počet tokenů. Jak konverzace rostou, budete potřebovat strategie, jak udržet relevantní kontext, aniž byste dosáhli stropu. Tento modul vám ukáže, jak paměť funguje; později se naučíte, kdy shrnovat, kdy zapomínat a kdy vyhledávat.
+Vícekrokové konverzace fungují tak, že každému požadavku přikládají historii zpráv. Ale existuje limit – každý model má maximální počet tokenů. Jak konverzace rostou, budete potřebovat strategie, jak udržet relevantní kontext bez překročení limitu. Tento modul vám ukáže, jak paměť funguje; později se naučíte, kdy shrnout, kdy zapomenout a kdy vyhledat.
 
 ## Další kroky
 
@@ -568,6 +570,6 @@ Vícekolové konverzace fungují tak, že každé žádosti přidávají histori
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Prohlášení o vyloučení odpovědnosti**:  
-Tento dokument byl přeložen pomocí AI překladatelské služby [Co-op Translator](https://github.com/Azure/co-op-translator). Přestože usilujeme o přesnost, mějte prosím na paměti, že automatizované překlady mohou obsahovat chyby nebo nepřesnosti. Originální dokument v jeho původním jazyce by měl být považován za autoritativní zdroj. Pro důležité informace doporučujeme profesionální lidský překlad. Nepřejímáme odpovědnost za jakákoli nedorozumění nebo nesprávné interpretace vyplývající z použití tohoto překladu.
+**Upozornění**:  
+Tento dokument byl přeložen pomocí AI překladatelské služby [Co-op Translator](https://github.com/Azure/co-op-translator). Ačkoliv usilujeme o přesnost, mějte prosím na paměti, že automatické překlady mohou obsahovat chyby či nepřesnosti. Originální dokument v jeho původním jazyce by měl být považován za rozhodující zdroj. Pro zásadní informace doporučujeme profesionální lidský překlad. Nejsme odpovědní za jakékoli nedorozumění či nesprávné výklady vyplývající z použití tohoto překladu.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

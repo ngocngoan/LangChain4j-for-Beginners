@@ -3,34 +3,36 @@
 ## Table des matières
 
 - [Présentation vidéo](../../../01-introduction)
-- [Ce que vous allez apprendre](../../../01-introduction)
+- [Ce que vous apprendrez](../../../01-introduction)
 - [Prérequis](../../../01-introduction)
-- [Comprendre le problème principal](../../../01-introduction)
+- [Comprendre le problème de base](../../../01-introduction)
 - [Comprendre les tokens](../../../01-introduction)
 - [Comment fonctionne la mémoire](../../../01-introduction)
 - [Comment cela utilise LangChain4j](../../../01-introduction)
 - [Déployer l'infrastructure Azure OpenAI](../../../01-introduction)
 - [Exécuter l'application localement](../../../01-introduction)
 - [Utiliser l'application](../../../01-introduction)
-  - [Chat sans état (panneau gauche)](../../../01-introduction)
-  - [Chat avec état (panneau droit)](../../../01-introduction)
+  - [Chat sans état (panneau de gauche)](../../../01-introduction)
+  - [Chat avec état (panneau de droite)](../../../01-introduction)
 - [Étapes suivantes](../../../01-introduction)
 
 ## Présentation vidéo
 
-Regardez cette session en direct qui explique comment démarrer avec ce module : [Prise en main avec LangChain4j - Session en direct](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
+Regardez cette session en direct qui explique comment démarrer avec ce module :
 
-## Ce que vous allez apprendre
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Getting Started with LangChain4j - Live Session" width="800"/></a>
 
-Si vous avez terminé le démarrage rapide, vous avez vu comment envoyer des invites et obtenir des réponses. C'est la base, mais les vraies applications demandent plus. Ce module vous apprend à créer une IA conversationnelle qui se souvient du contexte et maintient l'état - la différence entre une démo isolée et une application prête pour la production.
+## Ce que vous apprendrez
 
-Nous utiliserons GPT-5.2 d'Azure OpenAI tout au long de ce guide car ses capacités avancées de raisonnement rendent le comportement des différents modèles plus évident. Lorsque vous ajoutez la mémoire, vous verrez clairement la différence. Cela facilite la compréhension de ce que chaque composant apporte à votre application.
+Si vous avez terminé le démarrage rapide, vous avez vu comment envoyer des invites et obtenir des réponses. C'est la base, mais les vraies applications demandent plus. Ce module vous apprend à construire une IA conversationnelle qui se souvient du contexte et conserve l'état - la différence entre une démonstration ponctuelle et une application prête pour la production.
 
-Vous créerez une application qui démontre les deux modèles :
+Nous utiliserons GPT-5.2 d'Azure OpenAI tout au long de ce guide car ses capacités avancées de raisonnement rendent le comportement des différents schémas plus évident. Lorsque vous ajoutez la mémoire, la différence est nette. Cela facilite la compréhension de ce que chaque composant apporte à votre application.
 
-**Chat sans état** - Chaque requête est indépendante. Le modèle n'a pas de mémoire des messages précédents. C'est le modèle que vous avez utilisé dans le démarrage rapide.
+Vous construirez une application qui démontre les deux schémas :
 
-**Conversation avec état** - Chaque requête inclut l'historique de la conversation. Le modèle maintient le contexte sur plusieurs échanges. C'est ce qu'exigent les applications en production.
+**Chat sans état** - Chaque requête est indépendante. Le modèle ne garde pas en mémoire les messages précédents. C'est le schéma que vous avez utilisé dans le démarrage rapide.
+
+**Conversation avec état** - Chaque requête contient l'historique de la conversation. Le modèle maintient le contexte sur plusieurs échanges. C'est ce que nécessitent les applications en production.
 
 ## Prérequis
 
@@ -43,39 +45,39 @@ Vous créerez une application qui démontre les deux modèles :
 
 > **Note :** Ce module utilise GPT-5.2 sur Azure OpenAI. Le déploiement est configuré automatiquement via `azd up` - ne modifiez pas le nom du modèle dans le code.
 
-## Comprendre le problème principal
+## Comprendre le problème de base
 
 Les modèles de langage sont sans état. Chaque appel API est indépendant. Si vous envoyez "Je m'appelle John" puis demandez "Comment je m'appelle ?", le modèle n'a aucune idée que vous venez de vous présenter. Il traite chaque requête comme si c'était la première conversation que vous avez jamais eue.
 
-Cela convient pour des questions-réponses simples mais est inutile pour les applications réelles. Les bots de service client doivent se souvenir de ce que vous leur avez dit. Les assistants personnels ont besoin de contexte. Toute conversation avec plusieurs échanges nécessite une mémoire.
+Cela convient pour des questions-réponses simples mais est inutile pour de vraies applications. Les bots de service client doivent se souvenir de ce que vous leur avez dit. Les assistants personnels ont besoin de contexte. Toute conversation à plusieurs échanges requiert de la mémoire.
 
-<img src="../../../translated_images/fr/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Conversations sans état vs avec état" width="800"/>
+<img src="../../../translated_images/fr/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-*La différence entre les conversations sans état (appels indépendants) et avec état (sensibles au contexte)*
+*La différence entre conversations sans état (appels indépendants) et avec état (connaissance du contexte)*
 
 ## Comprendre les tokens
 
-Avant de plonger dans les conversations, il est important de comprendre les tokens - les unités de base de texte que les modèles de langage traitent :
+Avant de plonger dans les conversations, il est important de comprendre les tokens - les unités de texte de base que les modèles de langage traitent :
 
-<img src="../../../translated_images/fr/token-explanation.c39760d8ec650181.webp" alt="Explication des tokens" width="800"/>
+<img src="../../../translated_images/fr/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-*Exemple de découpage du texte en tokens - "J'aime l'IA !" devient 4 unités distinctes de traitement*
+*Exemple de découpage du texte en tokens - "J'adore l'IA !" devient 4 unités de traitement distinctes*
 
-Les tokens sont comment les modèles d'IA mesurent et traitent le texte. Les mots, la ponctuation, et même les espaces peuvent être des tokens. Votre modèle a une limite du nombre de tokens qu'il peut traiter simultanément (400 000 pour GPT-5.2, avec jusqu'à 272 000 tokens en entrée et 128 000 tokens en sortie). Comprendre les tokens vous aide à gérer la longueur des conversations et les coûts.
+Les tokens sont la manière dont les modèles IA mesurent et traitent le texte. Les mots, la ponctuation, et même les espaces peuvent être des tokens. Votre modèle a une limite sur le nombre de tokens qu'il peut traiter d'un coup (400 000 pour GPT-5.2, jusqu'à 272 000 tokens en entrée et 128 000 tokens en sortie). Comprendre les tokens vous aide à gérer la longueur des conversations et les coûts.
 
 ## Comment fonctionne la mémoire
 
-La mémoire de chat résout le problème sans état en conservant l'historique de la conversation. Avant d'envoyer votre requête au modèle, le cadre insère les messages précédents pertinents. Lorsque vous demandez "Comment je m'appelle ?", le système envoie en fait tout l'historique de la conversation, permettant au modèle de voir que vous avez précédemment dit "Je m'appelle John."
+La mémoire de chat résout le problème d'absence d'état en gardant l'historique de la conversation. Avant d’envoyer votre requête au modèle, le cadre de travail ajoute en préambule les messages précédents pertinents. Quand vous demandez "Comment je m'appelle ?", le système envoie en réalité tout l'historique de la conversation, ce qui permet au modèle de voir que vous avez dit précédemment "Je m'appelle John."
 
-LangChain4j fournit des implémentations de mémoire qui gèrent cela automatiquement. Vous choisissez combien de messages conserver et le cadre gère la fenêtre contextuelle.
+LangChain4j fournit des implémentations de mémoire qui gèrent cela automatiquement. Vous choisissez combien de messages garder et le cadre gère la fenêtre de contexte.
 
-<img src="../../../translated_images/fr/memory-window.bbe67f597eadabb3.webp" alt="Concept de fenêtre mémoire" width="800"/>
+<img src="../../../translated_images/fr/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory maintient une fenêtre glissante des messages récents, supprimant automatiquement les plus anciens*
+*MessageWindowChatMemory maintient une fenêtre glissante des messages récents, supprimant automatiquement les anciens*
 
 ## Comment cela utilise LangChain4j
 
-Ce module étend le démarrage rapide en intégrant Spring Boot et en ajoutant la mémoire de conversation. Voici comment les éléments s'imbriquent :
+Ce module étend le démarrage rapide en intégrant Spring Boot et en ajoutant la mémoire de conversation. Voici comment les éléments s’emboîtent :
 
 **Dépendances** - Ajoutez deux bibliothèques LangChain4j :
 
@@ -90,7 +92,7 @@ Ce module étend le démarrage rapide en intégrant Spring Boot et en ajoutant l
 </dependency>
 ```
 
-**Modèle de chat** - Configurez Azure OpenAI comme bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)) :
+**Modèle de chat** - Configurez Azure OpenAI en tant que bean Spring ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)) :
 
 ```java
 @Bean
@@ -105,7 +107,7 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Le constructeur lit les informations d'identification depuis des variables d'environnement définies par `azd up`. La configuration de `baseUrl` vers votre point de terminaison Azure fait fonctionner le client OpenAI avec Azure OpenAI.
+Le builder lit les identifiants depuis les variables d’environnement définies par `azd up`. La définition de `baseUrl` vers votre point de terminaison Azure fait fonctionner le client OpenAI avec Azure OpenAI.
 
 **Mémoire de conversation** - Suivez l'historique du chat avec MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)) :
 
@@ -120,21 +122,21 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Créez la mémoire avec `withMaxMessages(10)` pour conserver les 10 derniers messages. Ajoutez les messages utilisateur et IA avec des wrappers typés : `UserMessage.from(text)` et `AiMessage.from(text)`. Récupérez l'historique avec `memory.messages()` et envoyez-le au modèle. Le service stocke des instances de mémoire séparées par ID de conversation, permettant à plusieurs utilisateurs de chatter simultanément.
+Créez la mémoire avec `withMaxMessages(10)` pour garder les 10 derniers messages. Ajoutez des messages utilisateur et IA avec des wrappers typés : `UserMessage.from(text)` et `AiMessage.from(text)`. Récupérez l’historique avec `memory.messages()` et envoyez-le au modèle. Le service stocke des instances de mémoire séparées par ID de conversation, permettant à plusieurs utilisateurs de discuter simultanément.
 
 > **🤖 Essayez avec [GitHub Copilot](https://github.com/features/copilot) Chat :** Ouvrez [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) et demandez :
 > - "Comment MessageWindowChatMemory décide-t-il quels messages supprimer lorsque la fenêtre est pleine ?"
-> - "Puis-je implémenter un stockage mémoire personnalisé utilisant une base de données au lieu de la mémoire en RAM ?"
-> - "Comment ajouter un résumé pour compresser l'historique ancien de la conversation ?"
+> - "Puis-je implémenter un stockage mémoire personnalisé en utilisant une base de données au lieu de la mémoire en RAM ?"
+> - "Comment ajouter un résumé pour compresser l’ancien historique de conversation ?"
 
-Le point d’accès de chat sans état ignore complètement la mémoire - juste `chatModel.chat(prompt)` comme dans le démarrage rapide. Le point d’accès avec état ajoute des messages à la mémoire, récupère l’historique, et inclut ce contexte à chaque requête. Même configuration modèle, modèles différents.
+Le point de terminaison de chat sans état ignore totalement la mémoire - simplement `chatModel.chat(prompt)` comme dans le démarrage rapide. Le point de terminaison avec état ajoute les messages à la mémoire, récupère l’historique, et inclut ce contexte à chaque requête. Même configuration de modèle, mais schémas différents.
 
 ## Déployer l'infrastructure Azure OpenAI
 
 **Bash :**
 ```bash
 cd 01-introduction
-azd up  # Sélectionnez l’abonnement et l’emplacement (eastus2 recommandé)
+azd up  # Sélectionnez l'abonnement et l'emplacement (eastus2 recommandé)
 ```
 
 **PowerShell :**
@@ -143,14 +145,14 @@ cd 01-introduction
 azd up  # Sélectionnez l'abonnement et l'emplacement (eastus2 recommandé)
 ```
 
-> **Note :** Si vous rencontrez une erreur de délai d’attente (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), exécutez simplement `azd up` à nouveau. Les ressources Azure peuvent encore être en cours de provisionnement en arrière-plan, et retenter permet au déploiement de se terminer une fois que les ressources atteignent un état terminal.
+> **Note :** Si vous rencontrez une erreur de timeout (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), il suffit de relancer `azd up`. Les ressources Azure peuvent encore être en cours de provisionnement en arrière-plan, et réessayer permet au déploiement de se terminer une fois que les ressources sont dans un état terminal.
 
-Cela fera :
-1. Déployer la ressource Azure OpenAI avec les modèles GPT-5.2 et text-embedding-3-small
-2. Générer automatiquement un fichier `.env` à la racine du projet avec les identifiants
-3. Configurer toutes les variables d’environnement requises
+Cela va :
+1. Déployer la ressource Azure OpenAI avec GPT-5.2 et les modèles text-embedding-3-small
+2. Générer automatiquement le fichier `.env` dans la racine du projet avec les identifiants
+3. Configurer toutes les variables d'environnement requises
 
-**Des problèmes de déploiement ?** Consultez le [README Infrastructure](infra/README.md) pour un dépannage détaillé incluant conflits de noms de sous-domaines, étapes de déploiement manuel via Azure Portal, et conseils de configuration du modèle.
+**Problèmes de déploiement ?** Consultez le [README Infrastructure](infra/README.md) pour un dépannage détaillé incluant les conflits de noms de sous-domaines, les étapes de déploiement manuel dans le portail Azure, et les consignes de configuration des modèles.
 
 **Vérifiez que le déploiement a réussi :**
 
@@ -164,14 +166,14 @@ cat ../.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 Get-Content ..\.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 ```
 
-> **Note :** La commande `azd up` génère automatiquement le fichier `.env`. Si vous devez le mettre à jour plus tard, vous pouvez soit modifier le fichier `.env` manuellement, soit le régénérer en exécutant :
+> **Note :** La commande `azd up` génère automatiquement le fichier `.env`. Si vous devez le mettre à jour plus tard, éditez-le manuellement ou régénérez-le en lançant :
 >
 > **Bash :**
 > ```bash
 > cd ..
 > bash .azd-env.sh
 > ```
-
+>
 > **PowerShell :**
 > ```powershell
 > cd ..
@@ -180,9 +182,9 @@ Get-Content ..\.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 ## Exécuter l'application localement
 
-**Vérifier le déploiement :**
+**Vérifiez le déploiement :**
 
-Assurez-vous que le fichier `.env` existe dans le répertoire racine avec les identifiants Azure :
+Assurez-vous que le fichier `.env` existe à la racine avec les identifiants Azure :
 
 **Bash :**
 ```bash
@@ -194,25 +196,25 @@ cat ../.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 Get-Content ..\.env  # Devrait afficher AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Démarrer les applications :**
+**Démarrez les applications :**
 
-**Option 1 : Utiliser Spring Boot Dashboard (recommandé pour les utilisateurs de VS Code)**
+**Option 1 : Utiliser Spring Boot Dashboard (recommandé pour les utilisateurs VS Code)**
 
-Le conteneur de développement inclut l’extension Spring Boot Dashboard, qui fournit une interface visuelle pour gérer toutes les applications Spring Boot. Vous le trouverez dans la barre d’activités à gauche dans VS Code (recherchez l’icône Spring Boot).
+Le conteneur de développement inclut l'extension Spring Boot Dashboard, qui fournit une interface visuelle pour gérer toutes les applications Spring Boot. Vous la trouverez dans la barre d'activités à gauche de VS Code (cherchez l'icône Spring Boot).
 
-Depuis Spring Boot Dashboard, vous pouvez :
-- Voir toutes les applications Spring Boot disponibles dans l’espace de travail
-- Démarrer/arrêter les applications d’un simple clic
-- Visualiser les journaux des applications en temps réel
-- Surveiller le statut des applications
+Depuis le Spring Boot Dashboard, vous pouvez :
+- Voir toutes les applications Spring Boot disponibles dans l'espace de travail
+- Démarrer/arrêter les applications en un clic
+- Visualiser les logs des applications en temps réel
+- Surveiller l'état des applications
 
-Cliquez simplement sur le bouton lecture à côté de « introduction » pour lancer ce module, ou démarrez tous les modules à la fois.
+Cliquez simplement sur le bouton de lecture à côté de "introduction" pour démarrer ce module, ou lancez tous les modules en même temps.
 
 <img src="../../../translated_images/fr/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Option 2 : Utiliser les scripts shell**
+**Option 2 : Utiliser des scripts shell**
 
-Démarrez toutes les applications web (modules 01-04) :
+Démarrer toutes les applications web (modules 01-04) :
 
 **Bash :**
 ```bash
@@ -226,7 +228,7 @@ cd ..  # Depuis le répertoire racine
 .\start-all.ps1
 ```
 
-Ou lancez juste ce module :
+Ou démarrez seulement ce module :
 
 **Bash :**
 ```bash
@@ -240,16 +242,16 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Les deux scripts chargent automatiquement les variables d’environnement depuis le fichier `.env` à la racine et compilent les JARs s’ils n’existent pas.
+Les deux scripts chargent automatiquement les variables d'environnement du fichier `.env` racine et construiront les JARs s'ils n'existent pas.
 
-> **Note :** Si vous préférez construire manuellement tous les modules avant de démarrer :
+> **Note :** Si vous préférez construire tous les modules manuellement avant de démarrer :
 >
 > **Bash :**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-
+>
 > **PowerShell :**
 > ```powershell
 > cd ..  # Go to root directory
@@ -262,43 +264,43 @@ Ouvrez http://localhost:8080 dans votre navigateur.
 
 **Bash :**
 ```bash
-./stop.sh  # Ce module seulement
+./stop.sh  # Seulement ce module
 # Ou
 cd .. && ./stop-all.sh  # Tous les modules
 ```
 
 **PowerShell :**
 ```powershell
-.\stop.ps1  # Ce module seulement
+.\stop.ps1  # Ce module uniquement
 # Ou
 cd ..; .\stop-all.ps1  # Tous les modules
 ```
 
 ## Utiliser l'application
 
-L'application fournit une interface web avec deux implementations de chat côte à côte.
+L'application offre une interface web avec deux implémentations de chat côte à côte.
 
-<img src="../../../translated_images/fr/home-screen.121a03206ab910c0.webp" alt="Écran d'accueil de l'application" width="800"/>
+<img src="../../../translated_images/fr/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Tableau de bord montrant les options à la fois Chat Simple (sans état) et Chat Conversationnel (avec état)*
+*Tableau de bord affichant les options Simple Chat (sans état) et Conversational Chat (avec état)*
 
-### Chat sans état (panneau gauche)
+### Chat sans état (panneau de gauche)
 
-Essayez d'abord ceci. Dites "Je m'appelle John" puis demandez immédiatement "Comment je m'appelle ?" Le modèle ne se souviendra pas car chaque message est indépendant. Cela démontre le problème fondamental de l'intégration basique d'un modèle de langage - pas de contexte de conversation.
+Essayez d'abord ceci. Dites "Je m'appelle John" puis demandez immédiatement "Comment je m'appelle ?". Le modèle ne se souviendra pas parce que chaque message est indépendant. Cela illustre le problème central de l’intégration basique des modèles de langage - absence de contexte de conversation.
 
-<img src="../../../translated_images/fr/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Démo chat sans état" width="800"/>
+<img src="../../../translated_images/fr/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
-*L’IA ne se souvient pas de votre nom à partir du message précédent*
+*L'IA ne se souvient pas de votre nom donné dans le message précédent*
 
-### Chat avec état (panneau droit)
+### Chat avec état (panneau de droite)
 
-Essayez maintenant la même séquence ici. Dites "Je m'appelle John" puis "Comment je m'appelle ?" Cette fois, il se souvient. La différence est MessageWindowChatMemory - il maintient l'historique de la conversation et l'inclut dans chaque requête. C'est ainsi que fonctionne l'IA conversationnelle en production.
+Essayez maintenant la même séquence ici. Dites "Je m'appelle John" puis "Comment je m'appelle ?". Cette fois, il se souvient. La différence vient de MessageWindowChatMemory - il conserve l’historique de la conversation et l’inclut dans chaque requête. C’est ainsi que fonctionne une IA conversationnelle en production.
 
-<img src="../../../translated_images/fr/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Démo chat avec état" width="800"/>
+<img src="../../../translated_images/fr/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*L’IA se souvient de votre nom donné plus tôt dans la conversation*
+*L'IA se souvient de votre nom donné plus tôt dans la conversation*
 
-Les deux panneaux utilisent le même modèle GPT-5.2. La seule différence est la mémoire. Cela montre clairement ce que la mémoire apporte à votre application et pourquoi elle est essentielle pour des cas réels d’utilisation.
+Les deux panneaux utilisent le même modèle GPT-5.2. La seule différence est la mémoire. Cela montre clairement ce que la mémoire apporte à votre application et pourquoi elle est essentielle pour les cas d’usage réels.
 
 ## Étapes suivantes
 
@@ -311,6 +313,6 @@ Les deux panneaux utilisent le même modèle GPT-5.2. La seule différence est l
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Avis de non-responsabilité** :  
-Ce document a été traduit à l’aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer l’exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue d’origine doit être considéré comme la source faisant autorité. Pour les informations critiques, il est recommandé de recourir à une traduction humaine professionnelle. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l’utilisation de cette traduction.
+**Avertissement** :  
+Ce document a été traduit à l’aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer l’exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue d’origine doit être considéré comme la source faisant foi. Pour des informations cruciales, il est conseillé de recourir à une traduction professionnelle effectuée par un humain. Nous n’assumons aucune responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l’utilisation de cette traduction.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

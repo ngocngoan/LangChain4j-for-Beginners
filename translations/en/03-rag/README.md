@@ -28,7 +28,9 @@
 
 ## Video Walkthrough
 
-Watch this live session that explains how to get started with this module: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
@@ -103,10 +105,10 @@ The RAG pipeline in this module breaks down into four stages that run in sequenc
 When you upload a document, the system parses it (PDF or plain text), attaches metadata such as the filename, and then breaks it into chunks — smaller pieces that fit comfortably in the model's context window. These chunks overlap slightly so you don't lose context at the boundaries.
 
 ```java
-// Pars the hochgeladene Datei und verpacke sie in ein LangChain4j-Dokument
+// Parse the uploaded file and wrap it in a LangChain4j Document
 Document document = Document.from(content, metadata);
 
-// In 300-Token-Chunks mit 30-Token-Überlappung aufteilen
+// Split into 300-token chunks with 30-token overlap
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
@@ -199,8 +201,8 @@ The diagram below contrasts semantic search with traditional keyword search. A k
 Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
 
 <img src="../../../translated_images/en/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
-
 *This diagram illustrates cosine similarity as the angle between embedding vectors — more aligned vectors score closer to 1.0, indicating higher semantic similarity.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
 > - "How does similarity search work with embeddings and what determines the score?"
 > - "What similarity threshold should I use and how does it affect results?"

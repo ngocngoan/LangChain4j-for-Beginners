@@ -2,137 +2,139 @@
 
 ## Turinys
 
-- [Vaizdo įrašo apžvalga](../../../03-rag)
+- [Video vedlys](../../../03-rag)
 - [Ko išmoksite](../../../03-rag)
-- [Išankstiniai reikalavimai](../../../03-rag)
+- [Reikalingos sąlygos](../../../03-rag)
 - [RAG supratimas](../../../03-rag)
-  - [Kuris RAG metodas naudojamas šiame vadove?](../../../03-rag)
+  - [Kurią RAG metodiką naudoja šis vadovas?](../../../03-rag)
 - [Kaip tai veikia](../../../03-rag)
   - [Dokumento apdorojimas](../../../03-rag)
-  - [Įterpimų kūrimas](../../../03-rag)
+  - [Įterpinių kūrimas](../../../03-rag)
   - [Semantinė paieška](../../../03-rag)
   - [Atsakymo generavimas](../../../03-rag)
-- [Paleiskite programą](../../../03-rag)
-- [Programos naudojimas](../../../03-rag)
-  - [Įkelkite dokumentą](../../../03-rag)
-  - [Uždavinėkite klausimus](../../../03-rag)
-  - [Patikrinkite šaltinių nuorodas](../../../03-rag)
-  - [Eksperimentuokite su klausimais](../../../03-rag)
+- [Paleisti programą](../../../03-rag)
+- [Naudojimasis programa](../../../03-rag)
+  - [Įkelti dokumentą](../../../03-rag)
+  - [Uždavinėti klausimus](../../../03-rag)
+  - [Tikrinti šaltinių nuorodas](../../../03-rag)
+  - [Eksperimentuoti su klausimais](../../../03-rag)
 - [Pagrindinės sąvokos](../../../03-rag)
-  - [Fragmentavimo strategija](../../../03-rag)
-  - [Panašumo įvertinimai](../../../03-rag)
+  - [Dalių strategija](../../../03-rag)
+  - [Panašumo balai](../../../03-rag)
   - [Atminties saugykla](../../../03-rag)
   - [Konteksto lango valdymas](../../../03-rag)
 - [Kada RAG svarbus](../../../03-rag)
-- [Kiti žingsniai](../../../03-rag)
+- [Tolimesni žingsniai](../../../03-rag)
 
-## Vaizdo įrašo apžvalga
+## Video vedlys
 
-Žiūrėkite šią tiesioginę sesiją, kurioje paaiškinama, kaip pradėti dirbti su šiuo moduliu: [RAG with LangChain4j - Live Session](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Peržiūrėkite šią tiesioginę sesiją, kuri paaiškina, kaip pradėti dirbti su šiuo moduliu:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
 ## Ko išmoksite
 
-Anksčiau moduliuose išmokote, kaip kalbėtis su DI ir efektyviai struktūruoti užklausas. Tačiau yra esminis apribojimas: kalbos modeliai žino tik tai, ką jie išmoko mokymo metu. Jie negali atsakyti į klausimus apie jūsų įmonės taisykles, jūsų projekto dokumentaciją ar bet kokią informaciją, kurios nebuvo mokomi.
+Ankstesniuose moduliuose išmokote, kaip kalbėtis su DI ir efektyviai struktūruoti savo užklausas. Tačiau yra fundamentali apribojimas: kalbos modeliai žino tik tai, ką išmoksta treniruočių metu. Jie negali atsakyti į klausimus apie jūsų įmonės politikas, jūsų projekto dokumentaciją ar bet kokią informaciją, kurios mokyti nebuvo.
 
-RAG (Retrieval-Augmented Generation) sprendžia šią problemą. Vietoj to, kad mokytumėte modelį jūsų informacija (kas yra brangu ir nepraktiška), suteikiate jam galimybę ieškoti per jūsų dokumentus. Kai kas nors užduoda klausimą, sistema suranda atitinkamą informaciją ir įtraukia ją į užklausos kontekstą. Modelis tada atsako remdamasis tuo surinktu kontekstu.
+RAG (retrieval-augmented generation) išsprendžia šią problemą. Vietoje bandymo mokyti modelį jūsų informacija (kas yra brangu ir nepraktiška), jūs suteikiate jam galimybę ieškoti per jūsų dokumentus. Kai kas nors užduoda klausimą, sistema randa aktualią informaciją ir įtraukia ją į užklausą. Modelis atsako remdamasis tuo rasta kontekstu.
 
-Įsivaizduokite RAG kaip nuorodų biblioteką modeliui. Kai klausiate, sistema:
+Įsivaizduokite RAG kaip nuorodų biblioteką modeliui. Kai užduodate klausimą, sistema:
 
-1. **Vartotojo užklausa** – jūs užduodate klausimą  
-2. **Įterpimas** – paverčia klausimą vektoriumi  
-3. **Vektorinė paieška** – randa panašius dokumentų fragmentus  
-4. **Konteksto surinkimas** – į pradinę užklausą prideda atitinkamus fragmentus  
-5. **Atsakymas** – LLM generuoja atsakymą remdamasis kontekstu  
+1. **Vartotojo užklausa** – jūs klausiate
+2. **Įterpimas (embedding)** – jūsų klausimas paverčiamas vektoriumi
+3. **Vektorinė paieška** – randami panašūs dokumentų fragmentai
+4. **Konteksto surinkimas** – į užklausą pridedami susiję fragmentai
+5. **Atsakymas** – LLM generuoja atsakymą remdamasis kontekstu
 
-Tai pagrindžia modelio atsakymus jūsų tikrais duomenimis, o ne tik mokymo žiniomis ar išgalvotais atsakymais.
+Tai pagrindžia modelio atsakymus jūsų tikrais duomenimis vietoje pasikliaujant treniruočių žiniomis ar spėlionėmis.
 
-## Išankstiniai reikalavimai
+## Reikalingos sąlygos
 
-- Užbaigtas [00 modulis - Greitas startas](../00-quick-start/README.md) (Easy RAG pavyzdžiui, minėtam anksčiau)  
-- Užbaigtas [01 modulis - Įvadas](../01-introduction/README.md) (įdiegti Azure OpenAI ištekliai, įskaitant `text-embedding-3-small` įterpimų modelį)  
-- `.env` failas pagrindiniame kataloge su Azure kredencialais (sukurtas vykdant `azd up` 01 modulyje)  
+- Baigtas [Modulis 00 - Greitas pradžia](../00-quick-start/README.md) (Easy RAG pavyzdžiui, minėtam aukščiau)
+- Baigtas [Modulis 01 - Įvadas](../01-introduction/README.md) (išdiegti Azure OpenAI ištekliai, įskaitant modelį `text-embedding-3-small`)
+- `.env` failas šakninėje direktorijoje su Azure prisijungimo duomenimis (sukurtas komandą `azd up` Modulyje 01)
 
-> **Pastaba:** Jei dar nebaigėte 01 modulio, pirmiausia laikykitės ten pateiktų diegimo nurodymų. Komanda `azd up` įdiegia tiek GPT pokalbių modelį, tiek šio modulio naudojamą įterpimų modelį.
+> **Pastaba:** jei neužbaigėte Modulio 01, pirmiausia sekite ten pateiktas diegimo instrukcijas. Komanda `azd up` išdiegia tiek GPT pokalbių modelį, tiek šio modulio naudojamą įterpimų modelį.
 
 ## RAG supratimas
 
-Žemiau pateiktas diagrama iliustruoja pagrindinę koncepciją: vietoj to, kad remtumėtės vien modelio mokymo duomenimis, RAG suteikia jam jūsų dokumentų nuorodų biblioteką, kuria galima pasinaudoti prieš generuojant kiekvieną atsakymą.
+Žemiau pateiktas diagramas iliustruoja pagrindinę idėją: vietoje to, kad remtumėtės tik modelio treniruočių duomenimis, RAG suteikia jam jūsų dokumentų nuorodų biblioteką, kurią jis pasitikrina prieš generuodamas kiekvieną atsakymą.
 
-<img src="../../../translated_images/lt/what-is-rag.1f9005d44b07f2d8.webp" alt="Kas yra RAG" width="800"/>
+<img src="../../../translated_images/lt/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
 
-*Ši diagrama parodo skirtumą tarp standartinio LLM (kuris spėja remdamasis mokymo duomenimis) ir RAG patobulinto LLM (kuris pirmiausia pasitikrina jūsų dokumentus).*
+*Ši diagrama parodo skirtumą tarp standartinio LLM (spėjantis iš treniruočių duomenų) ir RAG patobulinto LLM (pirmiausia pasitariantį jūsų dokumentus).*
 
-Štai kaip visi komponentai sujungti nuo pradžios iki galo. Vartotojo klausimas praeina keturis etapus — įterpimą, vektorinę paiešką, konteksto surinkimą ir atsakymo generavimą — kiekvienas statomas ant ankstesnio:
+Štai kaip dalys sujungiamos nuo pradžios iki pabaigos. Vartotojo klausimas keliauja per keturis etapus – įterpimą, vektorų paiešką, konteksto surinkimą ir atsakymo generavimą – kiekvienas žingsnis statomas ant ankstesnio:
 
-<img src="../../../translated_images/lt/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG architektūra" width="800"/>
+<img src="../../../translated_images/lt/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
 
-*Ši diagrama parodo visą RAG procesą – vartotojo užklausa praeina per įterpimą, vektorinę paiešką, konteksto surinkimą ir atsakymo generavimą.*
+*Ši diagrama atvaizduoja pilną RAG srautą – vartotojo užklausa eina per įterpimą, vektorinę paiešką, konteksto surinkimą ir atsakymo generavimą.*
 
-Likusi šio modulio dalis detaliai apžvelgia kiekvieną etapą su kodu, kurį galite paleisti ir modifikuoti.
+Likusi šio modulio dalis išsamiai aptaria kiekvieną etapą su kodu, kurį galite paleisti ir modifikuoti.
 
-### Kuris RAG metodas naudojamas šiame vadove?
+### Kurią RAG metodiką naudoja šis vadovas?
 
-LangChain4j siūlo tris RAG įgyvendinimo būdus, kiekvienas su skirtingu abstrakcijos lygiu. Žemiau pateikta diagrama juos palygina:
+LangChain4j siūlo tris būdus RAG įgyvendinimui, kiekvienas su skirtingu abstrakcijos lygiu. Žemiau pateiktame diagramoje jie palyginti šalia šalia:
 
-<img src="../../../translated_images/lt/rag-approaches.5b97fdcc626f1447.webp" alt="Trys RAG metodai LangChain4j" width="800"/>
+<img src="../../../translated_images/lt/rag-approaches.5b97fdcc626f1447.webp" alt="Three RAG Approaches in LangChain4j" width="800"/>
 
-*Ši diagrama palygina tris LangChain4j RAG metodus – Easy, Native ir Advanced – rodydama jų pagrindinius komponentus ir kada naudoti kiekvieną.*
+*Ši diagrama lygina tris LangChain4j RAG metodus – Easy, Native ir Advanced – svetimi jų pagrindinius komponentus ir kada naudoti.*
 
-| Metodas | Ką daro | Kompromisas |
+| Metodika | Ką atlieka | Kompromisas |
 |---|---|---|
-| **Easy RAG** | Automatiškai sujungia viską per `AiServices` ir `ContentRetriever`. Žymite sąsają, prijungiate retriever'į, o LangChain4j užkulisiuose valdo įterpimą, paiešką ir užklausos surinkimą. | Minimaliai kodo, bet nematote kas vyksta kiekviename žingsnyje. |
-| **Native RAG** | Patys kviečiate įterpimų modelį, ieškote saugykloje, kuriate užklausą ir generuojate atsakymą – po vieną aiškų žingsnį. | Daugiau kodo, bet kiekvienas etapas yra matomas ir keičiamas. |
-| **Advanced RAG** | Naudoja `RetrievalAugmentor` sistemą su keičiamais užklausų transformatoriais, maršrutizatoriais, perrikiuotojais ir turinio įterpėjais, skirtais produkcijos lygio procesams. | Didžiausias lankstumas, bet ženkliai sudėtingiau. |
+| **Easy RAG** | Viską automatiškai sujungia per `AiServices` ir `ContentRetriever`. Aprašote sąsają, priskiriate retriverį, o LangChain4j pats tvarko įterpimą, paiešką ir užklausos surinkimą. | Minimalus kodas, bet nematote, kas vyksta kiekviename žingsnyje. |
+| **Native RAG** | Jūs pats kviečiate įterpimų modelį, ieškote saugykloje, kuriate užklausą ir generuojate atsakymą – žingsnis po žingsnio ir aiškiai. | Daugiau kodo, bet kiekvienas etapas matomas ir modifikuojamas. |
+| **Advanced RAG** | Naudoja `RetrievalAugmentor` sistemą su pritaikomais užklausų transformatoriais, maršrutizatoriais, reitinguotojais ir turinio įterpėjais gamybinėms sistemoms. | Maksimali lankstumas, bet žymiai sudėtingesnis. |
 
-**Šis vadovas naudoja Native metodą.** Kiekvienas RAG proceso žingsnis – įterpimo kūrimas, vektorinė paieška, konteksto surinkimas ir atsakymo generavimas – yra aiškiai išrašytas faile [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Tai daryta sąmoningai: mokymosi tikslais svarbiau matyti ir suprasti kiekvieną etapą, nei minimizuoti kodą. Kai susipažinsite, galėsite pereiti prie Easy RAG greitiems prototipams arba Advanced RAG produkcijos sistemoms.
+**Šis vadovas naudoja Native metodiką.** Kiekvienas RAG srauto žingsnis – užklausos įterpimas, vektorinė paieška, konteksto surinkimas ir atsakymo generavimas – parašytas aiškiai faile [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Tai sąmoninga: kaip mokymosi išteklius svarbiau, kad pamatytumėte ir suprastumėte kiekvieną etapą, negu, kad kodas būtų maksimaliai minimalus. Kai suprasite, kaip dalys dera, galėsite pereiti prie Easy RAG greitiems prototipams arba Advanced RAG gamybinėms sistemoms.
 
-> **💡 Jau matėte Easy RAG veikimą?** [Greito starto modulis](../00-quick-start/README.md) pateikia Dokumentų Q&A pavyzdį ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)), kuris naudoja Easy RAG metodą – LangChain4j automatiškai tvarko įterpimą, paiešką ir užklausos surinkimą. Šiame modulyje žingsnis po žingsnio atverčiame šį procesą, kad galėtumėte pamatyti ir valdyti kiekvieną etapą patys.
+> **💡 Jau matėte Easy RAG veikiant?** [Greito starto modulyje](../00-quick-start/README.md) yra Dokumentų Q&A pavyzdys ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)), kuris naudoja Easy RAG – LangChain4j automatiškai tvarko įterpimą, paiešką ir užklausos surinkimą. Šis modulis žengia toliau ir atidaro tą srautą, kad galėtumėte pamatyti ir valdyti kiekvieną etapą patys.
 
-<img src="../../../translated_images/lt/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG srautas - LangChain4j" width="800"/>
+<img src="../../../translated_images/lt/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
-*Ši diagrama rodo Easy RAG procesą iš `SimpleReaderDemo.java`. Palyginkite su Native metodu šiame modulyje: Easy RAG paslepia įterpimą, gavimą ir užklausos surinkimą už `AiServices` ir `ContentRetriever` – įkeliat dokumentą, prijungiate retrieverį ir gaunate atsakymus. Native metodas šiame modulyje atskleidžia šį procesą, kad pats kviečiate kiekvieną etapą (įterpti, ieškoti, surinkti kontekstą, generuoti), suteikdamas pilną matomumą ir kontrolę.*
+*Ši diagrama rodo Easy RAG srautą iš `SimpleReaderDemo.java`. Palyginkite su Native metodu, naudojamu šiame modulyje: Easy RAG slepia įterpimą, paiešką ir užklausos surinkimą už `AiServices` ir `ContentRetriever` – jūs įkeliate dokumentą, priskiriate retriverį ir gaunate atsakymus. Native metodas šio modulio atveju atveria tą srautą, kad galėtumėte patys kvieti kiekvieną etapą (įterpti, ieškoti, surinkti kontekstą, generuoti), suteikdamas pilną matomumą ir valdymą.*
 
 ## Kaip tai veikia
 
-Šio modulio RAG procesas suskaidytas į keturis etapus, kurie vykdomi kiekvieną kartą, kai vartotojas užduoda klausimą. Pirmiausia įkeltas dokumentas yra **išanalizuojamas ir suskaidomas** į valdomus fragmentus. Tie fragmentai virsta į **vektorinius įterpimus** ir saugomi, kad būtų galima matematiškai juos palyginti. Kai atkeliauja užklausa, sistema atlieka **semantinę paiešką** norėdama rasti aktualiausius fragmentus ir galiausiai perduoda juos LLM kaip kontekstą **atsakymo generavimui**. Žemiau pateiktos skiltys detalizuoja kiekvieną etapą su tikru kodu ir diagramomis. Pirmyn prie pirmojo žingsnio.
+Šio modulio RAG srautas skirstomas į keturis etapus, kurie vyksta nuosekliai kiekvieną kartą, kai vartotojas užduoda klausimą. Pirmiausia įkeltas dokumentas yra **išskaidomas ir suskaidomas** į valdomus fragmentus. Tie fragmentai tada paverčiami į **vektorinius įterpinius** ir saugomi, kad būtų galima juos aiškiai palyginti. Kai atvyksta užklausa, sistema atlieka **semantinę paiešką** ieškodama aktualiausių fragmentų, o galiausiai juos perduoda LLM kaip kontekstą **atsakymo generavimui**. Žemiau pateiktose dalyse aptariamas kiekvienas etapas su tikru kodu ir diagramomis. Pažiūrėkime į pirmą žingsnį.
 
 ### Dokumento apdorojimas
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Kai įkeliate dokumentą, sistema jį parsiunčia (PDF arba paprastas tekstas), prideda metaduomenis, tokius kaip failo pavadinimas, o tada suskaido į fragmentus – mažesnes dalis, kurios patogiai telpa modelio konteksto lange. Šie fragmentai šiek tiek persidengia, kad neprarastumėte konteksto ribose.
+Kai įkeliate dokumentą, sistema jį analizuoja (PDF ar paprastas tekstas), prideda metaduomenis, tokius kaip failo pavadinimas, ir tada suskaido į fragmentus – mažesnes dalis, kurios patogiai telpa modelio konteksto lange. Šie fragmentai kiek persidengia, kad neprarastumėte konteksto ribose.
 
 ```java
-// Išanalizuokite įkeltą failą ir įpakuokite jį į LangChain4j dokumentą
+// Išanalizuokite įkeltą failą ir apvyniokite jį LangChain4j dokumente
 Document document = Document.from(content, metadata);
 
-// Padalykite į 300 žodžių fragmentus su 30 žodžių persidengimu
+// Padalinkite į 300 žodžių fragmentus su 30 žodžių persidengimu
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
-  
-Žemiau pateikta diagrama vizualiai parodo, kaip tai veikia. Matyti, kaip kiekvienas fragmentas dalinasi kai kuriais žetonais su kaimynais — 30 žetonų persidengimas užtikrina, kad svarbus kontekstas nepranyktų per tarpą:
 
-<img src="../../../translated_images/lt/document-chunking.a5df1dd1383431ed.webp" alt="Dokumento fragmentavimas" width="800"/>
+Žemiau pateikta diagrama vizualiai parodo šį procesą. Pastebėkite, kad kiekvienas fragmentas dalinasi keletu žodžių su kaimynais – 30 žodžių persidengimas užtikrina, kad svarbus kontekstas nepraeis nepastebėtas:
 
-*Ši diagrama rodo, kaip dokumentas suskaidomas į 300 žetonų fragmentus su 30 žetonų persidengimu, išlaikant kontekstą fragmentų ribose.*
+<img src="../../../translated_images/lt/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbių funkcija:** Atidarykite [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) ir paklauskite:
-> - „Kaip LangChain4j suskaido dokumentus į fragmentus ir kodėl persidengimas svarbus?“
-> - „Koks yra optimalus fragmento dydis skirtingiems dokumentams ir kodėl?“
-> - „Kaip tvarkyti dokumentus keliomis kalbomis ar su specialiu formatu?“
+*Ši diagrama rodo dokumento suskaidymą į 300 žodžių fragmentus su 30 žodžių persidengimu, išlaikant kontekstą ribose.*
 
-### Įterpimų kūrimas
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) ir paklauskite:
+> - "Kaip LangChain4j skaido dokumentus į fragmentus ir kodėl persidengimas svarbus?"
+> - "Koks yra optimalus fragmentų dydis skirtingiems dokumentų tipams ir kodėl?"
+> - "Kaip tvarkyti dokumentus keliomis kalbomis ar su specialiu formatavimu?"
+
+### Įterpinių kūrimas
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Kiekvienas fragmentas paverčiamas į skaitmeninę išraišką, vadinamą įterpimu – tarsi prasmių vertėju į skaičius. Įterpimų modelis nėra „protingas“ kaip pokalbių modelis; jis neseka komandų, nemąsto ar neatsako į klausimus. Jo darbas – atvaizduoti tekstą į matematinę erdvę, kur panaši reikšmė yra arti viena kitos – „automobilis“ šalia „automobilio“, „grąžinimo politika“ šalia „pinigų grąžinimo“. Pokalbių modelį įsivaizduokite kaip žmogų, su kuriuo galima kalbėtis; įterpimų modelis – kaip labai gerai veikianti dokumentų sistema.
+Kiekvienas fragmentas paverčiamas skaitmeniniu atvaizdu, vadinamu įterpiniu – iš esmės tai yra reikšmės į skaičius konverteris. Įterpimų modelis nėra "protingas" kaip pokalbių modelis; jis negali vykdyti nurodymų, mąstyti ar atsakyti į klausimus. Jis sugeba tik suvesti tekstą į matematinę erdvę, kur panašios reikšmės atsiduria arti – "mašina" šalia "automobilio", "grąžinimo politika" šalia "grąžink mano pinigus". Įsivaizduokite pokalbių modelį kaip žmogų, su kuriuo galite kalbėtis; o įterpimų modelis yra labai gerai veikianti dokumentų sistema.
 
-<img src="../../../translated_images/lt/embedding-model-concept.90760790c336a705.webp" alt="Įterpimų modelio koncepcija" width="800"/>
+<img src="../../../translated_images/lt/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
 
-*Ši diagrama parodo, kaip įterpimų modelis paverčia tekstą į skaitmeninius vektorius, išdėstydamas panašias reikšmes – pvz., „automobilis“ ir „automobilis“ – arti viena kitos vektorinėje erdvėje.*
+*Ši diagrama rodo, kaip įterpimų modelis paverčia tekstą į skaitmeninius vektorius, išdėstydamas panašias reikšmes – pvz., "mašina" ir "automobilis" – arti viena kitos vektorinėje erdvėje.*
 
 ```java
 @Bean
@@ -147,30 +149,30 @@ public EmbeddingModel embeddingModel() {
 EmbeddingStore<TextSegment> embeddingStore = 
     new InMemoryEmbeddingStore<>();
 ```
-  
-Klasės diagrama žemiau rodo du atskirus srautus RAG procese ir LangChain4j klases, kurios juos įgyvendina. **Duomenų suvartojimo srautas** (vykdomas vieną kartą įkėlimo metu) suskaido dokumentą, sukuria įterpimus fragmentams ir saugo juos per `.addAll()`. **Užklausų srautas** (vykdomas kiekvieną kartą, kai užduodamas klausimas) įterpia klausimą, ieško saugykloje per `.search()` ir perduoda surinktą kontekstą pokalbių modeliui. Abu srautai susijungia per bendrą `EmbeddingStore<TextSegment>` sąsają:
 
-<img src="../../../translated_images/lt/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG klasės" width="800"/>
+Žemiau pateiktas klasių diagrama rodo du atskirus srautus RAG pipeline ir LangChain4j klases, kurios juos įgyvendina. **Įėjimo srautas** (vykdomas vieną kartą įkėlimo metu) dalija dokumentą, įterpia fragmentus ir saugo naudojant `.addAll()`. **Užklausos srautas** (vykdomas kiekvieną kartą, kai vartotojas užduoda klausimą) įterpia klausimą, ieško saugykloje per `.search()` ir perduoda suderintą kontekstą pokalbių modeliui. Abu srautai jungiasi bendra per `EmbeddingStore<TextSegment>` sąsają:
 
-*Ši diagrama rodo du RAG srautus – duomenų suvartojimą ir klausimą – ir jų sąsają per bendrą EmbeddingStore.*
+<img src="../../../translated_images/lt/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
 
-Įrašius įterpimus, panašus turinys natūraliai klasterizuojasi vektorinėje erdvėje. Žemiau pateikta vizualizacija rodo, kaip susijusios temos susikoncentruoja į artimus taškus, dėl ko įmanoma semantinė paieška:
+*Ši diagrama parodo du RAG proceso srautus – įėjimą ir užklausą – ir kaip jie jungiasi per bendrą EmbeddingStore.*
 
-<img src="../../../translated_images/lt/vector-embeddings.2ef7bdddac79a327.webp" alt="Vektorinė įterpimų erdvė" width="800"/>
+Kai įterpiniai yra saugomi, panašus turinys natūraliai klasterizuojasi vektorinėje erdvėje. Žemiau pateikta vizualizacija rodo, kaip susiję dokumentai tampa gretimi taškai, kas ir daro semantinę paiešką įmanomą:
 
-*Ši vizualizacija rodo, kaip susiję dokumentai klasterizuojasi 3D vektorinėje erdvėje, su temomis kaip Techninės dokumentacijos, Verslo taisyklės ir DUK formuojančiomis atskirus grupes.*
+<img src="../../../translated_images/lt/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
 
-Kai vartotojas ieško, sistema vykdo keturis žingsnius: vieną kartą įterpia dokumentus, kiekvieną kartą įterpia užklausą, palygina užklausos vektorių su visais saugomais vektoriais kosinuso panašumo metodu ir pateikia viršutinius K aukščiausius įvertintus fragmentus. Žemiau pateikta diagrama aiškina kiekvieną žingsnį ir LangChain4j klases:
+*Ši vizualizacija parodo, kaip susiję dokumentai klasterizuojasi 3D vektorinėje erdvėje, kur temos kaip Techniniai dokumentai, Verslo taisyklės ir DUK sudaro atskirus grupavimus.*
 
-<img src="../../../translated_images/lt/embedding-search-steps.f54c907b3c5b4332.webp" alt="Įterpimų paieškos žingsniai" width="800"/>
+Kai vartotojas ieško, sistema vykdo keturis žingsnius: vieną kartą sukurs įterpinius dokumentams, kiekvienai paieškai sukurs užklausos įterpinį, palygins užklausos vektorių su visais saugomais vektoriais panaudodama kosinuso panašumą ir grąžins aukščiausiai įvertintus fragmentus. Žemiau pateikta diagrama apibūdina kiekvieną žingsnį ir LangChain4j klases, dalyvaujančias procese:
 
-*Ši diagrama iliustruoja keturių žingsnių įterpimų paieškos procesą: įterpti dokumentus, įterpti užklausą, palyginti vektorius kosinuso panašumo būdu ir pateikti geriausius rezultatus.*
+<img src="../../../translated_images/lt/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding Search Steps" width="800"/>
+
+*Ši diagrama rodo keturių žingsnių įterpinių paieškos procesą: įterpti dokumentus, įterpti užklausą, palyginti vektorius kosinuso panašumu ir grąžinti geriausius rezultatus.*
 
 ### Semantinė paieška
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Kai užduodate klausimą, jūsų klausimas taip pat virsta įterpimu. Sistema palygina jūsų klausimo įterpimą su visų dokumentų fragmentų įterpimais. Ji randa fragmentus, turinčius panašiausią reikšmę – ne tik atitinkančius raktažodžius, bet ir konceptualią semantinę panašumą.
+Kai užduodate klausimą, jūsų klausimas taip pat paverčiamas įterpiniu. Sistema palygina jūsų klausimo įterpinį su visų dokumentų fragmentų įterpiniais. Ji randa fragmentus, kurių reikšmė yra panaši – ne tik atitikmenis pagal raktinius žodžius, bet ir faktinę semantinę prasmę.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
@@ -189,28 +191,28 @@ for (EmbeddingMatch<TextSegment> match : matches) {
     double score = match.score();
 }
 ```
-  
-Žemiau pateikta diagrama lygina semantinę paiešką su tradicine raktažodžių paieška. Raktažodžių paieška pagal „transporto priemonė“ praleidžia fragmentą apie „automobilius ir sunkvežimius“, bet semantinė paieška supranta, kad tai tas pats ir pateikia jį kaip aukštai įvertintą atitikmenį:
 
-<img src="../../../translated_images/lt/semantic-search.6b790f21c86b849d.webp" alt="Semantinė paieška" width="800"/>
+Žemiau pateikta diagrama lygina semantinę paiešką su tradicine raktinių žodžių paieška. Raktinių žodžių paieška „transporto priemonė“ praleidžia fragmentą apie „automobilius ir sunkvežimius“, tačiau semantinė paieška supranta, kad tai tas pats ir grąžina jį kaip aukštai įvertintą atitikmenį:
 
-*Ši diagrama lygina raktažodžių pagrindu veikiančią paiešką su semantine, parodant, kaip semantinė paieška surenka konceptualiai susijusį turinį, net jei tikslūs raktažodžiai nesutampa.*
+<img src="../../../translated_images/lt/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
-Sistemos viduje panašumas matuojamas kosinuso panašumo metodu – tarsi klausiama „ar šie du rodyklės rodo ta pačia kryptimi?“ Du fragmentai gali naudoti visiškai skirtingus žodžius, bet jei jų reikšmė ta pati, jų vektoriai nukreipti ta kryptimi ir įvertinimas yra arti 1.0:
+*Ši diagrama lygina raktinių žodžių paiešką su semantine paieška, parodant, kaip semantinė paieška atrenka konceptualiai susijusį turinį net jei tikslių raktinių žodžių nėra.*
 
-<img src="../../../translated_images/lt/cosine-similarity.9baeaf3fc3336abb.webp" alt="Kosinuso panašumas" width="800"/>
+Po gaubtu panašumas matuojamas kosinuso panašumu – iš esmės klausiama „ar šie du rodyklės rodo ta pačia kryptimi?“ Du fragmentai gali turėti visiškai skirtingus žodžius, bet jei jų reikšmė ta pati, jų vektoriai rodo ta kryptimi ir įvertinimas yra arti 1.0:
 
-*Ši diagrama iliustruoja kosinuso panašumą kaip kampą tarp įterpimo vektorių – kuo vektoriai labiau suderinti, tuo jų balas arčiau 1.0, reiškiantis didesnį semantinį panašumą.*
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) ir užduokite:
-> - "Kaip veikia panašumo paieška su imbeddingais ir kas lemia balą?"
+<img src="../../../translated_images/lt/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
+*Ši diagrama iliustruoja kosinuso panašumą kaip įstatytų vektorių kampą — labiau sulygiuoti vektoriai gauna balą arčiau 1,0, kas reiškia didesnį semantinį panašumą.*
+
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbiu:** Atidarykite [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) ir paklauskite:
+> - "Kaip veikia panašumo paieška naudojant įstatytus vektorius ir kas lemia balą?"
 > - "Kokį panašumo slenkstį turėčiau naudoti ir kaip tai veikia rezultatus?"
-> - "Kaip elgtis, kai nerandami atitinkami dokumentai?"
+> - "Kaip elgtis, kai nerandama jokių susijusių dokumentų?"
 
 ### Atsakymo generavimas
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Patys aktualiausi tekstų gabalai sujungiami į struktūruotą užklausą, kuri apima aiškias instrukcijas, surinktą kontekstą ir vartotojo klausimą. Modelis skaito tuos konkrečius gabalus ir atsako remdamasis ta informacija – jis gali naudoti tik tai, kas jam pateikta, taip išvengiant klajonių informacijos srityje.
+Labiausiai aktualūs fragmentai surenkami į struktūruotą užklausą, į kurią įtraukiamos aiškios instrukcijos, gautas kontekstas ir vartotojo klausimas. Modelis skaito tuos konkrečius fragmentus ir atsako remdamasis ta informacija — jis gali naudoti tik tai, kas yra priešais, taip išvengiant išgalvojimų.
 
 ```java
 String context = matches.stream()
@@ -231,17 +233,17 @@ String prompt = String.format("""
 String answer = chatModel.chat(prompt);
 ```
 
-Žemiau pateiktame diagramoje parodyta, kaip vyksta šis sujungimas – aukščiausiai įvertinti gabalai iš paieškos etapo įterpiami į užklausos šabloną, o `OpenAiOfficialChatModel` generuoja tvirtai pagrįstą atsakymą:
+Žemiau pateikta diagrama rodo šį surinkimo procesą — aukščiausiai įvertinti fragmentai iš paieškos žingsnio įterpiami į užklausos šabloną, o `OpenAiOfficialChatModel` generuoja pagrįstą atsakymą:
 
-<img src="../../../translated_images/lt/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
+<img src="../../../translated_images/lt/context-assembly.7e6dd60c31f95978.webp" alt="Konteksto surinkimas" width="800"/>
 
-*Ši diagrama parodo, kaip aukščiausiai įvertinti tekstų gabalai sujungiami į struktūruotą užklausą, leidžiančią modeliui generuoti pagrįstą atsakymą iš jūsų duomenų.*
+*Ši diagrama rodo, kaip aukščiausiai įvertinti fragmentai surenkami į struktūruotą užklausą, leidžiančią modeliui generuoti pagrįstą atsakymą iš jūsų duomenų.*
 
 ## Programos paleidimas
 
 **Patikrinkite diegimą:**
 
-Įsitikinkite, kad pagrindiniame kataloge yra `.env` failas su Azure kredencialais (sukurtas 1 Modulyje):
+Įsitikinkite, kad šakniniame kataloge yra `.env` failas su Azure kredencialais (sukurtas Module 01 metu):
 
 **Bash:**
 ```bash
@@ -253,39 +255,39 @@ cat ../.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 Get-Content ..\.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Paleiskite programą:**
+**Pradėkite programą:**
 
-> **Pastaba:** Jei jau paleidote visas programas naudodami `./start-all.sh` iš 1 Modulio, šis modulis jau veikia 8081 porte. Galite praleisti žemiau pateiktas paleidimo komandas ir tiesiog nueiti į http://localhost:8081.
+> **Pastaba:** Jei jau paleidote visas programas naudojant `./start-all.sh` iš Module 01, šis modulis jau veikia prievade 8081. Galite praleisti žemiau pateiktas paleidimo komandas ir tiesiogiai nueiti į http://localhost:8081.
 
-**1 variantas: Naudojant Spring Boot Dashboard (rekomenduojama VS Code naudotojams)**
+**1 variantas: Naudojant Spring Boot Dashboard (Rekomenduojama VS Code vartotojams)**
 
-Dev konteineryje yra Spring Boot Dashboard plėtinys, suteikiantis vizualią sąsają valdyti visas Spring Boot programas. Jį rasite veiklos juostoje kairėje VS Code pusėje (ieškokite Spring Boot ikonos).
+Dev konteineryje yra Spring Boot Dashboard plėtinys, suteikiantis vizualią sąsają valdyti visas Spring Boot programas. Jį rasite Activity Bar kairėje VS Code pusėje (ieškokite Spring Boot piktogramos).
 
-Naudodamiesi Spring Boot Dashboard galite:
-- Matyti visas prieinamas Spring Boot programas darbo aplinkoje
-- Vienu spustelėjimu paleisti/stabdyti programas
-- Realiniu laiku peržiūrėti programų žurnalus
+Iš Spring Boot Dashboard galite:
+- Matyti visas darbo erdvėje esančias Spring Boot programas
+- Vienu paspaudimu paleisti/stabdyti programas
+- Realio laiko režimu peržiūrėti programų žurnalus
 - Stebėti programų būseną
 
-Tiesiog spustelėkite žaidimo mygtuką šalia „rag“ ir paleiskite šį modulį arba paleiskite visus modulius iš karto.
+Paprasčiausiai spustelėkite paleidimo mygtuką šalia „rag“ modulio, kad jį paleistumėte, arba paleiskite visus modulius iš karto.
 
 <img src="../../../translated_images/lt/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Ši ekrano nuotrauka rodo Spring Boot Dashboard VS Code, kur galite vizualiai paleisti, stabdyti ir stebėti programas.*
+*Šis ekrano vaizdas rodo Spring Boot Dashboard VS Code, kur galite paleisti, sustabdyti ir stebėti programas vizualiai.*
 
-**2 variantas: Naudojant shell scenarijus**
+**2 variantas: Naudojant shell skriptus**
 
-Paleiskite visas interneto programas (1–4 moduliai):
+Paleiskite visas žiniatinklio programas (01-04 moduliai):
 
 **Bash:**
 ```bash
-cd ..  # Iš šaknininio katalogo
+cd ..  # Iš šakninių katalogų
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Iš šaknininio katalogo
+cd ..  # Iš šakninio katalogo
 .\start-all.ps1
 ```
 
@@ -303,9 +305,9 @@ cd 03-rag
 .\start.ps1
 ```
 
-Abu scenarijai automatiškai užkrauna aplinkos kintamuosius iš pagrindinio `.env` failo ir sukurs JAR failus, jei jų nėra.
+Abu skriptai automatiškai įkelia aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo ir sukurs JAR failus, jei jų nėra.
 
-> **Pastaba:** Jei norite rankiniu būdu sukurti visus modulius prieš paleidimą:
+> **Pastaba:** Jei norite prieš paleisdami rankiniu būdu sukompiliuoti visus modulius:
 >
 > **Bash:**
 > ```bash
@@ -319,20 +321,20 @@ Abu scenarijai automatiškai užkrauna aplinkos kintamuosius iš pagrindinio `.e
 > mvn clean package -DskipTests
 > ```
 
-Atidarykite naršyklėje http://localhost:8081.
+Naršyklėje atidarykite http://localhost:8081.
 
-**Norint sustabdyti:**
+**Norėdami sustabdyti:**
 
 **Bash:**
 ```bash
 ./stop.sh  # Tik šis modulis
 # Arba
-cd .. && ./stop-all.sh  # Visi moduliai
+cd .. && ./stop-all.sh  # Visos moduliai
 ```
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Tik šis modulis
+.\stop.ps1  # Šis modulis tik
 # Arba
 cd ..; .\stop-all.ps1  # Visi moduliai
 ```
@@ -341,91 +343,91 @@ cd ..; .\stop-all.ps1  # Visi moduliai
 
 Programa suteikia žiniatinklio sąsają dokumentų įkėlimui ir klausimų uždavimui.
 
-<a href="images/rag-homepage.png"><img src="../../../translated_images/lt/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-homepage.png"><img src="../../../translated_images/lt/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG programos sąsaja" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Ši ekrano nuotrauka rodo RAG programos sąsają, kur galite įkelti dokumentus ir užduoti klausimus.*
+*Šis ekrano vaizdas rodo RAG programos sąsają, kur galite įkelti dokumentus ir užduoti klausimus.*
 
 ### Įkelkite dokumentą
 
-Pradėkite nuo dokumento įkėlimo – geriausiai testavimui tinka TXT failai. Šiame kataloge yra pateiktas `sample-document.txt`, kuriame rasite informaciją apie LangChain4j funkcijas, RAG įgyvendinimą ir geriausias praktikas – puikiai tinkantis sistemai išbandyti.
+Pradėkite nuo dokumento įkėlimo — TXT failai geriausiai tinkami testavimui. Šiame kataloge yra `sample-document.txt`, kuriame pateikta informacija apie LangChain4j funkcijas, RAG įgyvendinimą ir geriausias praktikas — puikiai tinka sistemos bandymams.
 
-Sistema apdoroja jūsų dokumentą, suskaido jį į gabalus ir sukuria embeddingus kiekvienam gabalui. Tai vyksta automatiškai įkėlimo metu.
+Sistema apdoroja jūsų dokumentą, suskaido jį į fragmentus ir sukuria įstatytus vektorius kiekvienam fragmentui. Tai vyksta automatiškai, kai įkeliate.
 
 ### Užduokite klausimus
 
-Dabar užduokite specifinius klausimus apie dokumento turinį. Bandykite kažką faktinio, kas aiškiai yra pateikta dokumente. Sistema ieško aktualių gabalų, įtraukia juos į užklausą ir generuoja atsakymą.
+Dabar užduokite konkrečius klausimus apie dokumentą. Išbandykite faktinius klausimus, aiškiai nurodytus dokumente. Sistema ieško atitinkančių fragmentų, įtraukia juos į užklausą ir generuoja atsakymą.
 
 ### Patikrinkite šaltinių nuorodas
 
-Atkreipkite dėmesį, kad kiekvienas atsakymas turi šaltinių nuorodas su panašumo balais. Šie balai (nuo 0 iki 1) parodo, kaip labai kiekvienas gabalas buvo susijęs su jūsų klausimu. Aukštesni balai reiškia geresnius atitikmenis. Tai leidžia jums patikrinti atsakymą prieš pradinius duomenis.
+Atkreipkite dėmesį, kad kiekvienas atsakymas turi šaltinių nuorodas su panašumo balais. Šie balai (nuo 0 iki 1) rodo, kiek kiekvienas fragmentas buvo svarbus jūsų klausimui. Aukštesni balai reiškia geresnį atitikimą. Tai leidžia jums patvirtinti atsakymą pagal šaltinį.
 
-<a href="images/rag-query-results.png"><img src="../../../translated_images/lt/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-query-results.png"><img src="../../../translated_images/lt/rag-query-results.6d69fcec5397f355.webp" alt="RAG užklausos rezultatai" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Ši ekrano nuotrauka rodo užklausos rezultatus su sugeneruotu atsakymu, šaltinių nuorodomis ir aktualumo balais kiekvienam surastam gabalui.*
+*Šiame ekrano vaizde matyti užklausos rezultatai su sugeneruotu atsakymu, šaltinių nuorodomis ir panašumo balais kiekvienam rastam fragmentui.*
 
 ### Eksperimentuokite su klausimais
 
-Išbandykite skirtingų tipų klausimus:
-- Specifiniai faktai: „Kokia pagrindinė tema?“
+Išbandykite įvairius klausimų tipus:
+- Konkretūs faktai: „Kokia pagrindinė tema?“
 - Palyginimai: „Kuo skiriasi X ir Y?“
-- Santraukos: „Apibendrinkite svarbiausius taškus apie Z“
+- Santraukos: „Apibendrinkite svarbiausias Z dalis“
 
-Stebėkite, kaip keičiasi aktualumo balai, priklausomai nuo to, kaip gerai jūsų klausimas atitinka dokumentų turinį.
+Stebėkite, kaip panašumo balai keičiasi priklausomai nuo to, kaip gerai jūsų klausimas atitinka dokumentų turinį.
 
 ## Pagrindinės sąvokos
 
-### Gabalų skaidymo strategija
+### Fragmentavimo strategija
 
-Dokumentai suskaidomi į 300 ženklų gabalus su 30 ženklų persidengimu. Toks balansas užtikrina, kad kiekvienas gabalas turi pakankamai konteksto, kad būtų prasmingas, tuo pačiu išlaikant gabalus pakankamai mažus, kad jų būtų galima įtraukti daugiau užklausoje.
+Dokumentai skaidomi į 300 simbolių fragmentus su 30 simbolių persidengimu. Šis balansas užtikrina, kad kiekvienas fragmentas turėtų pakankamai konteksto, kad būtų prasmingas, tačiau būtų pakankamai mažas, kad būtų galima įtraukti kelis fragmentus į užklausą.
 
 ### Panašumo balai
 
-Kiekvienas rastas gabalas turi panašumo balą nuo 0 iki 1, kuris rodo, kaip tiksliai jis atitinka vartotojo klausimą. Žemiau pateikta diagrama vizualizuoja balų intervalus ir kaip sistema juos naudoja rezultatų filtravimui:
+Kiekvienas rastas fragmentas turi panašumo balą nuo 0 iki 1, kuris rodo, kiek gerai jis atitiko vartotojo klausimą. Žemiau pateikta diagrama vizualizuoja balų ribas ir kaip sistema jas naudoja filtruojant rezultatus:
 
-<img src="../../../translated_images/lt/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
+<img src="../../../translated_images/lt/similarity-scores.b0716aa911abf7f0.webp" alt="Panašumo balai" width="800"/>
 
-*Ši diagrama rodo balų intervalus nuo 0 iki 1, su minimaliu slenksčiu 0,5, kuris filtruoją nereikšmingus gabalus.*
+*Ši diagrama rodo balų intervalus nuo 0 iki 1, su minimaliu slenksčiu 0,5, kuris atfiltruoja nereikšmingus fragmentus.*
 
-Balai svyruoja nuo 0 iki 1:
-- 0,7-1,0: Labai aktualu, tiksli atitiktis
-- 0,5-0,7: Aktualu, geras kontekstas
-- Žemiau 0,5: Filtruojama, per daug skirtinga
+Balų intervalas nuo 0 iki 1:
+- 0,7–1,0: Labai aktualūs, tikslus atitikimas
+- 0,5–0,7: Aktualūs, geras kontekstas
+- Žemiau 0,5: Atfiltruota, pernelyg skirtingi
 
-Sistema grąžina tik gabalus virš minimalaus slenksčio, kad užtikrintų kokybę.
+Sistema pateikia tik fragmentus, kurie atitinka minimalią ribą, siekdama užtikrinti kokybę.
 
-Embeddingai gerai veikia, kai reikšmės aiškiai suskirstytos į klasterius, tačiau turi neaiškių vietų. Žemiau pateikta diagrama parodo dažniausias nesėkmių situacijas – per dideli gabalai sukuria miglotus vektorius, per maži gabalai neturi konteksto, neaiškūs terminai rodo į kelis klasterius, o tikslūs atitikimai (ID, dalių numeriai) visiškai neveikia su embeddingais:
+Įstatyti vektoriai gerai veikia, kai prasmės klasteriai yra aiškūs, tačiau turi spragas. Žemiau pateikta diagrama rodo dažniausias klaidų formas — pernelyg dideli fragmentai sukuria neryškius vektorius, per maži fragmentai neturi konteksto, dviprasmiai terminai nukreipia į kelis klasterius, o tikslaus atitikimo paieškos (ID, dalies numeriai) visiškai neveikia su įstatytais vektoriais:
 
-<img src="../../../translated_images/lt/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
+<img src="../../../translated_images/lt/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Įstatytų vektorių klaidų formos" width="800"/>
 
-*Ši diagrama rodo dažniausias embeddingų nesėkmių rūšis: per dideli gabalai, per maži gabalai, neaiškūs terminai, kurie rodo kelis klasterius, ir tikslių atitikimų ieškojimai, pvz., pagal ID.*
+*Ši diagrama rodo dažniausias įstatytų vektorių klaidų formas: pernelyg didelius fragmentus, pernelyg mažus fragmentus, dviprasmius terminus rodančius į kelis klasterius ir tikslaus atitikimo paieškas, tokias kaip ID.*
 
 ### Atminties saugykla
 
-Šis modulis naudoja atminties saugyklą paprastumui. Kai perkraunate programą, įkelti dokumentai prarandami. Gamybinėse sistemose naudojamos pastovios vektorinės duomenų bazės, tokios kaip Qdrant ar Azure AI Search.
+Šis modulis naudoja atminties saugyklą paprastumui. Kai perkraunate programą, įkelti dokumentai prarandami. Produkcijos sistemos naudoja pastovias vektorių duomenų bazes, tokias kaip Qdrant arba Azure AI Search.
 
 ### Konteksto lango valdymas
 
-Kiekvienas modelis turi maksimalų konteksto langą. Negalite įtraukti kiekvieno gabalo iš didelio dokumento. Sistema paima top N (pagal nutylėjimą 5) aktualiausių gabalų, kad tilptų į apribojimus ir suteiktų pakankamai konteksto tiksliems atsakymams.
+Kiekvienas modelis turi maksimalų konteksto langą. Negalite įtraukti visų fragmentų iš didelio dokumento. Sistema parenka top N aktualiausių fragmentų (pagal nutylėjimą 5), kad liktų ribose, tuo pačiu suteikdama pakankamai konteksto tiksliems atsakymams.
 
 ## Kada svarbus RAG
 
-RAG nėra visada tinkamas sprendimas. Žemiau pateiktas sprendimų gidas padeda nuspręsti, kada RAG prideda vertės, o kada paprastesni metodai – kaip turinio įtraukimas tiesiogiai į užklausą arba modelio integruotos žinios – yra pakankami:
+RAG ne visada yra tinkamas sprendimas. Žemiau pateikta sprendimų schema padeda nuspręsti, kada RAG prideda vertės, o kada paprastesni metodai — pavyzdžiui, tiesiog įtraukti turinį į užklausą arba pasikliauti modelio įgimtomis žiniomis — yra pakankami:
 
-<img src="../../../translated_images/lt/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
+<img src="../../../translated_images/lt/when-to-use-rag.1016223f6fea26bc.webp" alt="Kada naudoti RAG" width="800"/>
 
-*Ši diagrama rodo sprendimų gidą, kada verta naudoti RAG, o kada užtenka paprastesnių metodų.*
+*Ši diagrama rodo sprendimų vadovą, kada RAG prideda vertės, o kada pakanka paprastesnių metodų.*
 
 **Naudokite RAG, kai:**
-- Atsakote į klausimus apie konfidencialius dokumentus
+- Atsakote į klausimus apie saugomus dokumentus
 - Informacija dažnai keičiasi (politikos, kainos, specifikacijos)
-- Reikalingas tikslumas su šaltinių pateikimu
-- Turinys per didelis, kad tilptų į vieną užklausą
-- Reikia patikimų ir patvirtinamų atsakymų
+- Tikslumui reikia šaltinio nurodymo
+- Turinys per didelis įtraukti į vieną užklausą
+- Reikia patikimų, pagrįstų atsakymų
 
 **Nenaudokite RAG, kai:**
-- Klausimai reikalauja bendrųjų žinių, kurias modelis jau turi
+- Klausimai reikalauja bendrojo modelio žinių
 - Reikia realaus laiko duomenų (RAG veikia su įkeltais dokumentais)
-- Turinys pakankamai mažas, kad būtų galima įtraukti tiesiogiai į užklausas
+- Turinys pakankamai mažas, kad jį būtų galima tiesiogiai įtraukti į užklausas
 
 ## Tolimesni žingsniai
 
@@ -438,6 +440,6 @@ RAG nėra visada tinkamas sprendimas. Žemiau pateiktas sprendimų gidas padeda 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Atsakomybės atsisakymas**:
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatiniai vertimai gali turėti klaidų arba netikslumų. Originalus dokumentas gimtąja kalba turėtų būti laikomas autoritetingu šaltiniu. Esant svarbiai informacijai, rekomenduojamas profesionalus žmogaus vertimas. Mes neprisiimame atsakomybės už bet kokius nesusipratimus ar neteisingus interpretavimus, atsiradusius dėl šio vertimo naudojimo.
+**Atsakomybės apribojimas**:
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, prašome atkreipti dėmesį, kad automatizuoti vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas gimtąja kalba turėtų būti laikomas autoritetingu šaltiniu. Svarbiai informacijai rekomenduojamas profesionalus vertimas žmogaus. Mes neatsakome už jokius nesusipratimus ar neteisingas interpretacijas, kilusias naudojant šį vertimą.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

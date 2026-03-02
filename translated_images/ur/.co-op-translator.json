@@ -23,10 +23,10 @@
     "source_file": "00-quick-start/images/architecture.png",
     "language_code": "ur"
   },
-  "autonomous-streaming.9bf371904543fdc0.webp": {
+  "autonomous-streaming.97449e0afd3eba0b.webp": {
     "original_hash": "03c7b1ba574efd177a8eac96b7e81c0b",
-    "translation_date": "2026-02-18T14:54:55+00:00",
-    "source_file": "autonomous-streaming.png",
+    "translation_date": "2026-02-28T18:55:05+00:00",
+    "source_file": "02-prompt-engineering/images/autonomous-streaming.png",
     "language_code": "ur"
   },
   "chain-of-thought.5cff6630e2657e2a.webp": {
@@ -101,6 +101,12 @@
     "source_file": "02-prompt-engineering/images/dashboard-home.png",
     "language_code": "ur"
   },
+  "dashboard-showcase.3126afab3a886e19.webp": {
+    "original_hash": "9f6fc3c139b4fbcc5c8f9bd7b9567cf5",
+    "translation_date": "2026-02-28T18:53:23+00:00",
+    "source_file": "02-prompt-engineering/images/dashboard-showcase.png",
+    "language_code": "ur"
+  },
   "dashboard.69c7479aef09ff6b.webp": {
     "original_hash": "121c4b1dd4b6676525a4d11e990354fe",
     "translation_date": "2026-01-16T08:34:07+00:00",
@@ -111,12 +117,6 @@
     "original_hash": "758903d14d189faa0e57ccb9b0ab526e",
     "translation_date": "2026-01-16T08:40:34+00:00",
     "source_file": "04-tools/images/dashboard.png",
-    "language_code": "ur"
-  },
-  "dashboard.c6474fc734029222.webp": {
-    "original_hash": "9f6fc3c139b4fbcc5c8f9bd7b9567cf5",
-    "translation_date": "2026-02-18T14:56:07+00:00",
-    "source_file": "dashboard.png",
     "language_code": "ur"
   },
   "dashboard.da2c2130c904aaf0.webp": {
@@ -197,10 +197,10 @@
     "source_file": "02-prompt-engineering/images/five-patterns-overview.png",
     "language_code": "ur"
   },
-  "focused-streaming.e2f807057f39ae68.webp": {
+  "focused-streaming.87db30d52346279c.webp": {
     "original_hash": "b8528ddb13ed566fe336f8e0563164f5",
-    "translation_date": "2026-02-18T14:55:50+00:00",
-    "source_file": "focused-streaming.png",
+    "translation_date": "2026-02-28T18:55:52+00:00",
+    "source_file": "02-prompt-engineering/images/focused-streaming.png",
     "language_code": "ur"
   },
   "high-eagerness-demo.4ac93e7786c5a376.webp": {

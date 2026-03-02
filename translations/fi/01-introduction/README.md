@@ -1,81 +1,83 @@
-# Moduuli 01: Aloittaminen LangChain4j:n kanssa
+# Moduuli 01: LangChain4j:llä Aloittaminen
 
 ## Sisällysluettelo
 
-- [Videoesittely](../../../01-introduction)
-- [Mitä opit](../../../01-introduction)
-- [Esivaatimukset](../../../01-introduction)
-- [Ymmärrä ydinkysymys](../../../01-introduction)
-- [Ymmärrä tokenit](../../../01-introduction)
-- [Miten muisti toimii](../../../01-introduction)
-- [Miten tämä käyttää LangChain4j:ä](../../../01-introduction)
-- [Ota Azure OpenAI -infrastruktuuri käyttöön](../../../01-introduction)
-- [Suorita sovellus paikallisesti](../../../01-introduction)
-- [Sovelluksen käyttäminen](../../../01-introduction)
-  - [Tilaton keskustelu (vasen paneeli)](../../../01-introduction)
-  - [Tila säilyvä keskustelu (oikea paneeli)](../../../01-introduction)
-- [Seuraavat askeleet](../../../01-introduction)
+- [Videokävely](../../../01-introduction)
+- [Mitä Opit](../../../01-introduction)
+- [Edellytykset](../../../01-introduction)
+- [Ymmärtäen Keskeinen Ongelma](../../../01-introduction)
+- [Ymmärtäen Tokenit](../../../01-introduction)
+- [Miten Muisti Toimii](../../../01-introduction)
+- [Miten Tämä Käyttää LangChain4j:ää](../../../01-introduction)
+- [Azure OpenAI -infrastruktuurin Käyttöönotto](../../../01-introduction)
+- [Sovelluksen Suorittaminen Paikallisesti](../../../01-introduction)
+- [Sovelluksen Käyttö](../../../01-introduction)
+  - [Tilaton Keskustelu (Vasen Paneeli)](../../../01-introduction)
+  - [Tilallinen Keskustelu (Oikea Paneeli)](../../../01-introduction)
+- [Seuraavat Askeleet](../../../01-introduction)
 
-## Videoesittely
+## Videokävely
 
-Katso tämä live-istunto, joka selittää, miten pääset alkuun tämän moduulin kanssa: [Getting Started with LangChain4j - Live Session](https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9)
+Katso tämä live-sessio, joka selittää, miten aloitat tämän moduulin kanssa:
 
-## Mitä opit
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="LangChain4j:llä Aloittaminen - Live-sessio" width="800"/></a>
 
-Jos suoritat pikakäynnistyksen, näet kuinka lähettää pyyntöjä ja saada vastauksia. Se on perusta, mutta todelliset sovellukset tarvitsevat enemmän. Tässä moduulissa opit rakentamaan keskustelevaa tekoälyä, joka muistaa kontekstin ja ylläpitää tilaa – ero kertaluonteisen demon ja tuotantovalmiin sovelluksen välillä.
+## Mitä Opit
 
-Käytämme tässä oppaassa Azure OpenAI:n GPT-5.2:ta, koska sen kehittyneet päättelyominaisuudet tekevät eri mallikuvioiden käytöksen selkeämmäksi. Kun lisäät muistin, huomaat eron selvästi. Tämä helpottaa ymmärtämään, mitä kukin komponentti tuo sovellukseesi.
+Jos suoritat pika-alun, näit, miten lähettää kehotteita ja saada vastauksia. Se on perusta, mutta todelliset sovellukset tarvitsevat enemmän. Tämä moduuli opettaa sinut rakentamaan keskustelullisen tekoälyn, joka muistaa kontekstin ja ylläpitää tilaa – ero kertaluonteisen demon ja tuotantovalmiin sovelluksen välillä.
 
-Rakennat yhden sovelluksen, joka havainnollistaa molempia kuvioita:
+Käytämme tässä oppaassa Azure OpenAI:n GPT-5.2:ta koko ajan, koska sen edistyneet päättelykyvyt tekevät erilaisten kaavojen käyttäytymisen selvemmäksi. Kun lisäät muistin, näet eron selvästi. Tämä helpottaa ymmärtämään, mitä kukin komponentti tuo sovellukseesi.
 
-**Tilaton keskustelu** – Jokainen pyyntö on itsenäinen. Malli ei muista aiempia viestejä. Tämä on se kuvio, jota käytit pikakäynnistyksessä.
+Rakennat yhden sovelluksen, joka demonstroi molempia kaavoja:
 
-**Tila säilyvä keskustelu** – Jokainen pyyntö sisältää keskusteluhistorian. Malli ylläpitää kontekstia useiden vuorojen ajan. Tämä on, mitä tuotantosovellukset vaativat.
+**Tilaton Keskustelu** – Jokainen pyyntö on riippumaton. Mallilla ei ole muistia aiemmista viesteistä. Tätä kaavaa käytit pika-alussa.
 
-## Esivaatimukset
+**Tilallinen Keskustelu** – Jokainen pyyntö sisältää keskusteluhistorian. Malli ylläpitää kontekstia useiden vuorojen ajan. Tätä tuotantosovellukset vaativat.
+
+## Edellytykset
 
 - Azure-tilaus, jossa on Azure OpenAI -käyttöoikeus
 - Java 21, Maven 3.9+
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Huom:** Java, Maven, Azure CLI ja Azure Developer CLI (azd) ovat valmiiksi asennettuna mukana toimitetussa kehityssäiliössä.
+> **Huom:** Java, Maven, Azure CLI ja Azure Developer CLI (azd) ovat valmiiksi asennettuina mukana toimitetussa devcontainerissa.
 
-> **Huom:** Tämä moduuli käyttää GPT-5.2:ta Azure OpenAI:ssa. Käyttöönotto määritellään automaattisesti `azd up` -komennolla – älä muuta mallin nimeä koodissa.
+> **Huom:** Tämä moduuli käyttää GPT-5.2:ta Azure OpenAI:ssa. Käyttöönotto konfiguroidaan automaattisesti komennolla `azd up` – älä muuta mallin nimeä koodissa.
 
-## Ymmärrä ydinkysymys
+## Ymmärtäen Keskeinen Ongelma
 
-Kielimallit ovat tilattomia. Jokainen API-kutsu on riippumaton. Jos lähetät "Nimeni on John" ja sitten kysyt "Mikä nimeni on?", mallilla ei ole aavistustakaan, että juuri esittelit itsesi. Se käsittelee jokaisen pyynnön kuin se olisi ensimmäinen keskustelusi koskaan.
+Kielimallit ovat tilattomia. Jokainen API-kutsu on erillinen. Jos sanot "Nimeni on John" ja sitten kysyt "Mikä nimeni on?", mallilla ei ole mitään tietoa, että juuri esittelit itsesi. Se käsittelee jokaisen pyynnön kuin se olisi ensimmäinen keskustelu koskaan.
 
-Tämä toimii yksinkertaisissa kysymys-vastaus-tilanteissa, mutta on hyödytöntä oikeissa sovelluksissa. Asiakaspalvelubottien täytyy muistaa, mitä kerroit niille. Henkilökohtaisten avustajien täytyy ymmärtää konteksti. Mikä tahansa usean vuoron keskustelu vaatii muistia.
+Tämä toimii yksinkertaisessa kysymys-vastaus-tilanteessa, mutta on hyödytöntä oikeissa sovelluksissa. Asiakaspalvelubottien täytyy muistaa, mitä kerroit niille. Henkilökohtaisten avustajien täytyy ymmärtää kontekstia. Mikä tahansa monivuoropuhelu tarvitsee muistia.
 
-<img src="../../../translated_images/fi/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
+<img src="../../../translated_images/fi/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Tilaton vs Tilallinen Keskustelu" width="800"/>
 
-*Ero tilattomien (riippumattomat kutsut) ja tila säilyvien (kontekstia ymmärtävä) keskustelujen välillä*
+*Ero tilattoman (itsenäiset kutsut) ja tilallisen (kontekstitietoinen) keskustelun välillä*
 
-## Ymmärrä tokenit
+## Ymmärtäen Tokenit
 
-Ennen keskusteluihin siirtymistä on tärkeää ymmärtää tokenit – perusyksiköt, joita kielimallit käsittelevät:
+Ennen kuin sukellat keskusteluihin, on tärkeää ymmärtää tokenit – perusyksiköt, joita kielimallit käsittelevät tekstissä:
 
-<img src="../../../translated_images/fi/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
+<img src="../../../translated_images/fi/token-explanation.c39760d8ec650181.webp" alt="Token Selitys" width="800"/>
 
-*Esimerkki siitä, miten teksti pilkotaan tokeneiksi – "I love AI!" muuttuu 4 erilliseksi prosessointiyksiköksi*
+*Esimerkki siitä, miten teksti pilkotaan tokeneiksi – "I love AI!" muodostuu 4 eri käsittelyyksiköksi*
 
-Tokenit ovat keino, jolla tekoälymallit mittaavat ja käsittelevät tekstiä. Sanat, välimerkit ja jopa välilyönnit voivat olla tokeneita. Mallillasi on rajallinen määrä tokeneita, joita se voi käsitellä kerralla (400 000 GPT-5.2:lla, josta enintään 272 000 on syöte- ja 128 000 tulostokenia). Tokenien ymmärtäminen auttaa hallitsemaan keskustelun pituutta ja kustannuksia.
+Tokenit ovat tapa, jolla tekoälymallit mittaavat ja käsittelevät tekstiä. Sanat, välimerkit ja jopa välilyönnit voivat olla tokeneita. Mallillasi on raja, kuinka monta tokenia se voi käsitellä kerralla (GPT-5.2:ssa 400 000 tokenia, joista enintään 272 000 syöttötokenia ja 128 000 tulostokenia). Tokenien ymmärtäminen auttaa hallitsemaan keskustelun pituutta ja kustannuksia.
 
-## Miten muisti toimii
+## Miten Muisti Toimii
 
-Keskustelumuisti ratkaisee tilattomuusongelman ylläpitämällä keskusteluhistoriaa. Ennen kuin lähetät pyynnön mallille, kehys lisää mukaan oleelliset aiemmat viestit. Kun kysyt "Mikä nimeni on?", järjestelmä lähettää kokonaisen keskusteluhistorian, mikä antaa mallille tiedon, että sanoit aiemmin "Nimeni on John."
+Keskustelumuis­ti ratkaisee tilattomuuden ongelman ylläpitämällä keskusteluhistoriaa. Ennen kuin lähetät pyynnön mallille, kehys lisää mukaan relevantit aiemmat viestit. Kun kysyt "Mikä nimeni on?", järjestelmä oikeasti lähettää koko keskusteluhistorian, jolloin malli näkee, että sanoit aiemmin "Nimeni on John."
 
-LangChain4j tarjoaa muistirakenteita, jotka hoitavat tämän automaattisesti. Valitset, kuinka monta viestiä säilytetään, ja kehys hallitsee kontekstin ikkunaa.
+LangChain4j tarjoaa muistirakenteet, jotka hoitavat tämän automaattisesti. Voit valita, kuinka monta viestiä säilytät, ja kehys hallinnoi konteksti-ikkunaa.
 
-<img src="../../../translated_images/fi/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
+<img src="../../../translated_images/fi/memory-window.bbe67f597eadabb3.webp" alt="Muisti-ikkunan Käsite" width="800"/>
 
-*MessageWindowChatMemory ylläpitää liukuvaa ikkunaa viimeisimmistä viesteistä, pudottaen automaattisesti vanhat pois*
+*MessageWindowChatMemory ylläpitää liukuvaa ikkunaa uusimmista viesteistä, pudoten automaattisesti vanhat pois*
 
-## Miten tämä käyttää LangChain4j:ä
+## Miten Tämä Käyttää LangChain4j:ää
 
-Tämä moduuli laajentaa pikakäynnistystä integroimalla Spring Bootin ja lisäämällä keskustelumuistin. Näin osat sopivat yhteen:
+Tämä moduuli laajentaa pika-aloitusta integroimalla Spring Bootin ja lisäämällä keskustelumui­stin. Näin osat sopivat yhteen:
 
 **Riippuvuudet** – Lisää kaksi LangChain4j-kirjastoa:
 
@@ -90,7 +92,7 @@ Tämä moduuli laajentaa pikakäynnistystä integroimalla Spring Bootin ja lisä
 </dependency>
 ```
 
-**Keskustelumalli** – Määritä Azure OpenAI Spring beaniksi ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Keskustelumalli** – Konfiguroi Azure OpenAI Spring beanina ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -105,9 +107,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Rakentaja lukee tunnistetiedot ympäristömuuttujista, jotka `azd up` on asettanut. Asettamalla `baseUrl` osoittamaan Azure-päätteeseen saat OpenAI-asiakkaan toimimaan Azure OpenAI:n kanssa.
+Rakentaja lukee tunnistetiedot ympäristömuuttujista, jotka `azd up` asettaa. `baseUrl`-asetuksella omaan Azure-päätepisteeseen OpenAI-asiakas toimii Azuren kanssa.
 
-**Keskustelumuisti** – Seuraa keskusteluhistoriaa MessageWindowChatMemoryllä ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Keskustelumuis­ti** – Seuraa keskusteluhistoriaa MessageWindowChatMemoryllä ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -120,39 +122,39 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Luo muisti `withMaxMessages(10)`, joka pitää viimeiset 10 viestiä. Lisää käyttäjän ja tekoälyn viestit typetyillä käärimillä: `UserMessage.from(text)` ja `AiMessage.from(text)`. Hae historia `memory.messages()` ja lähetä se mallille. Palvelu tallentaa erillisiä muistiesimerkkejä keskustelu-ID:n mukaan, mahdollistaen useiden käyttäjien samanaikaisen keskustelun.
+Luo muisti `withMaxMessages(10)`-asetuksella, joka säilyttää viimeiset 10 viestiä. Lisää käyttäjän ja tekoälyn viestit tyyppisillä kääreillä: `UserMessage.from(text)` ja `AiMessage.from(text)`. Hae historia `memory.messages()` ja lähetä mallille. Palvelu tallentaa erilliset muistit kutakin keskustelu-ID:tä kohden, mahdollistaen useiden käyttäjien keskustelun yhtä aikaa.
 
-> **🤖 Kokeile [GitHub Copilot](https://github.com/features/copilot) Chatin kanssa:** Avaa [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ja kysy:
-> - "Miten MessageWindowChatMemory päättää, mitkä viestit poistetaan, kun ikkuna on täynnä?"
-> - "Voinko toteuttaa mukautetun muistivarastoinnin tietokannan avulla muistin sijaan?"
-> - "Miten lisäisin yhteenvedon puristamaan vanhaa keskusteluhistoriaa?"
+> **🤖 Kokeile [GitHub Copilotin](https://github.com/features/copilot) Chatin kanssa:** Avaa [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ja kysy:
+> - "Miten MessageWindowChatMemory päättää, mitkä viestit pudottaa, kun ikkuna on täysi?"
+> - "Voinko toteuttaa oman muistivarastoinnin tietokantaa käyttäen muistissa?"
+> - "Miten lisäisin yhteenvedon vanhan keskusteluhistorian puristamiseksi?"
 
-Tilaton chat-päätepiste ohittaa muistin kokonaan – vain `chatModel.chat(prompt)` kuten pikakäynnistyksessä. Tila säilyvä päätepiste lisää viestit muistiin, hakee historian ja sisällyttää tuon kontekstin jokaiseen pyyntöön. Sama malliasetus, eri kuviot.
+Tilaton chat-päätepiste ohittaa muistin kokonaan – vain `chatModel.chat(prompt)` kuten pika-alussa. Tilallinen päätepiste lisää viestit muistiin, hakee historian ja sisällyttää sen jokaisen pyynnön kontekstiin. Sama mallikokoonpano, eri kaavat.
 
-## Ota Azure OpenAI -infrastruktuuri käyttöön
+## Azure OpenAI -infrastruktuurin Käyttöönotto
 
 **Bash:**
 ```bash
 cd 01-introduction
-azd up  # Valitse tilaus ja sijainti (suositellaan eastus2)
+azd up  # Valitse tilaus ja sijainti (eastus2 suositeltu)
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction
-azd up  # Valitse tilaus ja sijainti (suositeltu itäinen Yhdysvallat 2)
+azd up  # Valitse tilaus ja sijainti (suositellaan eastus2)
 ```
 
-> **Huom:** Jos kohtaat aikakatkaisun virheen (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), suorita vain `azd up` uudelleen. Azure-resurssit voivat olla yhä määrittymässä taustalla, ja uudelleenyritys antaa käyttöönoton valmistua, kun resurssit saavuttavat lopullisen tilan.
+> **Huom:** Jos saat aikakatkaisun virheen (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), suorita vain `azd up` uudelleen. Azure-resurssit voivat vielä olla käyttöönotossa taustalla, ja uudelleenyrittäminen sallii käyttöönoton valmistumisen, kun resurssit ovat valmiita.
 
-Tämä:
-1. Ottaa käyttöön Azure OpenAI -resurssin GPT-5.2- ja text-embedding-3-small -malleilla
-2. Luo automaattisesti `.env`-tiedoston projektin juureen tunnistustiedoilla
+Tämä tekee:
+1. Asentaa Azure OpenAI -resurssin GPT-5.2- ja text-embedding-3-small-malleilla
+2. Luoda automaattisesti `.env`-tiedoston projektin juureen tunnistetiedoilla
 3. Määrittää kaikki tarvittavat ympäristömuuttujat
 
-**Onko käyttöönotossa ongelmia?** Katso [Infrastruktuurin README](infra/README.md) lisävianmääritystä varten, mukaan lukien aliverkkotunnusten nimikonfliktit, manuaaliset Azure Portal -asennusohjeet ja mallikonfigurointiohjeet.
+**Jos käyttöönotossa ongelmia:** Katso [Infrastructure README](infra/README.md) yksityiskohtaista vianetsintää varten, mukaan lukien aliverkkotunnuksen ristiriidat, manuaaliset Azure Portal -asennusvaiheet ja mallikonfiguraatio-ohjeet.
 
-**Varmista, että käyttöönotto onnistui:**
+**Varmista käyttöönoton onnistuminen:**
 
 **Bash:**
 ```bash
@@ -164,7 +166,7 @@ cat ../.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY jne.
 Get-Content ..\.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY jne.
 ```
 
-> **Huom:** `azd up` -komento luo `.env` -tiedoston automaattisesti. Jos tarvitset päivitystä myöhemmin, voit joko muokata `.env` -tiedostoa käsin tai luoda sen uudelleen suorittamalla:
+> **Huom:** `azd up` -komento generoi `.env`-tiedoston automaattisesti. Jos haluat päivittää sitä myöhemmin, voit joko muokata `.env`-tiedostoa manuaalisesti tai luoda sen uudelleen ajamalla:
 >
 > **Bash:**
 > ```bash
@@ -178,11 +180,11 @@ Get-Content ..\.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY jne.
 > .\.azd-env.ps1
 > ```
 
-## Suorita sovellus paikallisesti
+## Sovelluksen Suorittaminen Paikallisesti
 
 **Varmista käyttöönotto:**
 
-Varmista, että `.env`-tiedosto on olemassa juurikansiossa Azure-tunnuksilla:
+Tarkista, että `.env`-tiedosto on juurihakemistossa Azure-tunnistetiedoilla:
 
 **Bash:**
 ```bash
@@ -196,23 +198,23 @@ Get-Content ..\.env  # Tulisi näyttää AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYM
 
 **Käynnistä sovellukset:**
 
-**Vaihtoehto 1: Spring Boot Dashboardin käyttäminen (Suositellaan VS Code -käyttäjille)**
+**Vaihtoehto 1: Spring Boot Dashboardin käyttäminen (suositeltu VS Code -käyttäjille)**
 
-Kehityssäiliössä on mukana Spring Boot Dashboard -laajennus, joka tarjoaa visuaalisen käyttöliittymän kaikkien Spring Boot -sovellusten hallintaan. Löydät sen VS Code:n vasemman laidan Activity Barista (etsi Spring Boot -kuvake).
+Dev container sisältää Spring Boot Dashboard -laajennuksen, joka tarjoaa visuaalisen käyttöliittymän kaikkien Spring Boot -sovellusten hallintaan. Löydät sen VS Coden vasemman laidan Activity Barista (etsi Spring Boot -ikonia).
 
 Spring Boot Dashboardista voit:
 - Näyttää kaikki työtilassa olevat Spring Boot -sovellukset
 - Käynnistää/pysäyttää sovelluksia yhdellä napsautuksella
-- Katsoa sovelluksen lokit reaaliajassa
-- Valvoa sovelluksen tilaa
+- Katsoa sovelluslokeja reaaliaikaisesti
+- Valvoa sovellusten tilaa
 
-Klikkaa pelipainiketta "introduction" käynnistääksesi tämän moduulin tai käynnistä kaikki moduulit kerralla.
+Napsauta vain toistopainiketta "introduction"-kohdan vieressä käynnistääksesi tämän moduulin tai käynnistä kaikki moduulit kerralla.
 
 <img src="../../../translated_images/fi/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Vaihtoehto 2: Käytä komentojonoja**
+**Vaihtoehto 2: Shell-skriptien käyttäminen**
 
-Käynnistä kaikki web-sovellukset (moduulit 01-04):
+Käynnistä kaikki web-sovellukset (moduulit 01–04):
 
 **Bash:**
 ```bash
@@ -222,7 +224,7 @@ cd ..  # Juurihakemistosta
 
 **PowerShell:**
 ```powershell
-cd ..  # Juurikansiosta
+cd ..  # Juurihakemistosta
 .\start-all.ps1
 ```
 
@@ -240,9 +242,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juuren `.env` -tiedostosta ja rakentavat JAR-tiedostot, jos niitä ei ole.
+Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juuren `.env`-tiedostosta ja rakentavat JAR-tiedostot, jos niitä ei ole olemassa.
 
-> **Huom:** Jos haluat rakentaa kaikki moduulit manuaalisesti ennen käynnistystä:
+> **Huom:** Jos haluat rakentaa kaikki moduulit manuaalisesti ennen käynnistämistä:
 >
 > **Bash:**
 > ```bash
@@ -256,9 +258,9 @@ Molemmat skriptit lataavat automaattisesti ympäristömuuttujat juuren `.env` -t
 > mvn clean package -DskipTests
 > ```
 
-Avaa selaimessa osoite http://localhost:8080.
+Avaa selainosoitteessa http://localhost:8080.
 
-**Pysäyttämiseen:**
+**Lopettaaksesi:**
 
 **Bash:**
 ```bash
@@ -269,48 +271,48 @@ cd .. && ./stop-all.sh  # Kaikki moduulit
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Vain tämä moduuli
+.\stop.ps1  # Tämä moduuli vain
 # Tai
 cd ..; .\stop-all.ps1  # Kaikki moduulit
 ```
 
-## Sovelluksen käyttäminen
+## Sovelluksen Käyttö
 
-Sovellus tarjoaa web-käyttöliittymän, jossa on kaksi rinnakkaista chattiratkaisua.
+Sovellus tarjoaa verkkokäyttöliittymän, jossa on kaksi eri chat-ratkaisua rinnakkain.
 
-<img src="../../../translated_images/fi/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
+<img src="../../../translated_images/fi/home-screen.121a03206ab910c0.webp" alt="Sovelluksen Koti-näyttö" width="800"/>
 
-*Hallintapaneeli näyttää sekä Yksinkertaisen keskustelun (tilaton) että Keskusteleva keskustelu (tila säilyvä) vaihtoehdot*
+*Dashboard, joka näyttää sekä Yksinkertaisen Chatin (tilaton) että Keskustelukeskustelun (tilallinen) vaihtoehdot*
 
-### Tilaton keskustelu (vasen paneeli)
+### Tilaton Keskustelu (Vasen Paneeli)
 
-Kokeile tätä ensin. Kysy "Nimeni on John" ja heti perään "Mikä nimeni on?" Malli ei muista, koska jokainen viesti on itsenäinen. Tämä havainnollistaa ydinkysymystä peruskielimallien integroinnissa – ei keskustelukontekstia.
+Kokeile tätä ensin. Kysy "Nimeni on John" ja heti perään "Mikä nimeni on?" Malli ei muista, koska jokainen viesti on oma itsenäinen yksikkönsä. Tämä demonstroi perusongelman, joka liittyy pelkkään kielimallien integrointiin – ei keskustelukontekstia.
 
-<img src="../../../translated_images/fi/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
+<img src="../../../translated_images/fi/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Tilaton Chat Demo" width="800"/>
 
 *Tekoäly ei muista nimeäsi edellisestä viestistä*
 
-### Tila säilyvä keskustelu (oikea paneeli)
+### Tilallinen Keskustelu (Oikea Paneeli)
 
-Kokeile samaa sarjaa täällä. Kysy "Nimeni on John" ja sitten "Mikä nimeni on?" Tällä kertaa se muistaa. Erona on MessageWindowChatMemory – se ylläpitää keskusteluhistoriaa ja liittää sen jokaiseen pyyntöön. Näin tuotantokeskusteleva tekoäly toimii.
+Kokeile nyt samaa sekvenssiä tässä. Kysy "Nimeni on John" ja sitten "Mikä nimeni on?" Tällä kertaa se muistaa. Erona on MessageWindowChatMemory – se ylläpitää keskusteluhistoriaa ja sisällyttää sen jokaisen pyynnön kontekstiin. Näin tuotantokäyttöön tarkoitettu keskustelullinen tekoäly toimii.
 
-<img src="../../../translated_images/fi/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
+<img src="../../../translated_images/fi/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Tilallinen Chat Demo" width="800"/>
 
 *Tekoäly muistaa nimesi aiemmasta keskustelusta*
 
-Molemmat paneelit käyttävät samaa GPT-5.2 -mallia. Ainoa ero on muisti. Tämä tekee selväksi, mitä muisti tuo sovellukseesi ja miksi se on välttämätön todellisissa käyttötapauksissa.
+Molemmat paneelit käyttävät samaa GPT-5.2-mallia. Ainoa ero on muisti. Tämä selkeyttää, mitä muisti tuo sovellukseesi ja miksi se on välttämätöntä todellisissa käyttötapauksissa.
 
-## Seuraavat askeleet
+## Seuraavat Askeleet
 
-**Seuraava moduuli:** [02-prompt-engineering - Prompt Engineering with GPT-5.2](../02-prompt-engineering/README.md)
+**Seuraava Moduuli:** [02-prompt-engineering - Kehota-suunnittelu GPT-5.2:lla](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigointi:** [← Edellinen: Moduuli 00 - Pikakäynnistys](../00-quick-start/README.md) | [Takaisin päähakemistoon](../README.md) | [Seuraava: Moduuli 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
+**Navigointi:** [← Edellinen: Moduuli 00 - Pika-Alku](../00-quick-start/README.md) | [Takaisin Pääsivulle](../README.md) | [Seuraava: Moduuli 02 - Kehota-suunnittelu →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Vastuuvapauslauseke**:
-Tämä asiakirja on käännetty käyttämällä tekoälypohjaista käännöspalvelua [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta ota huomioon, että automaattiset käännökset saattavat sisältää virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäiskielellä tulee pitää auktoriteettisena lähteenä. Tärkeässä tiedossa suositellaan ammattimaista ihmiskäännöstä. Emme ole vastuussa tämän käännöksen käytöstä aiheutuvista väärinymmärryksistä tai virhetulkoinneista.
+**Vastuuvapauslauseke**:  
+Tämä asiakirja on käännetty tekoälypohjaisella käännöspalvelulla [Co-op Translator](https://github.com/Azure/co-op-translator). Pyrimme tarkkuuteen, mutta automaattiset käännökset saattavat sisältää virheitä tai epätarkkuuksia. Alkuperäistä asiakirjaa sen alkuperäisellä kielellä tulee pitää auktoritatiivisena lähteenä. Tärkeissä tiedoissa suosittelemme ammattimaisen ihmiskääntäjän käyttöä. Emme vastaa tämän käännöksen käytöstä mahdollisesti aiheutuvista väärinymmärryksistä tai virhetulkinnasta.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

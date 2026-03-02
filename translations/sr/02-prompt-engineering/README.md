@@ -4,72 +4,74 @@
 
 - [Видео водич](../../../02-prompt-engineering)
 - [Шта ћете научити](../../../02-prompt-engineering)
-- [Претходни услови](../../../02-prompt-engineering)
+- [Претпоставке](../../../02-prompt-engineering)
 - [Разумевање инжењеринга упита](../../../02-prompt-engineering)
 - [Основе инжењеринга упита](../../../02-prompt-engineering)
-  - [Zero-Shot паљба](../../../02-prompt-engineering)
-  - [Few-Shot паљба](../../../02-prompt-engineering)
-  - [Ланац размишљања](../../../02-prompt-engineering)
-  - [Паљба заснована на улози](../../../02-prompt-engineering)
+  - [Zero-Shot упити](../../../02-prompt-engineering)
+  - [Few-Shot упити](../../../02-prompt-engineering)
+  - [Џеп размишљања](../../../02-prompt-engineering)
+  - [Роло-базирани упити](../../../02-prompt-engineering)
   - [Шаблони упита](../../../02-prompt-engineering)
 - [Напредни обрасци](../../../02-prompt-engineering)
 - [Коришћење постојећих Azure ресурса](../../../02-prompt-engineering)
 - [Снимци екрана апликације](../../../02-prompt-engineering)
-- [Истражујући обрасце](../../../02-prompt-engineering)
-  - [Низак против високог ентузијазма](../../../02-prompt-engineering)
-  - [Извођење задатка (Реченице алата)](../../../02-prompt-engineering)
-  - [Саморефлективни код](../../../02-prompt-engineering)
-  - [Структурисана анализа](../../../02-prompt-engineering)
-  - [Вишеокретни чет](../../../02-prompt-engineering)
+- [Истраживање образаца](../../../02-prompt-engineering)
+  - [Низак против високог жаруљивости](../../../02-prompt-engineering)
+  - [Извршење задатка (почетни текстови алата)](../../../02-prompt-engineering)
+  - [Саморефлексивни код](../../../02-prompt-engineering)
+  - [Структурирана анализа](../../../02-prompt-engineering)
+  - [Вишекратни чет](../../../02-prompt-engineering)
   - [Размишљање корак по корак](../../../02-prompt-engineering)
-  - [Ограничен излаз](../../../02-prompt-engineering)
+  - [Ограничени излаз](../../../02-prompt-engineering)
 - [Шта заправо учите](../../../02-prompt-engineering)
 - [Следећи кораци](../../../02-prompt-engineering)
 
 ## Видео водич
 
-Погледајте ову уживо сесију која објашњава како почети са овим модулом: [Prompt Engineering with LangChain4j - Live Session](https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke)
+Погледајте ову уживо сесију која објашњава како започети са овим модулом:
+
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
 
 ## Шта ћете научити
 
 <img src="../../../translated_images/sr/what-youll-learn.c68269ac048503b2.webp" alt="Шта ћете научити" width="800"/>
 
-У претходном модулу видели сте како меморија омогућава разговорни АИ и користили сте GitHub моделе за основне интеракције. Сада ћемо се фокусирати на начин на који постављате питања — саме упите — користећи Azure OpenAI GPT-5.2. Начин на који структурирате своје упите драматично утиче на квалитет одговора које добијате. Започињемо прегледом основних техника упита, а затим прелазимо на осам напредних образаца који у потпуности искоришћавају могућности GPT-5.2.
+У претходном модулу видели сте како меморија омогућава конверзацијски AI и користили GitHub моделe за основне интеракције. Сада ћемо се фокусирати на то како постављате питања — саме упите — користећи Azure OpenAI GPT-5.2. Начин на који структурирате упите драматично утиче на квалитет добијених одговора. Почињемо прегледом основних техника упита, а затим прелазимо на осам напредних образаца који у потпуности искориштавају могућности GPT-5.2.
 
-Користићемо GPT-5.2 јер уводи контролу размишљања - можете рећи моделу колико размишљања да уради пре одговора. Ово чини различите стратегије упита видљивијим и помаже вам да разумете када да користите који приступ. Такође ћемо имати користи од мање Azure-ове ограничења брзине за GPT-5.2 у поређењу са GitHub моделима.
+Користићемо GPT-5.2 јер он уводи контролу размишљања - можете модели рећи колико треба размишљати пре одговора. Ово чини различите стратегије упита јаснијим и помаже вам да разумете када да користите који приступ. Такође ћемо имати користи од мањих ограничења Azure-а на GPT-5.2 у поређењу са GitHub моделима.
 
-## Претходни услови
+## Претпоставке
 
-- Завршен Модул 01 (дејловани Azure OpenAI ресурси)
-- `.env` фајл у коренском директоријуму са Azure акредитивима (креирано помоћу `azd up` у Модулу 01)
+- Завршен модул 01 (деплојовани Azure OpenAI ресурси)
+- `.env` фајл у коренском директоријуму са Azure подацима за пријаву (креиран командом `azd up` у Модулу 01)
 
-> **Напомена:** Ако нисте завршили Модул 01, прво следите упутства за деплојмент тамо.
+> **Напомена:** Ако нисте завршили Модул 01, прво пратите упутства за деплоирање у том модулу.
 
 ## Разумевање инжењеринга упита
 
 <img src="../../../translated_images/sr/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Шта је инжењеринг упита?" width="800"/>
 
-Инжењеринг упита се бави дизајнирањем улазног текста који доследно добија резултате који су вам потребни. Није само постављање питања — ради се о структурирању захтева тако да модел тачно разуме шта желите и како да то испоручи.
+Инжењеринг упита је дизајнирање улазног текста који доследно даје резултате које желите. Није само питање питања - ради се о структуирању захтева тако да модел разуме тачно шта желите и како да то испоручи.
 
-Замислите да дајете упутства колеги. "Поправи грешку" је нејасно. "Поправи null pointer изузетак у UserService.java на линији 45 додавањем проверe за null" је специфично. Језички модели раде исто — специфичност и структура су битни.
+Замислите као да дајете упутства колеги. "Поправи грешку" је нејасно. "Поправи null pointer exception у UserService.java на линији 45 додавањем провере null" је прецизно. Језички модели функционишу на исти начин – специфичност и структура су важни.
 
-<img src="../../../translated_images/sr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Како LangChain4j функционише" width="800"/>
+<img src="../../../translated_images/sr/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Како LangChain4j одговара" width="800"/>
 
-LangChain4j пружа инфраструктуру — везе са моделом, меморију и типове порука — док су обрасци упита пажљиво структурисани текст који шаљете кроз ту инфраструктуру. Кључни елементи су `SystemMessage` (који подешава понашање и улогу АИ) и `UserMessage` (која носи ваш стварни захтев).
+LangChain4j пружа инфраструктуру — везе са моделима, меморију и типове порука — док су обрасци упита само пажљиво структуиран текст који шаљете кроз ту инфраструктуру. Кључне грађевинске јединице су `SystemMessage` (који подешава понашање и улогу AI-а) и `UserMessage` (који носи ваш стварни захтев).
 
 ## Основе инжењеринга упита
 
 <img src="../../../translated_images/sr/five-patterns-overview.160f35045ffd2a94.webp" alt="Преглед пет образаца инжењеринга упита" width="800"/>
 
-Пре него што заронимо у напредне обрасце у овом модулу, прегледајмо пет основних техника упита. Ово су градивни блокови које сваки инжењер упита треба да зна. Ако сте већ прошли кроз [Quick Start модул](../00-quick-start/README.md#2-prompt-patterns), видели сте их у акцији — ово је концептуални оквир иза њих.
+Пре него што заронимо у напредне образце у овом модулу, погледајмо пет основних техника упита. Ово су грађевински блокови које сваки инжењер упита треба да зна. Ако сте већ радили [Quick Start модул](../00-quick-start/README.md#2-prompt-patterns), већ сте их видели у пракси — ево концептуалног оквира иза њих.
 
-### Zero-Shot паљба
+### Zero-Shot упити
 
-Најједноставнији приступ: дати моделу директну инструкцију без примера. Модел се у потпуности ослања на своју обуку да разуме и изврши задатак. Ово добро ради за једноставне захтеве где је очекивано понашање очигледно.
+Најједноставнији приступ: дати моделу директно упутство без примера. Модел се ослања у потпуности на своју обуку да разуме и изврши задатак. Ово добро функционише за једноставне захтеве где је очекивано понашање очигледно.
 
-<img src="../../../translated_images/sr/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot паљба" width="800"/>
+<img src="../../../translated_images/sr/zero-shot-prompting.7abc24228be84e6c.webp" alt="Zero-Shot упити" width="800"/>
 
-*Директна инструкција без примера — модел закључује задатак само из инструкције*
+*Директно упутство без примера — модел изводи задатак само из упутства*
 
 ```java
 String prompt = "Classify this sentiment: 'I absolutely loved the movie!'";
@@ -77,15 +79,15 @@ String response = model.chat(prompt);
 // Одговор: "Позитивно"
 ```
 
-**Када користити:** Једноставне класификације, директна питања, преводи или било који задатак који модел може обавити без додатних упутстава.
+**Кад користити:** Једноставне класификације, директна питања, преводи или било који задатак који модел може обрадити без додатних смерница.
 
-### Few-Shot паљба
+### Few-Shot упити
 
-Пружите примере који демонстрирају образац који желите да модел прати. Модел учи очекивани формат улаз/излаз из ваших примера и примењује га на нове уносе. Ово драматично побољшава конзистенцију за задатке где жељени формат или понашање није очигледно.
+Пружите примере који показују образац који желите да модел следи. Модел учи очекивани формат улаз-излаз из ваших примера и примењује га на нове улазе. Ово драматично побољшава конзистентност код задатака где формат или понашање нису очигледни.
 
-<img src="../../../translated_images/sr/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot паљба" width="800"/>
+<img src="../../../translated_images/sr/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot упити" width="800"/>
 
-*Учење из примера — модел препознаје образац и примењује га на нове уносе*
+*Учити из примера — модел идентификује образац и примењује га на нове улазе*
 
 ```java
 String prompt = """
@@ -102,15 +104,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Када користити:** Прилагођене класификације, доследно форматирање, задаци специфични за домен или када су zero-shot резултати нестандардни.
+**Кад користити:** Прилагођене класификације, конзистентно форматирање, задаци специфични за домен, или када zero-shot резултати нису конзистентни.
 
-### Ланац размишљања
+### Џеп размишљања
 
-Замолите модел да прикаже свој процес размишљања корак по корак. Уместо да одмах да одговор, модел разбраја проблем и ради кроз сваки део експлицитно. Ово побољшава тачност у математици, логици и задатцима са више корака размишљања.
+Замолите модел да прикаже свој поступак размишљања корак по корак. Уместо да одмах да одговор, модел разлаже проблем и ради кроз сваки део експлицитно. Ово побољшава тачност код математике, логике и вишестепених задатака.
 
-<img src="../../../translated_images/sr/chain-of-thought.5cff6630e2657e2a.webp" alt="Ланац размишљања" width="800"/>
+<img src="../../../translated_images/sr/chain-of-thought.5cff6630e2657e2a.webp" alt="Џеп размишљања" width="800"/>
 
-*Размишљање корак по корак — расклапање сложених проблема у експлицитне логичке кораке*
+*Размишљање корак по корак — разлагање сложених проблема у јасне логичке кораке*
 
 ```java
 String prompt = """
@@ -120,18 +122,18 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// Модел показује: 15 - 8 = 7, затим 7 + 12 = 19 јабука
+// Модел приказује: 15 - 8 = 7, затим 7 + 12 = 19 јабука
 ```
 
-**Када користити:** Математички проблеми, логичке загонетке, отклањање грешака или било који задатак где приказивање процеса размишљања повећава тачност и поверење.
+**Кад користити:** Математички проблеми, логичке загонетке, отклањање грешака, или било који задатак где приказ размишљања побољшава тачност и поверење.
 
-### Паљба заснована на улози
+### Роло-базирани упити
 
-Поставите личност или улогу АИ пре него што поставите питање. Ово пружа контекст који обликује тон, дубину и фокус одговора. „Софтверски архитекта“ даје другачије савете од „млађег програмера“ или „аудитора безбедности“.
+Подесите личност или улогу AI-а пре него што поставите питање. Ово пружа контекст који обликује тон, дубину и фокус одговора. "Софтверски архитект" даје другачије савете од "млађег програмера" или "сигурносног ревизора".
 
-<img src="../../../translated_images/sr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Паљба заснована на улози" width="800"/>
+<img src="../../../translated_images/sr/role-based-prompting.a806e1a73de6e3a4.webp" alt="Роло-базирани упити" width="800"/>
 
-*Постављање контекста и личности — иста питања добијају различите одговоре у зависности од додељене улоге*
+*Подешавање контекста и личности — исто питање добија различит одговор у зависности од додељене улоге*
 
 ```java
 String prompt = """
@@ -147,11 +149,11 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Када користити:** Прегледи кода, подучавање, анализа специфична за домен или када су потребни одговори прилагођени одређеном нивоу стручности или перспективи.
+**Кад користити:** Прегледи кода, туторство, анализа специфична за домен, или када су вам потребни одговори прилагођени одређеном нивоу експертизе или перспективи.
 
 ### Шаблони упита
 
-Креирајте поново употребљиве упите са променљивим местима за уметање. Уместо да сваки пут пишете нови упит, дефинишите шаблон једном и убацујте различите вредности. LangChain4j класа `PromptTemplate` то чини лакшим помоћу `{{variable}}` синтаксе.
+Креирајте поновно употребљиве упите са променљивим местима за убацивање. Уместо да сваки пут пишете нови упит, дефинишите шаблон једном и попуњавајте другачије вредности. LangChain4j класа `PromptTemplate` то олакшава са синтаксом `{{variable}}`.
 
 <img src="../../../translated_images/sr/prompt-templates.14bfc37d45f1a933.webp" alt="Шаблони упита" width="800"/>
 
@@ -170,25 +172,25 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Када користити:** Понављани упити са различитим уносима, серијска обрада, грађење поново употребљивих АИ токова рада или било који сценарио где се структура упита не мења али се подаци мењају.
+**Кад користити:** Понављани упити са различитим улазима, пакетна обрада, израда поновно употребљивих AI токова рада, или било који сценарио где структура упита остаје иста, али се подаци мењају.
 
 ---
 
-Ових пет основа вам пружају солидан алатник за већину задатака упита. Остатак овог модула надограђује их са **осам напредних образаца** који користе контролу размишљања GPT-5.2, самоевалуацију и могућности структурисаног излаза.
+Ових пет основа пружа вам солидан алат за већину задатака са упитима. Остатак овог модула надограђује их са **осам напредних образаца** који искоришћавају GPT-5.2 контролу размишљања, самоевалуацију и могућности структурираног излаза.
 
 ## Напредни обрасци
 
-Када смо покрили основе, пређимо на осам напредних образаца који овај модул чине јединственим. Неки проблеми не захтевају исти приступ. Нека питања требају брзе одговоре, друга дубоко размишљање. Нека захтевају видљиво размишљање, а друга само резултате. Сваки образац испод је оптимизован за различит сценарио — а контрола размишљања GPT-5.2 још више наглашава разлике.
+Након што смо покрили основе, прелазимо на осам напредних образаца који овај модул чине јединственим. Нису сви проблеми исти и не захтевају исти приступ. Нека питања захтевају брзе одговоре, друга дубоко размишљање. Нека требају видљиво размишљање, а нека само резултати. Сваки образац испод је оптимизован за различит сценарио — а GPT-5.2 контрола размишљања чини разлике још израженијим.
 
-<img src="../../../translated_images/sr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Осам образаца инжењеринга упита" width="800"/>
+<img src="../../../translated_images/sr/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Осам образаца упита" width="800"/>
 
-*Преглед осам образаца инжењеринга упита и њихове примене*
+*Преглед осам образаца инжењеринга упита и њихове употребе*
 
 <img src="../../../translated_images/sr/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Контрола размишљања са GPT-5.2" width="800"/>
 
-*Контрола размишљања GPT-5.2 вам омогућава да одредите колико размишљања модел треба да уради — од брзих директних одговора до дубоке анализе*
+*GPT-5.2 контрола размишљања вам омогућава да одредите колико модел треба да размишља — од брзих директних одговора до дубоке анализе*
 
-**Низак ентузијазам (брзо и фокусирано)** - За једноставна питања где желите брзе, директне одговоре. Модел врши минимално размишљање - максимум 2 корака. Користите за калкулације, прегледе или једноставна питања.
+**Низак жар (Брзо и фокусирано)** - За једноставна питања где желите брзе, директне одговоре. Модел врши минимално размишљање - максимум 2 корака. Користите ово за прорачуне, претраге или једноставна питања.
 
 ```java
 String prompt = """
@@ -207,12 +209,12 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> 💡 **Испробајте са GitHub Copilot:** Отворите [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) и питајте:
-> - "Која је разлика између низког и високог ентузијазма у обрасцима упита?"
-> - "Како XML тагови у упитима помажу у структуирању АИ одговора?"
-> - "Када треба користити обрасце саморазмишљања уместо директних упутстава?"
+> 💡 **Истражите уз GitHub Copilot:** Отворите [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) и питате:
+> - "Која је разлика између образаца упита са ниским и високим жаром?"
+> - "Како XML тагови у упитима помажу у структуирању одговора AI-а?"
+> - "Када треба користити образце са саморазматрaњем у односу на директна упутства?"
 
-**Висок ентузијазам (дубоко и темељно)** - За комплексне проблеме где желите комплетну анализу. Модел дубоко истражује и показује детаљне разлоге. Користите за дизајн система, одлуке у архитектури или компликована истраживања.
+**Висок жар (Дубоко и темељно)** - За сложене проблеме где желите свеобухватну анализу. Модел темељно истражује и приказује детаљно размишљање. Користите ово за дизајн система, архитетонске одлуке или сложена истраживања.
 
 ```java
 String prompt = """
@@ -226,7 +228,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Извођење задатка (прогрес корак по корак)** - За токове рада са више корака. Модел пружа план унапред, описује сваки корак док ради, затим даје резиме. Користите за миграције, имплементације или било који процес са више корака.
+**Извршење задатка (Прогрес корак по корак)** - За вишестепене токове посла. Модел пружа предлог плана, приповеда сваки корак током рада, а затим даје резиме. Користите за миграције, имплементације или било који вишестепени процес.
 
 ```java
 String prompt = """
@@ -264,18 +266,18 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Ланац размишљања експлицитно тражи од модела да прикаже свој процес размишљања, побољшавајући тачност за сложене задатке. Разлагање корак по корак помаже и људима и АИ да разумеју логику.
+Chain-of-Thought упит јасно тражи од модела да прикаже свој процес размишљања, побољшавајући тачност код сложених задатака. Рачлањавање корак по корак помаже људима и AI-у да разумеју логику.
 
-> **🤖 Испробајте са четом [GitHub Copilot](https://github.com/features/copilot):** Питајте о овом обрасцу:
-> - "Како бих прилагодио образац извођења задатка за дуготрајне операције?"
-> - "Које су најбоље праксе за структуирање реченица алата у продукционим апликацијама?"
-> - "Како могу да ухватим и прикажем ажурирања средњег напредовања у корисничком интерфејсу?"
+> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Питајте о овом образцу:
+> - "Како бих прилагодио образац извршења задатка за дуготрајне операције?"
+> - "Које су најбоље праксе за структурирање почетних текстова алата у продукцији?"
+> - "Како могу да снимим и прикажем унапред напредак у UI-ју?"
 
-<img src="../../../translated_images/sr/task-execution-pattern.9da3967750ab5c1e.webp" alt="Образац извођења задатка" width="800"/>
+<img src="../../../translated_images/sr/task-execution-pattern.9da3967750ab5c1e.webp" alt="Образац извршења задатка" width="800"/>
 
-*Планирање → Извођење → Резимирање тока рада за више корака*
+*Планирање → Извођење → Резимирање тока рада за вишестепене задатке*
 
-**Саморефлективни код** - За генерисање кода квалитета за продукцију. Модел генерише код пратећи продукционе стандарде са правилним руковањем грешкама. Користите када градите нове функције или сервисе.
+**Саморефлектујући код** - За генерисање кода продукционог квалитета. Модел генерише код пратећи продукционе стандарде са одговарајућом обрадом грешака. Користите када градите нове функције или сервисе.
 
 ```java
 String prompt = """
@@ -288,9 +290,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sr/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Циклус саморефлексије" width="800"/>
 
-*Итеративни циклус побољшавања - генериши, вреднуј, идентификуј проблеме, побољшај, понови*
+*Итеративна петља побољшања - генериши, оцењуј, идентификуј проблеме, побољшај, понови*
 
-**Структурисана анализа** - За доследну евалуацију. Модел прегледа код коришћењем фиксног оквира (исправност, праксе, перформансе, безбедност, одрживост). Користите за прегледе кода или процене квалитета.
+**Структурирана анализа** - За конзистентну евалуацију. Модел прегледа код користећи фиксни оквир (тачност, праксе, перформансе, безбедност, одрживост). Користите за прегледе кода или процене квалитета.
 
 ```java
 String prompt = """
@@ -338,16 +340,16 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-> **🤖 Испробајте са четом [GitHub Copilot](https://github.com/features/copilot):** Питајте о структурисаној анализи:
+> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Питајте о структурираној анализи:
 > - "Како могу прилагодити оквир анализе за различите типове прегледа кода?"
-> - "Који је најбољи начин за парсирање и рад са структурисаним излазом програмски?"
-> - "Како осигурати доследан ниво озбиљности у различитим сесијама прегледа?"
+> - "Који је најбољи начин за парсирање и програмацки рад са структурираним излазом?"
+> - "Како осигурати доследне нивое озбиљности у различитим сесијама прегледа?"
 
-<img src="../../../translated_images/sr/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Образац структурисане анализе" width="800"/>
+<img src="../../../translated_images/sr/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Образац структуриране анализе" width="800"/>
 
-*Оквир за доследне прегледе кода са нивоима озбиљности*
+*Оквир за конзистентне прегледе кода са нивоима озбиљности*
 
-**Вишеокретни чет** - За разговоре који захтевају контекст. Модел памти претходне поруке и надограђује их. Користите за интерактивне сесије помоћи или сложена питања и одговоре.
+**Вишекратни чет** - За разговоре који захтевају контекст. Модел памти претходне поруке и гради на њима. Користите за интерактивне помоћне сесије или сложена питања и одговоре.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -361,11 +363,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/sr/context-memory.dff30ad9fa78832a.webp" alt="Паметовање контекста" width="800"/>
+<img src="../../../translated_images/sr/context-memory.dff30ad9fa78832a.webp" alt="Памет контекста" width="800"/>
 
-*Како се контекст разговора акумулира током више корака све док се не достигне лимит токена*
+*Како контекст разговора акумулира кроз више корака све док се не достигне лимит токена*
 
-**Размишљање корак по корак** - За проблеме који захтевају видљиву логику. Модел показује експлицитно размишљање за сваки корак. Користите за математичке проблеме, логичке загонетке или када треба разумети процес размишљања.
+**Размишљање корак по корак** - За проблеме којима је потребна видљива логика. Модел приказује експлицитно размишљање за сваки корак. Користите за математичке проблеме, логичке загонетке или када желите разумети процес размишљања.
 
 ```java
 String prompt = """
@@ -381,9 +383,9 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sr/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Образац корак по корак" width="800"/>
 
-*Разлагање проблема у експлицитне логичке кораке*
+*Разлагање проблема у јасне логичке кораке*
 
-**Ограничен излаз** - За одговоре са специфичним захтевима формата. Модел строго прате правила формата и дужине. Користите за сажетке или када вам треба прецизна структура излаза.
+**Ограничени излаз** - За одговоре са специфичним захтевима формата. Модел стриктно прати правила формата и дужине. Користите за резиме или када вам треба прецизна структура излаза.
 
 ```java
 String prompt = """
@@ -401,37 +403,37 @@ String response = chatModel.chat(prompt);
 
 <img src="../../../translated_images/sr/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Образац ограниченог излаза" width="800"/>
 
-*Примена специфичних захтева формата, дужине и структуре*
+*Остварење специфичних захтева за формат, дужину и структуру*
 
 ## Коришћење постојећих Azure ресурса
 
-**Потврдите деплојмент:**
+**Проверите деплоирање:**
 
-Осигурајте да `.env` фајл постоји у коренском директоријуму са Azure акредитивима (креирано током Модула 01):
+Осигурајте да `.env` фајл постоји у коренском директоријуму са Azure подацима за пријаву (креиран током Модула 01):
 ```bash
-cat ../.env  # Треба да приказује AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Требало би да приказује AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Покрените апликацију:**
+**Покретање апликације:**
 
-> **Напомена:** Ако сте већ покренули све апликације користећи `./start-all.sh` из Модула 01, овај модул већ ради на порту 8083. Можете прескочити команде за покретање испод и директно отићи на http://localhost:8083.
+> **Напомена:** Ако сте већ покренули све апликације користећи `./start-all.sh` из Модула 01, овај модул већ ради на порту 8083. Можете прескочити наредбе за покретање испод и директно отићи на http://localhost:8083.
+**Опција 1: Коришћење Spring Boot Dashboard-а (Препоручено за кориснике VS Code-а)**
 
-**Опција 1: Коришћење Spring Boot Dashboard (препоручено за кориснике VS Code-а)**
-Dev kontejner uključuje ekstenziju Spring Boot Dashboard, koja pruža vizuelni interfejs za upravljanje svim Spring Boot aplikacijama. Možete je pronaći na Activity Bar-u na levoj strani VS Code-a (potražite Spring Boot ikonicu).
+_dev container_ укључује Spring Boot Dashboard екстензију, која пружа визуелни интерфејс за управљање свим Spring Boot апликацијама. Можете је пронаћи у Activity Bar-у на левој страни VS Code-а (потражите Spring Boot иконицу).
 
-Sa Spring Boot Dashboard-a možete:
-- Videti sve dostupne Spring Boot aplikacije u radnom prostoru
-- Pokrenuti/zaustaviti aplikacije jednim klikom
-- Pregledati logove aplikacije u realnom vremenu
-- Pratiti status aplikacije
+Из Spring Boot Dashboard-а можете:
+- Видети све расположиве Spring Boot апликације у радном простору
+- Покретати/пуштати апликације једним кликом
+- Пратити логове апликација у реалном времену
+- Надгледати статус апликације
 
-Jednostavno kliknite na dugme za pokretanje pored „prompt-engineering“ da pokrenete ovaj modul, ili pokrenite sve module odjednom.
+Само кликните на дугме за пуштање поред "prompt-engineering" да покренете овај модул, или покрените све модуле одједном.
 
 <img src="../../../translated_images/sr/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Opcija 2: Korišćenje shell skripti**
+**Опција 2: Коришћење shell скрипти**
 
-Pokrenite sve web aplikacije (module 01-04):
+Покрените све web апликације (модуле 01-04):
 
 **Bash:**
 ```bash
@@ -445,7 +447,7 @@ cd ..  # Из коренског директоријума
 .\start-all.ps1
 ```
 
-Ili pokrenite samo ovaj modul:
+Или покрените само овај модул:
 
 **Bash:**
 ```bash
@@ -459,9 +461,9 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Obe skripte automatski učitavaju promenljive okruženja iz root `.env` fajla i izgradiće JAR-ove ako oni ne postoje.
+Обе скрипте аутоматски учитавају променљиве окружења из коренског `.env` фајла и изградиће JAR фајлове уколико не постоје.
 
-> **Napomena:** Ako želite ručno da izgradite sve module pre pokretanja:
+> **Напомена:** Ако више волите да ручно изградите све модуле пре покретања:
 >
 > **Bash:**
 > ```bash
@@ -475,9 +477,9 @@ Obe skripte automatski učitavaju promenljive okruženja iz root `.env` fajla i 
 > mvn clean package -DskipTests
 > ```
 
-Otvorite http://localhost:8083 u vašem pregledaču.
+Отворите http://localhost:8083 у вашем прегледачу.
 
-**Za zaustavljanje:**
+**Да зауставите:**
 
 **Bash:**
 ```bash
@@ -493,81 +495,81 @@ cd .. && ./stop-all.sh  # Сви модули
 cd ..; .\stop-all.ps1  # Сви модули
 ```
 
-## Snimci ekrana aplikacije
+## Снимци екрана апликације
 
 <img src="../../../translated_images/sr/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Glavna tabla koja prikazuje svih 8 obrazaca za prompt inženjering sa njihovim karakteristikama i slučajevima upotrebe*
+*Главни dashboard који приказује свих 8 шаблона у prompt engineering-у са њиховим карактеристикама и примерима употребе*
 
-## Istraživanje obrazaca
+## Истраживање шаблона
 
-Web interfejs vam omogućava da eksperimentišete sa različitim strategijama promptova. Svaki obrazac rešava različite probleme - isprobajte ih da biste videli kada koji pristup najbolje funkcioniše.
+Веб интерфејс вам омогућава да експериментишете са различитим стратегијама састављања упита. Сваки шаблон решава различите проблеме - пробајте их да видите када је који приступ најбољи.
 
-> **Napomena: Streaming vs Non-Streaming** — Svaka stranica obrasca nudi dva dugmeta: **🔴 Stream Response (Live)** i **Non-streaming** opciju. Streaming koristi Server-Sent Events (SSE) da prikazuje tokene u realnom vremenu dok model generiše, tako da odmah vidite napredak. Opcija bez streaminga čeka ceo odgovor pre nego što ga prikaže. Za promptove koji pokreću duboko zaključivanje (npr. High Eagerness, Self-Reflecting Code), poziv bez streaminga može potrajati veoma dugo — ponekad i minutima — bez vidljive povratne informacije. **Koristite streaming kada eksperimentišete sa složenim promptovima** da biste mogli videti kako model radi i izbegli utisak da je zahtev istekao.
+> **Напомена: Стриминг vs Несстриминг** — Свака страница шаблона нуди два дугмета: **🔴 Stream Response (Live)** и опцију **Non-streaming**. Стриминг користи Server-Sent Events (SSE) да приказује токене у реалном времену док модел генерише, тако да видите напредак одмах. Несстриминг опција чека цео одговор пре приказа. За промпт који покрећу дубљи разлози (нпр. High Eagerness, Self-Reflecting Code), несстриминг позив може потрајати веома дуго — понекад минутама — без видљивог повратног одговора. **Користите стриминг када експериментишете са сложеним промптима** да бисте видели како модел ради и избегли утисак да је захтев истекао.
 >
-> **Napomena: Zahtev za pregledač** — Streaming funkcija koristi Fetch Streams API (`response.body.getReader()`) koji zahteva pun pregledač (Chrome, Edge, Firefox, Safari). Ne radi u ugrađenom Simple Browser-u VS Code-a, jer njegov webview ne podržava ReadableStream API. Ako koristite Simple Browser, dugmad za ne-streaming će i dalje raditi normalno — samo su streaming dugmad pogođena. Otvorite `http://localhost:8083` u eksternom pregledaču za potpuni doživljaj.
+> **Напомена: Захтеви за прегледач** — Стриминг функција користи Fetch Streams API (`response.body.getReader()`) који захтева пун прегледач (Chrome, Edge, Firefox, Safari). Не ради у уграђеном Simple Browser-у VS Code-а, јер његов webview не подржава ReadableStream API. Ако користите Simple Browser, несстриминг дугмад ће и даље радити нормално — само су дугмад за стриминг погођена. Отворите `http://localhost:8083` у спољном прегледачу за пун доживљај.
 
-### Niska vs Visoka želičnost (Eagerness)
+### Ниска vs Висока жеља (Eagerness)
 
-Postavite jednostavno pitanje poput "Koliko je 15% od 200?" koristeći Nisku želičnost. Dobijate instantan, direktan odgovor. Sada postavite nešto složenije poput "Dizajniraj strategiju keširanja za visokoprometni API" koristeći Visoku želičnost. Kliknite **🔴 Stream Response (Live)** i pratite detaljno rezonovanje modela koje se pojavljuje token po token. Isti model, ista struktura pitanja – ali prompt govori koliko razmišljanja treba da obavi.
+Поставите једноставно питање као „Колико је 15% од 200?“ користећи ниску жељу (Low Eagerness). Добит ћете тренутан, директан одговор. Сада поставите нешто компликовано као „Дизајнирај стратегију кеширања за API са великим саобраћајем“ користећи високу жељу (High Eagerness). Кликните **🔴 Stream Response (Live)** и пратите детаљно размишљање модела који се појављује токен по токен. Исти модел, иста структура питања - али промпт му говори колико дубоко да размишља.
 
-### Izvršavanje zadataka (Uvodni tekstovi alata)
+### Извршење задатка (Уводни делови алата)
 
-Višestepeni radni tokovi imaju koristi od predhodnog planiranja i pripovijedanja o napretku. Model iznosi šta će da uradi, pripoveda svaki korak, a zatim sumira rezultate.
+Вишестепени радни процеси имају користи од предходног планирања и преношења напретка. Модел наводи шта ће урадити, описује сваки корак, па потом сумира резултате.
 
-### Samoreflektujući kod
+### Само-рефлектујући код
 
-Probajte „Napravite servis za validaciju email adresa“. Umesto samo generisanja koda i zaustavljanja, model generiše, ocenjuje prema kvalitetnim kriterijumima, identifikuje slabosti i unapređuje. Videćete kako iterira dok kod ne zadovolji proizvodne standarde.
+Пробајте "Направи услугу за валидацију е-поште". Уместо да само генерише код и заустави се, модел генерише, процењује квалитет, идентификује слабости и унапређује. Видећете како понавља док код не достигне стандарде за продукцију.
 
-### Struktuirana analiza
+### Структурирана анализа
 
-Pregledi koda zahtevaju konzistentne okvire za evaluaciju. Model analizira kod koristeći fiksne kategorije (ispravnost, prakse, performanse, sigurnost) sa nivoima ozbiljnosti.
+Прегледи кода захтевају доследне оквире за процену. Модел анализира код користећи фиксне категорије (тачност, праксе, перформансе, безбедност) са нивоима озбиљности.
 
-### Višekratni razgovor (Multi-Turn Chat)
+### Вишедневни разговор (Multi-Turn Chat)
 
-Pitaje „Šta je Spring Boot?“ zatim odmah nastavite sa „Prikaži mi primer“. Model pamti vaše prvo pitanje i daje vam tačan primer Spring Boot-a. Bez memorije, drugo pitanje bi bilo previše neodređeno.
+Поставите „Шта је Spring Boot?“ па одмах наставите са „Покажи пример“. Модел памти ваше прво питање и даје вам пример посебно за Spring Boot. Без меморије, то друго питање би било превише нејасно.
 
-### Zakorači-po-zakorači rezonovanje
+### Рaзмишљање корак по корак
 
-Izaberite matematički problem i probajte ga sa i Zakorači-po-zakorači rezonovanjem i Niskom želičnošću. Niska želičnost daje samo odgovor – brzo ali nejasno. Zakorači-po-zakorači vam prikazuje svaki izračun i odluku.
+Изаберите математички проблем и пробајте са и са Step-by-Step Reasoning и са Low Eagerness. Ниска жеља само даје одговор - брзо али непрозирно. Размишљање корак по корак вам показује сваки израчун и одлуку.
 
-### Ograničen izlaz
+### Ограничен излаз
 
-Kada vam trebaju specifični formati ili broj reči, ovaj obrazac strogo sprovodi pravila. Probajte generisati rezime tačno sa 100 reči u formatu sa nabrajanjem.
+Када вам требају прецизни формати или број речи, овај шаблон строго одржава правила. Пробајте да генеришете резиме са тачно 100 речи у облику тачака.
 
-## Šta zaista učite
+## Шта заправо учите
 
-**Napor rezonovanja menja sve**
+**Напор размишљања мења све**
 
-GPT-5.2 vam omogućava da kontrolišete računarski napor kroz svoje promptove. Nizak napor znači brze odgovore sa minimalnim istraživanjem. Visok napor znači da model uzima vreme da duboko razmišlja. Učite kako da uskladite napor sa složenošću zadatka – nemojte gubiti vreme na jednostavna pitanja, ali nemojte ni žuriti sa složenim odlukama.
+GPT-5.2 вам дозвољава да контролишете рачунски напор кроз ваше промпте. Ниски напор значи брзе одговоре са минималном истраживањем. Високи напор значи да модел узима време да дубоко размишља. Учите да усагласите напор са сложеношћу задатка - немојте трошити време на једноставна питања, али немојте ни журити код сложених одлука.
 
-**Struktura vodi ponašanje**
+**Структура усмерава понашање**
 
-Primećujete li XML tagove u promptovima? Nisu dekorativni. Modeli pouzdanije prate uputstva kada su strukturisana nego slobodan tekst. Kada vam trebaju višestepeni procesi ili složena logika, struktura pomaže modelu da prati gde se nalazi i šta ide sledeće.
+Приметили сте XML тагове у промптима? Нису декоративни. Модели делују прецизније кад следе структуиране инструкције него слободни текст. Када вам требају вишестепени процеси или сложена логика, структура помаже моделу да прати где је и шта следи.
 
 <img src="../../../translated_images/sr/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 
-*Anatomija dobro strukturisanog prompta sa jasnim sekcijama i XML-stil organizacije*
+*Анатомија добро структуираног промпта са јасним секцијама и XML-стилом организације*
 
-**Kvalitet kroz samoocenu**
+**Квалитет кроз самоевалуацију**
 
-Samoreflektujući obrasci funkcionišu tako što eksplicitno definišu kriterijume kvaliteta. Umesto da se nadate da model "uradi ispravno", tačno mu kažete šta znači "ispravno": ispravna logika, rukovanje greškama, performanse, sigurnost. Model zatim može evaluirati svoj izlaz i unaprediti ga. Ovo pretvara generisanje koda iz lutrije u proces.
+Само-рефлектујући шаблони раде тако што квалитетне критеријуме чине јасним. Уместо да се надају да модел „уради како треба“, ви му тачно говорите шта значи „како треба“: тачна логика, руковање грешкама, перформансе, безбедност. Модел тада може проценити свој излаз и побољшати га. Ово претвара генерацију кода из лутрије у систематски процес.
 
-**Kontekst je ograničen**
+**Контекст је ограничен**
 
-Višekratni razgovori funkcionišu tako što uključuju istoriju poruka sa svakim zahtevom. Ali postoji limit – svaki model ima maksimalan broj tokena. Kako razgovori rastu, biće vam potrebne strategije da održite relevantan kontekst bez dostizanja tog limita. Ovaj modul vam pokazuje kako memorija funkcioniše; kasnije ćete naučiti kada sažimati, kada zaboraviti, a kada povratiti.
+Вишедневни разговори функционишу тако што укључују историју порука у сваком захтеву. Али постоји ограничење - сваки модел има максималан број токена. Како разговори расту, биће вам потребне стратегије за чување релевантног контекста без достигања тог лимита. Овај модул вам показује како меморија ради; касније ћете научити када да сумирате, када да заборавите и када да дохватите.
 
-## Sledeći koraci
+## Следећи кораци
 
-**Sledeći modul:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
+**Следећи модул:** [03-rag - RAG (Retrieval-Augmented Generation)](../03-rag/README.md)
 
 ---
 
-**Navigacija:** [← Prethodni: Modul 01 - Uvod](../01-introduction/README.md) | [Nazad na početak](../README.md) | [Sledeći: Modul 03 - RAG →](../03-rag/README.md)
+**Навигација:** [← Претходни: Модул 01 - Увод](../01-introduction/README.md) | [Назад на Почетак](../README.md) | [Следећи: Модул 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Изјава о одрицању одговорности**:  
-Овај документ је преведен помоћу АИ сервиса за превођење [Co-op Translator](https://github.com/Azure/co-op-translator). Иако тежимо тачности, имајте у виду да аутоматизовани преводи могу садржати грешке или нетачности. Првобитни документ на његовом оригиналном језику треба сматрати ауторитетним извором. За критичне информације препоручује се професионални превод од стране људи. Нисмо одговорни за било какве неспоразуме или погрешне тумачења настала употребом овог превода.
+**Одрицање од одговорности**:  
+Овај документ је преведен помоћу АИ преводилачке услуге [Co-op Translator](https://github.com/Azure/co-op-translator). Иако се трудимо да превод буде тачан, имајте у виду да аутоматизовани преводи могу садржати грешке или нетачности. Оригинални документ на његовом изворном језику треба сматрати ауторитетним извором. За критичне информације препоручује се професионални људски превод. Нисмо одговорни за било каква неспоразума или погрешне интерпретације настале коришћењем овог превода.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

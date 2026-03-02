@@ -2,108 +2,110 @@
 
 ## Índice
 
-- [Vídeo Passo a Passo](../../../03-rag)
+- [Vídeo Tutorial](../../../03-rag)
 - [O Que Você Vai Aprender](../../../03-rag)
 - [Pré-requisitos](../../../03-rag)
 - [Entendendo o RAG](../../../03-rag)
-  - [Qual Abordagem de RAG Este Tutorial Usa?](../../../03-rag)
+  - [Qual abordagem RAG este tutorial usa?](../../../03-rag)
 - [Como Funciona](../../../03-rag)
-  - [Processamento de Documentos](../../../03-rag)
+  - [Processamento de Documento](../../../03-rag)
   - [Criando Embeddings](../../../03-rag)
   - [Busca Semântica](../../../03-rag)
-  - [Geração de Respostas](../../../03-rag)
+  - [Geração de Resposta](../../../03-rag)
 - [Executar a Aplicação](../../../03-rag)
 - [Usando a Aplicação](../../../03-rag)
   - [Enviar um Documento](../../../03-rag)
   - [Fazer Perguntas](../../../03-rag)
-  - [Verificar Referências das Fontes](../../../03-rag)
+  - [Verificar Referências de Fonte](../../../03-rag)
   - [Experimentar com Perguntas](../../../03-rag)
-- [Conceitos-Chave](../../../03-rag)
-  - [Estratégia de Divisão em Blocos](../../../03-rag)
-  - [Pontuação de Similaridade](../../../03-rag)
+- [Conceitos Chave](../../../03-rag)
+  - [Estratégia de Chunking](../../../03-rag)
+  - [Pontuações de Similaridade](../../../03-rag)
   - [Armazenamento em Memória](../../../03-rag)
   - [Gerenciamento da Janela de Contexto](../../../03-rag)
-- [Quando o RAG Importa](../../../03-rag)
+- [Quando o RAG é Importante](../../../03-rag)
 - [Próximos Passos](../../../03-rag)
 
-## Vídeo Passo a Passo
+## Vídeo Tutorial
 
-Assista a esta sessão ao vivo que explica como começar com este módulo: [RAG com LangChain4j - Sessão Ao Vivo](https://www.youtube.com/watch?v=_olq75ZH_eY)
+Assista a esta sessão ao vivo que explica como começar com este módulo:
+
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG com LangChain4j - Sessão ao Vivo" width="800"/></a>
 
 ## O Que Você Vai Aprender
 
-Nos módulos anteriores, você aprendeu como ter conversas com IA e estruturar seus prompts de forma eficaz. Mas existe uma limitação fundamental: os modelos de linguagem só sabem o que aprenderam durante o treinamento. Eles não conseguem responder perguntas sobre as políticas da sua empresa, a documentação do seu projeto ou qualquer informação na qual não foram treinados.
+Nos módulos anteriores, você aprendeu como conversar com IA e estruturar seus prompts de forma eficaz. Mas existe uma limitação fundamental: modelos de linguagem só sabem o que aprenderam durante o treinamento. Eles não podem responder a perguntas sobre as políticas da sua empresa, sua documentação de projeto, ou qualquer informação na qual não foram treinados.
 
-O RAG (Geração Aumentada por Recuperação) resolve esse problema. Em vez de tentar ensinar as informações para o modelo (o que é caro e impraticável), você dá a ele a capacidade de buscar nos seus documentos. Quando alguém faz uma pergunta, o sistema encontra informações relevantes e as inclui no prompt. O modelo então responde com base nesse contexto recuperado.
+RAG (Geração Aumentada por Recuperação) resolve esse problema. Em vez de tentar ensinar o modelo com suas informações (o que é caro e impraticável), você lhe dá a capacidade de pesquisar seus documentos. Quando alguém faz uma pergunta, o sistema encontra informações relevantes e as inclui no prompt. O modelo então responde com base nesse contexto recuperado.
 
 Pense no RAG como dar ao modelo uma biblioteca de referência. Quando você faz uma pergunta, o sistema:
 
-1. **Consulta do Usuário** - Você faz uma pergunta  
-2. **Embedding** - Converte sua pergunta em um vetor  
-3. **Busca Vetorial** - Encontra blocos de documentos similares  
-4. **Montagem do Contexto** - Adiciona blocos relevantes ao prompt  
-5. **Resposta** - LLM gera uma resposta baseada no contexto  
+1. **Consulta do Usuário** - Você faz uma pergunta
+2. **Embedding** - Converte sua pergunta em um vetor
+3. **Busca Vetorial** - Encontra pedaços de documentos semelhantes
+4. **Montagem do Contexto** - Adiciona os pedaços relevantes ao prompt
+5. **Resposta** - O LLM gera uma resposta com base no contexto
 
-Isso fundamenta as respostas do modelo nos seus dados reais em vez de depender apenas do conhecimento do treinamento ou inventar respostas.
+Isso fundamenta as respostas do modelo nos seus dados reais, ao invés de depender apenas do conhecimento de treinamento ou inventar respostas.
 
 ## Pré-requisitos
 
-- Ter completado o [Módulo 00 - Início Rápido](../00-quick-start/README.md) (para o exemplo Easy RAG citado acima)  
-- Ter completado o [Módulo 01 - Introdução](../01-introduction/README.md) (recursos Azure OpenAI implantados, incluindo o modelo de embedding `text-embedding-3-small`)  
-- Arquivo `.env` no diretório raiz com credenciais Azure (criado pelo `azd up` no Módulo 01)  
+- Concluído o [Módulo 00 - Início Rápido](../00-quick-start/README.md) (para o exemplo Easy RAG mencionado acima)
+- Concluído o [Módulo 01 - Introdução](../01-introduction/README.md) (recursos Azure OpenAI implantados, incluindo o modelo de embedding `text-embedding-3-small`)
+- Arquivo `.env` no diretório raiz com as credenciais do Azure (criado pelo comando `azd up` no Módulo 01)
 
-> **Nota:** Se você não completou o Módulo 01, siga as instruções de implantação lá primeiro. O comando `azd up` implanta tanto o modelo de chat GPT quanto o modelo de embedding usado neste módulo.
+> **Nota:** Se você não concluiu o Módulo 01, siga primeiro as instruções de implantação lá. O comando `azd up` implanta tanto o modelo de chat GPT quanto o modelo de embedding usado neste módulo.
 
 ## Entendendo o RAG
 
-O diagrama abaixo ilustra o conceito principal: em vez de depender apenas dos dados de treinamento do modelo, o RAG lhe dá uma biblioteca de referência dos seus documentos para consultar antes de gerar cada resposta.
+O diagrama abaixo ilustra o conceito central: em vez de depender apenas dos dados do treinamento do modelo, o RAG oferece uma biblioteca de referência dos seus documentos para consultar antes de gerar cada resposta.
 
-<img src="../../../translated_images/pt-BR/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
+<img src="../../../translated_images/pt-BR/what-is-rag.1f9005d44b07f2d8.webp" alt="O que é RAG" width="800"/>
 
-*Este diagrama mostra a diferença entre um LLM padrão (que tenta adivinhar a partir dos dados de treinamento) e um LLM com RAG (que consulta seus documentos primeiro).*
+*Este diagrama mostra a diferença entre um LLM padrão (que adivinha a partir dos dados de treinamento) e um LLM melhorado com RAG (que consulta seus documentos primeiro).*
 
-Veja como as etapas se conectam de ponta a ponta. A pergunta do usuário flui por quatro estágios — embedding, busca vetorial, montagem do contexto e geração da resposta — cada um construindo sobre o anterior:
+Veja como as partes se conectam de ponta a ponta. A pergunta do usuário passa por quatro etapas — embedding, busca vetorial, montagem do contexto e geração da resposta — cada uma construindo sobre a anterior:
 
-<img src="../../../translated_images/pt-BR/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
+<img src="../../../translated_images/pt-BR/rag-architecture.ccb53b71a6ce407f.webp" alt="Arquitetura RAG" width="800"/>
 
-*Este diagrama mostra o pipeline completo do RAG — uma consulta do usuário passa por embedding, busca vetorial, montagem do contexto e geração da resposta.*
+*Este diagrama mostra o pipeline RAG de ponta a ponta — a consulta do usuário passa por embedding, busca vetorial, montagem do contexto e geração da resposta.*
 
-O restante deste módulo detalha cada estágio, com código que você pode executar e modificar.
+O resto deste módulo detalha cada etapa, com código que você pode executar e modificar.
 
-### Qual Abordagem de RAG Este Tutorial Usa?
+### Qual abordagem RAG este tutorial usa?
 
-LangChain4j oferece três formas de implementar RAG, cada uma com um nível diferente de abstração. O diagrama abaixo os compara lado a lado:
+LangChain4j oferece três formas de implementar RAG, cada uma com um nível diferente de abstração. O diagrama abaixo as compara lado a lado:
 
-<img src="../../../translated_images/pt-BR/rag-approaches.5b97fdcc626f1447.webp" alt="Three RAG Approaches in LangChain4j" width="800"/>
+<img src="../../../translated_images/pt-BR/rag-approaches.5b97fdcc626f1447.webp" alt="Três abordagens RAG em LangChain4j" width="800"/>
 
-*Este diagrama compara as três abordagens RAG do LangChain4j — Easy, Native e Advanced — mostrando seus componentes principais e quando usar cada uma.*
+*Este diagrama compara as três abordagens RAG LangChain4j — Easy, Native e Advanced — mostrando seus componentes principais e quando usar cada uma.*
 
-| Abordagem | O Que Faz | Compromisso |
+| Abordagem | O que faz | Compromisso |
 |---|---|---|
-| **Easy RAG** | Conecta tudo automaticamente através de `AiServices` e `ContentRetriever`. Você anota uma interface, adiciona um retriever e LangChain4j cuida do embedding, pesquisa e montagem do prompt nos bastidores. | Código mínimo, mas você não vê o que acontece em cada etapa. |
-| **Native RAG** | Você chama o modelo de embedding, pesquisa na store, monta o prompt e gera a resposta — um passo explícito de cada vez. | Mais código, mas todas as etapas são visíveis e modificáveis. |
-| **Advanced RAG** | Usa o framework `RetrievalAugmentor` com transformadores de consulta plugáveis, roteadores, re-rankers e injetores de conteúdo para pipelines em produção. | Máxima flexibilidade, mas muito mais complexidade. |
+| **Easy RAG** | Conecta tudo automaticamente via `AiServices` e `ContentRetriever`. Você anota uma interface, conecta um recuperador, e o LangChain4j cuida de embedding, busca e montagem do prompt nos bastidores. | Código mínimo, mas você não vê o que acontece em cada etapa. |
+| **Native RAG** | Você chama o modelo de embedding, busca na loja, monta o prompt e gera a resposta — um passo explícito por vez. | Mais código, mas cada etapa é visível e modificável. |
+| **Advanced RAG** | Usa o framework `RetrievalAugmentor` com transformadores de consulta plugáveis, roteadores, reclassificadores e injetores de conteúdo para pipelines de nível de produção. | Máxima flexibilidade, mas com complexidade significativamente maior. |
 
-**Este tutorial usa a abordagem Native.** Cada etapa do pipeline RAG — embedding da consulta, busca na store vetorial, montagem do contexto e geração da resposta — está escrita explicitamente em [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Isso é intencional: como recurso de aprendizado, é mais importante que você veja e entenda cada etapa do que que o código seja minimizado. Quando você estiver confortável com o funcionamento das partes, poderá avançar para Easy RAG para protótipos rápidos ou Advanced RAG para sistemas em produção.
+**Este tutorial usa a abordagem Native.** Cada etapa do pipeline RAG — embedding da consulta, busca na loja vetorial, montagem do contexto e geração da resposta — está explicitamente escrita em [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). Isso é intencional: como recurso de aprendizado, é mais importante que você veja e entenda todas as etapas do que minimizar o código. Quando estiver confortável com a montagem das partes, pode avançar para Easy RAG para protótipos rápidos ou Advanced RAG para sistemas de produção.
 
-> **💡 Já viu Easy RAG em ação?** O [módulo Início Rápido](../00-quick-start/README.md) inclui um exemplo Document Q&A ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) que usa a abordagem Easy RAG — LangChain4j cuida do embedding, pesquisa e montagem do prompt automaticamente. Este módulo dá o próximo passo abrindo esse pipeline para que você veja e controle cada etapa.
+> **💡 Já viu Easy RAG em ação?** O [módulo Início Rápido](../00-quick-start/README.md) inclui um exemplo de Perguntas e Respostas com Documentos ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) que usa a abordagem Easy RAG — o LangChain4j trata embedding, busca e montagem do prompt automaticamente. Este módulo avança ao abrir esse pipeline para que você veja e controle cada etapa.
 
-<img src="../../../translated_images/pt-BR/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
+<img src="../../../translated_images/pt-BR/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Pipeline Easy RAG - LangChain4j" width="800"/>
 
-*Este diagrama mostra o pipeline Easy RAG do `SimpleReaderDemo.java`. Compare com a abordagem Native usada neste módulo: o Easy RAG esconde o embedding, recuperação e montagem do prompt atrás de `AiServices` e `ContentRetriever` — você carrega um documento, adiciona um retriever e obtém respostas. A abordagem Native deste módulo abre esse pipeline para que você chame cada etapa (embed, buscar, montar contexto, gerar) você mesmo, dando visibilidade e controle total.*
+*Este diagrama mostra o pipeline Easy RAG do `SimpleReaderDemo.java`. Compare com a abordagem Native usada neste módulo: Easy RAG oculta embedding, recuperação e montagem do prompt atrás do `AiServices` e `ContentRetriever` — você carrega um documento, conecta um recuperador e obtém respostas. A abordagem Native neste módulo abre esse pipeline para que você chame cada etapa (embedar, buscar, montar contexto, gerar) manualmente, dando total visibilidade e controle.*
 
 ## Como Funciona
 
-O pipeline RAG neste módulo se divide em quatro etapas que executam em sequência toda vez que um usuário faz uma pergunta. Primeiro, um documento enviado é **analisado e dividido em blocos** gerenciáveis. Esses blocos são então convertidos em **embeddings vetoriais** e armazenados para que possam ser comparados matematicamente. Quando uma consulta chega, o sistema realiza uma **busca semântica** para encontrar os blocos mais relevantes, e finalmente os passa como contexto para o LLM para a **geração da resposta**. As seções abaixo explicam cada etapa com o código real e diagramas. Vamos ver o primeiro passo.
+O pipeline RAG neste módulo divide-se em quatro etapas sequenciais que rodamse toda vez que um usuário faz uma pergunta. Primeiro, um documento enviado é **analisado e dividido em pedaços** gerenciáveis. Esses pedaços são convertidos em **embeddings vetoriais** e armazenados para comparação matemática. Quando uma consulta chega, o sistema executa uma **busca semântica** para encontrar os pedaços mais relevantes, e finalmente os passa como contexto ao LLM para **geração da resposta**. As seções abaixo detalham cada etapa com código e diagramas. Vamos olhar o primeiro passo.
 
-### Processamento de Documentos
+### Processamento de Documento
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-Quando você envia um documento, o sistema o analisa (PDF ou texto simples), adiciona metadados como o nome do arquivo, e então o divide em blocos — pedaços menores que cabem confortavelmente na janela de contexto do modelo. Esses blocos se sobrepõem levemente para que não se perca contexto nas bordas.
+Quando você envia um documento, o sistema o analisa (PDF ou texto simples), anexa metadados como o nome do arquivo, e então o divide em pedaços — partes menores que cabem confortavelmente na janela de contexto do modelo. Esses pedaços se sobrepõem um pouco para que não se perca contexto nas bordas.
 
 ```java
-// Analise o arquivo carregado e envolva-o em um Documento LangChain4j
+// Analise o arquivo enviado e embrulhe-o em um Documento LangChain4j
 Document document = Document.from(content, metadata);
 
 // Divida em pedaços de 300 tokens com sobreposição de 30 tokens
@@ -112,27 +114,27 @@ DocumentSplitter splitter = DocumentSplitters
 
 List<TextSegment> segments = splitter.split(document);
 ```
-  
-O diagrama abaixo mostra como isso funciona visualmente. Note como cada bloco compartilha algumas tokens com seus vizinhos — a sobreposição de 30 tokens garante que nenhum contexto importante fique perdido entre as divisões:
 
-<img src="../../../translated_images/pt-BR/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
+O diagrama abaixo mostra como isso funciona visualmente. Observe como cada pedaço compartilha alguns tokens com seus vizinhos — a sobreposição de 30 tokens garante que nenhum contexto importante se perca:
 
-*Este diagrama mostra um documento sendo dividido em blocos de 300 tokens com sobreposição de 30 tokens, preservando o contexto nas bordas dos blocos.*
+<img src="../../../translated_images/pt-BR/document-chunking.a5df1dd1383431ed.webp" alt="Divisão do Documento em Pedaços" width="800"/>
+
+*Este diagrama mostra um documento sendo dividido em pedaços de 300 tokens com uma sobreposição de 30 tokens, preservando o contexto nas bordas dos pedaços.*
 
 > **🤖 Experimente com o [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) e pergunte:
-> - "Como o LangChain4j divide documentos em blocos e por que a sobreposição é importante?"
-> - "Qual o tamanho de bloco ideal para diferentes tipos de documentos e por quê?"
-> - "Como lidar com documentos em múltiplos idiomas ou com formatação especial?"
+> - "Como o LangChain4j divide documentos em pedaços e por que a sobreposição é importante?"
+> - "Qual o tamanho ideal dos pedaços para diferentes tipos de documentos e por quê?"
+> - "Como lidar com documentos em vários idiomas ou com formatações especiais?"
 
 ### Criando Embeddings
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-Cada bloco é convertido em uma representação numérica chamada embedding — essencialmente um conversor de significado para números. O modelo de embedding não é "inteligente" como um modelo de chat; ele não pode seguir instruções, raciocinar ou responder perguntas. O que ele pode fazer é mapear texto em um espaço matemático onde significados similares ficam próximos — "carro" perto de "automóvel," "política de reembolso" perto de "devolve meu dinheiro." Pense em um modelo de chat como uma pessoa para conversar; um modelo de embedding é um sistema de arquivamento ultra eficiente.
+Cada pedaço é convertido em uma representação numérica chamada embedding — essencialmente um conversor de significado para números. O modelo de embedding não é "inteligente" como um modelo de chat; não pode seguir instruções, raciocinar ou responder perguntas. O que ele faz é mapear texto em um espaço matemático onde significados semelhantes ficam próximos — "carro" perto de "automóvel", "política de reembolso" perto de "devolver meu dinheiro". Pense no modelo de chat como uma pessoa para conversar; o modelo de embedding é um sistema de arquivamento ultra eficiente.
 
-<img src="../../../translated_images/pt-BR/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
+<img src="../../../translated_images/pt-BR/embedding-model-concept.90760790c336a705.webp" alt="Conceito do Modelo de Embedding" width="800"/>
 
-*Este diagrama mostra como um modelo de embedding converte texto em vetores numéricos, colocando significados similares — como "carro" e "automóvel" — próximos no espaço vetorial.*
+*Este diagrama mostra como um modelo de embedding converte texto em vetores numéricos, colocando significados semelhantes — como "carro" e "automóvel" — próximos no espaço vetorial.*
 
 ```java
 @Bean
@@ -147,30 +149,30 @@ public EmbeddingModel embeddingModel() {
 EmbeddingStore<TextSegment> embeddingStore = 
     new InMemoryEmbeddingStore<>();
 ```
-  
-O diagrama de classes abaixo mostra os dois fluxos separados em um pipeline RAG e as classes LangChain4j que os implementam. O **fluxo de ingestão** (executado uma vez no envio) divide o documento, embede os blocos e os armazena via `.addAll()`. O **fluxo de consulta** (que roda a cada pergunta) embede a questão, pesquisa na store via `.search()`, e passa o contexto encontrado para o modelo de chat. Ambos os fluxos se conectam pela interface `EmbeddingStore<TextSegment>` compartilhada:
 
-<img src="../../../translated_images/pt-BR/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
+O diagrama de classes abaixo mostra os dois fluxos separados no pipeline RAG e as classes LangChain4j que os implementam. O **fluxo de ingestão** (executado uma vez no envio) divide o documento, embeda os pedaços e os armazena via `.addAll()`. O **fluxo de consulta** (executado a cada pergunta) embeda a questão, busca na loja via `.search()`, e passa o contexto correspondente ao modelo de chat. Ambos os fluxos se encontram na interface compartilhada `EmbeddingStore<TextSegment>`:
 
-*Este diagrama mostra os dois fluxos em um pipeline RAG — ingestão e consulta — e como se conectam através de uma EmbeddingStore compartilhada.*
+<img src="../../../translated_images/pt-BR/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="Classes RAG LangChain4j" width="800"/>
 
-Uma vez armazenados, conteúdos similares naturalmente se agrupam juntos no espaço vetorial. A visualização abaixo mostra como documentos sobre tópicos relacionados ficam próximos, o que torna possível a busca semântica:
+*Este diagrama mostra os dois fluxos no pipeline RAG — ingestão e consulta — e como eles se conectam através de um EmbeddingStore compartilhado.*
 
-<img src="../../../translated_images/pt-BR/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
+Uma vez armazenados os embeddings, conteúdos similares naturalmente se agrupam no espaço vetorial. A visualização abaixo mostra como documentos sobre tópicos relacionados ficam próximos, o que torna possível a busca semântica:
 
-*Esta visualização mostra como documentos relacionados se agrupam no espaço vetorial 3D, com tópicos como Documentos Técnicos, Regras de Negócio e FAQs formando grupos distintos.*
+<img src="../../../translated_images/pt-BR/vector-embeddings.2ef7bdddac79a327.webp" alt="Espaço de Embeddings Vetoriais" width="800"/>
 
-Quando um usuário pesquisa, o sistema segue quatro passos: embede os documentos uma vez, embede a consulta a cada busca, compara o vetor da consulta com todos os vetores armazenados usando similaridade do cosseno, e retorna os top-K blocos com maior pontuação. O diagrama abaixo ilustra cada passo e as classes LangChain4j envolvidas:
+*Esta visualização mostra como documentos relacionados se agrupam no espaço vetorial 3D, com tópicos como Documentação Técnica, Regras de Negócio e FAQs formando grupos distintos.*
 
-<img src="../../../translated_images/pt-BR/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding Search Steps" width="800"/>
+Quando um usuário busca, o sistema segue quatro passos: embeda os documentos uma vez, embeda a consulta a cada busca, compara o vetor da consulta contra todos os vetores armazenados usando similaridade cosseno, e retorna os top-K pedaços com maiores pontuações. O diagrama abaixo explica cada etapa e as classes LangChain4j envolvidas:
 
-*Este diagrama mostra o processo de busca por embedding em quatro etapas: embeder documentos, embedar a consulta, comparar vetores com similaridade do cosseno, e retornar os top-K resultados.*
+<img src="../../../translated_images/pt-BR/embedding-search-steps.f54c907b3c5b4332.webp" alt="Etapas da Busca por Embedding" width="800"/>
+
+*Este diagrama mostra o processo de busca por embedding em quatro passos: embedar documentos, embedar a consulta, comparar vetores com similaridade cosseno e retornar os top-K resultados.*
 
 ### Busca Semântica
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Quando você faz uma pergunta, a própria pergunta vira um embedding. O sistema compara o embedding da sua questão com os embeddings de todos os blocos de documentos. Ele encontra os blocos com significados mais semelhantes — não apenas palavras-chave iguais, mas similaridade semântica real.
+Quando você faz uma pergunta, ela também vira um embedding. O sistema compara o embedding da sua pergunta com os embeddings de todos os pedaços do documento. Ele encontra os pedaços com significados mais similares — não apenas palavras-chave iguais, mas similaridade semântica real.
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
@@ -189,28 +191,28 @@ for (EmbeddingMatch<TextSegment> match : matches) {
     double score = match.score();
 }
 ```
-  
-O diagrama abaixo contrasta a busca semântica com a busca tradicional por palavras-chave. Uma busca por palavra-chave por "veículo" perde um bloco sobre "carros e caminhões," mas a busca semântica entende que eles significam a mesma coisa e retorna esse bloco com alta pontuação:
 
-<img src="../../../translated_images/pt-BR/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
+O diagrama abaixo contrasta busca semântica com busca tradicional por palavra-chave. Uma busca por palavra-chave por "veículo" perde um trecho sobre "carros e caminhões", mas a busca semântica entende que eles significam o mesmo e o retorna como correspondência de alta pontuação:
 
-*Este diagrama compara busca baseada em palavra-chave com busca semântica, mostrando como a busca semântica recupera conteúdo conceitualmente relacionado mesmo quando as palavras exatas divergem.*
+<img src="../../../translated_images/pt-BR/semantic-search.6b790f21c86b849d.webp" alt="Busca Semântica" width="800"/>
 
-Por trás das cenas, a similaridade é medida usando similaridade do cosseno — basicamente perguntando "esses dois vetores apontam na mesma direção?" Dois blocos podem usar palavras completamente diferentes, mas se significam a mesma coisa, seus vetores apontam na mesma direção e têm pontuação próxima de 1.0:
+*Este diagrama compara a busca por palavras-chave com a busca semântica, mostrando como a busca semântica recupera conteúdos conceitualmente relacionados mesmo quando as palavras exatas diferem.*
 
-<img src="../../../translated_images/pt-BR/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
+Por trás, a similaridade é medida usando similaridade cosseno — basicamente perguntando "esses dois vetores apontam para a mesma direção?" Dois pedaços podem usar palavras completamente diferentes, mas se significarem a mesma coisa seus vetores apontam na mesma direção e pontuam perto de 1.0:
 
-*Este diagrama ilustra a similaridade do cosseno como o ângulo entre vetores de embedding — vetores mais alinhados pontuam mais próximos de 1.0, indicando maior similaridade semântica.*
-> **🤖 Experimente com o [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) e pergunte:
+<img src="../../../translated_images/pt-BR/cosine-similarity.9baeaf3fc3336abb.webp" alt="Similaridade Cosseno" width="800"/>
+*Este diagrama ilustra a similaridade de cosseno como o ângulo entre vetores de embedding — vetores mais alinhados pontuam mais próximos de 1.0, indicando maior similaridade semântica.*
+
+> **🤖 Experimente com [GitHub Copilot](https://github.com/features/copilot) Chat:** Abra [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) e pergunte:
 > - "Como funciona a busca por similaridade com embeddings e o que determina a pontuação?"
-> - "Qual limite de similaridade devo usar e como isso afeta os resultados?"
+> - "Qual limiar de similaridade devo usar e como isso afeta os resultados?"
 > - "Como lidar com casos onde nenhum documento relevante é encontrado?"
 
 ### Geração de Resposta
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-Os fragmentos mais relevantes são montados em um prompt estruturado que inclui instruções explícitas, o contexto recuperado e a pergunta do usuário. O modelo lê esses fragmentos específicos e responde com base nessa informação — ele só pode usar o que está à sua frente, o que evita alucinações.
+Os pedaços mais relevantes são reunidos em um prompt estruturado que inclui instruções explícitas, o contexto recuperado e a pergunta do usuário. O modelo lê esses pedaços específicos e responde com base nessas informações — ele só pode usar o que está à sua frente, o que previne alucinações.
 
 ```java
 String context = matches.stream()
@@ -231,17 +233,17 @@ String prompt = String.format("""
 String answer = chatModel.chat(prompt);
 ```
 
-O diagrama abaixo mostra essa montagem em ação — os fragmentos com maior pontuação da etapa de busca são inseridos no template do prompt, e o `OpenAiOfficialChatModel` gera uma resposta fundamentada:
+O diagrama abaixo mostra essa montagem em ação — os pedaços com maior pontuação da etapa de busca são inseridos no template do prompt, e o `OpenAiOfficialChatModel` gera uma resposta fundamentada:
 
-<img src="../../../translated_images/pt-BR/context-assembly.7e6dd60c31f95978.webp" alt="Montagem do Contexto" width="800"/>
+<img src="../../../translated_images/pt-BR/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
-*Este diagrama mostra como os fragmentos com maior pontuação são montados em um prompt estruturado, permitindo que o modelo gere uma resposta fundamentada a partir dos seus dados.*
+*Este diagrama mostra como os pedaços com maior pontuação são montados em um prompt estruturado, permitindo que o modelo gere uma resposta fundamentada a partir dos seus dados.*
 
-## Execute a Aplicação
+## Executar a Aplicação
 
 **Verifique a implantação:**
 
-Certifique-se de que o arquivo `.env` exista no diretório raiz com as credenciais Azure (criado durante o Módulo 01):
+Certifique-se de que o arquivo `.env` existe no diretório raiz com as credenciais do Azure (criado durante o Módulo 01):
 
 **Bash:**
 ```bash
@@ -255,15 +257,15 @@ Get-Content ..\.env  # Deve mostrar AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **Inicie a aplicação:**
 
-> **Nota:** Se você já iniciou todas as aplicações usando `./start-all.sh` do Módulo 01, este módulo já está rodando na porta 8081. Você pode pular os comandos de inicialização abaixo e ir direto para http://localhost:8081.
+> **Nota:** Se você já iniciou todas as aplicações usando `./start-all.sh` do Módulo 01, este módulo já está rodando na porta 8081. Você pode pular os comandos de inicialização abaixo e ir diretamente para http://localhost:8081.
 
 **Opção 1: Usando o Spring Boot Dashboard (Recomendado para usuários do VS Code)**
 
-O contêiner de desenvolvimento inclui a extensão Spring Boot Dashboard, que fornece uma interface visual para gerenciar todas as aplicações Spring Boot. Você pode encontrá-la na Barra de Atividades à esquerda do VS Code (procure o ícone do Spring Boot).
+O dev container inclui a extensão Spring Boot Dashboard, que fornece uma interface visual para gerenciar todas as aplicações Spring Boot. Você pode encontrá-la na Barra de Atividades do lado esquerdo do VS Code (procure o ícone Spring Boot).
 
 No Spring Boot Dashboard, você pode:
-- Ver todas as aplicações Spring Boot disponíveis no espaço de trabalho
-- Iniciar/parar aplicações com um único clique
+- Ver todas as aplicações Spring Boot disponíveis no workspace
+- Iniciar/parar aplicações com um clique
 - Visualizar logs da aplicação em tempo real
 - Monitorar o status da aplicação
 
@@ -271,7 +273,7 @@ Basta clicar no botão de play ao lado de "rag" para iniciar este módulo, ou in
 
 <img src="../../../translated_images/pt-BR/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Esta captura de tela mostra o Spring Boot Dashboard no VS Code, onde você pode iniciar, parar e monitorar as aplicações visualmente.*
+*Esta captura de tela mostra o Spring Boot Dashboard no VS Code, onde você pode iniciar, parar e monitorar aplicações visualmente.*
 
 **Opção 2: Usando scripts shell**
 
@@ -279,7 +281,7 @@ Inicie todas as aplicações web (módulos 01-04):
 
 **Bash:**
 ```bash
-cd ..  # A partir do diretório raiz
+cd ..  # Do diretório raiz
 ./start-all.sh
 ```
 
@@ -289,7 +291,7 @@ cd ..  # A partir do diretório raiz
 .\start-all.ps1
 ```
 
-Ou inicie só este módulo:
+Ou inicie apenas este módulo:
 
 **Bash:**
 ```bash
@@ -303,9 +305,9 @@ cd 03-rag
 .\start.ps1
 ```
 
-Ambos os scripts carregam automaticamente as variáveis de ambiente do arquivo `.env` na raiz e irão construir os JARs caso não existam.
+Ambos os scripts carregam automaticamente as variáveis de ambiente do arquivo `.env` na raiz e irão compilar os JARs se eles não existirem.
 
-> **Nota:** Se preferir construir todos os módulos manualmente antes de iniciar:
+> **Nota:** Se preferir compilar todos os módulos manualmente antes de iniciar:
 >
 > **Bash:**
 > ```bash
@@ -332,99 +334,99 @@ cd .. && ./stop-all.sh  # Todos os módulos
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Este módulo apenas
+.\stop.ps1  # Apenas este módulo
 # Ou
 cd ..; .\stop-all.ps1  # Todos os módulos
 ```
 
 ## Usando a Aplicação
 
-A aplicação oferece uma interface web para upload de documentos e perguntas.
+A aplicação fornece uma interface web para upload de documentos e questionamentos.
 
-<a href="images/rag-homepage.png"><img src="../../../translated_images/pt-BR/rag-homepage.d90eb5ce1b3caa94.webp" alt="Interface da Aplicação RAG" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-homepage.png"><img src="../../../translated_images/pt-BR/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
 *Esta captura de tela mostra a interface da aplicação RAG onde você faz upload de documentos e faz perguntas.*
 
 ### Fazer Upload de um Documento
 
-Comece fazendo upload de um documento - arquivos TXT funcionam melhor para testes. Um `sample-document.txt` está disponível neste diretório e contém informações sobre recursos do LangChain4j, implementação RAG e melhores práticas - perfeito para testar o sistema.
+Comece fazendo upload de um documento — arquivos TXT funcionam melhor para testes. Um arquivo `sample-document.txt` está disponível neste diretório e contém informações sobre recursos do LangChain4j, implementação RAG, e melhores práticas — perfeito para testar o sistema.
 
-O sistema processa seu documento, divide-o em fragmentos e cria embeddings para cada um. Isso acontece automaticamente quando você faz o upload.
+O sistema processa seu documento, divide em pedaços e cria embeddings para cada pedaço. Isso acontece automaticamente ao fazer upload.
 
-### Faça Perguntas
+### Fazer Perguntas
 
-Agora faça perguntas específicas sobre o conteúdo do documento. Tente algo factual que esteja claramente declarado no documento. O sistema busca fragmentos relevantes, os inclui no prompt e gera uma resposta.
+Agora faça perguntas específicas sobre o conteúdo do documento. Tente algo factual que esteja claramente declarado no documento. O sistema busca pedaços relevantes, os inclui no prompt e gera uma resposta.
 
-### Verifique as Referências da Fonte
+### Verificar Referências de Fonte
 
-Note que cada resposta inclui referências das fontes com as pontuações de similaridade. Estas pontuações (de 0 a 1) mostram o quão relevante cada fragmento foi para sua pergunta. Pontuações maiores indicam correspondências melhores. Isso permite que você verifique a resposta com o material fonte.
+Observe que cada resposta inclui referências de fontes com pontuações de similaridade. Essas pontuações (de 0 a 1) mostram o quão relevante cada pedaço foi para sua pergunta. Pontuações mais altas significam melhores correspondências. Isso permite verificar a resposta com o material original.
 
-<a href="images/rag-query-results.png"><img src="../../../translated_images/pt-BR/rag-query-results.6d69fcec5397f355.webp" alt="Resultados da Consulta RAG" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/rag-query-results.png"><img src="../../../translated_images/pt-BR/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Esta captura de tela mostra os resultados da consulta com a resposta gerada, referências das fontes e pontuações de relevância para cada fragmento recuperado.*
+*Esta captura de tela mostra resultados da consulta com a resposta gerada, referências de fonte e pontuações de relevância para cada pedaço recuperado.*
 
-### Experimente com Perguntas
+### Experimente Perguntas
 
-Tente diferentes tipos de perguntas:
+Experimente diferentes tipos de perguntas:
 - Fatos específicos: "Qual é o tema principal?"
 - Comparações: "Qual a diferença entre X e Y?"
-- Resumos: "Resuma os pontos-chave sobre Z"
+- Resumos: "Resuma os pontos chave sobre Z"
 
-Observe como as pontuações de relevância mudam com base na correspondência da sua pergunta com o conteúdo do documento.
+Observe como as pontuações de relevância mudam conforme sua pergunta combina com o conteúdo do documento.
 
 ## Conceitos-Chave
 
-### Estratégia de Fragmentação
+### Estratégia de Chunking
 
-Os documentos são divididos em fragmentos de 300 tokens com 30 tokens de sobreposição. Esse equilíbrio garante que cada fragmento tenha contexto suficiente para ser significativo, mantendo-os pequenos o bastante para incluir múltiplos fragmentos num prompt.
+Documentos são divididos em pedaços de 300 tokens com 30 tokens de sobreposição. Esse equilíbrio garante que cada pedaço tenha contexto suficiente para ser significativo, enquanto permanece pequeno o bastante para incluir múltiplos pedaços no prompt.
 
 ### Pontuações de Similaridade
 
-Cada fragmento recuperado vem com uma pontuação de similaridade entre 0 e 1 que indica o quão próximo ele corresponde à pergunta do usuário. O diagrama abaixo visualiza as faixas de pontuação e como o sistema as usa para filtrar resultados:
+Cada pedaço recuperado vem com uma pontuação de similaridade entre 0 e 1 que indica o quão próximo ele combina com a pergunta do usuário. O diagrama abaixo visualiza as faixas de pontuação e como o sistema as usa para filtrar resultados:
 
-<img src="../../../translated_images/pt-BR/similarity-scores.b0716aa911abf7f0.webp" alt="Pontuações de Similaridade" width="800"/>
+<img src="../../../translated_images/pt-BR/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
 
-*Este diagrama mostra faixas de pontuação de 0 a 1, com um limite mínimo de 0,5 que filtra fragmentos irrelevantes.*
+*Este diagrama mostra faixas de pontuação de 0 a 1, com um limiar mínimo de 0.5 que filtra pedaços irrelevantes.*
 
 As pontuações variam de 0 a 1:
-- 0,7-1,0: Altamente relevante, correspondência exata
-- 0,5-0,7: Relevante, bom contexto
-- Abaixo de 0,5: Filtrado, muito diferente
+- 0.7-1.0: Altamente relevante, correspondência exata
+- 0.5-0.7: Relevante, bom contexto
+- Abaixo de 0.5: Filtrado, muito diferente
 
-O sistema recupera apenas fragmentos acima do limite mínimo para garantir qualidade.
+O sistema recupera apenas pedaços acima do limiar mínimo para assegurar qualidade.
 
-Embeddings funcionam bem quando o significado se agrupa claramente, mas têm pontos cegos. O diagrama abaixo mostra modos comuns de falha — fragmentos muito grandes produzem vetores confusos, fragmentos muito pequenos carecem de contexto, termos ambíguos apontam para múltiplos agrupamentos, e buscas por correspondência exata (IDs, números de peça) não funcionam com embeddings:
+Embeddings funcionam bem quando o significado forma agrupamentos claros, mas possuem pontos cegos. O diagrama abaixo mostra os modos comuns de falha — pedaços muito grandes produzem vetores confusos, pedaços muito pequenos carecem de contexto, termos ambíguos apontam para múltiplos agrupamentos, e buscas por correspondência exata (IDs, números de parte) não funcionam com embeddings:
 
-<img src="../../../translated_images/pt-BR/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Modos de Falha de Embedding" width="800"/>
+<img src="../../../translated_images/pt-BR/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
 
-*Este diagrama mostra modos comuns de falha de embedding: fragmentos muito grandes, fragmentos muito pequenos, termos ambíguos que apontam para múltiplos agrupamentos, e buscas por correspondência exata como IDs.*
+*Este diagrama mostra modos comuns de falha de embedding: pedaços muito grandes, pedaços muito pequenos, termos ambíguos que apontam para múltiplos agrupamentos, e buscas por correspondência exata como IDs.*
 
 ### Armazenamento em Memória
 
-Este módulo usa armazenamento em memória para simplicidade. Quando você reinicia a aplicação, os documentos enviados são perdidos. Sistemas de produção usam bancos de dados vetoriais persistentes como Qdrant ou Azure AI Search.
+Este módulo usa armazenamento em memória para simplicidade. Quando você reinicia a aplicação, os documentos carregados são perdidos. Sistemas de produção usam bancos de dados vetoriais persistentes como Qdrant ou Azure AI Search.
 
-### Gestão da Janela de Contexto
+### Gerenciamento da Janela de Contexto
 
-Cada modelo tem uma janela máxima de contexto. Você não pode incluir todos os fragmentos de um documento grande. O sistema recupera os N fragmentos mais relevantes (padrão 5) para ficar dentro dos limites, enquanto fornece contexto suficiente para respostas precisas.
+Cada modelo tem uma janela de contexto máxima. Você não pode incluir todo pedaço de um documento grande. O sistema recupera os top N pedaços mais relevantes (padrão 5) para respeitar os limites e fornecer contexto suficiente para respostas precisas.
 
-## Quando o RAG é Importante
+## Quando o RAG Importa
 
-RAG nem sempre é a abordagem certa. O guia abaixo ajuda a determinar quando o RAG agrega valor versus quando abordagens mais simples — como incluir conteúdo diretamente no prompt ou confiar no conhecimento embutido do modelo — são suficientes:
+RAG nem sempre é a abordagem certa. O guia de decisão abaixo ajuda a determinar quando RAG agrega valor versus quando abordagens mais simples — como incluir conteúdo diretamente no prompt ou confiar no conhecimento embutido do modelo — são suficientes:
 
-<img src="../../../translated_images/pt-BR/when-to-use-rag.1016223f6fea26bc.webp" alt="Quando Usar RAG" width="800"/>
+<img src="../../../translated_images/pt-BR/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
-*Este diagrama mostra um guia de decisão para quando o RAG agrega valor versus quando abordagens mais simples são suficientes.*
+*Este diagrama mostra um guia de decisão para quando RAG agrega valor versus quando abordagens mais simples são suficientes.*
 
 **Use RAG quando:**
 - Responder perguntas sobre documentos proprietários
-- Informação muda frequentemente (políticas, preços, especificações)
-- Precisar de precisão com atribuição de fontes
-- Conteúdo é grande demais para caber num único prompt
+- Informações mudam frequentemente (políticas, preços, especificações)
+- Precisão exige atribuição da fonte
+- Conteúdo é grande demais para caber em um único prompt
 - Você precisa de respostas verificáveis e fundamentadas
 
 **Não use RAG quando:**
-- Perguntas requerem conhecimento geral que o modelo já possui
-- Dados em tempo real são necessários (RAG trabalha com documentos enviados)
+- Perguntas exigem conhecimento geral que o modelo já possui
+- Dados em tempo real são necessários (RAG trabalha com documentos carregados)
 - Conteúdo é pequeno o suficiente para incluir diretamente nos prompts
 
 ## Próximos Passos
@@ -438,6 +440,6 @@ RAG nem sempre é a abordagem certa. O guia abaixo ajuda a determinar quando o R
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Aviso Legal**:
-Este documento foi traduzido utilizando o serviço de tradução por IA [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos para garantir a precisão, esteja ciente de que traduções automatizadas podem conter erros ou imprecisões. O documento original em seu idioma nativo deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se tradução profissional realizada por humanos. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações equivocadas decorrentes do uso desta tradução.
+**Aviso Legal**:  
+Este documento foi traduzido utilizando o serviço de tradução por IA [Co-op Translator](https://github.com/Azure/co-op-translator). Embora nos esforcemos para garantir a precisão, esteja ciente de que traduções automáticas podem conter erros ou imprecisões. O documento original em seu idioma nativo deve ser considerado a fonte autorizada. Para informações críticas, recomenda-se tradução profissional humana. Não nos responsabilizamos por quaisquer mal-entendidos ou interpretações equivocadas decorrentes do uso desta tradução.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
