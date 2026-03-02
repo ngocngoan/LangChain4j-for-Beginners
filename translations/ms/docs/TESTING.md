@@ -1,18 +1,18 @@
 # Menguji Aplikasi LangChain4j
 
-## Jadual Kandungan
+## Kandungan
 
-- [Mula Cepat](../../../docs)
-- [Apa yang Diliputi oleh Ujian](../../../docs)
+- [Mula Pantas](../../../docs)
+- [Apa yang Diuji](../../../docs)
 - [Menjalankan Ujian](../../../docs)
 - [Menjalankan Ujian dalam VS Code](../../../docs)
 - [Corak Pengujian](../../../docs)
 - [Falsafah Pengujian](../../../docs)
 - [Langkah Seterusnya](../../../docs)
 
-Panduan ini membimbing anda melalui ujian yang menunjukkan cara menguji aplikasi AI tanpa memerlukan kekunci API atau perkhidmatan luaran.
+Panduan ini membimbing anda melalui ujian yang menunjukkan cara menguji aplikasi AI tanpa memerlukan kunci API atau perkhidmatan luar.
 
-## Mula Cepat
+## Mula Pantas
 
 Jalankan semua ujian dengan satu arahan:
 
@@ -26,30 +26,32 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/ms/test-results.ea5c98d8f3642043.webp" alt="Hasil Ujian Berjaya" width="800"/>
+Apabila semua ujian lulus, anda akan melihat output seperti tangkapan skrin di bawah — ujian dijalankan tanpa kegagalan.
+
+<img src="../../../translated_images/ms/test-results.ea5c98d8f3642043.webp" alt="Keputusan Ujian Berjaya" width="800"/>
 
 *Pelaksanaan ujian berjaya menunjukkan semua ujian lulus tanpa kegagalan*
 
-## Apa yang Diliputi oleh Ujian
+## Apa yang Diuji
 
-Kursus ini memberi tumpuan kepada **ujian unit** yang dijalankan secara tempatan. Setiap ujian menunjukkan konsep LangChain4j tertentu secara terpisah.
+Kursus ini memfokuskan pada **ujian unit** yang dijalankan secara tempatan. Setiap ujian menunjukkan konsep LangChain4j tertentu secara terpencil. Piramid pengujian di bawah menunjukkan di mana ujian unit sesuai — ia membentuk asas yang pantas dan boleh dipercayai yang dibina strategi ujian anda yang lain.
 
-<img src="../../../translated_images/ms/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramid Ujian" width="800"/>
+<img src="../../../translated_images/ms/testing-pyramid.2dd1079a0481e53e.webp" alt="Piramid Pengujian" width="800"/>
 
-*Piramid ujian yang menunjukkan keseimbangan antara ujian unit (pantas, terasing), ujian integrasi (komponen sebenar), dan ujian hujung-ke-hujung. Latihan ini meliputi ujian unit.*
+*Piramid pengujian menunjukkan keseimbangan antara ujian unit (pantas, terasing), ujian integrasi (komponen sebenar), dan ujian hujung ke hujung. Latihan ini merangkumi ujian unit.*
 
 | Modul | Ujian | Fokus | Fail Utama |
 |--------|-------|-------|-----------|
-| **00 - Mula Cepat** | 6 | Templat petikan dan penggantian pembolehubah | `SimpleQuickStartTest.java` |
-| **01 - Pengenalan** | 8 | Ingatan perbualan dan chat berstatus | `SimpleConversationTest.java` |
-| **02 - Kejuruteraan Petikan** | 12 | Corak GPT-5.2, tahap keghairahan, output berstruktur | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Pengambilan dokumen, embeddings, pencarian kesamaan | `DocumentServiceTest.java` |
-| **04 - Alat** | 12 | Panggilan fungsi dan rantai alat | `SimpleToolsTest.java` |
+| **00 - Mula Pantas** | 6 | Templat rangsangan dan penggantian pembolehubah | `SimpleQuickStartTest.java` |
+| **01 - Pengenalan** | 8 | Memori perbualan dan sembang berstatus | `SimpleConversationTest.java` |
+| **02 - Kejuruteraan Rangsangan** | 12 | Corak GPT-5.2, tahap kesungguhan, output berstruktur | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Penyepaduan dokumen, embedding, carian persamaan | `DocumentServiceTest.java` |
+| **04 - Alat** | 12 | Panggilan fungsi dan rantaian alat | `SimpleToolsTest.java` |
 | **05 - MCP** | 8 | Protokol Konteks Model dengan pengangkutan Stdio | `SimpleMcpTest.java` |
 
 ## Menjalankan Ujian
 
-**Jalankan semua ujian dari root:**
+**Jalankan semua ujian dari akar:**
 
 **Bash:**
 ```bash
@@ -66,7 +68,7 @@ mvn --% test
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Atau dari root
+# Atau dari akar
 mvn test -pl 01-introduction
 ```
 
@@ -93,7 +95,7 @@ mvn --% test -Dtest=SimpleConversationTest
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#harusMengekalkanSejarahPerbualan
+mvn test -Dtest=SimpleConversationTest#harusMenjagaSejarahPerbualan
 ```
 
 **PowerShell:**
@@ -103,31 +105,31 @@ mvn --% test -Dtest=SimpleConversationTest#harusMenjagaSejarahPerbualan
 
 ## Menjalankan Ujian dalam VS Code
 
-Jika anda menggunakan Visual Studio Code, Test Explorer menyediakan antara muka grafik untuk menjalankan dan debugging ujian.
+Jika anda menggunakan Visual Studio Code, Test Explorer menyediakan antara muka grafik untuk menjalankan dan menyahpepijat ujian.
 
-<img src="../../../translated_images/ms/vscode-testing.f02dd5917289dced.webp" alt="Peneroka Ujian VS Code" width="800"/>
+<img src="../../../translated_images/ms/vscode-testing.f02dd5917289dced.webp" alt="Penjelajah Ujian VS Code" width="800"/>
 
-*Peneroka Ujian VS Code menunjukkan pokok ujian dengan semua kelas ujian Java dan kaedah ujian individu*
+*Penjelajah Ujian VS Code menunjukkan pokok ujian dengan semua kelas ujian Java dan kaedah ujian individu*
 
 **Untuk menjalankan ujian dalam VS Code:**
 
-1. Buka Test Explorer dengan mengklik ikon beker di Bar Aktiviti
+1. Buka Test Explorer dengan mengklik ikon bekas kimia di Bar Aktiviti
 2. Kembangkan pokok ujian untuk melihat semua modul dan kelas ujian
 3. Klik butang main di sebelah mana-mana ujian untuk menjalankannya secara individu
-4. Klik "Run All Tests" untuk melaksanakan kesemua set ujian
-5. Klik kanan mana-mana ujian dan pilih "Debug Test" untuk menetapkan titik henti dan langkah melalui kod
+4. Klik "Run All Tests" untuk melaksanakan keseluruhan set ujian
+5. Klik kanan mana-mana ujian dan pilih "Debug Test" untuk menetapkan titik pecah dan langkah melalui kod
 
-Test Explorer menunjukkan tanda semak hijau untuk ujian yang lulus dan menyediakan mesej kegagalan terperinci apabila ujian gagal.
+Penjelajah Ujian menunjukkan tanda semak hijau untuk ujian yang lulus dan memberikan mesej kegagalan terperinci apabila ujian gagal.
 
 ## Corak Pengujian
 
-### Corak 1: Menguji Templat Petikan
+### Corak 1: Menguji Templat Rangsangan
 
-Corak paling mudah menguji templat petikan tanpa memanggil mana-mana model AI. Anda mengesahkan bahawa penggantian pembolehubah berfungsi dengan betul dan petikan diformat seperti yang dijangka.
+Corak paling mudah menguji templat rangsangan tanpa memanggil mana-mana model AI. Anda memeriksa bahawa penggantian pembolehubah dilakukan dengan betul dan rangsangan diformatkan seperti yang dijangka.
 
-<img src="../../../translated_images/ms/prompt-template-testing.b902758ddccc8dee.webp" alt="Pengujian Templat Petikan" width="800"/>
+<img src="../../../translated_images/ms/prompt-template-testing.b902758ddccc8dee.webp" alt="Pengujian Templat Rangsangan" width="800"/>
 
-*Pengujian templat petikan menunjukkan aliran penggantian pembolehubah: templat dengan tempat letak → nilai diterapkan → output diformat disahkan*
+*Pengujian templat rangsangan yang menunjukkan aliran penggantian pembolehubah: templat dengan tempat letak → nilai digunakan → output yang diformat disahkan*
 
 ```java
 @Test
@@ -146,27 +148,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-Ujian ini berada di `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
+Ujian ini terletak di `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java`.
 
-**Jalankan ia:**
+**Jalankan:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#formatTemplatArahanUji
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#ujianFormatTemplatArahan
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#ujiFormatTemplatArahan
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#formatTemplatPromptUjian
 ```
 
 ### Corak 2: Memalsukan Model Bahasa
 
-Apabila menguji logik perbualan, gunakan Mockito untuk membuat model palsu yang mengembalikan respons yang telah ditentukan. Ini menjadikan ujian pantas, percuma, dan deterministik.
+Apabila menguji logik perbualan, gunakan Mockito untuk mencipta model palsu yang mengembalikan respons yang telah ditentukan. Ini menjadikan ujian pantas, percuma, dan deterministik.
 
-<img src="../../../translated_images/ms/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Perbandingan Mock vs API Sebenar" width="800"/>
+<img src="../../../translated_images/ms/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Perbandingan Palsu vs API Sebenar" width="800"/>
 
-*Perbandingan yang menunjukkan mengapa mock lebih disukai untuk pengujian: ia pantas, percuma, deterministik, dan tidak memerlukan kekunci API*
+*Perbandingan menunjukkan mengapa palsu lebih disukai untuk pengujian: ia pantas, percuma, deterministik, dan tidak memerlukan kunci API*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -216,15 +218,15 @@ class SimpleConversationTest {
 }
 ```
 
-Corak ini muncul dalam `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Mock memastikan kelakuan konsisten supaya anda dapat mengesahkan pengurusan memori berfungsi dengan betul.
+Corak ini muncul dalam `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Palsu memastikan tingkah laku konsisten supaya anda boleh mengesahkan pengurusan memori berfungsi dengan betul.
 
 ### Corak 3: Menguji Pengasingan Perbualan
 
-Ingatan perbualan mesti memisahkan beberapa pengguna. Ujian ini mengesahkan bahawa perbualan tidak mencampuradukkan konteks.
+Memori perbualan mesti memisahkan beberapa pengguna. Ujian ini memeriksa bahawa perbualan tidak mencampur konteks.
 
 <img src="../../../translated_images/ms/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Pengasingan Perbualan" width="800"/>
 
-*Pengujian pengasingan perbualan menunjukkan stor ingatan berasingan untuk pengguna berbeza bagi mengelakkan pencampuran konteks*
+*Pengujian pengasingan perbualan menunjukkan stor memori berasingan untuk pengguna yang berbeza bagi mengelakkan pencampuran konteks*
 
 ```java
 @Test
@@ -248,15 +250,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Setiap perbualan mengekalkan sejarahnya sendiri secara bebas. Dalam sistem pengeluaran, pengasingan ini kritikal untuk aplikasi pelbagai pengguna.
+Setiap perbualan menyimpan sejarahnya sendiri secara bebas. Dalam sistem produksi, pengasingan ini kritikal untuk aplikasi berbilang pengguna.
 
-### Corak 4: Menguji Alat Secara Bebas
+### Corak 4: Menguji Alat Secara Berasingan
 
-Alat adalah fungsi yang boleh dipanggil oleh AI. Uji mereka secara langsung untuk memastikan mereka berfungsi dengan betul tanpa mengira keputusan AI.
+Alat adalah fungsi yang boleh dipanggil oleh AI. Uji mereka secara langsung untuk memastikan ia berfungsi walaupun tanpa keputusan AI.
 
 <img src="../../../translated_images/ms/tools-testing.3e1706817b0b3924.webp" alt="Pengujian Alat" width="800"/>
 
-*Pengujian alat secara bebas menunjukkan pelaksanaan alat palsu tanpa panggilan AI untuk mengesahkan logik perniagaan*
+*Pengujian alat secara berasingan menunjukkan pelaksanaan alat palsu tanpa panggilan AI untuk mengesahkan logik perniagaan*
 
 ```java
 @Test
@@ -279,15 +281,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Ujian ini dari `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` mengesahkan logik alat tanpa penglibatan AI. Contoh rantai menunjukkan bagaimana output satu alat memberi input kepada alat lain.
+Ujian ini dari `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` mengesahkan logik alat tanpa penglibatan AI. Contoh rantaian menunjukkan bagaimana output satu alat memberi makan kepada input alat lain.
 
 ### Corak 5: Pengujian RAG Dalam Memori
 
-Sistem RAG secara tradisional memerlukan pangkalan data vektor dan perkhidmatan embedding. Corak dalam memori membolehkan anda menguji keseluruhan saluran tanpa kebergantungan luaran.
+Sistem RAG tradisional memerlukan pangkalan data vektor dan perkhidmatan embedding. Corak dalam memori membolehkan anda menguji seluruh saluran tanpa pergantungan luar.
 
 <img src="../../../translated_images/ms/rag-testing.ee7541b1e23934b1.webp" alt="Pengujian RAG Dalam Memori" width="800"/>
 
-*Aliran kerja pengujian RAG dalam memori menunjukkan penganalisaan dokumen, penyimpanan embedding, dan pencarian kesamaan tanpa memerlukan pangkalan data*
+*Aliran kerja pengujian RAG dalam memori menunjukkan pengecaman dokumen, penyimpanan embedding, dan carian persamaan tanpa memerlukan pangkalan data*
 
 ```java
 @Test
@@ -304,15 +306,15 @@ void testProcessTextDocument() {
 }
 ```
 
-Ujian ini dari `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` mencipta dokumen dalam memori dan mengesahkan pemecahan dan pengendalian metadata.
+Ujian ini dari `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` mencipta dokumen dalam memori dan memeriksa pemecahan serta pengendalian metadata.
 
 ### Corak 6: Pengujian Integrasi MCP
 
-Modul MCP menguji protokol Model Context Protocol menggunakan pengangkutan stdio. Ujian ini mengesahkan bahawa aplikasi anda boleh menjana dan berkomunikasi dengan pelayan MCP sebagai subproses.
+Modul MCP menguji integrasi Protokol Konteks Model menggunakan pengangkutan stdio. Ujian ini mengesahkan aplikasi anda boleh menjana dan berkomunikasi dengan pelayan MCP sebagai proses bawah.
 
-Ujian dalam `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` mengesahkan kelakuan klien MCP.
+Ujian dalam `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` mengesahkan tingkah laku klien MCP.
 
-**Jalankan mereka:**
+**Jalankan:**
 
 **Bash:**
 ```bash
@@ -326,28 +328,28 @@ cd 05-mcp; mvn --% test
 
 ## Falsafah Pengujian
 
-Uji kod anda, bukan AI. Ujian anda harus mengesahkan kod yang anda tulis dengan memeriksa cara petikan dibina, cara memori diurus, dan cara alat dilaksanakan. Respons AI berubah-ubah dan tidak seharusnya menjadi sebahagian daripada pernyataan ujian. Tanyakan pada diri sendiri sama ada templat petikan anda menggantikan pembolehubah dengan betul, bukan sama ada AI memberikan jawapan yang betul.
+Uji kod anda, bukan AI. Ujian anda harus mengesahkan kod yang anda tulis dengan memeriksa bagaimana rangsangan dibina, bagaimana memori diurus, dan bagaimana alat dilaksanakan. Respons AI berubah-ubah dan tidak sepatutnya menjadi sebahagian daripada penegasan ujian. Tanyakan pada diri anda sama ada templat rangsangan anda menggantikan pembolehubah dengan betul, bukan sama ada AI memberikan jawapan yang betul.
 
-Gunakan mock untuk model bahasa. Mereka adalah kebergantungan luaran yang perlahan, mahal, dan tidak deterministik. Pemalsuan menjadikan ujian pantas dengan milisaat dan bukan saat, percuma tanpa kos API, serta deterministik dengan keputusan sama setiap masa.
+Gunakan palsu untuk model bahasa. Mereka adalah kebergantungan luaran yang perlahan, mahal, dan tidak deterministik. Memalsukan menjadikan ujian pantas dalam milisaat, percuma tanpa kos API, dan deterministik dengan keputusan sama setiap kali.
 
-Pastikan ujian berdikari. Setiap ujian harus menyediakan data sendiri, tidak bergantung pada ujian lain, dan membersihkan selepasnya. Ujian harus lulus tanpa mengira susunan pelaksanaan.
+Pastikan ujian berdikari. Setiap ujian harus menyediakan data sendiri, tidak bergantung pada ujian lain, dan membersihkan selepas dirinya. Ujian harus lulus tanpa mengira urutan pelaksanaan.
 
-Uji kes sempadan selain laluan yang biasa. Cubalah input kosong, input sangat besar, aksara khas, parameter tidak sah, dan keadaan sempadan. Ini sering mendedahkan pepijat yang tidak terdedah dalam penggunaan biasa.
+Uji kes luar selain jalan gembira. Cuba input kosong, input sangat besar, aksara khas, parameter tidak sah, dan syarat sempadan. Ini sering mendedahkan pepijat yang penggunaan normal tidak dedahkan.
 
-Gunakan nama yang deskriptif. Bandingkan `shouldMaintainConversationHistoryAcrossMultipleMessages()` dengan `test1()`. Yang pertama memberitahu anda dengan tepat apa yang diuji, memudahkan penjejakan kegagalan.
+Gunakan nama deskriptif. Bandingkan `shouldMaintainConversationHistoryAcrossMultipleMessages()` dengan `test1()`. Yang pertama memberitahu anda dengan tepat apa yang diuji, memudahkan debug kegagalan.
 
 ## Langkah Seterusnya
 
-Sekarang anda telah memahami corak pengujian, selami lebih dalam setiap modul:
+Kini anda memahami corak pengujian, terokai lebih mendalam setiap modul:
 
-- **[00 - Mula Cepat](../00-quick-start/README.md)** - Mulakan dengan asas templat petikan
-- **[01 - Pengenalan](../01-introduction/README.md)** - Belajar pengurusan ingatan perbualan
-- **[02 - Kejuruteraan Petikan](../02-prompt-engineering/README.md)** - Kuasai corak petikan GPT-5.2
-- **[03 - RAG](../03-rag/README.md)** - Bina sistem penjanaan beraugmen pengambilan
+- **[00 - Mula Pantas](../00-quick-start/README.md)** - Mulakan dengan asas templat rangsangan
+- **[01 - Pengenalan](../01-introduction/README.md)** - Pelajari pengurusan memori perbualan
+- **[02 - Kejuruteraan Rangsangan](../02/prompt-engineering/README.md)** - Kuasai corak rangsangan GPT-5.2
+- **[03 - RAG](../03-rag/README.md)** - Bangunkan sistem penghasilan diperkuatkan pengambilan
 - **[04 - Alat](../04-tools/README.md)** - Laksanakan panggilan fungsi dan rantai alat
 - **[05 - MCP](../05-mcp/README.md)** - Integrasi Protokol Konteks Model
 
-README setiap modul menyediakan penerangan terperinci tentang konsep yang diuji di sini.
+README setiap modul menyediakan penjelasan terperinci konsep yang diuji di sini.
 
 ---
 
@@ -357,5 +359,5 @@ README setiap modul menyediakan penerangan terperinci tentang konsep yang diuji 
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Penafian**:  
-Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, sila ambil perhatian bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya harus dianggap sebagai sumber rujukan yang sahih. Untuk maklumat penting, terjemahan profesional oleh manusia adalah disyorkan. Kami tidak bertanggungjawab atas sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
+Dokumen ini telah diterjemahkan menggunakan perkhidmatan terjemahan AI [Co-op Translator](https://github.com/Azure/co-op-translator). Walaupun kami berusaha untuk ketepatan, harap maklum bahawa terjemahan automatik mungkin mengandungi kesilapan atau ketidaktepatan. Dokumen asal dalam bahasa asalnya hendaklah dianggap sebagai sumber yang sahih. Untuk maklumat penting, terjemahan manusia profesional adalah disyorkan. Kami tidak bertanggungjawab atas sebarang salah faham atau salah tafsir yang timbul daripada penggunaan terjemahan ini.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
