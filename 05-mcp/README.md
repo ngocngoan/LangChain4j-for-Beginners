@@ -208,6 +208,12 @@ Here's what the concrete workflow looks like for our file-to-report pipeline:
 
 *FileAgent reads the file via MCP tools, then ReportAgent transforms the raw content into a structured report.*
 
+The following sequence diagram traces the full Supervisor orchestration — from spawning the MCP server, through the Supervisor's autonomous agent selection, to the tool calls over stdio and the final report:
+
+<img src="images/supervisor-agent-sequence.png" alt="Supervisor Agent Sequence Diagram" width="800"/>
+
+*The Supervisor autonomously invokes FileAgent (which calls the MCP server over stdio to read the file), then invokes ReportAgent to generate a structured report — each agent stores its output in the shared Agentic Scope.*
+
 Each agent stores its output in the **Agentic Scope** (shared memory), allowing downstream agents to access previous results. This demonstrates how MCP tools integrate seamlessly into agentic workflows — the Supervisor doesn't need to know *how* files are read, only that `FileAgent` can do it.
 
 #### Running the Demo

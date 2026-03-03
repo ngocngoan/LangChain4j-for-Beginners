@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Client as HTTP Client
+    participant Ctrl as Controller
+    participant Proxy as Assistant Proxy
+    participant LLM as Azure OpenAI
+    participant Tool as WeatherTool
+
+    Client->>Ctrl: POST /api/agent/chat
+    Ctrl->>Proxy: chat(sessionId, "Weather in Paris?")
+    Proxy->>LLM: message + tool schemas
+    LLM-->>Proxy: call getCurrentWeather("Paris")
+    Proxy->>Tool: WeatherTool.getCurrentWeather("Paris")
+    Tool-->>Proxy: "22°C and sunny"
+    Proxy->>LLM: tool result
+    LLM-->>Proxy: "The weather in Paris is 22°C and sunny."
+    Proxy-->>Ctrl: answer
+    Ctrl-->>Client: HTTP 200 JSON

@@ -126,6 +126,12 @@ Spring Boot auto-wires the declarative `@AiService` interface with all registere
 
 *The end-to-end flow — the user asks a question, the model selects a tool, LangChain4j executes it, and the model weaves the result into a natural response.*
 
+If you ran the [ToolIntegrationDemo](../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) in Module 00, you already saw this pattern in action — the `Calculator` tools were called the same way. The sequence diagram below shows exactly what happened under the hood during that demo:
+
+<img src="images/tool-calling-sequence.png" alt="Tool Calling Sequence Diagram" width="800"/>
+
+*The tool-calling loop from the Quick Start demo — `AiServices` sends your message and tool schemas to the LLM, the LLM replies with a function call like `add(42, 58)`, LangChain4j executes the `Calculator` method locally, and feeds the result back for the final answer.*
+
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`AgentService.java`](src/main/java/com/example/langchain4j/agents/service/AgentService.java) and ask:
 > - "How does the ReAct pattern work and why is it effective for AI agents?"
 > - "How does the agent decide which tool to use and in what order?"
@@ -142,6 +148,12 @@ This module uses LangChain4j's Spring Boot integration with declarative `@AiServ
 <img src="images/spring-boot-wiring.png" alt="Spring Boot Auto-Wiring Architecture" width="800"/>
 
 *The @AiService interface ties together the ChatModel, tool components, and memory provider — Spring Boot handles all the wiring automatically.*
+
+Here's the full request lifecycle as a sequence diagram — from the HTTP request through the controller, service, and auto-wired proxy, all the way to the tool execution and back:
+
+<img src="images/spring-boot-sequence.png" alt="Spring Boot Tool Calling Sequence" width="800"/>
+
+*The complete Spring Boot request lifecycle — HTTP request flows through the controller and service to the auto-wired Assistant proxy, which orchestrates the LLM and tool calls automatically.*
 
 Key benefits of this approach:
 
