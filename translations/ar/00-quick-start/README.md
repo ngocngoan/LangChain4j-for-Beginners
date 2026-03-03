@@ -5,45 +5,45 @@
 - [مقدمة](../../../00-quick-start)
 - [ما هو LangChain4j؟](../../../00-quick-start)
 - [اعتمادات LangChain4j](../../../00-quick-start)
-- [المتطلبات الأساسية](../../../00-quick-start)
+- [المتطلبات المسبقة](../../../00-quick-start)
 - [الإعداد](../../../00-quick-start)
   - [1. احصل على رمز GitHub الخاص بك](../../../00-quick-start)
-  - [2. ضبط رمزك](../../../00-quick-start)
+  - [2. ضبط الرمز الخاص بك](../../../00-quick-start)
 - [تشغيل الأمثلة](../../../00-quick-start)
   - [1. الدردشة الأساسية](../../../00-quick-start)
-  - [2. أنماط المطالبات](../../../00-quick-start)
+  - [2. أنماط الإدخال](../../../00-quick-start)
   - [3. استدعاء الدوال](../../../00-quick-start)
-  - [4. الأسئلة والأجوبة في المستندات (Easy RAG)](../../../00-quick-start)
+  - [4. أسئلة وأجوبة الوثائق (RAG السهل)](../../../00-quick-start)
   - [5. الذكاء الاصطناعي المسؤول](../../../00-quick-start)
-- [ما الذي يوضحه كل مثال](../../../00-quick-start)
+- [ما الذي يُظهره كل مثال](../../../00-quick-start)
 - [الخطوات التالية](../../../00-quick-start)
-- [حل المشكلات](../../../00-quick-start)
+- [استكشاف الأخطاء وإصلاحها](../../../00-quick-start)
 
 ## مقدمة
 
-تهدف هذه البداية السريعة إلى تمكينك من البدء مع LangChain4j بأسرع وقت ممكن. تغطي الأساسيات المطلقة لبناء تطبيقات الذكاء الاصطناعي باستخدام LangChain4j ونماذج GitHub. في الوحدات القادمة ستستخدم Azure OpenAI مع LangChain4j لبناء تطبيقات أكثر تقدمًا.
+تهدف هذه البداية السريعة إلى تمكينك من بدء استخدام LangChain4j بأسرع وقت ممكن. تغطي الأساسيات المطلقة لبناء تطبيقات الذكاء الاصطناعي باستخدام LangChain4j ونماذج GitHub. في الوحدات التالية، ستنتقل إلى Azure OpenAI و GPT-5.2 وتغوص أعمق في كل مفهوم.
 
 ## ما هو LangChain4j؟
 
-LangChain4j هي مكتبة جافا تبسط بناء تطبيقات مدعومة بالذكاء الاصطناعي. بدلاً من التعامل مع عملاء HTTP وتحليل JSON، تعمل مع واجهات برمجة تطبيقات جافا نظيفة.
+LangChain4j هو مكتبة Java تبسط بناء تطبيقات مدعومة بالذكاء الاصطناعي. بدلاً من التعامل مع عملاء HTTP وتحليل JSON، تعمل بواجهات برمجة تطبيقات Java نظيفة.
 
-تشير كلمة "chain" في LangChain إلى ربط مكونات متعددة معًا - قد تربط مطالبة بنموذج ثم بمحلل، أو تربط عدة مكالمات للذكاء الاصطناعي حيث يتم تمرير مخرج إلى المدخل التالي. تركز هذه البداية السريعة على الأساسيات قبل استكشاف سلاسل أكثر تعقيدًا.
+تشير كلمة "chain" في LangChain إلى ربط مكونات متعددة معًا - قد تربط مطالبة مع نموذج ثم محلل، أو تربط عدة استدعاءات للذكاء الاصطناعي معًا حيث تغذي ناتج واحد الإدخال التالي. تركز هذه البداية السريعة على الأساسيات قبل استكشاف سلاسل أكثر تعقيدًا.
 
 <img src="../../../translated_images/ar/langchain-concept.ad1fe6cf063515e1.webp" alt="مفهوم ربط LangChain4j" width="800"/>
 
-*ربط المكونات في LangChain4j - الوحدات البنائية تتصل لإنشاء تدفقات عمل ذكاء اصطناعي قوية*
+*ربط المكونات في LangChain4j - الكتل البنائية تتصل لإنشاء تدفقات عمل ذكية قوية*
 
-سنستخدم ثلاث مكونات أساسية:
+سنستخدم ثلاثة مكونات أساسية:
 
-**ChatModel** - واجهة التفاعل مع نموذج الذكاء الاصطناعي. استدعاء `model.chat("prompt")` والحصول على سلسلة استجابة. نستخدم `OpenAiOfficialChatModel` الذي يعمل مع نقاط نهاية متوافقة مع OpenAI مثل نماذج GitHub.
+**ChatModel** - واجهة للتفاعل مع نماذج الذكاء الاصطناعي. استدعِ `model.chat("prompt")` واحصل على سلسلة رد. نستخدم `OpenAiOfficialChatModel` الذي يعمل مع نقاط نهاية متوافقة مع OpenAI مثل نماذج GitHub.
 
-**AiServices** - تنشئ واجهات خدمة ذكاء اصطناعي آمنة من حيث النوع. عرّف الطرق، علق عليها بـ `@Tool`، ويتولى LangChain4j التنسيق. يقوم الذكاء الاصطناعي باستدعاء طرق جافا الخاصة بك تلقائيًا عند الحاجة.
+**AiServices** - ينشئ واجهات خدمات ذكاء اصطناعي آمنة من حيث النوع. عرّف طرقًا، علّمها بـ `@Tool`، ويتولى LangChain4j التنفيذ. يستدعي الذكاء الاصطناعي طرق Java الخاصة بك تلقائيًا عند الحاجة.
 
-**MessageWindowChatMemory** - يحافظ على سجل المحادثة. بدونها، كل طلب مستقل. معها، يذكر الذكاء الاصطناعي الرسائل السابقة ويحافظ على السياق عبر عدة جولات.
+**MessageWindowChatMemory** - يحتفظ بتاريخ المحادثة. بدون هذا، كل طلب مستقل. به، يتذكّر الذكاء الاصطناعي الرسائل السابقة ويحافظ على السياق عبر دورات متعددة.
 
-<img src="../../../translated_images/ar/architecture.eedc993a1c576839.webp" alt="بنية LangChain4j" width="800"/>
+<img src="../../../translated_images/ar/architecture.eedc993a1c576839.webp" alt="هندسة LangChain4j" width="800"/>
 
-*بنية LangChain4j - المكونات الأساسية تعمل معًا لتشغيل تطبيقات الذكاء الاصطناعي الخاصة بك*
+*هندسة LangChain4j - المكونات الأساسية تعمل معًا لتشغيل تطبيقات الذكاء الاصطناعي الخاصة بك*
 
 ## اعتمادات LangChain4j
 
@@ -69,38 +69,37 @@ LangChain4j هي مكتبة جافا تبسط بناء تطبيقات مدعوم
 </dependency>
 ```
 
+يوفر الموديول `langchain4j-open-ai-official` فئة `OpenAiOfficialChatModel` التي تتصل بواجهات API المتوافقة مع OpenAI. تستخدم نماذج GitHub نفس تنسيق API، لذا لا حاجة إلى محول خاص - فقط وجه عنوان القاعدة إلى `https://models.github.ai/inference`.
 
-يوفر الموديل `langchain4j-open-ai-official` فئة `OpenAiOfficialChatModel` التي تتصل بواجهات API متوافقة مع OpenAI. يستخدم GitHub Models نفس صيغة API، لذا لا يحتاج إلى محول خاص - فقط وجه عنوان URL الأساسي إلى `https://models.github.ai/inference`.
+يوفر الموديول `langchain4j-easy-rag` تقسيم الوثائق التلقائي، والتضمين، والاسترجاع حتى تتمكن من بناء تطبيقات RAG دون تكوين يدوي لكل خطوة.
 
-يوفر الموديل `langchain4j-easy-rag` تقسيم المستندات التلقائي، والتضمين، والاسترجاع حتى تتمكن من بناء تطبيقات RAG بدون إعداد يدوي لكل خطوة.
+## المتطلبات المسبقة
 
-## المتطلبات الأساسية
-
-**هل تستخدم حاوية التطوير؟** Java وMaven مثبتان بالفعل. تحتاج فقط إلى رمز وصول شخصي من GitHub.
+**هل تستخدم Dev Container؟** Java و Maven مثبتان بالفعل. أنت فقط بحاجة إلى رمز الوصول الشخصي من GitHub.
 
 **التطوير المحلي:**
 - Java 21+، Maven 3.9+
-- رمز الوصول الشخصي لـ GitHub (التعليمات أدناه)
+- رمز وصول شخصي من GitHub (التعليمات أدناه)
 
-> **ملاحظة:** تستخدم هذه الوحدة `gpt-4.1-nano` من نماذج GitHub. لا تغير اسم النموذج في الكود - فهو مهيأ للعمل مع نماذج GitHub المتوفرة.
+> **ملاحظة:** تستخدم هذه الوحدة `gpt-4.1-nano` من نماذج GitHub. لا تعدل اسم النموذج في الكود - هو مهيأ للعمل مع نماذج GitHub المتاحة.
 
 ## الإعداد
 
 ### 1. احصل على رمز GitHub الخاص بك
 
 1. انتقل إلى [إعدادات GitHub → رموز الوصول الشخصية](https://github.com/settings/personal-access-tokens)
-2. انقر على "إنشاء رمز جديد"
-3. ضع اسمًا وصفيًا (مثلاً: "عرض LangChain4j")
-4. اضبط تاريخ الانتهاء (7 أيام موصى بها)
-5. تحت "أذونات الحساب"، ابحث عن "نماذج" واضبطها على "قراءة فقط"
-6. انقر على "إنشاء رمز"
-7. انسخ رمزك واحفظه - لن تراه مرة أخرى
+2. اضغط على "إنشاء رمز جديد"
+3. ضع اسمًا وصفيًا (مثلاً: "LangChain4j Demo")
+4. حدد تاريخ انتهاء صلاحية (7 أيام موصى بها)
+5. تحت "أذونات الحساب"، ابحث عن "Models" واضبطها على "قراءة فقط"
+6. اضغط على "إنشاء رمز"
+7. انسخ وصِل رمزك - لن تراه مرة أخرى
 
-### 2. ضبط رمزك
+### 2. ضبط الرمز الخاص بك
 
 **الخيار 1: استخدام VS Code (موصى به)**
 
-إذا كنت تستخدم VS Code، أضف رمزك إلى ملف `.env` في جذر المشروع:
+إذا كنت تستخدم VS Code، أضف الرمز الخاص بك إلى ملف `.env` في جذر المشروع:
 
 إذا لم يكن ملف `.env` موجودًا، انسخ `.env.example` إلى `.env` أو أنشئ ملف `.env` جديد في جذر المشروع.
 
@@ -110,12 +109,11 @@ LangChain4j هي مكتبة جافا تبسط بناء تطبيقات مدعوم
 GITHUB_TOKEN=your_token_here
 ```
 
+ثم يمكنك ببساطة النقر بزر الفأرة الأيمن على أي ملف تجريبي (مثل `BasicChatDemo.java`) في المستكشف واختيار **"Run Java"** أو استخدام تكوينات التشغيل من لوحة Run و Debug.
 
-بعد ذلك يمكنك ببساطة النقر بزر الفأرة الأيمن على أي ملف تجريبي (مثلاً `BasicChatDemo.java`) في المستعرض واختيار **"تشغيل جافا"** أو استخدام إعدادات التشغيل من لوحة التشغيل والتصحيح.
+**الخيار 2: استخدام الطرفية**
 
-**الخيار 2: باستخدام الطرفية**
-
-اضبط الرمز كمتغير بيئي:
+اضبط الرمز كمتغير بيئة:
 
 **Bash:**
 ```bash
@@ -127,12 +125,11 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-
 ## تشغيل الأمثلة
 
-**باستخدام VS Code:** ببساطة انقر بزر الفأرة الأيمن على أي ملف تجريبي في المستعرض واختر **"تشغيل جافا"**، أو استخدم إعدادات التشغيل من لوحة التشغيل والتصحيح (تأكد من إضافة رمزك إلى ملف `.env` أولاً).
+**باستخدام VS Code:** فقط انقر بزر الفأرة الأيمن على أي ملف تجريبي في المستكشف واختر **"Run Java"**، أو استخدم تكوينات التشغيل من لوحة Run و Debug (تأكد من إضافة الرمز إلى ملف `.env` أولاً).
 
-**باستخدام Maven:** بدلاً من ذلك يمكنك التشغيل من سطر الأوامر:
+**باستخدام Maven:** بدلاً من ذلك، يمكنك التشغيل من سطر الأوامر:
 
 ### 1. الدردشة الأساسية
 
@@ -146,8 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-
-### 2. أنماط المطالبات
+### 2. أنماط الإدخال
 
 **Bash:**
 ```bash
@@ -159,8 +155,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-
-يعرض محادثات بدون أمثلة، مع أمثلة قليلة، سلسلة التفكير، ومطالبات قائمة على الأدوار.
+يعرض أنماط بدون أمثلة، مع أمثلة قليلة، السلسلة الفكرية، والإدخال القائم على الأدوار.
 
 ### 3. استدعاء الدوال
 
@@ -174,10 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
+الذكاء الاصطناعي يستدعي طرق Java الخاصة بك تلقائيًا عند الحاجة.
 
-يقوم الذكاء الاصطناعي بالاتصال التلقائي بطرق جافا الخاصة بك عندما يكون ذلك مطلوبًا.
-
-### 4. الأسئلة والأجوبة في المستندات (Easy RAG)
+### 4. أسئلة وأجوبة الوثائق (RAG السهل)
 
 **Bash:**
 ```bash
@@ -188,7 +182,6 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-
 
 اطرح أسئلة حول مستنداتك باستخدام Easy RAG مع التضمين والاسترجاع التلقائي.
 
@@ -204,14 +197,13 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
+شاهد كيف تمنع فلاتر سلامة الذكاء الاصطناعي المحتوى الضار.
 
-شاهد كيف تحجب مرشحات أمان الذكاء الاصطناعي المحتوى الضار.
-
-## ما الذي يوضحه كل مثال
+## ما الذي يُظهره كل مثال
 
 **الدردشة الأساسية** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-ابدأ من هنا لرؤية LangChain4j في أبسط صوره. ستنشئ `OpenAiOfficialChatModel`، ترسل مطالبة باستخدام `.chat()`، وتحصل على رد. يظهر هذا الأساس: كيف تهيئ النماذج بنقاط نهاية مخصصة ومفاتيح API. بمجرد فهم هذا النمط، يبنى كل شيء آخر عليه.
+ابدأ هنا لرؤية LangChain4j في أبسط صوره. ستنشئ `OpenAiOfficialChatModel`، ترسل مطالبة باستخدام `.chat()`، وتحصل على رد. هذا يوضح الأساس: كيف تهيئ النماذج بنقاط نهاية ومفاتيح API مخصصة. بمجرد فهمك لهذا النمط، يبنى كل شيء آخر عليه.
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -224,17 +216,17 @@ String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
 
-> **🤖 جرّب مع دردشة [GitHub Copilot](https://github.com/features/copilot):** افتح [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) واسأل:
+> **🤖 جرّب مع [GitHub Copilot](https://github.com/features/copilot) Chat:** افتح [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) واطرح:
 > - "كيف يمكنني التبديل من نماذج GitHub إلى Azure OpenAI في هذا الكود؟"
 > - "ما هي المعلمات الأخرى التي يمكنني تكوينها في OpenAiOfficialChatModel.builder()؟"
-> - "كيف أضيف ردودًا متدفقة بدلًا من الانتظار للحصول على الرد الكامل؟"
+> - "كيف أضيف ردود تدفق بدلاً من انتظار الرد الكامل؟"
 
 **هندسة المطالبات** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-الآن بعد أن عرفت كيفية التحدث إلى نموذج، دعنا نستكشف ما تقوله له. يستخدم هذا العرض نفس إعداد النموذج لكنه يعرض خمسة أنماط مختلفة للمطالبات. جرب مطالبات بدون أمثلة للتعليمات المباشرة، مطالبات بأمثلة قليلة للتعلم من الأمثلة، مطالبات سلسلة التفكير التي تكشف خطوات الاستدلال، والمطالبات القائمة على الأدوار التي تضبط السياق. سترى كيف يقدم نفس النموذج نتائج مختلفة بشكل كبير اعتمادًا على كيفية صياغة طلبك.
+الآن بعد أن عرفت كيف تتحدث إلى نموذج، دعنا نستكشف ما تقول له. تستخدم هذه التجربة نفس إعداد النموذج لكنها تعرض خمسة أنماط مختلفة من المطالبات. جرّب مطالبات بدون أمثلة مباشرة، مطالبات مع أمثلة قليلة تتعلم منها، مطالبات السلسلة الفكرية التي تكشف خطوات التفكير، والمطالبات القائمة على الأدوار التي تحدد السياق. سترى كيف يعطي نفس النموذج نتائج مختلفة تمامًا بناءً على كيفية صياغة طلبك.
 
-يعرض العرض أيضًا قوالب المطالبات، وهي طريقة قوية لإنشاء مطالبات قابلة لإعادة الاستخدام مع متغيرات.
-يوضح المثال أدناه مطالبة تستخدم `PromptTemplate` من LangChain4j لملء المتغيرات. سيجيب الذكاء الاصطناعي بناءً على الوجهة والنشاط المقدمين.
+تُظهر التجربة أيضًا قوالب المطالبات، وهي طريقة قوية لإنشاء مطالبات قابلة لإعادة الاستخدام مع متغيرات.
+يُظهر المثال أدناه مطالبة تستخدم قالب LangChain4j `PromptTemplate` لملء المتغيرات. سيجيب الذكاء الاصطناعي بناءً على الوجهة والنشاط المقدمين.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -249,15 +241,15 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-> **🤖 جرّب مع دردشة [GitHub Copilot](https://github.com/features/copilot):** افتح [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) واسأل:
-> - "ما الفرق بين المطالبة بدون أمثلة والأمثلة القليلة، ومتى يجب استخدام كل منهما؟"
-> - "كيف تؤثر معلمة درجة الحرارة على ردود النموذج؟"
+> **🤖 جرّب مع [GitHub Copilot](https://github.com/features/copilot) Chat:** افتح [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) واطرح:
+> - "ما الفرق بين مطالبة بدون أمثلة ومطالبة مع أمثلة قليلة، ومتى أستخدم كل منهما؟"
+> - "كيف يؤثر متغير درجة الحرارة على استجابات النموذج؟"
 > - "ما هي بعض التقنيات لمنع هجمات حقن المطالبات في الإنتاج؟"
 > - "كيف يمكنني إنشاء كائنات PromptTemplate قابلة لإعادة الاستخدام للأنماط الشائعة؟"
 
-**دمج الأدوات** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
+**تكامل الأدوات** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-هنا يصبح LangChain4j قويًا. ستستخدم `AiServices` لإنشاء مساعد ذكاء اصطناعي يمكنه استدعاء طرق جافا الخاصة بك. فقط علق الطرق بـ `@Tool("الوصف")` ويتولى LangChain4j الباقي - يقرر الذكاء الاصطناعي تلقائيًا متى يستخدم كل أداة بناءً على ما يطلبه المستخدم. يوضح هذا استدعاء الدوال، وهي تقنية رئيسية لبناء ذكاء اصطناعي يمكنه اتخاذ إجراءات، وليس مجرد الإجابة على الأسئلة.
+هنا يصبح LangChain4j قويًا. ستستخدم `AiServices` لإنشاء مساعد ذكاء اصطناعي يمكنه استدعاء طرق Java الخاصة بك. فقط عين الطرق بـ `@Tool("الوصف")` ويتولى LangChain4j الباقي - يقرر الذكاء الاصطناعي تلقائيًا متى يستخدم كل أداة بناءً على طلب المستخدم. توضح هذه التجربة استدعاء الدوال، وهي تقنية رئيسية لبناء ذكاء اصطناعي يمكنه اتخاذ إجراءات، وليس مجرد الإجابة عن الأسئلة.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -273,15 +265,15 @@ MathAssistant assistant = AiServices.builder(MathAssistant.class)
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
-> **🤖 جرّب مع دردشة [GitHub Copilot](https://github.com/features/copilot):** افتح [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) واسأل:
-> - "كيف تعمل التعليمة @Tool وماذا يفعل LangChain4j بها في الخلفية؟"
-> - "هل يمكن للذكاء الاصطناعي استدعاء أدوات متعددة بالتتابع لحل مشكلات معقدة؟"
-> - "ماذا يحدث إذا رمى أداة استثناءً - كيف يجب التعامل مع الأخطاء؟"
-> - "كيف سأدمج واجهة API حقيقية بدلاً من هذا المثال الحاسوبي؟"
+> **🤖 جرّب مع [GitHub Copilot](https://github.com/features/copilot) Chat:** افتح [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) واطرح:
+> - "كيف تعمل التعليمة @Tool وماذا يفعل LangChain4j معها خلف الكواليس؟"
+> - "هل يمكن للذكاء الاصطناعي استدعاء أدوات متعددة على التوالي لحل مشكلات معقدة؟"
+> - "ماذا يحدث إذا رمت أداة استثناء - كيف أتعامل مع الأخطاء؟"
+> - "كيف أدمج واجهة برمجة تطبيقات حقيقية بدلاً من مثال الآلة الحاسبة هذا؟"
 
-**الأسئلة والأجوبة في المستندات (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**أسئلة وأجوبة الوثائق (RAG السهل)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-هنا سترى RAG (التوليد المدعوم بالاسترجاع) باستخدام نهج "Easy RAG" في LangChain4j. يتم تحميل المستندات وتقسيمها تلقائيًا وتضمينها في مخزن ذاكرة مؤقت، ثم يوفر مسترجع المحتوى أجزاء ذات صلة للذكاء الاصطناعي عند وقت الاستعلام. يجيب الذكاء الاصطناعي بناءً على مستنداتك وليس على معرفته العامة.
+هنا ستشاهد RAG (التوليد المعزز بالاسترجاع) باستخدام نهج LangChain4j "Easy RAG". تُحمّل الوثائق، تُقسّم تلقائيًا وتُدمج في ذاكرة داخلية، ثم يزود مسترجع المحتوى الذكاء الاصطناعي بالقطع ذات الصلة وقت الاستعلام. يجيب الذكاء الاصطناعي بناءً على مستنداتك، وليس معرفته العامة.
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -298,16 +290,16 @@ Assistant assistant = AiServices.builder(Assistant.class)
 String answer = assistant.chat("What is the main topic?");
 ```
 
-> **🤖 جرّب مع دردشة [GitHub Copilot](https://github.com/features/copilot):** افتح [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) واسأل:
-> - "كيف يمنع RAG الهلوسات في الذكاء الاصطناعي مقارنة باستخدام بيانات تدريب النموذج؟"
+> **🤖 جرّب مع [GitHub Copilot](https://github.com/features/copilot) Chat:** افتح [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) واطرح:
+> - "كيف يمنع RAG الهلوسة في الذكاء الاصطناعي مقارنة باستخدام بيانات تدريب النموذج؟"
 > - "ما الفرق بين هذا النهج السهل وخط أنابيب RAG مخصص؟"
-> - "كيف أوسع هذا ليشمل مستندات متعددة أو قواعد معرفة أكبر؟"
+> - "كيف أقوم بتوسيعه ليتعامل مع مستندات متعددة أو قواعد معرفة أكبر؟"
 
 **الذكاء الاصطناعي المسؤول** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-ابنِ أمان الذكاء الاصطناعي بدفاع متعدد الطبقات. يظهر هذا العرض طبقتين من الحماية تعملان معًا:
+ابنِ أمان الذكاء الاصطناعي مع دفاع متعدد الطبقات. تعرض هذه التجربة طبقتين من الحماية تعملان معًا:
 
-**الجزء 1: حواجز LangChain4j للمدخلات** - تحجب المطالبات الخطيرة قبل وصولها إلى LLM. أنشئ حواجز مخصصة تتحقق من كلمات أو أنماط محظورة. تعمل هذه داخل كودك، لذا فهي سريعة ومجانية.
+**الجزء 1: قواعد حماية الإدخال في LangChain4j** - تمنع المطالبات الخطرة قبل وصولها إلى LLM. أنشئ قواعد حماية مخصصة تتحقق من كلمات أو أنماط محظورة. تعمل هذه في كودك، لذا فهي سريعة ومجانية.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -322,16 +314,16 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**الجزء 2: مرشحات الأمان المزود** - لدى نماذج GitHub مرشحات مدمجة تلتقط ما قد تفوّته حواجزك. سترى حواجز صارمة (أخطاء HTTP 400) للانتهاكات الشديدة ورفضًا لطيفًا حيث يعتذر الذكاء الاصطناعي بأدب.
+**الجزء 2: فلاتر السلامة لدى المزود** - لدى نماذج GitHub مرشحات مدمجة تلتقط ما قد تفوته قواعد الحماية لديك. سترى حجبًا صارمًا (أخطاء HTTP 400) للانتهاكات الجسيمة والرفض اللطيف حيث يرفض الذكاء الاصطناعي بأدب.
 
-> **🤖 جرّب مع دردشة [GitHub Copilot](https://github.com/features/copilot):** افتح [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) واسأل:
-> - "ما هو InputGuardrail وكيف أصنع خاصتي؟"
-> - "ما الفرق بين الحاجز الصارم والرفض اللين؟"
-> - "لماذا نستخدم كلًا من الحواجز والمرشحات المزودة معًا؟"
+> **🤖 جرّب مع [GitHub Copilot](https://github.com/features/copilot) Chat:** افتح [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) واطرح:
+> - "ما هو InputGuardrail وكيف أصنع واحدًا بنفسي؟"
+> - "ما الفرق بين الحجب الصارم والرفض اللطيف؟"
+> - "لماذا نستخدم كلًا من قواعد الحماية وفلاتر المزود معًا؟"
 
 ## الخطوات التالية
 
-**الوحدة التالية:** [01-introduction - البدء مع LangChain4j و gpt-5 على Azure](../01-introduction/README.md)
+**الوحدة التالية:** [01-introduction - البدء مع LangChain4j](../01-introduction/README.md)
 
 ---
 
@@ -339,20 +331,20 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ---
 
-## حل المشكلات
+## استكشاف الأخطاء وإصلاحها
 
-### البناء الأول لـ Maven
+### بناء Maven لأول مرة
 
-**المشكلة**: يستغرق `mvn clean compile` أو `mvn package` الأولي وقتًا طويلاً (10-15 دقيقة)
+**المشكلة**: يأخذ الأمر `mvn clean compile` أو `mvn package` الأول وقتًا طويلاً (10-15 دقيقة)
 
-**السبب**: يحتاج Maven إلى تنزيل كل اعتمادات المشروع (Spring Boot، مكتبات LangChain4j، SDK Azure، إلخ) في البناء الأول.
+**السبب**: يحتاج Maven إلى تنزيل جميع اعتمادات المشروع (Spring Boot، مكتبات LangChain4j، مجموعات Azure SDK، إلخ) في البناء الأول.
 
-**الحل**: هذا سلوك طبيعي. ستكون عمليات البناء اللاحقة أسرع بكثير لأن الاعتمادات مخزنة محليًا. يعتمد وقت التنزيل على سرعة شبكة الاتصال لديك.
+**الحل**: هذا سلوك طبيعي. ستكون عمليات البناء اللاحقة أسرع بكثير لأن الاعتمادات مخزنة محليًا. يعتمد وقت التنزيل على سرعة الشبكة الخاصة بك.
 
 ### صياغة أوامر Maven في PowerShell
 
-**المشكلة**: تفشل أوامر Maven مع خطأ `Unknown lifecycle phase ".mainClass=..."`
-**السبب**: يقوم PowerShell بتفسير `=` كعامل إسناد لمتغير، مما يكسر تركيب خصائص Maven
+**المشكلة**: تفشل أوامر Maven بخطأ `Unknown lifecycle phase ".mainClass=..."`
+**السبب**: يقوم PowerShell بتفسير `=` كعامل تخصيص متغير، مما يكسر بناء جملة خصائص Maven
 
 **الحل**: استخدم عامل إيقاف التحليل `--%` قبل أمر Maven:
 
@@ -366,30 +358,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-العامل `--%` يخبر PowerShell بتمرير كل الوسيطات المتبقية حرفيًا إلى Maven بدون تفسير.
+عامل `--%` يخبر PowerShell بتمرير جميع الوسائط المتبقية حرفيًا إلى Maven دون تفسير.
 
 ### عرض الرموز التعبيرية في Windows PowerShell
 
-**المشكلة**: تظهر ردود AI حروف غير مفهومة (مثل `????` أو `â??`) بدلاً من الرموز التعبيرية في PowerShell
+**المشكلة**: تظهر استجابات الذكاء الاصطناعي حروفًا تالفة (مثل `????` أو `â??`) بدلاً من الرموز التعبيرية في PowerShell
 
-**السبب**: الترميز الافتراضي لـ PowerShell لا يدعم الرموز التعبيرية بنظام UTF-8
+**السبب**: الترميز الافتراضي لـ PowerShell لا يدعم الرموز التعبيرية بنمط UTF-8
 
-**الحل**: قم بتشغيل هذا الأمر قبل تنفيذ تطبيقات Java:
+**الحل**: شغّل هذا الأمر قبل تنفيذ تطبيقات Java:
 ```cmd
 chcp 65001
 ```
 
-هذا يجبر الترميز على UTF-8 في الطرفية. بدلاً من ذلك، استخدم Windows Terminal الذي يدعم Unicode بشكل أفضل.
+هذا يجبر الترميز UTF-8 في الطرفية. بدلاً من ذلك، استخدم Windows Terminal الذي يدعم Unicode بشكل أفضل.
 
-### تصحيح مكالمات API
+### تصحيح أخطاء استدعاءات API
 
-**المشكلة**: أخطاء المصادقة، حدود المعدل، أو ردود غير متوقعة من نموذج AI
+**المشكلة**: أخطاء مصادقة، حدود معدلات، أو استجابات غير متوقعة من نموذج الذكاء الاصطناعي
 
-**الحل**: تتضمن الأمثلة `.logRequests(true)` و `.logResponses(true)` لعرض مكالمات API في وحدة التحكم. هذا يساعد في استكشاف أخطاء المصادقة، حدود المعدل، أو الردود غير المتوقعة. قم بإزالة هذه العلامات في بيئة الإنتاج لتقليل ضجيج السجلات.
+**الحل**: تتضمن الأمثلة `.logRequests(true)` و `.logResponses(true)` لعرض استدعاءات API في الكونسول. هذا يساعد في معالجة أخطاء المصادقة، حدود المعدلات، أو الاستجابات غير المتوقعة. قم بإزالة هذه العلامات في بيئة الإنتاج لتقليل ضوضاء السجل.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**تنويه**:  
-تمت ترجمة هذا المستند باستخدام خدمة الترجمة الآلية [Co-op Translator](https://github.com/Azure/co-op-translator). بينما نسعى لتحقيق الدقة، يرجى العلم أن الترجمات الآلية قد تحتوي على أخطاء أو عدم دقة. يجب اعتبار المستند الأصلي بلغته الأصلية المصدر الرسمي والمعتمد. للمعلومات الهامة، يُنصح بالاستعانة بالترجمة البشرية المهنية. نحن غير مسؤولين عن أي سوء فهم أو تفسير خاطئ ناتج عن استخدام هذه الترجمة.
+**تنويه**:
+تمت ترجمة هذا المستند باستخدام خدمة الترجمة بالذكاء الاصطناعي [Co-op Translator](https://github.com/Azure/co-op-translator). على الرغم من سعينا لتحقيق الدقة، يرجى العلم أن الترجمات الآلية قد تحتوي على أخطاء أو عدم دقة. ينبغي اعتبار المستند الأصلي بلغته الأصلية المصدر الموثوق به. للمعلومات الهامة، يُنصح بالاستعانة بترجمة بشرية محترفة. نحن غير مسؤولين عن أي سوء فهم أو تفسيرات خاطئة ناتجة عن استخدام هذه الترجمة.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
