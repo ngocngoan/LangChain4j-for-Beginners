@@ -2,9 +2,9 @@
 
 ## Innehållsförteckning
 
-- [Video Genomgång](../../../01-introduction)
-- [Vad du kommer lära dig](../../../01-introduction)
-- [Förkunskaper](../../../01-introduction)
+- [Videogenomgång](../../../01-introduction)
+- [Vad Du Kommer Lära Dig](../../../01-introduction)
+- [Förutsättningar](../../../01-introduction)
 - [Förstå kärnproblemet](../../../01-introduction)
 - [Förstå tokens](../../../01-introduction)
 - [Hur minne fungerar](../../../01-introduction)
@@ -12,44 +12,46 @@
 - [Distribuera Azure OpenAI-infrastruktur](../../../01-introduction)
 - [Kör applikationen lokalt](../../../01-introduction)
 - [Använda applikationen](../../../01-introduction)
-  - [Stateless chat (vänster panel)](../../../01-introduction)
-  - [Stateful chat (höger panel)](../../../01-introduction)
+  - [Stateless Chat (vänsterpanel)](../../../01-introduction)
+  - [Stateful Chat (högerpanel)](../../../01-introduction)
 - [Nästa steg](../../../01-introduction)
 
-## Video Genomgång
+## Videogenomgång
 
 Titta på denna livesession som förklarar hur du kommer igång med denna modul:
 
-<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Komma igång med LangChain4j - Live Session" width="800"/></a>
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Getting Started with LangChain4j - Live Session" width="800"/></a>
 
-## Vad du kommer lära dig
+## Vad Du Kommer Lära Dig
 
-Om du genomförde snabbstarten såg du hur man skickar prompts och får svar. Det är grunden, men verkliga applikationer behöver mer. Denna modul lär dig hur du bygger konverserande AI som kommer ihåg kontext och håller tillstånd – skillnaden mellan en engångs-demo och en produktionsklar applikation.
+I snabbstarten använde du GitHub Models för att skicka prompts, anropa verktyg, bygga en RAG-pipeline och testa skyddsbarriärer. Dessa demo visade vad som är möjligt – nu byter vi till Azure OpenAI och GPT-5.2 och börjar bygga produktionslika applikationer. Denna modul fokuserar på konversationell AI som kommer ihåg kontext och bevarar tillstånd – de koncept som snabbstartsdemona använde i bakgrunden men inte förklarade.
 
-Vi använder Azure OpenAI:s GPT-5.2 genom hela guiden eftersom dess avancerade resonemangsförmåga gör beteendet hos olika mönster tydligare. När du lägger till minne ser du tydligt skillnaden. Det gör det lättare att förstå vad varje komponent tillför din applikation.
+Vi använder Azure OpenAI:s GPT-5.2 genom hela denna guide eftersom dess avancerade resonemangsförmåga gör beteendet hos olika mönster tydligare. När du lägger till minne kommer du tydligt att se skillnaden. Detta gör det enklare att förstå vad varje komponent bidrar med till din applikation.
 
-Du kommer bygga en applikation som demonstrerar båda mönstren:
+Du kommer att bygga en applikation som demonstrerar båda mönstren:
 
 **Stateless Chat** – Varje förfrågan är oberoende. Modellen har inget minne av tidigare meddelanden. Detta är mönstret du använde i snabbstarten.
 
-**Stateful Conversation** – Varje förfrågan inkluderar konversationshistorik. Modellen behåller kontext över flera turer. Detta är vad produktionsapplikationer kräver.
+**Stateful Conversation** – Varje förfrågan inkluderar konversationshistorik. Modellen bevarar kontext över flera vändningar. Detta är vad produktionsapplikationer kräver.
 
-## Förkunskaper
+## Förutsättningar
 
-- Azure-prenumeration med Azure OpenAI-åtkomst
-- Java 21, Maven 3.9+
+- Azure-prenumeration med tillgång till Azure OpenAI
+- Java 21, Maven 3.9+ 
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Notera:** Java, Maven, Azure CLI och Azure Developer CLI (azd) är förinstallerade i den medföljande devcontainer.
+> **Obs:** Java, Maven, Azure CLI och Azure Developer CLI (azd) är förinstallerade i den tillhandahållna devcontainern.
 
-> **Notera:** Denna modul använder GPT-5.2 på Azure OpenAI. Utrullningen konfigureras automatiskt via `azd up` – ändra inte modellnamnet i koden.
+> **Obs:** Denna modul använder GPT-5.2 på Azure OpenAI. Utplaceringen konfigureras automatiskt via `azd up` – ändra inte modellnamnet i koden.
 
 ## Förstå kärnproblemet
 
-Språkmodeller är stateless. Varje API-anrop är oberoende. Om du säger "Mitt namn är John" och sedan frågar "Vad heter jag?" har modellen ingen aning om att du just presenterade dig. Den behandlar varje förfrågan som om det vore den första konversationen du någonsin haft.
+Språkmodeller är stateless. Varje API-anrop är oberoende. Om du skickar "Mitt namn är John" och sedan frågar "Vad heter jag?", har modellen ingen aning om att du just presenterade dig. Den behandlar varje förfrågan som om det vore din första konversation någonsin.
 
-Detta är okej för enkla frågor och svar men oanvändbart för verkliga applikationer. Kundservicebotar måste komma ihåg vad du berättade för dem. Personliga assistenter behöver kontext. Alla flertur-konversationer kräver minne.
+Det fungerar för enkla frågor och svar men är värdelöst för riktiga applikationer. Kundtjänstrobotar måste komma ihåg vad du har sagt. Personliga assistenter behöver kontext. Alla flervändskonversationer kräver minne.
+
+Följande diagram kontrasterar de två tillvägagångssätten – till vänster, ett stateless-anrop som glömmer ditt namn; till höger, ett stateful-anrop som stöds av ChatMemory som kommer ihåg det.
 
 <img src="../../../translated_images/sv/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
@@ -57,27 +59,27 @@ Detta är okej för enkla frågor och svar men oanvändbart för verkliga applik
 
 ## Förstå tokens
 
-Innan man dyker in i konversationer är det viktigt att förstå tokens – de grundläggande textenheterna som språkmodeller bearbetar:
+Innan vi dyker in i konversationer är det viktigt att förstå tokens – de grundläggande textenheterna som språkmodeller bearbetar:
 
 <img src="../../../translated_images/sv/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
 *Exempel på hur text delas upp i tokens – "I love AI!" blir 4 separata bearbetningsenheter*
 
-Tokens är hur AI-modeller mäter och bearbetar text. Ord, skiljetecken och till och med mellanslag kan vara tokens. Din modell har en gräns för hur många tokens den kan bearbeta samtidigt (400 000 för GPT-5.2, med upp till 272 000 inmatningstokens och 128 000 utmatningstokens). Att förstå tokens hjälper dig att hantera konversationslängd och kostnader.
+Tokens är hur AI-modeller mäter och bearbetar text. Ord, skiljetecken och till och med mellanslag kan vara tokens. Din modell har en gräns för hur många tokens den kan bearbeta åt gången (400 000 för GPT-5.2, med upp till 272 000 inmatningstokens och 128 000 utmatningstokens). Att förstå tokens hjälper dig att hantera konversationens längd och kostnader.
 
 ## Hur minne fungerar
 
-Chattminne löser problemet med stateless genom att behålla konversationshistorik. Innan du skickar din förfrågan till modellen lägger ramverket till relevanta tidigare meddelanden. När du frågar "Vad heter jag?" skickar systemet faktiskt hela konversationshistoriken, vilket gör att modellen ser att du tidigare sagt "Mitt namn är John."
+Chattminne löser det stateless-problemet genom att bevara konversationshistorik. Innan din förfrågan skickas till modellen lägger ramverket till relevanta tidigare meddelanden. När du frågar "Vad heter jag?" skickar systemet faktiskt hela konversationshistoriken, vilket gör det möjligt för modellen att se att du tidigare sa "Mitt namn är John."
 
-LangChain4j erbjuder minnesimplementationer som hanterar detta automatiskt. Du väljer hur många meddelanden som ska sparas och ramverket sköter kontextfönstret.
+LangChain4j tillhandahåller minnesimplementationer som hanterar detta automatiskt. Du väljer hur många meddelanden som ska behållas och ramverket hanterar kontextfönstret. Diagrammet nedan visar hur MessageWindowChatMemory upprätthåller ett rullande fönster av nyliga meddelanden.
 
 <img src="../../../translated_images/sv/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory behåller ett glidande fönster av senaste meddelanden och tar automatiskt bort gamla*
+*MessageWindowChatMemory upprätthåller ett rullande fönster av nyliga meddelanden, som automatiskt kastar äldre*
 
 ## Hur detta använder LangChain4j
 
-Denna modul utökar snabbstarten genom att integrera Spring Boot och lägga till konversationsminne. Så här passar delarna ihop:
+Denna modul utökar snabbstarten genom att integrera Spring Boot och lägga till konversationsminne. Så här passar bitarna ihop:
 
 **Beroenden** – Lägg till två LangChain4j-bibliotek:
 
@@ -92,7 +94,7 @@ Denna modul utökar snabbstarten genom att integrera Spring Boot och lägga till
 </dependency>
 ```
 
-**Chatmodell** – Konfigurera Azure OpenAI som en Spring-bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Chattmodell** – Konfigurera Azure OpenAI som en Spring-bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -107,9 +109,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Buildern läser inloggningsuppgifter från miljövariabler som sätts av `azd up`. Att ställa in `baseUrl` till din Azure-endpoint gör att OpenAI-klienten fungerar med Azure OpenAI.
+Buildern läser inloggningsuppgifter från miljövariabler som sätts av `azd up`. Att sätta `baseUrl` till din Azure-endpoint gör att OpenAI-klienten fungerar med Azure OpenAI.
 
-**Konversationsminne** – Spåra chatthistorik med MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Konversationsminne** – Spåra chattens historik med MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -122,14 +124,14 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Skapa minnet med `withMaxMessages(10)` för att behålla de senaste 10 meddelandena. Lägg till användar- och AI-meddelanden med typade wrappers: `UserMessage.from(text)` och `AiMessage.from(text)`. Hämta historik med `memory.messages()` och skicka det till modellen. Tjänsten lagrar separata minnesinstanser per konversations-ID, vilket möjliggör att flera användare kan chatta samtidigt.
+Skapa minnet med `withMaxMessages(10)` för att behålla de sista 10 meddelandena. Lägg till användar- och AI-meddelanden med typade wrappers: `UserMessage.from(text)` och `AiMessage.from(text)`. Hämta historik med `memory.messages()` och skicka den till modellen. Tjänsten lagrar separata minnesinstanser per konversations-ID, vilket tillåter flera användare att chatta samtidigt.
 
 > **🤖 Prova med [GitHub Copilot](https://github.com/features/copilot) Chat:** Öppna [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) och fråga:
 > - "Hur bestämmer MessageWindowChatMemory vilka meddelanden som ska tas bort när fönstret är fullt?"
-> - "Kan jag implementera egen minneslagring med databaser istället för i minnet?"
-> - "Hur skulle jag lägga till summering för att komprimera gammal konversationshistorik?"
+> - "Kan jag implementera eget minneslagring med en databas istället för i minnet?"
+> - "Hur skulle jag lägga till sammanfattning för att komprimera gammal konversationshistorik?"
 
-Stateless chat-endpoint hoppar helt över minnet – bara `chatModel.chat(prompt)` som i snabbstarten. Stateful endpoint lägger till meddelanden till minnet, hämtar historik och inkluderar den kontexten vid varje förfrågan. Samma modellkonfiguration, olika mönster.
+Stateless chatt-endpointen hoppar över minne helt – bara `chatModel.chat(prompt)` som i snabbstarten. Stateful-endpointen lägger till meddelanden i minnet, hämtar historik och inkluderar den kontexten med varje förfrågan. Samma modellkonfiguration, olika mönster.
 
 ## Distribuera Azure OpenAI-infrastruktur
 
@@ -145,16 +147,16 @@ cd 01-introduction
 azd up  # Välj prenumeration och plats (eastus2 rekommenderas)
 ```
 
-> **Notera:** Om du stöter på en timeout-error (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), kör bara `azd up` igen. Azure-resurser kan fortfarande provisioneras i bakgrunden, och att försöka igen låter distributionen slutföras när resurserna når ett terminalt tillstånd.
+> **Obs:** Om du får ett timeout-fel (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), kör helt enkelt `azd up` igen. Azure-resurser kan fortfarande sättas upp i bakgrunden, och att försöka igen låter distributionen slutföras när resurserna går in i ett slutligt tillstånd.
 
 Detta kommer att:
 1. Distribuera Azure OpenAI-resurs med GPT-5.2 och text-embedding-3-small modeller
 2. Automatiskt generera `.env`-fil i projektets rot med inloggningsuppgifter
-3. Konfigurera alla nödvändiga miljövariabler
+3. Sätta upp alla nödvändiga miljövariabler
 
-**Problem med distributionen?** Se [Infrastruktur-README](infra/README.md) för detaljerad felsökning inklusive subdomännamnskonflikter, manuella steg via Azure Portal och modellkonfigurationsråd.
+**Har du distributionsproblem?** Se [Infrastructure README](infra/README.md) för detaljerad felsökning inklusive problem med subdomännamn, manuella steg för Azure Portal-distribution och modellkonfigurationsråd.
 
-**Verifiera att distribution lyckades:**
+**Verifiera att distributionen lyckades:**
 
 **Bash:**
 ```bash
@@ -163,10 +165,10 @@ cat ../.env  # Bör visa AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Bör visa AZURE_OPENAI_ENDPOINT, API_KEY, etc.
+Get-Content ..\.env  # Bör visa AZURE_OPENAI_ENDPOINT, API_KEY, osv.
 ```
 
-> **Notera:** Kommandot `azd up` genererar `.env`-filen automatiskt. Om du behöver uppdatera den senare kan du antingen redigera `.env` manuellt eller generera om den genom att köra:
+> **Obs:** Kommandot `azd up` genererar automatiskt `.env`-filen. Om du behöver uppdatera den senare kan du redigera `.env`-filen manuellt eller generera om den genom att köra:
 >
 > **Bash:**
 > ```bash
@@ -184,7 +186,7 @@ Get-Content ..\.env  # Bör visa AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 **Verifiera distribution:**
 
-Se till att `.env`-filen finns i rotmappen med Azure-uppgifter:
+Säkerställ att `.env`-filen finns i rotkatalogen med Azure-uppgifter. Kör detta från modulkatalogen (`01-introduction/`):
 
 **Bash:**
 ```bash
@@ -198,21 +200,23 @@ Get-Content ..\.env  # Bör visa AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **Starta applikationerna:**
 
-**Alternativ 1: Använd Spring Boot Dashboard (Rekommenderat för VS Code-användare)**
+**Alternativ 1: Använd Spring Boot Dashboard (Rekommenderas för VS Code-användare)**
 
-Dev-containern inkluderar Spring Boot Dashboard-tillägget som ger en visuell vy för att hantera alla Spring Boot-applikationer. Du hittar den i aktivitetsfältet till vänster i VS Code (letar efter Spring Boot-ikonen).
+Devcontainern inkluderar Spring Boot Dashboard-tillägget som ger ett visuellt gränssnitt för att hantera alla Spring Boot-applikationer. Du hittar det i aktivitetsfältet på vänster sida av VS Code (titta efter Spring Boot-ikonen).
 
-Från Spring Boot Dashboard kan du:
-- Se alla tillgängliga Spring Boot-applikationer i arbetsytan
-- Starta/stopp applikationer med ett klick
+I Spring Boot Dashboard kan du:
+- Se alla tillgängliga Spring Boot-applikationer i workspace
+- Starta/stoppa applikationer med ett klick
 - Visa applikationsloggar i realtid
 - Övervaka applikationsstatus
 
-Klicka bara på play-knappen bredvid "introduction" för att starta denna modul, eller starta alla moduler på en gång.
+Klicka helt enkelt på play-knappen bredvid "introduction" för att starta denna modul, eller starta alla moduler samtidigt.
 
 <img src="../../../translated_images/sv/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Alternativ 2: Använda shell-skript**
+*Spring Boot Dashboard i VS Code — starta, stoppa och övervaka alla moduler från en plats*
+
+**Alternativ 2: Använd shell-script**
 
 Starta alla webbapplikationer (moduler 01-04):
 
@@ -228,7 +232,7 @@ cd ..  # Från rotkatalogen
 .\start-all.ps1
 ```
 
-Eller starta bara denna modul:
+Eller starta endast denna modul:
 
 **Bash:**
 ```bash
@@ -242,9 +246,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Båda skripten laddar automatiskt miljövariabler från `.env`-filen i rotmappen och bygger JAR-filer om de inte finns.
+Båda skripten laddar automatiskt miljövariabler från root `.env`-fil och bygger JAR-filerna om de inte finns.
 
-> **Notera:** Om du vill bygga alla moduler manuellt innan du startar:
+> **Obs:** Om du föredrar att bygga alla moduler manuellt innan start:
 >
 > **Bash:**
 > ```bash
@@ -278,29 +282,29 @@ cd ..; .\stop-all.ps1  # Alla moduler
 
 ## Använda applikationen
 
-Applikationen erbjuder en webbgränssnitt med två chattimplementationer sida vid sida.
+Applikationen erbjuder ett webbgränssnitt med två chattimplementationer sida vid sida.
 
 <img src="../../../translated_images/sv/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Dashboard som visar både Enkel Chatt (stateless) och Konverserande Chatt (stateful)*
+*Dashboard som visar både Enkel Chatt (stateless) och Konversationell Chatt (stateful) alternativ*
 
-### Stateless Chat (vänster panel)
+### Stateless Chat (vänsterpanel)
 
-Testa detta först. Säg "Mitt namn är John" och fråga sedan omedelbart "Vad heter jag?" Modellen kommer inte ihåg eftersom varje meddelande är oberoende. Detta demonstrerar huvudproblemet med grundläggande språkmodellsintegration – ingen kontext i konversationen.
+Prova detta först. Säg "Mitt namn är John" och fråga direkt efter "Vad heter jag?" Modellen kommer inte ihåg eftersom varje meddelande är oberoende. Detta demonstrerar kärnproblemet med grundläggande språkmodellintegration – ingen konversationskontext.
 
 <img src="../../../translated_images/sv/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
 *AI kommer inte ihåg ditt namn från föregående meddelande*
 
-### Stateful Chat (höger panel)
+### Stateful Chat (högerpanel)
 
-Nu testa samma sekvens här. Säg "Mitt namn är John" och sedan "Vad heter jag?" Denna gång kommer den ihåg. Skillnaden är MessageWindowChatMemory – den behåller konversationshistorik och inkluderar den i varje förfrågan. Så här fungerar produktionsklar konverserande AI.
+Prova nu samma sekvens här. Säg "Mitt namn är John" och sedan "Vad heter jag?" Den här gången minns den. Skillnaden är MessageWindowChatMemory – den bevarar konversationshistorik och inkluderar den med varje förfrågan. Så fungerar produktionsklar konversationell AI.
 
 <img src="../../../translated_images/sv/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*AI kommer ihåg ditt namn från tidigare i konversationen*
+*AI minns ditt namn från tidigare i konversationen*
 
-Båda paneler använder samma GPT-5.2-modell. Den enda skillnaden är minnet. Det gör det tydligt vad minnet tillför din applikation och varför det är avgörande för verkliga användningsfall.
+Båda panelerna använder samma GPT-5.2-modell. Den enda skillnaden är minnet. Detta visar tydligt vad minnet tillför till din applikation och varför det är nödvändigt för verkliga användningsfall.
 
 ## Nästa steg
 
@@ -308,11 +312,11 @@ Båda paneler använder samma GPT-5.2-modell. Den enda skillnaden är minnet. De
 
 ---
 
-**Navigation:** [← Föregående: Modul 00 - Snabbstart](../00-quick-start/README.md) | [Tillbaka till huvudmenyn](../README.md) | [Nästa: Modul 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
+**Navigering:** [← Föregående: Modul 00 - Snabbstart](../00-quick-start/README.md) | [Tillbaka till huvudsidan](../README.md) | [Nästa: Modul 02 - Prompt Engineering →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Ansvarsfriskrivning**:
-Detta dokument har översatts med hjälp av AI-översättningstjänsten [Co-op Translator](https://github.com/Azure/co-op-translator). Även om vi strävar efter noggrannhet, vänligen var medveten om att automatiska översättningar kan innehålla fel eller brister. Originaldokumentet på dess modersmål ska betraktas som den auktoritativa källan. För kritisk information rekommenderas professionell mänsklig översättning. Vi ansvarar inte för missförstånd eller feltolkningar som uppstår till följd av användningen av denna översättning.
+Detta dokument har översatts med hjälp av AI-översättningstjänsten [Co-op Translator](https://github.com/Azure/co-op-translator). Även om vi strävar efter noggrannhet, bör man vara medveten om att automatiska översättningar kan innehålla fel eller brister. Det ursprungliga dokumentet på dess ursprungsspråk ska betraktas som den auktoritativa källan. För viktig information rekommenderas professionell mänsklig översättning. Vi ansvarar inte för några missförstånd eller feltolkningar som uppstår till följd av användningen av denna översättning.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
