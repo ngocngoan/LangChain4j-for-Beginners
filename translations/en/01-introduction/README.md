@@ -24,7 +24,7 @@ Watch this live session that explains how to get started with this module:
 
 ## What You'll Learn
 
-If you completed the quick start, you saw how to send prompts and get responses. That's the foundation, but real applications need more. This module teaches you how to build conversational AI that remembers context and maintains state - the difference between a one-off demo and a production-ready application.
+In the quick start, you used GitHub Models to send prompts, call tools, build a RAG pipeline, and test guardrails. Those demos showed what's possible — now we switch to Azure OpenAI and GPT-5.2 and start building production-style applications. This module focuses on conversational AI that remembers context and maintains state — the concepts those quick start demos used behind the scenes but didn't explain.
 
 We'll use Azure OpenAI's GPT-5.2 throughout this guide because its advanced reasoning capabilities make the behavior of different patterns more apparent. When you add memory, you'll clearly see the difference. This makes it easier to understand what each component brings to your application.
 
@@ -51,6 +51,8 @@ Language models are stateless. Each API call is independent. If you send "My nam
 
 This is fine for simple Q&A but useless for real applications. Customer service bots need to remember what you told them. Personal assistants need context. Any multi-turn conversation requires memory.
 
+The following diagram contrasts the two approaches — on the left, a stateless call that forgets your name; on the right, a stateful call backed by ChatMemory that remembers it.
+
 <img src="../../../translated_images/en/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
 *The difference between stateless (independent calls) and stateful (context-aware) conversations*
@@ -69,7 +71,7 @@ Tokens are how AI models measure and process text. Words, punctuation, and even 
 
 Chat memory solves the stateless problem by maintaining conversation history. Before sending your request to the model, the framework prepends relevant previous messages. When you ask "What's my name?", the system actually sends the entire conversation history, allowing the model to see you previously said "My name is John."
 
-LangChain4j provides memory implementations that handle this automatically. You choose how many messages to retain and the framework manages the context window.
+LangChain4j provides memory implementations that handle this automatically. You choose how many messages to retain and the framework manages the context window. The diagram below shows how MessageWindowChatMemory maintains a sliding window of recent messages.
 
 <img src="../../../translated_images/en/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
@@ -184,7 +186,7 @@ Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, etc.
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials:
+Ensure the `.env` file exists in the root directory with Azure credentials. Run this from the module directory (`01-introduction/`):
 
 **Bash:**
 ```bash
@@ -211,6 +213,8 @@ From the Spring Boot Dashboard, you can:
 Simply click the play button next to "introduction" to start this module, or start all modules at once.
 
 <img src="../../../translated_images/en/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
+
+*The Spring Boot Dashboard in VS Code — start, stop, and monitor all modules from one place*
 
 **Option 2: Using shell scripts**
 

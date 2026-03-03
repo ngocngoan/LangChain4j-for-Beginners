@@ -26,13 +26,15 @@ mvn test
 mvn --% test
 ```
 
+When all tests pass, you should see output like the screenshot below — tests run with zero failures.
+
 <img src="../../../translated_images/en/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
 
 *Successful test execution showing all tests passing with zero failures*
 
 ## What the Tests Cover
 
-This course focuses on **unit tests** that run locally. Each test demonstrates a specific LangChain4j concept in isolation.
+This course focuses on **unit tests** that run locally. Each test demonstrates a specific LangChain4j concept in isolation. The testing pyramid below shows where unit tests fit — they form the fast, reliable foundation that the rest of your test strategy builds on.
 
 <img src="../../../translated_images/en/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
@@ -98,7 +100,7 @@ mvn test -Dtest=SimpleConversationTest#shouldMaintainConversationHistory
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#shouldMaintainConversationHistory
+mvn --% test -Dtest=SimpleConversationTest#should maintain conversation history
 ```
 
 ## Running Tests in VS Code

@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Wetin You Go Learn](../../../04-tools)
+- [Wetyn You Go Learn](../../../04-tools)
 - [Prerequisites](../../../04-tools)
 - [Understanding AI Agents wit Tools](../../../04-tools)
 - [How Tool Calling Dey Work](../../../04-tools)
@@ -28,41 +28,42 @@
 - [Tools vs RAG](../../../04-tools)
 - [Next Steps](../../../04-tools)
 
-## Wetin You Go Learn
+## Wetyn You Go Learn
 
-So far, you don learn how to dey yan wit AI, how to structure prompts well well, and how to make responses base on your documents. But e still get one kain main limitation: language models fit only generate text. Dem no fit check weather, do calculation, query databases, or join with external systems.
+So far, you don learn how to gist wit AI, structure prompts well well, and ground responses for your documents. But still one gbege dey: language models fit generate text only. Dem no fit check weather, do calculation, query database, or interact wit outside systems.
 
-Tools come change dis one. By giving the model access to functions wey e fit call, you go transform am from text generator to agent wey fit take actions. The model go decide when e need tool, which tool to use, and wetin parameters to pass. Your code go run the function and return the result. The model go join that result inside im response.
+Tools go change this one. If you give model access to functions wey e fit call, you go turn am from text generator to agent wey fit take action. The model dey decide when e need tool, which tool to use, and wetin parameters to pass. Your code go run the function and return result. The model go join that result inside e response.
 
 ## Prerequisites
 
-- Finish Module 01 (Azure OpenAI resources dey deployed)
-- `.env` file dey root folder wit Azure credentials (wey `azd up` for Module 01 create)
+- Don finish [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources don deploy)
+- Don finish pipo modules wey dem recommend (this module dey talk about [RAG concepts from Module 03](../03-rag/README.md) for Tools vs RAG comparison)
+- `.env` file for root directory wit Azure credentials (wey `azd up` create for Module 01)
 
-> **Note:** If you never finish Module 01, abeg follow deployment instruction wey dey there first.
+> **Note:** If you never finish Module 01, make you follow deployment instructions wey dey there first.
 
 ## Understanding AI Agents wit Tools
 
-> **📝 Note:** The word "agents" for this module na AI assistants wey get tool-calling power. E different from the **Agentic AI** patterns (wey be autonomous agents wit planning, memory, and multi-step reasoning) wey we go talk for [Module 05: MCP](../05-mcp/README.md).
+> **📝 Note:** The word "agents" for this module mean AI assistants wey dey advanced wit tool-calling capabilities. E different from **Agentic AI** patterns (autonomous agents wey get planning, memory, and multi-step reasoning) wey we go yarn for [Module 05: MCP](../05-mcp/README.md).
 
-Without tools, language model fit only generate text from im training data. If you ask am for the current weather, e go just guess. But if you give am tools, e fit call weather API, do calculation, or query database — then mix the real results into im response.
+Without tools, language model fit only produce text from e training data. Ask am about current weather, e go just guess. Give am tools, e fit call weather API, do calculation, or query database — then mix those real results inside e response.
 
 <img src="../../../translated_images/pcm/what-are-tools.724e468fc4de64da.webp" alt="Without Tools vs With Tools" width="800"/>
 
-*Without tools the model fit only guess — but wit tools e fit call APIs, do calculation, and return real-time data.*
+*Without tools the model fit only guess — wit tools e fit call APIs, run calculation, and bring real-time data.*
 
-AI agent wey get tools dey follow **Reasoning and Acting (ReAct)** pattern. The model no just respond — e dey think about wetin e need, e act by calling tool, e see the result, then e decide if na to act again or to give the answer:
+AI agent wit tools dey follow **Reasoning and Acting (ReAct)** pattern. The model no dey just respond — e dey reason wetin e need, e dey act by calling tool, e dey observe result, then e go decide to act again or give final answer:
 
-1. **Reason** — The agent go analyze wetin user ask and decide wetin info e need
-2. **Act** — The agent go pick correct tool, generate correct parameters, and call am
-3. **Observe** — The agent go receive tool output and check the result
-4. **Repeat or Respond** — If e need more data, e go repeat; if no, e go give answer for normal way
+1. **Reason** — Agent go analyze question and find wetin info e need
+2. **Act** — Agent go choose correct tool, generate right parameters, then call am
+3. **Observe** — Agent go receive tool output and check result
+4. **Repeat or Respond** — If still need more data, agent go do am again, if no, e go make natural language answer
 
 <img src="../../../translated_images/pcm/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct Pattern" width="800"/>
 
-*The ReAct cycle — the agent dey reason wetin to do, e dey act by calling tool, e dey observe the result, and e dey repeat till e fit give final answer.*
+*The ReAct cycle — agent dey reason wetin to do, dey act by calling tool, dey observe result, dey loop till e fit give final answer.*
 
-This one dey happen automatic. You go define the tools and their description. The model go handle the decision making for when and how to use them.
+This one dey happen automatically. You go define tools and their descriptions. The model go manage decision-making about when and how to use am.
 
 ## How Tool Calling Dey Work
 
@@ -70,7 +71,7 @@ This one dey happen automatic. You go define the tools and their description. Th
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-You go define functions wit clear description and parameter specifications. The model dey see these description inside system prompt and e go sabi wetin each tool dey do.
+You go specify functions wit clear descriptions and parameter details. The model dey see these descriptions inside system prompt and e go understand wetin each tool de do.
 
 ```java
 @Component
@@ -93,268 +94,263 @@ public interface Assistant {
 // - All @Tool methods from @Component classes
 // - ChatMemoryProvider for session management
 ```
-  
-Diagram wey dey below go breakdown every annotation and show how each one dey help AI know when to call tool and which arguments to pass:
+
+Diagram below go break down every annotation and show how every part dey help AI understand when to call tool and wetin argument to pass:
 
 <img src="../../../translated_images/pcm/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomy of Tool Definitions" width="800"/>
 
-*Anatomy of tool definition — @Tool dey tell AI as e suppose take am, @P dey describe each parameter, and @AiService dey wire everything join for startup.*
+*Anatomy of tool definition — @Tool dey tell AI when to use am, @P dey describe every parameter, and @AiService dey wire everything start-up time.*
 
-> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) and ask:  
-> - "How I fit join real weather API like OpenWeatherMap replace mock data?"  
-> - "Wetin make good tool description wey help AI use am correct?"  
-> - "How I go handle API errors and rate limits for my tool implementation?"
+> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) and ask:
+> - "How I fit integrate real weather API like OpenWeatherMap instead of mock data?"
+> - "Wetyn dey make good tool description wey go help AI use am correct?"
+> - "How I go handle API errors and rate limits for tool implementation?"
 
 ### Decision Making
 
-When user ask "Wetin be the weather for Seattle?", the model no go just anyhow pick tool. E go compare wetin user mean wit every tool description wey e get access, e go score every one based on relevance, then e go choose the best one. Then model go generate structured function call wit correct parameters — for this case, e go set `location` to `"Seattle"`.
+When person ask "Wetin be weather for Seattle?", model no go just randomly choose tool. E go compare wetin user want with every tool description wey e get. E go score each one for relevance, then pick best match. E go still generate structured function call wit correct parameters — like for this case, e go set `location` to `"Seattle"`.
 
-If no tool fit user request, model go answer based on im own knowledge. If many tools fit, e go pick the most specific one.
+If no tool match wetin user request, model go answer based on wetin e sabi. If multiple tools match, e go pick the most specific one.
 
 <img src="../../../translated_images/pcm/decision-making.409cd562e5cecc49.webp" alt="How the AI Decides Which Tool to Use" width="800"/>
 
-*The model go check every tool wey dey compare to wetin user mean and pick the best one — na why clear and specific tool descriptions dey important.*
+*Model dey evaluate every tool against wetin user want and pick best match — dat na why e important to write clear and specific tool descriptions.*
 
 ### Execution
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot go auto-wire the declarative `@AiService` interface wit all registered tools, LangChain4j go then run tool calls automatic. For the background, full tool call go pass six stages — comot from user natural language question go come back to natural language answer:
+Spring Boot go auto-wire `@AiService` interface wit all registered tools, and LangChain4j go run tool calls automatically. For backstage, full tool call na six steps — from user question to natural language answer:
 
 <img src="../../../translated_images/pcm/tool-calling-flow.8601941b0ca041e6.webp" alt="Tool Calling Flow" width="800"/>
 
-*The whole flow — user ask question, model pick tool, LangChain4j run am, model go mix the result for natural response.*
+*The full flow — user ask question, model select tool, LangChain4j run am, model mix result inside response.*
 
-> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) and ask:  
-> - "How ReAct pattern dey work and why e good for AI agents?"  
-> - "How agent go decide which tool to use and the order?"  
-> - "If tool run work fail, wetin I suppose do to handle errors well?"
+> **🤖 Try wit [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) and ask:
+> - "How ReAct pattern dey work and why e dey effective for AI agents?"
+> - "How agent dey decide which tool to use and wetin order na?"
+> - "Wetin happen if tool execution fail - how I go fit handle errors well?"
 
 ### Response Generation
 
-Model go collect weather data and format am as normal language response for user.
+The model go collect weather data and put am well for natural language response for the user.
 
 ### Architecture: Spring Boot Auto-Wiring
 
-This module dey use LangChain4j Spring Boot integration wit declarative `@AiService` interfaces. For startup, Spring Boot go find all `@Component` wey get `@Tool` methods, your `ChatModel` bean, and the `ChatMemoryProvider` — then wire dem all inside one `Assistant` interface wit zero boilerplate.
+This module dey use LangChain4j Spring Boot integration with `@AiService` interfaces wey dey declarative. For startup Spring Boot go find every `@Component` wey get `@Tool` methods, your `ChatModel` bean, and `ChatMemoryProvider` — then e go wire dem all together as single `Assistant` interface wit zero manual work.
 
 <img src="../../../translated_images/pcm/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Auto-Wiring Architecture" width="800"/>
 
-*The @AiService interface dey join ChatModel, tool components, and memory provider — Spring Boot dey handle all wiring automatic.*
+*@AiService interface dey tie ChatModel, tool components, and memory provider together — Spring Boot dey handle wiring automatically.*
 
-Some beta advantage for this way:
+Main benefits of this approach:
 
-- **Spring Boot auto-wiring** — ChatModel and tools self inject
+- **Spring Boot auto-wiring** — ChatModel and tools automatically join
 - **@MemoryId pattern** — Automatic session-based memory management
-- **Single instance** — Assistant create once and dey reuse for better performance
-- **Type-safe execution** — Java methods run direct wit type conversion
-- **Multi-turn orchestration** — Automatically handle tool chaining
-- **Zero boilerplate** — No manual `AiServices.builder()` calls or memory HashMap
+- **Single instance** — Assistant create once and e dey reuse for better speed
+- **Type-safe execution** — Java methods dey call directly wit type conversion
+- **Multi-turn orchestration** — Dey handle tool chaining automatically
+- **Zero boilerplate** — No need manual `AiServices.builder()` calls or memory HashMap
 
-Other approaches (wey na manual `AiServices.builder()` be) need more code and no get Spring Boot integration advantage.
+Other ways (manual `AiServices.builder()`) need more code and no get Spring Boot integration benefits.
 
 ## Tool Chaining
 
-**Tool Chaining** — Real power for tool-based agents go show anytime one question need multiple tools. If user ask "How be the weather for Seattle for Fahrenheit?" agent go automatically chain two tools: e first call `getCurrentWeather` to get temperature for Celsius, then e pass that one go `celsiusToFahrenheit` to convert — all for one conversation turn.
+**Tool Chaining** — Real power for tool-based agents show when one question need multiple tools. Ask "Wetin be weather for Seattle in Fahrenheit?" and agent go chain two tools: first e go call `getCurrentWeather` to get temperature for Celsius, then e go use that value give `celsiusToFahrenheit` make e convert am — all this na one chat turn.
 
 <img src="../../../translated_images/pcm/tool-chaining-example.538203e73d09dd82.webp" alt="Tool Chaining Example" width="800"/>
 
-*Tool chaining for work — agent first call getCurrentWeather, then chook the Celsius result inside celsiusToFahrenheit, then deliver combined answer.*
+*Tool chaining for work — agent call getCurrentWeather first, then use Celsius result pass to celsiusToFahrenheit, then deliver combined answer.*
 
-Dis na how e go look inside the running application — agent dey chain two tool calls inside one conversation turn:
-
-<a href="images/tool-chaining.png"><img src="../../../translated_images/pcm/tool-chaining.3b25af01967d6f7b.webp" alt="Tool Chaining" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
-
-*Real application output — agent automatic chain getCurrentWeather → celsiusToFahrenheit for one turn.*
-
-**Graceful Failures** — If you ask weather for one city wey no dey mock data, tool go return error message, AI go explain say e no fit help, no go crash. Tools fail safe.
+**Graceful Failures** — Ask for weather for city wey no dey mock data. Tool go return error message, AI go talk say e no fit help instead of crash. Tools dey fail safe. Diagram below show two approaches — wit good error handling, agent go catch the exception and respond well, without am, the whole app go crash:
 
 <img src="../../../translated_images/pcm/error-handling-flow.9a330ffc8ee0475c.webp" alt="Error Handling Flow" width="800"/>
 
-*If tool fail, agent go catch the error and give helpful explanation instead of crash.*
+*When tool fail, agent go catch error and respond wit correct explanation instead of crash.*
 
-This one happen for one conversation turn. Agent self control many tool calls.
+This one happen for one conversation turn. Agent go manage multiple tool calls alone.
 
 ## Run the Application
 
-**Make sure deployment:**
+**Confirm deployment:**
 
-Make sure `.env` file dey root folder wit Azure credentials (wey Module 01 create):  
+Make sure `.env` file dey root directory wit Azure credentials (wey Module 01 create). Run this from module folder (`04-tools/`):
+
+**Bash:**
 ```bash
-cat ../.env  # Suppose show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # E suppose show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-  
-**Start the application:**  
 
-> **Note:** If you don start all applications wit `./start-all.sh` from Module 01, this module don dey run for port 8084. You fit skip start commands and waka go http://localhost:8084 directly.
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # E suppose show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+```
 
-**Option 1: Use Spring Boot Dashboard (Best for VS Code users)**
+**Start the application:**
 
-Dev container get Spring Boot Dashboard extension wey give you visual interface to manage all Spring Boot applications. You fit find am for Activity Bar for left side of VS Code (look for Spring Boot icon).
+> **Note:** If you don start all applications wit `./start-all.sh` from root directory (like Module 01 talk), this module don dey for port 8084. You fit skip start commands below and waka go http://localhost:8084 directly.
 
-For Spring Boot Dashboard, you fit:  
-- See all Spring Boot applications wey dey your workspace  
-- Start/stop applications wit one click  
-- View application logs live  
-- Monitor application status  
+**Option 1: Using Spring Boot Dashboard (Na Better method for VS Code users)**
 
-Just click play button beside "tools" to start this module, or start all modules at once.
+Dev container get Spring Boot Dashboard extension, wey get visual interface to manage all Spring Boot apps. You fit find am for Activity Bar for left side of VS Code (look for Spring Boot icon).
+
+From Spring Boot Dashboard, you fit:
+- See all Spring Boot apps wey dey workspace
+- Start/stop apps wit one click
+- View app logs for real-time
+- Check app status
+
+Just click play button near "tools" to start this module, or start all modules at once.
+
+Dis na how Spring Boot Dashboard dey look for VS Code:
 
 <img src="../../../translated_images/pcm/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Option 2: Use shell scripts**
+*Spring Boot Dashboard for VS Code — fit start, stop, and monitor all modules from one place*
 
-Start all web applications (modules 01-04):
+**Option 2: Using shell scripts**
 
-**Bash:**  
+Start all web apps (modules 01-04):
+
+**Bash:**
 ```bash
 cd ..  # From root directory
 ./start-all.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
-cd ..  # From di root folder
+cd ..  # From di root directory
 .\start-all.ps1
 ```
-  
+
 Or start just this module:
 
-**Bash:**  
+**Bash:**
 ```bash
 cd 04-tools
 ./start.sh
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 cd 04-tools
 .\start.ps1
 ```
-  
-Both scripts go automatic load environment variables from root `.env` file and go build JARs if dem no dey.
 
-> **Note:** If you want build all modules manually before starting:  
->  
-> **Bash:**  
+Both scripts go automatically load environment variables from root `.env` file and go build the JARs if dem no dey.
+
+> **Note:** If you wan build all modules manually before start:
+>
+> **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
->  
-> **PowerShell:**  
+>
+> **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-  
+
 Open http://localhost:8084 for your browser.
 
-**To stop:**  
+**To stop:**
 
-**Bash:**  
+**Bash:**
 ```bash
 ./stop.sh  # Dis module only
 # Or
 cd .. && ./stop-all.sh  # All di modules
 ```
-  
-**PowerShell:**  
+
+**PowerShell:**
 ```powershell
 .\stop.ps1  # Dis module only
 # Or
-cd ..; .\stop-all.ps1  # All modules
+cd ..; .\stop-all.ps1  # All di modules
 ```
-  
+
 ## Using the Application
 
-This application give web interface wey you fit interact wit AI agent wey get access to weather and temperature conversion tools.
-
+Application get web interface wey you fit use interact wit AI agent wey get access to weather and temperature conversion tools. This be how the interface dey look — e get quick-start examples and chat panel wey you fit send requests inside:
 <a href="images/tools-homepage.png"><img src="../../../translated_images/pcm/tools-homepage.4b4cd8b2717f9621.webp" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*The AI Agent Tools interface - quick examples and chat interface to interact wit tools*
+*AI Agent Tools interface - quick examples and chat interface for to interact wit tools*
 
 ### Try Simple Tool Usage
-Start with one straightforward request: "Convert 100 degrees Fahrenheit to Celsius". Di agent sabi say e need di temperature conversion tool, e call am wit di correct parameters, den e return di result. You go notice how e feel natural - you no talk say which tool to use or how to call am.
+
+Start wit simple request: "Convert 100 degrees Fahrenheit to Celsius". Di agent sabi say e need di temperature conversion tool, e call am wit di correct parameters, den e return di result. Notice how e feel natural - you no tell am which tool to use or how to call am.
 
 ### Test Tool Chaining
 
-Now try something wey get more levels: "Wetin be di weather for Seattle and convert am to Fahrenheit?" Watch how di agent dey work am step by step. E first collect di weather (wey return Celsius), e sabi say e need to convert am to Fahrenheit, e call di conversion tool, den e put both results join for one reply.
+Now try sometin more complex: "Wetyn be di weather for Seattle and convert am to Fahrenheit?" Watch di agent dey work am step by step. E first get di weather (wey return Celsius), e sabi say e need to convert to Fahrenheit, e call di conversion tool, den e join all di results for one response.
 
 ### See Conversation Flow
 
-Di chat interface dey keep conversation history, make you fit talk many turns. You fit see all di questions and answers wey happen before, e easy to follow di talk and understand how di agent dey add context across many turns.
+Di chat interface dey keep conversation history, so you fit get multi-turn interactions. You fit see all di previous queries and responses, e easy to track di talk and understand how di agent dey build context over many exchanges.
 
 <a href="images/tools-conversation-demo.png"><img src="../../../translated_images/pcm/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation with Multiple Tool Calls" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Multi-turn conversation wey show simple conversions, weather lookups, and tool chaining*
+*Multi-turn conversation wey dey show simple conversions, weather lookups, and tool chaining*
 
 ### Experiment with Different Requests
 
 Try different combinations:
 - Weather lookups: "Wetin be di weather for Tokyo?"
 - Temperature conversions: "Wetin be 25°C for Kelvin?"
-- Combined queries: "Check di weather for Paris and tell me if e pass 20°C"
+- Combined queries: "Check di weather for Paris and tell me if e dey above 20°C"
 
-You go notice how di agent dey understand natural language and dey match am correct to tool calls.
+Notice how di agent dey understand natural language and map am to correct tool calls.
 
 ## Key Concepts
 
 ### ReAct Pattern (Reasoning and Acting)
 
-Di agent dey alternate between reasoning (to decide wetin to do) and acting (to use tools). Dis pattern dey allow autonomous problem-solving instead of just responding to instruction.
+Di agent dey alternate between reasoning (deciding wetin to do) and acting (using tools). Dis pattern dey enable autonomous problem-solving no be just respond to instruction.
 
 ### Tool Descriptions Matter
 
-Better tool descriptions fit help di model understand well when and how to call each tool. Clear and spesific descriptions dey important.
+How your tool descriptions be dey directly affect how well di agent dey use dem. Clear, specific descriptions dey help di model understand when and how to call each tool.
 
 ### Session Management
 
-Di `@MemoryId` annotation dey enable automatic session-based memory management. Every session ID get im own `ChatMemory` instance wey `ChatMemoryProvider` bean dey manage, so plenty users fit interact with di agent at di same time without mixing their conversations.
+Di `@MemoryId` annotation dey enable automatic session-based memory management. Each session ID get im own `ChatMemory` instance wey di `ChatMemoryProvider` bean dey manage, so many users fit interact wit di agent at the same time without their conversations mixing. Di diagram below show how many users dey routed to different memory stores based on their session IDs:
 
 <img src="../../../translated_images/pcm/session-management.91ad819c6c89c400.webp" alt="Session Management with @MemoryId" width="800"/>
 
-*Each session ID dey linked to one separate conversation history — users nor go see other people messages.*
+*Each session ID dey map to isolated conversation history — users no dey see each other's messages.*
 
 ### Error Handling
 
-Tools fit fail — APIs fit timeout, parameters fit no correct, external services fit crash. Production agents need error handling so di model fit explain problem or try another solution instead of crashing everywhere. When tool throw exception, LangChain4j go catch am and give di error message back to di model, wey fit explain wetin happen in normal language.
+Tools fit fail — APIs timeout, parameters fit no valid, external services fit go down. Production agents need error handling so model fit explain problems or try alternatives instead of make di whole app crash. When tool throw exception, LangChain4j dey catch am and give di error message back to model, wey fit explain di problem in natural language.
 
 ## Available Tools
 
-Di diagram below show di wide range of tools you fit build. Dis module dey show weather and temperature tools, but di same `@Tool` pattern fit work for any Java method — from database queries to payment processing.
+Di diagram below show di wide ecosystem of tools wey you fit build. Dis module dey demonstrate weather and temperature tools, but di same `@Tool` pattern fit work for any Java method — from database queries to payment processing.
 
 <img src="../../../translated_images/pcm/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Tool Ecosystem" width="800"/>
 
-*Any Java method wey get @Tool annotation go dey available to AI — di pattern fit extend to databases, APIs, email, file operations, and more.*
+*Any Java method annotated wit @Tool go available to di AI — di pattern extend to databases, APIs, email, file operations, and more.*
 
 ## When to Use Tool-Based Agents
 
+No every request need tools. Di decision depend on whether AI need interact wit external systems or fit answer from im own knowledge. Di guide below summarize when tools get value and when dem no necessary:
+
 <img src="../../../translated_images/pcm/when-to-use-tools.51d1592d9cbdae9c.webp" alt="When to Use Tools" width="800"/>
 
-*Quick decision guide — tools good for real-time data, calculations, and actions; general knowledge and creative tasks no really need dem.*
-
-**Use tools when:**
-- Answering require real-time data (weather, stock prices, inventory)
-- You need to do calculations wey pass simple math
-- Access databases or APIs
-- Take actions (send emails, create tickets, update records)
-- Combine multiple data sources
-
-**No use tools when:**
-- Questions fit answer with general knowledge
-- Response na pure conversation
-- Tool latency go make di experience too slow
+*Quick decision guide — tools dey for real-time data, calculations, and actions; general knowledge and creative tasks no really need dem.*
 
 ## Tools vs RAG
 
-Modules 03 and 04 dem both extend wetin AI fit do, but for different ways. RAG dey give di model access to **knowledge** by fetching documents. Tools dey give di model power to take **actions** by calling functions.
+Modules 03 and 04 dey extend wetin AI fit do, but for different ways. RAG dey give model access to **knowledge** by retrieving documents. Tools dey give model di ability to do **actions** by calling functions. Di diagram below compare di two approaches side by side — from how each workflow dey operate to their trade-offs:
 
 <img src="../../../translated_images/pcm/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Tools vs RAG Comparison" width="800"/>
 
-*RAG dey fetch info from static documents — Tools dey execute actions and get dynamic, real-time data. Many production systems dey combine both.*
+*RAG dey retrieve information from static documents — Tools dey execute actions and fetch dynamic, real-time data. Plenty production systems dey combine both.*
 
-For practice, many production systems dey combine both: RAG for ground answers for your documents, and Tools for get live data or do operations.
+For real life, many production systems dey use both approaches: RAG to ground answers for your documentation, and Tools to fetch live data or do operations.
 
 ## Next Steps
 
@@ -368,5 +364,5 @@ For practice, many production systems dey combine both: RAG for ground answers f
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:  
-Dis document don translate wit AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we dey try make am correct, abeg sabi say automated translations fit get some mistakes or errors. Di original document for dia own language na di correct one. If na important info, good professional human translation better. We no go responsible for any misunderstanding or wrong explanation wey fit show because of dis translation.
+Dis document na AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator) wey translate am. Even though we dey try make am correct, abeg sabi say automated translation fit get some mistakes or no too correct. The original document wey dey im own language na the correct one. If na serious matter, make person wey sabi do professional human translation help. We no go responsible for any wahala or mistake wey fit happen because of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

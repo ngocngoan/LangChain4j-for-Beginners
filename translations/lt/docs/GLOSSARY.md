@@ -1,198 +1,198 @@
-# LangChain4j Žodynas
+# LangChain4j žodynas
 
 ## Turinys
 
 - [Pagrindinės sąvokos](../../../docs)
 - [LangChain4j komponentai](../../../docs)
 - [AI/ML sąvokos](../../../docs)
-- [Apsauginiai mechanizmai](../../../docs)
-- [Promptų kūrimas](../../../docs)
-- [RAG (Retrieval-Augmented Generation)](../../../docs)
+- [Apsauginiai barjerai](../../../docs)
+- [Užklausų kūrimas](../../../docs)
+- [RAG (paieškomoji papildyta generacija)](../../../docs)
 - [Agentai ir įrankiai](../../../docs)
-- [Agentinis modulis](../../../docs)
+- [Agentų modulis](../../../docs)
 - [Modelio konteksto protokolas (MCP)](../../../docs)
 - [Azure paslaugos](../../../docs)
-- [Testavimas ir kūrimas](../../../docs)
+- [Testavimas ir vystymas](../../../docs)
 
-Greita terminų ir sąvokų, naudojamų per visą kursą, apžvalga.
+Greita terminų ir sąvokų, naudojamų visame kurse, nuoroda.
 
 ## Pagrindinės sąvokos
 
-**AI agentas** – Sistema, kuri naudoja AI mąstymui ir autonomiškam veikimui. [Modulis 04](../04-tools/README.md)
+**AI agentas** – Sistema, kuri naudoja AI savarankiškiems sprendimams ir veiksmams atlikti. [Modulis 04](../04-tools/README.md)
 
-**Grandinė** – Veiksmų seka, kurioje vieno veiksmo rezultatas perduodamas kitam žingsniui.
+**Grandinė** – Operacijų seka, kurioje kiekvieno žingsnio išvestis perduodama kitam.
 
-**Dalijimas į dalis** – Dokumentų suskaidymas į mažesnes dalis. Įprastai: 300-500 žetonų su persidengimu. [Modulis 03](../03-rag/README.md)
+**Dalijimas** – Dokumentų skaidymas į mažesnes dalis. Įprasta: 300–500 žodžių su persidengimu. [Modulis 03](../03-rag/README.md)
 
-**Konteksto langas** – Maksimalus žetonų skaičius, kurį modelis gali apdoroti. GPT-5.2: 400K žetonų.
+**Konteksto langas** – Maksimalus modelio apdorojamų žodžių skaičius. GPT-5.2: 400 tūkst. žodžių (iki 272 tūkst. įvesties, 128 tūkst. išvesties).
 
-**Įterpimai (Embeddings)** – Skaitmeniniai vektoriai, atspindintys teksto prasmę. [Modulis 03](../03-rag/README.md)
+**Įterpiniai (Embeddingai)** – Skaitmeniniai vektoriai, atspindintys teksto reikšmę. [Modulis 03](../03-rag/README.md)
 
-**Funkcijų kvietimas** – Modelis generuoja struktūruotus prašymus kvietimams išoriniams funkcijoms. [Modulis 04](../04-tools/README.md)
+**Funkcijų kvietimas** – Modelis generuoja struktūruotas užklausas išoriniams funkcijų kvietimams atlikti. [Modulis 04](../04-tools/README.md)
 
-**Halucinacija** – Kai modeliai generuoja neteisingą, bet įtikinamą informaciją.
+**Halucinacija** – Kai modeliai generuoja klaidingą, bet įtikinamą informaciją.
 
-**Promptas** – Teksto įvestis kalbos modeliui. [Modulis 02](../02-prompt-engineering/README.md)
+**Užklausa (Promptas)** – Tekstinis įvesties duomenų į kalbos modelį formatas. [Modulis 02](../02-prompt-engineering/README.md)
 
-**Semantinis paieška** – Paieška pagal reikšmę naudojant įterpimus, o ne raktažodžius. [Modulis 03](../03-rag/README.md)
+**Semantinė paieška** – Paieška pagal reikšmę naudojant įterpinius, ne raktinius žodžius. [Modulis 03](../03-rag/README.md)
 
-**Būsena su atmintimi vs be atminties** – Be atminties: be prisiminimų. Su atmintimi: palaikoma pokalbio istorija. [Modulis 01](../01-introduction/README.md)
+**Būsena su atsiminimu ir be jo** – Be atsiminimo: be atminties. Su atsiminimu: išlaiko pokalbio istoriją. [Modulis 01](../01-introduction/README.md)
 
-**Žetonai** – Pagrindinės teksto vienetės, kurias apdoroja modeliai. Įtakoja kainas ir apribojimus. [Modulis 01](../01-introduction/README.md)
+**Žodžiai (Tokens)** – Pagrindiniai teksto vienetai, kuriuos apdoroja modeliai. Įtakoja sąnaudas ir ribas. [Modulis 01](../01-introduction/README.md)
 
-**Įrankių grandinimas** – Sekantis įrankių naudojimas, kai išvestis paduodama kitam kvietimui. [Modulis 04](../04-tools/README.md)
+**Įrankių grandinimas** – Įrankių seka, kurioje išvestis naudojama kitam kvietimui. [Modulis 04](../04-tools/README.md)
 
 ## LangChain4j komponentai
 
-**AiServices** – Kuria tipams saugias AI paslaugų sąsajas.
+**AiServices** – Kuria tipo saugius AI paslaugų sąsajas.
 
 **OpenAiOfficialChatModel** – Vieningas klientas OpenAI ir Azure OpenAI modeliams.
 
-**OpenAiOfficialEmbeddingModel** – Kuria įterpimus naudodamas OpenAI Official klientą (palaiko tiek OpenAI, tiek Azure OpenAI).
+**OpenAiOfficialEmbeddingModel** – Kuria įterpinius naudojant OpenAI oficialų klientą (palaiko tiek OpenAI, tiek Azure OpenAI).
 
 **ChatModel** – Pagrindinė kalbos modelių sąsaja.
 
-**ChatMemory** – Saugo pokalbio istoriją.
+**ChatMemory** – Išlaiko pokalbio istoriją.
 
-**ContentRetriever** – Randa tinkamas dokumentų dalis RAG.
+**ContentRetriever** – Suranda aktualias dokumentų dalis RAG procesui.
 
-**DocumentSplitter** – Suskaido dokumentus į dalis.
+**DocumentSplitter** – Skaido dokumentus į dalis.
 
-**EmbeddingModel** – Paverčia tekstą į skaitmeninius vektorius.
+**EmbeddingModel** – Paverčia tekstą skaitmeniniais vektoriais.
 
-**EmbeddingStore** – Saugo ir ieško įterpimų.
+**EmbeddingStore** – Saugo ir paima įterpinius.
 
-**MessageWindowChatMemory** – Palaiko skaidraus lango paskutinių žinučių istoriją.
+**MessageWindowChatMemory** – Išlaiko naujausių pranešimų slenkamąjį langą.
 
-**PromptTemplate** – Kuria pakartotinai naudojamus promptus su `{{variable}}` vietomis.
+**PromptTemplate** – Kuria pakartotinai naudojamas užklausas su `{{variable}}` vietos žymomis.
 
 **TextSegment** – Teksto dalis su metaduomenimis. Naudojama RAG.
 
-**ToolExecutionRequest** – Atstovauja įrankio vykdymo užklausą.
+**ToolExecutionRequest** – Atspindi įrankio vykdymo užklausą.
 
-**UserMessage / AiMessage / SystemMessage** – Pokalbio žinučių tipai.
+**UserMessage / AiMessage / SystemMessage** – Pokalbio pranešimų tipai.
 
 ## AI/ML sąvokos
 
-**Keletas pavyzdžių mokymasis (Few-Shot Learning)** – Pavyzdžių pateikimas promptuose. [Modulis 02](../02-prompt-engineering/README.md)
+**Few-Shot mokymasis** – Pateikiami pavyzdžiai užklausose. [Modulis 02](../02-prompt-engineering/README.md)
 
-**Didelis kalbos modelis (LLM)** – AI modeliai, apmokyti dideliais tekstų kiekiais.
+**Didelis kalbos modelis (LLM)** – AI modeliai, apmokyti pagal milžiniškus tekstų kiekius.
 
-**Mąstymo pastangos (Reasoning Effort)** – GPT-5.2 parametras, kontroliuojantis mąstymo gylį. [Modulis 02](../02-prompt-engineering/README.md)
+**Mąstymo pastangos** – GPT-5.2 parametras, valdantis mąstymo gylį. [Modulis 02](../02-prompt-engineering/README.md)
 
-**Temperatūra** – Valdo atsakymų atsitiktinumą. Žema=deterministinis, aukšta=kūrybingas.
+**Temperatūra** – Valdo išvesties atsitiktinumą. Žema – deterministinė, aukšta – kūrybiška.
 
-**Vektorinių duomenų bazė** – Specializuota duomenų bazė įterpimams. [Modulis 03](../03-rag/README.md)
+**Vektorinė duomenų bazė** – Specializuota duomenų bazė įterpiniams. [Modulis 03](../03-rag/README.md)
 
-**Nulinio pavyzdžio mokymasis (Zero-Shot Learning)** – Užduočių atlikimas be pavyzdžių. [Modulis 02](../02-prompt-engineering/README.md)
+**Zero-Shot mokymasis** – Užuot naudojant pavyzdžius, atliekant užduotis be jų. [Modulis 02](../02-prompt-engineering/README.md)
 
-## Apsauginiai mechanizmai - [Modulis 00](../00-quick-start/README.md)
+## Apsauginiai barjerai - [Modulis 00](../00-quick-start/README.md)
 
-**Gynyba sluoksniais** – Daugiapakopė saugumo strategija, derinanti programos lygio apsaugos ribas su paslaugų teikėjo saugos filtrais.
+**Gylio gynyba** – Daugiasluoksnė saugumo sistema, jungiant programos lygmens barjerus su paslaugų filtrais.
 
-**Griežtas blokas** – Paslaugos teikėjas grąžina HTTP 400 klaidą už rimtus turinio pažeidimus.
+**Stiprus blokavimas** – Paslaugos teikėjas meta HTTP 400 klaidą už griežtus turinio pažeidimus.
 
-**InputGuardrail** – LangChain4j sąsaja, skirta vartotojo įvesties tikrinimui prieš pateikiant LLM. Taupo kaštus ir vėlinimą, anksti blokuodama kenksmingus promptus.
+**InputGuardrail** – LangChain4j sąsaja vartotojo įvesties patikrinimui prieš patekiant į LLM. Labai taupo išlaidas ir laiką, anksti blokuodama kenksmingas užklausas.
 
-**InputGuardrailResult** – Tikrinimo rezultato tipas: `success()` arba `fatal("priežastis")`.
+**InputGuardrailResult** – Vartotojo įvesties saugumo grįžtamoji reikšmė: `success()` arba `fatal("priežastis")`.
 
-**OutputGuardrail** – Sąsaja AI atsakymų tikrinimui prieš pateikiant vartotojams.
+**OutputGuardrail** – Sąsaja AI atsakymų peržiūrai prieš pateikiant vartotojui.
 
-**Paslaugų teikėjo saugos filtrai** – AI paslaugų teikėjų (pvz., GitHub modelių) integruoti turinio filtrai, kurie aptinka pažeidimus API lygyje.
+**Paslaugų teikėjo saugumo filtrai** – AI paslaugų įmontuoti turinio filtrai (pvz., GitHub modeliai), susekiantys pažeidimus API lygyje.
 
-**Minkštas atsisakymas** – Modelis mandagiai atsisako atsakyti be klaidos išmetimo.
+**Minkštas atsisakymas** – Modelis mandagiai atsisako atsakyti, nekeldamas klaidos.
 
-## Promptų kūrimas - [Modulis 02](../02-prompt-engineering/README.md)
+## Užklausų kūrimas - [Modulis 02](../02-prompt-engineering/README.md)
 
-**Grandinės mąstymas** – Žingsnis po žingsnio logika geresniam tikslumui.
+**Grandininis mąstymas** – Žingsnis po žingsnio argumentavimas geresniam tikslumui.
 
-**Apribota išvestis** – Nustatytos konkrečios formato ar struktūros reikalavimai.
+**Ribotas išvesties formatas** – Reikalavimo laikytis konkretaus formato ar struktūros.
 
-**Didelis entuziazmas** – GPT-5.2 šablonas nuodugniam mąstymui.
+**Didelis gatavumas** – GPT-5.2 šablonas išsamiai analizei.
 
-**Mažas entuziazmas** – GPT-5.2 šablonas greitiems atsakymams.
+**Mažas gatavumas** – GPT-5.2 greitiems atsakymams.
 
-**Daugiakartinis pokalbis** – Konteksto palaikymas per mainus.
+**Daugiapakopis pokalbis** – Konteksto palaikymas per kelias žinutes.
 
-**Rolės pagrindu kuriamas promptas** – Modelio asmenybės nustatymas per sistemos žinutes.
+**Vaidmens užklausų kūrimas** – Modelio personažo nustatymas per sistemos pranešimus.
 
-**Savi-refleksija** – Modelis įvertina ir tobulina savo atsakymus.
+**Savioverta** – Modelis vertina ir tobulina savo išvestį.
 
 **Struktūruota analizė** – Fiksuota vertinimo sistema.
 
-**Užduoties vykdymo modelis** – Planavimas → Vykdymas → Apibendrinimas.
+**Užduočių vykdymo modelis** – Planavimas → Vykdymas → Apibendrinimas.
 
-## RAG (Retrieval-Augmented Generation) - [Modulis 03](../03-rag/README.md)
+## RAG (paieškomoji papildyta generacija) - [Modulis 03](../03-rag/README.md)
 
-**Dokumentų apdorojimo grandinė** – Įkėlimas → dalijimas → įterpimas → saugojimas.
+**Dokumentų apdorojimo kanalas** – Įkėlimas → skaidymas → įterpimas → saugojimas.
 
-**Trumpalaikis įterpimų saugykla** – Laikina atmintinė testavimui.
+**Atminties įterpinių saugykla** – Neišlaikoma atminties saugykla testavimui.
 
-**RAG** – Derina paiešką su generavimu atsakymams pagrįsti.
+**RAG** – Derina paiešką su generavimu, siekiant pagrįsti atsakymus.
 
-**Panašumo balas** – Semantinio panašumo matas (0-1).
+**Panašumo įvertinimas** – Matavimo skalė (0-1) semantiniam panašumui.
 
-**Šaltinio nuoroda** – Metaduomenys apie rastą turinį.
+**Šaltinio nuoroda** – Paieškos turinio metaduomenys.
 
 ## Agentai ir įrankiai - [Modulis 04](../04-tools/README.md)
 
-**@Tool anotacija** – Pažymi Java metodus kaip AI iškviečiamus įrankius.
+**@Tool anotacija** – Žymi Java metodus kaip AI kviečiamus įrankius.
 
-**ReAct modelis** – Mąstyk → Veik → Stebėk → Kartok.
+**ReAct modelis** – Mąstyti → veikti → stebėti → kartoti.
 
-**Sesijų valdymas** – Atskirti kontekstai skirtingiems vartotojams.
+**Seansų valdymas** – Atskiri kontekstai skirtingiems vartotojams.
 
-**Įrankis** – Funkcija, kurią gali iškviesti AI agentas.
+**Įrankis** – Funkcija, kurią gali kviesti AI agentas.
 
-**Įrankio aprašymas** – Dokumentacija apie įrankio paskirtį ir parametrus.
+**Įrankio aprašymas** – Dokumentacija apie paskirtį ir parametrus.
 
-## Agentinis modulis - [Modulis 05](../05-mcp/README.md)
+## Agentų modulis - [Modulis 05](../05-mcp/README.md)
 
-**@Agent anotacija** – Pažymi sąsajas kaip AI agentus su deklaratyvia elgesio aprašymu.
+**@Agent anotacija** – Žymi sąsajas kaip AI agentus su deklaratyviu elgesio aprašymu.
 
-**Agentų klausytojas** – Priemonė stebėti agentų vykdymą per `beforeAgentInvocation()` ir `afterAgentInvocation()`.
+**Agentų klausytojas** – Priemonė stebėti agento vykdymą per `beforeAgentInvocation()` ir `afterAgentInvocation()`.
 
-**Agentinė sritis** – Bendroji atmintis, kurioje agentai saugo rezultatus naudodami `outputKey`, kad kiti agentai galėtų juos naudoti.
+**Agentinis kontekstas** – Bendroji atmintis, kur agentai saugo rezultatus naudodami `outputKey` tolimesniems agentams.
 
-**AgenticServices** – Fabrikas agentų kūrimui su `agentBuilder()` ir `supervisorBuilder()`.
+**AgenticServices** – Fabrikas agentams kurti naudojant `agentBuilder()` ir `supervisorBuilder()`.
 
-**Sąlyginis darbo srautas** – Maršruto nukreipimas į skirtingus specializuotus agentus pagal sąlygas.
+**Sąlyginis darbo eigos valdymas** – Nukreipia pagal sąlygas skirtingiems specialistams.
 
-**Žmogus procese (Human-in-the-Loop)** – Darbo srauto modelis su žmogaus patvirtinimu ar turinio peržiūra.
+**Žmogaus dalyvavimas** – Darbo modelis su žmonių patvirtinimu ar turinio peržiūra.
 
-**langchain4j-agentic** – Maven priklausomybė deklaratyviam agentų kūrimui (eksperimentinė).
+**langchain4j-agentic** – Maven priklausomybė deklaratyviems agentams kurti (eksperimentinė).
 
-**Ciklinis darbo srautas** – Kartojamas agento vykdymas, kol įvykdoma sąlyga (pvz., kokybės balas ≥ 0.8).
+**Ciklinis darbo eigos valdymas** – Kartojamas agentų vykdymas, kol įvykdoma sąlyga (pvz., kokybės įvertis ≥ 0.8).
 
-**outputKey** – Agentų anotacijos parametras, nurodantis, kur Agentinėje srityje saugomi rezultatai.
+**outputKey** – Agentų anotacijos parametras, nurodantis, kur rezultatai saugomi agentiniame kontekste.
 
-**Lygiagretus darbo srautas** – Kelis agentus vykdyti vienu metu nepriklausomoms užduotims.
+**Paralelinis darbo eigos valdymas** – Kelis agentus vykdyti lygiagrečiai nepriklausomoms užduotims.
 
-**Atsako strategija** – Kaip vadovas formuluoja galutinį atsakymą: PASKUTINIS, SANTRAUKA arba ĮVERTINTAS.
+**Atsakymo strategija** – Kaip prižiūrėtojas formuluoja galutinį atsakymą: PASKUTINIS, SANTRAUKA ar ĮVERTINTAS.
 
-**Sekos darbo srautas** – Agentų vykdymas iš eilės, kai rezultatas perduodamas kitam žingsniui.
+**Sekveninis darbo eigos valdymas** – Vykdyti agentus iš eilės, išvestis perduodama kitam etapui.
 
-**Vadovo agento modelis** – Sudėtingas agentinis modelis, kuriame vadovas LLM dinamiškai nusprendžia, kuriuos subagentus kviesti.
+**Prižiūrėtojo agento modelis** – Pažangus agentinis modelis, kuriame prižiūrėtojas LLM dinamiškai nusprendžia, kuriuos subagentus kviesti.
 
 ## Modelio konteksto protokolas (MCP) - [Modulis 05](../05-mcp/README.md)
 
 **langchain4j-mcp** – Maven priklausomybė MCP integracijai LangChain4j.
 
-**MCP** – Modelio konteksto protokolas: standartas AI programoms jungtis prie išorinių įrankių. Sukurk vieną kartą, naudok visur.
+**MCP** – Modelio konteksto protokolas: standartas AI programoms susijungti su išoriniais įrankiais. Sukurk kartą, naudok visur.
 
-**MCP klientas** – Programa, jungiantis prie MCP serverių, kad rastų ir naudotų įrankius.
+**MCP klientas** – Programa, jungiasi prie MCP serverių, ieško ir naudoja įrankius.
 
-**MCP serveris** – Paslauga, teikianti įrankius per MCP su aiškiais aprašymais ir parametrų schemomis.
+**MCP serveris** – Paslauga, viešoji įrankių per MCP su aiškiais aprašymais ir parametrų schemomis.
 
 **McpToolProvider** – LangChain4j komponentas, apgaubiantis MCP įrankius AI paslaugoms ir agentams.
 
-**McpTransport** – Sąsaja MCP komunikacijai. Realizacijos apima Stdio ir HTTP.
+**McpTransport** – Sąsaja MCP komunikacijai. Įgyvendinimai: Stdio ir HTTP.
 
-**Stdio transportas** – Vietinis procesas per stdin/stdout. Naudinga failų sistemų prieigai ar komandų eilutės įrankiams.
+**Stdio transportas** – Vietinis procesas per stdin/stdout. Naudinga failų sistema ar komandų eilutės įrankiams.
 
-**StdioMcpTransport** – LangChain4j realizacija, kurios metu MCP serveris paleidžiamas kaip subprocess.
+**StdioMcpTransport** – LangChain4j įgyvendinimas, paleidžiantis MCP serverį kaip antrinį procesą.
 
-**Įrankių atradimas** – Klientas užduoda serveriui klausimus apie turimus įrankius su aprašymais ir schemomis.
+**Įrankių paieška** – Klientas užklausia serverį apie galimus įrankius su aprašymais ir schemomis.
 
 ## Azure paslaugos - [Modulis 01](../01-introduction/README.md)
 
@@ -200,27 +200,27 @@ Greita terminų ir sąvokų, naudojamų per visą kursą, apžvalga.
 
 **Azure Developer CLI (azd)** – Azure išteklių diegimas.
 
-**Azure OpenAI** – Microsoft įmonių lygio AI paslauga.
+**Azure OpenAI** – Microsoft įmonių lygmens AI paslauga.
 
-**Bicep** – Azure infrastruktūros kaip kodo kalba. [Infrastruktūros vadovas](../01-introduction/infra/README.md)
+**Bicep** – Azure infrastruktūros kaip kodo kalba. [Infrastruktūros gidas](../01-introduction/infra/README.md)
 
 **Diegimo pavadinimas** – Modelio diegimo pavadinimas Azure.
 
-**GPT-5.2** – Naujausias OpenAI modelis su mąstymo kontrole. [Modulis 02](../02-prompt-engineering/README.md)
+**GPT-5.2** – Naujausias OpenAI modelis su mąstymo kontrolės funkcija. [Modulis 02](../02-prompt-engineering/README.md)
 
-## Testavimas ir kūrimas - [Testavimo vadovas](TESTING.md)
+## Testavimas ir vystymas - [Testavimo gidas](TESTING.md)
 
-**Dev konteineris** – Kūrimui skirtas konteinerizuotas aplinkas. [Konfigūracija](../../../.devcontainer/devcontainer.json)
+**Dev Container** – Kapsuliuota vystymo aplinka. [Konfigūracija](../../../.devcontainer/devcontainer.json)
 
-**GitHub modeliai** – Nemokama AI modelių poligonas. [Modulis 00](../00-quick-start/README.md)
+**GitHub modeliai** – Nemokama AI modelių žaidimų aikštelė. [Modulis 00](../00-quick-start/README.md)
 
-**Testavimas atmintyje** – Testavimas naudojant trumpalaikę saugyklą.
+**Atminties testavimas** – Testavimas naudojant atminties saugyklą.
 
 **Integracinis testavimas** – Testavimas su realia infrastruktūra.
 
-**Maven** – Java programų kūrimo įrankis.
+**Maven** – Java kūrimo automatizavimo įrankis.
 
-**Mockito** – Java imitavimo (mock) karkasas.
+**Mockito** – Java imitavimo (mock) biblioteka.
 
 **Spring Boot** – Java programų karkasas. [Modulis 01](../01-introduction/README.md)
 
@@ -228,5 +228,5 @@ Greita terminų ir sąvokų, naudojamų per visą kursą, apžvalga.
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Atsakomybės apribojimas**:
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, atkreipkite dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Pirminis dokumentas jo gimtąja kalba laikomas autoritetingu šaltiniu. Kritinei informacijai rekomenduojame naudotis profesionalaus žmogiško vertimo paslaugomis. Mes neatsakome už bet kokius nesusipratimus ar klaidingus supratimus, kilusius dėl šio vertimo panaudojimo.
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas natūralia kalba turėtų būti laikomas pagrindiniu šaltiniu. Svarbiai informacijai rekomenduojamas profesionalus žmogiškasis vertimas. Mes neatsakome už bet kokius nesusipratimus ar neteisingus aiškinimus, kilusius naudojant šį vertimą.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

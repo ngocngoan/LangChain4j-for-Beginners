@@ -1,56 +1,62 @@
-# 05-ös modul: Modell kontextus protokoll (MCP)
+# Modul 05: Model Context Protocol (MCP)
 
 ## Tartalomjegyzék
 
 - [Mit fogsz megtanulni](../../../05-mcp)
 - [Mi az MCP?](../../../05-mcp)
 - [Hogyan működik az MCP](../../../05-mcp)
-- [Az Agentic modul](../../../05-mcp)
-- [Példák futtatása](../../../05-mcp)
+- [Az ügynöki modul](../../../05-mcp)
+- [A példák futtatása](../../../05-mcp)
   - [Előfeltételek](../../../05-mcp)
 - [Gyors kezdés](../../../05-mcp)
   - [Fájlműveletek (Stdio)](../../../05-mcp)
   - [Felügyelő ügynök](../../../05-mcp)
     - [A demó futtatása](../../../05-mcp)
-    - [Hogyan működik a Felügyelő](../../../05-mcp)
+    - [Hogyan működik a felügyelő](../../../05-mcp)
     - [Válaszstratégiák](../../../05-mcp)
-    - [Az output megértése](../../../05-mcp)
-    - [Az Agentic modul funkcióinak magyarázata](../../../05-mcp)
+    - [Az eredmény megértése](../../../05-mcp)
+    - [Az ügynöki modul funkcióinak magyarázata](../../../05-mcp)
 - [Kulcsfogalmak](../../../05-mcp)
 - [Gratulálunk!](../../../05-mcp)
-  - [Mi a következő lépés?](../../../05-mcp)
+  - [Mi következik?](../../../05-mcp)
 
 ## Mit fogsz megtanulni
 
-Beszélgető AI-t építettél, elsajátítottad a promptokat, válaszokat alapozol dokumentumokra, és ügynököket hoztál létre eszközökkel. De ezek az eszközök mind az adott alkalmazásodhoz készültek. Mi lenne, ha az AI-d hozzáférhetne egy szabványosított eszközök ökoszisztémájához, amelyet bárki létrehozhat és megoszthat? Ebben a modulban megtanulod, hogyan valósítsd ezt meg a Model Context Protocol (MCP) és a LangChain4j agentic modul segítségével. Először bemutatunk egy egyszerű MCP fájlolvasót, majd megmutatjuk, hogyan integrálható ez könnyedén fejlett agentic munkafolyamatokba a Felügyelő Ügynök mintával.
+Már építettél beszélgető AI-t, elsajátítottad a promptokat, megalapozott válaszokat készítettél dokumentumokból, és létrehoztál eszközökkel rendelkező ügynököket. De ezek az eszközök mind az adott alkalmazásodra szabva készültek. Mi lenne, ha AI-d hozzáférést kaphatna egy szabványosított ökoszisztémához, amelyet bárki létrehozhat és megoszthat? Ebben a modulban épp ezt tanulod meg a Model Context Protocol (MCP) és a LangChain4j ügynöki modul segítségével. Először bemutatunk egy egyszerű MCP fájlolvasót, majd megmutatjuk, hogyan integrálható ez könnyedén fejlett ügynöki munkafolyamatokba a Felügyelő Ügynök mintájának használatával.
 
 ## Mi az MCP?
 
-A Model Context Protocol (MCP) pontosan ezt nyújtja – egy szabványos módot arra, hogy AI alkalmazások külső eszközöket fedezzenek fel és használjanak. Egyedi integrációk helyett minden adatforráshoz vagy szolgáltatáshoz, MCP szerverekhez kapcsolódsz, amelyek képességeiket konzisztens formátumban teszik elérhetővé. Az AI ügynököd így automatikusan felfedezheti és használhatja ezeket az eszközöket.
+A Model Context Protocol (MCP) éppen ezt biztosítja - egy szabványos módot arra, hogy AI alkalmazások felfedezzék és használják a külső eszközöket. Egyedi integrációk írása helyett minden adatforráshoz vagy szolgáltatáshoz, kapcsolódj MCP szerverekhez, amelyek képességeiket konzisztens formátumban teszik elérhetővé. Az AI ügynököd így automatikusan felfedezheti és használhatja ezeket az eszközöket.
+
+Az alábbi ábra bemutatja a különbséget — MCP nélkül minden integráció egyedi pont-pont összekötést igényel; MCP-vel egyetlen protokoll köti össze az alkalmazásodat bármely eszközzel:
 
 <img src="../../../translated_images/hu/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*Az MCP előtt: komplex pont-pont integrációk. Az MCP után: egy protokoll, végtelen lehetőségek.*
+*MCP előtt: bonyolult egyedi pont-pont integrációk. MCP után: Egy protokoll, végtelen lehetőségek.*
 
-Az MCP megoldja az AI fejlesztés egyik alapvető problémáját: minden integráció egyedi. GitHubhoz akarsz hozzáférni? Egyedi kód. Fájlokat olvasnál? Egyedi kód. Adatbázist lekérdeznél? Egyedi kód. És egyik integráció sem működik más AI alkalmazásokkal.
+Az MCP megold egy alapvető problémát az AI fejlesztésben: minden integráció egyedi. GitHub-hoz akarsz hozzáférni? Egyedi kód. Fájlokat olvasnál? Egyedi kód. Adatbázist kérdeznél le? Egyedi kód. És egyik integráció sem működik más AI alkalmazásokkal.
 
-Az MCP ezt szabványosítja. Egy MCP szerver egyértelmű leírásokkal és sémákkal teszi elérhetővé az eszközöket. Bármely MCP kliens csatlakozhat, felfedezheti az eszközöket és használhatja azokat. Egyszer építsd meg, bárhol használd!
+Az MCP ezt szabványosítja. Egy MCP szerver eszközöket kínál világos leírással és sémákkal. Bármely MCP kliens kapcsolódhat, felfedezheti az elérhető eszközöket, és használhatja azokat. Egyszer építsd meg, bárhol használd.
+
+Az alábbi ábra ezt az architektúrát szemlélteti — egyetlen MCP kliens (a te AI alkalmazásod) több MCP szerverhez kapcsolódik, amelyek mind egyedi eszközkészletüket teszik elérhetővé a szabványos protokollon keresztül:
 
 <img src="../../../translated_images/hu/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*Model Context Protocol architektúra – szabványosított eszközfelderítés és végrehajtás*
+*Model Context Protocol architektúra - szabványosított eszköz-felfedezés és végrehajtás*
 
 ## Hogyan működik az MCP
 
+A háttérben az MCP rétegzett architektúrát használ. A Java alkalmazásod (az MCP kliens) felfedezi az elérhető eszközöket, JSON-RPC kéréseket küld egy transzport rétegen keresztül (Stdio vagy HTTP), az MCP szerver végrehajtja a műveleteket és visszaadja az eredményeket. Az alábbi ábra bontja le a protokoll rétegeit:
+
 <img src="../../../translated_images/hu/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
 
-*Az MCP működése a háttérben — kliensek felfedezik az eszközöket, JSON-RPC üzeneteket cserélnek, és egy transzport rétegen keresztül végrehajtják a műveleteket.*
+*Hogyan működik az MCP a háttérben — a kliensek felfedezik az eszközöket, JSON-RPC üzeneteket cserélnek, és műveleteket hajtanak végre egy transzport rétegen keresztül.*
 
 **Szerver-Kliens architektúra**
 
-Az MCP kliens-szerver modellt használ. A szerverek eszközöket biztosítanak – fájlok olvasása, adatbázis lekérdezése, API hívások. A kliensek (az AI alkalmazásod) csatlakoznak a szerverekhez és használják az eszközöket.
+Az MCP kliens-szerver modellt használ. A szerverek eszközöket biztosítanak - fájlok olvasása, adatbázis lekérdezések, API hívások. A kliensek (az AI alkalmazásod) kapcsolódnak a szerverekhez és használják az eszközeiket.
 
-Az MCP használatához LangChain4j-vel add hozzá ezt a Maven függőséget:
+Az MCP használatához LangChain4j-vel add hozzá ezt a Maven-függőséget:
 
 ```xml
 <dependency>
@@ -60,25 +66,25 @@ Az MCP használatához LangChain4j-vel add hozzá ezt a Maven függőséget:
 </dependency>
 ```
 
-**Eszközfelderítés**
+**Eszköz felfedezés**
 
-Amikor a kliensed csatlakozik egy MCP szerverhez, megkérdezi: "Milyen eszközeid vannak?" A szerver egy listával válaszol az elérhető eszközökről, leírásokkal és paraméter sémákkal. Az AI ügynököd így eldöntheti, mely eszközöket használja a felhasználói kérés alapján.
+Amikor a kliensed kapcsolódik egy MCP szerverhez, megkérdezi: "Milyen eszközeid vannak?" A szerver válaszként elérhető eszközök listáját küldi leírásokkal és paraméter-sémákkal. Az AI ügynököd így eldöntheti, mely eszközöket használja a felhasználói kérések alapján. Az alábbi ábra ezt az üdvözlési kézfogást mutatja — a kliens egy `tools/list` kérést küld, és a szerver visszaküldi az elérhető eszközöket leírásokkal és paraméter-sémákkal:
 
 <img src="../../../translated_images/hu/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-*Az AI indításkor felfedezi az elérhető eszközöket — így tudja, milyen képességek állnak rendelkezésre és dönthet, melyeket használja.*
+*Az AI induláskor felfedezi az elérhető eszközöket — így tudja, milyen képességek állnak rendelkezésre, és dönthet, melyeket használja.*
 
 **Transzport mechanizmusok**
 
-Az MCP több transzport mechanizmust támogat. Ez a modul a helyi folyamatokhoz készült Stdio transzportot mutatja be:
+Az MCP különböző transzport mechanizmusokat támogat. A két opciónk a Stdio (helyi alfolyamat kommunikációhoz) és Streamable HTTP (távoli szerverekhez). Ez a modul a Stdio transzportot mutatja be:
 
 <img src="../../../translated_images/hu/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
 *MCP transzport mechanizmusok: HTTP távoli szerverekhez, Stdio helyi folyamatokhoz*
 
-**Stdio** – [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
+**Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Helyi folyamatokhoz. Az alkalmazás egy szervert indít alfolyamatként és a standard be-/kimeneten kommunikál vele. Hasznos fájlrendszer eléréshez vagy parancssori eszközökhöz.
+Helyi folyamatokhoz. Az alkalmazás egy szervert indít alfolyamatként, és a szabványos bemenet/kimeneten keresztül kommunikál. Hasznos fájlrendszer-hozzáféréshez vagy parancssori eszközökhöz.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -91,22 +97,38 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
+Az `@modelcontextprotocol/server-filesystem` szerver a következő eszközöket kínálja, mindegyik az általad megadott könyvtárakra korlátozva:
+
+| Eszköz | Leírás |
+|------|-------------|
+| `read_file` | Egyetlen fájl tartalmának olvasása |
+| `read_multiple_files` | Több fájl egy hívásban történő olvasása |
+| `write_file` | Fájl létrehozása vagy felülírása |
+| `edit_file` | Célzott keresés és csere műveletek végrehajtása |
+| `list_directory` | Fájlok és könyvtárak listázása egy útvonalon |
+| `search_files` | Rekurzívan keres fájlokat mintának megfelelően |
+| `get_file_info` | Fájl metaadatainak lekérése (méret, időbélyegek, jogosultságok) |
+| `create_directory` | Könyvtár létrehozása (szülő könyvtárakkal együtt) |
+| `move_file` | Fájl vagy könyvtár áthelyezése, átnevezése |
+
+Az alábbi ábra bemutatja, hogyan működik a Stdio transzport futásidőben — a Java alkalmazásod egy MCP szervert indít gyerekfolyamatként, és stdin/stdout csöveken keresztül kommunikálnak, hálózat vagy HTTP nélkül:
+
 <img src="../../../translated_images/hu/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
 
-*Stdio transzport működés közben — az alkalmazás a MCP szervert alfolyamatként indítja, stdin/stdout csatornákon keresztül kommunikál.*
+*Stdio transzport működés közben — az alkalmazásod gyerekfolyamatként indítja az MCP szervert, és stdin/stdout csöveken keresztül kommunikálnak.*
 
 > **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) fájlt és kérdezd meg:
-> - "Hogyan működik a Stdio transzport és mikor érdemes HTTP helyett használni?"
-> - "Hogyan kezeli a LangChain4j a MCP szerver alfolyamatok életciklusát?"
-> - "Milyen biztonsági kockázatokat jelent, ha az AI hozzáfér a fájlrendszerhez?"
+> - "Hogyan működik a Stdio transzport, és mikor használjam a HTTP-vel szemben?"
+> - "Hogyan kezeli a LangChain4j az MCP szerver folyamatok életciklusát?"
+> - "Milyen biztonsági kockázatokkal jár, ha az AI hozzáférést kap a fájlrendszerhez?"
 
-## Az Agentic modul
+## Az ügynöki modul
 
-Miközben az MCP szabványosított eszközöket biztosít, a LangChain4j **agentic modulja** deklaratív módot nyújt ügynökök építésére, amelyek koordinálják ezeket az eszközöket. Az `@Agent` annotáció és az `AgenticServices` lehetővé teszik az ügynök viselkedésének interfészekkel való definiálását imperatív kód helyett.
+Míg az MCP szabványosított eszközöket biztosít, a LangChain4j **ügynöki modulja** deklaratív módot kínál arra, hogy ügynököket építs, amelyek koordinálják ezeket az eszközöket. Az `@Agent` annotáció és az `AgenticServices` lehetővé teszi, hogy interfészeken keresztül, imperatív kód helyett definiáld az ügynökök viselkedését.
 
-Ebben a modulban megismered a **Felügyelő Ügynök** mintát – egy fejlett agentic AI megközelítést, ahol egy „felügyelő” ügynök dinamikusan dönt arról, hogy melyik al-ügynököt hívja meg a felhasználói kérések alapján. Összekapcsoljuk a két koncepciót azzal, hogy egyik al-ügynökünk MCP-vel támogatott fájlhozzáféréssel rendelkezik.
+Ebben a modulban megismerkedsz a **Felügyelő Ügynök** mintával — egy haladó ügynöki AI megközelítéssel, ahol egy "felügyelő" ügynök dinamikusan dönt, hogy melyik al-ügynököket hívja meg a felhasználói kérések alapján. Egyesítjük a két koncepciót úgy, hogy egyik al-ügynökünk MCP-alapú fájlhozzáféréssel rendelkezik.
 
-Az agentic modul használatához add hozzá ezt a Maven függőséget:
+Az ügynöki modul használatához add hozzá ezt a Maven-függőséget:
 
 ```xml
 <dependency>
@@ -115,35 +137,36 @@ Az agentic modul használatához add hozzá ezt a Maven függőséget:
     <version>${langchain4j.mcp.version}</version>
 </dependency>
 ```
+> **Megjegyzés:** A `langchain4j-agentic` modul külön verzió tulajdonságot használ (`langchain4j.mcp.version`), mert más ütemezés szerint jelenik meg, mint a core LangChain4j könyvtárak.
 
-> **⚠️ Kísérleti:** A `langchain4j-agentic` modul **kísérleti**, és változhat. Az AI asszisztensek stabil építési módja továbbra is a `langchain4j-core` egyedi eszközökkel (04-es modul).
+> **⚠️ Kísérleti:** A `langchain4j-agentic` modul **kísérleti jellegű**, és változhat. Az AI asszisztensek építésének stabil módja továbbra is a `langchain4j-core` egyedi eszközökkel (04. modul).
 
-## Példák futtatása
+## A példák futtatása
 
 ### Előfeltételek
 
+- Elvégzett [04-es modul - Eszközök](../04-tools/README.md) (ez a modul az egyedi eszközökre épít és összehasonlítja azokat az MCP eszközökkel)
+- `.env` fájl a gyökérkönyvtárban Azure hitelesítési adatokkal (amit a `azd up` hoz létre az 01-es modulban)
 - Java 21+, Maven 3.9+
-- Node.js 16+ és npm (MCP szerverekhez)
-- Környezeti változók beállítása `.env` fájlban (a gyökérkönyvtárból):
-  - `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT` (ugyanaz, mint az 01-04-es modulokban)
+- Node.js 16+ és npm (az MCP szerverekhez)
 
-> **Megjegyzés:** Ha még nem állítottad be a környezeti változókat, tekintsd meg a [00-modul - Gyors kezdés](../00-quick-start/README.md) útmutatót, vagy másold a `.env.example`-t `.env`-nek a gyökérben és töltsd ki a saját adataiddal.
+> **Megjegyzés:** Ha még nem állítottad be a környezeti változókat, lásd a [01-es modul - Bevezetés](../01-introduction/README.md) telepítési utasításait (`azd up` automatikusan létrehozza a `.env` fájlt), vagy másold a `.env.example` fájlt `.env`-re a gyökérkönyvtárban és töltsd ki a megfelelőt.
 
 ## Gyors kezdés
 
-**VS Code használata esetén:** Egyszerűen kattints jobb egérgombbal bármely demó fájlon a Fájlkezelőben és válaszd a **"Run Java"** opciót, vagy futtasd a konfigurációkat a Futtatás és hibakeresés panelből (előtte győződj meg, hogy a `.env` fájl helyesen be van állítva).
+**VS Code használata:** Egyszerűen kattints jobb gombbal bármelyik demó fájlra a Fájlkezelőben, és válaszd a **„Run Java”** lehetőséget, vagy használd a Futás és Hibakeresés panel indítási konfigurációit (győződj meg róla, hogy előbb a `.env` fájlban az Azure hitelesítők be vannak állítva).
 
-**Maven használatával:** Alternatívaként a parancssorból is futtathatod az alábbi példákat.
+**Mavennel:** Alternatívaként futtathatod parancssorból a következő példák szerint.
 
-### Fájlműveletek (Stdio)
+### Fájl műveletek (Stdio)
 
-Ez bemutatja helyi alfolyamat alapú eszközöket.
+Ez a helyi alfolyamat alapú eszközöket mutatja be.
 
-**✅ Nincs szükség előfeltételekre** – az MCP szerver automatikusan elindul.
+**✅ Nincs szükség előfeltételekre** - az MCP szervert az alkalmazás automatikusan elindítja.
 
 **Indító szkriptek használata (ajánlott):**
 
-Az indító szkriptek automatikusan betöltik a gyökér `.env` fájl környezeti változóit:
+Az indító szkriptek automatikusan betöltik a környezeti változókat a gyökérkönyvtár `.env` fájljából:
 
 **Bash:**
 ```bash
@@ -158,9 +181,9 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
-**VS Code használata:** Kattints jobb egérgombbal a `StdioTransportDemo.java`-n és válaszd a **"Run Java"** lehetőséget (bizonyosodj meg, hogy a `.env` fájl be van állítva).
+**VS Code használata:** Jobb klikk a `StdioTransportDemo.java` fájlra, majd válaszd a **„Run Java”** lehetőséget (győződj meg arról, hogy a `.env` be van állítva).
 
-Az alkalmazás automatikusan elindítja az MCP fájlrendszer szervert, és beolvas egy helyi fájlt. Figyeld meg, hogyan kezelődik az alfolyamat menedzsment.
+Az alkalmazás automatikusan elindít egy fájlrendszer MCP szervert és beolvassa egy helyi fájl tartalmát. Figyeld meg, hogyan kezeli az alfolyamat kezelést az alkalmazás helyetted.
 
 **Várt kimenet:**
 ```
@@ -168,27 +191,27 @@ Assistant response: The file provides an overview of LangChain4j, an open-source
 for integrating Large Language Models (LLMs) into Java applications...
 ```
 
-### Felügyelő Ügynök
+### Felügyelő ügynök
 
-A **Felügyelő Ügynök minta** egy **rugalmas** agentic AI forma. A Felügyelő egy LLM segítségével önállóan dönt, mely ügynököket hívja meg a felhasználói kérés alapján. A következő példában MCP-vel támogatott fájlhozzáférést kombinálunk egy LLM ügynökkel, hogy egy felügyelt fájlolvasás → jelentés munkafolyamatot hozzunk létre.
+A **Felügyelő Ügynök minta** egy **rugalmas** formája az ügynöki AI-nak. Egy felügyelő az LLM segítségével autonóm módon dönt arról, hogy mely ügynököket hívja meg a felhasználó kérései alapján. A következő példában kombináljuk az MCP-alapú fájlhozzáférést egy LLM ügynökkel, hogy létrehozzunk egy felügyelt fájlolvasás → jelentés munkafolyamatot.
 
-A demóban a `FileAgent` fájlokat olvas MCP fájlrendszer eszközökkel, a `ReportAgent` pedig egy strukturált jelentést készít egy vezetői összefoglalóval (1 mondat), 3 kulcsponttal és ajánlásokkal. A Felügyelő automatikusan koordinálja a folyamatot:
+A demóban a `FileAgent` fájlt olvas MCP fájlrendszer eszközökkel, a `ReportAgent` strukturált jelentést generál egy vezetői összefoglalóval (1 mondat), 3 kulcsponttal és ajánlásokkal. A Felügyelő automatikusan koordinálja ezt a folyamatot:
 
 <img src="../../../translated_images/hu/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-*A Felügyelő az LLM-jét használja, hogy eldöntse, mely ügynököket hívjon meg és milyen sorrendben — nincs szükség keménykódolt útirányításra.*
+*A felügyelő az LLM-jét használja, hogy eldöntse, mely ügynököket hívjon meg, és milyen sorrendben — nincs szükség keménykódolt útvonalválasztásra.*
 
-A fájl → jelentés munkafolyamat konkrét folyamata így néz ki:
+Ez a konkrét munkafolyamat a fájlból jelentésre csővezetékünk számára:
 
 <img src="../../../translated_images/hu/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
-*A FileAgent MCP eszközökkel olvassa a fájlt, majd a ReportAgent az alapanyagot strukturált jelentéssé alakítja.*
+*A FileAgent az MCP eszközökön keresztül olvassa a fájlt, majd a ReportAgent az nyers tartalmat strukturált jelentéssé alakítja.*
 
-Minden ügynök az **Agentic Scope**-ban (megosztott memória) tárolja az outputját, így a későbbi ügynökök hozzáférhetnek az előző eredményekhez. Ez azt példázza, hogy az MCP eszközök zökkenőmentesen integrálódnak az agentic munkafolyamatokba — a Felügyelőnek nem kell tudnia *hogyan* olvassák a fájlokat, csak hogy a `FileAgent` képes rá.
+Minden ügynök kimenetét az **Agentic Scope**-ban (megosztott memória) tárolja, így az utólagos ügynökök elérhetik a korábbi eredményeket. Ez demonstrálja, hogy az MCP eszközök hogyan integrálódnak zökkenőmentesen az ügynöki munkafolyamatokba — a Felügyelőnek nem kell tudnia, *hogyan* olvassák a fájlokat, csak annyi a dolga, hogy a `FileAgent` képes rá.
 
 #### A demó futtatása
 
-Az indító szkriptek automatikusan betöltik a gyökér `.env` fájl környezeti változóit:
+Az indító szkriptek automatikusan betöltik a környezeti változókat a gyökér `.env` fájlból:
 
 **Bash:**
 ```bash
@@ -203,15 +226,31 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
-**VS Code használata:** Kattints jobb egérgombbal a `SupervisorAgentDemo.java`-ra és válaszd a **"Run Java"** lehetőséget (bizonyosodj meg, hogy a `.env` fájl be van állítva).
+**VS Code használata:** Jobb kattintás a `SupervisorAgentDemo.java` fájlra, majd válaszd a **„Run Java”** lehetőséget (győződj meg róla, hogy a `.env` be van állítva).
 
-#### Hogyan működik a Felügyelő
+#### Hogyan működik a felügyelő
+
+Az ügynökök építése előtt össze kell kötni az MCP transzportot egy klienssel, és becsomagolni mint `ToolProvider`. Így válnak az MCP szerver eszközei elérhetővé az ügynökeid számára:
 
 ```java
-// 1. lépés: A FileAgent MCP eszközökkel olvassa be a fájlokat
+// Hozzon létre egy MCP klienst a transzportból
+McpClient mcpClient = new DefaultMcpClient.Builder()
+        .transport(stdioTransport)
+        .build();
+
+// Csomagolja be az ügyfelet ToolProvider-ként — ez hidat képez az MCP eszközök és a LangChain4j között
+ToolProvider mcpToolProvider = McpToolProvider.builder()
+        .mcpClients(List.of(mcpClient))
+        .build();
+```
+
+Most már injektálhatod a `mcpToolProvider`-t bármelyik ügynökbe, amelynek szüksége van MCP eszközökre:
+
+```java
+// 1. lépés: A FileAgent fájlokat olvas MCP eszközökkel
 FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .chatModel(model)
-        .toolProvider(mcpToolProvider)  // Tartalmazza az MCP eszközöket fájlműveletekhez
+        .toolProvider(mcpToolProvider)  // Rendelkezik MCP eszközökkel fájlműveletekhez
         .build();
 
 // 2. lépés: A ReportAgent strukturált jelentéseket készít
@@ -232,30 +271,29 @@ String response = supervisor.invoke("Read the file at /path/file.txt and generat
 
 #### Válaszstratégiák
 
-Amikor konfigurálsz egy `SupervisorAgent`-et, megadod, hogyan fogalmazza meg a végső választ a felhasználónak, miután az al-ügynökök befejezték a feladataikat.
+Amikor beállítod a `SupervisorAgent`-et, meg kell adnod, hogyan fogalmazza meg a végső választ a felhasználónak, miután az al-ügynökök befejezték a feladataikat. Az alábbi ábra a három elérhető stratégiát mutatja be — a LAST közvetlenül az utolsó ügynök kimenetét adja vissza, a SUMMARY egy LLM segítségével szintetizálja az összes kimenetet, az SCORED pedig a hármat értékeli az eredeti kéréshez képest és a jobb pontszámút választja:
 
 <img src="../../../translated_images/hu/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
 
-*Három stratégia a Felügyelő végső válaszának megalkotására – válassz attól függően, hogy az utolsó ügynök outputját, egy összesített összefoglalót vagy a legjobban értékelt válasz opciót szeretnéd.*
+*Három stratégia arra, hogyan fogalmazza meg a Felügyelő a végső válaszát — válaszd aszerint, hogy az utolsó ügynök kimenetét, egy összefoglaló szintézist, vagy a legjobbra értékelt opciót szeretnéd.*
 
 Az elérhető stratégiák:
 
 | Stratégia | Leírás |
 |----------|-------------|
-| **LAST** | A felügyelő az utolsó al-ügynök vagy eszköz által adott választ adja vissza. Hasznos, ha a munkafolyamat végső ügynöke kifejezetten a teljes, végső választ adja (pl. kutatási folyamatban egy "Összefoglaló ügynök"). |
-| **SUMMARY** | A felügyelő saját beépített nyelvi modelljével (LLM) összeállít egy összefoglalót az egész interakcióról és az összes al-ügynök válaszáról, majd ezt a szintetizált összefoglalót adja vissza végső válaszként. Ez egy tiszta, összefoglalt választ ad a felhasználónak. |
-| **SCORED** | A rendszer egy beépített LLM segítségével értékeli az utolsó választ és az összefoglalót a felhasználói kéréshez képest, és azt az outputot adja vissza, amelyik magasabb pontszámot kapott. |
+| **LAST** | A felügyelő az utolsó al-ügynök vagy eszköz által szolgáltatott kimenetet adja vissza. Ez hasznos, ha a munkafolyamat utolsó ügynöke kifejezetten a teljes, végső válasz előállítására van tervezve (pl. egy "Összefoglaló Ügynök" egy kutatási folyamatban). |
+| **SUMMARY** | A felügyelő a saját belső nyelvi modelljét használja az egész interakció és az összes al-ügynök kimenetének összesítésére, és ezt a szintetizált összefoglalót adja vissza végső válaszként. Ez tiszta, összefoglalt választ biztosít a felhasználónak. |
+| **SCORED** | A rendszer egy belső LLM-et használ arra, hogy pontozza mind a LAST választ, mind a SUMMARY-t az eredeti felhasználói kéréshez képest, és azt a kimenetet adja vissza, amelyik jobb pontszámot kapott. |
+Teljes megvalósításért lásd a [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) fájlt.
 
-A teljes megvalósítást lásd a [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) fájlban.
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chat-et:** Nyisd meg a [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) fájlt, és kérdezd meg:
+> - „Hogyan dönt a Supervisor, mely ügynököket hívja meg?”
+> - „Mi a különbség a Supervisor és a Szekvenciális munkafolyamat minták között?”
+> - „Hogyan testreszabhatom a Supervisor tervezési viselkedését?”
 
-> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) fájlt és kérdezd meg:
-> - "Hogyan dönt a Felügyelő, mely ügynököket hívjon meg?"
-> - "Mi a különbség a Felügyelő és a Szekvenciális munkafolyamat minták között?"
-> - "Hogyan testreszabhatom a Felügyelő tervezési viselkedését?"
+#### A kimenet megértése
 
-#### Az output megértése
-
-A demó futtatásakor egy strukturált bemutatót látsz arról, hogyan koordinálja a Felügyelő több ügynök működését. Íme, mit jelentenek az egyes szakaszok:
+Ha futtatod a demót, egy strukturált végigvezetést látsz arról, hogy a Supervisor miként irányít több ügynököt. Íme, mit jelent az egyes szakasz:
 
 ```
 ======================================================================
@@ -266,7 +304,7 @@ This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
 
-**A fejléc** bevezeti a munkafolyamat koncepcióját: fókuszált pipeline fájlolvasástól a jelentéskészítésig.
+**A fejlécek** bemutatják a munkafolyamat koncepcióját: egy fókuszált csővezetéket az állományolvasástól a jelentéskészítésig.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -282,16 +320,16 @@ The Supervisor orchestrates the agents automatically based on the request.
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
 
-**Munkafolyamat diagram** mutatja az adatok áramlását az ügynökök között. Minden ügynöknek specifikus szerepe van:
-- **FileAgent** MCP eszközökkel olvas fájlokat és a nyers tartalmat a `fileContent` változóba teszi
-- **ReportAgent** felhasználja ezt a tartalmat és strukturált jelentést készít a `report` változóba
+**A munkafolyamat diagramja** megmutatja az adatáramlást az ügynökök között. Minden ügynöknek megvan a maga szerepe:
+- **FileAgent** MCP eszközökkel olvassa be a fájlokat, és tárolja a nyers tartalmat a `fileContent` változóban
+- **ReportAgent** felhasználja ezt a tartalmat, és struktúrált jelentést készít a `report` változóban
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
 
-**Felhasználói kérés** mutatja a feladatot. A Felügyelő ezt elemzi és eldönti, hogy a FileAgent → ReportAgent hívásokat kell végrehajtani.
+**Felhasználói kérés** mutatja a feladatot. A Supervisor ezt feldolgozza és úgy dönt, hogy FileAgent → ReportAgent sorrendben hívja meg az ügynököket.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -312,11 +350,11 @@ The Supervisor orchestrates the agents automatically based on the request.
   +-- [OK] ReportAgent (generating structured report) completed
 ```
 
-**Felügyelő koordináció** mutatja a 2 lépéses folyamatot:
-1. **FileAgent** MCP-n keresztül olvassa a fájlt és eltárolja a tartalmat
-2. **ReportAgent** megkapja az adatot és strukturált jelentést generál
+**Supervisor szervezés** megmutatja a kétszakaszos folyamatot:
+1. **FileAgent** MCP-n keresztül olvassa be a fájlt és tárolja a tartalmat
+2. **ReportAgent** megkapja a tartalmat és struktúrált jelentést készít
 
-A Felügyelő ezt a döntést **önállóan** hozta meg a felhasználói kérés alapján.
+A Supervisor ezeket a döntéseket **önállóan** hozta a felhasználói kérés alapján.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -335,34 +373,38 @@ Recommendations
   * report: Executive Summary...
 ```
 
-#### Az Agentic modul funkcióinak magyarázata
+#### Magyarázat az Agentic Modul funkcióira
 
-A példa több fejlett agentic modul funkciót is bemutat. Tekintsünk közelebbről az Agentic Scope és az Agent Listeners-re.
+A példa több fejlett funkcióját is bemutatja az agentic modulnak. Vizsgáljuk meg közelebbről az Agentic Scope-ot és az Agent Listeners-eket.
 
-**Agentic Scope** a megosztott memória, ahol az ügynökök az `@Agent(outputKey="...")` annotációval tárolták az eredményeket. Ez lehetővé teszi:
-- Az utólagos ügynökök hozzáférését a korábbi ügynökök outputjaihoz
-- A Felügyelő számára a végső válasz szerkesztését
-- Számodra, hogy megnézd, mit produkált egy-egy ügynök
+**Agentic Scope** mutatja a megosztott memóriát, ahol az ügynökök az `@Agent(outputKey="...")` annotációval tárolták az eredményeket. Ez lehetővé teszi:
+- Hogy későbbi ügynökök elérjék a korábbi ügynökök kimenetét
+- Hogy a Supervisor összesítse a végső választ
+- Hogy te megvizsgálhasd, mit állított elő az egyes ügynök
+
+Az alábbi diagram azt mutatja, hogyan működik az Agentic Scope megosztott memóriaként a fájl-jelentés munkafolyamatban — a FileAgent a `fileContent` kulcs alatt írja az eredményt, a ReportAgent ezt olvassa és a `report` kulcs alatt írja a saját eredményét:
 
 <img src="../../../translated_images/hu/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
 
-*Az Agentic Scope mint megosztott memória működik — a FileAgent írja a `fileContent`-et, a ReportAgent olvassa azt és írja a `report`-ot, majd a kódod olvassa a végső eredményt.*
+*Az Agentic Scope megosztott memóriaként működik — a FileAgent írja a `fileContent`-et, a ReportAgent olvassa azt, majd írja a `report`-ot, és a kódod olvassa a végső eredményt.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
-String fileContent = scope.readState("fileContent");  // Nyers fájl adatok a FileAgent-től
+String fileContent = scope.readState("fileContent");  // Nyers fájladat a FileAgent-től
 String report = scope.readState("report");            // Strukturált jelentés a ReportAgent-től
 ```
 
-**Agent Listeners** lehetővé teszik az ügynök végrehajtásának megfigyelését és hibakeresését. A demóban látható lépésenkénti output egy AgentListenerből származik, amely minden ügynökhívásba be van fűzve:
-- **beforeAgentInvocation** - Akkor hívódik meg, amikor a Supervisor kiválaszt egy ügynököt, így láthatod, melyik ügynök került kiválasztásra és miért
-- **afterAgentInvocation** - Akkor hívódik meg, amikor egy ügynök befejeződik, megmutatva az eredményét
-- **inheritedBySubagents** - Ha igaz, a listener figyeli az összes ügynököt a hierarchiában
+**Agent Listeners** lehetővé teszik az ügynökök futásának figyelését és hibakeresését. A demóban látott lépésről lépésre történő kimenet egy olyan AgentListenerből származik, amely minden ügynök-aktiváláshoz kapcsolódik:
+- **beforeAgentInvocation** - Akkor hívódik meg, amikor a Supervisor kiválaszt egy ügynököt, lehetővé téve, hogy lásd, melyik ügynököt miért választotta
+- **afterAgentInvocation** - Akkor hívódik meg, amikor egy ügynök befejeződik, megjelenítve az eredményét
+- **inheritedBySubagents** - Ha true, a hallgató figyeli a hierarchiában lévő összes ügynököt
+
+Az alábbi diagram bemutatja az Agent Listener teljes életciklusát, beleértve, hogy az `onError` hogyan kezeli a hibákat az ügynök futása során:
 
 <img src="../../../translated_images/hu/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
 
-*Az Agent Listeners belépnek a végrehajtási élettartamba — figyelik, mikor indulnak el, fejeződnek be vagy hibáznak az ügynökök.*
+*Az Agent Listeners-ek bekapcsolódnak a futás életciklusába — figyelik, mikor indul el, fejeződik be vagy hibázik egy ügynök.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -381,75 +423,81 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Terjessze az összes alügynökhöz
+        return true; // Terjessze az összes alügynökre
     }
 };
 ```
 
-A Supervisor mintán túl a `langchain4j-agentic` modul számos erőteljes munkafolyamat-mintát és funkciót kínál:
+A Supervisor minta mellett a `langchain4j-agentic` modul több erőteljes munkafolyamat-mintát kínál. Az alábbi diagram az ötöt mutatja be — az egyszerű szekvenciális csővezetékektől az emberi ellenőrzést igénylő jóváhagyási folyamatokig:
 
 <img src="../../../translated_images/hu/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
 
-*Öt munkafolyamat-minta az ügynökök koordinálására — az egyszerű szekvenciális csővezetékektől a human-in-the-loop jóváhagyási munkafolyamatokig.*
+*Öt munkafolyamat-minta az ügynökök irányítására — az egyszerű szekvenciális csővezetékektől az emberi beavatkozást igénylő jóváhagyási folyamatokig.*
 
 | Minta | Leírás | Használati eset |
 |---------|-------------|----------|
-| **Szekvenciális** | Ügynökök végrehajtása sorrendben, a kimenet a következőhöz folyik | Csővezetékek: kutatás → elemzés → jelentés |
-| **Párhuzamos** | Ügynökök egyidejű futtatása | Független feladatok: időjárás + hírek + részvények |
-| **Ciklus** | Iterálás, amíg a feltétel teljesül | Minőségi értékelés: finomítás, amíg a pont ≥ 0.8 |
-| **Feltételes** | Útvonal választása feltételek alapján | Osztályozás → útvonal szakértő ügynökhöz |
-| **Human-in-the-Loop** | Emberi ellenőrzési pontok hozzáadása | Jóváhagyási munkafolyamatok, tartalmi áttekintés |
+| **Szekvenciális** | Az ügynökök sorban futnak, a kimenet a következőnek megy | Csővezetékek: kutatás → elemzés → jelentés |
+| **Párhuzamos** | Az ügynökök egyszerre futnak | Független feladatok: időjárás + hírek + részvények |
+| **Ciklus** | Ismétlődik, amíg a feltétel teljesül | Minőségi pontozás: finomítás amíg pont ≥ 0,8 |
+| **Feltételes** | Feltételek alapján irányít | Osztályozás → specialistához irányítás |
+| **Emberi beavatkozás** | Emberi ellenőrző pontokat ad hozzá | Jóváhagyási folyamatok, tartalmi felülvizsgálat |
 
 ## Kulcsfogalmak
 
-Most, hogy felfedezted az MCP-t és az agentic modult működés közben, foglaljuk össze, mikor melyik megközelítést érdemes használni.
+Most, hogy megismerted az MCP-t és az agentic modult a gyakorlatban, összefoglaljuk, mikor használj melyik megközelítést.
+
+Az MCP egyik legnagyobb előnye a növekvő ökoszisztéma. Az alábbi diagram mutatja, hogyan kapcsol egyetlen univerzális protokoll az AI alkalmazásodat sokféle MCP szerverhez — fájlrendszer- és adatbázis-hozzáféréstől a GitHub, e-mail, webscraping és egyebek felé:
 
 <img src="../../../translated_images/hu/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
 
-*Az MCP univerzális protokoll ökoszisztémát hoz létre — bármilyen MCP-kompatibilis szerver működik bármilyen MCP-kompatibilis klienssel, lehetővé téve az eszközök megosztását alkalmazások között.*
+*Az MCP univerzális protokoll-ökoszisztémát hoz létre — bármelyik MCP-kompatibilis szerver működik bármelyik MCP-kompatibilis klienssel, lehetővé téve az eszközök megosztását alkalmazások között.*
 
-**MCP** ideális, amikor meglévő eszközöket akarsz kihasználni, olyan eszközöket építesz, amelyeket több alkalmazás megoszthat, harmadik fél szolgáltatásait integrálod szabványos protokollokkal, vagy eszközmegvalósításokat cserélsz anélkül, hogy kódot változtatnál.
+**Az MCP** ideális, ha meglévő eszközök ökoszisztémáját akarod kihasználni, olyan eszközöket építesz, amiket több alkalmazás használhat, harmadik féltől származó szolgáltatásokat integrálsz szabványos protokollokkal, vagy eszközmegvalósításokat cserélnél anélkül, hogy a kódot módosítanád.
 
-**Az Agentic Modul** akkor a legjobb választás, ha deklaratív ügynök definíciókra van szükséged `@Agent` annotációkkal, munkafolyamat koordinálásra (szekvenciális, ciklus, párhuzamos), preferálod az interfész alapú ügynök tervezést az imperatív kód helyett, vagy több, kimeneteket megosztó ügynököt kombinálsz `outputKey` használatával.
+**Az Agentic Modul** akkor a legjobb választás, ha deklaratív ügynökdefiníciókra van szükséged `@Agent` annotációkkal, munkafolyamat-orchestrationt akarsz (szekvenciális, ciklus, párhuzamos), inkább interfész alapú ügynöktervezést preferálsz az imperatív kód helyett, vagy ha több ügynököt kombinálsz, amelyek megosztott `outputKey` értékeken alapulnak.
 
-**A Supervisor Agent minta** akkor ragyog, amikor a munkafolyamat nem előre kiszámítható és azt szeretnéd, hogy az LLM döntsön, amikor több specializált ügynököd van, amelyek dinamikus koordinációt igényelnek, amikor beszélgető rendszereket építesz, amelyek különböző képességekhez irányítanak, vagy ha a legrugalmasabb, adaptív ügynök viselkedést keresed.
+**A Supervisor Agent minta** akkor tündököl, ha a munkafolyamat előre nem kiszámítható és szeretnéd, hogy a LLM döntse el, ha több specializált ügynököt kell dinamikusan szervezni, ha beszélgetéses rendszereket építesz, amelyek különböző képességekre irányítanak, vagy ha a legrugalmasabb, legadaptívabb ügynök viselkedést akarod.
+
+Ahhoz, hogy segítsen dönteni a Module 04 egyedi `@Tool` metódusai és az MCP eszközök között, az alábbi összehasonlítás kiemeli a fő kompromisszumokat — az egyedi eszközök szoros kötést és teljes típusbiztonságot adnak az alkalmazás-specifikus logikához, míg az MCP eszközök szabványosított, újrahasznosítható integrációk:
 
 <img src="../../../translated_images/hu/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
 
-*Mikor használj egyedi @Tool metódusokat vs MCP eszközöket — egyedi eszközök alkalmazásspecifikus logikához teljes típusbiztonsággal, MCP eszközök szabványosított integrációkhoz, amelyek több alkalmazásban működnek.*
+*Mikor használj egyedi @Tool metódusokat vs MCP eszközöket — egyedi eszközök az alkalmazás-specifikus logikához teljes típusbiztonsággal, MCP eszközök a szabványos integrációkért, amelyek több alkalmazásban is működnek.*
 
 ## Gratulálunk!
 
+Végigmentél a LangChain4j kezdőknek kurzus mind az öt modulján! Íme egy áttekintés a teljes tanulási útról, amit bejártál — az alapvető chat-től az MCP-vel hajtott agentikus rendszerekig:
+
 <img src="../../../translated_images/hu/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
 
-*Az öt modulon át tartó tanulási utad — az alapvető beszélgetéstől az MCP-vel hajtott agentic rendszerekig.*
+*A tanulási utad mind az öt modult átöleli — az alapvető chattől az MCP erővel rendelkező agentikus rendszerekig.*
 
-Befejezted a LangChain4j kezdőknek szóló tanfolyamot. Megtanultad:
+Befejezted a LangChain4j kezdőknek kurzust. Megtanultad:
 
 - Hogyan építs beszélgető AI-t memóriával (01. modul)
-- Különböző feladatokra szóló prompt tervezési mintákat (02. modul)
-- Válaszok alátámasztása dokumentumaiddal RAG használatával (03. modul)
-- Alap AI ügynökök (asszisztensek) létrehozása egyedi eszközökkel (04. modul)
-- Szabványos eszközök integrálása a LangChain4j MCP és Agentic modulokkal (05. modul)
+- Prompt tervezési mintákat különböző feladatokhoz (02. modul)
+- Hogyan helyezz válaszokat a dokumentumaidhoz RAG segítségével (03. modul)
+- Alapvető AI ügynökök (asszisztensek) létrehozását egyedi eszközökkel (04. modul)
+- Szabványosított eszközök integrálását a LangChain4j MCP és Agentic modulokkal (05. modul)
 
-### Mi a következő lépés?
+### Mi következik ezután?
 
-A modulok elvégzése után fedezd fel a [Tesztelési Útmutatót](../docs/TESTING.md), hogy lásd a LangChain4j tesztelési koncepcióit működés közben.
+A modulok elvégzése után nézd meg a [Tesztelési Útmutatót](../docs/TESTING.md), hogy lásd a LangChain4j tesztelési koncepciókat működés közben.
 
 **Hivatalos források:**
-- [LangChain4j Dokumentáció](https://docs.langchain4j.dev/) - Átfogó útmutatók és API referenciák
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Forráskód és példák
-- [LangChain4j Oktatóanyagok](https://docs.langchain4j.dev/tutorials/) - Lépésről lépésre oktatóanyagok különféle használati esetekhez
+- [LangChain4j Dokumentáció](https://docs.langchain4j.dev/) – Átfogó útmutatók és API referencia
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) – Forráskód és példák
+- [LangChain4j Oktatóanyagok](https://docs.langchain4j.dev/tutorials/) – Lépésről lépésre oktatóanyagok különböző felhasználási esetekhez
 
-Köszönjük, hogy elvégezted ezt a tanfolyamot!
+Köszönjük, hogy elvégezted ezt a kurzust!
 
 ---
 
-**Navigáció:** [← Előző: 04-es modul - Eszközök](../04-tools/README.md) | [Vissza a főoldalra](../README.md)
+**Navigáció:** [← Előző: Modul 04 - Eszközök](../04-tools/README.md) | [Vissza a főoldalra](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Jogi nyilatkozat**:
-Ezt a dokumentumot az AI fordító szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével fordítottuk le. Bár az pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások tartalmazhatnak hibákat vagy pontatlanságokat. Az eredeti dokumentum az anyanyelvén tekintendő hiteles forrásnak. Fontos információk esetén szakmai, emberi fordítást javasolt igénybe venni. Nem vállalunk felelősséget semmilyen félreértésért vagy helytelen értelmezésért, amely a fordítás használatából adódik.
+**Jogi nyilatkozat**:  
+Ezt a dokumentumot az AI fordító szolgáltatás [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével fordítottuk le. Bár a pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum a saját nyelvén tekintendő hiteles forrásnak. Kritikus információk esetén javasolt szakmai, emberi fordítást igénybe venni. Nem vállalunk felelősséget az ebből a fordításból eredő félreértésekért vagy téves értelmezésekért.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

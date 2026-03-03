@@ -50,7 +50,7 @@ This grounds the model's responses in your actual data instead of relying on its
 
 ## Prerequisites
 
-- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced above)
+- Completed [Module 00 - Quick Start](../00-quick-start/README.md) (for the Easy RAG example referenced later in this module)
 - Completed [Module 01 - Introduction](../01-introduction/README.md) (Azure OpenAI resources deployed, including the `text-embedding-3-small` embedding model)
 - `.env` file in root directory with Azure credentials (created by `azd up` in Module 01)
 
@@ -89,6 +89,8 @@ LangChain4j offers three ways to implement RAG, each with a different level of a
 **This tutorial uses the Native approach.** Each step of the RAG pipeline — embedding the query, searching the vector store, assembling the context, and generating the answer — is written out explicitly in [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java). This is intentional: as a learning resource, it's more important that you see and understand every stage than that the code is minimized. Once you're comfortable with how the pieces fit together, you can graduate to Easy RAG for quick prototypes or Advanced RAG for production systems.
 
 > **💡 Already seen Easy RAG in action?** The [Quick Start module](../00-quick-start/README.md) includes a Document Q&A example ([`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)) that uses the Easy RAG approach — LangChain4j handles embedding, searching, and prompt assembly automatically. This module takes the next step by breaking open that pipeline so you can see and control each stage yourself.
+
+The diagram below shows the Easy RAG pipeline from that Quick Start example. Notice how `AiServices` and `EmbeddingStoreContentRetriever` hide all the complexity — you load a document, attach a retriever, and get answers. The Native approach in this module breaks each of those hidden steps open:
 
 <img src="../../../translated_images/en/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
@@ -131,6 +133,8 @@ The diagram below shows how this works visually. Notice how each chunk shares so
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
 Each chunk is converted into a numerical representation called an embedding — essentially a meaning-to-numbers converter. The embedding model isn't "intelligent" the way a chat model is; it can't follow instructions, reason, or answer questions. What it can do is map text into a mathematical space where similar meanings land near each other — "car" near "automobile," "refund policy" near "return my money." Think of a chat model as a person you can talk to; an embedding model is an ultra-good filing system.
+
+The diagram below visualizes this concept — text goes in, numerical vectors come out, and similar meanings produce nearby vectors:
 
 <img src="../../../translated_images/en/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
 
@@ -197,10 +201,10 @@ The diagram below contrasts semantic search with traditional keyword search. A k
 <img src="../../../translated_images/en/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
 *This diagram compares keyword-based search with semantic search, showing how semantic search retrieves conceptually related content even when exact keywords differ.*
-
 Under the hood, similarity is measured using cosine similarity — essentially asking "are these two arrows pointing in the same direction?" Two chunks can use completely different words, but if they mean the same thing their vectors point the same way and score close to 1.0:
 
 <img src="../../../translated_images/en/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
+
 *This diagram illustrates cosine similarity as the angle between embedding vectors — more aligned vectors score closer to 1.0, indicating higher semantic similarity.*
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) and ask:
@@ -243,7 +247,7 @@ The diagram below shows this assembly in action — the top-scoring chunks from 
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+Ensure the `.env` file exists in the root directory with Azure credentials (created during Module 01). Run this from the module directory (`03-rag/`):
 
 **Bash:**
 ```bash
@@ -257,7 +261,7 @@ Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **Start the application:**
 
-> **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8081. You can skip the start commands below and go directly to http://localhost:8081.
+> **Note:** If you already started all applications using `./start-all.sh` from the root directory (as described in Module 01), this module is already running on port 8081. You can skip the start commands below and go directly to http://localhost:8081.
 
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
@@ -416,18 +420,6 @@ RAG isn't always the right approach. The decision guide below helps you determin
 <img src="../../../translated_images/en/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
 *This diagram shows a decision guide for when RAG adds value versus when simpler approaches are sufficient.*
-
-**Use RAG when:**
-- Answering questions about proprietary documents
-- Information changes frequently (policies, prices, specifications)
-- Accuracy requires source attribution
-- Content is too large to fit in a single prompt
-- You need verifiable, grounded responses
-
-**Don't use RAG when:**
-- Questions require general knowledge the model already has
-- Real-time data is needed (RAG works on uploaded documents)
-- Content is small enough to include directly in prompts
 
 ## Next Steps
 

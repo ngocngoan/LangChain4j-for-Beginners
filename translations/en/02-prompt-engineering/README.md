@@ -13,7 +13,7 @@
   - [Role-Based Prompting](../../../02-prompt-engineering)
   - [Prompt Templates](../../../02-prompt-engineering)
 - [Advanced Patterns](../../../02-prompt-engineering)
-- [Using Existing Azure Resources](../../../02-prompt-engineering)
+- [Run the Application](../../../02-prompt-engineering)
 - [Application Screenshots](../../../02-prompt-engineering)
 - [Exploring the Patterns](../../../02-prompt-engineering)
   - [Low vs High Eagerness](../../../02-prompt-engineering)
@@ -34,9 +34,11 @@ Watch this live session that explains how to get started with this module:
 
 ## What You'll Learn
 
+The following diagram provides an overview of the key topics and skills you'll develop in this module — from prompt refinement techniques to the step-by-step workflow you'll follow.
+
 <img src="../../../translated_images/en/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
 
-In the previous module, you saw how memory enables conversational AI and used GitHub Models for basic interactions. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
+In the previous modules, you explored basic LangChain4j interactions with GitHub Models and saw how memory enables conversational AI with Azure OpenAI. Now we'll focus on how you ask questions — the prompts themselves — using Azure OpenAI's GPT-5.2. The way you structure your prompts dramatically affects the quality of responses you get. We start with a review of the fundamental prompting techniques, then move into eight advanced patterns that take full advantage of GPT-5.2's capabilities.
 
 We'll use GPT-5.2 because it introduces reasoning control - you can tell the model how much thinking to do before answering. This makes different prompting strategies more apparent and helps you understand when to use each approach. We'll also benefit from Azure's fewer rate limits for GPT-5.2 compared to GitHub Models.
 
@@ -49,17 +51,23 @@ We'll use GPT-5.2 because it introduces reasoning control - you can tell the mod
 
 ## Understanding Prompt Engineering
 
+At its core, prompt engineering is the difference between vague instructions and precise ones, as the comparison below illustrates.
+
 <img src="../../../translated_images/en/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
 
 Prompt engineering is about designing input text that consistently gets you the results you need. It's not just about asking questions - it's about structuring requests so the model understands exactly what you want and how to deliver it.
 
 Think of it like giving instructions to a colleague. "Fix the bug" is vague. "Fix the null pointer exception in UserService.java line 45 by adding a null check" is specific. Language models work the same way - specificity and structure matter.
 
+The diagram below shows how LangChain4j fits into this picture — connecting your prompt patterns to the model through SystemMessage and UserMessage building blocks.
+
 <img src="../../../translated_images/en/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
 
 LangChain4j provides the infrastructure — model connections, memory, and message types — while prompt patterns are just carefully structured text you send through that infrastructure. The key building blocks are `SystemMessage` (which sets the AI's behavior and role) and `UserMessage` (which carries your actual request).
 
 ## Prompt Engineering Fundamentals
+
+The five core techniques shown below form the foundation of effective prompt engineering. Each one addresses a different aspect of how you communicate with language models.
 
 <img src="../../../translated_images/en/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
 
@@ -186,6 +194,8 @@ With the fundamentals covered, let's move to the eight advanced patterns that ma
 
 *Overview of the eight prompt engineering patterns and their use cases*
 
+GPT-5.2 adds another dimension to these patterns: *reasoning control*. The slider below shows how you can adjust the model's thinking effort — from quick, direct answers to deep, thorough analysis.
+
 <img src="../../../translated_images/en/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
 
 *GPT-5.2's reasoning control lets you specify how much thinking the model should do — from fast direct answers to deep exploration*
@@ -273,6 +283,8 @@ Chain-of-Thought prompting explicitly asks the model to show its reasoning proce
 > - "What are best practices for structuring tool preambles in production applications?"
 > - "How can I capture and display intermediate progress updates in a UI?"
 
+The diagram below illustrates this Plan → Execute → Summarize workflow.
+
 <img src="../../../translated_images/en/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
 
 *Plan → Execute → Summarize workflow for multi-step tasks*
@@ -287,6 +299,8 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+
+The diagram below shows this iterative improvement loop — generate, evaluate, identify weaknesses, and refine until the code meets production standards.
 
 <img src="../../../translated_images/en/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
 
@@ -345,6 +359,8 @@ String response = chatModel.chat(prompt);
 > - "What's the best way to parse and act on structured output programmatically?"
 > - "How do I ensure consistent severity levels across different review sessions?"
 
+The following diagram shows how this structured framework organizes a code review into consistent categories with severity levels.
+
 <img src="../../../translated_images/en/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
 
 *Framework for consistent code reviews with severity levels*
@@ -363,10 +379,11 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
+The diagram below visualizes how conversation context accumulates with each turn and how it relates to the model's token limit.
+
 <img src="../../../translated_images/en/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
 
 *How conversation context accumulates over multiple turns until reaching the token limit*
-
 **Step-by-Step Reasoning** - For problems requiring visible logic. The model shows explicit reasoning for each step. Use this for math problems, logic puzzles, or when you need to understand the thinking process.
 
 ```java
@@ -380,6 +397,8 @@ String prompt = """
 
 String response = chatModel.chat(prompt);
 ```
+
+The diagram below illustrates how the model breaks problems into explicit, numbered logical steps.
 
 <img src="../../../translated_images/en/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
 
@@ -401,22 +420,32 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
+The following diagram shows how constraints guide the model to produce output that strictly adheres to your format and length requirements.
+
 <img src="../../../translated_images/en/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
 
 *Enforcing specific format, length, and structure requirements*
 
-## Using Existing Azure Resources
+## Run the Application
 
 **Verify deployment:**
 
-Ensure the `.env` file exists in root directory with Azure credentials (created during Module 01):
+Ensure the `.env` file exists in the root directory with Azure credentials (created during Module 01). Run this from the module directory (`02-prompt-engineering/`):
+
+**Bash:**
 ```bash
 cat ../.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # Should show AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+```
+
 **Start the application:**
 
-> **Note:** If you already started all applications using `./start-all.sh` from Module 01, this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
+> **Note:** If you already started all applications using `./start-all.sh` from the root directory (as described in Module 01), this module is already running on port 8083. You can skip the start commands below and go directly to http://localhost:8083.
+
 **Option 1: Using Spring Boot Dashboard (Recommended for VS Code users)**
 
 The dev container includes the Spring Boot Dashboard extension, which provides a visual interface to manage all Spring Boot applications. You can find it in the Activity Bar on the left side of VS Code (look for the Spring Boot icon).
@@ -430,6 +459,8 @@ From the Spring Boot Dashboard, you can:
 Simply click the play button next to "prompt-engineering" to start this module, or start all modules at once.
 
 <img src="../../../translated_images/en/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
+
+*The Spring Boot Dashboard in VS Code — start, stop, and monitor all modules from one place*
 
 **Option 2: Using shell scripts**
 
@@ -497,6 +528,8 @@ cd ..; .\stop-all.ps1  # All modules
 
 ## Application Screenshots
 
+Here is the main interface of the prompt engineering module, where you can experiment with all eight patterns side by side.
+
 <img src="../../../translated_images/en/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
 *The main dashboard showing all 8 prompt engineering patterns with their characteristics and use cases*
@@ -545,7 +578,7 @@ GPT-5.2 lets you control computational effort through your prompts. Low effort m
 
 **Structure Guides Behavior**
 
-Notice the XML tags in the prompts? They're not decorative. Models follow structured instructions more reliably than freeform text. When you need multi-step processes or complex logic, structure helps the model track where it is and what comes next.
+Notice the XML tags in the prompts? They're not decorative. Models follow structured instructions more reliably than freeform text. When you need multi-step processes or complex logic, structure helps the model track where it is and what comes next. The diagram below breaks down a well-structured prompt, showing how tags like `<system>`, `<instructions>`, `<context>`, `<user-input>`, and `<constraints>` organize your instructions into clear sections.
 
 <img src="../../../translated_images/en/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
 

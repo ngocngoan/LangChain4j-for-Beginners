@@ -1,140 +1,144 @@
-# Module 03: RAG（結合檢索的生成）
+# Module 03: RAG (檢索增強生成)
 
-## 目錄
+## Table of Contents
 
-- [視頻導覽](../../../03-rag)
-- [你將學習什麼](../../../03-rag)
-- [先決條件](../../../03-rag)
-- [了解 RAG](../../../03-rag)
-  - [本教程使用哪種 RAG 方法？](../../../03-rag)
-- [運作原理](../../../03-rag)
-  - [文件處理](../../../03-rag)
-  - [建立嵌入](../../../03-rag)
-  - [語義搜尋](../../../03-rag)
-  - [生成答案](../../../03-rag)
-- [執行應用程式](../../../03-rag)
-- [使用應用程式](../../../03-rag)
-  - [上傳文件](../../../03-rag)
-  - [提問](../../../03-rag)
-  - [檢查來源參考](../../../03-rag)
-  - [試驗提問](../../../03-rag)
-- [核心概念](../../../03-rag)
-  - [分塊策略](../../../03-rag)
-  - [相似度分數](../../../03-rag)
-  - [記憶體儲存](../../../03-rag)
-  - [語境窗口管理](../../../03-rag)
-- [何時 RAG 很重要](../../../03-rag)
-- [後續步驟](../../../03-rag)
+- [Video Walkthrough](../../../03-rag)
+- [What You'll Learn](../../../03-rag)
+- [Prerequisites](../../../03-rag)
+- [Understanding RAG](../../../03-rag)
+  - [Which RAG Approach Does This Tutorial Use?](../../../03-rag)
+- [How It Works](../../../03-rag)
+  - [Document Processing](../../../03-rag)
+  - [Creating Embeddings](../../../03-rag)
+  - [Semantic Search](../../../03-rag)
+  - [Answer Generation](../../../03-rag)
+- [Run the Application](../../../03-rag)
+- [Using the Application](../../../03-rag)
+  - [Upload a Document](../../../03-rag)
+  - [Ask Questions](../../../03-rag)
+  - [Check Source References](../../../03-rag)
+  - [Experiment with Questions](../../../03-rag)
+- [Key Concepts](../../../03-rag)
+  - [Chunking Strategy](../../../03-rag)
+  - [Similarity Scores](../../../03-rag)
+  - [In-Memory Storage](../../../03-rag)
+  - [Context Window Management](../../../03-rag)
+- [When RAG Matters](../../../03-rag)
+- [Next Steps](../../../03-rag)
 
-## 視頻導覽
+## Video Walkthrough
 
-觀看此直播課程，說明如何開始使用本模組：
+觀看此直播課程，講解如何開始使用本模組：
 
-<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="LangChain4j 的 RAG - 直播課程" width="800"/></a>
+<a href="https://www.youtube.com/watch?v=_olq75ZH_eY"><img src="https://img.youtube.com/vi/_olq75ZH_eY/maxresdefault.jpg" alt="RAG with LangChain4j - Live Session" width="800"/></a>
 
-## 你將學習什麼
+## What You'll Learn
 
-在先前的模組中，你學會了如何與 AI 進行對話以及如何有效構建提示。但有一個根本限制：語言模型只知道它在訓練期間學到的東西。它無法回答有關你公司政策、專案文件或任何未訓練過資訊的問題。
+在前面的模組中，你學會了如何與 AI 進行對話，並有效構建提示語。但有一個根本限制：語言模型只知道它在訓練期間學到的東西。它無法回答關於你公司政策、專案文件或任何未被訓練過的資訊的問題。
 
-RAG（結合檢索的生成）解決了這個問題。它不是試圖訓練模型了解你的資訊（這既昂貴又不實際），而是賦予模型在文件中搜尋的能力。當有人問問題時，系統會找到相關資訊並將其包含在提示中。模型接著基於該檢索到的語境進行回答。
+RAG（檢索增強生成）解決了這個問題。它不是試圖教模型你的資訊（這既昂貴又不實際），而是賦予模型搜尋你的文件的能力。當有人提問時，系統會找到相關資訊並包含在提示中，模型根據檢索到的上下文來回答。
 
-把 RAG 想像成給模型一個參考圖書館。當你問問題時，系統會：
+你可以將 RAG 想像成給模型一個參考圖書館。當你提出問題時，系統：
 
-1. **用戶查詢** - 你提出問題
-2. **建立嵌入** - 將你的問題轉換成向量
-3. **向量搜尋** - 找出相似的文件分塊
-4. **語境組裝** - 將相關分塊加入提示中
-5. **回應** - LLM 根據語境生成答案
+1. **使用者查詢** — 你提出問題  
+2. **嵌入** — 將問題轉換成向量  
+3. **向量搜尋** — 找到相似的文件片段  
+4. **上下文組合** — 將相關片段加入提示  
+5. **回應** — 大型語言模型根據上下文生成答案  
 
-這讓模型的回答有據可依於你的實際數據，而不是僅仰賴訓練知識或胡亂編造答案。
+這讓模型的回應基於你的實際數據，而不是依賴其訓練知識或捏造答案。
 
-## 先決條件
+## Prerequisites
 
-- 已完成 [Module 00 - 快速開始](../00-quick-start/README.md)（用於上述簡易 RAG 範例）
-- 已完成 [Module 01 - 介紹](../01-introduction/README.md)（已部署 Azure OpenAI 資源，包括 `text-embedding-3-small` 嵌入模型）
-- 根目錄有 `.env` 檔案，含 Azure 認證（由 Module 01 中的 `azd up` 建立）
+- 完成 [Module 00 - Quick Start](../00-quick-start/README.md)（用於本模組後面提及的簡易 RAG 範例）
+- 完成 [Module 01 - Introduction](../01-introduction/README.md)（已部署 Azure OpenAI 資源，包括 `text-embedding-3-small` 嵌入模型）
+- 根目錄下有包含 Azure 憑證的 `.env` 檔案（由模組 01 中的 `azd up` 建立）
 
-> **注意：** 如果尚未完成 Module 01，請先遵循那裡的部署說明。`azd up` 指令會部署 GPT 聊天模型和本模組所用的嵌入模型。
+> **注意：** 如果尚未完成 Module 01，請先依該模組的部署說明操作。`azd up` 命令會部署本模組使用的 GPT 聊天模型與嵌入模型。
 
-## 了解 RAG
+## Understanding RAG
 
-下圖展示了核心概念：RAG 不只是依賴模型的訓練數據，而是讓模型在每次生成答案前，先參考你的文件圖書館。
+下方圖示說明核心概念：RAG 不僅依賴模型訓練數據，還給模型提供了你的文件參考庫，讓它在生成每個答案前先查閱這些資料。
 
-<img src="../../../translated_images/zh-HK/what-is-rag.1f9005d44b07f2d8.webp" alt="什麼是 RAG" width="800"/>
+<img src="../../../translated_images/zh-HK/what-is-rag.1f9005d44b07f2d8.webp" alt="What is RAG" width="800"/>
 
-*此圖顯示標準 LLM（從訓練數據推測）與 RAG 增強的 LLM（先參考你的文件）的差別。*
+*此圖展示標準大型語言模型（依訓練資料推測）與 RAG 增強大型語言模型（先查閱你的文件）的不同。*
 
-以下說明端到端流程。用戶問題通過四個階段——嵌入、向量搜尋、語境組裝和答案生成——每個階段基於前一步進行：
+以下展示整個流程如何連結成端到端體系。使用者問題經過四個階段——嵌入、向量搜尋、上下文組合及答案生成——階段層層遞進：
 
-<img src="../../../translated_images/zh-HK/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG 架構" width="800"/>
+<img src="../../../translated_images/zh-HK/rag-architecture.ccb53b71a6ce407f.webp" alt="RAG Architecture" width="800"/>
 
-*此圖示範端到端 RAG 管線——用戶查詢經嵌入、向量搜尋、語境組裝和答案生成而完成。*
+*此圖顯示端到端 RAG 管道——使用者查詢依序經過嵌入、向量搜尋、上下文組合和答案生成。*
 
-接下來本模組會詳解每階段及相關程式碼，供你跑、修改。
+本模組接下來將詳細說明各個階段，並附上可執行與修改的程式碼。
 
-### 本教程使用哪種 RAG 方法？
+### Which RAG Approach Does This Tutorial Use?
 
-LangChain4j 提供三種 RAG 實作方式，每種抽象層級不同。下圖並排比較：
+LangChain4j 提供三種 RAG 實作方式，抽象層級各異。下圖並列比較：
 
-<img src="../../../translated_images/zh-HK/rag-approaches.5b97fdcc626f1447.webp" alt="LangChain4j 三種 RAG 方法" width="800"/>
+<img src="../../../translated_images/zh-HK/rag-approaches.5b97fdcc626f1447.webp" alt="Three RAG Approaches in LangChain4j" width="800"/>
 
-*此圖比較 LangChain4j 三種 RAG 策略——簡易、原生和進階，展示其主要元件及適用場合。*
+*此圖比較 LangChain4j 的三種 RAG 方法——Easy、Native 和 Advanced——展示主要組件及使用場合。*
 
-| 方法 | 功能 | 折衷 |
+| 方式 | 功能說明 | 均衡考量 |
 |---|---|---|
-| **簡易 RAG** | 透過 `AiServices` 和 `ContentRetriever` 自動串接所有流程。你只要標記接口、附加檢索器，LangChain4j 代為執行嵌入、搜尋和提示組裝。 | 程式碼少，但無法看到每步細節。 |
-| **原生 RAG** | 你自行呼叫嵌入模型、搜尋資料庫、建立提示和生成答案——每步明確寫出。 | 程式碼較多，但每階段清晰可見且可調整。 |
-| **進階 RAG** | 使用帶有可插拔查詢轉換器、路由器、重排序器和內容注入器的 `RetrievalAugmentor` 框架，適合生產管線。 | 彈性最大，但複雜度顯著提升。 |
+| **Easy RAG** | 透過 `AiServices` 和 `ContentRetriever` 自動串接所有流程。你只需註解接口，掛上檢索器，LangChain4j 背後自動執行嵌入、搜尋及提示組合。 | 代碼最少，但看不見每個步驟的運作。 |
+| **Native RAG** | 你自己呼叫嵌入模型，搜尋存儲，組提示，生成答案——明確拆分每個步驟。 | 代碼較多，但每階段清晰可見且可修改。 |
+| **Advanced RAG** | 使用帶可插拔查詢轉換器、路由器、重排序器及內容注入器的 `RetrievalAugmentor` 框架，適用於生產級管線。 | 彈性最大，但複雜度也最高。 |
 
-**本教程採用的是原生方式。** RAG 管線中的每步 —— 查詢嵌入、向量庫搜尋、語境組裝和答案生成 —— 全都明確寫在 [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) 中。這是有意為之：作為學習資源，清楚了解每階段比精簡程式碼更重要。熟悉流程後，你可以轉向簡易 RAG 做快速原型，或用進階 RAG 建置生產系統。
+**本教程採用 Native 方式。** RAG 管線的每一階段——查詢嵌入、向量搜尋、上下文組合與答案生成——都明確寫於 [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)。此設計是故意如此：作為學習資源，比起代碼簡短，更重要的是看到並理解每個階段如何運作。一旦熟悉整體架構，便可轉向 Easy RAG 快速原型或 Advanced RAG 生產系統。
 
-> **💡 已經看過簡易 RAG 範例？** [快速開始模組](../00-quick-start/README.md)包含一份文件問答範例（[`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)），使用的是簡易 RAG —— LangChain4j 會自動處理嵌入、搜尋與提示組裝。本模組則將該管線拆開，讓你能看見並控制每個階段。
+> **💡 已經看過 Easy RAG 範例？** [Quick Start 模組](../00-quick-start/README.md) 包含一個使用 Easy RAG 方法的文件問答範例（[`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)），LangChain4j 可自動執行嵌入、搜尋及提示組合。此模組進一步拆解該管線，讓你掌控各階段。
 
-<img src="../../../translated_images/zh-HK/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="簡易 RAG 管線 - LangChain4j" width="800"/>
+下圖展現 Quick Start 範例中的 Easy RAG 管線。注意 `AiServices` 和 `EmbeddingStoreContentRetriever` 如何隱藏複雜度——你只需載入文件、掛上檢索器，便能獲得答案。本模組的 Native 方法則拆解這些隱藏步驟：
 
-*此圖示 `SimpleReaderDemo.java` 中的簡易 RAG 管線。與本模組採用的原生方式比較： 簡易 RAG 把嵌入、檢索、提示組裝包裹在 `AiServices` 和 `ContentRetriever` 後面——你只要載入文件、附加檢索器，就能拿到答案。這模組用原生方法拆解管線，讓你自己呼叫每階段（嵌入、搜尋、組語境、生成），完全掌控過程。*
+<img src="../../../translated_images/zh-HK/easy-rag-pipeline.2e1602e2ad2ded42.webp" alt="Easy RAG Pipeline - LangChain4j" width="800"/>
 
-## 運作原理
+*此圖源自 `SimpleReaderDemo.java` 的 Easy RAG 管線。比對本模組使用的 Native 方法：Easy RAG 透過 `AiServices` 和 `ContentRetriever` 將嵌入、檢索和提示組合隱藏起來——你載入文件、掛檢索器，輕鬆獲答案。而 Native 方法則自己呼叫每個階段（嵌入、搜尋、組合上下文、生成）以提供完全的可視性與控制權。*
 
-本模組中的 RAG 管線分為四個階段，當用戶提出問題時依序執行。首先，把上傳文件**解析並分塊**成可管理小片段。接著，轉換這些分塊成**向量嵌入**並儲存起來，方便數學比較。當有查詢時，系統會做**語義搜尋**找出最相關分塊，最後將它們作為語境交給 LLM 生成答案。以下各節搭配實際程式碼和圖解，逐步說明。先看第一步。
+## How It Works
 
-### 文件處理
+本模組的 RAG 管線分為四個階段，每次使用者提問時依序執行。首先，上傳文件被 **解析與切塊** 成可管理的區塊。這些區塊接著轉成 **向量嵌入** 並存儲，以進行數學比對。當查詢進來，系統執行 **語義搜尋** 找出最相關區塊，最後將它們當作上下文交給大型語言模型進行 **答案生成**。以下章節逐步解析每一環節並附上程式碼與圖示。我們先從第一步開始。
+
+### Document Processing
 
 [DocumentService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)
 
-當你上傳文件，系統會解析（PDF 或純文字），附加檔名等元資料，接著拆成分塊——較小的片段，適合放入模型的語境窗口。分塊間略有重疊，避免語境在邊界處遺失。
+當你上傳文件時，系統會解析它（PDF 或純文字），附加檔名等元資料，然後將文件切成多個切塊——較小的片段，方便放入模型的上下文視窗。這些切塊彼此有些許重疊，以免上下文在分界處丟失。
 
 ```java
-// 解析已上載的檔案並將其包裝在 LangChain4j 文件中
+// 解析已上傳的檔案並包裝成 LangChain4j 文件
 Document document = Document.from(content, metadata);
 
-// 分割成300個標記的區塊，每個區塊重疊30個標記
+// 分割成每塊 300 個 token，並重疊 30 個 token
 DocumentSplitter splitter = DocumentSplitters
     .recursive(300, 30);
 
 List<TextSegment> segments = splitter.split(document);
 ```
 
-下圖以視覺化方式呈現此流程。注意每個分塊和鄰近分塊共享一些 token —— 30 字元的重疊確保關鍵語境不被漏掉：
+下圖視覺化展示此流程。注意每個切塊與鄰近切塊共享部分標記——30 標記重疊確保不會遺失重要上下文：
 
-<img src="../../../translated_images/zh-HK/document-chunking.a5df1dd1383431ed.webp" alt="文件分塊" width="800"/>
+<img src="../../../translated_images/zh-HK/document-chunking.a5df1dd1383431ed.webp" alt="Document Chunking" width="800"/>
 
-*此圖示文件被拆成 300 字元大小、30 字元重疊的分塊，保持分塊邊界的上下文連貫。*
+*此圖展示文件被拆成 300 標記切塊，每個切塊有 30 標記重疊，維護切塊邊界的上下文連續性。*
 
-> **🤖 用 [GitHub Copilot](https://github.com/features/copilot) 聊天試試：** 打開 [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java)，然後問：
-> - 「LangChain4j 如何分割文件成分塊？為何分塊重疊重要？」
-> - 「不同文件類型的最佳分塊大小是多少？為什麼？」
-> - 「如何處理多語言或具有特殊格式的文件？」
+> **🤖 用 [GitHub Copilot](https://github.com/features/copilot) Chat 試試：** 開啟 [`DocumentService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/DocumentService.java) 並問：
+> - 「LangChain4j 如何將文件拆成切塊，為什麼重疊重要？」
+> - 「不同文件類型的最佳切塊大小是什麼？為什麼？」
+> - 「如何處理多語言或特殊格式文件？」
 
-### 建立嵌入
+### Creating Embeddings
 
 [LangChainRagConfig.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/config/LangChainRagConfig.java)
 
-每塊會被轉換成數值表示，稱為嵌入 —— 本質上將語意轉成數字的轉換器。嵌入模型不像聊天模型那樣「智能」，它不會執行指令、推理或回答問題。它能做到的是將文本映射進一個數學空間，意義相近的文字會彼此靠近——「車」和「汽車」會很近，「退款政策」和「退錢」也相近。把聊天模型想像成能與你對話的人，嵌入模型則是超強的歸檔系統。
+每個切塊會被轉成一種數值表示，稱為嵌入——本質上是將意義轉成數字。嵌入模型不像聊天模型「聰明」，它無法執行指令、推理或回答問題。它能做的是將文本映射到一個數學空間，讓意義相似的文字在向量空間中互相靠近——「汽車」和「車子」會靠得很近，「退款政策」會和「退錢」附近。你可以把聊天模型想像成一個會說話的人，而嵌入模型就是超級優秀的檔案系統。
 
-<img src="../../../translated_images/zh-HK/embedding-model-concept.90760790c336a705.webp" alt="嵌入模型概念" width="800"/>
+下圖視覺化此概念——輸入文字，產出數值向量，意義相近的文字彼此位置相近：
 
-*此圖展示嵌入模型如何把文字轉成數值向量，將意思相近（比如「車」和「汽車」）的詞語置於向量空間相近位置。*
+<img src="../../../translated_images/zh-HK/embedding-model-concept.90760790c336a705.webp" alt="Embedding Model Concept" width="800"/>
+
+*此圖示範嵌入模型如何將文字轉成數值向量，讓像是「汽車」和「車子」這類相近意思的詞，在向量空間中彼此靠近。*
 
 ```java
 @Bean
@@ -150,29 +154,29 @@ EmbeddingStore<TextSegment> embeddingStore =
     new InMemoryEmbeddingStore<>();
 ```
 
-下方類別圖顯示 RAG 管線中兩個獨立流程與實作它們的 LangChain4j 類。**攝取流程**（上傳時計行）拆分文件，嵌入分塊，並用 `.addAll()` 儲存。**查詢流程**（用戶每問一次執行）嵌入問題，通過 `.search()` 搜尋存儲，並把匹配的語境傳給聊天模型。兩者共用 `EmbeddingStore<TextSegment>` 介面連結：
+下圖為類圖，描繪 RAG 管線的兩條流程及 LangChain4j 對應類別。**資料匯入流程**（於上傳時執行一次）拆文件、嵌入切塊，透過 `.addAll()` 儲存。**查詢流程**（每次用戶提問時執行）嵌入問題、透過 `.search()` 搜尋存儲，再將匹配的上下文傳給聊天模型。兩條流程共用 `EmbeddingStore<TextSegment>` 接口：
 
-<img src="../../../translated_images/zh-HK/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG 類別" width="800"/>
+<img src="../../../translated_images/zh-HK/rag-langchain4j-classes.bbf3aa9077ab443d.webp" alt="LangChain4j RAG Classes" width="800"/>
 
-*此圖示 RAG 管線的兩個流程——攝取和查詢，以及它們如何透過共用的 EmbeddingStore 介面連結。*
+*此圖顯示 RAG 管線的兩條流程——資料匯入與查詢——如何透過共用的 EmbeddingStore 連結。*
 
-當嵌入存好後，意義接近的內容自然會在向量空間聚集。下方視覺化展示相關主題文件成為鄰近點，這就是語義搜尋得以實現的原因：
+嵌入存入後，相似內容會自然於向量空間群聚。下圖展示相關主題的文件如何聚集為附近點群，讓語義搜尋成為可能：
 
-<img src="../../../translated_images/zh-HK/vector-embeddings.2ef7bdddac79a327.webp" alt="向量嵌入空間" width="800"/>
+<img src="../../../translated_images/zh-HK/vector-embeddings.2ef7bdddac79a327.webp" alt="Vector Embeddings Space" width="800"/>
 
-*此視覺化展示相關文件在三維向量空間中聚集，主題如技術文檔、商業規則、常見問題分成不同群集。*
+*此視覺化展示在三維向量空間中，相關的文件如技術文件、商業規則和常見問題，會聚集成不同群組。*
 
-用戶查詢時，系統遵循四步驟：文件嵌入做一次，查詢每次嵌入，比較查詢向量與所有存量向量餘弦相似度，返回前 K 筆得分最高分塊。下圖展現步驟及 LangChain4j 類別：
+使用時，系統遵循四步驟：文檔先嵌入一次，每次搜索嵌入查詢，利用餘弦相似度比對查詢向量和所有存向量，並回傳最高分的前 K 個切塊。下圖逐步說明流程及相關 LangChain4j 類別：
 
-<img src="../../../translated_images/zh-HK/embedding-search-steps.f54c907b3c5b4332.webp" alt="嵌入搜尋步驟" width="800"/>
+<img src="../../../translated_images/zh-HK/embedding-search-steps.f54c907b3c5b4332.webp" alt="Embedding Search Steps" width="800"/>
 
-*此圖展示四步嵌入搜尋流程：文件嵌入、查詢嵌入、使用餘弦相似度比較向量、返回前 K 結果。*
+*此圖展示嵌入搜尋的四步驟：嵌入文檔、嵌入查詢、利用餘弦相似度比較向量，並返回前 K 名結果。*
 
-### 語義搜尋
+### Semantic Search
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-當你提問時，你的問題也會被嵌入。系統將你的問題嵌入與所有文件分塊的嵌入比較。它找到最語義相似的分塊——並非只是關鍵字匹配，而是字面意義相符。
+當你提問時，問題本身也會被嵌入。系統將你的問題嵌入向量與所有文件切塊嵌入向量比對，找出意義最相近的切塊——不僅是字面關鍵詞匹配，而是真正的語義相似。
 
 ```java
 Embedding queryEmbedding = embeddingModel.embed(question).content();
@@ -192,27 +196,27 @@ for (EmbeddingMatch<TextSegment> match : matches) {
 }
 ```
 
-下圖比較語義搜尋與傳統的關鍵字搜尋。關鍵字搜尋「車輛」無法找到「汽車與卡車」的分塊，但語義搜尋理解兩者是同義，將其列為高分匹配：
+下圖比較語義搜尋與傳統關鍵詞搜尋。關鍵詞搜尋「vehicle」會漏掉一個談論「汽車與卡車」的切塊，但語義搜尋明白它們意思相同，並將其視為高分匹配結果：
 
-<img src="../../../translated_images/zh-HK/semantic-search.6b790f21c86b849d.webp" alt="語義搜尋" width="800"/>
+<img src="../../../translated_images/zh-HK/semantic-search.6b790f21c86b849d.webp" alt="Semantic Search" width="800"/>
 
-*此圖比較基於關鍵字搜尋和語義搜尋，展示語義搜尋即使關鍵字不同也能檢索相關內容。*
+*此圖比較基於關鍵字的搜尋和語義搜尋，展示語義搜尋如何擷取即使關鍵詞不同，但概念相近的內容。*
+在底層，使用餘弦相似度來衡量相似性 — 本質上是在問「這兩支箭頭是否指向相同方向？」兩個文本區塊可以用完全不同的詞語，但如果它們的意思相同，它們的向量就會指向相同方向，分數接近 1.0：
 
-底層相似度用餘弦相似度衡量——本質上是看「兩箭頭是否指向相同方向？」兩個分塊可用完全不同詞彙，但若意義相同，向量方向一致，得分接近 1.0：
+<img src="../../../translated_images/zh-HK/cosine-similarity.9baeaf3fc3336abb.webp" alt="Cosine Similarity" width="800"/>
 
-<img src="../../../translated_images/zh-HK/cosine-similarity.9baeaf3fc3336abb.webp" alt="餘弦相似度" width="800"/>
-*此圖說明餘弦相似度是嵌入向量間的角度—越一致的向量得分越接近 1.0，表示語義相似度越高。*
+*此圖說明餘弦相似度為嵌入向量間的角度 — 向量越一致，分數越接近 1.0，表示語意相似度越高。*
 
-> **🤖 試試看使用 [GitHub Copilot](https://github.com/features/copilot) Chat：** 開啟 [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) 並問：
-> - 「相似度搜尋如何與嵌入向量協同運作？得分由什麼決定？」
-> - 「我應該使用什麼相似度門檻？它如何影響結果？」
-> - 「遇到找不到相關文件時，該怎麼處理？」
+> **🤖 試試 [GitHub Copilot](https://github.com/features/copilot) Chat：** 打開 [`RagService.java`](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java) 並詢問：
+> - 「相似度搜尋如何使用嵌入向量運作，分數由什麼決定？」
+> - 「我應該使用什麼相似度閾值？這如何影響結果？」
+> - 「如果找不到相關文件，要怎麼處理？」
 
-### 答案產生
+### 答案生成
 
 [RagService.java](../../../03-rag/src/main/java/com/example/langchain4j/rag/service/RagService.java)
 
-最相關的文本塊會組裝成一個結構化提示，內含明確指示、檢索上下文和使用者問題。模型閱讀這些特定文本塊，根據資訊回答—它只能使用呈現在眼前的資訊，以防止幻覺生成。
+最相關的文本區塊會組裝成一個結構化提示，其中包含明確指令、取回的上下文，及用戶問題。模型依據這些特定區塊來回答 — 它只能使用眼前的資料，這防止了幻覺現象。
 
 ```java
 String context = matches.stream()
@@ -233,106 +237,106 @@ String prompt = String.format("""
 String answer = chatModel.chat(prompt);
 ```
 
-下圖展示此組裝流程—從搜尋步驟中取分數最高的文本塊注入提示模板，`OpenAiOfficialChatModel` 產生有根據的答案：
+下圖展示此組裝流程 — 從搜尋步驟中獲得最高分的區塊會注入到提示模板中，而 `OpenAiOfficialChatModel` 生成基於真實資訊的答案：
 
 <img src="../../../translated_images/zh-HK/context-assembly.7e6dd60c31f95978.webp" alt="Context Assembly" width="800"/>
 
-*此圖展示如何將最高分文本塊組成結構化提示，使模型能從您的資料生成有根據的答案。*
+*此圖顯示如何將最高分的文本區塊組裝成結構化提示，使模型能從你的資料中生成有根據的答案。*
 
 ## 運行應用程式
 
-**驗證部署：**
+**確認部署：**
 
-確認 `.env` 檔案存在根目錄且包含 Azure 認證（模組 01 建立時的設定）：
+確保根目錄有 `.env` 檔案，內含 Azure 憑證（於模組 01 建立）。從本模組目錄（`03-rag/`）執行：
 
-**Bash：**
+**Bash:**
 ```bash
-cat ../.env  # 應該顯示 AZURE_OPENAI_ENDPOINT、API_KEY、DEPLOYMENT
+cat ../.env  # 應顯示 AZURE_OPENAI_ENDPOINT、API_KEY、DEPLOYMENT
 ```
 
-**PowerShell：**
+**PowerShell:**
 ```powershell
 Get-Content ..\.env  # 應該顯示 AZURE_OPENAI_ENDPOINT、API_KEY、DEPLOYMENT
 ```
 
 **啟動應用程式：**
 
-> **注意：** 若您已於模組 01 透過 `./start-all.sh` 啟動所有應用，則此模組已於 8081 埠執行。您可跳過以下啟動指令，直接瀏覽 http://localhost:8081。
+> **注意：** 如果你已從根目錄使用 `./start-all.sh` 啟動所有應用程式（如模組 01 所述），本模組已在 8081 埠執行。你可以跳過以下啟動指令，直接瀏覽 http://localhost:8081。
 
-**選項 1：使用 Spring Boot 儀表板（推薦 VS Code 使用者）**
+**選項 1：使用 Spring Boot Dashboard（推薦給 VS Code 用戶）**
 
-開發容器已包含 Spring Boot 儀表板擴充，提供視覺介面管理所有 Spring Boot 應用。您可在 VS Code 左側活動欄找到（尋找 Spring Boot 圖示）。
+開發容器內建 Spring Boot Dashboard 擴充功能，提供可視化介面管理所有 Spring Boot 應用程式。可在 VS Code 左側活動欄找到（尋找 Spring Boot 圖示）。
 
-透過 Spring Boot 儀表板，您可以：
-- 查看工作區中所有可用的 Spring Boot 應用
+從 Spring Boot Dashboard 你可以：
+- 查看工作區內所有可用 Spring Boot 應用程式
 - 一鍵啟動/停止應用程式
-- 實時觀看應用日誌
-- 監控應用狀態
+- 實時查看應用程式日誌
+- 監控應用程式狀態
 
-點擊「rag」旁播放按鈕以啟動此模組，或一次啟動所有模組。
+只需點擊「rag」旁的播放按鈕即可啟動本模組，或一次啟動所有模組。
 
 <img src="../../../translated_images/zh-HK/dashboard.fbe6e28bf4267ffe.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*此截圖展示 VS Code 中 Spring Boot 儀表板，可視化啟動、停止及監控應用程式。*
+*此截圖展示 VS Code 的 Spring Boot Dashboard，讓你可視化啟動、停止並監控應用程式。*
 
 **選項 2：使用 shell 腳本**
 
-啟動所有網頁應用（模組 01-04）：
+啟動所有網頁應用程式（模組 01-04）：
 
-**Bash：**
+**Bash:**
 ```bash
 cd ..  # 從根目錄開始
 ./start-all.sh
 ```
 
-**PowerShell：**
+**PowerShell:**
 ```powershell
-cd ..  # 從根目錄
+cd ..  # 從根目錄開始
 .\start-all.ps1
 ```
 
 或只啟動本模組：
 
-**Bash：**
+**Bash:**
 ```bash
 cd 03-rag
 ./start.sh
 ```
 
-**PowerShell：**
+**PowerShell:**
 ```powershell
 cd 03-rag
 .\start.ps1
 ```
 
-兩者腳本均自動載入根目錄 `.env` 檔案中的環境變數，且若 JAR 尚不存在會自動編譯。
+兩個腳本會自動從根目錄 `.env` 載入環境變數，且如果 JAR 存在，就會進行建置。
 
-> **注意：** 若您偏好手動編譯所有模組再啟動：
+> **注意：** 若你想在啟動前手動建置所有模組：
 >
-> **Bash：**
+> **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
 >
-> **PowerShell：**
+> **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
 
-在瀏覽器開啟 http://localhost:8081 。
+在瀏覽器打開 http://localhost:8081。
 
-**停止應用：**
+**停止指令：**
 
-**Bash：**
+**Bash:**
 ```bash
-./stop.sh  # 只限本模組
+./stop.sh  # 只有此模塊
 # 或者
-cd .. && ./stop-all.sh  # 所有模組
+cd .. && ./stop-all.sh  # 所有模塊
 ```
 
-**PowerShell：**
+**PowerShell:**
 ```powershell
 .\stop.ps1  # 僅此模組
 # 或者
@@ -341,105 +345,93 @@ cd ..; .\stop-all.ps1  # 所有模組
 
 ## 使用應用程式
 
-此應用提供文件上傳和提問的網頁介面。
+此應用程式提供文件上傳及提問的網頁介面。
 
 <a href="images/rag-homepage.png"><img src="../../../translated_images/zh-HK/rag-homepage.d90eb5ce1b3caa94.webp" alt="RAG Application Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*此截圖展示 RAG 應用介面，您可上傳文件並提問。*
+*此截圖展示 RAG 應用界面，讓你上傳文件並提出問題。*
 
 ### 上傳文件
 
-從上傳文件開始—TXT 檔最適合測試。本目錄中提供一個 `sample-document.txt`，包含 LangChain4j 功能、RAG 實作和最佳實踐等資訊，非常適合測試系統。
+從上傳文件開始 — TXT 格式最適合測試。本目錄提供了一份 `sample-document.txt`，內容關於 LangChain4j 功能、RAG 實作與最佳實踐，適合用來測試系統。
 
-系統會處理您的文件，拆分成文本塊，並為每個塊建立嵌入向量。此過程於上傳時自動完成。
+系統會處理你的文件，拆分成多個區塊，並為每個區塊建立嵌入向量。這些過程會在上傳時自動執行。
 
 ### 提問
 
-現在對文件內容提出具體問題。嘗試詢問明確記載於文件的事實。系統會搜尋相關文本塊，將其包含於提示中，並生成答案。
+現在可以針對文件內容問具體問題。試著問內容中明確說明的事實。系統會搜尋相關區塊，將它們包含到提示中，並生成答案。
 
 ### 檢查來源引用
 
-留意每個答案均包含來源引用和相似度分數。這些分數（0~1）反映文本塊與問題的相關程度。分數越高代表匹配度越好。這讓您可以與原始資料核對答案。
+每個答案都帶有帶有相似度分數的來源引用。這些分數（0 至 1）顯示每個區塊跟你的問題貼合度。分數越高，表示匹配越好。這讓你能夠根據原始資料驗證答案。
 
 <a href="images/rag-query-results.png"><img src="../../../translated_images/zh-HK/rag-query-results.6d69fcec5397f355.webp" alt="RAG Query Results" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*此截圖展示查詢結果，包括生成的答案、來源引用及每個擷取文本塊的相關性分數。*
+*此截圖展示查詢結果，包括生成的答案、來源引用及每個檢索區塊的相關性分數。*
 
-### 試驗不同問題
+### 嘗試問不同問題
 
-嘗試不同類型問題：
+試試不同類型的問題：
 - 具體事實：「主要主題是什麼？」
-- 比較：「X 和 Y 有何差異？」
-- 摘要：「請總結關於 Z 的重點」
+- 比較：「X 和 Y 有什麼不同？」
+- 摘要：「總結關於 Z 的重點」
 
-觀察依問題與文件內容匹配度，相關性分數如何變化。
+觀察相關性分數如何依你的問題與文件內容匹配度變化。
 
-## 重要概念
+## 主要概念
 
 ### 拆分策略
 
-文件拆分為 300 代幣的文本塊，重疊 30 代幣。此比例確保每個文本塊擁有充足上下文同時足夠小，能在提示中容納多個塊。
+文件被拆成 300 代幣的區塊，重疊 30 代幣。此平衡讓每個區塊擁有足夠上下文，且大小適中，能在提示中包含多個區塊。
 
 ### 相似度分數
 
-每個擷取的文本塊都帶有介於 0 到 1 的相似度分數，顯示與使用者提問的匹配程度。下圖視覺化分數範圍及系統如何根據門檻過濾結果：
+每個檢索的區塊都附帶 0 到 1 範圍的相似度分數，用來表示和用戶問題的匹配程度。下圖視覺化分數範圍及系統如何利用它們過濾結果：
 
 <img src="../../../translated_images/zh-HK/similarity-scores.b0716aa911abf7f0.webp" alt="Similarity Scores" width="800"/>
 
-*此圖展示分數從 0 到 1 的範圍，並設定 0.5 最低門檻來過濾不相關文本塊。*
+*此圖示範分數範圍從 0 到 1，最低閾值為 0.5，用以過濾不相關區塊。*
 
 分數範圍：
 - 0.7-1.0：高度相關，精確匹配
-- 0.5-0.7：相關，具足夠上下文
-- 低於 0.5：被過濾，差異過大
+- 0.5-0.7：相關，良好上下文
+- 低於 0.5：被過濾，過於不相似
 
-系統只擷取超過最低門檻的文本塊以確保品質。
+系統只會檢索高於最低閾值的區塊以保證品質。
 
-嵌入向量在語義聚類清晰時效果佳，但存在盲點。下圖展示常見失敗模式—文本塊太大產生模糊向量、文本塊過小缺乏上下文、模糊詞彙指向多個聚類，以及精確匹配查詢（如 ID、部件號碼）無法用嵌入向量處理：
+嵌入向量適用於意義分群清晰的情境，但也有盲點。下圖展示常見失效模式 — 區塊過大導致向量模糊，區塊過小缺乏上下文，模糊詞彙連向多個群集，以及基於嵌入無法運作的精確匹配查詢（如ID、零件號）：
 
 <img src="../../../translated_images/zh-HK/embedding-failure-modes.b2bcb901d8970fc0.webp" alt="Embedding Failure Modes" width="800"/>
 
-*此圖展示常見嵌入失敗模式：文本塊過大、過小、模糊詞指向多聚類，以及精確匹配查詢如 ID 等。*
+*此圖展示嵌入失效的常見模式：區塊過大、區塊過小、模糊詞彙指向多重群集、及ID等精確匹配查詢。*
 
-### 記憶體儲存
+### 記憶體內存儲
 
-此模組為簡化起見採用記憶體儲存。重啟應用程式會遺失上傳的文件。正式系統會使用持久向量資料庫，如 Qdrant 或 Azure AI Search。
+此模組為簡易起見使用記憶體內存儲。每次重新啟動應用，已上傳文件會遺失。生產系統則使用持久性向量資料庫，如 Qdrant 或 Azure AI Search。
 
 ### 上下文視窗管理
 
-每個模型有最大上下文視窗限制。無法包含大型文件的所有文本塊。系統取回最相關的前 N 個文本塊（預設 5 個），在限制內提供足夠上下文以生成精確答案。
+各模型有最大上下文視窗限制。你不能把大型檔案的所有區塊都包含進去。系統會檢索前 N 個最相關的區塊（預設為 5）以確保在限制內，並提供足夠上下文來產生正確答案。
 
-## RAG 的適用時機
+## 何時使用 RAG
 
-RAG 並非總是最佳方案。下圖決策指引幫助判斷何時 RAG 有價值，何時可使用簡易方式（如直接將內容納入提示或依賴模型內建知識）即可：
+RAG 並非總是最佳方案。下圖決策指南幫助你判斷何時使用 RAG 具有價值，何時簡單方式已足夠 — 比如將內容直接放入提示或倚賴模型內建知識：
 
 <img src="../../../translated_images/zh-HK/when-to-use-rag.1016223f6fea26bc.webp" alt="When to Use RAG" width="800"/>
 
-*此圖為決策指引，説明何時 RAG 加值，何時簡易方案足夠。*
-
-**使用 RAG 時機：**
-- 回答專有文件相關問題
-- 資訊頻繁變動（政策、價格、規格）
-- 需精確來源歸屬保證準確性
-- 內容過大無法放入單一提示
-- 需要可驗證、有根據的回應
-
-**不使用 RAG 時機：**
-- 問題需模型已有的常識
-- 需即時資料（RAG 只針對已上傳文件）
-- 內容足夠小可直接放入提示
+*此圖示決策指南說明何時 RAG 有價值，何時簡單方法已足夠。*
 
 ## 下一步
 
-**下一模組：** [04-tools - AI Agents with Tools](../04-tools/README.md)
+**下一模組：** [04-tools - 使用工具的 AI 代理](../04-tools/README.md)
 
 ---
 
-**導航：** [← 上一節：Module 02 - 提示工程](../02-prompt-engineering/README.md) | [回到主頁](../README.md) | [下一節：Module 04 - 工具 →](../04-tools/README.md)
+**導覽：** [← 上一節：模組 02 - 提示工程](../02-prompt-engineering/README.md) | [回主頁](../README.md) | [下一節：模組 04 - 工具 →](../04-tools/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **免責聲明**：  
-本文件使用人工智能翻譯服務 [Co-op Translator](https://github.com/Azure/co-op-translator) 進行翻譯。雖然我們致力於確保翻譯的準確性，但請注意，自動翻譯可能包含錯誤或不準確之處。原始語言版本的文件應被視為權威來源。對於重要資訊，建議採用專業人工翻譯。因使用此翻譯而引起的任何誤解或誤釋，本公司概不負責。
+本文件已使用 AI 翻譯服務 [Co-op Translator](https://github.com/Azure/co-op-translator) 進行翻譯。雖然我們致力於提供準確的翻譯，但請注意自動翻譯可能包含錯誤或不準確之處。原始語言的文件應視為權威版本。對於重要資訊，建議使用專業人工翻譯。我們不對因使用本翻譯而引致的任何誤解或誤釋承擔責任。
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
