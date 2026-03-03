@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant App as main()
+    participant Sup as Supervisor
+    participant FA as FileAgent
+    participant MCP as MCP Server
+    participant RA as ReportAgent
+    participant LLM as Azure OpenAI
+
+    App->>Sup: "Read file and generate report"
+    Sup->>LLM: Which agent first?
+    LLM-->>Sup: FileAgent
+
+    Sup->>FA: readFile(path)
+    FA->>LLM: message + MCP tool schemas
+    LLM-->>FA: call read_file(path)
+    FA->>MCP: read_file (stdio)
+    MCP-->>FA: file contents
+    FA->>LLM: tool result
+    LLM-->>FA: file contents
+    FA-->>Sup: stores "fileContent" in scope
+
+    Sup->>LLM: What next?
+    LLM-->>Sup: ReportAgent
+
+    Sup->>RA: generateReport(fileContent)
+    RA->>LLM: message with content
+    LLM-->>RA: structured report
+    RA-->>Sup: stores "report" in scope
+
+    Sup-->>App: final report

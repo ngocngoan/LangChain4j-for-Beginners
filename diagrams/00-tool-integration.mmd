@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant App as main()
+    participant Proxy as MathAssistant Proxy
+    participant LLM as LLM
+    participant Tool as Calculator
+
+    App->>Proxy: chat("42 plus 58?")
+    Proxy->>LLM: message + tool schemas
+    LLM-->>Proxy: call add(42, 58)
+    Proxy->>Tool: Calculator.add(42, 58)
+    Tool-->>Proxy: 100.0
+    Proxy->>LLM: tool result: 100.0
+    LLM-->>Proxy: "42 plus 58 equals 100"
+    Proxy-->>App: "42 plus 58 equals 100"
