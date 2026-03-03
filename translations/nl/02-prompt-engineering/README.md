@@ -10,60 +10,68 @@
   - [Zero-Shot Prompting](../../../02-prompt-engineering)
   - [Few-Shot Prompting](../../../02-prompt-engineering)
   - [Chain of Thought](../../../02-prompt-engineering)
-  - [Role-Based Prompting](../../../02-prompt-engineering)
-  - [Prompt Templates](../../../02-prompt-engineering)
+  - [Rolgebaseerd Prompting](../../../02-prompt-engineering)
+  - [Prompt Sjablonen](../../../02-prompt-engineering)
 - [Geavanceerde Patronen](../../../02-prompt-engineering)
-- [Gebruik van Bestaande Azure Resources](../../../02-prompt-engineering)
-- [Applicatiescreenshots](../../../02-prompt-engineering)
-- [Verkenning van de Patronen](../../../02-prompt-engineering)
-  - [Lage vs Hoge Bereidheid](../../../02-prompt-engineering)
-  - [Taakuitvoering (Tool Preambles)](../../../02-prompt-engineering)
+- [De Applicatie Uitvoeren](../../../02-prompt-engineering)
+- [Applicatie Screenshots](../../../02-prompt-engineering)
+- [De Patronen Verkennen](../../../02-prompt-engineering)
+  - [Lage vs Hoge Begeerte](../../../02-prompt-engineering)
+  - [Taakuitvoering (Tool Intro's)](../../../02-prompt-engineering)
   - [Zelfreflecterende Code](../../../02-prompt-engineering)
   - [Gestructureerde Analyse](../../../02-prompt-engineering)
   - [Multi-Turn Chat](../../../02-prompt-engineering)
-  - [Stap-voor-Stap Redenering](../../../02-prompt-engineering)
+  - [Stap-voor-Stap Redeneren](../../../02-prompt-engineering)
   - [Beperkte Output](../../../02-prompt-engineering)
-- [Wat Je Echt Leert](../../../02-prompt-engineering)
+- [Wat Je Echt Leren](../../../02-prompt-engineering)
 - [Volgende Stappen](../../../02-prompt-engineering)
 
 ## Video Walkthrough
 
-Bekijk deze live sessie waarin wordt uitgelegd hoe je aan de slag kunt met deze module:
+Bekijk deze live sessie waarin wordt uitgelegd hoe je aan deze module kunt beginnen:
 
-<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering with LangChain4j - Live Session" width="800"/></a>
+<a href="https://www.youtube.com/live/PJ6aBaE6bog?si=LDshyBrTRodP-wke"><img src="https://img.youtube.com/vi/PJ6aBaE6bog/maxresdefault.jpg" alt="Prompt Engineering met LangChain4j - Live Sessie" width="800"/></a>
 
 ## Wat Je Zal Leren
 
-<img src="../../../translated_images/nl/what-youll-learn.c68269ac048503b2.webp" alt="What You'll Learn" width="800"/>
+Het volgende diagram geeft een overzicht van de belangrijkste onderwerpen en vaardigheden die je in deze module ontwikkelt — van prompt verfijningstechnieken tot de stap-voor-stap workflow die je volgt.
 
-In de vorige module zag je hoe geheugen gesprek-AI mogelijk maakt en gebruikte je GitHub Models voor basisinteracties. Nu richten we ons op hoe je vragen stelt — de prompts zelf — met Azure OpenAI's GPT-5.2. De manier waarop je je prompts structureert, beïnvloedt drastisch de kwaliteit van de reacties die je krijgt. We beginnen met een overzicht van de fundamentele promptingtechnieken, daarna behandelen we acht geavanceerde patronen die volledig gebruikmaken van GPT-5.2's mogelijkheden.
+<img src="../../../translated_images/nl/what-youll-learn.c68269ac048503b2.webp" alt="Wat Je Zal Leren" width="800"/>
 
-We gebruiken GPT-5.2 omdat het redeneercontrole introduceert - je kunt het model vertellen hoeveel denken het moet doen vóór het antwoordt. Dit maakt verschillende promptingstrategieën duidelijker en helpt je te begrijpen wanneer je welke aanpak moet gebruiken. We profiteren ook van Azure's minder strikte limieten voor GPT-5.2 vergeleken met GitHub Models.
+In eerdere modules heb je basisinteracties met LangChain4j en GitHub Modellen onderzocht en gezien hoe geheugen gesprek-KI met Azure OpenAI mogelijk maakt. Nu richten we ons op de vragen die je stelt — de prompts zelf — met behulp van Azure OpenAI's GPT-5.2. De manier waarop je prompts structureert, bepaalt in hoge mate de kwaliteit van de antwoorden die je krijgt. We beginnen met een overzicht van de fundamentele prompting technieken en gaan vervolgens over op acht geavanceerde patronen die de volledige mogelijkheden van GPT-5.2 benutten.
+
+We gebruiken GPT-5.2 omdat het redeneerscontrole introduceert - je kunt het model vertellen hoeveel het moet nadenken voordat het antwoord geeft. Dit maakt verschillende prompting strategieën duidelijker en helpt je begrijpen wanneer je welke aanpak moet gebruiken. Bovendien profiteren we van de minder strikte snelheidslimieten van Azure voor GPT-5.2 vergeleken met GitHub Modellen.
 
 ## Vereisten
 
-- Module 01 voltooid (Azure OpenAI resources gedeployed)
-- `.env` bestand in de hoofdmap met Azure-gegevens (gemaakt door `azd up` in Module 01)
+- Module 01 voltooid (Azure OpenAI bronnen gedeployed)
+- `.env` bestand in de hoofdmap met Azure-gegevens (aangemaakt door `azd up` in Module 01)
 
-> **Opmerking:** Als je Module 01 nog niet hebt voltooid, volg dan eerst de deployment-instructies daar.
+> **Opmerking:** Als je Module 01 nog niet hebt afgerond, volg dan eerst de deployment instructies daar.
 
 ## Begrip van Prompt Engineering
 
-<img src="../../../translated_images/nl/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="What is Prompt Engineering?" width="800"/>
+In de kern is prompt engineering het verschil tussen vage en precieze instructies, zoals de vergelijking hieronder laat zien.
 
-Prompt engineering gaat over het ontwerpen van invoertekst die je consequent de resultaten geeft die je nodig hebt. Het gaat niet alleen om het stellen van vragen - het gaat om het structureren van verzoeken zodat het model precies begrijpt wat je wilt en hoe het geleverd moet worden.
+<img src="../../../translated_images/nl/what-is-prompt-engineering.5c392a228a1f5823.webp" alt="Wat is Prompt Engineering?" width="800"/>
 
-Denk er aan als instructies geven aan een collega. "Los de fout op" is vaag. "Los de null pointer exception op in UserService.java regel 45 door een null-check toe te voegen" is specifiek. Taalmodellen werken hetzelfde - specificiteit en structuur zijn belangrijk.
+Prompt engineering gaat over het ontwerpen van invoertekst die consequent de resultaten oplevert die je nodig hebt. Het gaat niet alleen om het stellen van vragen — het gaat om het structureren van verzoeken zodat het model precies begrijpt wat je wilt en hoe het geleverd moet worden.
 
-<img src="../../../translated_images/nl/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="How LangChain4j Fits" width="800"/>
+Denk erover als het geven van instructies aan een collega. "Los de bug op" is vaag. "Los de null pointer exception op in UserService.java regel 45 door een null check toe te voegen" is specifiek. Taalmodellen werken op precies dezelfde manier — specificiteit en structuur zijn belangrijk.
 
-LangChain4j levert de infrastructuur — modelverbindingen, geheugen en berichttypes — terwijl promptpatronen gewoon zorgvuldig gestructureerde tekst zijn die je via die infrastructuur verstuurt. De sleutelbouwstenen zijn `SystemMessage` (dat het gedrag en de rol van de AI instelt) en `UserMessage` (dat je daadwerkelijke verzoek draagt).
+Het onderstaande diagram toont hoe LangChain4j in dit plaatje past — het koppelt je prompt patronen aan het model via SystemMessage en UserMessage bouwstenen.
+
+<img src="../../../translated_images/nl/how-langchain4j-fits.dfff4b0aa5f7812d.webp" alt="Hoe LangChain4j Passen" width="800"/>
+
+LangChain4j levert de infrastructuur — modelverbindingen, geheugen en berichttypes — terwijl prompt patronen gewoon zorgvuldig gestructureerde tekst zijn die je via die infrastructuur verstuurt. De belangrijkste bouwstenen zijn `SystemMessage` (dat het gedrag en de rol van de AI bepaalt) en `UserMessage` (dat je daadwerkelijke verzoek draagt).
 
 ## Basisprincipes van Prompt Engineering
 
-<img src="../../../translated_images/nl/five-patterns-overview.160f35045ffd2a94.webp" alt="Five Prompt Engineering Patterns Overview" width="800"/>
+De vijf kerntechnieken hieronder vormen de basis van effectieve prompt engineering. Elk adresseert een ander aspect van hoe je met taalmodellen communiceert.
 
-Voordat we ingaan op de geavanceerde patronen in deze module, laten we vijf fundamentele promptingtechnieken herzien. Dit zijn de bouwstenen die elke prompt-engineer zou moeten kennen. Als je al door de [Quick Start module](../00-quick-start/README.md#2-prompt-patterns) hebt gewerkt, heb je deze al in actie gezien — hier is het conceptuele raamwerk erachter.
+<img src="../../../translated_images/nl/five-patterns-overview.160f35045ffd2a94.webp" alt="Overzicht Vijf Prompt Engineering Patronen" width="800"/>
+
+Voordat we ingaan op de geavanceerde patronen in deze module, laten we vijf fundamentele prompting technieken herzien. Dit zijn de bouwstenen die elke prompt engineer zou moeten kennen. Als je de [Quick Start module](../00-quick-start/README.md#2-prompt-patterns) al hebt doorlopen, heb je deze al in actie gezien — hier is het conceptuele raamwerk erachter.
 
 ### Zero-Shot Prompting
 
@@ -79,11 +87,11 @@ String response = model.chat(prompt);
 // Antwoord: "Positief"
 ```
 
-**Wanneer te gebruiken:** Eenvoudige classificaties, directe vragen, vertalingen, of elke taak die het model kan afhandelen zonder aanvullende begeleiding.
+**Wanneer te gebruiken:** Simpele classificaties, directe vragen, vertalingen of elke taak die het model zonder extra begeleiding aankan.
 
 ### Few-Shot Prompting
 
-Geef voorbeelden die het patroon laten zien dat je wilt dat het model volgt. Het model leert het verwachte invoer-uitvoerformaat van je voorbeelden en past dit toe op nieuwe invoer. Dit verbetert de consistentie sterk voor taken waarbij het gewenste formaat of gedrag niet vanzelfsprekend is.
+Geef voorbeelden die het patroon tonen dat je wilt dat het model volgt. Het model leert het verwachte invoer-uitvoerformaat van je voorbeelden en past dat toe op nieuwe invoer. Dit verbetert de consistentie aanzienlijk voor taken waarbij het gewenste formaat of gedrag niet vanzelfsprekend is.
 
 <img src="../../../translated_images/nl/few-shot-prompting.9d9eace1da88989a.webp" alt="Few-Shot Prompting" width="800"/>
 
@@ -104,15 +112,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Wanneer te gebruiken:** Aangepaste classificaties, consistente opmaak, domeinspecifieke taken, of wanneer zero-shot resultaten inconsistent zijn.
+**Wanneer te gebruiken:** Aangepaste classificaties, consistente opmaak, domeinspecifieke taken of wanneer zero-shot resultaten inconsistent zijn.
 
 ### Chain of Thought
 
-Vraag het model om zijn redenering stap voor stap te tonen. In plaats van direct met een antwoord te komen, breekt het model het probleem af en werkt het elk onderdeel expliciet uit. Dit verbetert de nauwkeurigheid bij wiskunde, logica en meerstapsredeneringen.
+Vraag het model zijn redenering stap voor stap te laten zien. In plaats van direct een antwoord te geven, breekt het model het probleem af en werkt het expliciet door elke stap heen. Dit verbetert de nauwkeurigheid bij wiskunde, logica en meerstaps redeneertaken.
 
 <img src="../../../translated_images/nl/chain-of-thought.5cff6630e2657e2a.webp" alt="Chain of Thought Prompting" width="800"/>
 
-*Stap-voor-stap redenering — complexe problemen opdelen in expliciete logische stappen*
+*Stap-voor-stap redeneren — complexe problemen opdelen in expliciete logische stappen*
 
 ```java
 String prompt = """
@@ -122,16 +130,16 @@ String prompt = """
     Let's solve this step-by-step:
     """;
 String response = model.chat(prompt);
-// Het model toont: 15 - 8 = 7, daarna 7 + 12 = 19 appels
+// Het model toont: 15 - 8 = 7, dan 7 + 12 = 19 appels
 ```
 
-**Wanneer te gebruiken:** Wiskundige problemen, logische puzzels, debugging, of elke taak waarbij het tonen van het redeneerproces nauwkeurigheid en vertrouwen verbetert.
+**Wanneer te gebruiken:** Wiskundeproblemen, logische puzzels, debugging of elke taak waarbij het tonen van de redeneercyclus de nauwkeurigheid en vertrouwen verhoogt.
 
-### Role-Based Prompting
+### Rolgebaseerd Prompting
 
-Stel een persona of rol in voor de AI voordat je je vraag stelt. Dit verschaft context die de toon, diepgang en focus van het antwoord bepaalt. Een "software architect" geeft ander advies dan een "junior ontwikkelaar" of een "security auditor".
+Stel een persona of rol in voor de AI voordat je je vraag stelt. Dit geeft context die de toon, diepgang, en focus van het antwoord vormgeeft. Een "software-architect" geeft anders advies dan een "junior developer" of een "security auditor".
 
-<img src="../../../translated_images/nl/role-based-prompting.a806e1a73de6e3a4.webp" alt="Role-Based Prompting" width="800"/>
+<img src="../../../translated_images/nl/role-based-prompting.a806e1a73de6e3a4.webp" alt="Rolgebaseerd Prompting" width="800"/>
 
 *Context en persona instellen — dezelfde vraag krijgt een ander antwoord afhankelijk van de toegewezen rol*
 
@@ -149,15 +157,15 @@ String prompt = """
 String response = model.chat(prompt);
 ```
 
-**Wanneer te gebruiken:** Code reviews, tutoring, domeinspecifieke analyse, of wanneer je antwoorden wilt die zijn afgestemd op een bepaald expertise- of perspectiefniveau.
+**Wanneer te gebruiken:** Code-reviews, tutoring, domeinspecifieke analyse of wanneer je antwoorden wilt afgestemd op een bepaald expertise niveau of perspectief.
 
-### Prompt Templates
+### Prompt Sjablonen
 
-Maak herbruikbare prompts met variabele plaatsaanduidingen. In plaats van elke keer een nieuwe prompt te schrijven, definieer je een sjabloon één keer en vul je verschillende waarden in. LangChain4j's `PromptTemplate` klasse maakt dit makkelijk met `{{variable}}` syntax.
+Maak herbruikbare prompts met variabele placeholders. In plaats van elke keer een nieuwe prompt te schrijven, definieer je één sjabloon en vul je verschillende waardes in. De `PromptTemplate` klasse van LangChain4j maakt dit eenvoudig met `{{variable}}` syntax.
 
-<img src="../../../translated_images/nl/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Templates" width="800"/>
+<img src="../../../translated_images/nl/prompt-templates.14bfc37d45f1a933.webp" alt="Prompt Sjablonen" width="800"/>
 
-*Herbruikbare prompts met variabele plaatsaanduidingen — één sjabloon, veel toepassingen*
+*Herbruikbare prompts met variabele placeholders — één sjabloon, vele toepassingen*
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -172,25 +180,27 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-**Wanneer te gebruiken:** Herhaalde queries met verschillende invoer, batchverwerking, opbouwen van herbruikbare AI-workflows, of elk scenario waar de prompt-structuur hetzelfde blijft maar de data verandert.
+**Wanneer te gebruiken:** Herhaalde vragen met verschillende invoeren, batchverwerking, het bouwen van herbruikbare AI workflows, of elk scenario waarbij de promptstructuur hetzelfde blijft maar de data verandert.
 
 ---
 
-Deze vijf basisprincipes geven je een solide toolkit voor de meeste promptingtaken. De rest van deze module bouwt hierop voort met **acht geavanceerde patronen** die gebruikmaken van GPT-5.2's redeneercontrole, zelfevaluatie en gestructureerde outputmogelijkheden.
+Deze vijf fundamenten geven je een solide toolkit voor de meeste prompting taken. De rest van deze module bouwt daarop voort met **acht geavanceerde patronen** die de redeneerscontrole, zelfevaluatie en gestructureerde output capaciteiten van GPT-5.2 benutten.
 
 ## Geavanceerde Patronen
 
-Met de basisprincipes behandeld, gaan we naar de acht geavanceerde patronen die deze module uniek maken. Niet alle problemen vragen om dezelfde aanpak. Sommige vragen vereisen snelle antwoorden, andere diep nadenken. Sommige hebben zichtbare redenering nodig, andere alleen resultaten. Elk patroon hieronder is geoptimaliseerd voor een specifieke situatie — en GPT-5.2's redeneercontrole maakt de verschillen nog duidelijker.
+Met de fundamenten behandeld, gaan we nu naar de acht geavanceerde patronen die deze module uniek maken. Niet alle vraagstukken vereisen dezelfde aanpak. Sommige vragen hebben snelle antwoorden nodig, andere diepgaand denken. Sommige vragen vergen zichtbare redenering, andere alleen resultaten. Elk patroon hieronder is geoptimaliseerd voor een verschillend scenario — en de redeneerscontrole van GPT-5.2 maakt de verschillen nog duidelijker.
 
-<img src="../../../translated_images/nl/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Eight Prompting Patterns" width="800"/>
+<img src="../../../translated_images/nl/eight-patterns.fa1ebfdf16f71e9a.webp" alt="Acht Prompt Engineering Patronen" width="800"/>
 
 *Overzicht van de acht prompt engineering patronen en hun gebruikssituaties*
 
-<img src="../../../translated_images/nl/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Reasoning Control with GPT-5.2" width="800"/>
+GPT-5.2 voegt een extra dimensie toe aan deze patronen: *redeneerscontrole*. De schuifregelaar hieronder laat zien hoe je het denkvermogen van het model kunt aanpassen — van snelle, directe antwoorden tot diepe, grondige analyse.
 
-*GPT-5.2's redeneercontrole stelt je in staat te specificeren hoeveel denken het model moet doen — van snelle directe antwoorden tot diepgaande verkenning*
+<img src="../../../translated_images/nl/reasoning-control.5cf85f0fc1d0c1f3.webp" alt="Redeneerscontrole met GPT-5.2" width="800"/>
 
-**Lage Bereidheid (Snel & Gefocust)** - Voor eenvoudige vragen waarbij je snelle, directe antwoorden wilt. Het model doet minimale redenering - maximaal 2 stappen. Gebruik dit voor berekeningen, opzoeken of rechttoe rechtaan vragen.
+*De redeneerscontrole van GPT-5.2 laat je specificeren hoeveel het model moet nadenken — van snel directe antwoorden tot diepgaande exploratie*
+
+**Lage Begeerte (Snel & Gefocust)** - Voor eenvoudige vragen waar je snelle, directe antwoorden wilt. Het model doet minimale redenering - maximaal 2 stappen. Gebruik dit voor berekeningen, opzoeken of rechttoe rechtaan vragen.
 
 ```java
 String prompt = """
@@ -210,11 +220,11 @@ String response = chatModel.chat(prompt);
 ```
 
 > 💡 **Verken met GitHub Copilot:** Open [`Gpt5PromptService.java`](../../../02-prompt-engineering/src/main/java/com/example/langchain4j/prompts/service/Gpt5PromptService.java) en vraag:
-> - "Wat is het verschil tussen low eagerness en high eagerness prompting patronen?"
-> - "Hoe helpen de XML-tags in prompts de reactie van de AI structureren?"
-> - "Wanneer gebruik ik zelfreflectiepatronen versus directe instructie?"
+> - "Wat is het verschil tussen lage en hoge begeerte prompting patronen?"
+> - "Hoe helpen de XML-tags in prompts om de reactie van de AI te structureren?"
+> - "Wanneer gebruik ik zelfreflectie patronen versus directe instructie?"
 
-**Hoge Bereidheid (Diepgaand & Grondig)** - Voor complexe problemen waarbij je uitgebreide analyse wilt. Het model onderzoekt grondig en toont gedetailleerde redenering. Gebruik dit voor systeemontwerp, architectuurbeslissingen of complex onderzoek.
+**Hoge Begeerte (Diep & Grondig)** - Voor complexe problemen waar je een uitgebreide analyse wilt. Het model onderzoekt grondig en toont gedetailleerde redenering. Gebruik dit voor systeemuontwerp, architectuurbeslissingen of diepgaand onderzoek.
 
 ```java
 String prompt = """
@@ -228,7 +238,7 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-**Taakuitvoering (Stap-voor-Stap Vooruitgang)** - Voor meervoudige stap-processen. Het model geeft een plan vooraf, vertelt elke stap tijdens het werk en levert daarna een samenvatting. Gebruik dit voor migraties, implementaties of elk meerstapsproces.
+**Taakuitvoering (Stap-voor-Stap Voortgang)** - Voor meerstaps workflows. Het model geeft een upfront plan, beschrijft elke stap terwijl het werkt, en geeft een samenvatting. Gebruik dit voor migraties, implementaties, of elk meerstaps proces.
 
 ```java
 String prompt = """
@@ -266,18 +276,20 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-Chain-of-Thought prompting vraagt het model expliciet om zijn redeneerproces te tonen, wat de nauwkeurigheid verbetert bij complexe taken. De stap-voor-stap uitsplitsing helpt zowel mensen als AI de logica te begrijpen.
+Chain-of-Thought prompting vraagt het model expliciet zijn redeneercyclus te tonen, wat de nauwkeurigheid bij complexe taken verbetert. De stap-voor-stap opsplitsing helpt zowel mensen als AI om de logica te begrijpen.
 
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Vraag over dit patroon:
-> - "Hoe zou ik het taakuitvoeringspatroon aanpassen voor langlopende operaties?"
-> - "Wat zijn best practices voor het structureren van tool preambles in productieapplicaties?"
+> - "Hoe pas ik het taakuitvoeringspatroon aan voor langlopende operaties?"
+> - "Wat zijn best practices voor het structureren van tool intro's in productieomgevingen?"
 > - "Hoe kan ik tussentijdse voortgangsupdates vastleggen en tonen in een UI?"
 
-<img src="../../../translated_images/nl/task-execution-pattern.9da3967750ab5c1e.webp" alt="Task Execution Pattern" width="800"/>
+Het onderstaande diagram illustreert deze Plan → Uitvoeren → Samenvatten workflow.
 
-*Plan → Uitvoeren → Samenvatten workflow voor meervoudige stap-taken*
+<img src="../../../translated_images/nl/task-execution-pattern.9da3967750ab5c1e.webp" alt="Taakuitvoeringspatroon" width="800"/>
 
-**Zelfreflecterende Code** - Voor het genereren van productieklare code. Het model genereert code volgens productiestandaarden met correcte foutafhandeling. Gebruik dit bij het bouwen van nieuwe features of services.
+*Plan → Uitvoeren → Samenvatten workflow voor meerstaps taken*
+
+**Zelfreflecterende Code** - Voor het genereren van productiekwaliteit code. Het model genereert code volgens productiestandaarden met correcte foutafhandeling. Gebruik dit bij het bouwen van nieuwe features of services.
 
 ```java
 String prompt = """
@@ -288,11 +300,13 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/nl/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Self-Reflection Cycle" width="800"/>
+Het onderstaande diagram toont deze iteratieve verbetercyclus — genereren, evalueren, zwakke punten identificeren, en verfijnen totdat de code voldoet aan de productiestandaarden.
+
+<img src="../../../translated_images/nl/self-reflection-cycle.6f71101ca0bd28cc.webp" alt="Zelfreflectiecyclus" width="800"/>
 
 *Iteratieve verbetercyclus - genereren, evalueren, problemen identificeren, verbeteren, herhalen*
 
-**Gestructureerde Analyse** - Voor consistente evaluatie. Het model beoordeelt code met een vaste raamwerk (correctheid, praktische methoden, performance, beveiliging, onderhoudbaarheid). Gebruik dit voor code reviews of kwaliteitsbeoordelingen.
+**Gestructureerde Analyse** - Voor consistente evaluatie. Het model beoordeelt code volgens een vast kader (correctheid, praktijken, prestaties, veiligheid, onderhoudbaarheid). Gebruik dit voor code reviews of kwaliteitsbeoordelingen.
 
 ```java
 String prompt = """
@@ -341,15 +355,17 @@ String response = chatModel.chat(prompt);
 ```
 
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Vraag over gestructureerde analyse:
-> - "Hoe kan ik het analyse-raamwerk aanpassen voor verschillende typen code reviews?"
-> - "Wat is de beste manier om gestructureerde output programmatisch te parseren en erop te reageren?"
-> - "Hoe zorg ik voor consistente ernstniveaus over verschillende review-sessies?"
+> - "Hoe kan ik het analyse raamwerk aanpassen voor verschillende typen code reviews?"
+> - "Wat is de beste manier om gestructureerde output programmatisch te parsen en erop te reageren?"
+> - "Hoe zorg ik voor consistente ernstniveaus over verschillende review sessies heen?"
 
-<img src="../../../translated_images/nl/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Structured Analysis Pattern" width="800"/>
+Het volgende diagram toont hoe dit gestructureerde kader een code review ordent in consistente categorieën met ernstniveaus.
 
-*Raamwerk voor consistente code reviews met ernstniveaus*
+<img src="../../../translated_images/nl/structured-analysis-pattern.0af3b690b60cf2d6.webp" alt="Gestructureerd Analysepatroon" width="800"/>
 
-**Multi-Turn Chat** - Voor gesprekken die context nodig hebben. Het model onthoudt eerdere berichten en bouwt daarop voort. Gebruik dit voor interactieve hulpsessies of complexe Q&A.
+*Kader voor consistente code reviews met ernstniveaus*
+
+**Multi-Turn Chat** - Voor gesprekken die context nodig hebben. Het model onthoudt eerdere berichten en bouwt daarop voort. Gebruik dit voor interactieve hulpsessies of complexe vraag & antwoord.
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -363,11 +379,12 @@ AiMessage aiMessage2 = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage2);
 ```
 
-<img src="../../../translated_images/nl/context-memory.dff30ad9fa78832a.webp" alt="Context Memory" width="800"/>
+Het onderstaande diagram visualiseert hoe de context van het gesprek zich opstapelt bij elke beurt en hoe dit relateert aan de tokenlimiet van het model.
 
-*Hoe gesprekcontext zich ophoopt over meerdere beurten totdat de tokenlimiet is bereikt*
+<img src="../../../translated_images/nl/context-memory.dff30ad9fa78832a.webp" alt="Contextgeheugen" width="800"/>
 
-**Stap-voor-Stap Redenering** - Voor problemen die zichtbare logica vereisen. Het model toont expliciete redenering voor elke stap. Gebruik dit voor wiskundige problemen, logische puzzels of wanneer je het denkproces wilt begrijpen.
+*Hoe gesprekcontext zich opstapelt over meerdere beurten tot aan de tokenlimiet*
+**Stapsgewijze Uitleg** - Voor problemen die zichtbare logica vereisen. Het model toont expliciete redenering voor elke stap. Gebruik dit voor wiskundige problemen, logische puzzels, of wanneer je het denkproces wilt begrijpen.
 
 ```java
 String prompt = """
@@ -381,11 +398,13 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/nl/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Step-by-Step Pattern" width="800"/>
+Het onderstaande diagram illustreert hoe het model problemen opsplitst in expliciete, genummerde logische stappen.
 
-*Complexe problemen opdelen in expliciete logische stappen*
+<img src="../../../translated_images/nl/step-by-step-pattern.a99ea4ca1c48578c.webp" alt="Stapsgewijs Patroon" width="800"/>
 
-**Beperkte Output** - Voor antwoorden met specifieke formatteereisen. Het model volgt strikt format- en lengteregels. Gebruik dit voor samenvattingen of wanneer je een precieze outputstructuur nodig hebt.
+*Problemen opsplitsen in expliciete logische stappen*
+
+**Beperkte Output** - Voor antwoorden met specifieke formatteervereisten. Het model volgt strikt de format- en lengteregels. Gebruik dit voor samenvattingen of wanneer je een nauwkeurige outputstructuur nodig hebt.
 
 ```java
 String prompt = """
@@ -401,49 +420,61 @@ String prompt = """
 String response = chatModel.chat(prompt);
 ```
 
-<img src="../../../translated_images/nl/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Constrained Output Pattern" width="800"/>
+Het volgende diagram toont hoe beperkingen het model sturen om output te produceren die strikt voldoet aan jouw format- en lengtevereisten.
 
-*Handhaven van specifieke format-, lengte- en structuurvereisten*
+<img src="../../../translated_images/nl/constrained-output-pattern.0ce39a682a6795c2.webp" alt="Beperkt Output Patroon" width="800"/>
 
-## Gebruik van Bestaande Azure Resources
+*Specifieke eisen aan format, lengte en structuur afdwingen*
 
-**Controleer de deployment:**
+## De Applicatie uitvoeren
 
-Zorg dat het `.env` bestand in de hoofdmap staat met Azure-gegevens (gemaakt tijdens Module 01):
+**Verifieer de deployment:**
+
+Zorg ervoor dat het `.env` bestand aanwezig is in de hoofdmap met Azure-gegevens (gemaakt tijdens Module 01). Voer dit uit vanuit de modulemap (`02-prompt-engineering/`):
+
+**Bash:**
 ```bash
-cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT weergeven
+cat ../.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT tonen
+```
+
+**PowerShell:**
+```powershell
+Get-Content ..\.env  # Moet AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT tonen
 ```
 
 **Start de applicatie:**
 
-> **Opmerking:** Als je alle applicaties al gestart hebt met `./start-all.sh` uit Module 01 draait deze module al op poort 8083. Je kunt onderstaande startcommando’s overslaan en direct naar http://localhost:8083 gaan.
-**Optie 1: Gebruik van Spring Boot Dashboard (Aanbevolen voor VS Code-gebruikers)**
+> **Opmerking:** Als je alle applicaties al gestart hebt met `./start-all.sh` vanuit de hoofdmap (zoals beschreven in Module 01), draait deze module al op poort 8083. Je kunt de onderstaande startopdrachten overslaan en direct naar http://localhost:8083 gaan.
 
-De dev container bevat de Spring Boot Dashboard-extensie, die een visuele interface biedt om alle Spring Boot-toepassingen te beheren. Je vindt deze in de Activiteitenbalk aan de linkerkant van VS Code (zoek naar het Spring Boot-pictogram).
+**Optie 1: Gebruik van Spring Boot Dashboard (Aanbevolen voor VS Code gebruikers)**
 
-Vanaf het Spring Boot Dashboard kun je:
-- Alle beschikbare Spring Boot-toepassingen in de werkruimte zien
-- Toepassingen starten/stoppen met een enkele klik
-- Applicatielogs in realtime bekijken
-- De status van applicaties monitoren
+De dev container bevat de Spring Boot Dashboard extensie, die een visuele interface biedt om alle Spring Boot applicaties te beheren. Je vindt deze in de Activity Bar aan de linkerkant van VS Code (zoek naar het Spring Boot icoon).
+
+Vanuit het Spring Boot Dashboard kun je:
+- Alle beschikbare Spring Boot applicaties in de werkruimte zien
+- Applicaties starten/stoppen met één klik
+- Applicatielogs in real-time bekijken
+- Applicatiestatus monitoren
 
 Klik simpelweg op de afspeelknop naast "prompt-engineering" om deze module te starten, of start alle modules tegelijk.
 
 <img src="../../../translated_images/nl/dashboard.da2c2130c904aaf0.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Optie 2: Gebruik van shell-scripts**
+*Het Spring Boot Dashboard in VS Code — start, stop en monitor alle modules vanaf één plek*
+
+**Optie 2: Gebruik van shell scripts**
 
 Start alle webapplicaties (modules 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Vanuit de hoofdmap
+cd ..  # Vanuit de root directory
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Vanaf de root directory
+cd ..  # Vanuit de hoofdmap
 .\start-all.ps1
 ```
 
@@ -461,16 +492,16 @@ cd 02-prompt-engineering
 .\start.ps1
 ```
 
-Beide scripts laden automatisch omgevingsvariabelen vanuit het root `.env`-bestand en bouwen de JAR-bestanden indien deze nog niet bestaan.
+Beide scripts laden automatisch omgevingsvariabelen uit het `.env` bestand in de hoofdmap en bouwen de JAR bestanden als deze nog niet bestaan.
 
-> **Opmerking:** Als je alle modules handmatig wilt bouwen vóór het starten:
+> **Opmerking:** Als je alle modules liever handmatig bouwt voordat je start:
 >
 > **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
->
+
 > **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
@@ -497,67 +528,69 @@ cd ..; .\stop-all.ps1  # Alle modules
 
 ## Applicatie Screenshots
 
+Hier is de hoofdinterface van de prompt engineering module, waar je met alle acht patronen tegelijk kunt experimenteren.
+
 <img src="../../../translated_images/nl/dashboard-home.5444dbda4bc1f79d.webp" alt="Dashboard Home" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
 
-*Het hoofd-dashboard dat alle 8 prompt engineering-patronen toont met hun kenmerken en toepassingsgevallen*
+*Het hoofd dashboard toont alle 8 prompt engineering patronen met hun kenmerken en gebruikssituaties*
 
-## De Patronen Verkennen
+## Het verkennen van de Patronen
 
-De webinterface laat je experimenteren met verschillende promptingstrategieën. Elk patroon lost verschillende problemen op – probeer ze om te zien wanneer elke aanpak het beste werkt.
+De webinterface laat je experimenteren met verschillende prompting strategieën. Elk patroon lost andere problemen op – probeer ze uit om te zien wanneer elke aanpak uitblinkt.
 
-> **Opmerking: Streaming versus Niet-Streaming** — Elke patroonpagina biedt twee knoppen: **🔴 Stream Response (Live)** en een **Niet-streaming** optie. Streaming gebruikt Server-Sent Events (SSE) om tokens realtime weer te geven terwijl het model ze genereert, zodat je direct voortgang ziet. De niet-streaming optie wacht op de volledige reactie voordat deze wordt getoond. Voor prompts die diepgaand redeneren triggeren (bijv. Hoge Begeerte, Zelfreflecterende Code), kan de niet-streaming oproep erg lang duren — soms minuten — zonder zichtbare feedback. **Gebruik streaming bij het experimenteren met complexe prompts** zodat je het model aan het werk ziet en niet de indruk krijgt dat de aanvraag is verlopen.
+> **Opmerking: Streaming versus Non-Streaming** — Elke patroonpagina biedt twee knoppen: **🔴 Stream Response (Live)** en een **Non-streaming** optie. Streaming gebruikt Server-Sent Events (SSE) om tokens in real-time weer te geven terwijl het model ze genereert, zodat je direct voortgang ziet. De non-streaming optie wacht totdat de hele reactie compleet is voordat deze getoond wordt. Voor prompts die diepgaande redenering triggeren (bijv. High Eagerness, Self-Reflecting Code) kan de non-streaming oproep erg lang duren – soms minuten – zonder zichtbare feedback. **Gebruik streaming bij experimenteren met complexe prompts** zodat je het model aan het werk ziet en de indruk van een time-out voorkomt.
 >
-> **Opmerking: Browservereiste** — De streamingfunctie gebruikt de Fetch Streams API (`response.body.getReader()`) die een volledige browser vereist (Chrome, Edge, Firefox, Safari). Het werkt **niet** in VS Code's ingebouwde Simple Browser, omdat de webview de ReadableStream API niet ondersteunt. Als je de Simple Browser gebruikt, werken de niet-streaming knoppen nog normaal — alleen de streaming knoppen worden beïnvloed. Open `http://localhost:8083` in een externe browser voor de volledige ervaring.
+> **Opmerking: Browservereiste** — De streaming functie gebruikt de Fetch Streams API (`response.body.getReader()`) die een volledige browser vereist (Chrome, Edge, Firefox, Safari). Het werkt **niet** in de ingebouwde Simple Browser van VS Code, omdat de webview de ReadableStream API niet ondersteunt. Als je de Simple Browser gebruikt, werken de non-streaming knoppen wel normaal — alleen de streaming knoppen niet. Open `http://localhost:8083` in een externe browser voor de volledige ervaring.
 
-### Lage versus Hoge Begeerte
+### Lage versus Hoge Bereidheid
 
-Stel een eenvoudige vraag zoals "Wat is 15% van 200?" met Lage Begeerte. Je krijgt een direct en direct antwoord. Stel nu iets complexers zoals "Ontwerp een cachingstrategie voor een API met veel verkeer" met Hoge Begeerte. Klik op **🔴 Stream Response (Live)** en bekijk hoe het model gedetailleerde redeneringen token-voor-token toont. Zelfde model, zelfde vraagstructuur – maar de prompt vertelt het hoeveel nadenkwerk het moet doen.
+Stel een simpele vraag zoals "Wat is 15% van 200?" met Lage Bereidheid. Je krijgt een direct, snel antwoord. Stel nu iets complexers zoals "Ontwerp een caching strategie voor een drukke API" met Hoge Bereidheid. Klik op **🔴 Stream Response (Live)** en volg hoe het model gedetailleerde redeneringen token-voor-token laat zien. Zelfde model, zelfde vraagstructuur - maar de prompt vertelt hoeveel het moet nadenken.
 
 ### Taakuitvoering (Tool Preambles)
 
-Multi-stap workflows profiteren van vooraf plannen en voortgangsnarratie. Het model geeft aan wat het gaat doen, vertelt elke stap en vat vervolgens de resultaten samen.
+Meerstaps workflows profiteren van vooraf plannen en voortgangsnarratie. Het model schetst wat het gaat doen, vertelt elke stap, en vat daarna de resultaten samen.
 
 ### Zelfreflecterende Code
 
-Probeer "Maak een e-mail validatieservice". In plaats van alleen code te genereren en te stoppen, genereert het model, evalueert aan de hand van kwaliteitscriteria, identificeert zwaktes en verbetert. Je ziet het itereren totdat de code aan productiestandaarden voldoet.
+Probeer "Maak een e-mail validatieservice". In plaats van alleen code te genereren en te stoppen, genereert het model, evalueert op kwaliteitseisen, identificeert zwaktes en verbetert. Je ziet hoe het iteratief doorgaat tot de code voldoet aan productie-eisen.
 
 ### Gestructureerde Analyse
 
-Code reviews hebben consistente beoordelingskaders nodig. Het model analyseert code met vaste categorieën (correctheid, praktijken, prestaties, beveiliging) met ernstniveaus.
+Code reviews vragen om consistente evaluatiekaders. Het model analyseert code met vaste categorieën (correctheid, praktijken, prestaties, beveiliging) met ernstniveaus.
 
-### Multi-Turn Chat
+### Meerstaps Chat
 
-Vraag "Wat is Spring Boot?" en volg direct op met "Laat me een voorbeeld zien". Het model onthoudt je eerste vraag en geeft je specifiek een Spring Boot-voorbeeld. Zonder geheugen zou die tweede vraag te vaag zijn.
+Vraag "Wat is Spring Boot?" en volg meteen op met "Laat me een voorbeeld zien". Het model onthoudt je eerste vraag en geeft een voorbeeld dat bij Spring Boot past. Zonder geheugen zou die tweede vraag te vaag zijn.
 
-### Stap-voor-stap Redeneren
+### Stapsgewijze Redenering
 
-Kies een wiskundeprobleem en probeer het met zowel Stap-voor-stap Redeneren als Lage Begeerte. Lage begeerte geeft gewoon het antwoord – snel maar ondoorzichtig. Stap-voor-stap laat elke berekening en beslissing zien.
+Kies een wiskundeprobleem en probeer het met Stapsgewijze Redenering en Lage Bereidheid. Lage bereidheid geeft alleen het antwoord – snel maar ondoorzichtig. Stapsgewijs laat elke berekening en beslissing zien.
 
 ### Beperkte Output
 
-Wanneer je specifieke formaten of woordenaantallen nodig hebt, dwingt dit patroon strikte naleving af. Probeer een samenvatting te genereren met precies 100 woorden in opsomming.
+Als je specifieke formaten of woordenaantallen nodig hebt, dwingt dit patroon strikte naleving af. Probeer een samenvatting te genereren van precies 100 woorden in bullet points.
 
-## Wat Je Echt Leert
+## Wat je Echt Leert
 
-**Redeneerinspanning Verandert Alles**
+**Redeneringsinspanning Verandert Alles**
 
-GPT-5.2 laat je de computationele inspanning via je prompts regelen. Lage inspanning betekent snelle antwoorden met minimale exploratie. Hoge inspanning betekent dat het model de tijd neemt om diep na te denken. Je leert inspanning af te stemmen op de complexiteit van de taak – verspil geen tijd aan eenvoudige vragen, maar haast je ook niet bij complexe beslissingen.
+GPT-5.2 laat je de rekeninspanning sturen via je prompts. Lage inspanning betekent snelle reacties met minimale exploratie. Hoge inspanning betekent dat het model de tijd neemt om diep na te denken. Je leert de inspanning afstemmen op de taakcomplexiteit - verspil geen tijd aan simpele vragen, maar haast complexe beslissingen ook niet.
 
 **Structuur Stuurt Gedrag**
 
-Merk je de XML-tags in de prompts op? Ze zijn niet decoratief. Modellen volgen gestructureerde instructies betrouwbaarder dan vrije tekst. Wanneer je meerstapsprocessen of complexe logica nodig hebt, helpt structuur het model bij te houden waar het is en wat er daarna komt.
+Valt het je op dat prompts XML-tags bevatten? Die zijn niet decoratief. Modellen volgen gestructureerde instructies betrouwbaarder dan vrije tekst. Als je meerstaps processen of complexe logica nodig hebt, helpt structuur het model bij te houden waar het is en wat volgt. Het diagram hieronder ontleedt een goed gestructureerde prompt met tags zoals `<system>`, `<instructions>`, `<context>`, `<user-input>`, en `<constraints>` die je instructies in duidelijke secties ordenen.
 
-<img src="../../../translated_images/nl/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structure" width="800"/>
+<img src="../../../translated_images/nl/prompt-structure.a77763d63f4e2f89.webp" alt="Prompt Structuur" width="800"/>
 
 *Anatomie van een goed gestructureerde prompt met duidelijke secties en XML-stijl organisatie*
 
 **Kwaliteit Door Zelfevaluatie**
 
-De zelfreflecterende patronen werken door kwaliteitscriteria expliciet te maken. In plaats van te hopen dat het model "het goed doet", vertel je precies wat "goed" betekent: correcte logica, foutafhandeling, prestaties, beveiliging. Het model kan dan zijn eigen output beoordelen en verbeteren. Dit verandert codegeneratie van een loterij in een proces.
+De zelfreflecterende patronen maken kwaliteitscriteria expliciet. In plaats van te hopen dat het model "het goed doet", vertel je precies wat "goed" betekent: correcte logica, foutafhandeling, prestaties, beveiliging. Het model kan zo zijn eigen output evalueren en verbeteren. Dit maakt codegeneratie van een loterij tot een proces.
 
-**Context Is Beperkt**
+**Context is Beperkt**
 
-Multi-turn gesprekken werken door berichtgeschiedenis mee te nemen bij elke aanvraag. Maar er is een limiet – elk model heeft een maximaal tokenaantal. Naarmate gesprekken groeien, heb je strategieën nodig om relevante context te bewaren zonder die limiet te overschrijden. Deze module laat zien hoe geheugen werkt; later leer je wanneer je moet samenvatten, vergeten en ophalen.
+Meerstapsgesprekken werken door het opnemen van berichtgeschiedenis bij elke aanvraag. Maar er is een limiet – elk model heeft een maximum aantal tokens. Naarmate gesprekken groeien, heb je strategieën nodig om relevante context te bewaren zonder dat plafond te raken. Deze module laat zien hoe geheugen werkt; later leer je wanneer samenvatten, wanneer vergeten, en wanneer ophalen nodig is.
 
 ## Volgende Stappen
 
@@ -565,11 +598,11 @@ Multi-turn gesprekken werken door berichtgeschiedenis mee te nemen bij elke aanv
 
 ---
 
-**Navigatie:** [← Vorige: Module 01 - Introductie](../01-introduction/README.md) | [Terug naar Hoofdmenu](../README.md) | [Volgende: Module 03 - RAG →](../03-rag/README.md)
+**Navigatie:** [← Vorige: Module 01 - Introductie](../01-introduction/README.md) | [Terug naar Main](../README.md) | [Volgende: Module 03 - RAG →](../03-rag/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:
-Dit document is vertaald met behulp van de AI-vertalingsservice [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal geldt als de gezaghebbende bron. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+**Disclaimer**:  
+Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal dient als de gezaghebbende bron te worden beschouwd. Voor kritieke informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties voortvloeiend uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
