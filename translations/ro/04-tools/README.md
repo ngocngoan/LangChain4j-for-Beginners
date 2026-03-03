@@ -1,77 +1,77 @@
-# Modului 04: Agenți AI cu instrumente
+# Modulul 04: Agenți AI cu unelte
 
 ## Cuprins
 
 - [Ce vei învăța](../../../04-tools)
 - [Prerechizite](../../../04-tools)
-- [Înțelegerea Agenților AI cu instrumente](../../../04-tools)
-- [Cum funcționează apelarea instrumentelor](../../../04-tools)
-  - [Definiții ale instrumentelor](../../../04-tools)
+- [Înțelegerea agenților AI cu unelte](../../../04-tools)
+- [Cum funcționează apelarea uneltelor](../../../04-tools)
+  - [Definiții pentru unelte](../../../04-tools)
   - [Luarea deciziilor](../../../04-tools)
-  - [Execuție](../../../04-tools)
+  - [Executarea](../../../04-tools)
   - [Generarea răspunsului](../../../04-tools)
-  - [Arhitectură: Configurare automată Spring Boot](../../../04-tools)
-- [Lanțuire de instrumente](../../../04-tools)
+  - [Arhitectură: Auto-conectare Spring Boot](../../../04-tools)
+- [Lanțuirea uneltelor](../../../04-tools)
 - [Rulează aplicația](../../../04-tools)
-- [Folosirea aplicației](../../../04-tools)
-  - [Încearcă utilizarea simplă a instrumentelor](../../../04-tools)
-  - [Testează lanțuirea instrumentelor](../../../04-tools)
+- [Utilizarea aplicației](../../../04-tools)
+  - [Încearcă utilizarea simplă a unei unelte](../../../04-tools)
+  - [Testează lanțuirea uneltelor](../../../04-tools)
   - [Vezi fluxul conversației](../../../04-tools)
   - [Experimentează cu cereri diferite](../../../04-tools)
 - [Concepte cheie](../../../04-tools)
-  - [Modelul ReAct (Raționare și Acțiune)](../../../04-tools)
-  - [Descrierile instrumentelor contează](../../../04-tools)
-  - [Managementul sesiunii](../../../04-tools)
+  - [Tiparul ReAct (Raționament și Acțiune)](../../../04-tools)
+  - [Importanța descrierilor uneltelor](../../../04-tools)
+  - [Gestionarea sesiunii](../../../04-tools)
   - [Gestionarea erorilor](../../../04-tools)
-- [Instrumente disponibile](../../../04-tools)
-- [Când să folosești agenți bazati pe instrumente](../../../04-tools)
-- [Instrumente vs RAG](../../../04-tools)
+- [Unelte disponibile](../../../04-tools)
+- [Când să folosești agenți bazati pe unelte](../../../04-tools)
+- [Unelte vs RAG](../../../04-tools)
 - [Pașii următori](../../../04-tools)
 
 ## Ce vei învăța
 
-Până acum, ai învățat cum să porți conversații cu AI, să structurezi prompturi eficient și să ancorezi răspunsurile în documentele tale. Dar există o limitare fundamentală: modelele de limbaj pot genera doar text. Nu pot verifica vremea, face calcule, interoga baze de date sau interacționa cu sisteme externe.
+Până acum, ai învățat cum să porți conversații cu AI, să structurezi prompturi eficient și să ancorezi răspunsurile în documentele tale. Însă există o limitare fundamentală: modelele de limbaj pot genera doar text. Nu pot verifica vremea, face calcule, interoga baze de date sau interacționa cu sisteme externe.
 
-Instrumentele schimbă acest lucru. Dând modelului acces la funcții pe care le poate apela, îl transformi din generator de text într-un agent care poate lua acțiuni. Modelul decide când are nevoie de un instrument, care instrument să folosească și ce parametri să transmită. Codul tău execută funcția și returnează rezultatul. Modelul încorporează acel rezultat în răspunsul său.
+Uneltele schimbă acest lucru. Oferind modelului acces la funcții pe care le poate apela, îl transformi din generator de text într-un agent care poate întreprinde acțiuni. Modelul decide când are nevoie de o unealtă, ce unealtă să folosească și ce parametri să trimită. Codul tău execută funcția și returnează rezultatul. Modelul încorporează acest rezultat în răspunsul său.
 
 ## Prerechizite
 
-- Completat [Modul 01 - Introducere](../01-introduction/README.md) (resurse Azure OpenAI implementate)
-- Completarea modulelor anterioare este recomandată (acest modul face referire la [conceput RAG din Modulul 03](../03-rag/README.md) în comparația Instrumente vs RAG)
+- Finalizarea [Modulului 01 - Introducere](../01-introduction/README.md) (resurse Azure OpenAI implementate)
+- Recomandat să fi terminat modulele anterioare (acest modul face referire la [conceptele RAG din Modulul 03](../03-rag/README.md) în comparația Unelte vs RAG)
 - Fișier `.env` în directorul rădăcină cu acreditările Azure (creat de `azd up` în Modulul 01)
 
 > **Notă:** Dacă nu ai terminat Modulul 01, urmează mai întâi instrucțiunile de implementare de acolo.
 
-## Înțelegerea Agenților AI cu instrumente
+## Înțelegerea agenților AI cu unelte
 
-> **📝 Notă:** Termenul „agenți” în acest modul se referă la asistenți AI îmbunătățiți cu capabilități de apelare a instrumentelor. Aceasta este diferit de pattern-urile **Agentic AI** (agenți autonomi cu planificare, memorie și raționament în pași multipli) pe care le vom acoperi în [Modulul 05: MCP](../05-mcp/README.md).
+> **📝 Notă:** Termenul „agenți” în acest modul se referă la asistenți AI îmbunătățiți cu capabilități de apelare de unelte. Acest lucru este diferit de tiparele **Agentic AI** (agenți autonomi cu planificare, memorie și raționament în mai mulți pași) pe care le vom acoperi în [Modulul 05: MCP](../05-mcp/README.md).
 
-Fără instrumente, un model de limbaj poate doar genera text din datele sale de antrenament. Întreabă-l despre vremea actuală și trebuie să ghicească. Dă-i instrumente și poate apela o API de vreme, poate face calcule sau interoga o bază de date — apoi integrează acele rezultate reale în răspunsul său.
+Fără unelte, un model de limbaj poate doar genera text din datele sale de antrenament. Întreabă-l despre vremea curentă, și trebuie să ghicească. Oferă-i unelte și poate apela un API de vreme, face calcule sau interoga o bază de date — apoi împletește acele rezultate reale în răspunsul său.
 
-<img src="../../../translated_images/ro/what-are-tools.724e468fc4de64da.webp" alt="Fără instrumente vs Cu instrumente" width="800"/>
+<img src="../../../translated_images/ro/what-are-tools.724e468fc4de64da.webp" alt="Fără unelte vs cu unelte" width="800"/>
 
-*Fără instrumente modelul poate doar ghici — cu instrumente poate apela API-uri, executa calcule și returna date în timp real.*
+*Fără unelte modelul doar ghicește — cu unelte poate apela API-uri, efectua calcule și returna date în timp real.*
 
-Un agent AI cu instrumente urmează un model **Raționare și Acțiune (ReAct)**. Modelul nu răspunde doar — gândește ce are nevoie, acționează apelând un instrument, observă rezultatul și apoi decide dacă acționează din nou sau oferă răspunsul final:
+Un agent AI cu unelte urmează un tipar **Raționare și Acțiune (ReAct)**. Modelul nu doar răspunde — gândește la ce are nevoie, acționează apelând o unealtă, observă rezultatul și apoi decide dacă mai acționează sau livrează răspunsul final:
 
-1. **Raționează** — Agentul analizează întrebarea utilizatorului și determină ce informații sunt necesare
-2. **Acționează** — Agentul selectează instrumentul potrivit, generează parametrii corecți și îl apelează
-3. **Observă** — Agentul primește rezultatul instrumentului și îl evaluează
-4. **Repetă sau răspunde** — Dacă este nevoie de mai multe date, agentul revine la pasul anterior; altfel, compune un răspuns în limbaj natural
+1. **Raționează** — agentul analizează întrebarea utilizatorului și determină ce informații îi sunt necesare
+2. **Acționează** — agentul selectează unealta potrivită, generează parametrii corecți și o apelează
+3. **Observă** — agentul primește rezultatul uneltei și îl evaluează
+4. **Repetă sau Răspunde** — dacă sunt necesare mai multe date, agentul revine la pasul 1; altfel compune un răspuns în limbaj natural
 
-<img src="../../../translated_images/ro/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Modelul ReAct" width="800"/>
+<img src="../../../translated_images/ro/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Tiparul ReAct" width="800"/>
 
-*Ciclul ReAct — agentul raționează ce să facă, acționează apelând un instrument, observă rezultatul și repetă până poate livra răspunsul final.*
+*Ciclul ReAct — agentul raționează ce să facă, acționează apelând o unealtă, observă rezultatul și repetă până poate livra răspunsul final.*
 
-Acest lucru se întâmplă automat. Definiți instrumentele și descrierile lor. Modelul se ocupă de luarea deciziilor despre când și cum să le folosească.
+Acest proces se întâmplă automat. Tu definești uneltele și descrierile lor. Modelul se ocupă de luarea deciziilor despre când și cum să le folosească.
 
-## Cum funcționează apelarea instrumentelor
+## Cum funcționează apelarea uneltelor
 
-### Definiții ale instrumentelor
+### Definiții pentru unelte
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Definiți funcții cu descrieri clare și specificații pentru parametri. Modelul vede aceste descrieri în promptul său de sistem și înțelege ce face fiecare instrument.
+Definiți funcții cu descrieri clare și specificații pentru parametri. Modelul vede aceste descrieri în promptul său de sistem și înțelege ce face fiecare unealtă.
 
 ```java
 @Component
@@ -79,7 +79,7 @@ public class WeatherTool {
     
     @Tool("Get the current weather for a location")
     public String getCurrentWeather(@P("Location name") String location) {
-        // Logica ta de căutare meteo
+        // Logica dvs. pentru căutarea vremii
         return "Weather in " + location + ": 22°C, cloudy";
     }
 }
@@ -94,115 +94,127 @@ public interface Assistant {
 // - Toate metodele @Tool din clasele @Component
 // - ChatMemoryProvider pentru gestionarea sesiunii
 ```
+  
+Diagrama de mai jos detaliază fiecare adnotare și arată cum fiecare piesă ajută AI-ul să înțeleagă când să apeleze unealta și ce argumente să transmită:
 
-Diagramul de mai jos descrie fiecare adnotare și arată cum fiecare parte ajută AI să înțeleagă când să apeleze instrumentul și ce argumente să transmită:
+<img src="../../../translated_images/ro/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomia definițiilor uneltelor" width="800"/>
 
-<img src="../../../translated_images/ro/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomia definițiilor instrumentelor" width="800"/>
-
-*Anatomia unei definiții de instrument — @Tool îi spune AI când să îl folosească, @P descrie fiecare parametru, iar @AiService le leagă pe toate împreună la pornire.*
+*Anatomia definiției unei unelte — @Tool spune AI-ului când să o folosească, @P descrie fiecare parametru, iar @AiService conectează totul la pornire.*
 
 > **🤖 Încearcă cu [GitHub Copilot](https://github.com/features/copilot) Chat:** Deschide [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) și întreabă:
-> - "Cum aș integra o API reală de vreme precum OpenWeatherMap în locul datelor mock?"
-> - "Ce face o descriere bună a instrumentului care ajută AI să îl folosească corect?"
-> - "Cum gestionez erorile API și limitele de rată în implementările instrumentelor?"
+> - „Cum aș integra un API real de vreme ca OpenWeatherMap în loc de datele mock?”
+> - „Ce face o descriere bună de unealtă care ajută AI să o folosească corect?”
+> - „Cum gestionez erorile API și limitele de rată în implementările uneltelor?”
 
 ### Luarea deciziilor
 
-Când un utilizator întreabă „Care e vremea în Seattle?”, modelul nu alege aleator un instrument. Compară intenția utilizatorului cu fiecare descriere de instrument la care are acces, acordă un scor pentru relevanță și selectează cea mai bună potrivire. Apoi generează un apel de funcție structurat cu parametrii corecți — în acest caz, `location` setat la `"Seattle"`.
+Când un utilizator întreabă „Cum e vremea în Seattle?”, modelul nu alege o unealtă aleator. Compară intenția utilizatorului cu fiecare descriere de unealtă la care are acces, evaluează relevanța fiecăreia și selectează cea mai bună potrivire. Apoi generează un apel de funcție structurat cu parametrii corecți — în acest caz, setează `location` la `"Seattle"`.
 
-Dacă niciun instrument nu se potrivește cererii utilizatorului, modelul răspunde din propria sa cunoaștere. Dacă mai multe instrumente coincid, alege pe cel mai specific.
+Dacă nicio unealtă nu corespunde cererii utilizatorului, modelul răspunde din propria sa cunoaștere. Dacă mai multe unelte sunt potrivite, alege pe cea mai specifică.
 
-<img src="../../../translated_images/ro/decision-making.409cd562e5cecc49.webp" alt="Cum decide AI ce instrument să folosească" width="800"/>
+<img src="../../../translated_images/ro/decision-making.409cd562e5cecc49.webp" alt="Cum decide AI ce unealtă să folosească" width="800"/>
 
-*Modelul evaluează toate instrumentele disponibile față de intenția utilizatorului și selectează cea mai bună potrivire — de aceea contează să scrii descrieri clare și specifice pentru instrumente.*
+*Modelul evaluează fiecare unealtă disponibilă față de intenția utilizatorului și alege cea mai bună potrivire — de aceea contează să scrii descrieri clare, specifice.*
 
-### Execuție
+### Executarea
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot configurează automat interfața declarativă `@AiService` cu toate instrumentele înregistrate, iar LangChain4j execută apelurile instrumentelor automat. În spate, un apel complet al unui instrument trece prin șase etape — de la întrebarea utilizatorului în limbaj natural până la un răspuns tot în limbaj natural:
+Spring Boot leagă automat interfața declarativă `@AiService` cu toate uneltele înregistrate, iar LangChain4j execută apelurile către unelte automat. În spate, un apel complet către unealtă parcurge șase etape — de la întrebarea în limbaj natural a utilizatorului până la răspunsul final în limbaj natural:
 
-<img src="../../../translated_images/ro/tool-calling-flow.8601941b0ca041e6.webp" alt="Fluxul apelării instrumentului" width="800"/>
+<img src="../../../translated_images/ro/tool-calling-flow.8601941b0ca041e6.webp" alt="Fluxul apelării uneltei" width="800"/>
 
-*Fluxul end-to-end — utilizatorul pune o întrebare, modelul selectează un instrument, LangChain4j îl execută, iar modelul integrează rezultatul într-un răspuns natural.*
+*Fluxul complet — utilizatorul pune o întrebare, modelul selectează o unealtă, LangChain4j o execută iar modelul încorporează rezultatul într-un răspuns natural.*
+
+Dacă ai rulat [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) în Modulul 00, ai văzut deja acest tipar în acțiune — uneltele `Calculator` au fost apelate la fel. Diagrama de secvență de mai jos arată exact ce s-a întâmplat în spate în timpul acelei demonstrații:
+
+<img src="../../../translated_images/ro/tool-calling-sequence.94802f406ca26278.webp" alt="Diagramă de secvență pentru apelarea uneletei" width="800"/>
+
+*Bucle de apelare a uneltei din demo-ul Quick Start — `AiServices` trimite mesajul și schemele uneltelor la LLM, LLM răspunde cu un apel de funcție ca `add(42, 58)`, LangChain4j execută metoda `Calculator` local și aduce rezultatul pentru răspunsul final.*
 
 > **🤖 Încearcă cu [GitHub Copilot](https://github.com/features/copilot) Chat:** Deschide [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) și întreabă:
-> - "Cum funcționează modelul ReAct și de ce este eficient pentru agenții AI?"
-> - "Cum decide agentul ce instrument să folosească și în ce ordine?"
-> - "Ce se întâmplă dacă execuția unui instrument eșuează - cum ar trebui să gestionez erorile în mod robust?"
+> - „Cum funcționează tiparul ReAct și de ce este eficient pentru agenții AI?”
+> - „Cum decide agentul ce unealtă să folosească și în ce ordine?”
+> - „Ce se întâmplă dacă execuția unei unelte eșuează – cum gestionez erorile robust?”
 
 ### Generarea răspunsului
 
-Modelul primește datele meteo și le formatează într-un răspuns în limbaj natural pentru utilizator.
+Modelul primește datele despre vreme și le formatează într-un răspuns în limbaj natural pentru utilizator.
 
-### Arhitectură: Configurare automată Spring Boot
+### Arhitectură: Auto-conectare Spring Boot
 
-Acest modul folosește integrarea LangChain4j cu Spring Boot prin interfețe declarative `@AiService`. La pornire, Spring Boot descoperă fiecare `@Component` care conține metode `@Tool`, bean-ul tău `ChatModel` și `ChatMemoryProvider` — apoi le leagă pe toate într-o singură interfață `Assistant` fără boilerplate.
+Acest modul folosește integrarea LangChain4j cu Spring Boot și interfețele declarative `@AiService`. La pornire, Spring Boot descoperă fiecare `@Component` cu metode `@Tool`, bean-ul tău `ChatModel` și `ChatMemoryProvider` — apoi le conectează pe toate într-o singură interfață `Assistant` fără cod redundant.
 
-<img src="../../../translated_images/ro/spring-boot-wiring.151321795988b04e.webp" alt="Arhitectura configurării automate Spring Boot" width="800"/>
+<img src="../../../translated_images/ro/spring-boot-wiring.151321795988b04e.webp" alt="Arhitectură Auto-Conectare Spring Boot" width="800"/>
 
-*Interfața @AiService leagă ChatModel, componentele de instrumente și provider-ul de memorie — Spring Boot se ocupă de întreaga configurare automat.*
+*Interfața @AiService leagă împreună ChatModel, componentele uneltelor și provider-ul de memorie — Spring Boot gestionează automat toate conexiunile.*
+
+Iată întreg ciclul de viață al unei cereri ilustrat printr-o diagramă de secvență — de la cererea HTTP, prin controller, service și proxy auto-conectat, până la execuția uneltei și înapoi:
+
+<img src="../../../translated_images/ro/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Diagramă de secvență apelare unealtă Spring Boot" width="800"/>
+
+*Ciclul complet al cererii Spring Boot — cererea HTTP trece prin controller și service către proxy-ul Assistant auto-conectat, care orchestrează LLM-ul și apelurile uneltelor automat.*
 
 Beneficii cheie ale acestei abordări:
 
-- **Configurare automată Spring Boot** — ChatModel și instrumentele sunt injectate automat
-- **Pattern @MemoryId** — Management automat al memoriei bazat pe sesiuni
+- **Auto-conectare Spring Boot** — ChatModel și uneltele injectate automat
+- **Tiparul @MemoryId** — Gestionarea automată a memoriei bazate pe sesiuni
 - **Instanță unică** — Assistant creat o singură dată și reutilizat pentru performanță mai bună
-- **Execuție tip-safe** — Metode Java apelate direct cu conversie de tip
-- **Orchestrare multi-turn** — Gestionează automat lanțuirea instrumentelor
-- **Zero boilerplate** — Fără apeluri manuale `AiServices.builder()` sau memorie HashMap
+- **Executare tip-safe** — Apeluri directe de metode Java cu conversie de tipuri
+- **Orchestrare multi-turn** — Gestionează automat lanțuirea uneltelor
+- **Fără cod redundant** — Niciun apel manual `AiServices.builder()` sau HashMap de memorie
 
-Abordările alternative (manual `AiServices.builder()`) necesită mai mult cod și pierd beneficiile integrării Spring Boot.
+Abordările alternative (manuale cu `AiServices.builder()`) necesită mai mult cod și pierd beneficiile integrării Spring Boot.
 
-## Lanțuire de instrumente
+## Lanțuirea uneltelor
 
-**Lanțuirea instrumentelor** — Puterea reală a agenților bazati pe instrumente se vede când o singură întrebare necesită mai multe instrumente. Întreabă „Care e vremea în Seattle în Fahrenheit?” și agentul lanțuiește automat două instrumente: mai întâi apelează `getCurrentWeather` pentru temperatura în Celsius, apoi trece acea valoare la `celsiusToFahrenheit` pentru conversie — totul într-un singur pas de conversație.
+**Lanțuirea uneltelor** — Puterea reală a agenților bazati pe unelte apare când o singură întrebare necesită mai multe unelte. Întreabă „Care e vremea în Seattle în Fahrenheit?” iar agentul leagă automat două unelte: mai întâi apelează `getCurrentWeather` pentru temperatura în Celsius, apoi transmite acea valoare către `celsiusToFahrenheit` pentru conversie — toate într-un singur tur de conversație.
 
-<img src="../../../translated_images/ro/tool-chaining-example.538203e73d09dd82.webp" alt="Exemplu de lanțuire a instrumentelor" width="800"/>
+<img src="../../../translated_images/ro/tool-chaining-example.538203e73d09dd82.webp" alt="Exemplu de lanțuire unelte" width="800"/>
 
-*Lanțuirea instrumentelor în acțiune — agentul apelează mai întâi getCurrentWeather, apoi trece rezultatul în Celsius către celsiusToFahrenheit și oferă un răspuns combinat.*
+*Lanțuirea uneltelor în acțiune — agentul apelează mai întâi getCurrentWeather, apoi pasează rezultatul în Celsius către celsiusToFahrenheit și oferă un răspuns combinat.*
 
-**Eșecuri grațioase** — Cere vremea într-un oraș care nu este în datele mock. Instrumentul returnează un mesaj de eroare, iar AI explică că nu poate ajuta în loc să se blocheze. Instrumentele eșuează în siguranță. Diagramă de mai jos compară două abordări — cu gestionare corectă a erorilor agentul prinde excepția și răspunde ajutător, fără ea întreaga aplicație se blochează:
+**Eșecuri grațioase** — Cere vremea într-un oraș care nu există în datele mock. Unealta returnează un mesaj de eroare, iar AI explică de ce nu poate ajuta, în loc să se prăbușească. Uneltele eșuează în siguranță. Diagrama de mai jos contrastează cele două abordări — cu gestionare corectă a erorilor, agentul prinde excepția și răspunde util, iar fără ea întreaga aplicație se blochează:
 
-<img src="../../../translated_images/ro/error-handling-flow.9a330ffc8ee0475c.webp" alt="Fluxul gestionării erorilor" width="800"/>
+<img src="../../../translated_images/ro/error-handling-flow.9a330ffc8ee0475c.webp" alt="Flux de gestionare erori" width="800"/>
 
-*Când un instrument eșuează, agentul prinde eroarea și răspunde cu o explicație utilă în loc să se blocheze.*
+*Când o unealtă eșuează, agentul prinde eroarea și răspunde cu o explicație utilă în loc să se blocheze.*
 
-Aceasta se întâmplă într-un singur pas de conversație. Agentul orchestrează automat mai multe apeluri de instrumente.
+Acest lucru se întâmplă într-un singur tur de conversație. Agentul orchestrează autonom mai multe apeluri către unelte.
 
 ## Rulează aplicația
 
 **Verifică implementarea:**
 
-Asigură-te că fișierul `.env` există în directorul rădăcină cu acreditările Azure (creat în Modulul 01). Rulează din directorul modulului (`04-tools/`):
+Asigură-te că fișierul `.env` există în directorul rădăcină cu acreditările Azure (creat în Modulul 01). Rulează acest comandă din directorul modulului (`04-tools/`):
 
-**Bash:**
+**Bash:**  
 ```bash
 cat ../.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 Get-Content ..\.env  # Ar trebui să afișeze AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
-
+  
 **Pornește aplicația:**
 
-> **Notă:** Dacă ai pornit deja toate aplicațiile folosind `./start-all.sh` din directorul rădăcină (așa cum s-a descris în Modulul 01), acest modul rulează deja pe portul 8084. Poți sări peste comenzile de start de mai jos și merge direct la http://localhost:8084.
+> **Notă:** Dacă ai pornit deja toate aplicațiile folosind `./start-all.sh` din directorul rădăcină (așa cum e descris în Modulul 01), acest modul rulează deja pe portul 8084. Poți sări peste comenzile de start de mai jos și să accesezi direct http://localhost:8084.
 
 **Opțiunea 1: Folosind Spring Boot Dashboard (Recomandat pentru utilizatorii VS Code)**
 
-Containerul dev include extensia Spring Boot Dashboard, care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O găsești în bara de activități din stânga în VS Code (caută pictograma Spring Boot).
+Containerul de dezvoltare include extensia Spring Boot Dashboard care oferă o interfață vizuală pentru gestionarea tuturor aplicațiilor Spring Boot. O vei găsi în bara de activități din stânga VS Code (caută iconița Spring Boot).
 
 Din Spring Boot Dashboard poți:
-- Vezi toate aplicațiile Spring Boot disponibile în workspace
-- Porni/opri aplicațiile cu un singur clic
-- Vizualiza jurnalele aplicațiilor în timp real
+- Vizualiza toate aplicațiile Spring Boot din workspace
+- Porni/opri aplicații cu un singur clic
+- Vedea jurnalele aplicației în timp real
 - Monitoriza starea aplicațiilor
 
-Pur și simplu apasă butonul play de lângă „tools” pentru a porni acest modul, sau pornește toate modulele simultan.
+Apasă pe butonul play de lângă „tools” pentru a porni acest modul, sau pornește toate modulele simultan.
 
-Iată cum arată Spring Boot Dashboard în VS Code:
+Așa arată Spring Boot Dashboard în VS Code:
 
 <img src="../../../translated_images/ro/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
@@ -224,7 +236,7 @@ cd ..  # Din directorul rădăcină
 .\start-all.ps1
 ```
 
-Sau pornește doar acest modul:
+Sau porniți doar acest modul:
 
 **Bash:**
 ```bash
@@ -238,9 +250,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` rădăcină și vor construi JAR-urile dacă nu există.
+Ambele scripturi încarcă automat variabilele de mediu din fișierul rădăcină `.env` și vor construi JAR-urile dacă acestea nu există.
 
-> **Notă:** Dacă preferi să construiești manual toate modulele înainte de pornire:
+> **Notă:** Dacă preferați să construiți manual toate modulele înainte de a porni:
 >
 > **Bash:**
 > ```bash
@@ -254,9 +266,9 @@ Ambele scripturi încarcă automat variabilele de mediu din fișierul `.env` ră
 > mvn clean package -DskipTests
 > ```
 
-Deschide http://localhost:8084 în browserul tău.
+Deschideți http://localhost:8084 în browserul dumneavoastră.
 
-**Pentru oprire:**
+**Pentru a opri:**
 
 **Bash:**
 ```bash
@@ -267,102 +279,103 @@ cd .. && ./stop-all.sh  # Toate modulele
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Doar acest modul
+.\stop.ps1  # Numai acest modul
 # Sau
 cd ..; .\stop-all.ps1  # Toate modulele
 ```
 
-## Folosirea aplicației
+## Utilizarea aplicației
 
-Aplicația oferă o interfață web unde poți interacționa cu un agent AI care are acces la instrumente pentru vreme și conversie de temperatură. Iată cum arată interfața — include exemple rapide de început și un panou de chat pentru trimiterea cererilor:
-<a href="images/tools-homepage.png"><img src="../../../translated_images/ro/tools-homepage.4b4cd8b2717f9621.webp" alt="Interfața Instrumentelor Agentului AI" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Aplicația oferă o interfață web unde puteți interacționa cu un agent AI care are acces la unelte pentru vreme și conversia temperaturii. Iată cum arată interfața — include exemple rapide de pornire și un panou de chat pentru trimiterea cererilor:
 
-*Interfața Instrumentelor Agentului AI - exemple rapide și interfață de chat pentru interacțiunea cu instrumentele*
+<a href="images/tools-homepage.png"><img src="../../../translated_images/ro/tools-homepage.4b4cd8b2717f9621.webp" alt="Interfața uneltelor agentului AI" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-### Încearcă Utilizarea Simplă a Instrumentelor
+*Interfața uneltelor agentului AI - exemple rapide și interfață de chat pentru interacțiunea cu uneltele*
 
-Începe cu o solicitare simplă: „Convertește 100 de grade Fahrenheit în Celsius”. Agentul recunoaște că are nevoie de instrumentul de conversie a temperaturii, îl apelează cu parametrii corecți și returnează rezultatul. Observă cât de natural se simte - nu ai specificat ce instrument să folosești sau cum să-l apelezi.
+### Încercați utilizarea simplă a uneltei
 
-### Testează Lanțurile de Instrumente
+Începeți cu o cerere simplă: "Convertește 100 de grade Fahrenheit în Celsius". Agentul recunoaște că are nevoie de unealta de conversie a temperaturii, o apelează cu parametrii corecți și returnează rezultatul. Observați cât de natural se simte — nu ați specificat ce unealtă să folosească sau cum să o apeleze.
 
-Acum încearcă ceva mai complex: „Cum este vremea în Seattle și convertește-o în Fahrenheit?” Urmărește cum agentul parcurge acest proces pas cu pas. Mai întâi obține vremea (care returnează Celsius), recunoaște că trebuie să convertească în Fahrenheit, apelează instrumentul de conversie și combină ambele rezultate într-un singur răspuns.
+### Testați concatenarea uneltelor
 
-### Vezi Fluxul Conversației
+Acum încercați ceva mai complex: "Care este vremea în Seattle și convertește-o în Fahrenheit?" Urmăriți cum agentul lucrează în pași. Mai întâi obține vremea (care returnează în Celsius), recunoaște că trebuie să convertească în Fahrenheit, apelează unealta de conversie și combină ambele rezultate într-un singur răspuns.
 
-Interfața de chat păstrează istoricul conversațiilor, permițându-ți să ai interacțiuni pe mai multe runde. Poți vedea toate întrebările și răspunsurile anterioare, făcând ușor de urmărit conversația și de înțeles cum construiește agentul contextul pe parcursul mai multor schimburi.
+### Vedeți fluxul conversației
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/ro/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversație cu Apeluri Multiple la Instrumente" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Interfața de chat păstrează istoricul conversației, permițându-vă să aveți interacțiuni în mai multe runde. Puteți vedea toate întrebările și răspunsurile anterioare, făcând ușor de urmărit conversația și de înțeles cum agentul construiește context de-a lungul schimburilor multiple.
 
-*Conversație pe mai multe ture care arată conversii simple, verificări meteo și lanțuri de instrumente*
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/ro/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversație cu mai multe apeluri de unealtă" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-### Experimentează cu Solicitări Diferite
+*Conversație multi-turn care arată conversii simple, consultări de vreme și concatenarea uneltelor*
 
-Încearcă diferite combinații:
-- Verificări meteo: „Cum este vremea în Tokyo?”
-- Conversii de temperatură: „Ce este 25°C în Kelvin?”
-- Întrebări combinate: „Verifică vremea în Paris și spune-mi dacă este peste 20°C”
+### Experimentați cu cereri diferite
 
-Observă cum agentul interpretează limbajul natural și îl mapează la apeluri adecvate ale instrumentelor.
+Încercați diverse combinații:
+- Consultări meteo: "Care este vremea în Tokyo?"
+- Conversii de temperatură: "Cât este 25°C în Kelvin?"
+- Cereri combinate: "Verifică vremea în Paris și spune-mi dacă este peste 20°C"
 
-## Concepte Cheie
+Observați cum agentul interpretează limbajul natural și îl mapează la apeluri adecvate ale uneltelor.
 
-### Tiparul ReAct (Raționament și Acțiune)
+## Concepte cheie
 
-Agentul alternează între a raționa (a decide ce să facă) și a acționa (a folosi instrumentele). Acest tipar permite rezolvarea autonomă a problemelor, nu doar răspunsuri la instrucțiuni.
+### Modelul ReAct (Raționament și Acțiune)
 
-### Descrierile Instrumentelor Contează
+Agentul alternează între raționament (deciderea ce trebuie făcut) și acțiune (utilizarea uneltelor). Acest model permite rezolvarea autonomă a problemelor, nu doar răspunsuri la instrucțiuni.
 
-Calitatea descrierilor instrumentelor afectează direct cât de bine le folosește agentul. Descrierile clare și specifice ajută modelul să înțeleagă când și cum să apeleze fiecare instrument.
+### Descrierile uneltelor contează
 
-### Gestionarea Sesiunii
+Calitatea descrierilor uneltelor afectează direct cât de bine le folosește agentul. Descrierile clare și specifice ajută modelul să înțeleagă când și cum să apeleze fiecare unealtă.
 
-Anotarea `@MemoryId` permite gestionarea automată a memoriei bazate pe sesiuni. Fiecare ID de sesiune primește propria instanță `ChatMemory` gestionată de bean-ul `ChatMemoryProvider`, astfel încât mai mulți utilizatori pot interacționa simultan cu agentul fără ca conversațiile lor să se amestece. Diagrama următoare arată cum mai mulți utilizatori sunt direcționați către stocări de memorie izolate în funcție de ID-urile sesiunilor lor:
+### Managementul sesiunilor
 
-<img src="../../../translated_images/ro/session-management.91ad819c6c89c400.webp" alt="Gestionarea Sesiunii cu @MemoryId" width="800"/>
+Anotarea `@MemoryId` permite gestionarea automată a memoriei bazate pe sesiuni. Fiecare ID de sesiune primește propria instanță `ChatMemory` gestionată de bean-ul `ChatMemoryProvider`, astfel încât mai mulți utilizatori pot interacționa simultan cu agentul fără ca conversațiile lor să se amestece. Diagrama următoare arată cum mai mulți utilizatori sunt direcționați către depozite de memorie izolate pe baza ID-urilor lor de sesiune:
 
-*Fiecare ID de sesiune corespunde unui istoric de conversație izolat — utilizatorii nu văd niciodată mesajele celorlalți.*
+<img src="../../../translated_images/ro/session-management.91ad819c6c89c400.webp" alt="Gestionarea sesiúnilor cu @MemoryId" width="800"/>
 
-### Gestionarea Erorilor
+*Fiecare ID de sesiune corespunde unui istoric de conversație izolat — utilizatorii nu văd niciodată mesajele altora.*
 
-Instrumentele pot eșua — API-urile pot expira, parametrii pot fi invalizi, serviciile externe pot ceda. Agenții din producție au nevoie de gestionare a erorilor astfel încât modelul să poată explica problemele sau să încerce alternative în loc să se blocheze întregul sistem. Când un instrument aruncă o excepție, LangChain4j o prinde și transmite mesajul de eroare modelului, care apoi poate explica problema în limbaj natural.
+### Gestionarea erorilor
 
-## Instrumente Disponibile
+Uneltele pot eșua — API-urile pot expira, parametrii pot fi invalidi, serviciile externe pot cădea. Agenții de producție au nevoie de gestionare a erorilor astfel încât modelul să poată explica problemele sau să încerce alternative în loc să se prăbușească aplicația. Când o unealtă aruncă o excepție, LangChain4j o interceptă și trimite mesajul de eroare înapoi modelului, care poate explica problema în limbaj natural.
 
-Diagrama de mai jos arată ecosistemul larg de instrumente pe care le poți construi. Acest modul demonstrează instrumente pentru vreme și temperatură, dar același tipar `@Tool` funcționează pentru orice metodă Java — de la interogări în baze de date până la procesarea plăților.
+## Unelte disponibile
 
-<img src="../../../translated_images/ro/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ecosistemul Instrumentelor" width="800"/>
+Diagrama de mai jos arată ecosistemul larg de unelte pe care le puteți construi. Acest modul demonstrează unelte pentru vreme și temperatură, dar același model `@Tool` funcționează pentru orice metodă Java — de la interogări de baze de date până la procesarea plăților.
 
-*Orice metodă Java anotată cu @Tool devine disponibilă pentru AI — tiparul se extinde la baze de date, API-uri, email, operațiuni pe fișiere și altele.*
+<img src="../../../translated_images/ro/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ecosistemul uneltelor" width="800"/>
 
-## Când să Folosești Agenți Bazati pe Instrumente
+*Orice metodă Java anotată cu @Tool devine disponibilă AI-ului — modelul se extinde la baze de date, API-uri, email, operațiuni pe fișiere și altele.*
 
-Nu toate solicitările necesită instrumente. Decizia depinde dacă AI-ul trebuie să interacționeze cu sisteme externe sau poate răspunde din propria sa cunoaștere. Ghidul următor rezumă când instrumentele adaugă valoare și când sunt inutile:
+## Când să folosiți agenți cu unelte
 
-<img src="../../../translated_images/ro/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Când să Folosești Instrumente" width="800"/>
+Nu toate cererile necesită unelte. Decizia depinde dacă AI trebuie să interacționeze cu sisteme externe sau poate răspunde din propria cunoștință. Ghidul următor rezumă când uneltele adaugă valoare și când sunt inutile:
 
-*Un ghid rapid de decizie — instrumentele sunt pentru date în timp real, calcule și acțiuni; cunoștințele generale și sarcinile creative nu au nevoie de ele.*
+<img src="../../../translated_images/ro/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Când să folosești unelte" width="800"/>
 
-## Instrumente vs RAG
+*Ghid rapid de decizie — uneltele sunt pentru date în timp real, calcule și acțiuni; cunoștințe generale și sarcini creative nu necesită.*
 
-Modulele 03 și 04 extind ambele ceea ce poate face AI-ul, dar în moduri fundamental diferite. RAG oferă modelului acces la **cunoștințe** prin recuperarea de documente. Instrumentele oferă modelului abilitatea de a lua **acțiuni** apelând funcții. Diagrama de mai jos compară aceste două abordări alăturat — de la modul în care funcționează fiecare flux de lucru până la compromisurile dintre ele:
+## Unelte vs RAG
 
-<img src="../../../translated_images/ro/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Comparație Instrumente vs RAG" width="800"/>
+Modulele 03 și 04 extind ambele ce poate face AI-ul, dar în moduri fundamental diferite. RAG oferă modelului acces la **cunoaștere** prin recuperarea de documente. Uneltele oferă modelului abilitatea de a lua **acțiuni** apelând funcții. Diagrama de mai jos compară cele două abordări una lângă alta — de la cum operează fiecare flux de lucru până la compromisurile dintre ele:
 
-*RAG preia informații din documente statice — Instrumentele execută acțiuni și aduc date dinamice, în timp real. Multe sisteme de producție combină ambele.*
+<img src="../../../translated_images/ro/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Comparație unelte vs RAG" width="800"/>
 
-În practică, multe sisteme de producție combină ambele abordări: RAG pentru fundamentarea răspunsurilor în documentația ta, și Instrumentele pentru a prelua date live sau a efectua operațiuni.
+*RAG recuperează informații din documente statice — Uneltele execută acțiuni și preiau date dinamice, în timp real. Multe sisteme de producție combină ambele.*
 
-## Pașii Următori
+În practică, multe sisteme de producție combină ambele abordări: RAG pentru a funda răspunsurile în documentația ta și Uneltele pentru a prelua date live sau a efectua operațiuni.
 
-**Următorul Modul:** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
+## Pași următori
+
+**Modul următor:** [05-mcp - Protocolul Contextului Modelului (MCP)](../05-mcp/README.md)
 
 ---
 
-**Navigare:** [← Anterior: Modul 03 - RAG](../03-rag/README.md) | [Înapoi la Principal](../README.md) | [Următorul: Modul 05 - MCP →](../05-mcp/README.md)
+**Navigare:** [← Anterior: Modul 03 - RAG](../03-rag/README.md) | [Înapoi la principal](../README.md) | [Următor: Modul 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Declinare de responsabilitate**:  
-Acest document a fost tradus folosind un serviciu de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să țineți cont că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm răspunderea pentru orice neînțelegeri sau interpretări greșite rezultate din utilizarea acestei traduceri.
+Acest document a fost tradus folosind serviciul de traducere AI [Co-op Translator](https://github.com/Azure/co-op-translator). Deși ne străduim pentru acuratețe, vă rugăm să rețineți că traducerile automate pot conține erori sau inexactități. Documentul original, în limba sa nativă, trebuie considerat sursa autorizată. Pentru informații critice, se recomandă traducerea profesională realizată de un specialist uman. Nu ne asumăm responsabilitatea pentru eventuale neînțelegeri sau interpretări greșite care pot rezulta din utilizarea acestei traduceri.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
