@@ -2,7 +2,7 @@
 
 ## Tartalomjegyzék
 
-- [Gyors Kezdés](../../../docs)
+- [Gyors Kezdet](../../../docs)
 - [Mit Fednek Le a Tesztek](../../../docs)
 - [A Tesztek Futtatása](../../../docs)
 - [Tesztek Futtatása VS Code-ban](../../../docs)
@@ -10,11 +10,11 @@
 - [Tesztelési Filozófia](../../../docs)
 - [Következő Lépések](../../../docs)
 
-Ez az útmutató végigvezet a teszteken, amelyek bemutatják, hogyan lehet AI alkalmazásokat tesztelni API kulcsok vagy külső szolgáltatások igénye nélkül.
+Ez az útmutató végigvezet a teszteken, amelyek bemutatják, hogyan lehet AI alkalmazásokat tesztelni API kulcsok vagy külső szolgáltatások használata nélkül.
 
-## Gyors Kezdés
+## Gyors Kezdet
 
-Futtasd az összes tesztet egyetlen parancssal:
+Futtasd az összes tesztet egyetlen parancs segítségével:
 
 **Bash:**
 ```bash
@@ -26,30 +26,32 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/hu/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
+Ha minden teszt sikeresen lefut, az alábbi képernyőképen láthatóhoz hasonló kimenetet kell látnod — tesztek nulla hibával futnak.
 
-*Sikeres tesztfuttatás, minden teszt hibátlanul teljesítve*
+<img src="../../../translated_images/hu/test-results.ea5c98d8f3642043.webp" alt="Sikeres Teszteredmények" width="800"/>
+
+*Sikeres tesztfuttatás, amely mutatja, hogy minden teszt átment, nulla hibával*
 
 ## Mit Fednek Le a Tesztek
 
-Ez a kurzus a **unit tesztekre** koncentrál, amelyek lokálisan futnak. Minden teszt egy adott LangChain4j koncepciót mutat be elszigetelten.
+Ez a kurzus **egységtesztekre** fókuszál, amelyek helyben futnak. Minden teszt egy egyedi LangChain4j koncepciót mutat be elszigetelten. Az alábbi tesztelési piramis megmutatja, hol helyezkednek el az egységtesztek — ők alkotják a gyors, megbízható alapot, amelyre a többi tesztelési stratégia épül.
 
-<img src="../../../translated_images/hu/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
+<img src="../../../translated_images/hu/testing-pyramid.2dd1079a0481e53e.webp" alt="Tesztelési Piramis" width="800"/>
 
-*Tesztelési piramis, amely bemutatja az egység tesztek (gyorsak, elszigeteltek), integrációs tesztek (valódi komponensek) és end-to-end tesztek közti egyensúlyt. Ez a képzés az egységtesztelést fedi le.*
+*Tesztelési piramis, amely mutatja az egységtesztek (gyors, elszigetelt), integrációs tesztek (valós komponensek) és end-to-end tesztek egyensúlyát. Ez a képzés az egységtesztelést fedi le.*
 
-| Modul | Tesztek | Fókusz | Kulcs fájlok |
+| Modul | Tesztek | Fókusz | Kulcsfájlok |
 |--------|-------|-------|-----------|
-| **00 - Gyors Kezdés** | 6 | Prompt sablonok és változó behelyettesítés | `SimpleQuickStartTest.java` |
-| **01 - Bevezetés** | 8 | Beszélgetés memória és állapotkezelés | `SimpleConversationTest.java` |
-| **02 - Prompt Mérnökség** | 12 | GPT-5.2 minták, lelkesedési szintek, strukturált kimenet | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Dokumentumfeldolgozás, beágyazások, hasonlóság keresés | `DocumentServiceTest.java` |
-| **04 - Eszközök** | 12 | Függvényhívások és eszköz láncolás | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Model Context Protocol stdio transporttal | `SimpleMcpTest.java` |
+| **00 - Gyors Kezdet** | 6 | Parancssablonok és változó behelyettesítés | `SimpleQuickStartTest.java` |
+| **01 - Bevezetés** | 8 | Beszélgetés memória és állapot-alapú chat | `SimpleConversationTest.java` |
+| **02 - Prompt Mérnökség** | 12 | GPT-5.2 minták, buzgósági szintek, strukturált kimenet | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Dokumentum-beolvasás, beágyazások, hasonlóság keresés | `DocumentServiceTest.java` |
+| **04 - Eszközök** | 12 | Függvényhívás és eszközláncolás | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Model Context Protocol stdio átvitel használatával | `SimpleMcpTest.java` |
 
 ## A Tesztek Futtatása
 
-**Futtasd az összes tesztet a gyökérből:**
+**Futtasd az összes tesztet a gyökérkönyvtárból:**
 
 **Bash:**
 ```bash
@@ -66,18 +68,18 @@ mvn --% test
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Vagy a root könyvtárból
+# Vagy a gyökérből
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Vagy a rootból
+# Vagy a gyökérből
 mvn --% test -pl 01-introduction
 ```
 
-**Futtass egyetlen teszt osztályt:**
+**Futtass egyedi teszt osztályt:**
 
 **Bash:**
 ```bash
@@ -89,46 +91,45 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Futtass egy adott teszt metódust:**
+**Futtass egy konkrét tesztmetódust:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#meg kell őrizni a beszélgetés előzményeit
+mvn test -Dtest=SimpleConversationTest#meg kell tartani a beszélgetés előzményeit
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#meg kell őrizni a beszélgetés előzményeit
+mvn --% test -Dtest=SimpleConversationTest#meg kell őrizni a beszélgetési előzményeket
 ```
-
 
 ## Tesztek Futtatása VS Code-ban
 
-Ha Visual Studio Code-ot használsz, a Test Explorer grafikus felületet biztosít a tesztek futtatásához és hibakereséséhez.
+Ha Visual Studio Code-ot használsz, a Test Explorer grafikus felületet nyújt a tesztek futtatásához és hibakereséséhez.
 
-<img src="../../../translated_images/hu/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
+<img src="../../../translated_images/hu/vscode-testing.f02dd5917289dced.webp" alt="VS Code Teszt Felfedező" width="800"/>
 
-*VS Code Test Explorer, amely mutatja a tesztfa struktúrát, minden Java teszt osztállyal és egyedi teszt metódussal*
+*VS Code Teszt Felfedező, amely mutatja a tesztfát az összes Java tesztosztállyal és egyedi tesztmetódussal*
 
 **Tesztek futtatása VS Code-ban:**
 
 1. Nyisd meg a Test Explorer-t az Activity Bar-ban a lombik ikonra kattintva
 2. Bontsd ki a tesztfát, hogy lásd az összes modult és teszt osztályt
-3. Kattints egy tesztnél a lejátszás gombra az egyéni futtatáshoz
-4. Kattints a "Run All Tests" gombra az összes futtatásához
-5. Jobb kattintás egy teszten, válaszd a "Debug Test" lehetőséget töréspont beállításhoz és kód lépésenkénti követéséhez
+3. Kattints a lejátszás gombra bármelyik teszt mellett az egyedüli futtatáshoz
+4. Kattints a "Run All Tests"-re az egész tesztcsomag futtatásához
+5. Jobb klikk bármely teszten és válaszd a "Debug Test" opciót a breakpointok beállításához és lépésekhez a kódban
 
-A Test Explorer zöld pipát mutat a sikeres teszteknél és részletes hibaüzeneteket nyújt, ha egy teszt megbukik.
+A Test Explorer zöld pipákat mutat a sikeres teszteknél, illetve részletes hibajelentést, ha egy teszt megbukik.
 
 ## Tesztelési Minták
 
-### Minta 1: Prompt Sablonok Tesztelése
+### Minta 1: Parancssablonok Tesztelése
 
-A legegyszerűbb minta prompt sablonokat tesztel, anélkül, hogy AI modellt hívna meg. Ellenőrzöd, hogy a változó behelyettesítés helyes és a promptok a várt formátumban vannak.
+A legegyszerűbb minta a parancssablonokat teszteli AI modell hívás nélkül. Ellenőrzöd, hogy a változó helyettesítés helyesen működik-e és a promptok az elvárt formátumban vannak-e.
 
-<img src="../../../translated_images/hu/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
+<img src="../../../translated_images/hu/prompt-template-testing.b902758ddccc8dee.webp" alt="Parancssablon Tesztelés" width="800"/>
 
-*Prompt sablonok tesztelése, amely bemutatja a változó behelyettesítés folyamatát: sablon helyőrzőkkel → értékek hozzárendelve → formázott kimenet ellenőrizve*
+*Parancssablon tesztelés, amely mutatja a változó helyettesítés folyamatát: sablon helyőrzőkkel → értékekkel kiegészítve → formázott kimenet ellenőrizve*
 
 ```java
 @Test
@@ -161,14 +162,13 @@ cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#tesztPromptSablonForm�
 cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#tesztPromptSablonFormázás
 ```
 
-
 ### Minta 2: Nyelvi Modellek Mockolása
 
-Beszélgetés logika tesztelésekor használd a Mockito-t, hogy hamis modelleket hozz létre, melyek előre meghatározott válaszokat adnak. Ez a teszteket gyorssá, ingyenessé és determinisztikussá teszi.
+Beszélgetési logika tesztelésekor használd a Mockito-t hogy hamis modelleket hozz létre, amelyek előre meghatározott válaszokat adnak. Ez gyorsabbá, ingyenessé és determinisztikussá teszi a teszteket.
 
-<img src="../../../translated_images/hu/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
+<img src="../../../translated_images/hu/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock és Valós API Összehasonlítás" width="800"/>
 
-*Összehasonlítás, hogy miért előnyösebb a mock használata tesztekhez: gyors, ingyenes, determinisztikus és nem igényel API kulcsot*
+*Összehasonlítás, hogy miért előnyösek a mock-ok a teszteléshez: gyorsak, ingyenesek, determinisztikusak, nincs szükség API kulcsokra*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -218,15 +218,15 @@ class SimpleConversationTest {
 }
 ```
 
-Ez a minta az `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java` fájlban jelenik meg. A mock biztosítja az állandó viselkedést, így ellenőrizheted, hogy a memória kezelés megfelelő.
+Ez a minta megtalálható a `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java` fájlban. A mock biztosítja az állandó viselkedést, hogy az emlékezetkezelés helyes működését ellenőrizhesd.
 
-### Minta 3: Beszélgetés Izolációjának Tesztelése
+### Minta 3: Beszélgetés Elszigeteltségének Tesztelése
 
-A beszélgetés memóriának több felhasználót külön kell tartania. Ez a teszt ellenőrzi, hogy a kontextusok nem keverednek.
+A beszélgetés memóriának külön kell választania a több felhasználót. Ez a teszt ellenőrzi, hogy a beszélgetések nem keverik össze a kontextusokat.
 
-<img src="../../../translated_images/hu/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
+<img src="../../../translated_images/hu/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Beszélgetés Elszigetelés" width="800"/>
 
-*Beszélgetés izolációjának tesztelése, amely külön memóriatárolókat mutat felhasználónként a kontextus összekeveredésének elkerülésére*
+*Beszélgetés elszigetelés tesztelése, amely bemutatja, hogy eltérő felhasználók számára külön memóriatárolók vannak, hogy megelőzze a kontextus összekeveredését*
 
 ```java
 @Test
@@ -250,15 +250,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Minden beszélgetés saját, független történettel rendelkezik. Éles rendszerekben ez az izoláció kritikus a többfelhasználós alkalmazások számára.
+Minden beszélgetés saját, független előzményeket tart fenn. Éles rendszerekben ez az elszigetelés kritikus a többfelhasználós alkalmazások esetében.
 
 ### Minta 4: Eszközök Független Tesztelése
 
-Az eszközök olyan függvények, amelyeket az AI hívhat. Teszteld őket közvetlenül, hogy működésük független legyen az AI döntésektől.
+Az eszközök olyan funkciók, amelyeket az AI hívhat meg. Teszteld őket közvetlenül, hogy biztos legyél benne, hogy jól működnek AI döntések nélkül is.
 
-<img src="../../../translated_images/hu/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
+<img src="../../../translated_images/hu/tools-testing.3e1706817b0b3924.webp" alt="Eszközök Tesztelése" width="800"/>
 
-*Eszközök független tesztelése, amely bemutatja a mock eszköz végrehajtását AI hívások nélkül, az üzleti logika ellenőrzéséhez*
+*Eszközök független tesztelése, amely mutatja a mock eszközök futtatását AI hívások nélkül, hogy ellenőrizze az üzleti logikát*
 
 ```java
 @Test
@@ -281,15 +281,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Ezek a tesztek a `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` fájlból valók, amelyek validálják az eszköz logikáját AI nélkül. A láncolás példája megmutatja, hogyan táplálja az egyik eszköz kimenete a másik bemenetét.
+Ezek a tesztek a `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` fájlból valók, amelyek validálják az eszközlogikát AI részvétel nélkül. A láncolási példa azt mutatja, hogyan táplálja egy eszköz kimenete a másik bemenetét.
 
-### Minta 5: Memóriában Történő RAG Tesztelés
+### Minta 5: Memóriában Futó RAG Tesztelés
 
-A RAG rendszerek hagyományosan vektor adatbázisokat és beágyazási szolgáltatásokat igényelnek. A memóriában végzett minta lehetővé teszi, hogy a teljes folyamatot külső függőségek nélkül teszteld.
+A RAG rendszerek hagyományosan vektorigényes adatbázisokat és beágyazási szolgáltatásokat használnak. A memóriában futó minta lehetővé teszi az egész folyamat tesztelését külső függőségek nélkül.
 
-<img src="../../../translated_images/hu/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
+<img src="../../../translated_images/hu/rag-testing.ee7541b1e23934b1.webp" alt="Memóriában Futó RAG Tesztelés" width="800"/>
 
-*Memóriában végzett RAG tesztelési folyamat bemutatása, ahol dokumentum elemzés, beágyazás tárolás és hasonlóság keresés történik adatbázis nélkül*
+*Memóriában futó RAG tesztelési munkafolyamat, amely bemutatja a dokumentum feldolgozását, beágyazás tárolást és hasonlóság keresést adatbázis nélkül*
 
 ```java
 @Test
@@ -306,13 +306,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Ez a teszt az `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` fájlból állít elő egy dokumentumot memóriában, és ellenőrzi a darabolást és metaadat kezelését.
+Ez a teszt a `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` fájlból kreál a memóriában dokumentumot és ellenőrzi a darabolást és metaadat kezelését.
 
 ### Minta 6: MCP Integrációs Tesztelés
 
-Az MCP modul teszteli a Model Context Protocol integrációt stdio transzport használatával. Ezek a tesztek ellenőrzik, hogy az alkalmazás képes-e MCP szervereket szubfolyamatként indítani és kommunikálni velük.
+Az MCP modul a Model Context Protocol integrációját teszteli stdio átvitel használatával. Ezek a tesztek igazolják, hogy az alkalmazás képes MCP szervereket folyamatként indítani és velük kommunikálni.
 
-Az `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` tesztek validálják az MCP kliens működését.
+Az `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` fájlban lévő tesztek validálják az MCP kliens viselkedését.
 
 **Futtasd őket:**
 
@@ -326,39 +326,38 @@ cd 05-mcp && mvn test
 cd 05-mcp; mvn --% test
 ```
 
-
 ## Tesztelési Filozófia
 
-A kódodat teszteld, ne az AI-t. A teszteket arra használd, hogy validáld a kódodat: ellenőrizd, hogyan épülnek fel a promptok, hogyan kezelődik a memória, és miként hajtódnak végre az eszközök. Az AI válaszok változékonyak, és nem lehet belőlük következtetéseket levonni a tesztelések során. Inkább azt teszteld, hogy a prompt sablon helyesen helyettesíti-e be a változókat, ne azt, hogy az AI a helyes választ adja-e.
+A kódodat teszteld, ne az AI-t. A tesztjeidnek azt kell ellenőrizniük, hogy a te általad írt kód hogyan működik, például hogy a promptok hogyan épülnek fel, hogyan kezelődik a memória és hogyan működnek az eszközök. Az AI válaszai változóak lehetnek, és nem szabad, hogy a tesztelés tárgyát képezzék. Kérdezd meg inkább, hogy a prompt sablon helyesen helyettesíti-e a változókat, nem pedig azt, hogy az AI jól válaszol-e.
 
-Használj mockokat a nyelvi modellekhez. Ezek külső függőségek, amelyek lassúak, drágák és nem determinisztikusak. A mockolás gyors teszteket eredményez, milliszekundumok alatt, díjmentesen, és mindig ugyanaz az eredmény jön létre.
+Használj mock-okat a nyelvi modellekhez. Ezek külső függőségek, amelyek lassúak, drágák és nem determinisztikusak. A mockolás gyors, milliszekundumos, ingyenes és mindig azonos eredményt ad.
 
-Tartsd függetlenül a teszteket. Minden teszt állítsa be a saját adatait, ne függjön más tesztektől, és takarítsa el magát. A teszteknek a futás sorrendjétől függetlenül is sikeresnek kell lenniük.
+Tartsd a teszteket függetlennek. Minden teszt állítsa be a saját adatait, ne támaszkodjon más tesztekre, és takarítson maga után. A teszteknek bármilyen futási sorrendben át kell menniük.
 
-Tesztelj szélsőséges eseteket is, ne csak a jó utat. Próbálj ki üres bemeneteket, nagyon nagy bemeneteket, speciális karaktereket, érvénytelen paramétereket és szélsőértékeket. Ezek gyakran fedik fel azokat a hibákat, amelyeket a normál használat nem.
+Tesztelj szélsőséges eseteket a megszokott útvonalakon túl. Próbálj ki üres bemeneteket, nagyon nagy adatokat, speciális karaktereket, érvénytelen paramétereket és határfeltételeket. Ezek gyakran fednek fel olyan hibákat, amiket a normál használat nem.
 
-Használj leíró neveket. Hasonlítsd össze a `shouldMaintainConversationHistoryAcrossMultipleMessages()` és a `test1()` neveket. Az első pontosan leírja mit tesztel, így a hibakeresés sokkal egyszerűbb.
+Használj leíró neveket. Összehasonlítva a `shouldMaintainConversationHistoryAcrossMultipleMessages()` és a `test1()` neveket: az első pontosan elmondja, hogy mit tesztel, könnyebbé téve a hibák keresését.
 
 ## Következő Lépések
 
-Most, hogy érintetted a tesztelési mintákat, mélyedj el minden modulban:
+Most, hogy megérted a tesztelési mintákat, mélyedj el az egyes modulokban:
 
-- **[00 - Gyors Kezdés](../00-quick-start/README.md)** - Kezdj a prompt sablon alapokkal
-- **[01 - Bevezetés](../01-introduction/README.md)** - Tanulj a beszélgetés memória kezeléséről
-- **[02 - Prompt Mérnökség](../02-prompt-engineering/README.md)** - Sajátítsd el a GPT-5.2 prompt mintákat
-- **[03 - RAG](../03-rag/README.md)** - Építs lekérdezés alapú generálási rendszereket
-- **[04 - Eszközök](../04-tools/README.md)** - Valósíts meg függvényhívásokat és eszköz láncokat
+- **[00 - Gyors Kezdet](../00-quick-start/README.md)** - Kezdd a parancssablon alapokkal
+- **[01 - Bevezetés](../01-introduction/README.md)** - Tanuld meg a beszélgetés memória kezelését
+- **[02 - Prompt Mérnökség](../02/prompt-engineering/README.md)** - Sajátítsd el a GPT-5.2 promptolási mintákat
+- **[03 - RAG](../03-rag/README.md)** - Építs lekérdezés-kiterjesztett generálási rendszereket
+- **[04 - Eszközök](../04-tools/README.md)** - Valósítsd meg a függvényhívást és eszközláncokat
 - **[05 - MCP](../05-mcp/README.md)** - Integráld a Model Context Protocol-t
 
-Minden modul README-je részletes magyarázatot ad az itt tesztelt koncepciókról.
+Minden modul README-je részletes magyarázatokat ad a itt tesztelt koncepciókról.
 
 ---
 
-**Navigáció:** [← Vissza a főoldalra](../README.md)
+**Navigáció:** [← Vissza a Főoldalra](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Felelősség kizárása**:
-Ez a dokumentum az AI fordítási szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével készült. Bár a pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti, anyanyelvi dokumentum tekintendő hiteles forrásnak. Fontos információk esetén szakmai, emberi fordítást javaslunk. Nem vállalunk felelősséget a fordítás használatából eredő félreértésekért vagy téves értelmezésekért.
+**Nyilatkozat**:
+Ezt a dokumentumot az AI fordító szolgáltatás [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével fordítottuk le. Bár igyekszünk a pontosságra, kérjük, vegye figyelembe, hogy az automatikus fordítások tartalmazhatnak hibákat vagy pontatlanságokat. Az eredeti dokumentum a saját nyelvén tekintendő hiteles forrásnak. Kritikus információk esetén professzionális, emberi fordítást javaslunk. Nem vállalunk felelősséget az ebből eredő félreértésekért vagy helytelen értelmezésekért.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

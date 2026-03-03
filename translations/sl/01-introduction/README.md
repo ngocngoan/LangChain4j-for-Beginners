@@ -1,85 +1,87 @@
 # Modul 01: Začetek z LangChain4j
 
-## Kazalo
+## Kazalo vsebine
 
-- [Video prikaz](../../../01-introduction)
-- [Kaj boste izvedeli](../../../01-introduction)
-- [Pogoj za začetek](../../../01-introduction)
+- [Video predstavitev](../../../01-introduction)
+- [Kaj se boste naučili](../../../01-introduction)
+- [Predpogoji](../../../01-introduction)
 - [Razumevanje osnovnega problema](../../../01-introduction)
 - [Razumevanje tokenov](../../../01-introduction)
 - [Kako deluje pomnilnik](../../../01-introduction)
 - [Kako to uporablja LangChain4j](../../../01-introduction)
-- [Postavitev Azure OpenAI infrastrukture](../../../01-introduction)
+- [Implementacija infrastrukture Azure OpenAI](../../../01-introduction)
 - [Zagon aplikacije lokalno](../../../01-introduction)
 - [Uporaba aplikacije](../../../01-introduction)
-  - [Brezstanje pogovora (levi panel)](../../../01-introduction)
-  - [Stanjevni pogovor (desni panel)](../../../01-introduction)
+  - [Brezstaten klepet (levo okno)](../../../01-introduction)
+  - [Staten klepet (desno okno)](../../../01-introduction)
 - [Naslednji koraki](../../../01-introduction)
 
-## Video prikaz
+## Video predstavitev
 
-Oglejte si to v živo predavanje, ki pojasnjuje, kako začeti z modulom:
+Oglejte si to v živo posneto sejo, ki pojasnjuje, kako začeti z modulom:
 
-<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Začetek z LangChain4j - V živo" width="800"/></a>
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Začetek z LangChain4j - V živo seja" width="800"/></a>
 
-## Kaj boste izvedeli
+## Kaj se boste naučili
 
-Če ste zaključili hitri začetek, ste videli, kako poslati pozive in dobiti odgovore. To je osnova, vendar resne aplikacije potrebujejo več. Ta modul vas uči, kako graditi pogovorno AI, ki si zapomni kontekst in ohranja stanje - razlika med enkratnim prikazom in aplikacijo, pripravljeno za produkcijo.
+V hitrem začetku ste uporabili GitHub modele za pošiljanje pozivov, klic orodij, zgradnjo RAG cevovoda in testiranje varovanih mehanizmov. Te predstavitve so pokazale, kaj je mogoče — zdaj preklopimo na Azure OpenAI in GPT-5.2 ter začnemo graditi aplikacije v produkcijskem slogu. Ta modul se osredotoča na pogovorno AI, ki si zapomni kontekst in ohranja stanje — koncepti, ki so jih uporabili hitri začetni primeri, a niso razloženi.
 
-V tem vodiču bomo uporabljali Azure OpenAI GPT-5.2, ker njegove napredne sposobnosti razmišljanja naredijo vedenje različnih vzorcev bolj očitno. Ko dodate pomnilnik, boste jasno videli razliko. To olajša razumevanje, kaj posamezna komponenta prinaša vaši aplikaciji.
+V celotnem vodniku bomo uporabljali Azure OpenAI GPT-5.2, saj njegove napredne zmožnosti sklepanja naredijo vedenje različnih vzorcev jasneje vidno. Ko dodate pomnilnik, boste jasno videli razliko. To olajša razumevanje, kaj posamezna komponenta prinaša vaši aplikaciji.
 
 Zgradili boste eno aplikacijo, ki prikazuje oba vzorca:
 
-**Brezstanje pogovora** - Vsak zahtevek je neodvisen. Model nima spomina prejšnjih sporočil. To je vzorec, ki ste ga uporabili v hitrem začetku.
+**Brezstaten klepet** – Vsak zahtevek je neodvisen. Model nima pomnilnika prejšnjih sporočil. To je vzorec, ki ste ga uporabili v hitrem začetku.
 
-**Stanjevni pogovor** - Vsak zahtevek vključuje zgodovino pogovora. Model ohranja kontekst skozi več zank. To zahtevajo produkcijske aplikacije.
+**Staten pogovor** – Vsak zahtevek vključuje zgodovino pogovora. Model ohranja kontekst skozi več krogov. To je tisto, kar zahtevajo produkcijske aplikacije.
 
-## Pogoj za začetek
+## Predpogoji
 
 - Azure naročnina z dostopom do Azure OpenAI
 - Java 21, Maven 3.9+
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Opomba:** Java, Maven, Azure CLI in Azure Developer CLI (azd) so prednameščeni v priloženem devcontainerju.
+> **Opomba:** Java, Maven, Azure CLI in Azure Developer CLI (azd) so v predhodno nameščenem devcontainerju.
 
-> **Opomba:** Ta modul uporablja GPT-5.2 na Azure OpenAI. Namestitev je samodejno konfigurirana preko `azd up` - ne spreminjajte imena modela v kodi.
+> **Opomba:** Ta modul uporablja GPT-5.2 na Azure OpenAI. Implementacija je samodejno konfigurirana preko `azd up` - ne spreminjajte imena modela v kodi.
 
 ## Razumevanje osnovnega problema
 
-Jezični modeli so brezstanje. Vsak API klic je neodvisen. Če pošljete "Moje ime je John" in nato vprašate "Kako je moje ime?", model nima pojma, da ste se pravkar predstavili. Vsak zahtevek obravnava, kot da je prvi pogovor, ki ste ga kdaj imeli.
+Jezikovni modeli so brezstatični. Vsak API klic je neodvisen. Če pošljete "Moje ime je John" in nato vprašate "Kako je moje ime?", model nima pojma, da ste se pravkar predstavili. Vsak zahtevek obravnava, kot da je prvi pogovor, ki ste ga kdaj imeli.
 
-To je v redu za preprosta vprašanja in odgovore, vendar neuporabno za resne aplikacije. Botom za podporo uporabnikom je treba zapomniti, kaj ste jim povedali. Osebni pomočniki potrebujejo kontekst. Vsak večkratni pogovor zahteva pomnilnik.
+To je v redu za preprosta vprašanja in odgovore, a nepomembno za resne aplikacije. Pomočniki v storitvah za stranke morajo si zapomniti, kaj ste jim povedali. Osebni asistenti potrebujejo kontekst. Vsak večkrogovni pogovor zahteva pomnilnik.
 
-<img src="../../../translated_images/sl/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Brezstanje proti stanjevnim pogovorom" width="800"/>
+Naslednja shema primerja oba pristopa — na levi brezstaten klic, ki pozabi vaše ime; na desni staten klic s ChatMemory, ki si ga zapomni.
 
-*Razlika med brezstanje (neodvisni klici) in stanjevnim (ozaveščen o kontekstu) pogovorom*
+<img src="../../../translated_images/sl/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Brezstatični proti statičnim pogovorom" width="800"/>
+
+*Razlika med brezstatičnimi (neodvisnimi klici) in statičnimi (zavedajočimi se konteksta) pogovori*
 
 ## Razumevanje tokenov
 
-Preden se poglobite v pogovore, je pomembno razumeti tokene - osnovne enote besedila, ki jih procesirajo jezikovni modeli:
+Preden se poglobite v pogovore, je pomembno razumeti tokene – osnovne enote besedila, ki jih procesirajo jezikovni modeli:
 
 <img src="../../../translated_images/sl/token-explanation.c39760d8ec650181.webp" alt="Razlaga tokenov" width="800"/>
 
-*Primer, kako je besedilo razdeljeno na tokene - "I love AI!" postane 4 ločene enote za obdelavo*
+*Primer, kako se besedilo razdeli na tokene – "I love AI!" postane 4 ločene obdelovalne enote*
 
-Tokeni so način, kako AI modeli merijo in procesirajo besedilo. Besede, ločila in celo presledki so lahko tokeni. Vaš model ima omejitev, koliko tokenov lahko procesuira hkrati (400.000 za GPT-5.2, z do 272.000 vhodnih in 128.000 izhodnih tokenov). Razumevanje tokenov vam pomaga upravljati dolžino pogovora in stroške.
+Tokeni so način, na katerega AI modeli merijo in obdelujejo besedilo. Besede, ločila in celo presledki so lahko tokeni. Vaš model ima omejitev koliko tokenov lahko obdela hkrati (400.000 za GPT-5.2, z do 272.000 vhodnimi in 128.000 izhodnimi tokeni). Razumevanje tokenov pomaga upravljati dolžino pogovora in stroške.
 
 ## Kako deluje pomnilnik
 
-Pogovorni pomnilnik rešuje problem brezstanja z ohranjanjem zgodovine pogovora. Preden pošljete zahtevek modelu, okvir doda ustrezna prejšnja sporočila. Ko vprašate "Kako je moje ime?", sistem v resnici pošlje celotno zgodovino pogovora, kar modelu omogoči, da vidi, da ste prej rekli "Moje ime je John."
+Pogovorni pomnilnik rešuje problem brezstatnosti tako, da ohranja zgodovino pogovorov. Preden pošljete zahtevek modelu, okvir doda ustrezna prejšnja sporočila. Ko vprašate "Kako je moje ime?", sistem dejansko pošlje celotno zgodovino pogovora, kar modelu omogoča, da vidi, da ste predhodno rekli "Moje ime je John."
 
-LangChain4j ponuja implementacije pomnilnika, ki to obvladujejo samodejno. Izberete, koliko sporočil želite zadržati, okvir pa upravlja kontekstno okno.
+LangChain4j ponuja implementacije pomnilnika, ki to upravljajo samodejno. Izberete koliko sporočil shraniti, okvir pa upravlja okno konteksta. Spodnja shema prikazuje, kako MessageWindowChatMemory ohranja drseče okno nedavnih sporočil.
 
 <img src="../../../translated_images/sl/memory-window.bbe67f597eadabb3.webp" alt="Koncept pomnilniškega okna" width="800"/>
 
-*MessageWindowChatMemory ohranja drsno okno nedavnih sporočil in samodejno odstranjuje stare*
+*MessageWindowChatMemory ohranja drseče okno nedavnih sporočil in samodejno odstranjuje stare*
 
 ## Kako to uporablja LangChain4j
 
-Ta modul nadgrajuje hitri začetek z integracijo Spring Boot in dodajanjem pogovornega pomnilnika. Tako se sestavine povežejo:
+Ta modul nadgradi hiter začetek z integracijo Spring Boot in dodajanjem pomnilnika pogovora. Tako se deli povežejo:
 
-**Odvisnosti** - Dodajte dve knjižnici LangChain4j:
+**Odvisnosti** – Dodajte dve LangChain4j knjižnici:
 
 ```xml
 <dependency>
@@ -92,7 +94,7 @@ Ta modul nadgrajuje hitri začetek z integracijo Spring Boot in dodajanjem pogov
 </dependency>
 ```
 
-**Pogovorni model** - Konfigurirajte Azure OpenAI kot Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Klepetni model** – Konfigurirajte Azure OpenAI kot Spring bean ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -107,9 +109,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Graditelj bere poverilnice iz okoljskih spremenljivk, ki jih nastavi `azd up`. Nastavitev `baseUrl` na vaš Azure končni naslov omogoča OpenAI klientu delo z Azure OpenAI.
+Builder prebere poverilnice iz okoljskih spremenljivk, nastavljenih z `azd up`. Nastavitev `baseUrl` na vašo Azure točko konca omogoča delovanje OpenAI odjemalca z Azure OpenAI.
 
-**Pogovorni pomnilnik** - Sledite zgodovini pogovora z MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Pomnilnik pogovora** – Sledite zgodovini klepeta z MessageWindowChatMemory ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -122,16 +124,16 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Ustvarite pomnilnik z `withMaxMessages(10)`, da ohranite zadnjih 10 sporočil. Dodajte uporabniška in AI sporočila s tipiziranimi zavitki: `UserMessage.from(text)` in `AiMessage.from(text)`. Zgodovino pridobite z `memory.messages()` in jo pošljite modelu. Storitev hrani ločene pomnilnike za vsak ID pogovora, kar omogoča več uporabnikom hkratni pogovor.
+Ustvarite pomnilnik z `withMaxMessages(10)` za hranjenje zadnjih 10 sporočil. Dodajte uporabniška in AI sporočila z ohišji tipa: `UserMessage.from(text)` in `AiMessage.from(text)`. Z zgodovino dostopajte z `memory.messages()` in jo pošljite modelu. Storitev hrani ločene instance pomnilnika za vsak ID pogovora, kar omogoča hkratno klepetanje več uporabnikov.
 
-> **🤖 Preizkusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) in vprašajte:
-> - "Kako MessageWindowChatMemory odloči, katera sporočila izpustiti, ko je okno polno?"
-> - "Lahko implementiram lasten pomnilnik z uporabo baze podatkov namesto pomnilnika v RAM?"
+> **🤖 Poskusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) in vprašajte:
+> - "Kako MessageWindowChatMemory odloči, katera sporočila bo odstranil, ko je okno polno?"
+> - "Ali lahko implementiram lastno shrambo pomnilnika z uporabo baze podatkov namesto v pomnilniku?"
 > - "Kako bi dodal povzetek za stiskanje stare zgodovine pogovora?"
 
-Vhodi brezstanje pogovora popolnoma preskočijo pomnilnik - samo `chatModel.chat(prompt)` kot v hitrem začetku. Stanjevni endpoint doda sporočila v pomnilnik, pridobi zgodovino in vključi ta kontekst pri vsakem zahtevku. Enaka konfiguracija modela, različni vzorci.
+Brezstatični klepetni endpoint popolnoma preide preko pomnilnika - samo `chatModel.chat(prompt)` kot v hitrem začetku. Staten endpoint doda sporočila v pomnilnik, pridobi zgodovino in vključuje ta kontekst z vsako zahtevo. Enaka konfiguracija modela, različni vzorci.
 
-## Postavitev Azure OpenAI infrastrukture
+## Implementacija infrastrukture Azure OpenAI
 
 **Bash:**
 ```bash
@@ -145,16 +147,16 @@ cd 01-introduction
 azd up  # Izberite naročnino in lokacijo (priporočeno eastus2)
 ```
 
-> **Opomba:** Če naletite na timeout napako (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), preprosto ponovno zaženite `azd up`. Azure viri so morda še vedno v postopku priprave v ozadju, ponovni poskus pa omogoči dokončanje namestitve, ko viri dosežejo končno stanje.
+> **Opomba:** Če naletite na napako poteka časa (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), preprosto zaženite `azd up` znova. Azure viri so morda še vedno v postopku provisioniranja v ozadju, zato ponovni poskus omogoči dokončanje implementacije, ko viri dosežejo končno stanje.
 
 To bo:
-1. Namestilo Azure OpenAI vir z modeli GPT-5.2 in text-embedding-3-small
-2. Samodejno ustvarilo `.env` datoteko v korenu projekta z poverilnicami
+1. Namestilo Azure OpenAI sredstvo z GPT-5.2 in modeli text-embedding-3-small
+2. Samodejno ustvarilo `.env` datoteko v korenu projekta s poverilnicami
 3. Nastavilo vse potrebne okoljske spremenljivke
 
-**Se pojavljajo težave z namestitvijo?** Oglejte si [README za infrastrukturo](infra/README.md) za podrobna navodila za odpravljanje težav, vključno s konfliktnimi imeni poddomen, ročnim nameščanjem v Azure Portal in navodili za konfiguracijo modela.
+**Imate težave z implementacijo?** Oglejte si [Infrastructure README](infra/README.md) za podrobno odpravljanje težav, vključno s konflikti imen poddomen, ročno implementacijo v Azure Portal in navodili za konfiguracijo modela.
 
-**Preverite uspešnost namestitve:**
+**Preverite uspešnost implementacije:**
 
 **Bash:**
 ```bash
@@ -163,10 +165,10 @@ cat ../.env  # Prikazati bi moral AZURE_OPENAI_ENDPOINT, API_KEY itd.
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Naj prikaže AZURE_OPENAI_ENDPOINT, API_KEY itd.
+Get-Content ..\.env  # Naj prikaže AZURE_OPENAI_ENDPOINT, API_KEY, itd.
 ```
 
-> **Opomba:** Ukaz `azd up` samodejno ustvari `.env` datoteko. Če jo boste kasneje morali posodobiti, jo lahko ročno uredite ali ponovno ustvarite z zagonom:
+> **Opomba:** Ukaz `azd up` samodejno ustvari `.env` datoteko. Če jo želite kasneje posodobiti, jo lahko ročno uredite ali ponovno ustvarite z izvajanjem:
 >
 > **Bash:**
 > ```bash
@@ -182,13 +184,13 @@ Get-Content ..\.env  # Naj prikaže AZURE_OPENAI_ENDPOINT, API_KEY itd.
 
 ## Zagon aplikacije lokalno
 
-**Preverite namestitev:**
+**Preverite implementacijo:**
 
-Prepričajte se, da `.env` datoteka obstaja v korenski mapi z Azure poverilnicami:
+Prepričajte se, da `.env` datoteka obstaja v korenski mapi z Azure poverilnicami. Zaženite to v mapi modula (`01-introduction/`):
 
 **Bash:**
 ```bash
-cat ../.env  # Prikazati mora AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Prikazati bi moral AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **PowerShell:**
@@ -198,19 +200,21 @@ Get-Content ..\.env  # Prikazati bi moralo AZURE_OPENAI_ENDPOINT, API_KEY, DEPLO
 
 **Zaženite aplikacije:**
 
-**Možnost 1: Uporaba Spring Boot Dashboarda (priporočeno za uporabnike VS Code)**
+**Možnost 1: Uporaba Spring Boot nadzorne plošče (priporočeno za uporabnike VS Code)**
 
-Dev container vključuje razširitev Spring Boot Dashboard, ki nudi vizualni vmesnik za upravljanje vseh Spring Boot aplikacij. Najdete jo v vrstici z dejavnostmi na levi strani v VS Code (ikona Spring Boot).
+Dev container vključuje razširitev Spring Boot Dashboard, ki omogoča vizualni vmesnik za upravljanje vseh Spring Boot aplikacij. Najdete jo v Aktivnostni vrstici na levi strani VS Code (ikona Spring Boot).
 
-Iz Spring Boot Dashboarda lahko:
+Iz Spring Boot Dashboard lahko:
 - Vidite vse razpoložljive Spring Boot aplikacije v delovnem prostoru
 - Zaženete/ustavite aplikacije z enim klikom
-- V realnem času si ogledate dnevnike aplikacij
-- Spremljate status aplikacij
+- Ogledate dnevniške datoteke aplikacij v realnem času
+- Spremljate stanje aplikacije
 
-Preprosto kliknite gumb za predvajanje poleg "introduction" za zagon tega modula ali zaženite vse module hkrati.
+Preprosto kliknite gumb za predvajanje ob "introduction" za zagon tega modula ali zaženite vse module skupaj.
 
-<img src="../../../translated_images/sl/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
+<img src="../../../translated_images/sl/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot nadzorna plošča" width="400"/>
+
+*Spring Boot nadzorna plošča v VS Code — začnite, ustavite in spremljajte vse module iz enega mesta*
 
 **Možnost 2: Uporaba shell skript**
 
@@ -218,7 +222,7 @@ Zaženite vse spletne aplikacije (moduli 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Iz korenske mape
+cd ..  # Iz korenskega imenika
 ./start-all.sh
 ```
 
@@ -228,7 +232,7 @@ cd ..  # Iz korenskega imenika
 .\start-all.ps1
 ```
 
-Ali zaženite samo ta modul:
+Ali zaženite zgolj ta modul:
 
 **Bash:**
 ```bash
@@ -244,7 +248,7 @@ cd 01-introduction
 
 Obe skripti samodejno naložita okoljske spremenljivke iz korenske `.env` datoteke in zgradita JAR datoteke, če ne obstajajo.
 
-> **Opomba:** Če želite vse module najprej ročno zgraditi pred zagonom:
+> **Opomba:** Če želite vse module ročno zgraditi pred zagonom:
 >
 > **Bash:**
 > ```bash
@@ -264,7 +268,7 @@ Odprite http://localhost:8080 v vašem brskalniku.
 
 **Bash:**
 ```bash
-./stop.sh  # Samo ta modul
+./stop.sh  # Ta modul samo
 # Ali
 cd .. && ./stop-all.sh  # Vsi moduli
 ```
@@ -278,29 +282,29 @@ cd ..; .\stop-all.ps1  # Vsi moduli
 
 ## Uporaba aplikacije
 
-Aplikacija nudi spletni vmesnik z dvema implementacijama klepeta ena ob drugi.
+Aplikacija zagotavlja spletni vmesnik z dvema klepetalnima implementacijama ena ob drugi.
 
 <img src="../../../translated_images/sl/home-screen.121a03206ab910c0.webp" alt="Glavni zaslon aplikacije" width="800"/>
 
-*Nadzorna plošča prikazuje možnosti Simple Chat (brezstanje) in Conversational Chat (stanjevni)*
+*Nadzorna plošča prikazuje obe možnosti: Preprost klepet (brezstaten) in Pogovorni klepet (staten)*
 
-### Brezstanje pogovora (levi panel)
+### Brezstaten klepet (levo okno)
 
-Najprej poskusite to. Vprašajte "Moje ime je John", nato takoj vprašajte "Kako je moje ime?" Model si ne bo zapomnil, ker je vsako sporočilo neodvisno. To prikazuje osnovni problem z integracijo jezikovnih modelov – brez konteksta pogovora.
+Preizkusite najprej to. Vprašajte "Moje ime je John" in nato takoj "Kako je moje ime?" Model se ne bo spomnil, ker sta sporočili neodvisni. To prikazuje osnovni problem integracije jezikovnega modela - ni konteksta pogovora.
 
-<img src="../../../translated_images/sl/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Demonstracija brezstanje klepeta" width="800"/>
+<img src="../../../translated_images/sl/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Demo brezstatnega klepeta" width="800"/>
 
-*AI si ne zapomni vašega imena iz prejšnjega sporočila*
+*AI se ne spomni vašega imena iz prejšnjega sporočila*
 
-### Stanjevni pogovor (desni panel)
+### Staten klepet (desno okno)
 
-Zdaj poskusite isti vrstni red tukaj. Vprašajte "Moje ime je John" in nato "Kako je moje ime?" Tokrat se spomni. Razlika je MessageWindowChatMemory - ohranja zgodovino pogovora in jo vključuje pri vsakem zahtevku. Tako deluje produkcijski pogovorni AI.
+Zdaj poskusite isti postopek tukaj. Vprašajte "Moje ime je John" in nato "Kako je moje ime?" Tokrat se spomni. Razlika je MessageWindowChatMemory - ohranja zgodovino pogovora in jo vključuje v vsak zahtevek. Tako deluje produkcijska pogovorna AI.
 
-<img src="../../../translated_images/sl/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Demonstracija stanjevnega klepeta" width="800"/>
+<img src="../../../translated_images/sl/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Demo statnega klepeta" width="800"/>
 
-*AI si zapomni vaše ime iz prejšnjega pogovora*
+*AI se spomni vašega imena iz večjega dela pogovora*
 
-Oba panela uporabljata isti model GPT-5.2. Edina razlika je pomnilnik. To jasno pokaže, kaj pomnilnik prinaša vaši aplikaciji in zakaj je nujen za resnične primere uporabe.
+Oba okna uporabljata isti GPT-5.2 model. Edina razlika je pomnilnik. To jasno pokaže, kaj pomnilnik prinaša vaši aplikaciji in zakaj je ključnega pomena za resnične primere uporabe.
 
 ## Naslednji koraki
 
@@ -308,11 +312,11 @@ Oba panela uporabljata isti model GPT-5.2. Edina razlika je pomnilnik. To jasno 
 
 ---
 
-**Navigacija:** [← Prejšnji: Modul 00 - Hiter začetek](../00-quick-start/README.md) | [Nazaj na glavno](../README.md) | [Naslednji: Modul 02 - Oblikovanje pozivov →](../02-prompt-engineering/README.md)
+**Navigacija:** [← Prejšnji: Modul 00 - Hiter začetek](../00-quick-start/README.md) | [Nazaj na glavno](../README.md) | [Naprej: Modul 02 - Oblikovanje pozivov →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Opozorilo**:  
-Ta dokument je bil preveden z uporabo storitve za samodejni prevod [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da lahko samodejni prevodi vsebujejo napake ali netočnosti. Izvirni dokument v izvorni jezik velja za verodostojen vir. Za ključne informacije priporočamo strokovni človeški prevod. Za morebitna nesporazume ali napačne interpretacije, ki nastanejo zaradi uporabe tega prevoda, ne prevzemamo odgovornosti.
+**Omejitev odgovornosti**:
+Ta dokument je bil preveden z uporabo AI prevajalske storitve [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da lahko avtomatizirani prevodi vsebujejo napake ali netočnosti. Izvirni dokument v izvorni jeziku velja za avtoritativni vir. Za ključne informacije priporočamo strokovni človeški prevod. Nismo odgovorni za morebitne nesporazume ali napačne interpretacije, ki izhajajo iz uporabe tega prevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

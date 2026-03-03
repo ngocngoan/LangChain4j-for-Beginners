@@ -4,48 +4,48 @@
 
 - [Увод](../../../00-quick-start)
 - [Шта је LangChain4j?](../../../00-quick-start)
-- [LangChain4j зависности](../../../00-quick-start)
-- [Услови](../../../00-quick-start)
+- [Зависности LangChain4j](../../../00-quick-start)
+- [Предуслови](../../../00-quick-start)
 - [Подешавање](../../../00-quick-start)
-  - [1. Добијте свој GitHub токен](../../../00-quick-start)
+  - [1. Узмите свој GitHub токен](../../../00-quick-start)
   - [2. Поставите свој токен](../../../00-quick-start)
-- [Покрени примере](../../../00-quick-start)
-  - [1. Основни чет](../../../00-quick-start)
-  - [2. Обрасци упита](../../../00-quick-start)
+- [Покрените примере](../../../00-quick-start)
+  - [1. Основни ћаскање](../../../00-quick-start)
+  - [2. Обрасци за упите](../../../00-quick-start)
   - [3. Позивање функција](../../../00-quick-start)
-  - [4. Питања и одговори за документе (Easy RAG)](../../../00-quick-start)
+  - [4. Питања и одговори на документима (Easy RAG)](../../../00-quick-start)
   - [5. Одговорни AI](../../../00-quick-start)
 - [Шта сваки пример показује](../../../00-quick-start)
 - [Следећи кораци](../../../00-quick-start)
-- [Отстрањивање проблема](../../../00-quick-start)
+- [Решавање проблема](../../../00-quick-start)
 
 ## Увод
 
-Овај брзи почетак има за циљ да вас што брже упути у коришћење LangChain4j. Обухвата апсолутне основе изградње AI апликација са LangChain4j и GitHub моделима. У наредним модулима ћете користити Azure OpenAI са LangChain4j за изградњу напреднијих апликација.
+Овај брзи почетак је намењен да вас што брже покрене са LangChain4j. Обухвата основе прављења AI апликација са LangChain4j и GitHub моделима. У наредним модулима прелазите на Azure OpenAI и GPT-5.2 и дубље се бавите сваким концептом.
 
 ## Шта је LangChain4j?
 
-LangChain4j је Java библиотека која поједностављује изградњу AI-подржаних апликација. Уместо да радите са HTTP клијентима и парсирањем JSON-а, радите са чистим Java API-јима.
+LangChain4j је Java библиотека која поједностављује прављење апликација са вештачком интелигенцијом. Уместо да се бавите HTTP клијентима и парсирањем JSON-а, радите са чистим Java API-јима.
 
-„Ланац“ у LangChain означава повезивање више компоненти - можете повезати упит (prompt) са моделом, па са парсером, или повезати више AI позива где један излаз иде у следећи улаз. Овај брзи почетак се фокусира на основе пре него што истражимо сложеније ланце.
+„Ланац“ у LangChain означава повезивање више компоненти заједно – можете повезати упит са моделом, затим са парсером, или повезати више AI позива где резултат једног иде као улаз за други. Овај брзи почетак је усредсређен на основе пре него што истражите сложеније ланце.
 
-<img src="../../../translated_images/sr/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
+<img src="../../../translated_images/sr/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j концепт ланца" width="800"/>
 
-*Повезивање компоненти у LangChain4j - грађевински блокови се спајају како би направили моћне AI токове рада*
+*Повезивање компоненти у LangChain4j – градивни блокови се спајају да створе моћне AI токове рада*
 
 Користићемо три основне компоненте:
 
-**ChatModel** - Интерфејс за интеракцију са AI моделом. Позовите `model.chat("prompt")` и добијете одговор као стринг. Користимо `OpenAiOfficialChatModel` који ради са OpenAI-компатибилним ентпојнтима као што су GitHub модели.
+**ChatModel** – Интерфејс за интеракцију са AI моделом. Позовете `model.chat("промпт")` и добијете одговор у виду низа. Користимо `OpenAiOfficialChatModel` који ради са OpenAI-компатибилним крајњим тачкама као што су GitHub модели.
 
-**AiServices** - Креира тип-безбедне AI сервисне интерфејсе. Дефинишите методе, означите их са `@Tool`, а LangChain4j се брине о оркестрацији. AI аутоматски позива ваше Java методе када је потребно.
+**AiServices** – Креира типско безбедне AI сервисне интерфејсе. Дефинишете методе, означите их са `@Tool`, и LangChain4j се бави оркестрацијом. AI аутоматски позива ваше Java методе кад је потребно.
 
-**MessageWindowChatMemory** - Чува историју разговора. Без тога, сваки захтев је независан. Са тим, AI памти претходне поруке и одржава контекст кроз више корака.
+**MessageWindowChatMemory** – Одржава историју разговора. Без ове компоненте сваки захтев је независан. Са њом, AI памти претходне поруке и одржава контекст кроз више корака.
 
-<img src="../../../translated_images/sr/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
+<img src="../../../translated_images/sr/architecture.eedc993a1c576839.webp" alt="Архитектура LangChain4j" width="800"/>
 
-*Архитектура LangChain4j - основне компоненте које сарађују да покрену ваше AI апликације*
+*Архитектура LangChain4j – основне компоненте које раде заједно да покрећу ваше AI апликације*
 
-## LangChain4j зависности
+## Зависности LangChain4j
 
 Овај брзи почетак користи три Maven зависности у [`pom.xml`](../../../00-quick-start/pom.xml):
 
@@ -69,35 +69,35 @@ LangChain4j је Java библиотека која поједностављуј
 </dependency>
 ```
 
-`langchain4j-open-ai-official` модул обезбеђује класу `OpenAiOfficialChatModel` која се повезује на OpenAI-компатибилне API-је. GitHub модели користе исти формат API-ја, па није потребан никакав посебан адаптер — само усмерите базну URL адресу на `https://models.github.ai/inference`.
+Модул `langchain4j-open-ai-official` обезбеђује класу `OpenAiOfficialChatModel` која се повезује на OpenAI-компатибилне API-је. GitHub модели користе исти формат API-ја, тако да није потребан посебан адаптер – само усмерите базну URL адресу на `https://models.github.ai/inference`.
 
-`langchain4j-easy-rag` модул обезбеђује аутоматско делење докумената, уграђивање и преузимање тако да можете правити RAG апликације без ручног конфигурисања сваког корака.
+Модул `langchain4j-easy-rag` обезбеђује аутоматско раздвајање, уграђивање и претрагу докумената, тако да можете изградити RAG апликације без ручног конфигурисања сваког корака.
 
-## Услови
+## Предуслови
 
 **Користите ли Dev Container?** Јава и Maven су већ инсталирани. Потребан вам је само GitHub Personal Access Token.
 
 **Локални развој:**
 - Java 21+, Maven 3.9+
-- GitHub Personal Access Token (упутство у наставку)
+- GitHub Personal Access Token (упутство доле)
 
-> **Напомена:** Овај модул користи `gpt-4.1-nano` из GitHub модела. Немојте мењати назив модела у коду - конфигурисано је да ради са доступним GitHub моделима.
+> **Напомена:** Овај модул користи `gpt-4.1-nano` из GitHub модела. Немојте мењати име модела у коду – конфигурисан је да ради са расположивим моделима GitHub-а.
 
 ## Подешавање
 
-### 1. Добијте свој GitHub токен
+### 1. Узмите свој GitHub токен
 
 1. Идите на [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
-2. Кликните на „Generate new token“
-3. Поставите описно име (нпр. „LangChain4j Demo“)
-4. Подесите истекање (препоручено 7 дана)
-5. У „Account permissions“ пронађите „Models“ и подесите на „Read-only“
-6. Кликните „Generate token“
-7. Копирајте и сачувајте свој токен - нећете га видети поново
+2. Кликните на "Generate new token"
+3. Поставите описно име (нпр. "LangChain4j Demo")
+4. Поставите рок важности (препоручује се 7 дана)
+5. Под „Account permissions“ пронађите „Models“ и подесите на „Read-only“
+6. Кликните на "Generate token"
+7. Копирајте и сачувајте токен – више га нећете видети
 
 ### 2. Поставите свој токен
 
-**Опција 1: Коришћење VS Code-а (препоручено)**
+**Опција 1: Користећи VS Code (препоручено)**
 
 Ако користите VS Code, додајте свој токен у `.env` фајл у корену пројекта:
 
@@ -109,9 +109,9 @@ LangChain4j је Java библиотека која поједностављуј
 GITHUB_TOKEN=your_token_here
 ```
 
-Затим можете једноставно десним кликом на било који демонстрациони фајл (нпр. `BasicChatDemo.java`) у Explorer-у изабрати **"Run Java"** или користити конфигурације за покретање из Run and Debug панела.
+Онда можете једноставно десним кликом на било који демо фајл (нпр. `BasicChatDemo.java`) у Explorer-у и одабрати **"Run Java"** или користити конфигурације за покретање из Run and Debug панела.
 
-**Опција 2: Коришћење терминала**
+**Опција 2: Користећи терминал**
 
 Поставите токен као променљиву окружења:
 
@@ -125,13 +125,13 @@ export GITHUB_TOKEN=your_token_here
 $env:GITHUB_TOKEN=your_token_here
 ```
 
-## Покрени примере
+## Покрените примере
 
-**Користећи VS Code:** Једноставно десним кликом на било који демонстрациони фајл у Explorer-у изаберите **"Run Java"**, или користите конфигурације за покретање из Run and Debug панела (претходно додајте токен у `.env`).
+**Користећи VS Code:** Једноставно десним кликом на било који демо фајл у Explorer-у одаберите **"Run Java"** или користите конфигурације из Run and Debug панела (обавезно сте претходно додали токен у `.env`).
 
 **Користећи Maven:** Алтернативно, можете покренути из командне линије:
 
-### 1. Основни чет
+### 1. Основни ћаскање
 
 **Bash:**
 ```bash
@@ -143,7 +143,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicC
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-### 2. Обрасци упита
+### 2. Обрасци за упите
 
 **Bash:**
 ```bash
@@ -155,7 +155,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-Приказује zero-shot, few-shot, chain-of-thought, и улогом засновано покретање упита.
+Приказује zero-shot, few-shot, chain-of-thought и упите засноване на улогама.
 
 ### 3. Позивање функција
 
@@ -169,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-AI аутоматски позива ваше Java методе када је потребно.
+AI аутоматски позива ваше Java методе кад је потребно.
 
-### 4. Питања и одговори за документе (Easy RAG)
+### 4. Питања и одговори на документима (Easy RAG)
 
 **Bash:**
 ```bash
@@ -183,7 +183,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Постављајте питања о вашим документима користећи Easy RAG са аутоматским уграђивањем и преузимањем.
+Постављајте питања о вашим документима користећи Easy RAG са аутоматским уграђивањем и претрагом.
 
 ### 5. Одговорни AI
 
@@ -197,13 +197,13 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-Погледајте како AI филтри за безбедност блокирају штетни садржај.
+Погледајте како AI филтери за безбедност блокирају штетни садржај.
 
 ## Шта сваки пример показује
 
-**Основни чет** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
+**Основни ћаскање** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Почните овде да бисте видели LangChain4j у најосновнијем облику. Креираћете `OpenAiOfficialChatModel`, послати упит са `.chat()`, и добити одговор. Ово показује основу: како иницијализовати моделе са прилагођеним ентпојнтима и API кључевима. Када разумете овај образац, све остало се надограђује на њему.
+Започните овде да видите LangChain4j у најједноставнијој форми. Креираћете `OpenAiOfficialChatModel`, послаћете упит `.chat()` и добити одговор. Ово показује темеље: како инициализовати моделе са прилагођеним крајњим тачкама и API кључевима. Када разумете овај образац, све остало се гради на томе.
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -216,16 +216,17 @@ String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
 
-> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Отворите [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) и питајте:
-> - "Како да пребацим са GitHub модела на Azure OpenAI у овом коду?"
+> **🤖 Испробајте са [GitHub Copilot](https://github.com/features/copilot) Ćаскањем:** Отворите [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) и питајте:
+> - "Како бих пребацио са GitHub модела на Azure OpenAI у овом коду?"
 > - "Које друге параметре могу да конфигуришем у OpenAiOfficialChatModel.builder()?"
-> - "Како додати стриминг одговоре уместо чекања на комплетан одговор?"
+> - "Како да додам стриминг одговоре уместо да чекам комплетан одговор?"
 
 **Инжењеринг упита** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Сада када знате како да разговарате са моделом, хајде да истражимо шта му говорите. Овај демо користи исто подешавање модела али показује пет различитих образаца упита. Испробајте zero-shot упите за директна упутства, few-shot упите који уче из примера, chain-of-thought упите који показују разлоге корака, и улогом засноване упите који постављају контекст. Видећете како исти модел даје драматично различите резултате у зависности од тога како формулишете ваш захтев.
+Сад када знате како да разговарате са моделом, истражимо шта му говорите. Овај демо користи исту конфигурацију модела али показује пет различитих образаца упита. Испробајте zero-shot упите за директне инструкције, few-shot упите који уче из примера, chain-of-thought упите који откривају кораке резоновања, и упите засноване на улогама који постављају контекст. Видео ћете како исти модел даје драстично различите резултате у зависности од начина формулације захтева.
 
-Демо такође показује шаблоне упита, које су моћан начин за креирање поново коришћених упита са променљивима. Испод је пример упита који користи LangChain4j `PromptTemplate` за попуњавање променљивих. AI ће одговорити на основу дате дестинације и активности.
+Демо такође приказује предлошке за упите, који су моћан начин да направите поновљиве упите са променљивима.
+Испод је пример упита користећи LangChain4j `PromptTemplate` за попуњавање променљивих. AI ће одговорити на основу дате дестинације и активности.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -240,15 +241,15 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Отворите [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) и питајте:
+> **🤖 Испробајте са [GitHub Copilot](https://github.com/features/copilot) Ćаскањем:** Отворите [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) и питајте:
 > - "Која је разлика између zero-shot и few-shot упита и када треба користити који?"
 > - "Како параметар temperature утиче на одговоре модела?"
-> - "Које су технике за спречавање prompt injection напада у продукцији?"
-> - "Како да направим поново коришћене PromptTemplate објекте за уобичајене обрасце?"
+> - "Које су неке технике за спречавање напада уписивањем упита (prompt injection) у продукцији?"
+> - "Како да направим поновљиве PromptTemplate објекте за честе обрасце?"
 
 **Интеграција алата** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Овде LangChain4j постаје моћан. Користићете `AiServices` да направите AI асистента који може да позива ваше Java методе. Само означите методе са `@Tool("description")` и LangChain4j се брине о свему - AI аутоматски одлучује када да користи који алат у зависности од тога шта корисник пита. Ово показује позивање функција, кључну технику за изградњу AI који може да предузима акције, а не само одговара на питања.
+Овде LangChain4j постаје моћан. Користићете `AiServices` да направите AI асистента који може позивати ваше Java методе. Само означите методе са `@Tool("опис")` и LangChain4j се бави осталим – AI аутоматски одлучује када ће користити који алат на основу онога што корисник тражи. Ово приказује позивање функција, кључну технику за прављење AI који може извршавати акције, а не само одговарати на питања.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -264,15 +265,15 @@ MathAssistant assistant = AiServices.builder(MathAssistant.class)
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
-> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Отворите [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) и питајте:
-> - "Како функционише @Tool анотација и шта LangChain4j ради са њом у позадини?"
-> - "Може ли AI да позове више алата у низу за решавање сложених проблема?"
-> - "Шта се дешава ако алат баци изузетак - како треба да обрађујем грешке?"
+> **🤖 Испробајте са [GitHub Copilot](https://github.com/features/copilot) Ćаскањем:** Отворите [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) и питајте:
+> - "Како ради @Tool анотација и шта LangChain4j ради са њом иза сцене?"
+> - "Може ли AI позивати више алата узастопно да реши сложене проблеме?"
+> - "Шта се дешава ако алат баци изузетак – како треба да руковам грешкама?"
 > - "Како бих интегрисао прави API уместо овог примера калкулатора?"
 
-**Питања и одговори за документе (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Питања и одговори на документима (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Овде ћете видети RAG (retrieval-augmented generation) користећи LangChain4j приступ „Easy RAG“. Документи се учитавају, аутоматски деле и убијају у унутрашњу меморију, а потом преузимач садржаја доставља релевантне делове AI-ју у тренутку упита. AI одговара на основу ваших докумената, а не опште базе знања.
+Овде ћете видети RAG (retrieval-augmented generation) користећи LangChain4j приступ "Easy RAG". Документи се учитавају, аутоматски раздвајају и уграђују у меморијску базу, затим претраживач садржаја доставља релевантне делове AI-ју у тренутку упита. AI одговара на основу ваших докумената, не своје опште базе знања.
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -289,16 +290,16 @@ Assistant assistant = AiServices.builder(Assistant.class)
 String answer = assistant.chat("What is the main topic?");
 ```
 
-> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Отворите [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) и питајте:
-> - "Како RAG спречава AI халуцинације у поређењу са употребом података за обуку модела?"
-> - "Која је разлика између овог лаког приступа и прилагођеног RAG процеса?"
+> **🤖 Испробајте са [GitHub Copilot](https://github.com/features/copilot) Ćаскањем:** Отворите [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) и питајте:
+> - "Како RAG спречава AI халуцинације у поређењу са коришћењем података о обучавању модела?"
+> - "Која је разлика између овог једноставног приступа и прилагођеног RAG процеса?"
 > - "Како бих ово скалирао за рад са више докумената или већим базама знања?"
 
 **Одговорни AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Изградите безбедност AI модела са одбраном у дубини. Овај демо приказује два заштитна нивоа која раде заједно:
+Градите AI безбедност са одбраном у дубини. Овај демо приказује два слоја заштите који раде заједно:
 
-**Део 1: LangChain4j улазне заштитне мреже (Input Guardrails)** - Блокирају опасне упите пре него што стигну до LLM-а. Креирајте прилагођене заштитне мреже које проверавају забрањене кључне речи или образце. Оне се извршавају у вашем коду, па су брзе и бесплатне.
+**Део 1: LangChain4j Guardrails за унос** – Блокира опасне упите пре него што дођу до LLM-а. Креирајте прилагођене грејдрајлове који проверавају забрањене кључне речи или обрасце. Они раде у вашем коду, тако да су брзи и бесплатни.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -313,16 +314,16 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**Део 2: Провајдерски филтри безбедности** - GitHub модели имају уграђене филтере који хватају оно што ваше заштитне мреже могу пропустити. Видећете тврде блокаде (HTTP 400 грешке) за озбиљне повреде и мекане одбијене одговоре где AI љубазно одбија.
+**Део 2: Филтери безбедности провајдера** – GitHub модели имају уграђене филтере који хватају оно што ваши грејдрајлови пропусте. Видећете оштре блокаде (HTTP 400 грешке) за озбиљне прекршаје и благе одбијања где AI љубазно одбија.
 
-> **🤖 Испробајте уз [GitHub Copilot](https://github.com/features/copilot) Chat:** Отворите [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) и питајте:
-> - "Шта је InputGuardrail и како да направим свој?"
-> - "Која је разлика између тврде блокаде и меканог одбијања?"
-> - "Зашто користити и заштитне мреже и провајдерске филтере заједно?"
+> **🤖 Испробајте са [GitHub Copilot](https://github.com/features/copilot) Ćаскањем:** Отворите [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) и питајте:
+> - "Шта је InputGuardrail и како направити свој?"
+> - "Која је разлика између оштре блокаде и блажег одбијања?"
+> - "Зашто користити и грејдрајлове и филтере провајдера заједно?"
 
 ## Следећи кораци
 
-**Следећи модул:** [01-introduction - Почетак рада са LangChain4j и gpt-5 на Azure](../01-introduction/README.md)
+**Следећи модул:** [01-introduction - Почетак рада са LangChain4j](../01-introduction/README.md)
 
 ---
 
@@ -330,22 +331,22 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ---
 
-## Отстрањивање проблема
+## Решавање проблема
 
-### Први Maven билд
+### Прва Maven компилација
 
-**Проблем:** Почетна команда `mvn clean compile` или `mvn package` дуго траје (10-15 минута)
+**Проблем:** Почетни `mvn clean compile` или `mvn package` траје дуго (10-15 минута)
 
-**Разлог:** Maven треба да преузме све зависности пројекта (Spring Boot, LangChain4j библиотеке, Azure SDK-ове итд.) при првом билду.
+**Узрок:** Maven мора да преузме све зависности пројекта (Spring Boot, LangChain4j библиотеке, Azure SDK итд.) при првој компилацији.
 
-**Решење:** Ово је нормално понашање. Накнадни билдови ће бити много бржи јер ће зависности бити кеширане локално. Време преузимања зависи од брзине ваше мреже.
+**Решење:** Ово је нормално понашање. Наредне компилације ће бити много брже јер се зависности кеширају локално. Време преузимања зависи од брзине ваше мреже.
 
-### PowerShell Maven команда синтакса
+### Синтакса Maven команди у PowerShell-у
 
 **Проблем:** Maven команде не успевају са грешком `Unknown lifecycle phase ".mainClass=..."`
-**Uzrok**: PowerShell tumači `=` kao operator dodele vrednosti varijabli, što prekida Maven sintaksu svojstava
+**Узрок**: PowerShell тумачи `=` као оператор додељивања вредности променљивој, што нарушава Maven синтаксу својстава
 
-**Rešenje**: Koristite operator za zaustavljanje parsiranja `--%` pre Maven komande:
+**Решење**: Користите оператор за заустављање парсирања `--%` пре Maven команде:
 
 **PowerShell:**
 ```powershell
@@ -357,30 +358,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-Operator `--%` govori PowerShell-u da prosledi sve preostale argumente bukvalno Mavenu bez tumačenja.
+Оператор `--%` каже PowerShell-у да све остале аргументе проследи Maven-у буквално, без тумачења.
 
-### Prikaz emodžija u Windows PowerShell
+### Приказ емоџија у Windows PowerShell
 
-**Problem**: AI odgovori prikazuju besmislene karaktere (npr. `????` ili `â??`) umesto emodžija u PowerShell-u
+**Проблем**: AI одговори приказују бесмислене знакове (нпр. `????` или `â??`) уместо емоџија у PowerShell-у
 
-**Uzrok**: Podrazumevano kodiranje PowerShell-a ne podržava UTF-8 emodžije
+**Узрок**: Подразумевани енкодирање PowerShell-а не подржава UTF-8 емоџије
 
-**Rešenje**: Pokrenite ovu komandu pre izvršavanja Java aplikacija:
+**Решење**: Покрените ову команду пре извршавања Java апликација:
 ```cmd
 chcp 65001
 ```
 
-Ovo forsira UTF-8 kodiranje u terminalu. Alternativno, koristite Windows Terminal koji ima bolju Unicode podršku.
+Ово приморава UTF-8 енкодирање у терминалу. Алтернативно, користите Windows Terminal који има бољу подршку за Unicode.
 
-### Otklanjanje grešaka u API pozivima
+### Дебаговање API позива
 
-**Problem**: Greške autentifikacije, ograničenja brzine ili neočekivani odgovori od AI modela
+**Проблем**: Грешке при аутентификацији, ограничења брзине или неочекивани одговори од AI модела
 
-**Rešenje**: Primeri uključuju `.logRequests(true)` i `.logResponses(true)` da bi se API pozivi prikazali u konzoli. Ovo pomaže u rešavanju problema sa autentifikacijom, ograničenjima brzine ili neočekivanim odgovorima. Uklonite ove zastavice u produkciji da smanjite buku u logu.
+**Решење**: Примери укључују `.logRequests(true)` и `.logResponses(true)` да би приказали API позиве у конзоли. Ово помаже при решавању проблема са аутентификацијом, ограничењима брзине или неочекиваним одговорима. Уклоните ове заставице у продукцији да бисте смањили буку у логовима.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Одрицање од одговорности**:
-Овај документ је преведен коришћењем AI преводилачке услуге [Co-op Translator](https://github.com/Azure/co-op-translator). Док тежимо прецизности, имајте у виду да аутоматски преводи могу садржати грешке или нетачности. Изворни документ на његовом изворном језику треба сматрати ауторитетом. За критичне информације препоручује се професионалан превод од стране људи. Нисмо одговорни за било каква неспоразума или погрешна тумачења која проистекну из коришћења овог превода.
+**Одрицање од одговорности**:  
+Овај документ је преведен помоћу AI услуге за превођење [Co-op Translator](https://github.com/Azure/co-op-translator). Иако настојимо да превод буде тачан, молимо вас да имате у виду да аутоматски преводи могу садржати грешке или нетачности. Оригинални документ на његовом изворном језику треба сматрати ауторитетним извором. За критичне информације препоручује се професионални превод од стране људског стручњака. Не преузимамо одговорност за било каква неспоразума или погрешна тумачења која проистекну из коришћења овог превода.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

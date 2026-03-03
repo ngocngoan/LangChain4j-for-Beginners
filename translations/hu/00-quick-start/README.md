@@ -1,53 +1,53 @@
-# Modul 00: Gyors kezdés
+# Modul 00: Gyors áttekintés
 
 ## Tartalomjegyzék
 
-- [Bevezetés](../../../00-quick-start)
+- [Bevezető](../../../00-quick-start)
 - [Mi az a LangChain4j?](../../../00-quick-start)
-- [LangChain4j függőségek](../../../00-quick-start)
+- [LangChain4j Függőségek](../../../00-quick-start)
 - [Előfeltételek](../../../00-quick-start)
 - [Beállítás](../../../00-quick-start)
-  - [1. Szerezd be a GitHub tokened](../../../00-quick-start)
-  - [2. Állítsd be a tokened](../../../00-quick-start)
+  - [1. Szerezd meg a GitHub tokenedet](../../../00-quick-start)
+  - [2. Állítsd be a tokenedet](../../../00-quick-start)
 - [Futtasd a példákat](../../../00-quick-start)
   - [1. Alap chat](../../../00-quick-start)
   - [2. Prompt minták](../../../00-quick-start)
   - [3. Függvényhívás](../../../00-quick-start)
-  - [4. Dokumentum Q&A (Könnyű RAG)](../../../00-quick-start)
-  - [5. Felelős mesterséges intelligencia](../../../00-quick-start)
-- [Mit mutat minden példa](../../../00-quick-start)
+  - [4. Dokumentum kérdések és válaszok (Easy RAG)](../../../00-quick-start)
+  - [5. Felelős MI](../../../00-quick-start)
+- [Mit mutat be az egyes példa](../../../00-quick-start)
 - [Következő lépések](../../../00-quick-start)
 - [Hibaelhárítás](../../../00-quick-start)
 
-## Bevezetés
+## Bevezető
 
-Ez a gyors kezdő útmutató arra szolgál, hogy minél gyorsabban elindulj a LangChain4j használatával. Lefedi az AI-alkalmazások építésének abszolút alapjait a LangChain4j és a GitHub Models segítségével. A következő modulokban az Azure OpenAI-t fogod használni a LangChain4j-vel, hogy fejlettebb alkalmazásokat készíthess.
+Ez a gyors indítás célja, hogy minél gyorsabban elindulj a LangChain4j használatával. Megismerteti az AI alkalmazások LangChain4j-vel és GitHub modellekkel történő alapvető építését. A következő modulokban Azure OpenAI és GPT-5.2-re váltasz, és mélyebben belemerülsz az egyes fogalmakba.
 
 ## Mi az a LangChain4j?
 
-A LangChain4j egy Java könyvtár, amely leegyszerűsíti az mesterséges intelligencia alapú alkalmazások építését. HTTP kliens és JSON feldolgozás helyett tiszta Java API-kkal dolgozol.
+A LangChain4j egy Java könyvtár, amely leegyszerűsíti az MI-vezérelt alkalmazások készítését. HTTP kliensek és JSON feldolgozás helyett tiszta Java API-kkal dolgozol. 
 
-A "chain" a LangChain elnevezésben több komponens összefűzésére utal – például összeköthetsz egy promptot egy modellel és egy elemzővel, vagy láncolhatsz több AI-hívást, ahol az egyik kimenete a következő bemenete lesz. Ez a gyors kezdés az alapokra fókuszál, mielőtt bonyolultabb láncokat fedeznénk fel.
+A LangChain "lánc" arra utal, hogy több komponens láncolódik össze – például összekapcsolhatsz egy promptot egy modellel és egy elemzővel, vagy több MI hívás láncolódik, ahol az egyik kimenet a következő bemenete. Ez a gyorsstart az alapokra fókuszál, mielőtt bonyolultabb láncok felé lépne.
 
 <img src="../../../translated_images/hu/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*A LangChain4j komponenseinek összekapcsolása – építőelemek egyesülnek, hogy erőteljes AI munkafolyamatokat hozzanak létre*
+*Komponensek láncolása LangChain4j-ben – építőkövek kapcsolódnak, hogy erős MI munkafolyamatokat hozzanak létre*
 
-Három alapelemeket használunk:
+Három alapvető komponenst használunk:
 
-**ChatModel** – Az AI modell interakciók interfésze. Hívd meg `model.chat("prompt")` metódust és kapj vissza egy válaszüzenetet. Az `OpenAiOfficialChatModel`-t használjuk, amely olyan OpenAI-kompatibilis végpontokkal működik, mint a GitHub Models.
+**ChatModel** - Az MI modellel való interakciók felülete. Meghívod: `model.chat("prompt")` és kapsz válaszstringet. Az `OpenAiOfficialChatModel`-t használjuk, amely kompatibilis OpenAI végpontokkal, például GitHub modellekkel.
 
-**AiServices** – Típusbiztos AI szolgáltatás interfészeket hoz létre. Definiálj metódusokat, annotáld őket `@Tool` címkével, és a LangChain4j kezeli az összehangolást. Az AI automatikusan meghívja a Java metódusaidat, amikor szükséges.
+**AiServices** - Típusbiztos MI szolgáltatási interfészek létrehozása. Metódusokat definiálsz, `@Tool` annotációval látod el őket, és a LangChain4j kezeli az összehangolást. Az MI automatikusan hívja Java metódusaidat, ha szükséges.
 
-**MessageWindowChatMemory** – Megőrzi a beszélgetés előzményeit. Nélküle minden kérés független. Ezzel az AI emlékszik a korábbi üzenetekre és a kontextust több fordulón át fenntartja.
+**MessageWindowChatMemory** - A beszélgetés előzményeit tárolja. Enélkül minden kérés független. Ezzel az MI megjegyzi a korábbi üzeneteket és megőrzi a kontextust több fordulón át.
 
 <img src="../../../translated_images/hu/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*LangChain4j architektúra – az alapelemek együtt működnek, hogy a te AI alkalmazásaidat működtessék*
+*LangChain4j architektúra – alapvető komponensek, amelyek együtt működnek az MI alkalmazásaid hajtásához*
 
-## LangChain4j függőségek
+## LangChain4j Függőségek
 
-Ez a gyors kezdő három Maven függőséget használ a [`pom.xml`](../../../00-quick-start/pom.xml) fájlban:
+Ez a gyorsindítás három Maven függőséget használ a [`pom.xml`](../../../00-quick-start/pom.xml) fájlban:
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -69,51 +69,51 @@ Ez a gyors kezdő három Maven függőséget használ a [`pom.xml`](../../../00-
 </dependency>
 ```
 
-A `langchain4j-open-ai-official` modul biztosítja az `OpenAiOfficialChatModel` osztályt, amely kapcsolódik OpenAI-kompatibilis API-khoz. A GitHub Models ugyanezt az API formátumot használja, így nincs szükség külön adapterre – csak állítsd be az alap URL-t `https://models.github.ai/inference` értékre.
+A `langchain4j-open-ai-official` modul biztosítja az `OpenAiOfficialChatModel` osztályt, amely OpenAI-kompatibilis API-khoz kapcsolódik. A GitHub Modellek ugyanazt az API formátumot használják, ezért nincs szükség külön adapterre – csak állítsd be az alap URL-t `https://models.github.ai/inference`-re.
 
-A `langchain4j-easy-rag` modul automatikusan kezeli a dokumentum feldarabolást, beágyazást és visszakeresést, így RAG alkalmazásokat építhetsz minden lépés kézi konfigurálása nélkül.
+A `langchain4j-easy-rag` modul automatikus dokumentumfelosztást, beágyazást és visszakeresést biztosít, így RAG alkalmazásokat építhetsz anélkül, hogy manuálisan konfigurálnád az egyes lépéseket.
 
 ## Előfeltételek
 
-**Fejlesztői konténer használata esetén?** A Java és Maven már telepítve van. Csak egy GitHub személyes hozzáférési tokenre van szükséged.
+**Fejlesztői konténer használata?** Java és Maven már telepítve van. Csak a GitHub Személyes Hozzáférési Tokent kell beszerezned.
 
-**Helyi fejlesztéshez:**
+**Helyi fejlesztés:**
 - Java 21+, Maven 3.9+
-- GitHub személyes hozzáférési token (lásd az alábbi utasításokat)
+- GitHub Személyes Hozzáférési Token (utasítások lent)
 
-> **Megjegyzés:** Ez a modul a GitHub Models `gpt-4.1-nano` modelljét használja. Ne módosítsd a modell nevét a kódban – úgy van konfigurálva, hogy a GitHub elérhető modelljeivel működjön.
+> **Megjegyzés:** Ez a modul a GitHub Modellek `gpt-4.1-nano` változatát használja. Ne módosítsd a modell nevét a kódban – ez a GitHub elérhető modelljeihez van konfigurálva.
 
 ## Beállítás
 
-### 1. Szerezd be a GitHub tokened
+### 1. Szerezd meg a GitHub tokenedet
 
-1. Lépj a [GitHub Beállítások → Személyes hozzáférési tokenek](https://github.com/settings/personal-access-tokens) oldalra
-2. Kattints az "Új token generálása" gombra
-3. Adj egy leíró nevet (pl. "LangChain4j Demo")
-4. Állítsd be a lejáratot (ajánlott 7 nap)
-5. Az "Fiók jogosultságok" alatt keresd meg a "Models" részt és válaszd a "Csak olvasható" opciót
-6. Kattints a "Token generálása" gombra
-7. Másold ki és mentsd el a tokened – újra nem fogod látni
+1. Nyisd meg a [GitHub Beállítások → Személyes hozzáférési tokenek](https://github.com/settings/personal-access-tokens) oldalt
+2. Kattints a „Generate new token” gombra
+3. Adj meg egy leíró nevet (pl. „LangChain4j Demo”)
+4. Állíts be lejárati időt (7 nap javasolt)
+5. Az „Account permissions” alatt keresd meg a „Models” opciót, és állítsd „Read-only”-ra
+6. Kattints a „Generate token” gombra
+7. Másold ki és mentsd el a tokenedet – később nem fogod látni újra
 
-### 2. Állítsd be a tokened
+### 2. Állítsd be a tokenedet
 
-**1. opció: VS Code használatával (ajánlott)**
+**1. lehetőség: VS Code használata (ajánlott)**
 
-Ha VS Code-ot használsz, add meg a tokened a projekt gyökérkönyvtárában lévő `.env` fájlban:
+Ha VS Code-ot használsz, add hozzá a tokened a projekt gyökérkönyvtárában lévő `.env` fájlhoz:
 
-Ha nincs `.env` fájl, másold át a `.env.example` fájlt `.env` néven, vagy hozz létre egy újat a projekt gyökerében.
+Ha a `.env` fájl nem létezik, másold a `.env.example` fájlt `.env` néven, vagy hozz létre egy új `.env` fájlt a projekt gyökerében.
 
-**Példa `.env` fájlra:**
+**Példa `.env` fájl:**
 ```bash
 # A /workspaces/LangChain4j-for-Beginners/.env fájlban
 GITHUB_TOKEN=your_token_here
 ```
 
-Ezután egyszerűen kattints jobb gombbal bármelyik demó fájlra (pl. `BasicChatDemo.java`) a Fájlkezelőben, és válaszd a **"Run Java"** opciót, vagy használd a futtatási konfigurációkat a Futtatás és Hibakeresés panelen.
+Ezután egyszerűen kattints jobb gombbal egy bemutató fájlra (pl. `BasicChatDemo.java`) a Felfedezőben és válaszd a **„Run Java”** opciót, vagy használd a „Run and Debug” panel indítási konfigurációit.
 
-**2. opció: Terminal használata**
+**2. lehetőség: Terminál használata**
 
-Állítsd be a tokened környezeti változóként:
+Állítsd be a token környezeti változóként:
 
 **Bash:**
 ```bash
@@ -127,9 +127,9 @@ $env:GITHUB_TOKEN=your_token_here
 
 ## Futtasd a példákat
 
-**VS Code használatával:** Egyszerűen kattints jobb gombbal bármelyik demó fájlra a Fájlkezelőben és válaszd a **"Run Java"** opciót, vagy használd a Futtatás és Hibakeresés panelből az indítási konfigurációkat (előtte győződj meg róla, hogy hozzáadtad a tokened a `.env` fájlhoz).
+**VS Code használatával:** Egyszerűen kattints jobb gombbal egy bemutató fájlra a Felfedezőben, és válaszd a **„Run Java”** lehetőséget, vagy a „Run and Debug” panel indítási konfigurációit használd (előtte természetesen adj hozzá egy tokent a `.env` fájlhoz).
 
-**Maven használatával:** Alternatívaként futtathatod parancssorból is:
+**Maven használatával:** Vagy a parancssorból futtathatod:
 
 ### 1. Alap chat
 
@@ -155,7 +155,7 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Prompt
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
 
-Bemutatja a nulla-shot, néhány-shot, lánc-tanulás és szerepkör-alapú promptingot.
+Mutatja a zero-shot, few-shot, chain-of-thought és szerepkör-alapú promptokat.
 
 ### 3. Függvényhívás
 
@@ -169,9 +169,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIn
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
 
-Az AI automatikusan meghívja a Java metódusaidat, amikor szükséges.
+Az MI automatikusan hívja a Java metódusaidat, amikor szükséges.
 
-### 4. Dokumentum Q&A (Könnyű RAG)
+### 4. Dokumentum kérdések és válaszok (Easy RAG)
 
 **Bash:**
 ```bash
@@ -183,9 +183,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Simple
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
 
-Kérdezz a dokumentumaidról az Easy RAG segítségével, amely automatikusan beágyaz és keres tartalmakat.
+Kérdezz a dokumentumaidról az Easy RAG használatával, automatikus beágyazás és visszakeresés mellett.
 
-### 5. Felelős mesterséges intelligencia
+### 5. Felelős MI
 
 **Bash:**
 ```bash
@@ -197,13 +197,13 @@ mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Respon
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
 
-Lásd, hogyan szűrik a mesterséges intelligencia biztonsági szűrők a káros tartalmakat.
+Nézd meg, hogyan blokkolják az MI biztonsági szűrők a káros tartalmakat.
 
-## Mit mutat minden példa
+## Mit mutat be az egyes példa
 
 **Alap chat** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-Kezdd itt, hogy lásd a LangChain4j-t a legegyszerűbb formában. Létrehozol egy `OpenAiOfficialChatModel`-t, küldesz egy promptot `.chat()`-tel, és választ kapsz. Ez bemutatja az alapokat: hogyan inicializálj modelleket egyedi végpontokkal és API kulcsokkal. Ha ezt a mintát megérted, minden más erre épül.
+Kezdj itt, hogy meglásd a LangChain4j legegyszerűbb használatát. Létrehozol egy `OpenAiOfficialChatModel`-t, küldesz egy promptot `.chat()`-pel, és kapsz választ. Ez megmutatja az alapokat: hogyan inicializálj modelleket egyedi végpontokkal és API kulcsokkal. Ha megérted ezt a mintát, minden más erre épül.
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -216,17 +216,17 @@ String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chaten:** Nyisd meg a [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) fájlt és kérdezd meg:
-> - "Hogyan válthatok GitHub Models-ről Azure OpenAI-ra ebben a kódban?"
-> - "Milyen más paramétereket állíthatok be az OpenAiOfficialChatModel.builder()-ben?"
-> - "Hogyan adhatok hozzá streaming válaszokat a teljes válasz várása helyett?"
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) fájlt és kérdezd:
+> - „Hogyan válthatnék a GitHub Modellekről Azure OpenAI-ra ebben a kódban?”
+> - „Milyen egyéb paramétereket állíthatok az OpenAiOfficialChatModel.builder()-ben?”
+> - „Hogyan adhatok streaming válaszokat a teljes válaszra való várakozás helyett?”
 
-**Prompt Tervezés** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
+**Prompt mérnökség** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-Most, hogy tudod, hogyan kell beszélni egy modellel, nézzük meg, mit mondasz neki. Ez a demó ugyanazt a modellt használja, de öt különböző prompt mintát mutat be. Próbáld ki a nulla-shot promptokat közvetlen utasításokhoz, néhány-shot promptokat, amelyek példákból tanulnak, lánc-gondolkodás promptokat, amelyek felfedik az érvelési lépéseket, valamint szerepkör alapú promptokat, amelyek kontextust állítanak be. Láthatod, hogyan ad ugyanaz a modell drámai módon eltérő eredményeket attól függően, hogyan fogalmazod meg a kérésedet.
+Most, hogy tudod, hogyan beszélj a modellel, nézzük meg, hogy mit mondasz neki. Ez a demó ugyanazt a modell beállítást használja, de öt különböző prompt mintát mutat be. Próbáld ki a zero-shot promptokat közvetlen utasításokra, few-shot promptokat példák alapján való tanulásra, chain-of-thought promptokat az érvelési lépések felfedésére, és szerepalapú promptokat kontextus beállítására. Láthatod, hogyan ad ugyanaz a modell drámaian különböző eredményeket az igény keretezése alapján.
 
-A demó bemutat prompt sablonokat is, amelyek hatékony módjai, hogy újrahasználható promptokat hozz létre változókkal.
-Az alábbi példa egy promptot mutat a LangChain4j `PromptTemplate` használatával, amely kitölti a változókat. Az AI a megadott célállomás és tevékenység alapján válaszol.
+A demó továbbá bemutat prompt sablonokat, amelyek hatékony módszert nyújtanak újrafelhasználható promptok létrehozására változókkal.
+Az alábbi példa egy promptot mutat be a LangChain4j `PromptTemplate` használatával változók kitöltésére. Az MI a megadott célállomás és tevékenység alapján válaszol.
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -241,15 +241,15 @@ Prompt prompt = template.apply(Map.of(
 String response = model.chat(prompt.text());
 ```
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chaten:** Nyisd meg a [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) fájlt és kérdezd meg:
-> - "Mi a különbség a nulla-shot és a néhány-shot prompt között, és mikor melyiket használjam?"
-> - "Hogyan befolyásolja a hőmérséklet paraméter a modell válaszait?"
-> - "Milyen technikákkal lehet megelőzni a prompt injekciós támadásokat éles környezetben?"
-> - "Hogyan hozhatok létre újrahasználható PromptTemplate objektumokat gyakori mintákhoz?"
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) fájlt és kérdezd:
+> - „Mi a különbség a zero-shot és a few-shot prompt között, és mikor melyiket érdemes használni?”
+> - „Hogyan befolyásolja a hőmérséklet paraméter a modell válaszait?”
+> - „Milyen technikákkal lehet megelőzni a prompt injekciós támadásokat éles környezetben?”
+> - „Hogyan hozhatok létre újrafelhasználható PromptTemplate objektumokat gyakori mintákhoz?”
 
-**Eszköz Integráció** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
+**Eszköz integráció** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-Itt válik hatékonnyá a LangChain4j. Az `AiServices` segítségével létrehozol egy AI asszisztenst, amely képes meghívni a Java metódusaidat. Csak annotáld a metódusokat `@Tool("leírás")` címkével, és a LangChain4j kezeli a többit – az AI automatikusan eldönti, melyik eszközt használja a felhasználó kérése alapján. Ez bemutatja a függvényhívást, kulcsfontosságú technikát az olyan AI építéséhez, amely képes cselekedni, és nem csak válaszolni.
+Itt lesz igazán erős a LangChain4j. `AiServices` használatával létrehozhatsz egy MI asszisztenst, amely hívja a Java metódusaidat. Csak annotáld a metódusokat `@Tool("leírás")`-ral és a LangChain4j elintézi a többit – az MI automatikusan dönti el, mikor használja az egyes eszközöket a felhasználói kérés alapján. Ez bemutatja a függvényhívást mint kulcsfontosságú technikát az MI vezérelt akciók építéséhez, nem csak kérdések megválaszolásához.
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -265,15 +265,15 @@ MathAssistant assistant = AiServices.builder(MathAssistant.class)
 String response = assistant.chat("What is 25 plus 17?");
 ```
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chaten:** Nyisd meg a [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) fájlt és kérdezd meg:
-> - "Hogyan működik az @Tool annotáció és mit csinál a LangChain4j a háttérben vele?"
-> - "Az AI képes egymás után több eszközt hívni összetett problémák megoldására?"
-> - "Mi történik, ha egy eszköz kivételt dob – hogyan kezeljem a hibákat?"
-> - "Hogyan integrálnék egy valós API-t ahelyett, hogy csak ezt a számológép példát használnám?"
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) fájlt és kérdezd:
+> - „Hogyan működik az @Tool annotáció, és mit csinál vele a LangChain4j a háttérben?”
+> - „Lehet-e az MI több eszközt egymás után hívni összetett problémák megoldására?”
+> - „Mi történik, ha egy eszköz kivételt dob – hogyan kezeljem a hibákat?”
+> - „Hogyan integrálnék egy valódi API-t a kalkulátor példa helyett?”
 
-**Dokumentum Q&A (Könnyű RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
+**Dokumentum kérdések és válaszok (Easy RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-Itt a RAG-ot (visszakereséssel kiegészített generálás) látod a LangChain4j "Könnyű RAG" megközelítésével. A dokumentumokat betöltjük, automatikusan feldaraboljuk és beágyazzuk egy memóriában tárolt adatbázisba, majd egy tartalom visszakereső ad releváns szövegrészeket az AI számára a kérdezéskor. Az AI a dokumentumaid alapján válaszol, nem az általános tudása alapján.
+Itt láthatod a RAG (retrieval-augmented generation, tudás-kiegészítő generálás) működését a LangChain4j „Easy RAG” megközelítésével. A dokumentumokat betöltik, automatikusan felosztják és beágyazzák egy memóriában tárolt adatbázisba, majd egy tartalom visszakereső szolgáltatás szolgálat releváns részeket az MInek a lekérdezés idején. Az MI a dokumentumaid alapján válaszol, nem az általa általánosan ismert tudásra támaszkodik.
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -290,16 +290,16 @@ Assistant assistant = AiServices.builder(Assistant.class)
 String answer = assistant.chat("What is the main topic?");
 ```
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chaten:** Nyisd meg a [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) fájlt és kérdezd meg:
-> - "Hogyan gátolja a RAG az AI kitalációkat a modell tanítási adataihoz képest?"
-> - "Mi a különbség a könnyű megközelítés és egy testreszabott RAG pipeline között?"
-> - "Hogyan méretezhetem ezt több dokumentum vagy nagyobb tudásbázis kezelésére?"
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) fájlt és kérdezd:
+> - „Hogyan akadályozza meg a RAG az MI tévesztéseket a modell tanítási adataihoz képest?”
+> - „Miben különbözik ez az egyszerű megközelítés egy egyedi RAG csővezetéktől?”
+> - „Hogyan skáláznám ezt több dokumentumra vagy nagyobb tudásbázisokra?”
 
-**Felelős mesterséges intelligencia** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
+**Felelős MI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-Építs AI biztonságot rétegzett védelemmel. Ez a demó két védelmi réteget mutat be, amelyek együtt dolgoznak:
+Építs MI biztonságot több szintű védelemmel. Ez a demó két védelmi réteget mutat be, amelyek együtt működnek:
 
-**1. rész: LangChain4j Input Guardrails** – Megakadályozza a veszélyes promptokat, mielőtt elérnék az LLM-et. Készíts egyéni őrvonalakat, amelyek tiltott kulcsszavakat vagy mintákat keresnek. Ezek a te kódodban futnak, így gyorsak és költségmentesek.
+**1. rész: LangChain4j bemeneti korlátok** – Megakadályozzák, hogy veszélyes promptok eljussanak a LLM-hez. Egyedi korlátokat hozhatsz létre, amelyek tiltott kulcsszavakat vagy mintákat ellenőriznek. Ezek a kódodban futnak, így gyorsak és ingyenesek.
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -314,20 +314,20 @@ class DangerousContentGuardrail implements InputGuardrail {
 }
 ```
 
-**2. rész: Szolgáltató biztonsági szűrők** – A GitHub Models beépített szűrőkkel rendelkezik, amelyek elkapják, amit az őrvonalak esetleg nem látnak. Lesznek kemény tiltások (HTTP 400 hibák) súlyos szabálysértések esetén és lágy visszautasítások, amikor az AI udvariasan megtagadja.
+**2. rész: Szolgáltató biztonsági szűrők** – A GitHub Modellek beépített szűrőket használnak, amelyek elkapják, amit a te korlátjaid esetleg nem. Látsz szigorú blokkokat (HTTP 400 hibákat) súlyos szabálysértéseknél, valamint finomabb visszautasításokat, amikor az MI udvariasan elutasít.
 
-> **🤖 Próbáld ki [GitHub Copilot](https://github.com/features/copilot) Chaten:** Nyisd meg a [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) fájlt és kérdezd meg:
-> - "Mi az az InputGuardrail és hogyan készíthetek sajátot?"
-> - "Mi a különbség a kemény tiltás és a lágy visszautasítás között?"
-> - "Miért használjuk egyszerre az őrvonalakat és a szolgáltató szűrőket?"
+> **🤖 Próbáld ki a [GitHub Copilot](https://github.com/features/copilot) Chattel:** Nyisd meg a [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) fájlt és kérdezd:
+> - „Mi az InputGuardrail és hogyan készíthetem el a sajátomat?”
+> - „Mi a különbség a szigorú blokkolás és a finom elutasítás között?”
+> - „Miért használjuk együtt a korlátokat és a szolgáltató szűrőket?”
 
 ## Következő lépések
 
-**Következő modul:** [01-bevezetés - Kezdés a LangChain4j-vel és a gpt-5-tel Azure-on](../01-introduction/README.md)
+**Következő modul:** [01-bevezető - Kezdés a LangChain4j-vel](../01-introduction/README.md)
 
 ---
 
-**Navigáció:** [← Vissza a főoldalra](../README.md) | [Következő: Modul 01 - Bevezetés →](../01-introduction/README.md)
+**Navigáció:** [← Vissza a főoldalra](../README.md) | [Következő: Modul 01 - Bevezető →](../01-introduction/README.md)
 
 ---
 
@@ -335,18 +335,18 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ### Első Maven build
 
-**Probléma**: Az első `mvn clean compile` vagy `mvn package` futtatás sokáig tart (10-15 perc)
+**Probléma:** Az első `mvn clean compile` vagy `mvn package` futtatás sokáig tart (10-15 perc)
 
-**Ok**: A Maven az összes projektfüggőséget le kell töltse (Spring Boot, LangChain4j könyvtárak, Azure SDK-k stb.) az első build során.
+**Ok:** A Mavennek meg kell töltenie az összes projektfüggőséget (Spring Boot, LangChain4j könyvtárak, Azure SDK-k stb.) az első build során.
 
-**Megoldás**: Ez normális viselkedés. A későbbi build-ek sokkal gyorsabbak lesznek, mivel a függőségek helyileg gyorsítótárazva vannak. A letöltési idő a hálózati sebességedtől függ.
+**Megoldás:** Ez normális viselkedés. A további build-ek sokkal gyorsabbak lesznek, mert a függőségek lokálisan cache-lődnek. A letöltési idő a hálózati sebességtől függ.
 
-### PowerShell Maven parancs szintaxis
+### PowerShell Maven parancs szintaxis hiba
 
-**Probléma**: Maven parancsok hibával meghiúsulnak: `Unknown lifecycle phase ".mainClass=..."`
-**Ok**: A PowerShell az `=` jelet változó hozzárendelési operátorként értelmezi, ami megszakítja a Maven property szintaxisát
+**Probléma:** A Maven parancsok hibára futnak `Unknown lifecycle phase ".mainClass=..."` üzenettel
+**Ok**: A PowerShell az `=` jelet változóértékadásként értelmezi, ami megszakítja a Maven tulajdonság szintaxisát
 
-**Megoldás**: Használja a stop-parsing operátort `--%` a Maven parancs előtt:
+**Megoldás**: Használja a stop-parsing `--%` operátort a Maven parancs előtt:
 
 **PowerShell:**
 ```powershell
@@ -358,30 +358,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-A `--%` operátor azt mondja a PowerShellnek, hogy az összes további argumentumot szó szerint adja át a Mavennek értelmezés nélkül.
+A `--%` operátor megmondja a PowerShell-nek, hogy az összes fennmaradó argumentumot szó szerint továbbítsa a Mavennek értelmezés nélkül.
 
 ### Windows PowerShell Emoji megjelenítés
 
-**Probléma**: AI válaszok helyett szemét karakterek jelennek meg (pl. `????` vagy `â??`) az emojik helyett PowerShellben
+**Probléma**: Az AI válaszok helyett szemét karakterek jelennek meg (pl. `????` vagy `â??`) PowerShell-ben az emojik helyett
 
 **Ok**: A PowerShell alapértelmezett kódolása nem támogatja az UTF-8 emojikat
 
-**Megoldás**: Futtassa ezt a parancsot Java alkalmazások indítása előtt:
+**Megoldás**: Futtassa ezt a parancsot Java alkalmazások futtatása előtt:
 ```cmd
 chcp 65001
 ```
 
-Ez kényszeríti az UTF-8 kódolást a terminálban. Alternatívaként használja a Windows Terminalt, amely jobb Unicode támogatással rendelkezik.
+Ez kényszeríti az UTF-8 kódolást a terminálban. Alternatív megoldásként használja a Windows Terminalt, amely jobb Unicode támogatással rendelkezik.
 
 ### API hívások hibakeresése
 
-**Probléma**: Hitelesítési hibák, sebességkorlátok vagy váratlan válaszok az AI modelltől
+**Probléma**: Hitelesítési hibák, aránykorlátozások vagy váratlan válaszok az AI modelltől
 
-**Megoldás**: A példák tartalmazzák a `.logRequests(true)` és `.logResponses(true)` használatát, hogy az API hívások megjelenjenek a konzolon. Ez segít a hitelesítési hibák, sebességkorlátok vagy váratlan válaszok hibakeresésében. Ezeket a jelzőket vegye ki a termelési környezetben a naplózási zaj csökkentése érdekében.
+**Megoldás**: A példák tartalmazzák a `.logRequests(true)` és `.logResponses(true)` hívásokat, hogy az API hívások megjelenjenek a konzolon. Ez segít a hitelesítési hibák, aránykorlátozások vagy váratlan válaszok hibakeresésében. Ezeket a zászlókat távolítsa el az éles környezetben a naplózási zaj csökkentése érdekében.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Nyilatkozat**:
-Ezt a dokumentumot az AI fordítási szolgáltatás, a [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével fordítottuk. Bár igyekszünk pontosak lenni, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum anyanyelvén tekintendő a hiteles forrásnak. Fontos információk esetén javasolt professzionális emberi fordítást igénybe venni. Nem vállalunk felelősséget a fordítás használatából eredő félreértésekért vagy félreértelmezésekért.
+**Jogi Nyilatkozat**:
+Ez a dokumentum az AI fordítási szolgáltatás [Co-op Translator](https://github.com/Azure/co-op-translator) segítségével készült. Bár az pontosságra törekszünk, kérjük, vegye figyelembe, hogy az automatikus fordítások hibákat vagy pontatlanságokat tartalmazhatnak. Az eredeti dokumentum a saját nyelvén tekintendő hiteles forrásnak. Kritikus információk esetén professzionális emberi fordítást javaslunk. Nem vállalunk felelősséget az ebből eredő félreértésekért vagy félreértelmezésekért.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

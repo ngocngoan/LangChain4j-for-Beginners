@@ -21,7 +21,7 @@
 
 ## Introduction
 
-This quickstart is meant to get you up and running with LangChain4j as quickly as possible. It covers the absolute basics of building AI applications with LangChain4j and GitHub Models. In the next modules you'll use Azure OpenAI with LangChain4j to build more advanced applications.
+This quickstart is meant to get you up and running with LangChain4j as quickly as possible. It covers the absolute basics of building AI applications with LangChain4j and GitHub Models. In the next modules you'll switch to Azure OpenAI and GPT-5.2 and dive deeper into each concept.
 
 ## What is LangChain4j?
 
@@ -323,7 +323,7 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ## Next Steps
 
-**Next Module:** [01-introduction - Getting Started with LangChain4j and gpt-5 on Azure](../01-introduction/README.md)
+**Next Module:** [01-introduction - Getting Started with LangChain4j](../01-introduction/README.md)
 
 ---
 

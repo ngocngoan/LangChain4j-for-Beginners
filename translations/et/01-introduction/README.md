@@ -2,84 +2,86 @@
 
 ## Sisukord
 
-- [Video ülevaade](../../../01-introduction)
-- [Mida õpid](../../../01-introduction)
-- [Eeldused](../../../01-introduction)
+- [Video juhendamine](../../../01-introduction)
+- [Mida sa õpid](../../../01-introduction)
+- [Eeltingimused](../../../01-introduction)
 - [Põhiprobleemi mõistmine](../../../01-introduction)
-- [Tokenite mõistmine](../../../01-introduction)
+- [Tokonite mõistmine](../../../01-introduction)
 - [Kuidas mälu töötab](../../../01-introduction)
-- [Kuidas see kasutab LangChain4j-d](../../../01-introduction)
-- [Azure OpenAI infrastruktuuri juurutamine](../../../01-introduction)
-- [Rakenduse kohalik käivitamine](../../../01-introduction)
+- [Kuidas see kasutab LangChain4j](../../../01-introduction)
+- [Deploy Azure OpenAI infrastruktuur](../../../01-introduction)
+- [Rakenduse käivitamine lokaalselt](../../../01-introduction)
 - [Rakenduse kasutamine](../../../01-introduction)
-  - [Olemitu vestlus (vasak paneel)](../../../01-introduction)
-  - [Olemusega vestlus (parem paneel)](../../../01-introduction)
+  - [Seisunditu vestlus (vasak paneel)](../../../01-introduction)
+  - [Seisundiga vestlus (parem paneel)](../../../01-introduction)
 - [Järgmised sammud](../../../01-introduction)
 
-## Video ülevaade
+## Video juhendamine
 
-Vaata seda otseülekannet, mis selgitab, kuidas selle mooduliga alustada:
+Vaata seda otseülekande salvestust, mis selgitab, kuidas selle mooduliga alustada:
 
-<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="LangChain4j-ga alustamine - otseülekanne" width="800"/></a>
+<a href="https://www.youtube.com/live/nl_troDm8rQ?si=6b85S8xGjWnT2fX9"><img src="https://img.youtube.com/vi/nl_troDm8rQ/maxresdefault.jpg" alt="Getting Started with LangChain4j - Live Session" width="800"/></a>
 
-## Mida õpid
+## Mida sa õpid
 
-Kui sa läbisid kiire alguse, nägid, kuidas saata ettepanekuid ja saada vastuseid. See on alus, kuid tõelised rakendused vajavad enamat. See moodul õpetab sind looma vestlus-AI, mis mäletab konteksti ja hoiab olekut – erinevust ühekordsest demosest ja tootmiskõlbulikust rakendusest.
+Kiirlahenduses kasutasid GitHubi mudeleid, et saata päringuid, kutsuda tööriistu, ehitada RAG-torustikku ja testida turvameetmeid. Need demo'd näitasid, mis on võimalik — nüüd liigume üle Azure OpenAI ja GPT-5.2 peale ning hakkame ehitama tootmistasemel rakendusi. See moodul keskendub dialoogipõhisele tehisintellektile, mis mäletab konteksti ja hoiab seisundit — need on mõisted, mida kiirlahenduse demo'd taustal kasutasid, kuid ei selgitanud.
 
-Me kasutame kogu juhendis Azure OpenAI GPT-5.2, sest selle arenenud järeldamisvõimed teevad eri mustrite käitumise selgemaks. Kui lisad mälu, näed ilmselgelt erinevust. See muudab lihtsamaks mõista, mida iga komponent sinu rakendusele annab.
+Kogu juhendis kasutame Azure OpenAI GPT-5.2 mudelit, kuna selle täiustatud mõtlemisvõime teeb erinevate mustrite käitumise paremini nähtavaks. Mälu lisamisel näed selgelt erinevust. See muudab lihtsamaks mõista, mida iga komponent sinu rakendusele lisab.
 
-Sa ehitad ühe rakenduse, mis demonstreerib mõlemaid mustreid:
+Sa ehitad ühe rakenduse, mis demonstreerib mõlemat mustrit:
 
-**Olemitu vestlus** – iga päring on iseseisev. Mudelil puudub mälu varasematest sõnumitest. See on mustritüüp, mida kasutasid kiire algusega.
+**Seisunditu vestlus** - Iga päring on iseseisev. Mudelil puudub mälu eelnevate sõnumite kohta. See on see mustrilahendus, mida kasutasid kiirlahenduses.
 
-**Olemusega vestlus** – iga päring sisaldab vestluse ajalugu. Mudel hoiab konteksti läbi mitme käigu. Seda nõuavad tootmisrakendused.
+**Seisundiga vestlus** - Iga päring sisaldab vestluse ajalugu. Mudel hoiab konteksti mitme vahetuse ulatuses. Selle nõuavad tootmisrakendused.
 
-## Eeldused
+## Eeltingimused
 
 - Azure tellimus koos Azure OpenAI ligipääsuga
-- Java 21, Maven 3.9+
+- Java 21, Maven 3.9+ 
 - Azure CLI (https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Azure Developer CLI (azd) (https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
-> **Märkus:** Java, Maven, Azure CLI ja Azure Developer CLI (azd) on eelnevalt paigaldatud antud devcontaineris.
+> **Märkus:** Java, Maven, Azure CLI ja Azure Developer CLI (azd) on eelinstalleeritud pakutud devcontaineris.
 
-> **Märkus:** See moodul kasutab GPT-5.2 Azure OpenAI peal. Juurutamine toimub automaatselt `azd up` abil – ärge muutke mudeli nime koodis.
+> **Märkus:** See moodul kasutab GPT-5.2 Azure OpenAI-st. Deploy konfiguratsioon toimub automaatselt `azd up` kaudu — ära muuda mudeli nime koodis.
 
 ## Põhiprobleemi mõistmine
 
-Keelemudelid on olemitud. Iga API kõne on iseseisev. Kui sa saadad "Minu nimi on John" ja siis küsid "Mis on minu nimi?", ei tea mudel, et just äsja end tutvustasid. Iga päringut koheldakse, nagu oleks see sinu esimene vestlus.
+Keelemudelid on seisunditud. Iga API kõne on iseseisev. Kui sa saadad "Minu nimi on John" ja siis küsid "Mis on minu nimi?", mudelil pole aimugi, et sa just end tutvustasid. Ta käsitleb iga päringut nagu esimese vestlusena, mis sul kunagi olnud on.
 
-See sobib lihtsate küsimuste ja vastuste jaoks, kuid on kasutu tõeliste rakenduste puhul. Klienditeeninduse botid peavad meeles pidama, mida neile räägiti. Isiklikud assistendid vajavad konteksti. Iga mitmekäiguline vestlus nõuab mälu.
+See sobib lihtsatele küsimustele ja vastustele, kuid on päris rakendustes kasutuskõlbmatu. Klienditeenindusbotid peavad mäletama, mida neile öeldi. Isiklikud assistendid vajavad konteksti. Igas mitme vahetusega vestluses on mälu vajalik.
 
-<img src="../../../translated_images/et/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Olemitu vs oleme vestlused" width="800"/>
+Järgnev diagramm võrdleb kahte lähenemist — vasakul seisunditu kõne, kes unustab su nime; paremal seisundiga kõne, mida toetab ChatMemory ja mis mäletab seda.
 
-*Vahe olemitu (iseseisvad kõned) ja olemusega (kontekstiteadlikud) vestluste vahel*
+<img src="../../../translated_images/et/stateless-vs-stateful.cc4a4765e649c41a.webp" alt="Stateless vs Stateful Conversations" width="800"/>
 
-## Tokenite mõistmine
+*Vahe seisunditu (iseseisvad kõned) ja seisundiga (kontekstiteadlikud) vestluste vahel*
 
-Enne vestlustesse sukeldumist on tähtis mõista toiminguid ehk tokeneid – tekstist koosnevaid põhielemente, mida keelemudelid töödeldes kasutavad:
+## Tokonite mõistmine
 
-<img src="../../../translated_images/et/token-explanation.c39760d8ec650181.webp" alt="Tokeni seletus" width="800"/>
+Enne vestlustesse süvenemist on oluline mõista tokeneid – põhilisi tekstiplokke, mida keelemudelid töötlevad:
 
-*Näide, kuidas tekst jaotatakse tokeniteks – "I love AI!" muutub 4 eraldi töötlemise üksuseks*
+<img src="../../../translated_images/et/token-explanation.c39760d8ec650181.webp" alt="Token Explanation" width="800"/>
 
-Tokenid on kui AI mudelite mõõtühikud teksti mõõtmiseks ja töötlemiseks. Sõnad, kirjavahemärgid ja isegi tühikud võivad olla tokenid. Sinu mudelil on piir kui palju tokeneid korraga töödelda saab (GPT-5.2 puhul 400 000, sisendtokeneid kuni 272 000 ja väljundtokeneid kuni 128 000). Tokenite mõistmine aitab sul hallata vestluse pikkust ja kulusid.
+*Näide, kuidas tekst lagundatakse tokeniteks – "I love AI!" jaguneb neljaks eraldi töötlemise ühikuks*
+
+Tokendid on see, kuidas tehisintellekt mudelid mõõdavad ja töötlevad teksti. Sõnad, kirjavahemärgid ja isegi tühikud võivad olla token'iteks. Sinu mudelil on piir, kui palju tokeneid ta korraga suudab töödelda (GPT-5.2 puhul 400 000, seesama jaotatuna kuni 272 000 sisendtokeniks ja 128 000 väljundtokeniks). Tokonite mõistmine aitab sul hallata vestluse pikkust ja kulusid.
 
 ## Kuidas mälu töötab
 
-Vestluse mälu lahendab olemituse probleemi, hoides vestluse ajalugu. Enne kui sa päringu mudelile saatad, lülitab raamistik eelnevad sobivad sõnumid ette. Kui küsid "Mis on minu nimi?", saadab süsteem tegelikult kogu vestluse ajaloo, võimaldades mudelil näha, et sa ütlesid äsja "Minu nimi on John."
+Vestluse mälu lahendab seisunditu probleemi, säilitades vestluse ajaloo. Enne, kui päring mudelile saadetakse, lisab raamistik ette asjakohased varasemad sõnumid. Kui sa küsid "Mis on mu nimi?", saadab süsteem tegelikult kogu vestluse ajaloo, mis võimaldab mudelil näha, et sa eespool ütlesid "Minu nimi on John".
 
-LangChain4j pakub mälufunktsioone, mis selle automaatselt teevad. Sa valid, mitu sõnumit säilitada ja raamistik haldab kontekstuaakna suurust.
+LangChain4j pakub mälu teostusi, mis teevad seda automaatselt. Sa valid, kui palju sõnumeid säilitada, ja raamistik haldab konteksti akent. Allolev diagramm näitab, kuidas MessageWindowChatMemory haldab liugakent viimaste sõnumite jaoks.
 
-<img src="../../../translated_images/et/memory-window.bbe67f597eadabb3.webp" alt="Mäluakna kontseptsioon" width="800"/>
+<img src="../../../translated_images/et/memory-window.bbe67f597eadabb3.webp" alt="Memory Window Concept" width="800"/>
 
-*MessageWindowChatMemory hoiab libisevat akent hiljutistest sõnumitest, automaatselt vanu kustutades*
+*MessageWindowChatMemory hoiab liugakent viimaste sõnumite jaoks, automaatselt vanu välja visates*
 
-## Kuidas see kasutab LangChain4j-d
+## Kuidas see kasutab LangChain4j
 
-See moodul laiendab kiire alguse näidet Spring Booti integreerimise ja vestlusmäluga. Siin on, kuidas komponendid omavahel sobituvad:
+See moodul laiendab kiirlahendust, integreerides Spring Boot'i ja lisades vestluse mälu. Siin on kuidas komponendid kokku sobivad:
 
-**Sõltuvused** – lisa kaks LangChain4j teeki:
+**Sõltuvused** - Lisa kaks LangChain4j teeki:
 
 ```xml
 <dependency>
@@ -92,7 +94,7 @@ See moodul laiendab kiire alguse näidet Spring Booti integreerimise ja vestlusm
 </dependency>
 ```
 
-**Vestlusmudel** – konfigureeri Azure OpenAI Spring bean-ina ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
+**Vestlusmudel** - Konfigureeri Azure OpenAI Spring bean'ina ([LangChainConfig.java](../../../01-introduction/src/main/java/com/example/langchain4j/config/LangChainConfig.java)):
 
 ```java
 @Bean
@@ -107,9 +109,9 @@ public OpenAiOfficialChatModel openAiOfficialChatModel() {
 }
 ```
 
-Builder loeb mandaadid keskkonnamuutujatest, mida `azd up` seab. `baseUrl` seadmine oma Azure endpoinile teeb OpenAI kliendi tööle Azure OpenAI-ga.
+Builder loeb tõestust andmed keskkonnamuutujatest, mida seab `azd up`. `baseUrl` seadmine sinu Azure lõpp-punktile muudab OpenAI kliendi töövõimeliseks Azure OpenAI-ga.
 
-**Vestlusmälu** – jälgi vestluse ajalugu MessageWindowChatMemory abil ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
+**Vestluse mälu** - Jälgi vestluse ajalugu MessageWindowChatMemory abil ([ConversationService.java](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java)):
 
 ```java
 ChatMemory memory = MessageWindowChatMemory.withMaxMessages(10);
@@ -122,16 +124,16 @@ AiMessage aiMessage = chatModel.chat(memory.messages()).aiMessage();
 memory.add(aiMessage);
 ```
 
-Loo mälu `withMaxMessages(10)`, et hoida viimased 10 sõnumit. Lisa kasutaja ja AI sõnumid tüübikate wrapperitega: `UserMessage.from(text)` ja `AiMessage.from(text)`. Ajalugu saad `memory.messages()` abil ja seejärel saada mudelile. Teenus salvestab iga vestluse ID jaoks eraldi mälu, võimaldades mitmel kasutajal korraga vestelda.
+Loo mälu `withMaxMessages(10)` abil, et hoida viimased 10 sõnumit. Lisa kasutaja ja AI sõnumid tüübitud mähistega: `UserMessage.from(text)` ja `AiMessage.from(text)`. Ajalugu taasta `memory.messages()` abil ja saada mudelile. Teenus salvestab eraldi mälu eksemplarid iga vestluse ID jaoks, võimaldades mitmel kasutajal korraga vestelda.
 
-> **🤖 Proovi koos [GitHub Copilot](https://github.com/features/copilot) Chatiga:** Ava [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ja küsi:
-> - "Kuidas MessageWindowChatMemory otsustab, millised sõnumid kustutada, kui aken on täis?"
-> - "Kas ma saan rakendada isiklikku mälu hoidmist andmebaasi kasutades, mitte ainult mälus?"
-> - "Kuidas lisada kokkuvõttefunktsioon vana vestluse ajaloo kokkusurumiseks?"
+> **🤖 Proovi [GitHub Copilot](https://github.com/features/copilot) Chat'iga:** Ava [`ConversationService.java`](../../../01-introduction/src/main/java/com/example/langchain4j/service/ConversationService.java) ja küsi:
+> - "Kuidas MessageWindowChatMemory otsustab, millised sõnumid akna täitumisel välja visata?"
+> - "Kas ma saan rakendada kohandatud mälu salvestamist, kasutades andmebaasi mälus hoidmise asemel?"
+> - "Kuidas ma lisaksin vanade vestluste ajaloo kokkuvõtmise?"
 
-Olemitu vestlus lõpp-punkt eirab mälu – lihtsalt `chatModel.chat(prompt)`, nagu kiire algus. Olemusega vestlus lisab sõnumid mällu, hangib ajaloo ja saadab selle kontekstina iga päringuga. Sama mudelikonfiguratsioon, erinevad mustrid.
+Seisunditu vestluse lõpp-punkt jätab mälu täielikult vahele — lihtne `chatModel.chat(prompt)` nagu kiirlahenduses. Seisundiga lõpp-punkt lisab sõnumid mällu, taasesitab ajaloo ja kaasab selle konteksti iga päringuga. Sama mudeli seadistus, erinevad mustrid.
 
-## Azure OpenAI infrastruktuuri juurutamine
+## Deploy Azure OpenAI infrastruktuur
 
 **Bash:**
 ```bash
@@ -145,28 +147,28 @@ cd 01-introduction
 azd up  # Valige tellimus ja asukoht (soovitatav on eastus2)
 ```
 
-> **Märkus:** Kui tekib ajapiirangu viga (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), käivitage `azd up` uuesti. Azure ressursid võivad endiselt taustal juurutuda ja kordamine lubab juurutusel lõpule jõuda, kui ressursid jõuavad lõppseisundisse.
+> **Märkus:** Kui kohtad ajapiirangu tõrget (`RequestConflict: Cannot modify resource ... provisioning state is not terminal`), käivita lihtsalt uuesti `azd up`. Azure ressursid võivad taustal hetkel seadistamisel olla ja korduskatse võimaldab deploy lõpule viia, kui ressursid jõuavad lõplikku olekusse.
 
-See teeb järgmist:
-1. Juurutab Azure OpenAI ressursi GPT-5.2 ja text-embedding-3-small mudelitega
-2. Genereerib automaatselt projekti juurkausta `.env` faili mandaadiga
-3. Seadistab kõik vajalikud keskkonnamuutujad
+See sooritab:
+1. Deploy Azure OpenAI ressurss GPT-5.2 ja text-embedding-3-small mudelitega
+2. Automaatse `.env` faili genereerimise projekti juurkausta koos tõestust andmetega
+3. Kõik vajalike keskkonnamuutujate seadistamise
 
-**Probleeme juurutamisega?** Vaata [Infrastruktuuri README-d](infra/README.md) üksikasjaliku probleemide lahendamise, alamdomeeni nime konfliktide, manuaalse Azure Portali juurutamise ja mudeli konfiguratsiooni juhendamise kohta.
+**Kui esineb deploy probleeme?** Vaata [Infrastructure README](infra/README.md), kus on põhjalik tõrkeotsing, sealhulgas alamdomeeni nime konfliktid, käsitsi Azure Portali deploy sammud ja mudeli seadistamise juhised.
 
-**Kontrolli, kas juurutamine õnnestus:**
+**Veendu, et deploy õnnestus:**
 
 **Bash:**
 ```bash
-cat ../.env  # Peaks kuvama AZURE_OPENAI_ENDPOINT, API_KEY jne.
+cat ../.env  # Peaks näitama AZURE_OPENAI_ENDPOINT, API_KEY jms.
 ```
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Peaksite näitama AZURE_OPENAI_ENDPOINTi, API_KEYd jne.
+Get-Content ..\.env  # Peaks näitama AZURE_OPENAI_ENDPOINT, API_KEY jms.
 ```
 
-> **Märkus:** `azd up` käsk genereerib `.env` faili automaatselt. Kui vajad hiljem selle uuendamist, saad kas muuta `.env` faili käsitsi või genereerida uuesti, käivitades:
+> **Märkus:** `azd up` käsu käivitamine genereerib automaatselt `.env` faili. Kui vajad hiljem uuendamist, võid kas käsitsi `.env` faili muuta või uuesti genereerida, käivitades:
 >
 > **Bash:**
 > ```bash
@@ -180,15 +182,15 @@ Get-Content ..\.env  # Peaksite näitama AZURE_OPENAI_ENDPOINTi, API_KEYd jne.
 > .\.azd-env.ps1
 > ```
 
-## Rakenduse kohalik käivitamine
+## Rakenduse lokaal käivitamine
 
-**Kontrolli juurutust:**
+**Veendu deploy õnnestumises:**
 
-Veendu, et projektikataloogi juures on `.env` fail Azure mandaadiga:
+Veendu, et `.env` fail asub juurkaustas koos Azure tõestust andmetega. Käivita see mooduli kaustast (`01-introduction/`):
 
 **Bash:**
 ```bash
-cat ../.env  # Tõrjub AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+cat ../.env  # Tuleks näidata AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **PowerShell:**
@@ -196,35 +198,37 @@ cat ../.env  # Tõrjub AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 Get-Content ..\.env  # Peaks näitama AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
-**Käivita rakendused:**
+**Alusta rakendusi:**
 
-**Valik 1: Kasutades Spring Boot Dashboardi (Soovitatav VS Code kasutajatele)**
+**Variant 1: Kasutades Spring Boot Dashboardi (Soovitatav VS Code kasutajatele)**
 
-Devcontainer sisaldab Spring Boot Dashboard laiendit, mis pakub visuaalset liidest kõigi Spring Boot rakenduste haldamiseks. Leiad selle VS Code'i vasakpoolsel tööriistaribal (otsi Spring Boot ikooni).
+Dev container sisaldab Spring Boot Dashboard laiendust, mis pakub visuaalset liidest, et hallata kõiki Spring Boot rakendusi. Leiad selle VS Code vasakpoolsest Activity Bar-ist (otsi Spring Boot ikooni).
 
-Spring Boot Dashboardist saad:
-- Näha kõiki töölaua Spring Boot rakendusi
-- Käivitada/peatada rakendusi ühe klikiga
-- Reaalajas vaadata rakenduste logisid
-- Jälgida rakenduste olekut
+Spring Boot Dashboardilt saad:
+- Näha kõiki saadaval olevaid Spring Boot rakendusi töökohas
+- Alustada/peatada rakendusi ühe klikiga
+- Vaadata rakenduse logisid reaalajas
+- Jälgida rakenduse olekut
 
-Lihtsalt klõpsa nupule "introduction" kõrval, et käivitada see moodul või alusta kõiki korraga.
+Lihtsalt kliki "introduction" kõrval mängimise nupule, et käivitada see moodul või käivita kõik korraga.
 
 <img src="../../../translated_images/et/dashboard.69c7479aef09ff6b.webp" alt="Spring Boot Dashboard" width="400"/>
 
-**Valik 2: Kasutades shell-skripte**
+*Spring Boot Dashboard VS Code's — käivita, peata ja jälgi kõiki mooduleid ühest kohast*
+
+**Variant 2: Kasutades shell skripte**
 
 Käivita kõik veebirakendused (moodulid 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Juurekataloogist
+cd ..  # Juurest kataloogist
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Juurekataloogist
+cd ..  # Juura kataloogist
 .\start-all.ps1
 ```
 
@@ -242,9 +246,9 @@ cd 01-introduction
 .\start.ps1
 ```
 
-Mõlemad skriptid laevad automaatselt keskkonnamuutujad juurkaustast `.env` failist ja ehitavad JAR-id, kui neid veel pole.
+Mõlemad skriptid laadivad automaatselt keskkonnamuutujad juurkaustas `.env` failist ja ehitavad JAR failid, kui neid veel pole.
 
-> **Märkus:** Kui soovid eelistada kõigi moodulite manuaalset ehitamist enne käivitamist:
+> **Märkus:** Kui tahad ehitada kõik moodulid käsitsi enne käivitamist:
 >
 > **Bash:**
 > ```bash
@@ -258,7 +262,7 @@ Mõlemad skriptid laevad automaatselt keskkonnamuutujad juurkaustast `.env` fail
 > mvn clean package -DskipTests
 > ```
 
-Ava oma veebibrauseris http://localhost:8080.
+Ava oma brauseris http://localhost:8080.
 
 **Peatamiseks:**
 
@@ -278,41 +282,41 @@ cd ..; .\stop-all.ps1  # Kõik moodulid
 
 ## Rakenduse kasutamine
 
-Rakendus pakub veebiliidest kahe kõneimplementatsiooniga kõrvuti.
+Rakendus pakub veebipõhist liidest kahe vestluslahendusega kõrvuti.
 
-<img src="../../../translated_images/et/home-screen.121a03206ab910c0.webp" alt="Rakenduse avaleht" width="800"/>
+<img src="../../../translated_images/et/home-screen.121a03206ab910c0.webp" alt="Application Home Screen" width="800"/>
 
-*Armatuurlaud näitab nii lihtsat olemitut vestlust kui ka olemusega vestlust*
+*Armatuurlaud, mis kuvab nii lihtsa vestluse (seisunditu) kui ka dialoogipõhise vestluse (seisundiga) valikud*
 
-### Olemitu vestlus (vasak paneel)
+### Seisunditu vestlus (vasak paneel)
 
-Alusta sellest. Küsi „Minu nimi on John“ ja kohe pärast seda „Mis on minu nimi?“ Mudel ei mäleta, sest iga sõnum on iseseisev. See näitab põhiprobleemi, kuidas lihtne keelemudel on ilma vestluse kontekstita.
+Proovi esmalt seda. Küsi "Minu nimi on John" ja siis kohe "Mis on mu nimi?" Mudel ei mäleta, sest iga sõnum on iseseisev. See demonstreerib põhiprobleemi keelemudelite tavaintegratsioonis – puudub vestluse kontekst.
 
-<img src="../../../translated_images/et/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Olemitu vestluse demo" width="800"/>
+<img src="../../../translated_images/et/simple-chat-stateless-demo.13aeb3978eab3234.webp" alt="Stateless Chat Demo" width="800"/>
 
-*AI ei mäleta eelnevas sõnumis öeldud nime*
+*Tehisintellekt ei mäleta su nime eelmisest sõnumist*
 
-### Olemusega vestlus (parem paneel)
+### Seisundiga vestlus (parem paneel)
 
-Proovi nüüd sama järjestust siin. Küsi „Minu nimi on John“ ja siis „Mis on minu nimi?“ Seekord ta mäletab. Erinevuseks on MessageWindowChatMemory – see hoiab vestluse ajalugu ja lisab selle iga päringuga. Just nii toimib tootmiskõlbulik vestlus-AI.
+Nüüd proovi sama jada siin. Küsi "Minu nimi on John" ja seejärel "Mis on mu nimi?" Seekord mäletab. Erinevus on MessageWindowChatMemory - see hoiab vestluse ajaloo ja lisab selle iga päringuga kaasa. Nii töötab tootmisvestluse tehisintellekt.
 
-<img src="../../../translated_images/et/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Olemusega vestluse demo" width="800"/>
+<img src="../../../translated_images/et/conversational-chat-stateful-demo.e5be9822eb23ff59.webp" alt="Stateful Chat Demo" width="800"/>
 
-*AI mäletab sinu nime varasemast vestlusest*
+*Tehisintellekt mäletab su nime varasemast vestlusest*
 
-Mõlemad paneelid kasutavad sama GPT-5.2 mudelit. Erinevus on ainult mälus. See teeb selgeks, mida mälu sinu rakendusele toob ja miks see on tõeliste kasutusjuhtude jaoks hädavajalik.
+Mõlemad paneelid kasutavad sama GPT-5.2 mudelit. Erinevus on ainult mälus. See teeb selgeks, mida mälu rakendusele annab ja miks see on tegelikes kasutusjuhtudes oluline.
 
 ## Järgmised sammud
 
-**Järgmine moodul:** [02-prompt-engineering - Päringute inseneriteadus GPT-5.2-ga](../02-prompt-engineering/README.md)
+**Järgmine moodul:** [02-prompt-engineering - Prompt Engineering GPT-5.2-ga](../02-prompt-engineering/README.md)
 
 ---
 
-**Navigeerimine:** [← Eelmine: Moodul 00 - Kiire algus](../00-quick-start/README.md) | [Tagasi avalehele](../README.md) | [Järgmine: Moodul 02 - Päringute inseneriteadus →](../02-prompt-engineering/README.md)
+**Navigatsioon:** [← Eelmine: Moodul 00 – Kiirlahendus](../00-quick-start/README.md) | [Tagasi avalehele](../README.md) | [Järgmine: Moodul 02 – Prompt Engineering →](../02-prompt-engineering/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Vastutusest loobumine**:
-See dokument on tõlgitud tehisintellekti tõlketeenuse [Co-op Translator](https://github.com/Azure/co-op-translator) abil. Kuigi püüdleme täpsuse poole, tuleb arvestada, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles on autoriteetne allikas. Olulise teabe puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta selle tõlke kasutamisest tulenevate arusaamatuste või valesti mõistmiste eest.
+See dokument on tõlgitud tehisintellekti tõlketeenuse [Co-op Translator](https://github.com/Azure/co-op-translator) abil. Kuigi püüame tagada täpsust, tuleks arvestada, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle algkeeles tuleks pidada autoriteetseks allikaks. Tähtsa teabe puhul soovitatakse kasutada professionaalset inimtõlget. Me ei võta vastutust mis tahes arusaamatuste või vale tõlgenduste eest, mis tulenevad selle tõlke kasutamisest.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

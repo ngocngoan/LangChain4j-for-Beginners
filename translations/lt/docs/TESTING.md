@@ -5,16 +5,16 @@
 - [Greitas pradėjimas](../../../docs)
 - [Ką apima testai](../../../docs)
 - [Testų vykdymas](../../../docs)
-- [Testavimas VS Code](../../../docs)
+- [Testų vykdymas VS Code](../../../docs)
 - [Testavimo modeliai](../../../docs)
 - [Testavimo filosofija](../../../docs)
 - [Kiti žingsniai](../../../docs)
 
-Šiame vadove pateikiama informacija apie testus, kurie demonstruoja, kaip testuoti AI programas nereikalaujant API raktų ar išorinių paslaugų.
+Ši gidas jus supažindina su testais, kurie parodo, kaip testuoti DI programas nereikalaujant API raktų ar išorinių paslaugų.
 
 ## Greitas pradėjimas
 
-Visus testus paleiskite vienu komandos įrašu:
+Paleiskite visus testus su vienu komandos įvedimu:
 
 **Bash:**
 ```bash
@@ -26,30 +26,32 @@ mvn test
 mvn --% test
 ```
 
-<img src="../../../translated_images/lt/test-results.ea5c98d8f3642043.webp" alt="Sekmingi testų rezultatai" width="800"/>
+Kai visi testai sėkmingai praeina, turėtumėte matyti panašų rezultatą kaip žemiau esančioje ekrano nuotraukoje — testai vykdomi be klaidų.
 
-*Sėkmingas testų vykdymas, kai visi testai praeina be klaidų*
+<img src="../../../translated_images/lt/test-results.ea5c98d8f3642043.webp" alt="Successful Test Results" width="800"/>
+
+*Sėkmingas testų vykdymas, rodantis, kad visi testai praeina be klaidų*
 
 ## Ką apima testai
 
-Šis kursas orientuojasi į **vienetinius testus**, kurie vykdomi vietoje. Kiekvienas testas demonstruoja specifinę LangChain4j koncepciją izoliuotai.
+Šis kursas orientuotas į **vienetinius testus**, kurie vykdomi lokaliai. Kiekvienas testas demonstruoja konkretų LangChain4j konceptą izoliacijoje. Toliau pateikta testavimo piramidė rodo, kur tinka vienetiniai testai — jie sudaro greitą, patikimą pagrindą, ant kurio statoma visa kita testavimo strategija.
 
-<img src="../../../translated_images/lt/testing-pyramid.2dd1079a0481e53e.webp" alt="Testavimo piramidė" width="800"/>
+<img src="../../../translated_images/lt/testing-pyramid.2dd1079a0481e53e.webp" alt="Testing Pyramid" width="800"/>
 
-*Testavimo piramidė, rodanti balansą tarp vienetinių testų (greiti, izoliuoti), integracijos testų (tikri komponentai) ir galutinio testavimo. Šis mokymas apima vienetinius testus.*
+*Testavimo piramidė rodanti balansą tarp vienetinių testų (greiti, izoliuoti), integracinių testų (tikri komponentai) ir pilno veikimo testų. Ši apmokyma apima vienetinius testus.*
 
-| Modulis | Testai | Dėmesys | Pagrindiniai failai |
-|---------|--------|---------|---------------------|
-| **00 - Greitas pradėjimas** | 6 | Užklausų šablonai ir kintamųjų pakeitimas | `SimpleQuickStartTest.java` |
-| **01 - Įvadas** | 8 | Pokalbių atmintis ir būsenos palaikymas | `SimpleConversationTest.java` |
-| **02 - Užklausų inžinerija** | 12 | GPT-5.2 modeliai, entuziazmo lygiai, struktūrizuotas outputas | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Dokumentų apdorojimas, įterpiniai, panašumo paieška | `DocumentServiceTest.java` |
-| **04 - Įrankiai** | 12 | Funkcijų kvietimas ir įrankių grandinė | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Modelio konteksto protokolas su Stdio transportu | `SimpleMcpTest.java` |
+| Modulis | Testai | Fokusas | Svarbūs failai |
+|--------|-------|-------|-----------|
+| **00 - Greitas pradėjimas** | 6 | Pavyzdžių šablonai ir kintamųjų pakeitimas | `SimpleQuickStartTest.java` |
+| **01 - Įvadas** | 8 | Pokalbių atmintis ir būsenoje saugomi chat'ai | `SimpleConversationTest.java` |
+| **02 - Pavyzdžių inžinerija** | 12 | GPT-5.2 modelių pavyzdžiai, entuziazmo lygiai, struktūruotas išvestis | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Dokumentų įvedimas, įterpimai, panašumo paieška | `DocumentServiceTest.java` |
+| **04 - Įrankiai** | 12 | Funkcijų iškvietimas ir įrankių jungimas | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Modelio konteksto protokolas naudojant stdio | `SimpleMcpTest.java` |
 
 ## Testų vykdymas
 
-**Paleiskite visus testus iš root direktorijos:**
+**Paleisti visus testus iš pagrindinio katalogo:**
 
 **Bash:**
 ```bash
@@ -61,23 +63,23 @@ mvn test
 mvn --% test
 ```
 
-**Paleiskite testus konkrečiam moduliui:**
+**Paleisti testus konkrečiam moduliui:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Arba iš šaknies
+# Arba iš root
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Arba iš root
+# Arba iš šaknies
 mvn --% test -pl 01-introduction
 ```
 
-**Paleiskite vieną testų klasę:**
+**Paleisti vieną testų klasę:**
 
 **Bash:**
 ```bash
@@ -89,45 +91,45 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Paleiskite konkretų testų metodą:**
+**Paleisti konkretų testų metodą:**
 
 **Bash:**
 ```bash
-mvn test -Dtest=SimpleConversationTest#turėtųIšlaikytiPokALBĮIstoriją
+mvn test -Dtest=SimpleConversationTest#turėtųIšlaikytiPokALBIOIstoriją
 ```
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#turėtųIšlaikytiPokalbįIstoriją
+mvn --% test -Dtest=SimpleConversationTest#turėtųIšlaikytiPokalbioIstoriją
 ```
 
 ## Testų vykdymas VS Code
 
-Jei naudojate Visual Studio Code, Testų Explorer suteikia grafinę sąsają testų vykdymui ir derinimui.
+Jei naudojate Visual Studio Code, Test Explorer suteikia grafinę sąsają testų vykdymui ir derinimui.
 
-<img src="../../../translated_images/lt/vscode-testing.f02dd5917289dced.webp" alt="VS Code testų naršyklė" width="800"/>
+<img src="../../../translated_images/lt/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Explorer" width="800"/>
 
-*VS Code Testų explorer rodantis testų medį su visomis Java testų klasėmis ir atskirais testų metodais*
+*VS Code testų naršyklė rodanti testų medį su visomis Java testų klasėmis ir atskirais testų metodais*
 
-**Kaip paleisti testus VS Code:**
+**Norėdami paleisti testus VS Code:**
 
-1. Atidarykite Testų Explorer spustelėdami apie indelio piktogramą veiklos juostoje
+1. Atidarykite Test Explorer paspausdami mėgintuvėlio ikoną Veiklos juostoje
 2. Išskleiskite testų medį, kad pamatytumėte visus modulius ir testų klases
-3. Spustelėkite „play“ mygtuką prie bet kurio testo, norėdami jį paleisti atskirai
-4. Paspauskite „Run All Tests“ palaikyti visą testų rinkinį
-5. Paspauskite dešinį pelės klavišą ant testo ir pasirinkite „Debug Test“, kad nustatytumėte pertraukos taškus ir žingsniuotumėte per kodą
+3. Spustelėkite paleidimo mygtuką prie bet kurio testo, kad paleistumėte jį atskirai
+4. Spustelėkite "Run All Tests", kad paleistumėte visą testų rinkinį
+5. Dešiniuoju pelės mygtuku spustelėkite bet kurį testą ir pasirinkite "Debug Test", kad nustatytumėte pertraukos taškus ir žingsniuotumėte per kodą
 
-Testų explorer parodo žalius varnelės ženklus praeinantiems testams ir pateikia išsamius klaidų pranešimus, kai testai nepraeina.
+Testų naršyklė rodo žalius varnele pažymėtus sėkmingus testus ir pateikia išsamius klaidų pranešimus, kai testai nepraeina.
 
 ## Testavimo modeliai
 
-### Modelis 1: Užklausų šablonų testavimas
+### Modelis 1: Pavyzdžių šablonų testavimas
 
-Paprastas modelis testuoja užklausų šablonus neatliekant jokio AI modelio kvietimo. Patikrinama, kad kintamųjų pakeitimas veiktų teisingai ir užklausos būtų tinkamai suformatuotos.
+Paprastas modelis testuoja pavyzdžių šablonus neiškviečiant jokio DI modelio. Patikrinama, ar kintamųjų pakeitimas veikia teisingai ir ar pavyzdžiai suformuoti kaip tikimasi.
 
-<img src="../../../translated_images/lt/prompt-template-testing.b902758ddccc8dee.webp" alt="Užklausų šablonų testavimas" width="800"/>
+<img src="../../../translated_images/lt/prompt-template-testing.b902758ddccc8dee.webp" alt="Prompt Template Testing" width="800"/>
 
-*Užklausų šablonų testavimas, rodantis kintamųjų pakeitimo srautą: šablonas su vietos ženkliais → pritaikytos reikšmės → patvirtintas suformatuotas outputas*
+*Pavyzdžių šablonų testavimas rodantis kintamųjų pakeitimo kelią: šablonas su vietos žymekliais → pritaikomi reikšmės → patvirtinama suformatuota išvestis*
 
 ```java
 @Test
@@ -152,21 +154,21 @@ void testPromptTemplateFormatting() {
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testuotiUžklausosŠablonoFormatavimą
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testuotiUžklausoŠablonoFormatavimą
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testoUžklausosŠablonoFormatavimas
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testuotiKlausimoŠablonoFormatavimą
 ```
 
-### Modelis 2: Kalbos modelių imitavimas su Mockito
+### Modelis 2: Kalbos modelių maketavimas
 
-Testuojant pokalbio logiką, naudokite Mockito, kad sukurtumėte dirbtinius modelius, grąžinančius iš anksto nustatytus atsakymus. Tai leidžia testams būti greitiems, nemokamiems ir deterministiniams.
+Testuojant pokalbių logiką, naudokite Mockito, kad sukurtumėte netikrus modelius, kurie grąžina iš anksto nustatytus atsakymus. Tai daro testus greitus, nemokamus ir deterministinius.
 
-<img src="../../../translated_images/lt/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Imitacinio ir tikro API palyginimas" width="800"/>
+<img src="../../../translated_images/lt/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock vs Real API Comparison" width="800"/>
 
-*Palyginimas, kodėl imitacijos naudojamos testavimui: jos yra greitos, nemokamos, deterministinės ir nereikalauja API raktų*
+*Palyginimas rodantis, kodėl maketai yra pageidautini testavimui: jie yra greiti, nemokami, deterministiniai ir nereikalauja API raktų*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +213,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 naudotojo + 3 DI žinutės
+        assertThat(history).hasSize(6); // 3 vartotojo + 3 DI žinutės
     }
 }
 ```
 
-Šis modelis naudojamas faile `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Imitacija užtikrina nuoseklią elgseną, kad būtų galima patikrinti teisingą atminties valdymą.
+Šis modelis panaudotas faile `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java`. Maketas užtikrina nuoseklią elgseną, todėl galima patikrinti teisingą atminties valdymą.
 
-### Modelis 3: Pokalbio izoliacijos testavimas
+### Modelis 3: Pokalbių izoliacijos testavimas
 
-Pokalbio atmintis turi atskirti kelis vartotojus. Šis testas patikrina, ar pokalbiai nesimaišo tarpusavyje.
+Pokalbių atmintis turi išlaikyti atskirus daugelio vartotojų kontekstus. Šis testas patikrina, ar pokalbiai nesimaišo.
 
-<img src="../../../translated_images/lt/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Pokalbio izoliacija" width="800"/>
+<img src="../../../translated_images/lt/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Conversation Isolation" width="800"/>
 
-*Pokalbio izoliacijos testavimas, rodantis atskiras atminties saugyklas skirtingiems vartotojams, kad būtų išvengta konteksto maišymo*
+*Pokalbių izoliacijos testavimas rodo atskirus atminties saugyklas skirtingiems vartotojams, kad būtų užkirstas kelias kontekstui maišytis*
 
 ```java
 @Test
@@ -248,15 +250,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Kiekvienas pokalbis palaiko nepriklausomą istoriją. Produkcijos sistemose ši izoliacija yra kritiškai svarbi daugiafunkcėms programoms.
+Kiekvienas pokalbis palaiko savo nepriklausomą istoriją. Gamybinėse sistemose ši izoliacija yra kritiškai svarbi daugiafunkcinei naudotojų aplikacijai.
 
 ### Modelis 4: Įrankių testavimas atskirai
 
-Įrankiai yra funkcijos, kurias AI gali iškviesti. Testuokite juos tiesiogiai, kad įsitikintumėte, jog jie veikia teisingai, nepriklausomai nuo AI sprendimų.
+Įrankiai yra funkcijos, kurias DI gali iškviesti. Testuokite juos tiesiogiai, kad įsitikintumėte, jog jie veikia teisingai nepriklausomai nuo DI sprendimų.
 
-<img src="../../../translated_images/lt/tools-testing.3e1706817b0b3924.webp" alt="Įrankių testavimas" width="800"/>
+<img src="../../../translated_images/lt/tools-testing.3e1706817b0b3924.webp" alt="Tools Testing" width="800"/>
 
-*Įrankių testavimas be AI kvietimų, naudojant imitacijas, kad būtų patikrinta verslo logika*
+*Įrankių testavimas atskirai, rodantis maketuojamą įrankio vykdymą be DI kvietimų, patvirtina verslo logiką*
 
 ```java
 @Test
@@ -279,15 +281,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Šie testai iš `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` patikrina įrankių logiką be AI dalyvavimo. Grandinės pavyzdys rodo, kaip vieno įrankio outputas tiekiamas kaip įvestis kitam.
+Šie testai iš `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` tikrina įrankių logiką be DI įtraukimo. Grandinėlės pavyzdys rodo, kaip vieno įrankio išvestis įeina į kito įrankio įvestį.
 
-### Modelis 5: Atmintyje saugomas RAG testavimas
+### Modelis 5: RAG testavimas atmintyje
 
-RAG sistemos dažniausiai reikalauja vektorinės duomenų bazės ir įterpimo paslaugų. Atmintyje saugomas modelis leidžia testuoti visą procesą be išorinių priklausomybių.
+RAG sistemos tradiciškai reikalauja vektorių duomenų bazių ir įterpimų paslaugų. Modelis „atmintyje“ leidžia testuoti visą srautą be išorinių priklausomybių.
 
-<img src="../../../translated_images/lt/rag-testing.ee7541b1e23934b1.webp" alt="Atmintyje saugas RAG testavimas" width="800"/>
+<img src="../../../translated_images/lt/rag-testing.ee7541b1e23934b1.webp" alt="In-Memory RAG Testing" width="800"/>
 
-*Atmintyje saugomo RAG testavimo darbo eiga demonstravimas: dokumentų analizė, įterpinių saugykla ir panašumo paieška be duomenų bazės*
+*RAG testavimo „atmintyje“ srautas, rodantis dokumentų analizę, įterpimų saugojimą ir panašumo paiešką be duomenų bazės*
 
 ```java
 @Test
@@ -304,13 +306,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Šis testas iš `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` sukuria dokumentą atmintyje ir tikrina jo skilimą į dalis bei metaduomenų apdorojimą.
+Šis testas faile `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` sukuria dokumentą atmintyje ir patikrina jo dalijimąsi bei metaduomenų valdymą.
 
-### Modelis 6: MCP integracijos testavimas
+### Modelis 6: MCP integracinis testavimas
 
-MCP modulis testuoja Modelio konteksto protokolo integraciją naudojant stdio transportą. Šie testai patikrina, ar jūsų programa gali paleisti ir komunikuoti su MCP serveriais kaip subprocessais.
+MCP modulis tikrina Modelio konteksto protokolo integraciją naudojant stdio transportą. Šie testai patvirtina, kad jūsų programa gali sukurti ir bendrauti su MCP serveriais kaip pakomos procesais.
 
-Testai faile `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` tikrina MCP kliento elgseną.
+Testai faile `05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` vertina MCP kliento elgseną.
 
 **Paleiskite juos:**
 
@@ -326,36 +328,36 @@ cd 05-mcp; mvn --% test
 
 ## Testavimo filosofija
 
-Testuokite savo kodą, o ne AI. Testai turi tikrinti jūsų rašomą kodą patikrindami, kaip konstruojami užklausų šablonai, kaip valdoma atmintis ir kaip vykdomi įrankiai. AI atsakymai kinta ir neturėtų būti naudojami testų patvirtinimams. Klausykite savęs, ar jūsų užklausų šablonas teisingai pakeičia kintamuosius, o ne ar AI pateikia teisingą atsakymą.
+Testuokite savo kodą, ne DI. Jūsų testai turėtų tikrinti jūsų parašytą kodą, kaip konstruojami pavyzdžiai, kaip valdoma atmintis ir kaip vykdomi įrankiai. DI atsakymai kinta ir neturėtų būti testų patvirtinimų dalis. Klausykite savęs, ar jūsų pavyzdžio šablonas tinkamai pakeičia kintamuosius, o ne ar DI pateikia teisingą atsakymą.
 
-Naudokite imitacijas kalbos modeliams. Tai išorinės priklausomybės, kurios yra lėtos, brangios ir nedeterministinės. Imitavimas leidžia testams būti greitiems su milisekundžių uždaviniu, nemokamiems be jokių API kaštų ir deterministiniams su vienodu rezultatu kiekvieną kartą.
+Naudokite maketus kalbos modeliams. Tai išoriniai komponentai, kurie yra lėti, brangūs ir nedeterministiniai. Maketai leidžia testams būti greitiems (milisekundėmis vietoje sekundžių), nemokamiems (be API kaštų) ir deterministiniams (tą patį rezultatą kiekvieną kartą).
 
-Išlaikykite testus nepriklausomus. Kiekvienas testas turi susikurti savo duomenis, nesiremti kitų testų rezultatais ir atlikti valymą po savęs. Testai turi praeiti nepriklausomai nuo vykdymo tvarkos.
+Išlaikykite testus nepriklausomais. Kiekvienas testas turi paruošti savo duomenis, nereikėti kitų testų ir po savęs išvalyti. Testai turi praeiti nepriklausomai nuo vykdymo eiliškumo.
 
-Testuokite ir ribines situacijas, ne tik sėkmingus scenarijus. Išbandykite tuščius įvestis, labai dideles įvestis, specialius simbolius, neteisingus parametrus ir ribines sąlygas. Tai dažnai atskleidžia klaidas, kurios įprasto naudojimo metu nepasirodo.
+Testuokite kraštutinius atvejus, o ne tik malonius srautus. Bandykite tuščius įvedimus, labai didelius įvedimus, specialiuosius simbolius, neteisingus parametrus ir ribines sąlygas. Dažnai tai išryškina klaidas, kurių įprastas naudojimas nerodo.
 
-Naudokite aprašomuosius pavadinimus. Palyginkite `shouldMaintainConversationHistoryAcrossMultipleMessages()` su `test1()`. Pirmasis tiksliai nurodo, kas testuojama, todėl gedimų derinimas tampa daug paprastesnis.
+Naudokite aprašomuosius pavadinimus. Palyginkite `shouldMaintainConversationHistoryAcrossMultipleMessages()` su `test1()`. Pirmasis tiksliai nurodo, kas testuojama, kas palengvina gedimų derinimą.
 
 ## Kiti žingsniai
 
-Dabar, kai suprantate testavimo modelius, gilinkitės į kiekvieną modulį:
+Dabar kai suprantate testavimo modelius, gilinkitės į kiekvieną modulį:
 
-- **[00 - Greitas pradėjimas](../00-quick-start/README.md)** - Pradėkite nuo užklausų šablonų pagrindų
-- **[01 - Įvadas](../01-introduction/README.md)** - Sužinokite pokalbio atminties valdymą
-- **[02 - Užklausų inžinerija](../02/prompt-engineering/README.md)** - Įvaldykite GPT-5.2 šablonų modelius
-- **[03 - RAG](../03-rag/README.md)** - Kurkite duomenų paiešką papildančias generavimo sistemas
-- **[04 - Įrankiai](../04-tools/README.md)** - Įgyvendinkite funkcijų kvietimą ir įrankių grandines
+- **[00 - Greitas pradėjimas](../00-quick-start/README.md)** - Pradėkite nuo pavyzdžių šablonų pagrindų
+- **[01 - Įvadas](../01-introduction/README.md)** - Sužinokite pokalbių atminties valdymą
+- **[02 - Pavyzdžių inžinerija](../02/prompt-engineering/README.md)** - Įvaldykite GPT-5.2 pavyzdžių modelius
+- **[03 - RAG](../03-rag/README.md)** - Kurkite paieškos ir generavimo sistemas
+- **[04 - Įrankiai](../04-tools/README.md)** - Įgyvendinkite funkcijų iškvietimus ir įrankių grandines
 - **[05 - MCP](../05-mcp/README.md)** - Integruokite Modelio konteksto protokolą
 
-Kiekvieno modulio README pateikia detalius čia testuotų koncepcijų paaiškinimus.
+Kiekvieno modulio README pateikia detalius šio mokymo metu testuojamų konceptų paaiškinimus.
 
 ---
 
-**Navigacija:** [← Atgal į Pagrindinį](../README.md)
+**Navigacija:** [← Atgal į pagrindinį](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Atsakomybės apribojimas**:  
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatiniai vertimai gali turėti klaidų arba netikslumų. Originalus dokumentas jo gimtąja kalba laikomas autoritetingu šaltiniu. Kritinei informacijai rekomenduojama naudoti profesionalų vertimą, atliktą žmogaus. Mes neatsakome už jokius nesusipratimus ar neteisingą interpretaciją, kylančią dėl šio vertimo naudojimo.
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, prašome atkreipti dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas jo gimtąja kalba turėtų būti laikomas pagrindiniu šaltiniu. Svarbiai informacijai rekomenduojama naudoti profesionalų žmogišką vertimą. Mes neatsakome už jokių nesusipratimų ar neteisingų interpretacijų, kylančių naudojant šį vertimą.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

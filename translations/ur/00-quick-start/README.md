@@ -4,7 +4,7 @@
 
 - [تعارف](../../../00-quick-start)
 - [LangChain4j کیا ہے؟](../../../00-quick-start)
-- [LangChain4j انحصار](../../../00-quick-start)
+- [LangChain4j کی منحصرات](../../../00-quick-start)
 - [ضروریات](../../../00-quick-start)
 - [سیٹ اپ](../../../00-quick-start)
   - [1. اپنا GitHub ٹوکن حاصل کریں](../../../00-quick-start)
@@ -13,41 +13,41 @@
   - [1. بنیادی چیٹ](../../../00-quick-start)
   - [2. پرامپٹ پیٹرنز](../../../00-quick-start)
   - [3. فنکشن کالنگ](../../../00-quick-start)
-  - [4. دستاویز Q&A (آسان RAG)](../../../00-quick-start)
+  - [4. دستاویز سوال و جواب (آسان RAG)](../../../00-quick-start)
   - [5. ذمہ دار AI](../../../00-quick-start)
-- [ہر مثال میں کیا دکھایا گیا ہے](../../../00-quick-start)
-- [اگلے مراحل](../../../00-quick-start)
+- [ہر مثال کیا دکھاتی ہے](../../../00-quick-start)
+- [آگے کے مراحل](../../../00-quick-start)
 - [مسائل کا حل](../../../00-quick-start)
 
 ## تعارف
 
-یہ تیز آغاز آپ کو جتنا جلدی ممکن ہو LangChain4j کے ساتھ شروع کرنے میں مدد دینے کے لئے ہے۔ یہ LangChain4j اور GitHub ماڈلز کے ساتھ AI ایپلیکیشنز بنانے کی مکمل بنیادی باتوں کا احاطہ کرتا ہے۔ اگلے ماڈیولز میں آپ Azure OpenAI کو LangChain4j کے ساتھ استعمال کریں گے تاکہ مزید پیچیدہ ایپلیکیشنز بنائی جا سکیں۔
+یہ تیز آغاز آپ کو LangChain4j کے ساتھ جلد از جلد کام شروع کرنے کے لیے ہے۔ یہ LangChain4j اور GitHub Models کے ساتھ AI ایپلیکیشنز بنانے کی بنیادی باتیں کور کرتا ہے۔ اگلے ماڈیولز میں آپ Azure OpenAI اور GPT-5.2 پر منتقل ہوں گے اور ہر تصور کو مزید گہرائی سے سمجھیں گے۔
 
 ## LangChain4j کیا ہے؟
 
-LangChain4j ایک جاوا لائبریری ہے جو AI سے چلنے والی ایپلیکیشنز بنانے کو آسان بناتی ہے۔ HTTP کلائنٹس اور JSON پارسنگ سے نمٹنے کی بجائے، آپ صاف ستھرے جاوا APIs کے ساتھ کام کرتے ہیں۔ 
+LangChain4j ایک Java لائبریری ہے جو AI سے چلنے والی ایپلیکیشنز بنانے کو آسان بناتی ہے۔ HTTP کلائنٹس اور JSON تجزیہ کے بجائے، آپ صاف ستھری Java APIs کے ساتھ کام کرتے ہیں۔
 
-LangChain میں "چین" متعدد اجزاء کو آپس میں جوڑنے کی طرف اشارہ کرتا ہے - آپ ایک پرامپٹ کو ماڈل کے ساتھ، پھر ایک پارسر کے ساتھ جوڑ سکتے ہیں، یا متعدد AI کالز کو اس طرح جوڑ سکتے ہیں جہاں ایک آؤٹ پٹ اگلے ان پٹ میں جاتا ہے۔ یہ تیز آغاز بنیادی باتوں پر توجہ دیتا ہے اس سے پہلے کہ زیادہ پیچیدہ چینز کی جانچ کی جائے۔
+LangChain میں "چین" سے مراد متعدد اجزاء کو آپس میں جوڑنا ہے - آپ پرامپٹ کو ماڈل سے پارسر تک چیک کر سکتے ہیں، یا متعدد AI کالز کو ایک دوسرے کے ساتھ سلسلے وار جوڑ سکتے ہیں جہاں ایک آؤٹ پٹ اگلے ان پٹ میں جاتا ہے۔ یہ تیز آغاز بنیادی اصولوں پر توجہ دیتا ہے اس سے پہلے کہ آپ مزید پیچیدہ چینز کو دریافت کریں۔
 
 <img src="../../../translated_images/ur/langchain-concept.ad1fe6cf063515e1.webp" alt="LangChain4j Chaining Concept" width="800"/>
 
-*LangChain4j میں اجزاء کی چیننگ - بلاکس کو جوڑ کر طاقتور AI ورک فلو بنانا*
+*LangChain4j میں اجزاء کو سلسلے وار جوڑنا - بلاکس کو جوڑ کر طاقتور AI ورک فلو بنانا*
 
-ہم تین مرکزی اجزاء استعمال کریں گے:
+ہم تین بنیادی اجزاء استعمال کریں گے:
 
-**ChatModel** - AI ماڈل کے ساتھ انٹرایکشن کے لئے انٹرفیس۔ `model.chat("prompt")` کال کریں اور ایک جواب کا سٹرنگ حاصل کریں۔ ہم `OpenAiOfficialChatModel` استعمال کرتے ہیں جو GitHub ماڈلز جیسے OpenAI-مطابق اینڈپوائنٹس کے ساتھ کام کرتا ہے۔
+**ChatModel** - AI ماڈل کے ساتھ بات چیت کا انٹرفیس۔ `model.chat("prompt")` کال کریں اور جواب حاصل کریں۔ ہم `OpenAiOfficialChatModel` استعمال کرتے ہیں جو OpenAI-مطابقت والے اینڈ پوائنٹس جیسے GitHub Models کے ساتھ کام کرتا ہے۔
 
-**AiServices** - قسم-محفوظ AI سروس انٹرفیسز بناتا ہے۔ طریقے وضع کریں، انہیں `@Tool` کے ساتھ تشریح کریں، اور LangChain4j نظم و نسق سنبھالتا ہے۔ AI خود بخود جب ضرورت ہو آپ کے جاوا طریقوں کو کال کرتا ہے۔
+**AiServices** - قسم محفوظ AI سروس انٹرفیسز بناتا ہے۔ طریقے define کریں، ان پر `@Tool` کا ٹیگ لگائیں، اور LangChain4j انتظام کرتا ہے۔ AI آپ کے Java طریقوں کو خود بخود کال کرتا ہے جب ضرورت ہو۔
 
-**MessageWindowChatMemory** - بات چیت کی تاریخ کو برقرار رکھتا ہے۔ اس کے بغیر، ہر درخواست آزاد ہوتی ہے۔ اس کے ساتھ، AI پچھلے پیغامات کو یاد رکھتا ہے اور متعدد دوروں کے دوران سیاق و سباق برقرار رکھتا ہے۔
+**MessageWindowChatMemory** - گفتگو کی تاریخ کو برقرار رکھتا ہے۔ اس کے بغیر ہر درخواست آزاد ہوتی ہے۔ اس کے ساتھ، AI پچھلے پیغامات کو یاد رکھتا ہے اور متعدد ٹرنز میں سیاق و سباق بنائے رکھتا ہے۔
 
 <img src="../../../translated_images/ur/architecture.eedc993a1c576839.webp" alt="LangChain4j Architecture" width="800"/>
 
-*LangChain4j فن تعمیر - مرکزی اجزاء ایک ساتھ کام کر کے آپ کی AI ایپلیکیشنز کو بااختیار بناتے ہیں*
+*LangChain4j کی ساخت - بنیادی اجزاء مل کر آپ کی AI ایپلیکیشنز کو چلانے کے لیے کام کرتے ہیں*
 
-## LangChain4j انحصار
+## LangChain4j کی منحصرات
 
-یہ تیز آغاز [`pom.xml`](../../../00-quick-start/pom.xml) میں تین Maven انحصار استعمال کرتا ہے:
+یہ تیز آغاز [`pom.xml`](../../../00-quick-start/pom.xml) میں تین Maven منحصرات استعمال کرتا ہے:
 
 ```xml
 <!-- Core LangChain4j library -->
@@ -68,142 +68,144 @@ LangChain میں "چین" متعدد اجزاء کو آپس میں جوڑنے ک
     <artifactId>langchain4j-easy-rag</artifactId> <!-- Inherited from BOM in root pom.xml -->
 </dependency>
 ```
+  
+`langchain4j-open-ai-official` ماڈیول `OpenAiOfficialChatModel` کلاس فراہم کرتا ہے جو OpenAI-مطابقت رکھنے والی APIs سے جڑتا ہے۔ GitHub Models اسی API فارمٹ استعمال کرتا ہے، اس لیے کوئی خاص اڈاپٹر نہیں چاہیے - بس بیس URL کو `https://models.github.ai/inference` پر پوائنٹ کریں۔
 
-`langchain4j-open-ai-official` ماڈیول `OpenAiOfficialChatModel` کلاس فراہم کرتا ہے جو OpenAI-مطابق APIs سے منسلک ہوتا ہے۔ GitHub ماڈلز اسی API فارمیٹ کا استعمال کرتے ہیں، اس لیے کسی خاص اڈاپٹر کی ضرورت نہیں - بس بیس URL کو `https://models.github.ai/inference` پر پوائنٹ کریں۔
-
-`langchain4j-easy-rag` ماڈیول خودکار دستاویز تقسیم، ایمبیڈنگ، اور بازیافت فراہم کرتا ہے تاکہ آپ بغیر دستی ترتیب دیے RAG ایپلیکیشنز بنا سکیں۔
+`langchain4j-easy-rag` ماڈیول خودکار دستاویزی تقسیم، ایمبیڈنگ اور بازیافت فراہم کرتا ہے تاکہ آپ بغیر دستی طور پر ہر مرحلہ مرتب کیے RAG ایپلیکیشنز بنا سکیں۔
 
 ## ضروریات
 
-**کیا آپ ڈیولپمنٹ کنٹینر استعمال کر رہے ہیں؟** جاوا اور Maven پہلے سے نصب ہیں۔ آپ کو صرف ایک GitHub پرسنل ایکسس ٹوکن چاہیے۔
+**Dev Container استعمال کر رہے ہیں؟** Java اور Maven پہلے سے انسٹال ہیں۔ آپ کو صرف GitHub Personal Access Token چاہیے۔
 
 **مقامی ترقی:**
-- جاوا 21+، Maven 3.9+
-- GitHub پرسنل ایکسس ٹوکن (نیچے ہدایات)
+- Java 21+، Maven 3.9+
+- GitHub Personal Access Token (نیچے ہدایات)
 
-> **نوٹ:** یہ ماڈیول GitHub ماڈلز سے `gpt-4.1-nano` استعمال کرتا ہے۔ کوڈ میں ماڈل کا نام تبدیل نہ کریں - یہ GitHub کے دستیاب ماڈلز کے مطابق ترتیب دیا گیا ہے۔
+> **نوٹ:** یہ ماڈیول GitHub Models سے `gpt-4.1-nano` استعمال کرتا ہے۔ کوڈ میں ماڈل نام تبدیل نہ کریں - یہ GitHub کے دستیاب ماڈلز کے ساتھ کام کرنے کے لیے ترتیب دیا گیا ہے۔
 
 ## سیٹ اپ
 
 ### 1. اپنا GitHub ٹوکن حاصل کریں
 
-1. جائیں [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens)
-2. "Generate new token" پر کلک کریں
-3. ایک وضاحتی نام دیں (مثلاً "LangChain4j Demo")
-4. معیاد (7 دن کی تجویز)
-5. "Account permissions" میں "Models" کو "Read-only" پر سیٹ کریں
-6. "Generate token" پر کلک کریں
-7. اپنا ٹوکن کاپی کریں اور محفوظ کریں - آپ اسے دوبارہ نہیں دیکھیں گے
+1. [GitHub Settings → Personal Access Tokens](https://github.com/settings/personal-access-tokens) پر جائیں  
+2. "Generate new token" پر کلک کریں  
+3. ایک وضاحتی نام دیں (مثلاً "LangChain4j Demo")  
+4. مدت ختم ہونے کی مدت مقرر کریں (7 دن کی سفارش کی جاتی ہے)  
+5. "Account permissions" میں "Models" پر جائیں اور اسے "Read-only" پر سیٹ کریں  
+6. "Generate token" پر کلک کریں  
+7. اپنا ٹوکن کاپی کریں اور محفوظ رکھیں - آپ کو یہ دوبارہ نظر نہیں آئے گا  
 
 ### 2. اپنا ٹوکن سیٹ کریں
 
 **آپشن 1: VS Code استعمال کرتے ہوئے (تجویز کردہ)**
 
-اگر آپ VS Code استعمال کر رہے ہیں تو پروجیکٹ روٹ میں `.env` فائل میں اپنا ٹوکن شامل کریں:
+اگر آپ VS Code استعمال کر رہے ہیں تو اپنے پراجیکٹ کے روٹ میں `.env` فائل میں اپنا ٹوکن شامل کریں:
 
-اگر `.env` فائل موجود نہیں ہے تو `.env.example` کو `.env` میں کاپی کریں یا نیا `.env` فائل خود بنائیں۔
+اگر `.env` فائل موجود نہیں، تو `.env.example` کو `.env` میں کاپی کریں یا نیا `.env` فائل بنائیں۔
 
-**مثال `.env` فائل:**
+**مثال `.env` فائل:**  
 ```bash
 # میں /workspaces/LangChain4j-for-Beginners/.env
 GITHUB_TOKEN=your_token_here
 ```
+  
+پھر آپ کسی بھی ڈیمو فائل (مثلاً `BasicChatDemo.java`) پر ایکسپلورر میں رائٹ کلک کر کے **"Run Java"** منتخب کریں یا Run and Debug پینل سے لانچ کنفیگریشنز استعمال کریں۔
 
-پھر آپ صرف کسی بھی ڈیمو فائل (مثلاً `BasicChatDemo.java`) پر رائٹ کلک کر کے **"Run Java"** منتخب کر سکتے ہیں یا Run and Debug پینل سے لانچ کنفیگریشنز استعمال کر سکتے ہیں۔
+**آپشن 2: ٹرمینل استعمال کرتے ہوئے**
 
-**آپشن 2: ٹرمینل استعمال کریں**
+ٹوکن کو بطور ماحول کا متغیر سیٹ کریں:
 
-ٹوکن کو ماحول کے متغیر کے طور پر سیٹ کریں:
-
-**Bash:**
+**Bash:**  
 ```bash
 export GITHUB_TOKEN=your_token_here
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 $env:GITHUB_TOKEN=your_token_here
 ```
+  
 
 ## مثالیں چلائیں
 
-**VS Code استعمال کرتے ہوئے:** صرف کسی بھی ڈیمو فائل پر رائٹ کلک کریں اور **"Run Java"** منتخب کریں، یا Run and Debug پینل سے لانچ کنفیگریشنز استعمال کریں (یقینی بنائیں کہ آپ نے پہلے `.env` فائل میں اپنا ٹوکن شامل کیا ہے)۔
+**VS Code استعمال کرتے ہوئے:** کسی بھی ڈیمو فائل پر رائٹ کلک کریں اور **"Run Java"** منتخب کریں، یا Run and Debug پینل سے لانچ کنفیگریشنز استعمال کریں (پہلے `.env` میں اپنا ٹوکن شامل کرنا یقینی بنائیں)۔
 
-**Maven استعمال کرتے ہوئے:** متبادل کے طور پر، آپ کمانڈ لائن سے چلا سکتے ہیں:
+**Maven استعمال کرتے ہوئے:** متبادل طور پر، آپ کمانڈ لائن سے چلائیں:
 
 ### 1. بنیادی چیٹ
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
+  
 
 ### 2. پرامپٹ پیٹرنز
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.PromptEngineeringDemo
 ```
-
+  
 زیرو شاٹ، فیو شاٹ، چین آف تھوٹ، اور رول بیسڈ پرامپٹنگ دکھاتا ہے۔
 
 ### 3. فنکشن کالنگ
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ToolIntegrationDemo
 ```
+  
+AI ضرورت پڑنے پر خود بخود آپ کے Java طریقے کال کرتا ہے۔
 
-AI خود بخود آپ کے جاوا طریقوں کو کال کرتا ہے جب ضرورت ہو۔
+### 4. دستاویز سوال و جواب (آسان RAG)
 
-### 4. دستاویز Q&A (آسان RAG)
-
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.SimpleReaderDemo
 ```
-
-آسان RAG کے ساتھ خودکار ایمبیڈنگ اور بازیافت استعمال کرتے ہوئے اپنی دستاویزات کے بارے میں سوالات کریں۔
+  
+آسان RAG کے ساتھ خودکار ایمبیڈنگ اور بازیافت کے ذریعے اپنے دستاویزات کے بارے میں سوالات پوچھیں۔
 
 ### 5. ذمہ دار AI
 
-**Bash:**
+**Bash:**  
 ```bash
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.ResponsibleAIDemo
 ```
+  
+دیکھیں کہ AI سیفٹی فلٹرز کس طرح نقصان دہ مواد کو روک دیتے ہیں۔
 
-دیکھیں کہ AI کی حفاظتی فلٹرز کس طرح مضر مواد کو روکتی ہیں۔
-
-## ہر مثال میں کیا دکھایا گیا ہے
+## ہر مثال کیا دکھاتی ہے
 
 **بنیادی چیٹ** - [BasicChatDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java)
 
-یہاں سے شروع کریں تاکہ LangChain4j کو اس کی سب سے سادہ صورت میں دیکھ سکیں۔ آپ `OpenAiOfficialChatModel` بنائیں گے، `.chat()` کے ساتھ پرامپٹ بھیجیں گے، اور جواب حاصل کریں گے۔ یہ بنیاد دکھاتا ہے: کس طرح ماڈلز کو کسٹم اینڈپوائنٹس اور API کیز کے ساتھ شروع کریں۔ جب آپ اس پیٹرن کو سمجھ جائیں گے، سب کچھ اسی پر قائم ہوگا۔
+یہاں شروع کریں تاکہ LangChain4j کو اس کی سادگی میں دیکھ سکیں۔ آپ ایک `OpenAiOfficialChatModel` بنائیں گے، `.chat()` کے ذریعے پرامپٹ بھیجیں گے، اور جواب حاصل کریں گے۔ یہ بنیاد دکھاتا ہے: ماڈلز کو کس طرح کسٹم اینڈ پوائنٹس اور API کیز کے ساتھ initialize کرنا ہے۔ ایک بار جب آپ یہ پیٹرن سمجھ لیں، باقی سب اس پر مبنی ہوگا۔
 
 ```java
 OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
@@ -215,18 +217,18 @@ OpenAiOfficialChatModel model = OpenAiOfficialChatModel.builder()
 String response = model.chat("What is LangChain4j?");
 System.out.println(response);
 ```
-
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) چیٹ کے ساتھ آزمائیں:** کھولیں [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) اور پوچھیں:
-> - "میں اس کوڈ میں GitHub ماڈلز سے Azure OpenAI میں کیسے سوئچ کروں؟"
-> - "OpenAiOfficialChatModel.builder() میں اور کون سے پیرامیٹرز ترتیب دے سکتا ہوں؟"
-> - "میں مکمل جواب کا انتظار کرنے کے بجائے کیسے اسٹریمنگ جوابات شامل کر سکتا ہوں؟"
+  
+> **🤖 GitHub Copilot Chat کے ساتھ آزمائیں:** [`BasicChatDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/BasicChatDemo.java) کھولیں اور پوچھیں:  
+> - "میں اس کوڈ میں GitHub Models سے Azure OpenAI کیسے سوئچ کروں؟"  
+> - "OpenAiOfficialChatModel.builder() میں کون سے اور پیرامیٹرز مرتب کر سکتا ہوں؟"  
+> - "میں مکمل جواب کا انتظار کیے بغیر اسٹریم شدہ جوابات کیسے شامل کروں؟"  
 
 **پرامپٹ انجینئرنگ** - [PromptEngineeringDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java)
 
-اب جب آپ جان گئے کہ ماڈل سے بات کیسے کریں، آئیں دیکھتے ہیں کہ آپ اسے کیا کہتے ہیں۔ یہ ڈیمو وہی ماڈل سیٹ اپ استعمال کرتا ہے لیکن پانچ مختلف پرامپٹنگ پیٹرنز دکھاتا ہے۔ زیرو شاٹ پرامپٹ آزمائیں براہ راست ہدایات کے لیے، فیو شاٹ پرامپٹس جن سے مثالیں سیکھیں، چین آف تھوٹ پرامپٹس جو استدلال کے مراحل ظاہر کرتے ہیں، اور رول بیسڈ پرامپٹس جو سیاق و سباق طے کرتے ہیں۔ آپ دیکھیں گے کہ وہی ماڈل کس طرح بہت مختلف نتائج دیتا ہے اس پر منحصر ہے کہ آپ درخواست کیسے بناتے ہیں۔
+اب جب آپ کو ماڈل سے بات کرنا آتا ہے، تو دیکھیں کہ آپ اس سے کیا کہتے ہیں۔ یہ ڈیمو وہی ماڈل سیٹ اپ استعمال کرتا ہے لیکن پانچ مختلف پرامپٹنگ پیٹرنز دکھاتا ہے۔ براہ راست ہدایتوں کے لیے زیرو شاٹ پرامپٹ آزمائیں، مثالوں سے سیکھنے کے لیے فیو شاٹ، استدلال کے مراحل کے لیے چین آف تھوٹ، اور سیاق و سباق کے لیے رول بیسڈ پرامپٹ۔ آپ دیکھیں گے کہ ایک ہی ماڈل کس قدر مختلف نتائج دیتا ہے کہ آپ اپنی درخواست کیسے فریم کرتے ہیں۔
 
-یہ ڈیمو پرامپٹ ٹیمپلیٹس بھی دکھاتا ہے، جو متغیرات کے ساتھ دوبارہ قابل استعمال پرامپٹس بنانے کا طاقتور طریقہ ہیں۔
-نیچے والا مثال LangChain4j `PromptTemplate` استعمال کرتے ہوئے متغیرات بھرنے کا ایک پرامپٹ دکھاتا ہے۔ AI فراہم کردہ منزل اور سرگرمی کی بنیاد پر جواب دے گا۔
+یہ ڈیمو پرامپٹ ٹیمپلیٹس بھی دکھاتا ہے، جو متغیرات کے ساتھ دوبارہ قابل استعمال پرامپٹس بنانے کا ایک طاقتور طریقہ ہے۔  
+نیچے والا مثال LangChain4j `PromptTemplate` استعمال کرتا ہے تاکہ متغیرات بھریں۔ AI دی گئی منزل اور سرگرمی کی بنیاد پر جواب دے گا۔
 
 ```java
 PromptTemplate template = PromptTemplate.from(
@@ -240,16 +242,16 @@ Prompt prompt = template.apply(Map.of(
 
 String response = model.chat(prompt.text());
 ```
-
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) چیٹ کے ساتھ آزمائیں:** کھولیں [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) اور پوچھیں:
-> - "زیرو شاٹ اور فیو شاٹ پرامپٹنگ میں کیا فرق ہے، اور میں کب کس کا استعمال کروں؟"
-> - "ٹیمپریچر پیرامیٹر ماڈل کے جوابات پر کیسے اثر انداز ہوتا ہے؟"
-> - "پیداوار میں پرامپٹ انجیکشن حملوں کو روکنے کے لئے کیا تکنیک ہیں؟"
-> - "میں عام پیٹرنز کے لئے دوبارہ قابل استعمال PromptTemplate آبجیکٹس کیسے بنا سکتا ہوں؟"
+  
+> **🤖 GitHub Copilot Chat کے ساتھ آزمائیں:** [`PromptEngineeringDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/PromptEngineeringDemo.java) کھولیں اور پوچھیں:  
+> - "زیرو شاٹ اور فیو شاٹ پرامپٹنگ میں کیا فرق ہے، اور مجھے کب کون سا استعمال کرنا چاہیے؟"  
+> - "درجہ حرارت (temperature) پیرامیٹر ماڈل کے جوابات کو کیسے متاثر کرتا ہے؟"  
+> - "پروڈکشن میں پرامپٹ انجیکشن حملوں کو روکنے کی کیا تکنیکیں ہیں؟"  
+> - "عام پیٹرنز کے لیے reusable PromptTemplate آبجیکٹس کیسے بناؤں؟"  
 
 **ٹول انٹیگریشن** - [ToolIntegrationDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java)
 
-یہیں سے LangChain4j طاقتور بنتا ہے۔ آپ `AiServices` استعمال کریں گے تاکہ ایک AI اسسٹنٹ بنائیں جو آپ کے جاوا طریقے کال کر سکے۔ بس طریقوں کی تشریح کریں `@Tool("description")` کے ساتھ اور LangChain4j باقی نظم سنبھالتا ہے - AI خود بخود فیصلہ کرتا ہے کہ ہر ٹول کب استعمال کرنا ہے، صارف کی درخواست کی بنیاد پر۔ یہ فنکشن کالنگ کو دکھاتا ہے، جو AI بنانے کی کلیدی تکنیک ہے جو صرف سوالات کے جواب دینے کے بجائے عمل کر سکتا ہے۔
+یہاں LangChain4j طاقتور ہو جاتا ہے۔ آپ `AiServices` استعمال کریں گے تاکہ AI معاون بنائیں جو آپ کے Java طریقے کال کرے۔ بس اپنے طریقوں پر `@Tool("description")` کا ٹیگ لگائیں اور LangChain4j باقی انتظام کرے گا - AI خود بخود فیصلہ کرتا ہے کہ صارف کیا پوچھتا ہے اس کی بنیاد پر کون سا ٹول کب استعمال کرنا ہے۔ یہ فنکشن کالنگ ظاہر کرتا ہے، جو AI کو صرف سوالوں کا جواب دینے کی بجائے عمل کرنے کے قابل بناتا ہے۔
 
 ```java
 @Tool("Performs addition of two numeric values")
@@ -264,16 +266,16 @@ MathAssistant assistant = AiServices.builder(MathAssistant.class)
     .build();
 String response = assistant.chat("What is 25 plus 17?");
 ```
+  
+> **🤖 GitHub Copilot Chat کے ساتھ آزمائیں:** [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) کھولیں اور پوچھیں:  
+> - "@Tool انوٹیشن کیسے کام کرتی ہے اور LangChain4j اس کے پیچھے کیا کرتا ہے؟"  
+> - "کیا AI ایک سلسلے میں متعدد ٹولز کال کر سکتا ہے تاکہ پیچیدہ مسائل حل کرے؟"  
+> - "اگر کوئی ٹول استثنا پھینکے تو میں غلطیوں کو کیسے ہینڈل کروں؟"  
+> - "میں اس کیلکولیٹر مثال کے بجائے اصلی API کیسے انٹیگریٹ کروں؟"  
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) چیٹ کے ساتھ آزمائیں:** کھولیں [`ToolIntegrationDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) اور پوچھیں:
-> - "@Tool تشریح کیسے کام کرتی ہے اور LangChain4j اس کے پیچھے کیا کرتا ہے؟"
-> - "کیا AI پیچیدہ مسائل حل کرنے کے لئے متواتر طور پر متعدد ٹولز کال کر سکتا ہے؟"
-> - "اگر کوئی ٹول استثنا پھینکے تو میں غلطیوں کو کیسے سنبھالوں؟"
-> - "میں اس کیلکولیٹر مثال کی جگہ حقیقی API کیسے انٹیگریٹ کروں؟"
+**دستاویز سوال و جواب (آسان RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
 
-**دستاویز Q&A (آسان RAG)** - [SimpleReaderDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java)
-
-یہاں آپ LangChain4j کے "آسان RAG" طریقہ استعمال کرتے ہوئے RAG (ریکوریئل-آگمینٹڈ جنریشن) دیکھیں گے۔ دستاویزات لوڈ کی جاتی ہیں، خودکار طور پر تقسیم اور ایمبیڈ کر کے میموری اسٹور میں ڈال دی جاتی ہیں، پھر ایک کنٹینٹ ریکوریور AI کو متعلقہ حصے وقتِ سوال فراہم کرتا ہے۔ AI آپ کی دستاویزات کی بنیاد پر جواب دیتا ہے، نہ کہ اپنی عمومی معلومات پر۔
+یہاں آپ LangChain4j کی "Easy RAG" اپروچ کے ذریعے RAG (retrieval-augmented generation) دیکھیں گے۔ دستاویزات لوڈ ہوتی ہیں، خودکار طریقے سے تقسیم اور ایمبیڈ کی جاتی ہیں، پھر ایک مواد بازیافت کنندہ وقتِ سوال AI کو متعلقہ حصے فراہم کرتا ہے۔ AI آپ کی دستاویزات کی بنیاد پر جواب دیتا ہے، اپنی عمومی معلومات نہیں۔
 
 ```java
 Document document = loadDocument(Paths.get("document.txt"));
@@ -289,17 +291,17 @@ Assistant assistant = AiServices.builder(Assistant.class)
 
 String answer = assistant.chat("What is the main topic?");
 ```
-
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) چیٹ کے ساتھ آزمائیں:** کھولیں [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) اور پوچھیں:
-> - "RAG AI ہیلوسنیشن کو ماڈل کی ٹریننگ ڈیٹا استعمال کرنے کے مقابلے میں کیسے روک دیتا ہے؟"
-> - "اس آسان طریقہ اور کسٹم RAG پائپ لائن میں کیا فرق ہے؟"
-> - "میں اسے متعدد دستاویزات یا بڑے نالج بیس کے لئے کیسے وسعت دوں؟"
+  
+> **🤖 GitHub Copilot Chat کے ساتھ آزمائیں:** [`SimpleReaderDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/SimpleReaderDemo.java) کھولیں اور پوچھیں:  
+> - "ماڈل کی تربیتی ڈیٹا کے مقابلے میں RAG AI کے ہیلوسینیشن کو کیسے روکتا ہے؟"  
+> - "یہ آسان طریقہ اور کسٹم RAG پائپ لائن میں کیا فرق ہے؟"  
+> - "میں اسے متعدد دستاویزات یا بڑے نالج بیس کے لیے کیسے اسکیل کر سکتا ہوں؟"  
 
 **ذمہ دار AI** - [ResponsibleAIDemo.java](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java)
 
-گہری دفاع کے ساتھ AI حفاظت بنائیں۔ یہ ڈیمو حفاظتی دو پرتوں کو دکھاتا ہے جو مل کر کام کرتی ہیں:
+گہرائی سے دفاع کے ساتھ AI سیفٹی بنائیں۔ یہ ڈیمو دو حفاظتی پرتیں دکھاتا ہے جو اکٹھے کام کرتی ہیں:
 
-**حصہ 1: LangChain4j ان پٹ گارڈریل** - خطرناک پرامپٹس کو LLM تک پہنچنے سے پہلے روکیں۔ ایسی اپنی مرضی کی گارڈریل بنائیں جو ممنوعہ کلیدی الفاظ یا پیٹرنز چیک کرتی ہیں۔ یہ آپ کے کوڈ میں چلتی ہیں، اس لئے تیز اور مفت ہیں۔
+**حصہ 1: LangChain4j ان پٹ گارڈریل** - خطرناک پرامپٹس کو LLM تک پہنچنے سے پہلے روکتا ہے۔ اپنی کسٹم گارڈریل بنائیں جو ممنوعہ الفاظ یا پیٹرنز کو چیک کرتی ہیں۔ یہ آپ کے کوڈ میں چلتے ہیں، اس لیے تیز اور مفت ہیں۔
 
 ```java
 class DangerousContentGuardrail implements InputGuardrail {
@@ -313,21 +315,21 @@ class DangerousContentGuardrail implements InputGuardrail {
     }
 }
 ```
+  
+**حصہ 2: پرووائیڈر سیفٹی فلٹرز** - GitHub Models میں بلٹ ان فلٹرز ہیں جو آپ کی گارڈریل کی ممکنہ کمی کو پورا کرتے ہیں۔ آپ سخت بلاکس (HTTP 400 ایررز) اور نرم انکار دیکھیں گے جہاں AI شائستگی سے انکار کرتا ہے۔
 
-**حصہ 2: فراہم کنندہ کی حفاظتی فلٹرز** - GitHub ماڈلز میں بلٹ ان فلٹرز ہیں جو آپ کی گارڈریل سے بچنے والی چیزوں کو پکڑتے ہیں۔ آپ سخت بلاکس (HTTP 400 کی خرابی) اور نرم انکار جہاں AI مہذب انداز میں انکار کرتا ہے، دیکھیں گے۔
+> **🤖 GitHub Copilot Chat کے ساتھ آزمائیں:** [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) کھولیں اور پوچھیں:  
+> - "InputGuardrail کیا ہے اور میں اپنا کیسے بناؤں؟"  
+> - "سخت بلاک اور نرم انکار میں کیا فرق ہے؟"  
+> - "گارڈریل اور پرووائیڈر فلٹرز دونوں استعمال کرنے کی کیا وجہ ہے؟"  
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) چیٹ کے ساتھ آزمائیں:** کھولیں [`ResponsibleAIDemo.java`](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ResponsibleAIDemo.java) اور پوچھیں:
-> - "InputGuardrail کیا ہے اور میں اپنا خود کیسے بنا سکتا ہوں؟"
-> - "سخت بلاک اور نرم انکار میں کیا فرق ہے؟"
-> - "میں گارڈریل اور فراہم کنندہ کے فلٹرز دونوں کیوں استعمال کروں؟"
+## آگے کے مراحل
 
-## اگلے مراحل
-
-**اگلا ماڈیول:** [01-introduction - LangChain4j اور gpt-5 کے ساتھ Azure پر شروع کرنا](../01-introduction/README.md)
+**اگلا ماڈیول:** [01-introduction - LangChain4j کے ساتھ شروعات](../01-introduction/README.md)
 
 ---
 
-**نیویگیشن:** [← مین پیج پر واپس](../README.md) | [اگلا: ماڈیول 01 - تعارف →](../01-introduction/README.md)
+**نیوگیشن:** [← مین پیج پر واپس](../README.md) | [اگلا: ماڈیول 01 - تعارف →](../01-introduction/README.md)
 
 ---
 
@@ -335,18 +337,18 @@ class DangerousContentGuardrail implements InputGuardrail {
 
 ### پہلی بار Maven بلڈ
 
-**مسئلہ:** ابتدائی `mvn clean compile` یا `mvn package` میں زیادہ وقت لگنا (10-15 منٹ)
+**مسئلہ:** ابتدائی `mvn clean compile` یا `mvn package` میں طویل وقت لگنا (10-15 منٹ)
 
-**وجہ:** Maven کو پہلی بار تمام پروجیکٹ انحصارات (Spring Boot، LangChain4j لائبریریز، Azure SDKs، وغیرہ) ڈاؤنلوڈ کرنے ہوتے ہیں۔
+**سبب:** Maven کو پہلی بار تمام پروجیکٹ منحصرات ڈاؤن لوڈ کرنے کی ضرورت ہوتی ہے (Spring Boot، LangChain4j لائبریریز، Azure SDKs، وغیرہ)۔
 
-**حل:** یہ معمول کی بات ہے۔ بعد کی بلڈز بہت تیز ہوں گی کیونکہ انحصارات مقامی طور پر کیش ہو جاتی ہیں۔ ڈاؤنلوڈ وقت آپ کے نیٹ ورک کی رفتار پر منحصر ہے۔
+**حل:** یہ معمول کی بات ہے۔ بعد کی بلڈز زیادہ تیز ہوں گی کیونکہ منحصرات لوکل کیش ہو چکی ہوتی ہیں۔ ڈاؤن لوڈ کا وقت آپ کے نیٹ ورک کی رفتار پر منحصر ہے۔
 
-### PowerShell Maven کمانڈ کی ترکیب
+### PowerShell Maven کمانڈ کی نحو
 
-**مسئلہ:** Maven کمانڈز `Unknown lifecycle phase ".mainClass=..."` کی خرابی کے ساتھ ناکام ہو جاتی ہیں۔
-**باعث**: پاور شیل `=` کو متغیر تفویض آپریٹر کے طور پر سمجھتا ہے، جو میون پراپرٹی کے نحو کو توڑ دیتا ہے
+**مسئلہ:** Maven کمانڈز `Unknown lifecycle phase ".mainClass=..."` کی خرابی کے ساتھ ناکام ہونا
+**وجہ**: PowerShell `=` کو ویری ایبل اسائنمنٹ آپریٹر کے طور پر سمجھتا ہے، جس سے Maven پراپرٹی کا سینٹیکس ٹوٹ جاتا ہے
 
-**حل**: میون کمانڈ سے پہلے اسٹاپ-پارسنگ آپریٹر `--%` استعمال کریں:
+**حل**: Maven کمانڈ سے پہلے stop-parsing آپریٹر `--%` استعمال کریں:
 
 **PowerShell:**
 ```powershell
@@ -358,30 +360,30 @@ mvn --% compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.Ba
 mvn compile exec:java -Dexec.mainClass=com.example.langchain4j.quickstart.BasicChatDemo
 ```
 
-`--%` آپریٹر پاور شیل کو کہتا ہے کہ وہ باقی تمام دلائل کو بغیر کسی تشریح کے حرف بہ حرف میون کو دے۔
+`--%` آپریٹر PowerShell کو بتاتا ہے کہ وہ باقی تمام دلائل کو بغیر کسی تشریح کے بالکل ویسے ہی Maven کو بھیج دے۔
 
-### ونڈوز پاور شیل ایموجی ڈسپلے
+### Windows PowerShell میں ایموجی کی نمائش
 
-**مسئلہ**: AI جوابات پاور شیل میں ایموجیز کی بجائے گڑبڑ والے کریکٹرز (مثلاً `????` یا `â??`) دکھاتے ہیں
+**مسئلہ**: PowerShell میں AI جوابات ایموجیز کی بجائے بے معنی حروف دکھاتے ہیں (جیسے `????` یا `â??`)
 
-**باعث**: پاور شیل کی ڈیفالٹ انکوڈنگ UTF-8 ایموجیز کی حمایت نہیں کرتی
+**وجہ**: PowerShell کی ڈیفالٹ انکوڈنگ UTF-8 ایموجیز کی حمایت نہیں کرتی
 
 **حل**: جاوا ایپلیکیشنز چلانے سے پہلے یہ کمانڈ چلائیں:
 ```cmd
 chcp 65001
 ```
 
-یہ ٹرمینل میں UTF-8 انکوڈنگ کو جبراً فعال کرتا ہے۔ متبادل طور پر، ونڈوز ٹرمینل استعمال کریں جس میں بہتر یونیکوڈ سپورٹ موجود ہے۔
+یہ ٹرمینل میں UTF-8 انکوڈنگ کو زبردستی فعال کرتا ہے۔ متبادل طور پر، Windows Terminal استعمال کریں جو بہتر یونیکوڈ سپورٹ فراہم کرتا ہے۔
 
 ### API کالز کی ڈیبگنگ
 
-**مسئلہ**: AI ماڈل سے توثیقی غلطیاں، ریٹ لمٹس، یا غیر متوقع جوابات
+**مسئلہ**: تصدیقی غلطیاں، ریٹ لمٹس، یا AI ماڈل سے غیر متوقع جوابات
 
-**حل**: مثالوں میں `.logRequests(true)` اور `.logResponses(true)` شامل ہیں تاکہ کنسول میں API کالز ظاہر ہوں۔ یہ توثیقی غلطیوں، ریٹ لمٹس، یا غیر متوقع جوابات کو مسئلہ حل کرنے میں مدد دیتا ہے۔ پروڈکشن میں لوگ شور کم کرنے کے لیے ان فلیگز کو ہٹا دیں۔
+**حل**: مثالوں میں `.logRequests(true)` اور `.logResponses(true)` شامل ہیں تاکہ API کالز کنسول میں دکھائی دیں۔ یہ تصدیقی غلطیوں، ریٹ لمٹس، یا غیر متوقع جوابات کو حل کرنے میں مدد دیتا ہے۔ پیداوار میں ان فلیگز کو ہٹا دیں تاکہ لاگ شور کم ہو۔
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**اعلانِ ذمہ داری**:
-اس دستاویز کا ترجمہ AI ترجمہ سروس [Co-op Translator](https://github.com/Azure/co-op-translator) کی مدد سے کیا گیا ہے۔ اگرچہ ہم درستگی کی بھرپور کوشش کرتے ہیں، لیکن براہِ کرم اس بات کا خیال رکھیں کہ خودکار ترجمے میں غلطیاں یا نقصانات ہو سکتے ہیں۔ اصل دستاویز اپنی مادری زبان میں ہی مستند ماخذ سمجھی جائے۔ اہم معلومات کے لیے پیشہ ور انسانی ترجمہ تجویز کیا جاتا ہے۔ ہم اس ترجمے کے استعمال سے پیدا ہونے والی کسی بھی غلط فہمی یا غلط تشریحات کے ذمہ دار نہیں ہوں گے۔
+**اہم اطلاع**:  
+یہ دستاویز AI تراجم کی سروس [Co-op Translator](https://github.com/Azure/co-op-translator) کے ذریعے ترجمہ کی گئی ہے۔ اگرچہ ہم درستگی کی بھرپور کوشش کرتے ہیں، براہ کرم اس بات کا خیال رکھیں کہ خودکار تراجم میں غلطیاں یا نا درستیاں ہو سکتی ہیں۔ اصل دستاویز اپنی مادری زبان میں ہی معتبر ماخذ سمجھی جانی چاہیے۔ اہم معلومات کے لیے پیشہ ورانہ انسانی ترجمہ تجویز کیا جاتا ہے۔ اس ترجمے کے استعمال سے ہونے والی کسی بھی غلط فہمی یا غلط تعبیر کی ذمہ داری ہم پر عائد نہیں ہوتی۔
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

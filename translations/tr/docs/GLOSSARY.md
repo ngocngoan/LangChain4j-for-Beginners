@@ -6,10 +6,10 @@
 - [LangChain4j Bileşenleri](../../../docs)
 - [AI/ML Kavramları](../../../docs)
 - [Koruyucu Önlemler](../../../docs)
-- [Prompt Mühendisliği](../../../docs)
+- [İstem Mühendisliği](../../../docs)
 - [RAG (Getirme Destekli Üretim)](../../../docs)
 - [Ajanlar ve Araçlar](../../../docs)
-- [Ajansal Modül](../../../docs)
+- [Agentic Modülü](../../../docs)
 - [Model Bağlam Protokolü (MCP)](../../../docs)
 - [Azure Hizmetleri](../../../docs)
 - [Test ve Geliştirme](../../../docs)
@@ -18,39 +18,39 @@ Kurs boyunca kullanılan terimler ve kavramlar için hızlı başvuru.
 
 ## Temel Kavramlar
 
-**AI Agent** - Özerk şekilde akıl yürütme ve hareket etme yeteneğine sahip yapay zeka sistemi. [Modül 04](../04-tools/README.md)
+**AI Agent** - Yapay zekayı kullanarak kendi kendine düşünen ve hareket eden sistem. [Modül 04](../04-tools/README.md)
 
-**Zincir** - Çıktının bir sonraki adıma besleme yaptığı işlem dizisi.
+**Chain** - Çıkışın sonraki adıma aktarıldığı işlem dizisi.
 
-**Parçalama** - Belgeleri daha küçük parçalara bölme. Tipik: 300-500 token ve örtüşme. [Modül 03](../03-rag/README.md)
+**Chunking** - Belgelerin daha küçük parçalara bölünmesi. Tipik: 300-500 token ve örtüşme. [Modül 03](../03-rag/README.md)
 
-**Bağlam Penceresi** - Bir modelin işleyebileceği maksimum token sayısı. GPT-5.2: 400K token.
+**Context Window** - Bir modelin işleyebileceği maksimum token sayısı. GPT-5.2: 400K token (en fazla 272K giriş, 128K çıkış).
 
-**Öbeklemeler (Embeddings)** - Metnin anlamını temsil eden sayısal vektörler. [Modül 03](../03-rag/README.md)
+**Embeddings** - Metin anlamını temsil eden sayısal vektörler. [Modül 03](../03-rag/README.md)
 
-**Fonksiyon Çağrısı** - Modelin dış fonksiyonları çağırmak için yapılandırılmış istekler üretmesi. [Modül 04](../04-tools/README.md)
+**Function Calling** - Modelin dış işlevleri çağırmak için yapılandırılmış istekler üretmesi. [Modül 04](../04-tools/README.md)
 
-**Hallüsinasyon** - Modellerin yanlış ancak mantıklı görünen bilgi üretmesi.
+**Hallucination** - Modellerin hatalı ama inanılır bilgiler üretmesi.
 
-**Prompt** - Dil modeline verilen metin girişi. [Modül 02](../02-prompt-engineering/README.md)
+**Prompt** - Dil modeline verilen metin girdisi. [Modül 02](../02-prompt-engineering/README.md)
 
-**Anlamsal Arama** - Anahtar kelime yerine öbeklemeler kullanarak anlamla arama. [Modül 03](../03-rag/README.md)
+**Semantic Search** - Anahtar kelime değil, gömülü anlam kullanarak arama. [Modül 03](../03-rag/README.md)
 
-**Durumlu vs Durumsuz** - Durumsuz: hafıza yok. Durumlu: konuşma geçmişini korur. [Modül 01](../01-introduction/README.md)
+**Stateful vs Stateless** - Stateless: hafızasız. Stateful: konuşma geçmişini tutar. [Modül 01](../01-introduction/README.md)
 
-**Tokenler** - Modellerin işlediği temel metin birimleri. Maliyet ve sınırları etkiler. [Modül 01](../01-introduction/README.md)
+**Tokens** - Modellerin işlediği temel metin birimleri. Maliyet ve sınırları etkiler. [Modül 01](../01-introduction/README.md)
 
-**Araç Zinciri** - Çıktının sonraki aracı bilgilendirdiği ardışık araç yürütme. [Modül 04](../04-tools/README.md)
+**Tool Chaining** - Çıktının sonraki çağrıyı bilgilendirdiği ardışık araç yürütme. [Modül 04](../04-tools/README.md)
 
 ## LangChain4j Bileşenleri
 
-**AiServices** - Tür güvenliği olan AI servis arabirimleri oluşturur.
+**AiServices** - Tip-güvenli yapay zeka servis arayüzleri oluşturur.
 
 **OpenAiOfficialChatModel** - OpenAI ve Azure OpenAI modelleri için birleşik istemci.
 
-**OpenAiOfficialEmbeddingModel** - OpenAI Official istemcisi kullanarak öbeklemeler oluşturur (OpenAI ve Azure OpenAI destekler).
+**OpenAiOfficialEmbeddingModel** - OpenAI Resmi istemcisi kullanarak gömüler oluşturur (OpenAI ve Azure OpenAI destekler).
 
-**ChatModel** - Dil modelleri için temel arabirim.
+**ChatModel** - Dil modelleri için temel arayüz.
 
 **ChatMemory** - Konuşma geçmişini tutar.
 
@@ -60,13 +60,13 @@ Kurs boyunca kullanılan terimler ve kavramlar için hızlı başvuru.
 
 **EmbeddingModel** - Metni sayısal vektörlere dönüştürür.
 
-**EmbeddingStore** - Öbeklemeleri depolar ve geri çağırır.
+**EmbeddingStore** - Gömüleri depolar ve geri getirir.
 
 **MessageWindowChatMemory** - Son mesajların kayan penceresini tutar.
 
-**PromptTemplate** - `{{variable}}` yer tutucularıyla yeniden kullanılabilir promptlar oluşturur.
+**PromptTemplate** - `{{değişken}}` yer tutucularla yeniden kullanılabilir istemler oluşturur.
 
-**TextSegment** - Özniteliği olan metin parçası. RAG'de kullanılır.
+**TextSegment** - Meta verili metin parçası. RAG'de kullanılır.
 
 **ToolExecutionRequest** - Araç yürütme isteğini temsil eder.
 
@@ -74,105 +74,105 @@ Kurs boyunca kullanılan terimler ve kavramlar için hızlı başvuru.
 
 ## AI/ML Kavramları
 
-**Few-Shot Learning** - Promptlarda örnekler verme. [Modül 02](../02-prompt-engineering/README.md)
+**Few-Shot Learning** - İstemlerde örnek sağlama. [Modül 02](../02-prompt-engineering/README.md)
 
-**Büyük Dil Modeli (LLM)** - Geniş metin verileriyle eğitilmiş yapay zeka modelleri.
+**Large Language Model (LLM)** - Büyük metin verisiyle eğitilmiş yapay zeka modelleri.
 
-**Akıl Yürütme Çabası** - GPT-5.2'de düşünme derinliğini kontrol eden parametre. [Modül 02](../02-prompt-engineering/README.md)
+**Reasoning Effort** - GPT-5.2 parametresi, düşünmenin derinliğini kontrol eder. [Modül 02](../02-prompt-engineering/README.md)
 
-**Sıcaklık (Temperature)** - Çıktı rastgeleliğini kontrol eder. Düşük = belirleyici, yüksek = yaratıcı.
+**Temperature** - Çıktı rastgeleliğini kontrol eder. Düşük=belirli, yüksek=yaratıcı.
 
-**Vektör Veritabanı** - Öbeklemeler için özel veritabanı. [Modül 03](../03-rag/README.md)
+**Vector Database** - Gömüler için özel veritabanı. [Modül 03](../03-rag/README.md)
 
 **Zero-Shot Learning** - Örnek olmadan görev yapma. [Modül 02](../02-prompt-engineering/README.md)
 
 ## Koruyucu Önlemler - [Modül 00](../00-quick-start/README.md)
 
-**Derinliğe Dayalı Savunma** - Uygulama seviyesi koruyucu önlemlerle sağlayıcı güvenlik filtrelerini birleştiren çok katmanlı güvenlik yaklaşımı.
+**Defense in Depth** - Uygulama seviyesinde koruyucu önlemlerle sağlayıcı güvenlik filtrelerini birleştiren çok katmanlı güvenlik yöntemi.
 
-**Katı Engelleme** - Sağlayıcının ciddi içerik ihlalleri için HTTP 400 hatası vermesi.
+**Hard Block** - Sağlayıcı ciddi içerik ihlallerinde HTTP 400 hatası verir.
 
-**InputGuardrail** - Kullanıcı girişi LLM'ye ulaşmadan önce doğrulamak için LangChain4j arabirimi. Zararlı promptları erken engelleyerek maliyet ve gecikmeyi azaltır.
+**InputGuardrail** - LLM’ye ulaşmadan önce kullanıcı girişini doğrulayan LangChain4j arayüzü. Zararlı istemleri erken engelleyerek maliyet ve gecikmeyi azaltır.
 
-**InputGuardrailResult** - Koruyucu önlem doğrulamasının dönüş türü: `success()` veya `fatal("reason")`.
+**InputGuardrailResult** - Koruyucu doğrulama dönüş türü: `success()` veya `fatal("sebep")`.
 
-**OutputGuardrail** - AI cevaplarını kullanıcıya dönmeden önce doğrulama arabirimi.
+**OutputGuardrail** - AI yanıtlarını kullanıcılara dönmeden önce doğrulama arayüzü.
 
-**Sağlayıcı Güvenlik Filtreleri** - API seviyesinde ihlalleri yakalayan AI sağlayıcılarının (örneğin GitHub Modelleri) yerleşik içerik filtreleri.
+**Provider Safety Filters** - API düzeyinde ihlalleri yakalayan AI sağlayıcılarının yerleşik içerik filtreleri (örn. GitHub Modelleri).
 
-**Yumuşak Reddetme** - Model hataya yol açmadan nazikçe yanıt vermeyi reddeder.
+**Soft Refusal** - Model kibarca hatasız yanıt vermekten kaçınır.
 
-## Prompt Mühendisliği - [Modül 02](../02-prompt-engineering/README.md)
+## İstem Mühendisliği - [Modül 02](../02-prompt-engineering/README.md)
 
-**Düşünce Zinciri** - Daha iyi doğruluk için adım adım akıl yürütme.
+**Chain-of-Thought** - Daha iyi doğruluk için adım adım muhakeme.
 
-**Kısıtlı Çıktı** - Belirli format veya yapıyı zorlamak.
+**Constrained Output** - Belirli format veya yapı zorunluluğu.
 
-**Yüksek İsteklilik** - GPT-5.2'de detaylı akıl yürütme deseni.
+**High Eagerness** - GPT-5.2 için titiz düşünme kalıbı.
 
-**Düşük İsteklilik** - GPT-5.2'de hızlı yanıt deseni.
+**Low Eagerness** - GPT-5.2 için hızlı yanıt kalıbı.
 
-**Çok Turlu Konuşma** - Değiş tokuşlar arasında bağlam sürdürme.
+**Multi-Turn Conversation** - Değiş tokuşlar arasında bağlamın korunması.
 
-**Rol Tabanlı Prompt** - Sistem mesajlarıyla model kişiliğini belirleme.
+**Role-Based Prompting** - Sistem mesajlarıyla model kişiliğini belirleme.
 
-**Öz-Yansıtma** - Modelin çıktısını değerlendirmesi ve geliştirmesi.
+**Self-Reflection** - Model kendi çıktısını değerlendirir ve geliştirir.
 
-**Yapılandırılmış Analiz** - Sabit değerlendirme çerçevesi.
+**Structured Analysis** - Sabit değerlendirme çerçevesi.
 
-**Görev Yürütme Deseni** - Planla → Yürüt → Özetle.
+**Task Execution Pattern** - Planla → Uygula → Özetle.
 
 ## RAG (Getirme Destekli Üretim) - [Modül 03](../03-rag/README.md)
 
-**Belge İşleme Hattı** - Yükle → parçalara ayır → öbekle → depola.
+**Document Processing Pipeline** - Yükle → parçala → göm → depola.
 
-**Bellek İçi Öbekleme Deposu** - Test için kalıcı olmayan depolama.
+**In-Memory Embedding Store** - Test için geçici depolama.
 
-**RAG** - Yanıtları sağlamlaştırmak için getirme ile üretimi birleştirir.
+**RAG** - Yanıtları dayandırmak için getirmeyle üretimi birleştirir.
 
-**Benzerlik Puanı** - Anlamsal benzerlik ölçüsü (0-1).
+**Similarity Score** - Anlamsal benzerlik ölçüsü (0-1 arası).
 
-**Kaynak Referansı** - Getirilen içeriğe dair meta veri.
+**Source Reference** - Getirilen içerik hakkında meta veriler.
 
 ## Ajanlar ve Araçlar - [Modül 04](../04-tools/README.md)
 
-**@Tool Anotasyonu** - Java yöntemlerini AI tarafından çağrılabilir araçlar olarak işaretler.
+**@Tool Annotation** - Java yöntemlerini AI tarafından çağrılabilir araç olarak işaretler.
 
-**ReAct Deseni** - Akıl Yürüt → Hareket Et → Gözlemle → Tekrarla.
+**ReAct Pattern** - Düşün → Hareket Et → Gözlemle → Tekrarla.
 
-**Oturum Yönetimi** - Farklı kullanıcılar için ayrı bağlamlar.
+**Session Management** - Farklı kullanıcılar için ayrı bağlamlar.
 
-**Araç** - AI ajanının çağırabileceği fonksiyon.
+**Tool** - AI ajanının çağırabileceği işlev.
 
-**Araç Açıklaması** - Araç amacı ve parametrelerinin dokümantasyonu.
+**Tool Description** - Araç amacı ve parametrelerinin dökümantasyonu.
 
-## Ajansal Modül - [Modül 05](../05-mcp/README.md)
+## Agentic Modülü - [Modül 05](../05-mcp/README.md)
 
-**@Agent Anotasyonu** - Arabirimleri, davranışı bildirimsel olarak tanımlanmış AI ajanları olarak işaretler.
+**@Agent Annotation** - AI ajanlarını bildirimsel davranış tanımlamasıyla işaretler.
 
-**Agent Listener** - `beforeAgentInvocation()` ve `afterAgentInvocation()` ile ajan yürütmesini izlemek için kanca.
+**Agent Listener** - `beforeAgentInvocation()` ve `afterAgentInvocation()` ile ajan yürütmesini izler.
 
-**Ajansal Alan** - Ajanların çıktıları `outputKey` ile depolayıp aşağıdaki ajanların kullanabileceği paylaşılan hafıza.
+**Agentic Scope** - Ajanların çıktıları paylaştığı, sonraki ajanların kullandığı ortak hafıza alanı.
 
-**AgenticServices** - `agentBuilder()` ve `supervisorBuilder()` kullanarak ajan yaratan fabrika.
+**AgenticServices** - `agentBuilder()` ve `supervisorBuilder()` ile ajanlar oluşturan fabrika.
 
-**Koşullu İş Akışı** - Farklı uzman ajanlara koşullara göre yönlendirme.
+**Conditional Workflow** - Koşullara göre farklı uzman ajanlara yönlendirme.
 
-**İnsan Döngüde (Human-in-the-Loop)** - Onay veya içerik incelemesi için insan kontrol noktaları ekleyen iş akışı.
+**Human-in-the-Loop** - Onay veya içerik incelemesi için insan kontrol noktaları ekleyen iş akışı.
 
-**langchain4j-agentic** - Bildirimsel ajan oluşturma için Maven bağımlılığı (deneysel).
+**langchain4j-agentic** - Bildirimsel ajan oluşturmak için Maven bağımlılığı (deneysel).
 
-**Döngü İş Akışı** - Bir koşul sağlanana kadar (ör. kalite puanı ≥ 0.8) ajan yürütmesini yineleme.
+**Loop Workflow** - Belirli koşul gerçekleşene kadar ajan yürütmesini yineleme (örneğin kalite skoru ≥ 0.8).
 
-**outputKey** - Ajan anotasyonu parametresi; sonuçların Ajansal Alan'da depolanacağı yer.
+**outputKey** - Ajan anotasyonu parametresi, sonuçların Agentic Scope’da nereye kaydedileceğini belirtir.
 
-**Paralel İş Akışı** - Bağımsız görevler için birden fazla ajanın aynı anda çalıştırılması.
+**Parallel Workflow** - Bağımsız görevler için aynı anda birden fazla ajan çalıştırma.
 
-**Yanıt Stratejisi** - Gözetmenin nihai yanıtı oluşturma biçimi: SON, ÖZET veya PUANLI.
+**Response Strategy** - Süpervizörün nihai cevabı oluşturma yöntemi: SON, ÖZET veya PUANLI.
 
-**Ardışık İş Akışı** - Ajanların çıktılarının bir sonraki adıma aktarılarak sırayla yürütülmesi.
+**Sequential Workflow** - Ajanları sırayla yürütme, çıktı bir sonraki adıma akar.
 
-**Gözetmen Ajan Deseni** - Hangi alt ajanların çağrılacağına dinamik karar veren gelişmiş ajansal desen.
+**Supervisor Agent Pattern** - Bir süpervizör LLM’nin hangi alt ajanları çağıracağına dinamik karar verdiği gelişmiş ajan modeli.
 
 ## Model Bağlam Protokolü (MCP) - [Modül 05](../05-mcp/README.md)
 
@@ -180,53 +180,53 @@ Kurs boyunca kullanılan terimler ve kavramlar için hızlı başvuru.
 
 **MCP** - Model Bağlam Protokolü: AI uygulamalarını dış araçlara bağlamak için standart. Bir kere oluştur, her yerde kullan.
 
-**MCP İstemcisi** - MCP sunucularına bağlanan, araçları keşfeden ve kullanan uygulama.
+**MCP Client** - MCP sunucularına bağlanan ve araçları keşfedip kullanan uygulama.
 
-**MCP Sunucusu** - MCP üzerinden araçları açıklamalar ve parametre şemaları ile sunan servis.
+**MCP Server** - Araçları net açıklamalar ve parametre şemalarıyla MCP üzerinden sunan servis.
 
-**McpToolProvider** - MCP araçlarını AI servisleri ve ajanlarda kullanılmak üzere saran LangChain4j bileşeni.
+**McpToolProvider** - LangChain4j bileşeni, MCP araçlarını AI servisleri ve ajanlarında kullanılmak üzere sarar.
 
-**McpTransport** - MCP iletişimi arabirimi. Uygulamaları Stdio ve HTTP’yi içerir.
+**McpTransport** - MCP iletişimi için arayüz. Uygulamaları Stdio ve HTTP içerir.
 
-**Stdio Taşımacılığı** - stdin/stdout üzerinden yerel süreç taşımacılığı. Dosya sistemi erişimi veya komut satırı araçları için idealdir.
+**Stdio Transport** - Yerel işlem taşımacılığı, stdin/stdout üzerinden. Dosya sistemi erişimi veya komut satırı araçları için uygun.
 
-**StdioMcpTransport** - MCP sunucusunu alt süreç olarak başlatan LangChain4j uygulaması.
+**StdioMcpTransport** - MCP sunucusunu alt süreç olarak çalıştıran LangChain4j uygulaması.
 
-**Araç Keşfi** - İstemcinin sunucudan açıklamalar ve şemalarla birlikte mevcut araçları sorgulaması.
+**Tool Discovery** - İstemcinin sunucudan açıklamalar ve şemalarla mevcut araçları sorgulaması.
 
 ## Azure Hizmetleri - [Modül 01](../01-introduction/README.md)
 
-**Azure AI Arama** - Vektör yetenekli bulut arama. [Modül 03](../03-rag/README.md)
+**Azure AI Search** - Vektör özellikli bulut araması. [Modül 03](../03-rag/README.md)
 
-**Azure Geliştirici CLI (azd)** - Azure kaynaklarını konuşlandırma aracı.
+**Azure Developer CLI (azd)** - Azure kaynaklarını dağıtır.
 
 **Azure OpenAI** - Microsoft’un kurumsal AI servisi.
 
-**Bicep** - Azure altyapı kodu dili. [Altyapı Kılavuzu](../01-introduction/infra/README.md)
+**Bicep** - Azure altyapı kodlama dili. [Altyapı Rehberi](../01-introduction/infra/README.md)
 
-**Dağıtım Adı** - Azure’daki model dağıtımı için isim.
+**Deployment Name** - Azure’da model dağıtma için ad.
 
-**GPT-5.2** - Akıl yürütme kontrolü ile en yeni OpenAI modeli. [Modül 02](../02-prompt-engineering/README.md)
+**GPT-5.2** - En son OpenAI modeli, muhakeme kontrolü sağlıyor. [Modül 02](../02-prompt-engineering/README.md)
 
-## Test ve Geliştirme - [Test Kılavuzu](TESTING.md)
+## Test ve Geliştirme - [Test Rehberi](TESTING.md)
 
-**Dev Container** - Konteyner tabanlı geliştirme ortamı. [Yapılandırma](../../../.devcontainer/devcontainer.json)
+**Dev Container** - Konteynerleştirilmiş geliştirme ortamı. [Yapılandırma](../../../.devcontainer/devcontainer.json)
 
-**GitHub Modelleri** - Ücretsiz AI model sahası. [Modül 00](../00-quick-start/README.md)
+**GitHub Models** - Ücretsiz AI model oyun alanı. [Modül 00](../00-quick-start/README.md)
 
-**Bellek İçi Test** - Bellek içi depolama ile test.
+**In-Memory Testing** - Bellekte geçici depolama ile test.
 
-**Entegrasyon Testi** - Gerçek altyapı ile test.
+**Integration Testing** - Gerçek altyapı ile test.
 
 **Maven** - Java derleme otomasyon aracı.
 
-**Mockito** - Java taklit (mock) çerçevesi.
+**Mockito** - Java için sahte/mock kütüphanesi.
 
 **Spring Boot** - Java uygulama çatısı. [Modül 01](../01-introduction/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Feragatname**:  
-Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayın. Orijinal belge, kendi ana dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucunda ortaya çıkabilecek yanlış anlamalar veya yorumlamalar nedeniyle sorumluluk kabul edilmemektedir.
+**Feragatname**:
+Bu belge, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba sarf etsek de, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayın. Orijinal belge, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucu ortaya çıkabilecek yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

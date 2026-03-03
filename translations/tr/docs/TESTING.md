@@ -6,15 +6,15 @@
 - [Testlerin Kapsadığı Konular](../../../docs)
 - [Testleri Çalıştırma](../../../docs)
 - [VS Code'da Testleri Çalıştırma](../../../docs)
-- [Test Desenleri](../../../docs)
+- [Test Şablonları](../../../docs)
 - [Test Felsefesi](../../../docs)
 - [Sonraki Adımlar](../../../docs)
 
-Bu rehber, API anahtarı veya dış servis gerektirmeden yapay zeka uygulamalarını nasıl test edeceğinizi gösteren testlere sizi yönlendirir.
+Bu rehber, API anahtarları veya harici servisler gerektirmeden AI uygulamalarını nasıl test edeceğinizi gösteren testleri adım adım anlatır.
 
 ## Hızlı Başlangıç
 
-Tüm testleri tek bir komut ile çalıştırın:
+Tüm testleri tek bir komutla çalıştırın:
 
 **Bash:**
 ```bash
@@ -25,31 +25,33 @@ mvn test
 ```powershell
 mvn --% test
 ```
+
+Tüm testler geçtiğinde, aşağıdaki ekran görüntüsündeki gibi hata almadan testlerin çalıştığını görmelisiniz.
 
 <img src="../../../translated_images/tr/test-results.ea5c98d8f3642043.webp" alt="Başarılı Test Sonuçları" width="800"/>
 
-*Tüm testlerin sıfır başarısızlıkla geçtiğini gösteren başarılı test çalıştırması*
+*Hata almadan tüm testlerin geçtiğini gösteren başarılı test çalıştırması*
 
 ## Testlerin Kapsadığı Konular
 
-Bu kurs, yerel olarak çalışan **birim testlere** odaklanır. Her test, LangChain4j'nin belirli bir kavramını izole şekilde gösterir.
+Bu eğitim, yerel olarak çalışan **birim testlere** odaklanır. Her test, LangChain4j'nin belirli bir kavramını izole şekilde gösterir. Aşağıdaki test piramidi, birim testlerin nerede yer aldığını gösterir — test stratejinizin hızlı, güvenilir temelini oluştururlar.
 
 <img src="../../../translated_images/tr/testing-pyramid.2dd1079a0481e53e.webp" alt="Test Piramidi" width="800"/>
 
-*Birim testlerin (hızlı, izole), entegrasyon testlerinin (gerçek bileşenler) ve uçtan uca testlerin dengesi gösteren test piramidi. Bu eğitim birim testi kapsamaktadır.*
+*Birim testler (hızlı, izole), entegrasyon testleri (gerçek bileşenler) ve uçtan uca testler arasındaki dengeyi gösteren test piramidi. Bu eğitim birim testi kapsamaktadır.*
 
 | Modül | Testler | Odak | Ana Dosyalar |
 |--------|-------|-------|-----------|
-| **00 - Hızlı Başlangıç** | 6 | İstem şablonları ve değişken yerleştirme | `SimpleQuickStartTest.java` |
-| **01 - Giriş** | 8 | Konuşma hafızası ve durumlu sohbet | `SimpleConversationTest.java` |
-| **02 - İstem Mühendisliği** | 12 | GPT-5.2 desenleri, istek seviyeleri, yapılandırılmış çıktı | `SimpleGpt5PromptTest.java` |
-| **03 - RAG** | 10 | Doküman işleme, gömme, benzerlik araması | `DocumentServiceTest.java` |
-| **04 - Araçlar** | 12 | Fonksiyon çağırma ve araç zinciri | `SimpleToolsTest.java` |
-| **05 - MCP** | 8 | Stdio transport ile Model Context Protocol | `SimpleMcpTest.java` |
+| **00 - Hızlı Başlangıç** | 6 | İstek şablonları ve değişken yer değiştirme | `SimpleQuickStartTest.java` |
+| **01 - Giriş** | 8 | Konuşma belleği ve durumlu sohbet | `SimpleConversationTest.java` |
+| **02 - İstek Mühendisliği** | 12 | GPT-5.2 şablonları, istek istekliliği, yapılandırılmış çıktı | `SimpleGpt5PromptTest.java` |
+| **03 - RAG** | 10 | Doküman işleme, gömme (embedding), benzerlik araması | `DocumentServiceTest.java` |
+| **04 - Araçlar** | 12 | Fonksiyon çağırma ve araç zincirleme | `SimpleToolsTest.java` |
+| **05 - MCP** | 8 | Model Kontekst Protokolü (MCP) stdio taşıma ile | `SimpleMcpTest.java` |
 
 ## Testleri Çalıştırma
 
-**Tüm testleri ana dizinden çalıştırın:**
+**Kök dizinden tüm testleri çalıştır:**
 
 **Bash:**
 ```bash
@@ -61,23 +63,23 @@ mvn test
 mvn --% test
 ```
 
-**Belirli bir modül için testleri çalıştırın:**
+**Belirli bir modülün testlerini çalıştır:**
 
 **Bash:**
 ```bash
 cd 01-introduction && mvn test
-# Veya kökten
+# Ya da kök dizinden
 mvn test -pl 01-introduction
 ```
 
 **PowerShell:**
 ```powershell
 cd 01-introduction; mvn --% test
-# Veya kökten
+# Ya da kök dizinden
 mvn --% test -pl 01-introduction
 ```
 
-**Tek bir test sınıfını çalıştırın:**
+**Tek bir test sınıfını çalıştır:**
 
 **Bash:**
 ```bash
@@ -89,7 +91,7 @@ mvn test -Dtest=SimpleConversationTest
 mvn --% test -Dtest=SimpleConversationTest
 ```
 
-**Belirli bir test metodunu çalıştırın:**
+**Belirli bir test metodunu çalıştır:**
 
 **Bash:**
 ```bash
@@ -98,36 +100,36 @@ mvn test -Dtest=SimpleConversationTest#Konuşma geçmişi korunmalı mı
 
 **PowerShell:**
 ```powershell
-mvn --% test -Dtest=SimpleConversationTest#Konuşma Geçmişi Korunmalı mı
+mvn --% test -Dtest=SimpleConversationTest#Konuşma geçmişi korunmalı mı
 ```
 
 ## VS Code'da Testleri Çalıştırma
 
-Visual Studio Code kullanıyorsanız, Test Explorer testleri çalıştırmak ve hata ayıklamak için grafiksel arayüz sağlar.
+Visual Studio Code kullanıyorsanız, Test Gezgini testleri çalıştırmak ve hata ayıklamak için grafiksel bir arayüz sağlar.
 
 <img src="../../../translated_images/tr/vscode-testing.f02dd5917289dced.webp" alt="VS Code Test Gezgini" width="800"/>
 
-*VS Code Test Gezgini, tüm Java test sınıflarını ve bireysel test metodlarını gösteren test ağacını gösteriyor*
+*Tüm Java test sınıfları ve tekil test metotlarını gösteren VS Code Test Gezgini test ağacı*
 
 **VS Code'da testleri çalıştırmak için:**
 
 1. Aktivite Çubuğundaki beher simgesine tıklayarak Test Gezgini'ni açın
 2. Tüm modülleri ve test sınıflarını görmek için test ağacını genişletin
-3. Herhangi bir testi tek tek çalıştırmak için oynat düğmesine tıklayın
-4. Tüm testi çalıştırmak için "Tüm Testleri Çalıştır" seçeneğine tıklayın
-5. Herhangi bir testi sağ tıklayıp "Testi Hata Ayıkla" seçeneği ile kesme noktası koyup kodu adım adım izleyin
+3. Herhangi bir testi tek başına çalıştırmak için yanındaki oynat düğmesine tıklayın
+4. Tüm testleri çalıştırmak için "Tüm Testleri Çalıştır" seçeneğine tıklayın
+5. Herhangi bir teste sağ tıklayarak "Testi Hata Ayıkla" ile kesme noktaları ayarlayıp kodda adım adım ilerleyin
 
-Test Gezgini, geçen testler için yeşil onay işaretleri gösterir ve başarısız olanlara ayrıntılı hata mesajları sağlar.
+Test Gezgini geçen testler için yeşil onay işaretleri gösterir ve başarısızlık durumunda detaylı hata mesajları sağlar.
 
-## Test Desenleri
+## Test Şablonları
 
-### Desen 1: İstem Şablonlarını Test Etme
+### Şablon 1: İstek Şablonlarını Test Etme
 
-En basit desen, herhangi bir yapay zeka modeli çağırmadan istem şablonlarını test eder. Değişken yerleştirmesinin doğru çalıştığını ve istemlerin beklenildiği gibi biçimlendiğini doğrularsınız.
+En basit şablon, herhangi bir AI modelini çağırmadan istek şablonlarını test eder. Değişken yer değiştirmesinin doğru çalıştığını ve isteklerin doğru formatlandığını doğrularsınız.
 
-<img src="../../../translated_images/tr/prompt-template-testing.b902758ddccc8dee.webp" alt="İstem Şablonu Testi" width="800"/>
+<img src="../../../translated_images/tr/prompt-template-testing.b902758ddccc8dee.webp" alt="İstek Şablonu Testi" width="800"/>
 
-*İstem şablonlarını test ederken değişken yerleştirme akışını gösteriyor: yer tutuculu şablon → değerler uygulanıyor → biçimlendirilmiş çıktı doğrulanıyor*
+*Değişken yer değiştirme akışını gösteren istek şablonu testi: yer tutuculu şablon → uygulanan değerler → doğrulanmış biçimlendirilmiş çıktı*
 
 ```java
 @Test
@@ -146,27 +148,27 @@ void testPromptTemplateFormatting() {
 }
 ```
 
-Bu test `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java` içinde bulunur.
+Bu test `00-quick-start/src/test/java/com/example/langchain4j/quickstart/SimpleQuickStartTest.java` dosyasında yer alır.
 
 **Çalıştırmak için:**
 
 **Bash:**
 ```bash
-cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testİstekŞablonuBiçimlendirme
+cd 00-quick-start && mvn test -Dtest=SimpleQuickStartTest#testPromptŞablonFormatlama
 ```
 
 **PowerShell:**
 ```powershell
-cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testİstekŞablonuBiçimlendirme
+cd 00-quick-start; mvn --% test -Dtest=SimpleQuickStartTest#testİstemŞablonuBiçimlendirmesi
 ```
 
-### Desen 2: Dil Modellerini Taklit Etme
+### Şablon 2: Dil Modellerini Taklit Etme (Mocking)
 
-Konuşma mantığını test ederken, önceden belirlenmiş yanıtlar döndüren sahte modeller oluşturmak için Mockito kullanın. Bu testlerin hızlı, ücretsiz ve deterministik olmasını sağlar.
+Sohbet mantığını test ederken, önceden belirlenmiş yanıtları dönen sahte (mock) modeller oluşturmak için Mockito kullanın. Bu testleri hızlı, ücretsiz ve deterministik (kesin) yapar.
 
-<img src="../../../translated_images/tr/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Sahte ve Gerçek API Karşılaştırması" width="800"/>
+<img src="../../../translated_images/tr/mock-vs-real.3b8b1f85bfe6845e.webp" alt="Mock ve Gerçek API Karşılaştırması" width="800"/>
 
-*Testte neden sahte nesnelerin tercih edildiğini gösteriyor: hızlı, ücretsiz, deterministik ve API anahtarı gerektirmezler*
+*Testler için neden mock tercih edildiğini gösteren karşılaştırma: hızlı, ücretsiz, deterministik ve API anahtarı gerektirmezler*
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -211,20 +213,20 @@ class SimpleConversationTest {
         conversationService.chat(conversationId, "Third message");
 
         List<ChatMessage> history = conversationService.getHistory(conversationId);
-        assertThat(history).hasSize(6); // 3 kullanıcı + 3 Yapay Zeka mesajı
+        assertThat(history).hasSize(6); // 3 kullanıcı + 3 yapay zeka mesajı
     }
 }
 ```
 
-Bu desen `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java` içinde bulunur. Sahte nesne, tutarlı davranışı sağlar böylece hafıza yönetiminin doğru çalıştığını doğrulayabilirsiniz.
+Bu şablon `01-introduction/src/test/java/com/example/langchain4j/service/SimpleConversationTest.java` dosyasında bulunur. Mock, bellek yönetiminin doğru çalıştığını doğrulamanız için tutarlı davranış sağlar.
 
-### Desen 3: Konuşma İzolasyonunu Test Etme
+### Şablon 3: Konuşma İzolasyonunu Test Etme
 
-Konuşma hafızası birden çok kullanıcıyı ayrı tutmalıdır. Bu test, konuşmaların bağlamlarını karıştırmadığını doğrular.
+Konuşma belleği, birden çok kullanıcıyı ayrı tutmalıdır. Bu test, konuşmaların bağlamlarını karıştıramayacağını doğrular.
 
 <img src="../../../translated_images/tr/conversation-isolation.e00336cf8f7a3e3f.webp" alt="Konuşma İzolasyonu" width="800"/>
 
-*Farklı kullanıcılar için ayrı hafıza depoları göstererek bağlam karışıklığını önleyen konuşma izolasyon testi*
+*Bağlam karışıklığını önlemek için farklı kullanıcılar için ayrı bellek depolarını gösteren konuşma izolasyon testi*
 
 ```java
 @Test
@@ -248,15 +250,15 @@ void shouldIsolateConversationsByid() {
 }
 ```
 
-Her konuşma kendi bağımsız geçmişini tutar. Üretim sistemlerinde bu izolasyon çok kullanıcılı uygulamalar için kritiktir.
+Her konuşma kendi bağımsız geçmişini tutar. Üretim sistemlerinde bu izolasyon, çok kullanıcılı uygulamalar için kritik önemdedir.
 
-### Desen 4: Araçları Bağımsız Test Etme
+### Şablon 4: Araçları Bağımsız Test Etme
 
-Araçlar, yapay zekanın çağırabileceği fonksiyonlardır. Yapay zekanın kararlarından bağımsız olarak düzgün çalıştıklarını doğrudan test edin.
+Araçlar, AI'nın çağırabileceği fonksiyonlardır. Bunları doğrudan test ederek AI kararlarından bağımsız çalıştıklarından emin olun.
 
-<img src="../../../translated_images/tr/tools-testing.3e1706817b0b3924.webp" alt="Araç Testi" width="800"/>
+<img src="../../../translated_images/tr/tools-testing.3e1706817b0b3924.webp" alt="Araçların Testi" width="800"/>
 
-*Yapay zeka çağrısı olmadan sahte araç yürütmesi göstererek iş mantığını doğrulayan bağımsız araç testi*
+*İş mantığını doğrulamak için AI çağrısı olmadan mock araç yürütmesini gösteren araçların bağımsız testi*
 
 ```java
 @Test
@@ -279,15 +281,15 @@ void shouldDemonstrateToolChaining() {
 }
 ```
 
-Bu testler `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` dosyasından gelir ve yapay zeka katılımı olmadan araç mantığını doğrular. Zincirleme örnek, bir aracın çıktısının diğerinin girdisi olarak nasıl kullanıldığını gösterir.
+Bu testler `04-tools/src/test/java/com/example/langchain4j/agents/tools/SimpleToolsTest.java` dosyasından gelir. Zincirleme örneği, bir aracın çıktısının diğerinin girdisi olarak nasıl beslediğini gösterir.
 
-### Desen 5: Bellek İçi RAG Testi
+### Şablon 5: Bellek İçi RAG Testi
 
-RAG sistemleri genellikle vektör veritabanları ve gömme servisleri gerektirir. Bellek içi desen, harici bağımlılık olmadan tüm iş akışını test etmenizi sağlar.
+RAG sistemleri geleneksel olarak vektör tabanlı veri tabanları ve gömme servisleri gerektirir. Bellek içi şablon, tüm hattı harici bağımlılıklar olmadan test etmenizi sağlar.
 
 <img src="../../../translated_images/tr/rag-testing.ee7541b1e23934b1.webp" alt="Bellek İçi RAG Testi" width="800"/>
 
-*Veritabanı gerektirmeden doküman ayrıştırma, gömme saklama ve benzerlik aramasını gösteren bellek içi RAG testi iş akışı*
+*Veritabanı gerektirmeden doküman ayrıştırma, gömme depolama ve benzerlik araması gösteren bellek içi RAG test iş akışı*
 
 ```java
 @Test
@@ -304,13 +306,13 @@ void testProcessTextDocument() {
 }
 ```
 
-Bu test `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` içinde bulunur. Bellekte bir doküman oluşturur ve parçalara ayırma ile meta veri işleme doğrulaması yapar.
+Bu test `03-rag/src/test/java/com/example/langchain4j/rag/service/DocumentServiceTest.java` dosyasından gelir; bellek içinde bir doküman oluşturur ve parçalama ile meta veri işlemini doğrular.
 
-### Desen 6: MCP Entegrasyon Testi
+### Şablon 6: MCP Entegrasyon Testi
 
-MCP modülü, stdio transport kullanarak Model Context Protocol entegrasyonunu test eder. Bu testler uygulamanızın MCP sunucularını alt süreç olarak başlatıp iletişim kurabildiğini doğrular.
+MCP modülü stdio taşıma kullanarak Model Kontekst Protokolü entegrasyonunu test eder. Bu testler, uygulamanızın MCP sunucularını alt süreç olarak başlatıp iletişim kurabildiğini doğrular.
 
-`05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` içindeki testler MCP istemci davranışını doğrular.
+`05-mcp/src/test/java/com/example/langchain4j/mcp/SimpleMcpTest.java` dosyasındaki testler MCP istemci davranışını doğrular.
 
 **Çalıştırmak için:**
 
@@ -326,36 +328,36 @@ cd 05-mcp; mvn --% test
 
 ## Test Felsefesi
 
-Kodunuzu, yapay zekayı değil, test edin. Testleriniz, istemlerin nasıl oluşturulduğunu, hafızanın nasıl yönetildiğini ve araçların nasıl yürütüldüğünü doğrulayarak yazdığınız kodu doğrulamalıdır. Yapay zeka yanıtları değişkendir ve test iddialarının parçası olmamalıdır. İstem şablonunuzun değişkenleri doğru şekilde yerleştirip yerleştirmediğini sorun; yapay zekanın doğru cevabı verip vermediğini değil.
+AI'yı değil, kendi kodunuzu test edin. Testleriniz, isteklerin nasıl oluşturulduğunu, belleğin nasıl yönetildiğini ve araçların nasıl çalıştırıldığını kontrol ederek yazdığınız kodu doğrulamalı. AI yanıtları değişir ve test doğrulamalarının parçası olmamalıdır. Soru şu olmalı: "İstek şablonum değişkenleri doğru şekilde değiştiriyor mu?" değil, "AI doğru cevap mı veriyor?"
 
-Dil modelleri için sahte nesneler kullanın. Bunlar dış bağımlılıklardır, yavaş, pahalı ve deterministik değildir. Sahte nesneler testleri saniyeler yerine milisaniyeler içinde hızlı, API maliyeti olmadan ücretsiz ve her seferinde aynı sonucu veren deterministik yapar.
+Dil modelleri için mock kullanın. Bunlar dış bağımlılıklar olup yavaş, pahalı ve deterministik olmayan kaynaklardır. Mocking, testleri saniyeler yerine milisaniyeler içinde hızlı, ücretsiz ve her seferinde aynı sonucu veren deterministik hale getirir.
 
-Testleri bağımsız tutun. Her test kendi verisini kurmalı, diğer testlere güvenmemeli ve kendinden sonra temizlik yapmalıdır. Testler çalıştırma sırasından bağımsız olarak geçmelidir.
+Testleri bağımsız tutun. Her test kendi verisini kurmalı, diğer testlere bağlı olmamalı ve kendi temizliğini yapmalı. Testler çalıştırma sırasından bağımsız olarak geçmelidir.
 
-Mutlu yolu aşan uç durumları test edin. Boş girişleri, çok büyük girişleri, özel karakterleri, geçersiz parametreleri ve sınır durumlarını deneyin. Bunlar genellikle normal kullanımda ortaya çıkmayan hataları ortaya çıkarır.
+Mutlu yolun ötesinde uç durumları test edin. Boş girdiler, çok büyük girdiler, özel karakterler, geçersiz parametreler ve sınır koşulları deneyin. Bunlar genellikle normal kullanımda ortaya çıkmayan hataları ortaya çıkarır.
 
-Anlamlı isimler kullanın. `shouldMaintainConversationHistoryAcrossMultipleMessages()` ile `test1()`'i karşılaştırın. İlk isim tam olarak neyin test edildiğini söyler, böylece hata ayıklamak çok daha kolay olur.
+Anlamlı isimler kullanın. `shouldMaintainConversationHistoryAcrossMultipleMessages()` ile `test1()` karşılaştırın. İlki tam olarak ne test edildiğini söyler, hata ayıklamayı çok kolaylaştırır.
 
 ## Sonraki Adımlar
 
-Artık test desenlerini anladığınıza göre, her modüle daha derin dalın:
+Test şablonlarını anladıysanız, her modüle derinlemesine dalın:
 
-- **[00 - Hızlı Başlangıç](../00-quick-start/README.md)** - İstem şablonu temellerine başlayın
-- **[01 - Giriş](../01-introduction/README.md)** - Konuşma hafızası yönetimini öğrenin
-- **[02 - İstem Mühendisliği](../02/prompt-engineering/README.md)** - GPT-5.2 istem desenlerinde ustalaşın
-- **[03 - RAG](../03-rag/README.md)** - Retrieval-augmented generation sistemleri kurun
-- **[04 - Araçlar](../04-tools/README.md)** - Fonksiyon çağırma ve araç zincirleme uygulayın
-- **[05 - MCP](../05-mcp/README.md)** - Model Context Protocol’ü entegre edin
+- **[00 - Hızlı Başlangıç](../00-quick-start/README.md)** - İstek şablonu temelleriyle başlayın
+- **[01 - Giriş](../01-introduction/README.md)** - Konuşma belleği yönetimini öğrenin
+- **[02 - İstek Mühendisliği](../02/prompt-engineering/README.md)** - GPT-5.2 istek şablonları ustası olun
+- **[03 - RAG](../03-rag/README.md)** - Geri getirme artırılmış üretim sistemleri oluşturun
+- **[04 - Araçlar](../04-tools/README.md)** - Fonksiyon çağırma ve araç zincirleri uygulayın
+- **[05 - MCP](../05-mcp/README.md)** - Model Kontekst Protokolü entegre edin
 
-Her modülün README dosyası burada test edilen kavramların detaylı açıklamalarını sağlar.
+Her modülün README dosyası burada test edilen kavramların ayrıntılı açıklamalarını içerir.
 
 ---
 
-**Geçiş:** [← Ana Sayfaya Dön](../README.md)
+**Geçiş:** [← Ana Sayfaya Geri](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Feragatname**:  
-Bu doküman, AI çeviri servisi [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstersek de otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal doküman, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilmektedir. Bu çevirinin kullanımından kaynaklanan yanlış anlamalar veya yorum hatalarından sorumlu değiliz.
+Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba sarf etsek de, otomatik çevirilerin hata veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal belge, kendi ana dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucunda oluşabilecek herhangi bir yanlış anlama veya hatalı yorumlamadan sorumlu değiliz.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

@@ -1,4 +1,4 @@
-# Module 05: 模型上下文协议 (MCP)
+# 模块 05：模型上下文协议 (MCP)
 
 ## 目录
 
@@ -8,49 +8,55 @@
 - [Agentic 模块](../../../05-mcp)
 - [运行示例](../../../05-mcp)
   - [先决条件](../../../05-mcp)
-- [快速入门](../../../05-mcp)
+- [快速开始](../../../05-mcp)
   - [文件操作（Stdio）](../../../05-mcp)
   - [监督代理](../../../05-mcp)
     - [运行演示](../../../05-mcp)
     - [监督者如何工作](../../../05-mcp)
     - [响应策略](../../../05-mcp)
     - [理解输出](../../../05-mcp)
-    - [Agentic 模块功能解释](../../../05-mcp)
+    - [Agentic 模块功能说明](../../../05-mcp)
 - [关键概念](../../../05-mcp)
 - [恭喜！](../../../05-mcp)
-  - [下一步是什么？](../../../05-mcp)
+  - [接下来是什么？](../../../05-mcp)
 
 ## 你将学习什么
 
-你已经构建了会话式 AI，掌握了提示，基于文档设定了响应基础，并创建了带有工具的代理。但所有这些工具都是为你的特定应用程序定制的。如果你能让你的 AI 访问一个任何人都可以创建和共享的标准化工具生态系统，会怎么样呢？在本模块中，你将学习如何使用模型上下文协议（MCP）和 LangChain4j 的 agentic 模块来实现这一点。我们首先展示一个简单的 MCP 文件读取器，然后展示它如何轻松集成到使用监督代理模式的高级 agentic 工作流中。
+你已经构建了对话式 AI，掌握了提示，基于文档生成了有根据的回复，并创建了带工具的代理。但所有这些工具都是为你的特定应用程序定制构建的。如果你能让你的 AI 访问一个任何人都能创建和共享的标准化工具生态系统该多好？在本模块中，你将学习如何通过模型上下文协议（MCP）和 LangChain4j 的 agentic 模块来实现这一目标。我们首先展示一个简单的 MCP 文件读取器，然后演示它如何轻松集成到使用监督代理模式的高级 agentic 工作流中。
 
 ## 什么是 MCP？
 
-模型上下文协议（MCP）提供了正是这样一个标准化方法，让 AI 应用能够发现并使用外部工具。无须为每个数据源或服务写定制集成代码，而是连接到以一致格式暴露其能力的 MCP 服务器。你的 AI 代理随后可以自动发现并使用这些工具。
+模型上下文协议（MCP）正是为此提供了一种标准方式，让 AI 应用程序能够发现和使用外部工具。你无需为每个数据源或服务编写定制集成，只需连接到以一致格式公开其能力的 MCP 服务器。你的 AI 代理就能自动发现并使用这些工具。
+
+下图展示了区别——没有 MCP，每个集成都需要定制的点对点连接；有了 MCP，一个协议即可连接你的应用程序与任何工具：
 
 <img src="../../../translated_images/zh-CN/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*MCP 之前：复杂的点对点集成。MCP 之后：一个协议，无限可能。*
+*在 MCP 之前：复杂的点对点集成。在 MCP 之后：一个协议，无限可能。*
 
-MCP 解决了 AI 开发中的一个基本问题：每个集成都是定制的。想访问 GitHub？自定义代码。想读取文件？自定义代码。想查询数据库？自定义代码。这些集成都不能与其他 AI 应用共享。
+MCP 解决了 AI 开发中的一个根本问题：每个集成都定制。想访问 GitHub？定制代码。想读文件？定制代码。想查询数据库？定制代码。且这些集成都无法与其他 AI 应用共用。
 
-MCP 将这一过程标准化。MCP 服务器暴露带有清晰描述和架构的工具。任何 MCP 客户端都可以连接、发现可用工具并使用它们。构建一次，随处使用。
+MCP 使其标准化。MCP 服务器以清晰的描述和架构公开工具。任何 MCP 客户端都能连接、发现可用工具并使用它们。一次构建，处处可用。
+
+下图说明了此架构——单个 MCP 客户端（你的 AI 应用）连接多个 MCP 服务器，每个服务器通过标准协议暴露自身工具集：
 
 <img src="../../../translated_images/zh-CN/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*模型上下文协议架构——标准化的工具发现与执行*
+*模型上下文协议架构——标准化的工具发现和执行*
 
 ## MCP 如何工作
 
+在底层，MCP 使用分层架构。你的 Java 应用（MCP 客户端）发现可用工具，通过传输层（Stdio 或 HTTP）发送 JSON-RPC 请求，MCP 服务器执行操作并返回结果。下图细分了该协议的各层：
+
 <img src="../../../translated_images/zh-CN/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
 
-*MCP 工作原理—客户端发现工具，交换 JSON-RPC 消息，并通过传输层执行操作。*
+*MCP 工作原理——客户端发现工具，交换 JSON-RPC 消息，通过传输层执行操作。*
 
 **服务器-客户端架构**
 
 MCP 使用客户端-服务器模型。服务器提供工具——读取文件、查询数据库、调用 API。客户端（你的 AI 应用）连接服务器并使用其工具。
 
-要与 LangChain4j 一起使用 MCP，添加以下 Maven 依赖：
+要在 LangChain4j 中使用 MCP，添加以下 Maven 依赖：
 
 ```xml
 <dependency>
@@ -59,18 +65,18 @@ MCP 使用客户端-服务器模型。服务器提供工具——读取文件、
     <version>${langchain4j.version}</version>
 </dependency>
 ```
-
+  
 **工具发现**
 
-当你的客户端连接到 MCP 服务器时，会询问“你有哪些工具？”服务器返回可用工具列表，每个工具有描述和参数架构。你的 AI 代理基于用户请求决定使用哪些工具。
+当客户端连接到 MCP 服务器时，会询问“你有哪些工具？”服务器会返回一份可用工具清单，每个工具带有描述和参数架构。你的 AI 代理可根据用户请求决定使用哪些工具。下图展示了这段握手过程——客户端发送 `tools/list` 请求，服务器返回其可用工具及描述参数架构：
 
 <img src="../../../translated_images/zh-CN/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-*AI 在启动时发现可用工具——它现在知道有哪些能力可用，并能决定使用哪些。*
+*AI 在启动时发现可用工具——它现在知道有哪些能力可用，可以决定使用哪些工具。*
 
 **传输机制**
 
-MCP 支持不同传输机制。本模块演示本地进程的 Stdio 传输：
+MCP 支持不同的传输机制。两个选项是 Stdio（用于本地子进程通信）和可流式 HTTP（用于远程服务器）。本模块演示 Stdio 传输：
 
 <img src="../../../translated_images/zh-CN/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
@@ -78,7 +84,7 @@ MCP 支持不同传输机制。本模块演示本地进程的 Stdio 传输：
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-适用于本地进程。你的应用作为子进程启动服务器，通过标准输入/输出通信。适合文件系统访问或命令行工具。
+用于本地进程。你的应用作为子进程启动服务器，并通过标准输入输出通信。适合文件系统访问或命令行工具。
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -90,23 +96,39 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .logEvents(false)
     .build();
 ```
+  
+`@modelcontextprotocol/server-filesystem` 服务器暴露以下工具，均限制在你指定的目录沙盒内：
+
+| 工具 | 描述 |
+|------|------|
+| `read_file` | 读取单个文件内容 |
+| `read_multiple_files` | 一次读取多个文件 |
+| `write_file` | 创建或覆盖文件 |
+| `edit_file` | 有针对性的查找替换编辑 |
+| `list_directory` | 列出路径下文件和目录 |
+| `search_files` | 递归搜索匹配模式的文件 |
+| `get_file_info` | 获取文件元数据（大小、时间戳、权限） |
+| `create_directory` | 创建目录（包含父目录） |
+| `move_file` | 移动或重命名文件或目录 |
+
+下图展示了 Stdio 传输的运行时流程——你的 Java 应用将 MCP 服务器作为子进程启动，并通过 stdin/stdout 管道通信，期间不涉及网络或 HTTP ：
 
 <img src="../../../translated_images/zh-CN/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
 
-*Stdio 传输实例——应用启动 MCP 服务器作为子进程，通过 stdin/stdout 管道通信。*
+*Stdio 传输实际运行图——你的应用作为子进程启动 MCP 服务器，通过 stdin/stdout 管道通信。*
 
-> **🤖 使用 [GitHub Copilot](https://github.com/features/copilot) Chat 尝试：**打开 [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) 并提问:
-> - “Stdio 传输如何工作，什么情况下我应该用它而不是 HTTP？”
-> - “LangChain4j 如何管理启动的 MCP 服务器进程的生命周期？”
-> - “让 AI 访问文件系统会有哪些安全隐患？”
+> **🤖 试试用 [GitHub Copilot](https://github.com/features/copilot) 聊天：** 打开 [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) 并问：
+> - “Stdio 传输如何工作，何时应该用它而非 HTTP？”
+> - “LangChain4j 如何管理所启动 MCP 服务器进程的生命周期？”
+> - “允许 AI 访问文件系统有哪些安全隐患？”
 
 ## Agentic 模块
 
-虽然 MCP 提供了标准化工具，LangChain4j 的 **agentic 模块** 提供了一种声明式方式构建协调这些工具的代理。`@Agent` 注解和 `AgenticServices` 让你通过接口定义代理行为，而非命令式代码。
+虽然 MCP 提供了标准化工具，LangChain4j 的 **agentic 模块** 提供了一种声明式方式来构建协调这些工具的代理。`@Agent` 注解和 `AgenticServices` 让你通过接口定义代理行为，而不是命令式编码。
 
-本模块将探索 **监督代理** 模式——一种高级 agentic AI 方法，其中“监督者”代理基于用户请求动态决定调用哪些子代理。我们将结合这两个概念，给其中一个子代理赋能 MCP 驱动的文件访问能力。
+在本模块中，你将探索 **监督代理** 模式——一个先进的 agentic AI 方法，其中一个“监督”代理基于用户请求动态决定调用哪些子代理。我们将结合两种概念，赋予子代理基于 MCP 的文件访问能力。
 
-添加此 Maven 依赖以使用 agentic 模块：
+要使用 agentic 模块，添加以下 Maven 依赖：
 
 ```xml
 <dependency>
@@ -115,31 +137,33 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     <version>${langchain4j.mcp.version}</version>
 </dependency>
 ```
+  
+> **注意：** `langchain4j-agentic` 模块使用单独的版本属性(`langchain4j.mcp.version`)，因为其发布时间表与 LangChain4j 核心库不同。
 
-> **⚠️ 实验性质：** `langchain4j-agentic` 模块为**实验性**且可能更改。构建 AI 助理的稳定方式仍是使用 `langchain4j-core` 配合自定义工具（模块 04）。
+> **⚠️ 实验性：** `langchain4j-agentic` 模块为**实验性质**，可能会发生变化。构建 AI 助手的稳定方式仍是使用 `langchain4j-core` 和自定义工具（见模块 04）。
 
 ## 运行示例
 
 ### 先决条件
 
+- 完成 [模块 04 - 工具](../04-tools/README.md)（本模块基于自定义工具概念，并与 MCP 工具做比较）
+- 根目录下有包含 Azure 凭据的 `.env` 文件（由模块 01 中的 `azd up` 创建）
 - Java 21+，Maven 3.9+
 - Node.js 16+ 和 npm（用于 MCP 服务器）
-- 在根目录的 `.env` 文件中配置环境变量：
-  - `AZURE_OPENAI_ENDPOINT`，`AZURE_OPENAI_API_KEY`，`AZURE_OPENAI_DEPLOYMENT`（与模块 01-04 相同）
 
-> **注意：** 如果尚未设置环境变量，请参见[模块 00 - 快速入门](../00-quick-start/README.md)获取说明，或者将根目录的 `.env.example` 复制为 `.env` 并填写你的值。
+> **注意：** 如果你还未设置环境变量，参见 [模块 01 - 介绍](../01-introduction/README.md) 获取部署说明（`azd up` 会自动创建 `.env` 文件），或将 `.env.example` 复制为根目录下的 `.env` 并填写你的值。
 
-## 快速入门
+## 快速开始
 
-**使用 VS Code：** 在资源管理器中右键单击任意演示文件，选择**“运行 Java”**，或使用运行和调试面板中的启动配置（确保先已在 `.env` 文件中添加令牌）。
+**使用 VS Code：** 只需在资源管理器中右键任意演示文件，选择 **“Run Java”**，或从运行和调试面板使用启动配置（确保先正确配置 `.env` 文件中的 Azure 凭据）。
 
-**使用 Maven：** 也可以在命令行通过以下示例运行。
+**使用 Maven：** 你也可以在命令行通过以下示例运行。
 
 ### 文件操作（Stdio）
 
-此示例展示基于本地子进程的工具。
+演示基于本地子进程的工具。
 
-**✅ 无需先决条件** - MCP 服务器会自动启动。
+**✅ 无需先决条件** — MCP 服务器会自动启动。
 
 **使用启动脚本（推荐）：**
 
@@ -151,40 +175,40 @@ cd 05-mcp
 chmod +x start-stdio.sh
 ./start-stdio.sh
 ```
-
+  
 **PowerShell：**
 ```powershell
 cd 05-mcp
 .\start-stdio.ps1
 ```
+  
+**使用 VS Code：** 右键 `StdioTransportDemo.java` 选择 **“Run Java”**（确保 `.env` 文件已配置）。
 
-**使用 VS Code：** 右键单击 `StdioTransportDemo.java` 并选择**“运行 Java”**（确保 `.env` 已配置）。
-
-应用自动启动文件系统 MCP 服务器并读取本地文件。注意子进程管理已帮你处理。
+应用自动启动文件系统 MCP 服务器并读取本地文件。注意子进程管理为你处理了所有细节。
 
 **预期输出：**
 ```
 Assistant response: The file provides an overview of LangChain4j, an open-source Java library
 for integrating Large Language Models (LLMs) into Java applications...
 ```
-
+  
 ### 监督代理
 
-**监督代理模式**是一种**灵活**的 agentic AI 形式。监督者使用大型语言模型（LLM）自主决定基于用户请求调用哪些代理。在下一个示例中，我们将结合 MCP 驱动的文件访问和 LLM 代理，创建一个受监督的文件读取→报告生成工作流。
+**监督代理模式** 是一种**灵活的** agentic AI 形式。监督者使用 LLM 自主决定根据用户请求调用哪些代理。在下一个示例中，我们结合 MCP 支持的文件访问和 LLM 代理，创建一个“文件读取 → 报告”受监督的工作流。
 
-演示中，`FileAgent` 使用 MCP 文件系统工具读取文件，`ReportAgent` 生成包含执行摘要（一句话）、3 个要点和建议的结构化报告。监督者自动协调此流程：
+演示中，`FileAgent` 使用 MCP 文件系统工具读取文件，`ReportAgent` 基于读取的内容生成含执行摘要（一句）、3 个重点和建议的结构化报告。监督者自动协调这整个流程：
 
 <img src="../../../translated_images/zh-CN/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-*监督者用其 LLM 决定调用哪些代理以及顺序——无需硬编码路由。*
+*监督者使用其 LLM 判断调用哪些代理及调用顺序——无需硬编码路由。*
 
-具体的文件到报告流程如下图：
+我们的文件到报告管道具体工作流如下：
 
 <img src="../../../translated_images/zh-CN/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
-*FileAgent 通过 MCP 工具读取文件，然后 ReportAgent 将原始内容转成结构化报告。*
+*FileAgent 通过 MCP 工具读取文件，ReportAgent 将原始内容转为结构化报告。*
 
-每个代理将其输出存储在**Agentic Scope**（共享内存）中，供后续代理访问前序结果。这展示了 MCP 工具如何无缝集成到 agentic 工作流中——监督者不需知道文件如何读取，只需知道 `FileAgent` 会做这件事。
+每个代理将其输出存储在**Agentic 作用域**（共享内存）中，下游代理可访问前序结果。此演示说明 MCP 工具如何无缝集成到 agentic 工作流——监督者无需了解文件是*如何*读取的，只需知道 `FileAgent` 会读取。
 
 #### 运行演示
 
@@ -196,30 +220,46 @@ cd 05-mcp
 chmod +x start-supervisor.sh
 ./start-supervisor.sh
 ```
-
+  
 **PowerShell：**
 ```powershell
 cd 05-mcp
 .\start-supervisor.ps1
 ```
-
-**使用 VS Code：** 右键单击 `SupervisorAgentDemo.java` 并选择**“运行 Java”**（确保 `.env` 已配置）。
+  
+**使用 VS Code：** 右键 `SupervisorAgentDemo.java` 选择 **“Run Java”**（确保 `.env` 文件已配置）。
 
 #### 监督者如何工作
 
+构建代理前，需先将 MCP 传输连接至客户端，并将其封装成 `ToolProvider`。这样，MCP 服务器的工具才可供代理使用：
+
 ```java
-// 第一步：FileAgent 使用 MCP 工具读取文件
-FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
-        .chatModel(model)
-        .toolProvider(mcpToolProvider)  // 拥有用于文件操作的 MCP 工具
+// 从传输创建一个MCP客户端
+McpClient mcpClient = new DefaultMcpClient.Builder()
+        .transport(stdioTransport)
         .build();
 
-// 第二步：ReportAgent 生成结构化报告
+// 将客户端包装为ToolProvider——这将MCP工具桥接到LangChain4j中
+ToolProvider mcpToolProvider = McpToolProvider.builder()
+        .mcpClients(List.of(mcpClient))
+        .build();
+```
+  
+现在，你可以将 `mcpToolProvider` 注入任何需要 MCP 工具的代理：
+
+```java
+// 第一步：FileAgent使用MCP工具读取文件
+FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
+        .chatModel(model)
+        .toolProvider(mcpToolProvider)  // 具有用于文件操作的MCP工具
+        .build();
+
+// 第二步：ReportAgent生成结构化报告
 ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// 主管协调文件 → 报告流程
+// 主管协调文件→报告的工作流
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
@@ -229,33 +269,32 @@ SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
 // 主管根据请求决定调用哪些代理
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
-
+  
 #### 响应策略
 
-配置 `SupervisorAgent` 时，你需要指定在子代理完成任务后，它如何向用户给出最终答案。
+配置 `SupervisorAgent` 时，你需指定子代理完成任务后，监督者应如何向用户形成最终回答。下图显示了三种可用策略——LAST 直接返回最后一个代理输出，SUMMARY 通过 LLM 汇总所有输出，SCORED 则选分数更高的回应：
 
 <img src="../../../translated_images/zh-CN/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
 
-*3 种监督者生成最终响应的策略——根据你想要最后一个代理输出、合成摘要还是最高评分结果选择。*
+*监督者形成最终响应的三种策略：根据你希望获得最后一个代理输出、合成摘要还是最高评分结果来选择。*
 
-可用策略包括：
+可用策略说明：
 
-| 策略     | 描述                                                        |
-|----------|------------------------------------------------------------|
-| **LAST** | 监督者返回最后调用的子代理或工具的输出。当工作流最后的代理专门设计用来产生完整的最终答案（如研究管线中的“摘要代理”）时，这非常有用。 |
-| **SUMMARY** | 监督者使用其内部的语言模型（LLM）综合整个交互及所有子代理输出，返回该摘要作为最终响应。这为用户提供了简洁的聚合答案。 |
-| **SCORED** | 系统使用内部 LLM 对最后响应和交互总结分别进行评分，返回得分较高的输出。 |
+| 策略 | 描述 |
+|------|------|
+| **LAST** | 监督者返回最后调用的子代理或工具的输出。当工作流中的最终代理专门设计为生成完整最终答案时，此策略很有用（例如，研究流程中的“摘要代理”）。 |
+| **SUMMARY** | 监督者使用其内部语言模型（LLM）综合整个交互以及所有子代理输出的摘要，并将该摘要作为最终响应返回。这为用户提供了清晰的聚合答案。 |
+| **SCORED** | 系统使用内部 LLM 对 LAST 响应和 SUMMARY 摘要分别相对于原始用户请求评分，返回得分较高的输出。 |
+参见 [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) 查看完整实现。
 
-完整实现见 [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java)。
+> **🤖 使用 [GitHub Copilot](https://github.com/features/copilot) 聊天尝试：** 打开 [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) 并询问：
+> - “Supervisor 如何决定调用哪些代理？”
+> - “Supervisor 和顺序工作流模式有什么区别？”
+> - “我如何自定义 Supervisor 的规划行为？”
 
-> **🤖 使用 [GitHub Copilot](https://github.com/features/copilot) Chat 尝试：**打开 [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) 并提问:
-> - “监督者如何决定调用哪些代理？”
-> - “监督者和顺序工作流模式有什么区别？”
-> - “我如何自定义监督者的计划行为？”
+#### 理解输出内容
 
-#### 理解输出
-
-运行演示时，你会看到监督者如何协调多个代理的结构化演示。以下是每部分内容的含义：
+运行演示时，你会看到 Supervisor 如何协调多个代理的结构化演练。下述是每个部分的含义：
 
 ```
 ======================================================================
@@ -266,7 +305,7 @@ This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
 
-**标题**介绍工作流概念：从文件读取到报告生成的聚焦管线。
+**标题栏**介绍了工作流概念：一个从文件读取到报告生成的专注管道。
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -282,16 +321,16 @@ The Supervisor orchestrates the agents automatically based on the request.
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
 
-**工作流图**展示代理间的数据流。每个代理角色明确：
-- **FileAgent** 使用 MCP 工具读取文件，原始内容存储在 `fileContent`
-- **ReportAgent** 使用该内容生成结构化报告，存储在 `report`
+**工作流图**显示了代理之间的数据流。每个代理具有特定角色：
+- **FileAgent** 使用 MCP 工具读取文件并将原始内容存储在 `fileContent`
+- **ReportAgent** 消费该内容并生成结构化报告，存储在 `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
 
-**用户请求**显示任务。监督者解析后决定调用 FileAgent → ReportAgent。
+**用户请求**展示了任务，Supervisor 解析后决定调用 FileAgent → ReportAgent。
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -312,11 +351,11 @@ The Supervisor orchestrates the agents automatically based on the request.
   +-- [OK] ReportAgent (generating structured report) completed
 ```
 
-**监督者协调**展示两步流程：
+**Supervisor 编排**展示了两步流程的执行：
 1. **FileAgent** 通过 MCP 读取文件并存储内容
 2. **ReportAgent** 接收内容并生成结构化报告
 
-监督者基于用户请求**自主**做出这些决策。
+Supervisor 基于用户请求**自主**做出了这些决定。
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -335,18 +374,20 @@ Recommendations
   * report: Executive Summary...
 ```
 
-#### Agentic 模块功能解释
+#### Agentic 模块功能说明
 
-示例展示了 agentic 模块的多种高级功能。让我们深入看看 Agentic Scope 和 Agent 监听器。
+该示例演示了 agentic 模块的多个高级功能。让我们细看 Agentic Scope 和 Agent Listeners。
 
-**Agentic Scope** 是共享内存，代理通过 `@Agent(outputKey="...")` 存储结果。它允许：
-- 后续代理访问前序输出
-- 监督者综合最终响应
-- 你查看每个代理输出内容
+**Agentic Scope** 显示了代理使用 `@Agent(outputKey="...")` 存储结果的共享内存。它允许：
+- 后续代理访问前序代理的输出
+- Supervisor 综合生成最终响应
+- 你检查每个代理产生的内容
+
+下图展示了 Agentic Scope 作为共享内存在文件到报告工作流中的工作方式 — FileAgent 将输出写入 `fileContent` 键，ReportAgent 读取该键并将其输出写入 `report`：
 
 <img src="../../../translated_images/zh-CN/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
 
-*Agentic Scope 充当共享内存——FileAgent 写入 `fileContent`，ReportAgent 读取它并写入 `report`，你的代码读取最终结果。*
+*Agentic Scope 起共享内存作用 — FileAgent 写入 `fileContent`，ReportAgent 读取它并写入 `report`，你的代码读取最终结果。*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
@@ -355,14 +396,16 @@ String fileContent = scope.readState("fileContent");  // 来自 FileAgent 的原
 String report = scope.readState("report");            // 来自 ReportAgent 的结构化报告
 ```
 
-**Agent 监听器**使得监控和调试代理执行成为可能。演示中看到的逐步输出来自挂接每次代理调用的 AgentListener：
-- **beforeAgentInvocation** - 当Supervisor选择代理时调用，让您了解选择了哪个代理及其原因
-- **afterAgentInvocation** - 当代理完成时调用，显示其结果
-- **inheritedBySubagents** - 为true时，监听器监控层级中的所有代理
+**Agent Listeners** 使你能监控和调试代理执行。演示中你看到的逐步输出来自监听代理调用的 AgentListener：
+- **beforeAgentInvocation** - Supervisor 选择代理时调用，显示选择了哪个代理及其原因
+- **afterAgentInvocation** - 代理完成时调用，显示其结果
+- **inheritedBySubagents** - 若为 true，监听所有代理层级中的代理
+
+下图显示完整的 Agent Listener 生命周期，包括 `onError` 如何处理代理执行中的失败：
 
 <img src="../../../translated_images/zh-CN/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
 
-*代理监听器挂钩执行生命周期——监控代理何时开始、完成或遇到错误。*
+*Agent Listeners 钩入执行生命周期 — 监控代理启动、完成或遇到错误的时刻。*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -386,70 +429,76 @@ AgentListener monitor = new AgentListener() {
 };
 ```
 
-除了Supervisor模式外，`langchain4j-agentic`模块还提供了几种强大的工作流模式和功能：
+除了 Supervisor 模式外，`langchain4j-agentic` 模块还提供了多种强大工作流模式。下图显示了全部五种——从简单的顺序管道到人工审批工作流：
 
 <img src="../../../translated_images/zh-CN/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
 
-*五种代理编排工作流模式——从简单的顺序流水线到人工干预审批工作流。*
+*五种代理工作流模式——从简单的顺序管道到人工打回审批工作流。*
 
-| Pattern | Description | Use Case |
+| 模式 | 描述 | 适用场景 |
 |---------|-------------|----------|
-| **Sequential** | 按顺序执行代理，输出流向下一个 | 流水线：研究 → 分析 → 报告 |
-| **Parallel** | 同时运行多个代理 | 独立任务：天气 + 新闻 + 股票 |
-| **Loop** | 迭代直到满足条件 | 质量评分：重复优化直到得分 ≥ 0.8 |
-| **Conditional** | 基于条件路由 | 分类 → 路由到专家代理 |
-| **Human-in-the-Loop** | 增加人工检查点 | 审批工作流，内容审核 |
+| **顺序** | 依次执行代理，输出流向下一个 | 管道流程：调研 → 分析 → 报告 |
+| **并行** | 同时运行多个代理 | 独立任务：天气 + 新闻 + 股票 |
+| **循环** | 迭代直到满足条件 | 质量评分：迭代直到分数 ≥ 0.8 |
+| **条件** | 基于条件进行路由 | 分类 → 路由到专家代理 |
+| **人工介入** | 添加人工检查点 | 审批流程，内容复审 |
 
 ## 关键概念
 
-现在您已经了解了MCP和agentic模块的实际应用，让我们总结何时使用每种方法。
+既然你已深入了解 MCP 和 agentic 模块的实战，下面总结何时使用哪种方案。
+
+MCP 最大优势之一是其不断成长的生态系统。下图显示了单一通用协议如何将 AI 应用连接到多种 MCP 服务器——从文件系统和数据库访问到 GitHub、电子邮件、网页抓取等：
 
 <img src="../../../translated_images/zh-CN/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
 
-*MCP构建了一个通用协议生态系统——任何兼容MCP的服务器都可与任何兼容MCP的客户端协作，实现跨应用的工具共享。*
+*MCP 构建了一个通用协议生态——任何 MCP 兼容服务器都能与任意 MCP 兼容客户端协作，实现跨应用工具共享。*
 
-**MCP** 适合想利用现有工具生态、构建多应用共享的工具、用标准协议集成第三方服务，或想替换工具实现而无需改代码的场景。
+**MCP** 适合想利用现有工具生态、构建多个应用共享的工具、通过标准协议集成第三方服务，或无需更改代码即可替换工具实现的场景。
 
-**Agentic模块** 最适合需要用`@Agent`注解定义声明式代理、需要工作流编排（顺序、循环、并行）、偏好基于接口的代理设计而非命令式代码，或组合多个共享`outputKey`输出的代理的情况。
+**Agentic 模块** 最适合想要通过 `@Agent` 注解声明式定义代理、需要工作流编排（顺序、循环、并行）、偏好基于接口设计代理而非命令式代码，或结合多个通过 `outputKey` 共享输出的代理。
 
-**Supervisor Agent模式** 适用于流程事先不可预测且希望由LLM决定、需要动态编排多名专门代理、构建可路由到不同能力的对话系统，或想要最灵活、适应性强的代理行为时。
+**Supervisor Agent 模式** 擅长工作流不可预先确定并需要 LLM 决策、多位多专代理需动态调度、打造路由多种能力的对话系统，或追求最高灵活性与自适应代理行为时。
+
+为了帮助你在 Module 04 的自定义 `@Tool` 方法和本模块的 MCP 工具间选择，下图对关键权衡进行了对比——自定义工具提供紧耦合和完备类型安全的应用专属逻辑，MCP 工具则提供标准化、可复用的集成：
 
 <img src="../../../translated_images/zh-CN/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
 
-*何时使用自定义@Tool方法与MCP工具——自定义工具适合应用特定逻辑，提供完整类型安全；MCP工具适合标准化集成，支持跨应用使用。*
+*何时使用自定义 @Tool 方法 vs MCP 工具——自定义工具支持应用特定逻辑且具类型安全，MCP 工具提供跨应用标准集成。*
 
 ## 恭喜！
 
+你已完成 LangChain4j 初学者课程的全部五个模块！下面展示的是你完成的全部学习路径——从基础对话到 MCP 驱动的 agentic 系统：
+
 <img src="../../../translated_images/zh-CN/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
 
-*您已经完成了从基础聊天到MCP驱动的agentic系统的五个模块学习旅程。*
+*你的全部学习旅程 —— 从基础聊天到 MCP 驱动的 agentic 系统。*
 
-您已完成LangChain4j初学者课程，学到了：
+你已学会：
 
-- 如何构建带记忆的对话AI（模块01）
-- 针对不同任务的提示工程模式（模块02）
-- 利用RAG将回答基于文档落地（模块03）
-- 创建带自定义工具的基础AI代理（助手）（模块04）
-- 使用LangChain4j MCP和Agentic模块集成标准工具（模块05）
+- 如何构建具备记忆的对话 AI（模块 01）
+- 针对不同任务的提示工程模式（模块 02）
+- 使用 RAG 将回答落地至文档（模块 03）
+- 用自定义工具创建基础 AI 代理（助手）（模块 04）
+- 将标准化工具与 LangChain4j MCP 及 Agentic 模块集成（模块 05）
 
-### 下一步？
+### 接下来？
 
-完成模块后，探索[测试指南](../docs/TESTING.md)，了解LangChain4j测试概念实操。
+完成模块后，探索 [测试指南](../docs/TESTING.md) 以查看 LangChain4j 测试概念的实际应用。
 
 **官方资源：**
-- [LangChain4j文档](https://docs.langchain4j.dev/) - 详尽指南与API参考
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - 源代码和示例
-- [LangChain4j教程](https://docs.langchain4j.dev/tutorials/) - 各种用例的分步教程
+- [LangChain4j 文档](https://docs.langchain4j.dev/) - 全面指南与 API 参考
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - 源代码与示例
+- [LangChain4j 教程](https://docs.langchain4j.dev/tutorials/) - 针对各种用例的循序渐进教程
 
-感谢您完成本课程！
+感谢你完成本课程！
 
 ---
 
-**导航：** [← 上一节：模块04 - 工具](../04-tools/README.md) | [返回主菜单](../README.md)
+**导航：** [← 上一：模块 04 - 工具](../04-tools/README.md) | [返回主目录](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **免责声明**：
-本文件由人工智能翻译服务[Co-op Translator](https://github.com/Azure/co-op-translator)翻译而成。尽管我们力求准确，但请注意自动翻译可能包含错误或不准确之处。原始文件的本地语言版本应被视为权威来源。对于重要信息，建议采用专业人工翻译。我们不对因使用此翻译而产生的任何误解或错误解释承担责任。
+本文件由人工智能翻译服务 [Co-op Translator](https://github.com/Azure/co-op-translator) 翻译而成。虽然我们力求准确，但请注意，自动翻译可能存在错误或不准确之处。以原始语言的原文文件为权威版本。对于重要信息，建议采用专业人工翻译。因使用本翻译而引起的任何误解或误释，我们概不负责。
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
