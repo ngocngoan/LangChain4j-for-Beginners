@@ -92,10 +92,10 @@ DOTENV_MIGRATION_PLAN.md
 # MCP Servers (users add locally from https://github.com/modelcontextprotocol/servers)
 servers/
 
-# Image Generation Guide (contains API key instructions)
 IMAGE_GENERATION_GUIDE.md
 githubcopilot.md
 loadusers.sh
 script.txt
 docs/GPT-5.2-UPGRADE.md
 PROJECT_RECREATION_INSTRUCTIONS.md
+.vscode/mcp.json
