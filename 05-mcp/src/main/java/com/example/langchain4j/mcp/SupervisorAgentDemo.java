@@ -142,7 +142,7 @@ public class SupervisorAgentDemo {
     private static McpClient createMcpClient() {
         String npmCmd = System.getProperty("os.name").toLowerCase().contains("win") ? "npm.cmd" : "npm";
         McpTransport transport = new StdioMcpTransport.Builder()
-                .command(List.of(npmCmd, "exec", "@modelcontextprotocol/server-filesystem@2025.12.18", ALLOWED_DIRECTORY))
+                .command(List.of(npmCmd, "exec", "@modelcontextprotocol/server-filesystem@2026.1.14", ALLOWED_DIRECTORY))
                 .logEvents(false)
                 .build();
 
