@@ -140,7 +140,7 @@ public class StdioTransportDemo {
         return new StdioMcpTransport.Builder()
                 .command(List.of(
                     npmCmd, "exec",
-                    "@modelcontextprotocol/server-filesystem@2025.12.18",
+                    "@modelcontextprotocol/server-filesystem@2026.1.14",
                     resourcesDir
                 ))
                 .logEvents(false)
