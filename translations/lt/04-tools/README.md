@@ -1,77 +1,77 @@
-# Modulis 04: DI Agentai su Įrankiais
+# Modulis 04: DI agentai su įrankiais
 
 ## Turinys
 
 - [Ko Išmoksite](../../../04-tools)
-- [Reikalavimai](../../../04-tools)
-- [Suprasti DI Agentus su Įrankiais](../../../04-tools)
-- [Kaip Veikia Įrankių Iškvietimas](../../../04-tools)
-  - [Įrankių Apibrėžimai](../../../04-tools)
-  - [Sprendimų Priėmimas](../../../04-tools)
+- [Prieš sąlygos](../../../04-tools)
+- [Supratimas apie DI agentus su įrankiais](../../../04-tools)
+- [Kaip veikia įrankių kvietimas](../../../04-tools)
+  - [Įrankių apibrėžimai](../../../04-tools)
+  - [Sprendimų priėmimas](../../../04-tools)
   - [Vykdymas](../../../04-tools)
-  - [Atsako Generavimas](../../../04-tools)
-  - [Architektūra: Spring Boot Automatinis Sujungimas](../../../04-tools)
-- [Įrankių Grandinėlės](../../../04-tools)
-- [Paleiskite Programą](../../../04-tools)
-- [Naudojant Programą](../../../04-tools)
-  - [Išbandykite Paprastą Įrankių Naudojimą](../../../04-tools)
-  - [Išbandykite Įrankių Grandinėlę](../../../04-tools)
-  - [Žiūrėti Pokalbio Srautą](../../../04-tools)
-  - [Eksperimentuokite su Skirtingais Užklausimais](../../../04-tools)
-- [Pagrindinės Sąvokos](../../../04-tools)
-  - [ReAct Šablonas (Priežasties Glaudinimas ir Veikimas)](../../../04-tools)
-  - [Įrankių Aprašymai Yra Svarbūs](../../../04-tools)
-  - [Sesijų Valdymas](../../../04-tools)
-  - [Klaidų Tvarkymas](../../../04-tools)
-- [Galimi Įrankiai](../../../04-tools)
-- [Kada Naudoti Agentus su Įrankiais](../../../04-tools)
-- [Įrankiai vs RAG](../../../04-tools)
-- [Kiti Žingsniai](../../../04-tools)
+  - [Atsakymų generavimas](../../../04-tools)
+  - [Architektūra: Spring Boot automatinis sujungimas](../../../04-tools)
+- [Įrankių grandinimas](../../../04-tools)
+- [Paleiskite programą](../../../04-tools)
+- [Naudojant programą](../../../04-tools)
+  - [Išbandykite paprastą įrankio naudojimą](../../../04-tools)
+  - [Patikrinkite įrankių grandinimą](../../../04-tools)
+  - [Peržiūrėkite pokalbio srautą](../../../04-tools)
+  - [Eksperimentuokite su skirtingais užklausimais](../../../04-tools)
+- [Svarbiausios sąvokos](../../../04-tools)
+  - [ReAct modelis (mąstymas ir veikimas)](../../../04-tools)
+  - [Įrankių aprašymai yra svarbūs](../../../04-tools)
+  - [Sesijos valdymas](../../../04-tools)
+  - [Klaidų tvarkymas](../../../04-tools)
+- [Galimi įrankiai](../../../04-tools)
+- [Kada naudoti įrankiais pagrįstus agentus](../../../04-tools)
+- [Įrankiai prieš RAG](../../../04-tools)
+- [Kitos veiksmų gairės](../../../04-tools)
 
 ## Ko Išmoksite
 
-Iki šiol jūs išmokote, kaip bendrauti su DI, efektyviai struktūruoti užklausas ir pagrįsti atsakymus savo dokumentais. Tačiau yra esminė apribojimas: kalbos modeliai gali tik generuoti tekstą. Jie negali patikrinti oro sąlygų, atlikti skaičiavimų, užklausti duomenų bazių ar sąveikauti su išorinėmis sistemomis.
+Iki šiol jūs išmokote kaip kalbėtis su DI, kaip efektyviai struktūruoti užklausas ir pagrįsti atsakymus savo dokumentais. Tačiau vis dar yra pagrindinis apribojimas: kalbos modeliai gali tik generuoti tekstą. Jie negali patikrinti oro sąlygų, atlikti skaičiavimų, užklausinėti duomenų bazių ar bendrauti su išorinėmis sistemomis.
 
-Įrankiai tai keičia. Pateikdami modeliui prieigą prie kviečiamų funkcijų, jūs paverčiate jį iš teksto generatoriaus į agentą, kuris gali imtis veiksmų. Modelis nusprendžia, kada jam reikia įrankio, kurį įrankį naudoti ir kokius parametrus perduoti. Jūsų kodas vykdo funkciją ir grąžina rezultatą. Modelis integruoja tą rezultatą į savo atsakymą.
+Įrankiai tai keičia. Suteikdami modeliui prieigą prie funkcijų, kurias jis gali iškviesti, jūs paverčiate jį iš teksto generatoriaus į agentą, kuris gali vykdyti veiksmus. Modelis nusprendžia, kada jam reikia įrankio, kurį įrankį naudoti ir kokius parametrus perduoti. Jūsų kodas vykdo funkciją ir grąžina rezultatą. Modelis šį rezultatą įtraukia į savo atsakymą.
 
-## Reikalavimai
+## Prieš sąlygos
 
-- Atliktas [Modulis 01 - Įvadas](../01-introduction/README.md) (diegti Azure OpenAI ištekliai)
-- Rekomenduojama atlikti ankstesnius modulius (šis modulis nuorodo į [RAG sąvokas iš Modulio 03](../03-rag/README.md) palyginime Įrankiai vs RAG)
-- `.env` failas šakniniame kataloge su Azure kredencialais (sukurtas `azd up` 1 modulyje)
+- Užbaigtas [Modulis 01 - Įvadas](../01-introduction/README.md) (diegtos Azure OpenAI ištekliai)
+- Rekomenduojama įveikti ankstesnius modulius (šiame modulyje paminėtos [RAG sąvokos iš Modulio 03](../03-rag/README.md) įrankių ir RAG palyginime)
+- `.env` failas pagrindiniame kataloge su Azure kredencialais (sukurtas naudojant `azd up` Modulyje 01)
 
-> **Pastaba:** Jei neatlikote Modulio 01, pirmiausia atlikite diegimo instrukcijas ten.
+> **Pastaba:** Jei dar neužbaigėte Modulio 01, pirmiausia sekite diegimo instrukcijas ten.
 
-## Suprasti DI Agentus su Įrankiais
+## Supratimas apie DI agentus su įrankiais
 
-> **📝 Pastaba:** Šio modulio terminas "agentai" reiškia DI asistentus, patobulintus su įrankių kvietimo galimybėmis. Tai skiriasi nuo **Agentinio DI** modelių (autonomiški agentai su planavimu, atmintimi ir daugiapakopių sprendimų priėmimu), kuriuos aptarsime [Modulyje 05: MCP](../05-mcp/README.md).
+> **📝 Pastaba:** Šio modulio terminas „agentai“ reiškia DI asistentus, patobulintus įrankių kvietimo galimybėmis. Tai skiriasi nuo **Agentic AI** modelių (autonomi agentai su planavimu, atmintimi ir daugiamąstekliu mąstymu), apie kuriuos kalbėsime [Modulyje 05: MCP](../05-mcp/README.md).
 
-Be įrankių kalbos modelis gali tik generuoti tekstą iš savo mokymosi duomenų. Paklauskite jo apie dabartines oro sąlygas, jis turi spėlioti. Duokite įrankius, ir jis gali iškviesti orų API, atlikti skaičiavimus arba užklausti duomenų bazę — tada įpinti tuos tikrus rezultatus į savo atsakymą.
+Be įrankių, kalbos modelis gali tik generuoti tekstą remiantis mokymo duomenimis. Paklauskite apie esamą orą, ir jis tik spės. Suteikite įrankius, ir jis gali iškviesti orų API, atlikti skaičiavimus arba užklausti duomenų bazę — ir tada įpinti šiuos tikrus rezultatus į atsakymą.
 
-<img src="../../../translated_images/lt/what-are-tools.724e468fc4de64da.webp" alt="Be įrankių vs Su įrankiais" width="800"/>
+<img src="../../../translated_images/lt/what-are-tools.724e468fc4de64da.webp" alt="Be įrankių prieš Įrankius" width="800"/>
 
-*Be įrankių modelis tik spėlioja — su įrankiais jis gali iškviesti API, atlikti skaičiavimus ir pateikti realaus laiko duomenis.*
+*Be įrankių modelis tik spėlioja — su įrankiais jis gali kviesti API, vykdyti skaičiavimus ir pateikti realaus laiko duomenis.*
 
-DI agentas su įrankiais laikosi **Priežasties ir Veikimo (ReAct)** šablono. Modelis ne tik atsako — jis mąsto, ko jam reikia, veikia iškviesdamas įrankį, stebi rezultatą ir tada nusprendžia, ar veikti dar kartą, ar pateikti galutinį atsakymą:
+DI agentas su įrankiais seka **Mąstymo ir Veikimo (ReAct)** modelį. Modelis ne tik atsako — jis galvoja, ko jam reikia, veikia iškviesdamas įrankį, stebi rezultatą ir suveda sprendimą, ar tęsti veiksmą ar pateikti galutinį atsakymą:
 
-1. **Mąstyk** — agentas analizuoja vartotojo klausimą ir nustato, kokios informacijos reikia
-2. **Veik** — agentas pasirenka tinkamą įrankį, generuoja tinkamus parametrus ir iškviečia jį
-3. **Stebėk** — agentas gauna įrankio išvestį ir įvertina rezultatą
-4. **Kartok arba Atsakyk** — jei reikia daugiau duomenų, agentas sugrįžta į ciklą; priešingu atveju, sudaro natūralios kalbos atsakymą
+1. **Mąstymas** — agentas analizuoja naudotojo klausimą ir nusprendžia, kokios informacijos reikia
+2. **Veikimas** — agentas pasirenka tinkamą įrankį, generuoja teisingus parametrus ir jį iškviečia
+3. **Stebėjimas** — agentas gauna įrankio išvestį ir įvertina rezultatą
+4. **Kartojimas ar Atsakymas** — jei reikia daugiau duomenų, agentas kartoja; kitu atveju sudaro natūralios kalbos atsakymą
 
-<img src="../../../translated_images/lt/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct Šablonas" width="800"/>
+<img src="../../../translated_images/lt/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct modelis" width="800"/>
 
 *ReAct ciklas — agentas mąsto, ką daryti, veikia kviesdamas įrankį, stebi rezultatą ir kartoja, kol gali pateikti galutinį atsakymą.*
 
-Tai vyksta automatiškai. Jūs apibrėžiate įrankius ir jų aprašymus. Modelis sprendžia, kada ir kaip juos naudoti.
+Tai vyksta automatiškai. Jūs apibrėžiate įrankius ir jų aprašymus. Modelis tvarko sprendimų priėmimą, kada ir kaip juos naudoti.
 
-## Kaip Veikia Įrankių Iškvietimas
+## Kaip veikia įrankių kvietimas
 
-### Įrankių Apibrėžimai
+### Įrankių apibrėžimai
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Jūs apibrėžiate funkcijas su aiškiais aprašymais ir parametrų specifikacijomis. Modelis mato šiuos aprašymus savo sistemos užklausoje ir supranta, ką kiekvienas įrankis daro.
+Jūs apibrėžiate funkcijas su aiškiais aprašymais ir parametrų specifikacijomis. Modelis mato šiuos aprašymus sistemos užklausoje ir supranta, ką kiekvienas įrankis daro.
 
 ```java
 @Component
@@ -89,92 +89,104 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Asistentas automatiškai prijungiamas Spring Boot su:
+// Pagalbininkas automatiškai sujungiamas per Spring Boot su:
 // - ChatModel komponentu
 // - Visais @Tool metodais iš @Component klasių
 // - ChatMemoryProvider sesijų valdymui
 ```
 
-Žemiau esantis diagrama išskaido kiekvieną anotaciją ir rodo, kaip kiekvienas elementas padeda DI suprasti, kada iškviesti įrankį ir kokius argumentus perduoti:
+Žemiau esantis diagrama paaiškina kiekvieną anotaciją ir parodo, kaip kiekviena dalis padeda DI suprasti, kada iškviesti įrankį ir kokius argumentus pateikti:
 
-<img src="../../../translated_images/lt/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Įrankių Apibrėžimų Anatomija" width="800"/>
+<img src="../../../translated_images/lt/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Įrankių apibrėžimų sandara" width="800"/>
 
-*Įrankio apibrėžimo anatomija — @Tool nurodo DI, kada jį naudoti, @P aprašo kiekvieną parametrą, o @AiService susieja viską paleidimo metu.*
+*Įrankio apibrėžimo sandara — @Tool nurodo DI, kada jį naudoti, @P aprašo kiekvieną parametrą, o @AiService paleidimo metu sujungia viską.*
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) ir paklauskite:
-> - "Kaip integruočiau tikrą orų API, pvz., OpenWeatherMap, vietoje imituotų duomenų?"
-> - "Kas apibrėžia gerą įrankio aprašymą, kuris padeda DI teisingai jį naudoti?"
-> - "Kaip valdyti API klaidas ir kvotų apribojimus įrankių įgyvendinime?"
+> - „Kaip integruočiau tikrą orų API, pvz., OpenWeatherMap, vietoje imituotų duomenų?“
+> - „Kas sudaro gerą įrankio aprašymą, kuris padeda DI jį tinkamai naudoti?“
+> - „Kaip tvarkyti API klaidas ir greičio apribojimus įrankių įgyvendinimuose?“
 
-### Sprendimų Priėmimas
+### Sprendimų priėmimas
 
-Kai vartotojas klausia „Kokia orų prognozė Sietle?“, modelis neatsitiktinai pasirenka įrankį. Jis palygina vartotojo ketinimą su kiekvienu įrankio aprašymu, įvertina kiekvieno aktualumą ir pasirenka geriausiai atitinkantį. Tada generuoja struktūruotą funkcijos kvietimą su tinkamais parametrais — šiuo atveju nustatydamas `location` į `"Seattle"`.
+Kai naudotojas klausia „Koks oras Sietle?“, modelis neatsirenka įrankio atsitiktinai. Jis lygina naudotojo ketinimą su kiekvienu įrankio aprašymu, įvertina atitiktį ir parenka geriausią variantą. Tada generuoja struktūruotą funkcijos kvietimą su teisingais parametrais — šiuo atveju, nustatydamas `location` kaip `"Seattle"`.
 
-Jei nė vienas įrankis atitinka vartotojo užklausą, modelis grįžta prie atsakymo iš savo žinių. Jei keli įrankiai tinka, jis pasirenka konkretiausią.
+Jei nė vienas įrankis neatitinka naudotojo užklausos, modelis grįžta atsakyti iš savo žinių. Jei tinka keli įrankiai, pasirenkamas konkretiausias.
 
-<img src="../../../translated_images/lt/decision-making.409cd562e5cecc49.webp" alt="Kaip DI Pasirenka Įrankį" width="800"/>
+<img src="../../../translated_images/lt/decision-making.409cd562e5cecc49.webp" alt="Kaip DI nusprendžia, kurį įrankį naudoti" width="800"/>
 
-*Modelis įvertina kiekvieną turimą įrankį pagal vartotojo ketinimą ir pasirenka geriausią atitikimą — todėl aiškių, konkrečių įrankių aprašymų rašymas yra svarbus.*
+*Modelis įvertina visus prieinamus įrankius pagal naudotojo ketinimą ir pasirenka geriausią variantą — todėl svarbu rašyti aiškius, specifinius įrankių aprašymus.*
 
 ### Vykdymas
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot automatiškai sujungia deklaratyvią `@AiService` sąsają su visais užregistruotais įrankiais, o LangChain4j vykdo įrankių kvietimus automatiškai. Užkulisiuose pilnas įrankio kvietimo procesas praeina per šešis etapus — nuo vartotojo natūralios kalbos klausimo iki natūralios kalbos atsakymo:
+Spring Boot automatiškai sujungia deklaracinį `@AiService` interfeisą su visais registruotais įrankiais, ir LangChain4j automatiškai vykdo įrankių kvietimus. Užkulisiuose pilnas įrankio kvietimas eina per šešis etapus — nuo naudotojo klausimo natūralia kalba iki natūralaus kalbos atsakymo:
 
-<img src="../../../translated_images/lt/tool-calling-flow.8601941b0ca041e6.webp" alt="Įrankių Kvietimo Srautas" width="800"/>
+<img src="../../../translated_images/lt/tool-calling-flow.8601941b0ca041e6.webp" alt="Įrankių kvietimo srautas" width="800"/>
 
-*Visas procesas — vartotojas užduoda klausimą, modelis pasirenka įrankį, LangChain4j jį vykdo, o modelis apjungia rezultatą į natūralų atsakymą.*
+*Visas srautas — naudotojas užduoda klausimą, modelis pasirenka įrankį, LangChain4j jį vykdo, ir modelis įterpia rezultatą į natūralų atsakymą.*
+
+Jei paleidote [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) Modulyje 00, jau matėte šį modelį veikiant — `Calculator` įrankiai buvo kviečiami tokiu pačiu būdu. Žemiau pateiktas sekų diagrama tiksliai parodo, kas vyko užkulisiuose per tą demonstraciją:
+
+<img src="../../../translated_images/lt/tool-calling-sequence.94802f406ca26278.webp" alt="Įrankių kvietimo sekų diagrama" width="800"/>
+
+*Įrankių kvietimo ciklas iš Greito Starto demo — `AiServices` siunčia jūsų žinutę ir įrankių schemas LLM, LLM atsako funkcijos kvietimu kaip `add(42, 58)`, LangChain4j vykdo `Calculator` metodą lokaliai ir grąžina rezultatą galutiniam atsakymui.*
 
 > **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) ir paklauskite:
-> - "Kaip veikia ReAct šablonas ir kodėl jis veiksmingas DI agentams?"
-> - "Kaip agentas nusprendžia, kurį įrankį naudoti ir kokia tvarka?"
-> - "Kas nutinka, jei įrankio vykdymas nepavyksta - kaip saugiai tvarkyti klaidas?"
+> - „Kaip veikia ReAct modelis ir kodėl jis efektyvus DI agentams?“
+> - „Kaip agentas nusprendžia, kurį įrankį naudoti ir kokia tvarka?“
+> - „Kas nutinka, jeigu įrankio vykdymas nepavyksta — kaip tvarkyti klaidas patikimai?“
 
-### Atsako Generavimas
+### Atsakymų generavimas
 
-Modelis gauna orų duomenis ir formatuoja juos natūraliu kalbos atsakymu vartotojui.
+Modelis gauna orų duomenis ir suformuoja juos į natūralios kalbos atsakymą naudotojui.
 
-### Architektūra: Spring Boot Automatinis Sujungimas
+### Architektūra: Spring Boot automatinis sujungimas
 
-Šis modulis naudoja LangChain4j Spring Boot integraciją su deklaratyviomis `@AiService` sąsajomis. Paleidimo metu Spring Boot aptinka kiekvieną `@Component`, turintį `@Tool` metodus, jūsų `ChatModel` komponentą ir `ChatMemoryProvider` — tada sujungia juos į vieną `Assistant` sąsają be jokių boilerplate rašymo.
+Šis modulis naudoja LangChain4j integraciją su Spring Boot ir deklaracinį `@AiService` interfeisą. Paleidimo metu Spring Boot atranda kiekvieną `@Component`, turintį `@Tool` metodus, jūsų `ChatModel` komponentą ir `ChatMemoryProvider` — ir sujungia juos visus į vieną `Assistant` interfeisą be boilerplate kodo.
 
-<img src="../../../translated_images/lt/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Automatinio Sujungimo Architektūra" width="800"/>
+<img src="../../../translated_images/lt/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot automatinių sujungimų architektūra" width="800"/>
 
-*@AiService sąsaja sujungia ChatModel, įrankių komponentus ir atminties tiekėją — Spring Boot automatiškai atlieka visą sujungimą.*
+*@AiService interfeisas sujungia ChatModel, įrankių komponentus ir atminties tiekėją — Spring Boot automatiškai tvarko visus sujungimus.*
 
-Svarbiausios šio požiūrio naudos:
+Štai visos užklausos gyvavimo ciklas sekų diagramoje — nuo HTTP užklausos per valdiklį, servisą ir automatiškai sujungtą proxy iki įrankio vykdymo ir atgal:
 
-- **Spring Boot automatinis sujungimas** — ChatModel ir įrankiai automatiškai įpurškiami
-- **@MemoryId šablonas** — Automatinis sesijinis atminties valdymas
-- **Viena instancija** — Assistant sukuriamas vieną kartą ir naudojamas pakartotinai geresniam našumui
-- **Tipui saugus vykdymas** — Java metodai kviečiami tiesiogiai su tipų konvertavimu
-- **Daugkartinio sukinėjimo orkestracija** — Automatinis įrankių grandinavimas
-- **Nėra boilerplate** — Nereikia rankinių `AiServices.builder()` kvietimų ar atminties HashMap
+<img src="../../../translated_images/lt/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Spring Boot įrankių kvietimo sekos diagrama" width="800"/>
 
-Alternatyvūs metodai (rankinis `AiServices.builder()`) reikalauja daugiau kodo ir neprisijungia prie Spring Boot integracijos privalumų.
+*Pilnas Spring Boot užklausos gyvavimo ciklas — HTTP užklausa teka per valdiklį ir servisą į automatiškai sujungtą Assistant proxy, kuris organizuoja LLM ir įrankių kvietimus automatiškai.*
 
-## Įrankių Grandinėlės
+Pagrindinės šio požiūrio naudos:
 
-**Įrankių Grandinėlės** — tikroji agentų su įrankiais galia pasireiškia, kai vienam klausimui reikia kelių įrankių. Paklauskite „Kokia orų prognozė Sietle pagal Farenheito skalę?“ ir agentas automatiškai sujungia du įrankius: pirmiausia jis kviečia `getCurrentWeather`, kad gautų temperatūrą Celsijumi, tada perduoda tą reikšmę į `celsiusToFahrenheit` konvertavimui — visa tai viename pokalbio žingsnyje.
+- **Spring Boot automatinis sujungimas** — ChatModel ir įrankiai įšvirkščiami automatiškai
+- **@MemoryId modelis** — Automatizuotas sesijos pagrindu valdomas atminties valdymas
+- **Vienas egzempliorius** — Assistant sukuriamas vieną kartą ir pakartotinai naudojamas geresniam našumui
+- **Tipų saugus vykdymas** — Java metodai kviečiami tiesiogiai su tipų konvertavimu
+- **Daugiatūrio orkestracija** — Automatiškai tvarko įrankių grandinimą
+- **Nulinis boilerplate** — Nereikia rankinių `AiServices.builder()` kvietimų ar HashMap atminties
 
-<img src="../../../translated_images/lt/tool-chaining-example.538203e73d09dd82.webp" alt="Įrankių Grandinėlės Pavyzdys" width="800"/>
+Alternatyvūs metodai (rankinis `AiServices.builder()`) reikalauja daugiau kodo ir nepritaiko Spring Boot integracijos privalumų.
 
-*Įrankių grandinėlė veikia — agentas pirmiausia kviečia getCurrentWeather, tada perduoda Celsijaus rezultatą į celsiusToFahrenheit ir pateikia sujungtą atsakymą.*
+## Įrankių grandinimas
 
-**Lankstus Klaidos Tvarkymas** — Paklauskite apie orus mieste, kuris nėra imituotuose duomenyse. Įrankis grąžina klaidos pranešimą, o DI paaiškina, kad negali padėti vietoje to, kad sugriūtų. Įrankiai nesugenda pavojingai. Žemiau pateikta diagrama lygina abu požiūrius — su tinkamu klaidų tvarkymu agentas pagauna išimtį ir atsako naudingai, o be jo – programa sugriūna:
+**Įrankių grandinimas** — Tikroji įrankiais pagrįstų agentų galia pasireiškia, kai vienam klausimui reikia kelių įrankių. Paklauskite: „Koks oras Sietle pagal Farenheito skalę?“ ir agentas automatiškai sujungia du įrankius: pirmiausia iškviečia `getCurrentWeather`, kad gautų temperatūrą Celsijumi, paskui perduoda šią reikšmę į `celsiusToFahrenheit` konvertavimui — visa tai viename pokalbio cikle.
 
-<img src="../../../translated_images/lt/error-handling-flow.9a330ffc8ee0475c.webp" alt="Klaidų Tvarkymo Srautas" width="800"/>
+<img src="../../../translated_images/lt/tool-chaining-example.538203e73d09dd82.webp" alt="Įrankių grandinimo pavyzdys" width="800"/>
 
-*Kai įrankis nesėkmingas, agentas pagauna klaidą ir atsako su naudingais paaiškinimais vietoje programos gedimo.*
+*Įrankių grandinimas veikloje — agentas pirmiausia iškviečia getCurrentWeather, paskui perveda rezultatus į celsiusToFahrenheit ir pateikia sujungtą atsakymą.*
 
-Tai vyksta per vieną pokalbio žingsnį. Agentas autonomiškai organizuoja kelis įrankių kvietimus.
+**Gražios klaidų tvarkymo situacijos** — Paklauskite apie orą mieste, kuris nėra imituotuose duomenyse. Įrankis grąžina klaidos pranešimą, o DI paaiškina, kad negali padėti, vietoje to, kad sugriūtų. Įrankiai gedimų atveju elgiasi saugiai. Žemiau esanti diagrama palygina dvi situacijas — su tinkamu klaidų tvarkymu agentas pagauna išimtį ir atsako naudingai, o be jos visa programa sugriūna:
 
-## Paleiskite Programą
+<img src="../../../translated_images/lt/error-handling-flow.9a330ffc8ee0475c.webp" alt="Klaidų valdymo srautas" width="800"/>
+
+*Kai įrankis nepavyksta, agentas pagauna klaidą ir vietoje programos gedimo pateikia naudingą paaiškinimą.*
+
+Tai vyksta viename pokalbio cikle. Agentas automatiškai organizuoja kelis įrankių kvietimus.
+
+## Paleiskite programą
 
 **Patikrinkite diegimą:**
 
-Įsitikinkite, kad `.env` failas yra šakniniame kataloge su Azure kredencialais (sukurtas Modulyje 01). Paleiskite iš šio modulio katalogo (`04-tools/`):
+Įsitikinkite, kad `.env` faile pagrindiniame kataloge yra Azure kredencialai (sukurti Modulyje 01). Paleiskite tai iš modulio katalogo (`04-tools/`):
 
 **Bash:**
 ```bash
@@ -183,48 +195,48 @@ cat ../.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Turėtų parodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+Get-Content ..\.env  # Turėtų rodyti AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Paleiskite programą:**
 
-> **Pastaba:** Jei jau paleidote visas programas naudodami `./start-all.sh` iš šakninio katalogo (kaip aprašyta 1 modulyje), šis modulis jau veikia 8084 prievade. Galite praleisti paleidimo komandas žemiau ir tiesiog nueiti į http://localhost:8084.
+> **Pastaba:** Jei jau paleidote visas programas naudodami `./start-all.sh` pagrindiniame kataloge (kaip aprašyta Modulyje 01), šis modulis jau veikia per 8084 prievadą. Galite praleisti žemiau pateiktus paleidimo veiksmus ir tiesiog nueiti į http://localhost:8084.
 
-**1 Variantė: Naudojant Spring Boot Dashboard (Rekomenduojama VS Code naudotojams)**
+**1 variantas: Naudojant Spring Boot Dashboard (rekomenduojama VS Code vartotojams)**
 
-Dev konteineryje yra Spring Boot Dashboard plėtinys, suteikiantis vizualią sąsają valdyti visas Spring Boot programas. Jį rasite kairėje VS Code veiklos juostoje (pažymėta Spring Boot ikona).
+Dev konteineris įtraukia Spring Boot Dashboard plėtinį, suteikiantį vizualią priemonę valdyti visas Spring Boot programas. Jį rasite šoniniame veiklos juostos skiltyje kairėje VS Code (ieškokite Spring Boot ikonos).
 
 Iš Spring Boot Dashboard galite:
-- Peržiūrėti visas darbo aplinkos Spring Boot programas
+- Matyti visas darbo aplinkoje prieinamas Spring Boot programas
 - Vienu paspaudimu paleisti/stabdyti programas
-- Realizuoti programų žurnalų peržiūrą realiu laiku
-- Stebėti programų būseną
+- Žiūrėti programų žurnalus realiu laiku
+- Stebėti programų būklę
 
-Tiesiog spustelėkite paleidimo mygtuką prie „tools”, kad pradėtumėte šį modulį, arba paleiskite visus modulius iš karto.
+Tiesiog spustelėkite paleidimo mygtuką šalia „tools“, kad paleistumėte šį moduli, arba paleiskite visus modulius kartu.
 
-Štai kaip atrodo Spring Boot Dashboard VS Code:
+Taip Spring Boot Dashboard atrodo VS Code:
 
 <img src="../../../translated_images/lt/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Spring Boot Dashboard VS Code — vienoje vietoje paleiskite, sustabdykite ir stebėkite visus modulius.*
+*Spring Boot Dashboard VS Code — paleiskite, stabdykite ir stebėkite visus modulius iš vienos vietos*
 
-**2 Variantė: Naudojant shell skriptus**
+**2 variantas: Naudojant shell skriptus**
 
-Paleiskite visas interneto programas (moduliai 01-04):
+Paleiskite visas žiniatinklio programas (modulius 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Iš pagrindinio katalogo
+cd ..  # Iš šaknų katalogo
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Iš šaknininio katalogo
+cd ..  # Iš pagrindinio katalogo
 .\start-all.ps1
 ```
 
-Arba paleiskite tik šį modulį:
+Ar pradėkite tik šį modulį:
 
 **Bash:**
 ```bash
@@ -238,16 +250,16 @@ cd 04-tools
 .\start.ps1
 ```
 
-Abu skriptai automatiškai įkrauna aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo ir pastatys JAR, jei jo nėra.
+Abu scenarijai automatiškai įkelia aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo ir sukurs JAR failus, jei jų nėra.
 
-> **Pastaba:** Jei norite visus modulius pastatyti rankiniu būdu prieš paleisdami:
+> **Pastaba:** Jei norite rankiniu būdu sukurti visus modulius prieš pradėdami:
 >
 > **Bash:**
 > ```bash
 > cd ..  # Go to root directory
 > mvn clean package -DskipTests
 > ```
-
+>
 > **PowerShell:**
 > ```powershell
 > cd ..  # Go to root directory
@@ -272,97 +284,98 @@ cd .. && ./stop-all.sh  # Visi moduliai
 cd ..; .\stop-all.ps1  # Visi moduliai
 ```
 
-## Naudojant Programą
+## Programos naudojimas
 
-Programa suteikia žiniatinklio sąsają, kurioje galite bendrauti su DI agentu, turinčiu prieigą prie orų ir temperatūros konvertavimo įrankių. Sąsajos pavyzdys – ji apima greito starto pavyzdžius ir pokalbių skydelį užklausoms siųsti:
-<a href="images/tools-homepage.png"><img src="../../../translated_images/lt/tools-homepage.4b4cd8b2717f9621.webp" alt="Dirbtinio intelekto agento įrankių sąsaja" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Programa suteikia žiniatinklio sąsają, kurioje galite bendrauti su DI agentu, turinčiu prieigą prie oro sąlygų ir temperatūros konvertavimo įrankių. Štai kaip atrodo sąsaja — joje yra greitos pradžios pavyzdžių ir pokalbių skydelis prašymams siųsti:
 
-*Dirbtinio intelekto agento įrankių sąsaja – greiti pavyzdžiai ir pokalbių sąsaja sąveikai su įrankiais*
+<a href="images/tools-homepage.png"><img src="../../../translated_images/lt/tools-homepage.4b4cd8b2717f9621.webp" alt="DI agente esantys įrankiai" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-### Išbandykite paprastą įrankio naudojimą
+*DI agento įrankių sąsaja – greiti pavyzdžiai ir pokalbių sąsaja bendraujant su įrankiais*
 
-Pradėkite nuo paprastos užklausos: „Konvertuokite 100 laipsnių Farenheito į Celsijų“. Agentas atpažįsta, kad reikia temperatūros konvertavimo įrankio, iškviečia jį su tinkamais parametrais ir pateikia rezultatą. Atkreipkite dėmesį, kokia natūrali tai yra – jūs nenurodėte, kurį įrankį naudoti ar kaip jį iškviesti.
+### Išbandykite paprastą įrankių naudojimą
 
-### Išbandykite įrankių sujungimą
+Pradėkite nuo paprasto prašymo: „Konvertuoti 100 laipsnių Fahrenheito į Celsijų“. Agentas suvokia, kad reikalingas temperatūros konvertavimo įrankis, iškviečia jį su tinkamais parametrais ir pateikia rezultatą. Pastebėkite, kaip natūraliai tai atrodo – jūs nenurodėte, kurį įrankį naudoti ar kaip jį iškviesti.
 
-Dabar pabandykite ką nors sudėtingesnio: „Koks oras Sietle ir konvertuokite jį į Farenheitą?“ Stebėkite, kaip agentas atlieka veiksmus etapais. Pirmiausia jis gauna orą (kuris pateikiamas Celsijais), atpažįsta, kad reikia konvertuoti į Farenheitą, iškviečia konvertavimo įrankį ir sujungia abu rezultatus į vieną atsakymą.
+### Išbandykite įrankių grandinėlę
 
-### Peržiūrėkite pokalbio eigą
+Dabar pabandykite kažką sudėtingesnio: „Kokia oras Sietle ir konvertuokite jį į Farenheitus?“ Stebėkite, kaip agentas atlieka veiksmus žingsnis po žingsnio. Pirmiausia jis gauna orą (kuris pateikiamas Celsijais), suvokia, kad reikia konvertuoti į Farenheitus, iškviečia konvertavimo įrankį ir sujungia abu rezultatus į vieną atsakymą.
 
-Pokalbių sąsaja įrašo pokalbių istoriją, leidžiantį vykdyti kelių etapų pokalbius. Matysite visas ankstesnes užklausas ir atsakymus, todėl lengva sekti pokalbį ir suprasti, kaip agentas stato kontekstą per kelis mainus.
+### Matykite pokalbio eigą
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/lt/tools-conversation-demo.89f2ce9676080f59.webp" alt="Pokalbis su kelių įrankių iškvietimais" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Pokalbių sąsaja palaiko pokalbio istoriją, leidžiančią atlikti daugiapakopes sąveikas. Galite matyti visus ankstesnius užklausimus ir atsakymus, todėl lengva sekti pokalbį ir suprasti, kaip agentas kuria kontekstą per kelis mainus.
 
-*Kelių turų pokalbis, kuriame atliekamos paprastos konversijos, orų paieškos ir įrankių sujungimas*
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/lt/tools-conversation-demo.89f2ce9676080f59.webp" alt="Pokalbis su keliais įrankių kvietimais" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-### Eksperimentuokite su skirtingomis užklausomis
+*Daugiapakopis pokalbis, rodantis paprastus konvertavimus, oro sąlygų užklausimus ir įrankių grandinėlę*
 
-Išbandykite įvairius derinius:
-- Orų paieškos: „Koks oras Tokijuje?“
-- Temperatūros konvertavimai: „Kiek yra 25°C kelvinuose?“
-- Kombinuotos užklausos: „Patikrink orą Paryžiuje ir pasakyk, ar temperatūra viršija 20°C“
+### Eksperimentuokite su įvairiomis užklausomis
 
-Atkreipkite dėmesį, kaip agentas interpretuoja natūralią kalbą ir pritaiko ją tinkamiems įrankių iškvietimams.
+Išbandykite įvairias kombinacijas:
+- Orų užklausos: „Kokia oras Tokijuje?“
+- Temperatūros konvertavimai: „Kiek yra 25 °C kelvinais?“
+- Kombinuotos užklausos: „Patikrink orą Paryžiuje ir pasakyk, ar temperatūra viršija 20 °C“
+
+Atkreipkite dėmesį, kaip agentas interpretuoja natūralią kalbą ir pritaiko tinkamus įrankių kvietimus.
 
 ## Pagrindinės sąvokos
 
-### ReAct modelis (Mąstymas ir Veiksmas)
+### ReAct modelis (mąstymas ir veiksmai)
 
-Agentas keičiasi tarp mąstymo (sprendžiant, ką daryti) ir veikimo (naudojant įrankius). Šis modelis leidžia savarankiškai spręsti problemas, o ne tik vykdyti nurodymus.
+Agentas keičiasi tarp mąstymo (sprendžia, ką daryti) ir veiksmų (naudoja įrankius). Šis modelis leidžia autonomiškai spręsti problemas, o ne tik vykdyti nurodymus.
 
 ### Įrankių aprašymai yra svarbūs
 
-Įrankių aprašymų kokybė tiesiogiai veikia, kaip gerai agentas juos naudoja. Aiškūs ir konkretūs aprašymai padeda modeliui suprasti, kada ir kaip iškviesti kiekvieną įrankį.
+Įrankių aprašymų kokybė tiesiogiai veikia, kaip gerai agentas juos naudoja. Aiškūs, konkretūs aprašymai padeda modeliui suprasti, kada ir kaip kvieti kiekvieną įrankį.
 
 ### Sesijos valdymas
 
-`@MemoryId` anotacija leidžia automatiškai valdyti sesijai priskirtą atmintį. Kiekvienas sesijos ID gauna savo `ChatMemory` egzempliorių, valdytą per `ChatMemoryProvider` komponentą, todėl keli vartotojai gali vienu metu bendrauti su agentu nesimaišant pokalbiams. Žemiau pateiktoje diagramoje parodyta, kaip keli vartotojai nukreipiami į atskirus atminties saugyklas pagal jų sesijų ID:
+`@MemoryId` anotacija leidžia automatinį sesijos pagrindu valdomą atminties tvarkymą. Kiekvienas sesijos ID gauna savo `ChatMemory` egzempliorių, kurį valdo `ChatMemoryProvider` komponentas, taigi keli vartotojai gali bendrauti su agentu vienu metu, nepersimaišydami pokalbių. Žemiau pateikta schema rodo, kaip keli vartotojai nukreipiami į atskiras atminties saugyklas pagal jų sesijos ID:
 
 <img src="../../../translated_images/lt/session-management.91ad819c6c89c400.webp" alt="Sesijos valdymas su @MemoryId" width="800"/>
 
-*Kiekvienas sesijos ID atitinka atskirą pokalbių istoriją – vartotojai niekada nemato vienas kito žinučių.*
+*Kiekvienas sesijos ID atitinka atskirą pokalbio istoriją — vartotojai nemato vieni kitų žinučių.*
 
-### Klaidos valdymas
+### Klaidų tvarkymas
 
-Įrankiai gali sugesti – API pavėluoti, parametrai gali būti neteisingi, išorinės paslaugos gali neveikti. Gamybos agentams reikalingas klaidų valdymas, kad modelis galėtų paaiškinti problemas arba bandyti alternatyvas, o ne sugadintų visą programą. Kai įrankis meta išimtį, LangChain4j ją pagavo ir perduoda klaidos pranešimą modeliui, kuris gali tada natūralia kalba paaiškinti problemą.
+Įrankiai gali sugesti — API gali strigti, parametrai būti klaidingi, išorinės paslaugos nebeveikti. Produkciniai agentai turi turėti klaidų tvarkymą, kad modelis galėtų paaiškinti problemas arba bandyti kitus variantus vietoje visos programos gedimo. Kai įrankis meta išimtį, LangChain4j ją pagavęs perduoda klaidos žinutę atgal modeliui, kuris gali paaiškinti problemą natūralia kalba.
 
 ## Turimi įrankiai
 
-Žemiau pateikta diagrama parodo platų įrankių ekosistemą, kurią galite kurti. Šis modulis demonstruoja orų ir temperatūros įrankius, tačiau tas pats `@Tool` modelis tinka bet kuriam Java metodui – nuo duomenų bazių užklausų iki mokėjimų apdorojimo.
+Žemiau pateikta schema rodo platų įrankių ekosistemą, kurią galite sukurti. Šis modulis demonstruoja oro sąlygų ir temperatūros įrankius, tačiau tas pats `@Tool` modelis veikia bet kuriame Java metode — nuo duomenų bazių užklausų iki mokėjimų apdorojimo.
 
 <img src="../../../translated_images/lt/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Įrankių ekosistema" width="800"/>
 
-*Kiekvienas Java metodas, pažymėtas @Tool, tampa prieinamas DI – modelis gali naudoti įrankius, skirtus duomenų bazėms, API, el. paštui, failų operacijoms ir daugeliui kitų.*
+*Bet kuris su @Tool anotacija pažymėtas Java metodas tampa prieinamas DI modeliui — modelis gali naudoti įrankius, duomenų bazes, API, el. paštą, failų operacijas ir daugiau.*
 
-## Kada naudoti įrankiais pagrįstus agentus
+## Kada naudoti įrankiais paremtus agentus
 
-Ne kiekvienai užklausai reikalingi įrankiai. Sprendimas priklauso nuo to, ar DI turi bendrauti su išorinėmis sistemomis, ar gali atsakyti iš savo žinių. Žemiau pateiktas vadovas apibendrina, kada įrankiai prideda vertės, o kada jų nereikia:
+Ne kiekviena užklausa reikalauja įrankių. Sprendimas priklauso nuo to, ar DI turi bendrauti su išorinėmis sistemomis, ar gali atsakyti remdamasis savo žiniomis. Toliau pateikiama pagalba, kada įrankiai naudingi, o kada jų nereikia:
 
 <img src="../../../translated_images/lt/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Kada naudoti įrankius" width="800"/>
 
-*Greitas sprendimų vadovas – įrankiai skirti realaus laiko duomenims, skaičiavimams ir veiksmams; bendros žinios ir kūrybiniai uždaviniai jų nereikalauja.*
+*Greitas sprendimų pagalbininkas — įrankiai skirti realaus laiko duomenims, skaičiavimams ir veiksmams; bendrąsias žinias ir kūrybinius uždavinius galima spręsti be jų.*
 
-## Įrankiai prieš RAG
+## Įrankiai vs RAG
 
-03 ir 04 moduliai abu plečia DI galimybes, bet iš esmės skirtingais būdais. RAG suteikia modeliui prieigą prie **žinių** iš dokumentų. Įrankiai leidžia modeliui imtis **veiksmų** iškviečiant funkcijas. Žemiau pateikta diagrama lygina šiuos du požiūrius šalia vienas kito – kaip veikia kiekvienas srautas ir kokie yra kompromisai:
+3 ir 4 moduliai abu išplečia DI galimybes, tačiau fundamentaliai skirtingais būdais. RAG suteikia modeliui prieigą prie **žinių** traukiant dokumentus. Įrankiai suteikia modeliui galimybę imtis **veiksmų** kviečiant funkcijas. Žemiau pateikta schema lygina šiuos du metodus šalia vienas kito — nuo veikimo principų iki kompromisų:
 
-<img src="../../../translated_images/lt/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Įrankiai prieš RAG palyginimas" width="800"/>
+<img src="../../../translated_images/lt/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Įrankiai vs RAG palyginimas" width="800"/>
 
-*RAG gauna informaciją iš statinių dokumentų – įrankiai vykdo veiksmus ir gauna dinamiškus, realaus laiko duomenis. Daugelis gamybos sistemų naudoja abu.*
+*RAG traukia informaciją iš statinių dokumentų — įrankiai atlieka veiksmus ir gauna dinamiškus, realaus laiko duomenis. Daugelis produkcinių sistemų naudoja abu variantus.*
 
-Praktiškai daug gamybos sistemų naudoja abu požiūrius: RAG tvirtina atsakymus jūsų dokumentacijoje, o įrankiai gauna gyvus duomenis arba atlieka operacijas.
+Praktikoje daugelis produkcinių sistemų derina abu požiūrius: RAG naudoti atsakymams pagrįsti jūsų dokumentacijoje, o Įrankiai — gyviems duomenims gauti arba operacijoms atlikti.
 
-## Tolimesni žingsniai
+## Kiti žingsniai
 
 **Kitas modulis:** [05-mcp - Modelio konteksto protokolas (MCP)](../05-mcp/README.md)
 
 ---
 
-**Navigacija:** [← Ankstesnis: Modulis 03 - RAG](../03-rag/README.md) | [Atgal į Pradžią](../README.md) | [Kitas: Modulis 05 - MCP →](../05-mcp/README.md)
+**Naršymas:** [← Ankstesnis: Modulis 03 - RAG](../03-rag/README.md) | [Grįžti į pagrindinį](../README.md) | [Kitas: Modulis 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Atsakomybės apribojimas**:
-Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, prašome atkreipti dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas gimtąja kalba turi būti laikomas autoritetingu šaltiniu. Kritinei informacijai rekomenduojama naudoti profesionalų žmogišką vertimą. Mes neatsakome už bet kokius nesusipratimus ar neteisingą interpretavimą, kylančius dėl šio vertimo naudojimo.
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors siekiame tikslumo, prašome atkreipti dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas gimtąja kalba turėtų būti laikomas autoritetingu šaltiniu. Svarbiai informacijai rekomenduojamas profesionalus žmogiškasis vertimas. Mes neprisiimame atsakomybės už bet kokius nesusipratimus ar klaidingus interpretavimus, atsiradusius naudojantis šiuo vertimu.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

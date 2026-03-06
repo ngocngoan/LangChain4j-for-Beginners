@@ -1,77 +1,77 @@
 # Modul 04: AI agenti z orodji
 
-## Kazalo vsebine
+## Vsebina
 
 - [Kaj se boste naučili](../../../04-tools)
 - [Predpogoji](../../../04-tools)
 - [Razumevanje AI agentov z orodji](../../../04-tools)
-- [Kako deluje klic orodja](../../../04-tools)
+- [Kako deluje klic orodij](../../../04-tools)
   - [Definicije orodij](../../../04-tools)
   - [Sprejemanje odločitev](../../../04-tools)
   - [Izvedba](../../../04-tools)
   - [Generiranje odziva](../../../04-tools)
-  - [Arhitektura: samodejna povezava Spring Boot](../../../04-tools)
-- [Verižna raba orodij](../../../04-tools)
+  - [Arhitektura: Spring Boot samodejno povezovanje](../../../04-tools)
+- [Povezovanje orodij](../../../04-tools)
 - [Zagon aplikacije](../../../04-tools)
 - [Uporaba aplikacije](../../../04-tools)
-  - [Poskusite preprosto uporabo orodja](../../../04-tools)
-  - [Preizkusite verižna orodja](../../../04-tools)
-  - [Oglejte si potek pogovora](../../../04-tools)
-  - [Eksperimentirajte z različnimi zahtevki](../../../04-tools)
-- [Ključni pojmi](../../../04-tools)
-  - [Vzorec ReAct (premišljanje in delovanje)](../../../04-tools)
-  - [Opis orodij je pomemben](../../../04-tools)
+  - [Preizkusi preprosto uporabo orodja](../../../04-tools)
+  - [Preizkusi povezovanje orodij](../../../04-tools)
+  - [Oglej si potek pogovora](../../../04-tools)
+  - [Eksperimentiraj z različnimi zahtevami](../../../04-tools)
+- [Ključni koncepti](../../../04-tools)
+  - [Vzorec ReAct (razmišljanje in ukrepanje)](../../../04-tools)
+  - [Pomen opisov orodij](../../../04-tools)
   - [Upravljanje sej](../../../04-tools)
-  - [Ravnanje z napakami](../../../04-tools)
+  - [Obdelava napak](../../../04-tools)
 - [Razpoložljiva orodja](../../../04-tools)
-- [Kdaj uporabiti agente, ki temeljijo na orodjih](../../../04-tools)
+- [Kdaj uporabljati agente na osnovi orodij](../../../04-tools)
 - [Orodja proti RAG](../../../04-tools)
 - [Naslednji koraki](../../../04-tools)
 
 ## Kaj se boste naučili
 
-Do zdaj ste se naučili, kako se pogovarjati z AI, učinkovito strukturirati pozive in podpreti odgovore z vašimi dokumenti. Vendar pa obstaja temeljna omejitev: jezikovni modeli lahko generirajo le besedilo. Ne morejo preveriti vremena, izvajati izračunov, poizvedovati v podatkovnih bazah ali sodelovati z zunanjimi sistemi.
+Do zdaj ste se naučili, kako voditi pogovore z AI, učinkovito strukturirati pozive in usmerjati odgovore v vaše dokumente. A še vedno obstaja temeljna omejitev: jezikovni modeli lahko ustvarjajo le besedilo. Ne morejo preveriti vremenske napovedi, izvajati izračunov, poizvedovati po podatkovnih bazah ali se povezovati z zunanjimi sistemi.
 
-Orodja to spremenijo. Z omogočanjem dostopa modelu do funkcij, ki jih lahko kliče, ga spremenite iz generatorja besedila v agenta, ki lahko izvaja dejanja. Model odloča, kdaj potrebuje orodje, katerega orodje uporabiti in katere parametre posredovati. Vaša koda izvede funkcijo in vrne rezultat. Model vključuje ta rezultat v svoj odgovor.
+Orodja to spremenijo. Z zagotavljanjem dostopa do funkcij, ki jih lahko model pokliče, ga preoblikujete iz generatorja besedila v agenta, ki lahko izvaja dejanja. Model odloča, kdaj potrebuje orodje, katero orodje uporabiti in katere parametre posredovati. Vaša koda izvede funkcijo in vrne rezultat. Model ta rezultat vključi v svoj odgovor.
 
 ## Predpogoji
 
 - Zaključen [Modul 01 - Uvod](../01-introduction/README.md) (nameščeni Azure OpenAI viri)
-- Priporočeni zaključek prejšnjih modulov (ta modul se v primerjavi orodij in RAG sklicuje na [RAG pojme iz Modula 03](../03-rag/README.md))
-- Datoteka `.env` v korenski mapi z Azure poverilnicami (ustvarjena z `azd up` v Modulu 01)
+- Priporočeni so zaključeni prejšnji moduli (ta modul se sklicuje na [RAG koncepte iz Modula 03](../03-rag/README.md) v primerjavi Orodja proti RAG)
+- `.env` datoteka v korenski mapi z Azure poverilnicami (ustvarjena z `azd up` v Modulu 01)
 
-> **Opomba:** Če Modula 01 niste zaključili, najprej sledite navodilom za namestitev tam.
+> **Opomba:** Če modula 01 niste zaključili, najprej upoštevajte navodila za namestitev tam.
 
 ## Razumevanje AI agentov z orodji
 
-> **📝 Opomba:** V tem modulu izraz "agenti" označuje AI pomočnike, izboljšane z zmogljivostmi klicanja orodij. To se razlikuje od vzorcev **Agentic AI** (avtonomni agenti z načrtovanjem, spominom in večstopenjskim premišljevanjem), ki jih bomo obravnavali v [Modulu 05: MCP](../05-mcp/README.md).
+> **📝 Opomba:** Izraz "agenti" v tem modulu se nanaša na AI pomočnike, ki so nadgrajeni z možnostmi klica orodij. To se razlikuje od vzorcev **Agentic AI** (avtonomni agenti z načrtovanjem, spominom in večstopenjskim razmišljanjem), ki jih bomo obravnavali v [Modulu 05: MCP](../05-mcp/README.md).
 
-Brez orodij lahko jezikovni model generira le besedilo iz svojih učnih podatkov. Če ga vprašate za trenutno vreme, mora ugibati. Če mu daste orodja, lahko kliče vremenski API, izvaja izračune ali poizveduje v bazi podatkov — nato vplete te resnične rezultate v svoj odgovor.
+Brez orodij lahko jezikovni model ustvarja le besedilo na podlagi svojega učnega gradiva. Vprašajte ga za trenutno vreme in mora ugibati. Če mu zagotovite orodja, lahko pokliče vremenski API, izvede izračune ali poizve za podatke v bazi — nato te resnične rezultate vključi v svoj odgovor.
 
 <img src="../../../translated_images/sl/what-are-tools.724e468fc4de64da.webp" alt="Brez orodij proti z orodji" width="800"/>
 
-*Brez orodij model samo ugiba — z orodji lahko kliče API-je, izvaja izračune in vrača podatke v realnem času.*
+*Brez orodij model le ugiba — z orodji lahko kliče API-je, izvaja izračune in vrača podatke v realnem času.*
 
-AI agent z orodji sledi vzorcu **Reasoning and Acting (ReAct)**. Model se ne odzove le — razmišlja, kaj potrebuje, deluje s klicem orodja, opazuje rezultat in nato odloči, ali naj ponovno deluje ali poda končni odgovor:
+AI agent z orodji sledi vzorcu **Razmišljanje in Ukrepanje (ReAct)**. Model ne samo odgovarja — razmišlja, kaj potrebuje, ukrepa z uporabo orodja, opazuje rezultat in nato odloča, ali bo še naprej ukrepal ali podal končni odgovor:
 
-1. **Premisli** — agent analizira uporabnikovo vprašanje in ugotovi, katere informacije potrebuje
-2. **Ustvari dejanje** — agent izbere pravo orodje, ustvari pravilne parametre in ga kliče
-3. **Opazuj** — agent prejme izhod orodja in oceni rezultat
-4. **Ponovi ali odgovori** — če je potrebnih več podatkov, se agent vrne na začetek; sicer sestavi naravnavplovno besedilo kot odgovor
+1. **Razmišljanje** — agent analizira uporabnikovo vprašanje in ugotovi, katere informacije potrebuje
+2. **Ukrepanje** — agent izbere pravo orodje, ustvari pravilne parametre in ga pokliče
+3. **Opazovanje** — agent prejme izhod orodja in oceni rezultat
+4. **Ponavljanje ali odgovor** — če je potrebnih več podatkov, agent ponovi zanko; sicer sestavi odgovor v naravnem jeziku
 
 <img src="../../../translated_images/sl/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Vzorec ReAct" width="800"/>
 
-*Cikel ReAct — agent premišljuje o dejanju, deluje s klicem orodja, opazuje rezultat in ponavlja, dokler ne poda končnega odgovora.*
+*Cikel ReAct — agent razmišlja, kaj storiti, ukrepa z uporabo orodja, opazuje rezultat in ponavlja, dokler ne poda končnega odgovora.*
 
-To se zgodi samodejno. Določite orodja in njihove opise. Model sam sprejema odločitve, kdaj in kako jih uporabiti.
+To se zgodi samodejno. Definirate orodja in njihove opise. Model sam sprejema odločitve, kdaj in kako jih uporabiti.
 
-## Kako deluje klic orodja
+## Kako deluje klic orodij
 
 ### Definicije orodij
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Definirate funkcije s jasnimi opisi in specifikacijami parametrov. Model vidi te opise v svojem sistemskem pozivu in razume, kaj vsako orodje počne.
+Definirate funkcije z jasnimi opisi in specifikacijami parametrov. Model vidi te opise v sistemskem pozivu in razume, kaj vsako orodje počne.
 
 ```java
 @Component
@@ -89,92 +89,104 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Asistent je samodejno povezan s Spring Boot z:
+// Pomočnik je samodejno povezan s Spring Boot z:
 // - ChatModel bean
 // - Vse metode @Tool iz razredov @Component
 // - ChatMemoryProvider za upravljanje sej
 ```
 
-Diagram spodaj razčleni vsako oznako in pokaže, kako vsak del pomaga AI razumeti, kdaj naj kliče orodje in katere argumente posredovati:
+Shema spodaj razčleni vsako anotacijo in pokaže, kako vsak element pomaga AI razumeti, kdaj klicati orodje in katere argumente posredovati:
 
 <img src="../../../translated_images/sl/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomija definicij orodij" width="800"/>
 
-*Anatomija definicije orodja — @Tool pove AI, kdaj ga uporabiti, @P opisuje vsak parameter, @AiService pa poveže vse skupaj ob zagonu.*
+*Anatomija definicije orodja — @Tool pove AI, kdaj ga uporabiti, @P opiše vsak parameter, @AiService pa ob zagonu poveže vse skupaj.*
 
-> **🤖 Poskusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) in vprašajte:
-> - "Kako bi integriral pravi vremenski API, kot je OpenWeatherMap, namesto lažnih podatkov?"
-> - "Kaj naredi dober opis orodja, ki AI pomaga pravilno uporabljati orodje?"
-> - "Kako naj obravnavam napake API-ja in omejitve klicev v implementacijah orodij?"
+> **🤖 Preizkusi z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odpri [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) in vprašaj:
+> - "Kako bi integriral pravi vremenski API, kot je OpenWeatherMap, namesto ponarejenih podatkov?"
+> - "Kaj naredi dober opis orodja, ki AI pomaga uporabljati ga pravilno?"
+> - "Kako obravnavam napake API-ja in omejitve pogostosti v implementacijah orodij?"
 
 ### Sprejemanje odločitev
 
-Ko uporabnik vpraša "Kakšno je vreme v Seattleu?", model ne izbere orodja naključno. Primerja uporabnikov namen z opisi vsakega orodja, jim dodeli ocene ustreznosti in izbere najboljšo možnost. Nato generira strukturiran klic funkcije s pravimi parametri — v tem primeru nastavi `location` na `"Seattle"`.
+Ko uporabnik vpraša "Kakšno je vreme v Seattlu?", model ne izbere orodja po naključju. Primerja uporabnikov cilj z vsakim opisom orodja, ki mu je na voljo, oceni relevantnost in izbere najbolj ustrezno orodje. Nato generira strukturiran klic funkcije z ustreznimi parametri — v tem primeru nastavi `location` na `"Seattle"`.
 
-Če nobeno orodje ne ustreza uporabnikovi zahtevi, model odgovori iz lastnega znanja. Če več orodij ustreza, izbere najnatančnejše.
+Če nobeno orodje ne ustreza uporabnikovi zahtevi, model odgovori na podlagi lastnega znanja. Če ustreza več orodij, izbere najbolj specifično.
 
 <img src="../../../translated_images/sl/decision-making.409cd562e5cecc49.webp" alt="Kako AI odloča, katero orodje uporabiti" width="800"/>
 
-*Model oceni vsako razpoložljivo orodje glede na uporabnikov namen in izbere najboljšo ujemanje — zato je pomembno pisati jasne, specifične opise orodij.*
+*Model ovrednoti vsako razpoložljivo orodje glede na uporabnikov namen in izbere najboljši ujem; zato je pomembno pisati jasne in specifične opise orodij.*
 
 ### Izvedba
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot samodejno poveže deklarativni vmesnik `@AiService` z vsemi registriranimi orodji, LangChain4j pa avtomatično izvaja klice orodij. Za kulisami poteka celoten klic orodja skozi šest stopenj — od uporabnikovega vprašanja v naravnem jeziku vse do odgovora v naravnem jeziku:
+Spring Boot samodejno povezuje deklarativni vmesnik `@AiService` z vsemi registriranimi orodji, LangChain4j pa samodejno izvaja klice orodij. V ozadju celoten klic orodja poteka skozi šest faz — od uporabnikovega vprašanja v naravnem jeziku vse do odgovora v naravnem jeziku:
 
 <img src="../../../translated_images/sl/tool-calling-flow.8601941b0ca041e6.webp" alt="Potek klica orodja" width="800"/>
 
-*Celoten potek — uporabnik postavi vprašanje, model izbere orodje, LangChain4j ga izvede, model vplete rezultat v naravni odgovor.*
+*Celoten potek — uporabnik postavi vprašanje, model izbere orodje, LangChain4j ga izvede, model pa rezultat vključi v naraven odgovor.*
 
-> **🤖 Poskusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) in vprašajte:
+Če ste zagnali [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) v Modulu 00, ste ta vzorec že videli v akciji — orodje `Calculator` je bilo poklicano na enak način. Zaporedni diagram spodaj točno pokaže, kaj se je dogajalo v ozadju med tem demonstracijskim primerom:
+
+<img src="../../../translated_images/sl/tool-calling-sequence.94802f406ca26278.webp" alt="Zaporedni diagram klica orodja" width="800"/>
+
+*Cikel klica orodja iz demonstracije Hitrega začetka — `AiServices` pošlje vaše sporočilo in sheme orodij LLM-ju, LLM odgovori s klicem funkcije, npr. `add(42, 58)`, LangChain4j lokalno izvede metodo `Calculator`, rezultat pa vrne nazaj za končni odgovor.*
+
+> **🤖 Preizkusi z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odpri [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) in vprašaj:
 > - "Kako deluje vzorec ReAct in zakaj je učinkovit za AI agente?"
-> - "Kako agent odloča, katero orodje uporabiti in v kakšnem vrstnem redu?"
+> - "Kako agent odloči, katero orodje uporabiti in v kakšnem vrstnem redu?"
 > - "Kaj se zgodi, če izvedba orodja ne uspe - kako naj robustno obravnavam napake?"
 
 ### Generiranje odziva
 
-Model prejme vremenske podatke in jih oblikuje v naravnaven odgovor za uporabnika.
+Model prejme vremenske podatke in jih oblikuje v naravno jezikovni odgovor za uporabnika.
 
-### Arhitektura: samodejna povezava Spring Boot
+### Arhitektura: Spring Boot samodejno povezovanje
 
-Ta modul uporablja LangChain4j integracijo s Spring Boot z deklarativnimi vmesniki `@AiService`. Ob zagonu Spring Boot odkrije vsak `@Component` z metodami `@Tool`, vaš `ChatModel` bean in `ChatMemoryProvider` — nato jih vse poveže v en vmesnik `Assistant` brez dodatnega ročnega nastavljanja.
+Ta modul uporablja LangChain4j integracijo s Spring Boot z deklarativnimi vmesniki `@AiService`. Ob zagonu Spring Boot odkrije vsak `@Component`, ki vsebuje metode `@Tool`, vaš `ChatModel` bean in `ChatMemoryProvider` — nato jih vse poveže v en sam vmesnik `Assistant` brez kakršnegakoli dodatnega kodiranja.
 
-<img src="../../../translated_images/sl/spring-boot-wiring.151321795988b04e.webp" alt="Arhitektura samodejne povezave Spring Boot" width="800"/>
+<img src="../../../translated_images/sl/spring-boot-wiring.151321795988b04e.webp" alt="Arhitektura samodejnega povezovanja Spring Boot" width="800"/>
 
-*Vmesnik @AiService povezuje ChatModel, komponente orodij in upravljavca pomnilnika — povezavo Spring Boot samodejno upravlja.*
+*Vmesnik @AiService povezuje ChatModel, komponente orodij in ponudnika pomnilnika — Spring Boot samodejno skrbi za povezovanje.*
 
-Ključne prednosti te metode:
+Celoten življenjski cikel zahteve je prikazan kot zaporedni diagram — od HTTP zahteve preko kontrolerja, storitve in samodejno povezanega proxy-ja do izvedbe orodja in nazaj:
 
-- **Samodejna povezava Spring Boot** — ChatModel in orodja samodejno injicirani
-- **Vzorec @MemoryId** — samodejno upravljanje sejnskega pomnilnika
-- **En sam primerek** — Assistant ustvarjen enkrat in ponovno uporabljen za boljšo zmogljivost
-- **Tipno varna izvedba** — Java metode klicane neposredno s pretvorbo tipov
-- **Večkrsna orkestracija** — samodejno upravlja verižne klice orodij
-- **Brez nepotrebne kode** — ni ročnih klicev `AiServices.builder()` ali pomnilniških HashMap
+<img src="../../../translated_images/sl/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Zaporedni diagram klicev orodij v Spring Boot" width="800"/>
 
-Alternativni pristopi (ročni `AiServices.builder()`) zahtevajo več kode in ne ponujajo prednosti integracije Spring Boot.
+*Popoln življenjski cikel zahteve Spring Boot — HTTP zahteva teče preko kontrolerja in storitve do samodejno povezanega proxy-ja Assistant, ki samodejno orkestrira klice LLM in orodij.*
 
-## Verižna raba orodij
+Ključne prednosti tega pristopa:
 
-**Verižna raba orodij** — Pravi potencial agentov, ki temeljijo na orodjih, se pokaže, ko je za eno vprašanje potrebno več orodij. Če vprašate "Kakšno je vreme v Seattleu v Fahrenheitih?", agent samodejno združi dve orodji: najprej kliče `getCurrentWeather`, da dobi temperaturo v Celziju, nato pa ta rezultat posreduje funkciji `celsiusToFahrenheit` za pretvorbo — vse v enem samem pogovornem koraku.
+- **Spring Boot samodejno povezovanje** — ChatModel in orodja samodejno vbrizgani
+- **Vzorec @MemoryId** — samodejno upravljanje pomnilnika na osnovi seje
+- **Enojna instanca** — Assistant ustvarjen enkrat in ponovno uporabljen za boljšo zmogljivost
+- **Varna izvedba po tipu** — klici Java metod neposredno s pretvorbo tipov
+- **Orkestracija več korakov** — samodejno upravlja povezovanje orodij
+- **Brez nepotrebne kode** — ni ročnih klicev `AiServices.builder()` ali HashMap pomnilnika
 
-<img src="../../../translated_images/sl/tool-chaining-example.538203e73d09dd82.webp" alt="Primer verižne rabe orodij" width="800"/>
+Alternativni pristopi (ročni `AiServices.builder()`) zahtevajo več kode in ne prinašajo prednosti integracije Spring Boot.
 
-*Verižna raba orodij v praksi — agent najprej kliče getCurrentWeather, nato pretvori rezultat Celzija v Fahrenheita in poda združen odgovor.*
+## Povezovanje orodij
 
-**Nenehne napake** — Če vprašate za vreme v mestu, ki ni v lažnih podatkih, orodje vrne sporočilo o napaki, AI pa pojasni, da ne more pomagati in ne zruši aplikacije. Orodja se varno izognejo napakam. Diagram spodaj primerja obe pristopi — ob pravilnem ravnanju z napako agent ujame izjemo in poda koristno pojasnilo, sicer pa se aplikacija popolnoma zruši:
+**Povezovanje orodij** — prava moč agentov na osnovi orodij pride do izraza, ko eno vprašanje zahteva več orodij. Vprašajte "Kakšno je vreme v Seattlu v Fahrenheitu?" in agent samodejno poveže dve orodji: najprej pokliče `getCurrentWeather`, da dobi temperaturo v Celziju, nato ta rezultat poda `celsiusToFahrenheit` za pretvorbo — vse v enem pogovornem obratu.
 
-<img src="../../../translated_images/sl/error-handling-flow.9a330ffc8ee0475c.webp" alt="Potek ravnanja z napakami" width="800"/>
+<img src="../../../translated_images/sl/tool-chaining-example.538203e73d09dd82.webp" alt="Primer povezovanja orodij" width="800"/>
 
-*Ko orodje ne uspe, agent ujame napako in poda koristno pojasnilo namesto zrušitve.*
+*Povezovanje orodij v akciji — agent najprej pokliče getCurrentWeather, nato rezultat v Celzijih preusmeri v celsiusToFahrenheit in poda združen odgovor.*
 
-Kazanje se zgodi v enem pogovornem koraku. Agent samostojno orkestrira več orodnih klicev.
+**Elegantne napake** — zahtevajte vreme v mestu, ki ni v vzorčnih podatkih. Orodje vrne sporočilo o napaki, AI pa razloži, da ne more pomagati, namesto da se aplikacija zruši. Orodja varno zakrijejo napake. Spodnja shema primerja oba pristopa — ob pravilni obdelavi napak agent ujame izjemo in prijazno odgovori, sicer se aplikacija zruši:
+
+<img src="../../../translated_images/sl/error-handling-flow.9a330ffc8ee0475c.webp" alt="Potek obdelave napak" width="800"/>
+
+*Ko orodje ne uspe, agent ujame napako in poda v pomoč namenjen odgovor namesto zrušitve.*
+
+To se zgodi v enem pogovornem obratu. Agent samostojno orkestrira več klicev orodij.
 
 ## Zagon aplikacije
 
 **Preverite namestitev:**
 
-Preverite, da je datoteka `.env` v korenski mapi s poverilnicami Azure (ustvarjena v Modulu 01). Zaženite iz mape modula (`04-tools/`):
+Prepričajte se, da `.env` datoteka obstaja v korenski mapi z Azure poverilnicami (ustvarjena med Modulom 01). Zaženite to iz mape modula (`04-tools/`):
 
 **Bash:**
 ```bash
@@ -183,32 +195,32 @@ cat ../.env  # Prikazati mora AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 
 **PowerShell:**
 ```powershell
-Get-Content ..\.env  # Mora prikazati AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
+Get-Content ..\.env  # Naj pokaže AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT
 ```
 
 **Zaženite aplikacijo:**
 
-> **Opomba:** Če ste že zagnali vse aplikacije z `./start-all.sh` iz korenske mape (kot opisano v Modulu 01), ta modul že teče na vratih 8084. Ukaze za zagon lahko preskočite in pojdite neposredno na http://localhost:8084.
+> **Opomba:** Če ste že zagnali vse aplikacije z uporabo `./start-all.sh` iz korenske mape (kot je opisano v Modulu 01), ta modul že teče na vratih 8084. Lahko preskočite ukaze za zagon in greste neposredno na http://localhost:8084.
 
-**Možnost 1: Uporaba Spring Boot nadzorne plošče (priporočeno uporabnikom VS Code)**
+**Možnost 1: Uporaba Spring Boot Dashboard (Priporočeno za uporabnike VS Code)**
 
-Razvojno okolje vključuje razširitev Spring Boot nadzorne plošče, ki nudi vizualni vmesnik za upravljanje vseh Spring Boot aplikacij. Najdete jo na stranski vrstici aktivnosti na levi strani v VS Code (ikona Spring Boot).
+Razvojno okolje vsebuje razširitev Spring Boot Dashboard, ki nudi vizualni vmesnik za upravljanje vseh Spring Boot aplikacij. Nahaja se v Aktivnostni vrstici na levi strani VS Code (ikona Spring Boot).
 
-Iz nadzorne plošče lahko:
+Iz Spring Boot Dashboard lahko:
 - Vidite vse razpoložljive Spring Boot aplikacije v delovnem prostoru
 - Zaženete/ustavite aplikacije z enim klikom
-- Ogledujete dnevniške zapise v realnem času
+- Ogledate dnevniške zapise aplikacij v realnem času
 - Spremljate stanje aplikacij
 
-Preprosto kliknite gumb za predvajanje poleg "tools" za zagon tega modula ali zaženite vse module naenkrat.
+Preprosto kliknite ikono pred "tools" za zagon tega modula ali zaženite vse module hkrati.
 
-Tako izgleda Spring Boot nadzorna plošča v VS Code:
+Tako izgleda Spring Boot Dashboard v VS Code:
 
-<img src="../../../translated_images/sl/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot nadzorna plošča" width="400"/>
+<img src="../../../translated_images/sl/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Spring Boot nadzorna plošča v VS Code — zagon, ustavitev in spremljanje vseh modulov na enem mestu*
+*Spring Boot Dashboard v VS Code — zaženite, ustavite in spremljajte vse module na enem mestu*
 
-**Možnost 2: Uporaba skript za ukazno vrstico**
+**Možnost 2: Uporaba ukaznih skript**
 
 Zaženite vse spletne aplikacije (moduli 01-04):
 
@@ -220,7 +232,7 @@ cd ..  # Iz korenskega imenika
 
 **PowerShell:**
 ```powershell
-cd ..  # Iz korenskega imenika
+cd ..  # Iz korenske mape
 .\start-all.ps1
 ```
 
@@ -238,9 +250,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Obe skripti samodejno naložita okoljske spremenljivke iz korenske `.env` datoteke in po potrebi sestavita JAR datoteke.
+Oba skripta samodejno naložita spremenljivke okolja iz glavne datoteke `.env` in bosta zgradila JAR-je, če ti ne obstajajo.
 
-> **Opomba:** Če želite module zgraditi ročno pred zagon:
+> **Opomba:** Če želite pred začetkom ročno zgraditi vse module:
 >
 > **Bash:**
 > ```bash
@@ -254,9 +266,9 @@ Obe skripti samodejno naložita okoljske spremenljivke iz korenske `.env` datote
 > mvn clean package -DskipTests
 > ```
 
-Odprite http://localhost:8084 v vašem brskalniku.
+Odprite http://localhost:8084 v svojem brskalniku.
 
-**Za ustavitev:**
+**Zaustavitev:**
 
 **Bash:**
 ```bash
@@ -274,95 +286,96 @@ cd ..; .\stop-all.ps1  # Vsi moduli
 
 ## Uporaba aplikacije
 
-Aplikacija ponuja spletni vmesnik, kjer lahko komunicirate z AI agentom z dostopom do vremenskih in orodij za pretvorbo temperature. Tako izgleda vmesnik — vključuje primere za hiter začetek in klepetalno ploščo za pošiljanje zahtevkov:
+Aplikacija ponuja spletni vmesnik, preko katerega lahko komunicirate z AI agentom, ki ima dostop do orodij za vremensko napoved in pretvorbo temperature. Tako izgleda vmesnik — vključuje hitre primere in klepetalno ploščo za pošiljanje zahtev:
+
 <a href="images/tools-homepage.png"><img src="../../../translated_images/sl/tools-homepage.4b4cd8b2717f9621.webp" alt="Vmesnik orodij AI agenta" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
 *Vmesnik orodij AI agenta - hitri primeri in klepetalni vmesnik za interakcijo z orodji*
 
-### Preizkusite preprosto uporabo orodja
+### Poskusite preprosto uporabo orodja
 
-Začnite s preprostim zahtevkom: "Pretvori 100 stopinj Fahrenheita v Celzijev". Agent prepozna, da potrebuje orodje za pretvorbo temperature, ga pokliče z ustreznimi parametri in vrne rezultat. Opazite, kako naravno je to - niste določili, katero orodje uporabiti ali kako ga poklicati.
+Začnite z enostavno zahtevo: "Pretvori 100 stopinj Fahrenheita v Celzija". Agent prepozna, da potrebuje orodje za pretvorbo temperature, ga pokliče z ustreznimi parametri in vrne rezultat. Opazite, kako naravno deluje – niste določili, katero orodje uporabiti ali kako ga poklicati.
 
-### Preizkusite verižitev orodij
+### Preizkusite verižni klic orodij
 
-Sedaj poskusite nekaj bolj zapletenega: "Kakšno je vreme v Seattlu in pretvori v Fahrenheite?" Oglejte si, kako agent ta postopek opravi v korakih. Najprej pridobi vreme (ki vrne v Celziju), prepozna potrebo po pretvorbi v Fahrenheite, pokliče orodje za pretvorbo in združi oba rezultata v en odgovor.
+Zdaj poskusite nekaj bolj zapletenega: "Kakšno je vreme v Seattlu in pretvori ga v Fahrenheite?" Opazujte, kako agent to obdela po korakih. Najprej pridobi vreme (ki vrne Celzije), prepozna potrebo po pretvorbi v Fahrenheite, pokliče pretvorbeno orodje in združi oba rezultata v en odgovor.
 
 ### Oglejte si potek pogovora
 
-Klepetalni vmesnik ohranja zgodovino pogovora, kar vam omogoča večkrožne interakcije. Vidite lahko vse prejšnje poizvedbe in odgovore, kar olajša sledenje pogovoru in razumevanje, kako agent gradi kontekst skozi več izmenjav.
+Klepetalni vmesnik shranjuje zgodovino pogovora, kar omogoča večkratne interakcije. Vidite lahko vse prejšnje poizvedbe in odgovore, kar olajša sledenje pogovoru in razumevanje, kako agent gradi kontekst skozi več izmenjav.
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/sl/tools-conversation-demo.89f2ce9676080f59.webp" alt="Pogovor z večkratnimi klici orodij" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/sl/tools-conversation-demo.89f2ce9676080f59.webp" alt="Pogovor z več klici orodij" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Večkratni pogovor, ki prikazuje preproste pretvorbe, vremenske poizvedbe in verižitev orodij*
+*Večkratni pogovor prikazuje preproste pretvorbe, vremenske poizvedbe in povezovanje orodij*
 
-### Eksperimentirajte z različnimi zahtevki
+### Eksperimentirajte z različnimi zahtevami
 
 Preizkusite različne kombinacije:
 - Vremenske poizvedbe: "Kakšno je vreme v Tokiu?"
 - Pretvorbe temperatur: "Koliko je 25°C v Kelvinih?"
-- Združene poizvedbe: "Preveri vreme v Parizu in mi povej, če je nad 20°C"
+- Združene poizvedbe: "Preveri vreme v Parizu in mi povej, ali je nad 20°C"
 
-Opazite, kako agent interpretira naravni jezik in ga preslika v ustrezne klice orodij.
+Opazite, kako agent razume naravni jezik in ga preslika v ustrezne klice orodij.
 
 ## Ključni koncepti
 
-### Vzorec ReAct (Razmišljanje in izvajanje)
+### ReAct vzorec (razmišljanje in delovanje)
 
-Agent izmenično razmišlja (odloča, kaj storiti) in deluje (uporablja orodja). Ta vzorec omogoča avtonomno reševanje problemov namesto le odzivanja na ukaze.
+Agent izmenično razmišlja (odloča, kaj storiti) in deluje (uporablja orodja). Ta vzorec omogoča avtonomno reševanje problemov, ne zgolj odzivanje na ukaze.
 
-### Opisi orodij so pomembni
+### Pomen opisa orodij
 
 Kakovost opisov vaših orodij neposredno vpliva na to, kako dobro jih agent uporablja. Jasni, specifični opisi pomagajo modelu razumeti, kdaj in kako poklicati posamezno orodje.
 
 ### Upravljanje sej
 
-Označba `@MemoryId` omogoča samodejno upravljanje spomina na podlagi sej. Vsak ID seje dobi svojo instanco `ChatMemory`, ki jo upravlja `ChatMemoryProvider` bean, tako da lahko več uporabnikov istočasno komunicira z agentom brez prepletanja pogovorov. Spodnji diagram prikazuje, kako so uporabniki usmerjeni v izolirane shrambe spominov na podlagi svojih ID sej:
+Oznaka `@MemoryId` omogoča samodejno upravljanje pomnilnika na podlagi sej. Vsaka ID seja dobi svojo instanco `ChatMemory`, ki jo upravlja primerek `ChatMemoryProvider`, tako da lahko več uporabnikov hkrati komunicira z agentom brez prekrivanja pogovorov. Spodnji diagram prikazuje, kako se več uporabnikov usmeri v izolirane pomnilniške shrambe glede na njihove ID-je sej:
 
 <img src="../../../translated_images/sl/session-management.91ad819c6c89c400.webp" alt="Upravljanje sej z @MemoryId" width="800"/>
 
-*Vsak ID seje se preslika na izolirano zgodovino pogovorov — uporabniki nikoli ne vidijo sporočil drug drugega.*
+*Vsak ID seja preslika zgodovino pogovora v ločeno shrambo — uporabniki nikoli ne vidijo sporočil drug drugega.*
 
 ### Ravnanje z napakami
 
-Orodja lahko spodletijo — API-ji potečejo, parametri so morda neveljavni, zunanji servisi odpovedo. Produkcijski agenti potrebujejo ravnanje z napakami, da model lahko pojasni probleme ali poskusi alternative namesto da aplikacija pade. Ko orodje sproži izjemo, LangChain4j jo ujame in sporočilo o napaki posreduje nazaj modelu, ki lahko nato problem pojasni v naravnem jeziku.
+Orodja lahko odpovejo — API-ji potečejo, parametri so lahko neveljavni, zunanje storitve odpovedo. Produkcijski agenti potrebujejo obravnavo napak, da lahko model pojasni težave ali poskusi alternative namesto da bi sesul celotno aplikacijo. Ko orodje vrže izjemo, jo LangChain4j ujamem in sporoči napako nazaj modelu, ki lahko potem razloži težavo v naravnem jeziku.
 
 ## Razpoložljiva orodja
 
-Spodnji diagram prikazuje širok ekosistem orodij, ki jih lahko razvijete. Ta modul prikazuje vremenska in temperaturna orodja, a isti vzorec `@Tool` deluje za katerokoli Java metodo — od poizvedb v podatkovnih bazah do procesiranja plačil.
+Spodnji diagram prikazuje širok ekosistem orodij, ki jih lahko zgradite. Ta modul prikazuje orodja za vreme in temperature, vendar enak vzorec `@Tool` deluje za katerokoli Java metodo — od poizvedb v bazo podatkov do obdelave plačil.
 
-<img src="../../../translated_images/sl/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ekosistem orodij" width="800"/>
+<img src="../../../translated_images/sl/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Ecosistem orodij" width="800"/>
 
-*Katera koli Java metoda, označena z @Tool, je na voljo za AI — vzorec se razteza na baze podatkov, API-je, e-pošto, operacije s datotekami in še več.*
+*Vsaka Java metoda z oznako @Tool postane dostopna AI-ju — vzorec se razteza na baze podatkov, API-je, e-pošto, datotečne operacije in več.*
 
-## Kdaj uporabljati agente na osnovi orodij
+## Kdaj uporabljati agente, ki temeljijo na orodjih
 
-Za vsak zahtevek niso potrebna orodja. Odločitev je odvisna od tega, ali AI potrebuje interakcijo z zunanjimi sistemi ali lahko odgovori iz lastnega znanja. Spodnji vodič povzema, kdaj orodja koristijo in kdaj niso potrebna:
+Za vsako zahtevo orodja niso potrebna. Odločitev temelji na tem, ali AI potrebuje interakcijo z zunanjimi sistemi ali lahko odgovori na podlagi lastnega znanja. Spodaj je povzetek, kdaj orodja dodajo vrednost in kdaj niso potrebna:
 
 <img src="../../../translated_images/sl/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Kdaj uporabljati orodja" width="800"/>
 
-*Hiter vodič za odločanje — orodja so za podatke v realnem času, izračune in akcije; splošno znanje in ustvarjalne naloge jih ne potrebujejo.*
+*Hitri vodič za odločanje — orodja so za podatke v realnem času, izračune in dejanja; splošno znanje in ustvarjalne naloge jih ne potrebujejo.*
 
 ## Orodja proti RAG
 
-Modula 03 in 04 oba širita zmožnosti AI, a na povsem različne načine. RAG modelu omogoča dostop do **znanja** s pridobivanjem dokumentov. Orodja modelu omogočajo izvajanje **dejanj** s klici funkcij. Spodnji diagram primerja ti dve pristopi vzporedno — od načinov delovanja do kompromisov med njima:
+Modula 03 in 04 razširjata možnosti AI-ja, a na povsem različne načine. RAG omogoča modelu dostop do **znanja** z iskanjem dokumentov. Orodja omogočajo modelu izvajanje **dejanj** z klicanjem funkcij. Diagram spodaj primerja oba pristopa vzporedno — od delovanja posameznega poteka do kompromisov med njima:
 
 <img src="../../../translated_images/sl/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Primerjava orodij in RAG" width="800"/>
 
-*RAG pridobiva informacije iz statičnih dokumentov — orodja izvajajo dejanja in pridobivajo dinamične, aktualne podatke. Mnogi produkcijski sistemi združujejo oba.*
+*RAG išče informacije v statičnih dokumentih — orodja izvajajo dejanja in pridobivajo dinamične, aktualne podatke. Veliko produkcijskih sistemov uporablja oba.*
 
-V praksi mnogi produkcijski sistemi kombinirajo oba pristopa: RAG za utemeljitev odgovorov v dokumentaciji ter Orodja za pridobitev živih podatkov ali izvajanje operacij.
+V praksi veliko produkcijskih sistemov uporablja oba pristopa: RAG za utemeljevanje odgovorov z vašo dokumentacijo in Orodja za pridobivanje živih podatkov ali izvajanje operacij.
 
 ## Naslednji koraki
 
-**Naslednji modul:** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
+**Naslednji modul:** [05-mcp - Protokol konteksta modela (MCP)](../05-mcp/README.md)
 
 ---
 
-**Navigacija:** [← Prejšnji: Modul 03 - RAG](../03-rag/README.md) | [Nazaj na glavno](../README.md) | [Naprej: Modul 05 - MCP →](../05-mcp/README.md)
+**Navigacija:** [← Prejšnji: Modul 03 - RAG](../03-rag/README.md) | [Nazaj na glavno](../README.md) | [Naslednji: Modul 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Omejitev odgovornosti**:
-Ta dokument je bil preveden z uporabo storitve za avtomatski prevod [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da lahko avtomatski prevodi vsebujejo napake ali netočnosti. Izvirni dokument v izvirnem jeziku velja za avtoritativni vir. Za kritične informacije priporočamo strokovni prevod s strani človeka. Nismo odgovorni za morebitna nesporazumevanja ali napačne interpretacije, ki izhajajo iz uporabe tega prevoda.
+**Opozorilo**:
+Ta dokument je bil preveden z uporabo AI prevajalske storitve [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da lahko avtomatizirani prevodi vsebujejo napake ali netočnosti. Izvirni dokument v izvorni jezik je treba šteti za avtoritativni vir. Za ključne informacije priporočamo strokovni človeški prevod. Ne odgovarjamo za morebitne nesporazume ali napačne razlage, ki izhajajo iz uporabe tega prevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

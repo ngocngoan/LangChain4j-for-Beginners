@@ -1,4 +1,22 @@
 {
+  "00-tool-integration.3f573138c2fa4eb2.webp": {
+    "original_hash": "4e132d8f4b1c5d7d67511ebb718784a6",
+    "translation_date": "2026-03-03T17:25:42+00:00",
+    "source_file": "diagrams/00-tool-integration.png",
+    "language_code": "lt"
+  },
+  "04-tools-spring-boot.a1bd8ae23cd098e1.webp": {
+    "original_hash": "79a86ab27b38d69feb8b17f94af99288",
+    "translation_date": "2026-03-03T17:25:14+00:00",
+    "source_file": "diagrams/04-tools-spring-boot.png",
+    "language_code": "lt"
+  },
+  "05-supervisor-agent.76491f14a6eed653.webp": {
+    "original_hash": "511042a7c0e06d00aa2327536e2c61d0",
+    "translation_date": "2026-03-03T17:25:32+00:00",
+    "source_file": "diagrams/05-supervisor-agent.png",
+    "language_code": "lt"
+  },
   "LangChain4j.90e1d693fcc71b50.webp": {
     "original_hash": "2b2dcf50ebdefc1d9e53029c330bfe50",
     "translation_date": "2026-01-16T12:10:30+00:00",
@@ -335,6 +353,12 @@
     "source_file": "01-introduction/images/simple-chat-stateless-demo.png",
     "language_code": "lt"
   },
+  "spring-boot-sequence.f83e3d485aa4a3c6.webp": {
+    "original_hash": "79a86ab27b38d69feb8b17f94af99288",
+    "translation_date": "2026-03-03T17:26:23+00:00",
+    "source_file": "04-tools/images/spring-boot-sequence.png",
+    "language_code": "lt"
+  },
   "spring-boot-wiring.151321795988b04e.webp": {
     "original_hash": "f4cfb40479536d71b6ae7c560650c317",
     "translation_date": "2026-02-27T18:30:57+00:00",
@@ -371,6 +395,12 @@
     "source_file": "05-mcp/images/supervisor-agent-pattern.png",
     "language_code": "lt"
   },
+  "supervisor-agent-sequence.1aa389b3bef99956.webp": {
+    "original_hash": "511042a7c0e06d00aa2327536e2c61d0",
+    "translation_date": "2026-03-03T17:26:01+00:00",
+    "source_file": "05-mcp/images/supervisor-agent-sequence.png",
+    "language_code": "lt"
+  },
   "task-execution-pattern.9da3967750ab5c1e.webp": {
     "original_hash": "d7f2b703fc92b713e194e84643f5de00",
     "translation_date": "2026-01-16T12:12:21+00:00",
@@ -399,6 +429,12 @@
     "original_hash": "1fc05f653fd9c04aa0220c1eba521e38",
     "translation_date": "2026-02-27T18:31:31+00:00",
     "source_file": "04-tools/images/tool-calling-flow.png",
+    "language_code": "lt"
+  },
+  "tool-calling-sequence.94802f406ca26278.webp": {
+    "original_hash": "4e132d8f4b1c5d7d67511ebb718784a6",
+    "translation_date": "2026-03-03T17:26:12+00:00",
+    "source_file": "04-tools/images/tool-calling-sequence.png",
     "language_code": "lt"
   },
   "tool-chaining-example.538203e73d09dd82.webp": {
