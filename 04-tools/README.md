@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](#video-walkthrough)
 - [What You'll Learn](#what-youll-learn)
 - [Prerequisites](#prerequisites)
 - [Understanding AI Agents with Tools](#understanding-ai-agents-with-tools)
@@ -27,6 +28,12 @@
 - [When to Use Tool-Based Agents](#when-to-use-tool-based-agents)
 - [Tools vs RAG](#tools-vs-rag)
 - [Next Steps](#next-steps)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
 ## What You'll Learn
 

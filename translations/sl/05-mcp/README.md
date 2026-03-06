@@ -1,4 +1,4 @@
-# Modul 05: Protokol konteksta modela (MCP)
+# Modul 05: Protokol modelnega konteksta (MCP)
 
 ## Kazalo
 
@@ -9,54 +9,55 @@
 - [Zagon primerov](../../../05-mcp)
   - [Predpogoji](../../../05-mcp)
 - [Hiter začetek](../../../05-mcp)
-  - [Operacije z datotekami (Stdio)](../../../05-mcp)
+  - [Datotečne operacije (Stdio)](../../../05-mcp)
   - [Nadzorni agent](../../../05-mcp)
     - [Zagon demonstracije](../../../05-mcp)
-    - [Kako nadzornik deluje](../../../05-mcp)
+    - [Kako deluje nadzornik](../../../05-mcp)
+    - [Kako FileAgent med izvajanjem odkrije MCP orodja](../../../05-mcp)
     - [Strategije odziva](../../../05-mcp)
     - [Razumevanje izhoda](../../../05-mcp)
     - [Pojasnilo funkcij agentnega modula](../../../05-mcp)
-- [Ključni koncepti](../../../05-mcp)
-- [Čestitke!](../../../05-mcp)
+- [Ključni pojmi](../../../05-mcp)
+- [Čestitamo!](../../../05-mcp)
   - [Kaj sledi?](../../../05-mcp)
 
 ## Kaj se boste naučili
 
-Zgradili ste pogovorno umetno inteligenco, obvladali ukaze, povezali odgovore z dokumenti in ustvarili agente z orodji. Toda vsa ta orodja so bila posebej izdelana za vašo aplikacijo. Kaj pa, če bi lahko svoji AI omogočili dostop do standardiziranega ekosistema orodij, ki jih lahko kdorkoli ustvari in deli? V tem modulu se boste naučili prav tega z Model Context Protocol (MCP) in agentnim modulom LangChain4j. Najprej prikažemo preprost MCP bralnik datotek, nato pa, kako se zlahka integrira v napredne agentne delovne tokove z vzorcem Nadzornega agenta.
+Zgradili ste pogovorno umetno inteligenco, obvladali pozive, utemeljili odgovore v dokumentih in ustvarili agente z orodji. Vsa ta orodja pa so bila prilagojena za vašo specifično aplikacijo. Kaj pa, če bi lahko svoji umetni inteligenci dali dostop do standardiziranega ekosistema orodij, ki jih lahko kdorkoli ustvari in deli? V tem modulu se boste naučili prav to z Model Context Protocol (MCP) in agentnim modulom LangChain4j. Najprej prikažemo preprost MCP bralnik datotek in nato pokažemo, kako se enostavno vključi v napredne agentne poteke dela z uporabo vzorca Supervisor Agent.
 
 ## Kaj je MCP?
 
-Protokol konteksta modela (MCP) zagotavlja prav to – standardiziran način za AI aplikacije, da odkrijejo in uporabljajo zunanja orodja. Namesto pisanja posebnih integracij za vsak vir podatkov ali storitev se povežete s strežniki MCP, ki razkrivajo svoje zmogljivosti v dosledni obliki. Vaš AI agent lahko nato te funkcije samodejno odkrije in uporablja.
+Model Context Protocol (MCP) nudi prav to – standardiziran način, da AI aplikacije odkrijejo in uporabljajo zunanja orodja. Namesto pisanja prilagojenih integracij za vsak podatek ali storitev, se povežete s strežniki MCP, ki svoje zmogljivosti razkrivajo v skladni obliki. Vaš AI agent lahko nato ta orodja samodejno odkrije in uporablja.
 
-Spodnja shema prikazuje razliko — brez MCP vsaka integracija zahteva posebno povezavo ena na ena; z MCP pa en sam protokol povezuje vašo aplikacijo z vsakim orodjem:
+Diagram spodaj prikazuje razliko — brez MCP vsaka integracija zahteva prilagojeno točko do točke povezavo; z MCP en sam protokol poveže vašo aplikacijo z vsakim orodjem:
 
 <img src="../../../translated_images/sl/mcp-comparison.9129a881ecf10ff5.webp" alt="Primerjava MCP" width="800"/>
 
-*Pred MCP: zapletene povezave ena na ena. Po MCP: en protokol, neskončne možnosti.*
+*Pred MCP: Kompleksne točka-do-točka integracije. Po MCP: En protokol, neskončne možnosti.*
 
-MCP rešuje temeljni problem razvoja AI: vsaka integracija je po meri. Želite dostop do GitHuba? Posebna koda. Želite brati datoteke? Posebna koda. Želite poizvedovati bazo podatkov? Posebna koda. Te integracije pa ne delujejo z drugimi AI aplikacijami.
+MCP rešuje temeljni problem v razvoju AI: vsaka integracija je prilagojena. Želite dostop do GitHub? Prilagojena koda. Želite brati datoteke? Prilagojena koda. Želite poizvedovati bazen podatkov? Prilagojena koda. Nobena od teh integracij ne deluje z drugimi AI aplikacijami.
 
-MCP to standardizira. MCP strežnik predstavlja orodja z jasno opisanim vmesnikom in shemami. Vsak MCP odjemalec se lahko poveže, odkrije na voljo orodja in jih uporablja. Zgradiš enkrat, uporabljaš kjerkoli.
+MCP to standardizira. MCP strežnik razkriva orodja s jasnimi opisi in shemami parametrov. Vsak MCP klient se lahko poveže, odkrije razpoložljiva orodja in jih uporablja. Zgradi enkrat, uporabi povsod.
 
-Spodnja shema prikazuje to arhitekturo — en MCP odjemalec (vaša AI aplikacija) se povezuje z več MCP strežniki, od katerih vsak predstavlja svoj nabor orodij prek standardnega protokola:
+Diagram spodaj ponazarja to arhitekturo — en MCP klient (vaša AI aplikacija) se poveže z več MCP strežniki, pri čemer vsak razkrije svoj nabor orodij prek standardiziranega protokola:
 
 <img src="../../../translated_images/sl/mcp-architecture.b3156d787a4ceac9.webp" alt="Arhitektura MCP" width="800"/>
 
-*Arhitektura protokola konteksta modela - standardizirano odkrivanje in izvajanje orodij*
+*Arhitektura Model Context Protocol – standardizirano odkrivanje in izvajanje orodij*
 
 ## Kako MCP deluje
 
-"Pod pokrovom" MCP uporablja slojevno arhitekturo. Vaša Java aplikacija (MCP odjemalec) odkrije na voljo orodja, pošlje JSON-RPC zahtevke prek transportnega sloja (Stdio ali HTTP), MCP strežnik pa izvede operacije in vrne rezultate. Spodnja shema razčleni vsak sloj tega protokola:
+Pod pokrovom MCP uporablja slojevito arhitekturo. Vaša Java aplikacija (MCP klient) odkrije razpoložljiva orodja, pošlje JSON-RPC zahteve preko transportnega sloja (Stdio ali HTTP), MCP strežnik izvede operacije in vrne rezultate. Naslednji diagram razčleni vsak sloj tega protokola:
 
 <img src="../../../translated_images/sl/mcp-protocol-detail.01204e056f45308b.webp" alt="Podrobnosti protokola MCP" width="800"/>
 
-*Kako MCP deluje v ozadju — odjemalci odkrijejo orodja, izmenjujejo JSON-RPC sporočila in izvajajo operacije prek transportnega sloja.*
+*Kako MCP deluje pod pokrovom — klienti odkrijejo orodja, izmenjujejo JSON-RPC sporočila in izvajajo operacije preko transportnega sloja.*
 
-**Arhitektura strežnik-odjemalec**
+**Arhitektura Strežnik-Klient**
 
-MCP uporablja model strežnik-odjemalec. Strežniki nudijo orodja – branje datotek, poizvedbe baz, klici API. Odjemalci (vaša AI aplikacija) se povežejo s strežniki in uporabljajo njihova orodja.
+MCP uporablja model strežnik-klient. Strežniki zagotavljajo orodja – branje datotek, poizvedovanje baz, klicanje API-jev. Klienti (vaša AI aplikacija) se povežejo do strežnikov in uporabljajo njihova orodja.
 
-Za uporabo MCP z LangChain4j dodajte naslednjo Maven odvisnost:
+Za uporabo MCP z LangChain4j dodajte to Maven odvisnost:
 
 ```xml
 <dependency>
@@ -68,15 +69,15 @@ Za uporabo MCP z LangChain4j dodajte naslednjo Maven odvisnost:
 
 **Odkritje orodij**
 
-Ko se vaš odjemalec poveže z MCP strežnikom, vpraša "Katera orodja imate?" Strežnik odgovori s seznamom na voljo orodij, vsakim z opisom in parametričnimi shemami. Vaš AI agent nato lahko odloči, katera orodja uporabiti glede na zahteve uporabnika. Spodnja shema prikazuje ta pozdravni protokol — odjemalec pošlje zahtevek `tools/list`, strežnik pa vrne svoja orodja z opisi in parametričnimi shemami:
+Ko se vaš klient poveže s MCP strežnikom, vpraša "Katera orodja imate?" Strežnik odgovori z seznamom razpoložljivih orodij, vsako z opisi in shemami parametrov. Vaš AI agent lahko nato izbere, katera orodja uporabiti na podlagi uporabniških zahtev. Diagram spodaj prikazuje ta rokovanje — klient pošlje zahtevo `tools/list` in strežnik vrne razpoložljiva orodja z opisi in shemami parametrov:
 
 <img src="../../../translated_images/sl/tool-discovery.07760a8a301a7832.webp" alt="Odkritje orodij MCP" width="800"/>
 
-*AI odkrije razpoložljiva orodja ob zagonu — zdaj ve, katere zmogljivosti so na voljo in se lahko odloči, katera uporabiti.*
+*AI ob zagonu odkrije razpoložljiva orodja — zdaj ve, katere zmogljivosti so na voljo in lahko odloči, katera uporabiti.*
 
 **Transportni mehanizmi**
 
-MCP podpira različne transportne mehanizme. Dve možnosti sta Stdio (za lokalno komunikacijo s podprocesi) in Streamable HTTP (za oddaljene strežnike). Ta modul prikazuje Stdio transport:
+MCP podpira različne transportne mehanizme. Dve možnosti sta Stdio (za lokalno komunikacijo podprocesov) in Streamable HTTP (za oddaljene strežnike). Ta modul prikazuje Stdio transport:
 
 <img src="../../../translated_images/sl/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transportni mehanizmi" width="800"/>
 
@@ -84,7 +85,7 @@ MCP podpira različne transportne mehanizme. Dve možnosti sta Stdio (za lokalno
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Za lokalne procese. Vaša aplikacija zažene strežnik kot podproces in komunicira preko standardnega vhoda/izhoda. Uporabno za dostop do datotečnega sistema ali orodij ukazne vrstice.
+Za lokalne procese. Vaša aplikacija požene strežnik kot podproces in komunicira preko standardnega vhoda/izhoda. Uporabno za dostop do datotečnega sistema ali orodij ukazne vrstice.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -101,34 +102,34 @@ Strežnik `@modelcontextprotocol/server-filesystem` razkriva naslednja orodja, v
 
 | Orodje | Opis |
 |--------|-------|
-| `read_file` | Prebere vsebino ene same datoteke |
+| `read_file` | Prebere vsebino ene datoteke |
 | `read_multiple_files` | Prebere več datotek v enem klicu |
 | `write_file` | Ustvari ali prepiše datoteko |
 | `edit_file` | Izvede ciljno iskanje in zamenjavo |
-| `list_directory` | Naredi seznam datotek in imenikov na poti |
+| `list_directory` | Nakaže datoteke in imenike na poti |
 | `search_files` | Rekurzivno išče datoteke, ki ustrezajo vzorcu |
 | `get_file_info` | Pridobi metapodatke datoteke (velikost, časovne žige, dovoljenja) |
 | `create_directory` | Ustvari imenik (vključno z nadrejenimi imeniki) |
 | `move_file` | Premakne ali preimenuje datoteko ali imenik |
 
-Spodnja shema prikazuje, kako Stdio transport deluje med izvajanjem — vaša Java aplikacija zažene MCP strežnik kot otroški proces in komunicirata preko pip stdin/stdout brez omrežja ali HTTP:
+Naslednji diagram prikazuje, kako Stdio transport deluje med izvajanjem — vaša Java aplikacija požene MCP strežnik kot podproces in med njima poteka komunikacija preko stdin/stdout kanalov, brez mrežne povezave ali HTTP:
 
-<img src="../../../translated_images/sl/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Potek Stdio transporta" width="800"/>
+<img src="../../../translated_images/sl/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Tok Stdio transporta" width="800"/>
 
-*Stdio transport v akciji — vaša aplikacija zažene MCP strežnik kot otroški proces in komunicira preko pip stdin/stdout.*
+*Stdio transport v akciji — aplikacija požene MCP strežnik kot podproces in komunicira preko stdin/stdout kanalov.*
 
-> **🤖 Poskusite s [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) in vprašajte:
-> - "Kako deluje Stdio transport in kdaj naj ga uporabim namesto HTTP?"
-> - "Kako LangChain4j upravlja življenjski cikel procesov MCP strežnikov?"
-> - "Kakšne so varnostne posledice, če AI omogočim dostop do datotečnega sistema?"
+> **🤖 Poskusi z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odpri [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) in vprašaj:  
+> - "Kako deluje Stdio transport in kdaj naj ga uporabim namesto HTTP?"  
+> - "Kako LangChain4j upravlja življenjski cikel podprocecev MCP strežnika?"  
+> - "Kakšni so varnostni vidiki dostopa AI do datotečnega sistema?"
 
 ## Agentni modul
 
-Medtem ko MCP zagotavlja standardizirana orodja, LangChain4j-jev **agentni modul** zagotavlja deklarativen način gradnje agentov, ki orkestrirajo ta orodja. Oznaka `@Agent` in `AgenticServices` vam omogočata, da določite vedenje agenta preko vmesnikov namesto imperative kode.
+Medtem ko MCP zagotavlja standardizirana orodja, LangChain4j-jev **agentni modul** omogoča deklarativen način gradnje agentov, ki orkestrirajo ta orodja. Anotacija `@Agent` in `AgenticServices` omogočata definiranje obnašanja agenta preko vmesnikov namesto imperativne kode.
 
-V tem modulu boste raziskali vzorec **Nadzorni agent** — napreden agentni pristop, kjer "nadzornik" dinamično odloča, katere podagente poklicati glede na zahtevo uporabnika. Združili bomo oba koncepta tako, da bomo enemu izmed naših podagentov dali MCP-pogonjene možnosti dostopa do datotek.
+V tem modulu boste raziskali vzorec **Supervisor Agent** — napredno agentno AI pristop, kjer "nadzorni" agent dinamično odloča, katere pod-agente sprožiti na podlagi uporabniških zahtev. Združili bomo oba koncepta tako, da bomo enemu izmed naših pod-agentov dali MCP-poganjane zmogljivosti dostopa do datotek.
 
-Za uporabo agentnega modula dodajte naslednjo Maven odvisnost:
+Za uporabo agentnega modula dodajte to Maven odvisnost:
 
 ```xml
 <dependency>
@@ -137,32 +138,32 @@ Za uporabo agentnega modula dodajte naslednjo Maven odvisnost:
     <version>${langchain4j.mcp.version}</version>
 </dependency>
 ```
-> **Opomba:** Modul `langchain4j-agentic` uporablja ločeno lastnost verzije (`langchain4j.mcp.version`), ker je izdan po drugačnem urniku kot jedrne knjižnice LangChain4j.
+> **Opomba:** `langchain4j-agentic` modul uporablja ločeno lastnost različice (`langchain4j.mcp.version`), ker se izda po drugačnem urniku kot osnovne knjižnice LangChain4j.
 
-> **⚠️ Eksperimentalno:** Modul `langchain4j-agentic` je **eksperimentalni** in se lahko spreminja. Stabilen način gradnje AI asistentov ostaja `langchain4j-core` z lastnimi orodji (Modul 04).
+> **⚠️ Eksperimentalno:** `langchain4j-agentic` modul je **eksperimentalni** in se lahko spremeni. Stabilen način za ustvarjanje AI pomočnikov ostaja `langchain4j-core` s prilagojenimi orodji (Modul 04).
 
 ## Zagon primerov
 
 ### Predpogoji
 
-- Zaključen [Modul 04 - Orodja](../04-tools/README.md) (ta modul nadgradi koncepte lastnih orodij in jih primerja z MCP orodji)
-- `.env` datoteka v korenskem imeniku z Azure poverilnicami (ustvarjena z `azd up` v Modulu 01)
+- Zaključen [Modul 04 - Orodja](../04-tools/README.md) (ta modul gradi na konceptih prilagojenih orodij in jih primerja z orodji MCP)
+- Datoteka `.env` v korenskem imeniku z Azure poverilnicami (ustvarjena z `azd up` v Modulu 01)
 - Java 21+, Maven 3.9+
 - Node.js 16+ in npm (za MCP strežnike)
 
-> **Opomba:** Če še niste nastavili okoljskih spremenljivk, glejte [Modul 01 - Uvod](../01-introduction/README.md) za navodila za nameščanje (`azd up` ustvari `.env` datoteko samodejno), ali pa kopirajte `.env.example` v `.env` v korenskem imeniku in vnesite svoje vrednosti.
+> **Opomba:** Če še niste nastavili svojih okolijskih spremenljivk, glejte [Modul 01 - Uvod](../01-introduction/README.md) za navodila o namestitvi (`azd up` samodejno ustvari `.env` datoteko), ali kopirajte `.env.example` v `.env` v korenskem imeniku in dopolnite svoje vrednosti.
 
 ## Hiter začetek
 
-**Uporaba VS Code:** Preprosto kliknite desni gumb miške na katero koli demo datoteko v Explorerju in izberite **"Run Java"** ali uporabite konfiguracije zagona iz plošče Run and Debug (prej poskrbite, da je vaša `.env` datoteka konfigurirana z Azure poverilnicami).
+**Uporaba VS Code:** Preprosto z desnim klikom na katerokoli datoteko demo v Explorerju izberite **"Run Java"**, ali uporabite konfiguracije zagona iz panela Run and Debug (najprej poskrbite, da je vaša `.env` datoteka nastavljena z Azure poverilnicami).
 
-**Uporaba Mavena:** Alternativno lahko zaženete iz ukazne vrstice z naslednjimi primeri.
+**Uporaba Maven:** Lahko pa zaženete iz ukazne vrstice z naslednjimi primeri.
 
-### Operacije z datotekami (Stdio)
+### Datotečne operacije (Stdio)
 
-Ta primer prikazuje orodja, ki temeljijo na lokalnih podprocesih.
+To prikazuje orodja na osnovi lokalnega podprocesa.
 
-**✅ Ni potrebnih predpogojev** - MCP strežnik se zažene samodejno.
+**✅ Brez potrebnih predpogojev** - MCP strežnik se zažene samodejno.
 
 **Uporaba zagonskih skript (priporočeno):**
 
@@ -181,9 +182,9 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
-**Uporaba VS Code:** Desni klik na `StdioTransportDemo.java` in izberite **"Run Java"** (preverite, da je vaša `.env` datoteka konfigurirana).
+**Uporaba VS Code:** Z desnim klikom na `StdioTransportDemo.java` izberite **"Run Java"** (poskrbite, da je `.env` konfiguriran).
 
-Aplikacija samodejno zažene filesystem MCP strežnik in prebere lokalno datoteko. Opazite, kako za vas upravlja podproces.
+Aplikacija samodejno požene MCP strežnik za datotečni sistem in prebere lokalno datoteko. Opazite, kako se upravljanje podprocesa izvede za vas.
 
 **Pričakovani izhod:**
 ```
@@ -193,21 +194,27 @@ for integrating Large Language Models (LLMs) into Java applications...
 
 ### Nadzorni agent
 
-Vzorčni vzorec **Nadzorni agent** je **prilagodljiva** oblika agentne AI. Nadzornik uporablja LLM za avtonomno odločanje, katere agente poklicati glede na uporabnikovo zahtevo. V naslednjem primeru združimo MCP-podprti dostop do datotek z LLM agentom za ustvarjanje nadzorovanega delovnega toka branja datoteke → poročila.
+Vzorec **Supervisor Agent** je **prilagodljiva** oblika agentne AI. Nadzornik s pomočjo LLM samostojno odloča, katere agente sprožiti na podlagi uporabnikove zahteve. V naslednjem primeru združimo MCP-poganjan dostop do datotek z LLM agentom za ustvarjanje nadzorovane verige branja datotek → poročila.
 
-V demonstraciji `FileAgent` bere datoteko z uporabo MCP orodij datotečnega sistema, `ReportAgent` pa ustvari strukturirano poročilo z izvršnim povzetkom (1 stavek), 3 ključnimi točkami in priporočili. Nadzornik orkestrira ta potek samodejno:
+V demonstraciji `FileAgent` prebere datoteko z uporabo MCP orodij za datotečni sistem, `ReportAgent` pa ustvari strukturirano poročilo z izvršilnim povzetkom (1 stavek), 3 ključnimi točkami in priporočili. Nadzornik samodejno orkestrira ta potek:
 
-<img src="../../../translated_images/sl/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Vzorčni vzorec nadzornega agenta" width="800"/>
+<img src="../../../translated_images/sl/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Vzorec nadzornega agenta" width="800"/>
 
-*Nadzornik uporablja svoj LLM za odločanje, katere agente poklicati in v kakšnem vrstnem redu — ni potrebe po trdo kodiranem usmerjanju.*
+*Nadzornik uporabi svoj LLM za odločitev, katere agente sprožiti in v kakšnem vrstnem redu — ni potrebna trdo kodirana usmeritev.*
 
-Tako izgleda konkreten delovni tok za naš cevovod datoteka → poročilo:
+Tako izgleda konkreten potek datoteka-poročilo v našem kanalu:
 
-<img src="../../../translated_images/sl/file-report-workflow.649bb7a896800de9.webp" alt="Delovni tok od datoteke do poročila" width="800"/>
+<img src="../../../translated_images/sl/file-report-workflow.649bb7a896800de9.webp" alt="Potek od datoteke do poročila" width="800"/>
 
 *FileAgent prebere datoteko preko MCP orodij, nato ReportAgent preoblikuje surovo vsebino v strukturirano poročilo.*
 
-Vsak agent shrani svoj izhod v **Agentic Scope** (deljeno pomnilnik), kar omogoča dostop naslednjim agentom do prejšnjih rezultatov. To prikazuje, kako se MCP orodja brezhibno vključijo v agentne delovne tokove — Nadzornik ne potrebuje vedeti *kako* se datoteke berejo, samo da to zmore `FileAgent`.
+Naslednji zaporedni diagram prikazuje celotno orkestracijo nadzornika — od zagona MCP strežnika, preko samostojne izbire agentov nadzornika, do klicev orodij prek stdio in končnega poročila:
+
+<img src="../../../translated_images/sl/supervisor-agent-sequence.1aa389b3bef99956.webp" alt="Zaporedni diagram nadzornega agenta" width="800"/>
+
+*Nadzornik samodejno sproži FileAgent (ki kliče MCP strežnik preko stdio za branje datoteke), nato sproži ReportAgent za ustvarjanje strukturiranega poročila — vsak agent shrani svoj izhod v deljeni Agentic Scope.*
+
+Vsak agent shrani svoj izhod v **Agentic Scope** (deljeni pomnilnik), kar omogoča agentom v nadaljnjih korakih dostop do prejšnjih rezultatov. To pokaže, kako se MCP orodja nemoteno vključijo v agentne delovne tokove — nadzornik ne potrebuje vedeti *kako* se datoteke berejo, le da lahko `FileAgent` to naredi.
 
 #### Zagon demonstracije
 
@@ -226,11 +233,11 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
-**Uporaba VS Code:** Desni klik na `SupervisorAgentDemo.java` in izberite **"Run Java"** (preverite, da je vaša `.env` datoteka konfigurirana).
+**Uporaba VS Code:** Z desnim klikom na `SupervisorAgentDemo.java` izberite **"Run Java"** (poskrbite, da je `.env` konfiguriran).
 
-#### Kako nadzornik deluje
+#### Kako deluje nadzornik
 
-Preden zgradite agente, morate povezati MCP transport s klientom in ga zaviti kot `ToolProvider`. Tako MCP strežnikova orodja postanejo na voljo vašim agentom:
+Pred gradnjo agentov morate MCP transport povezati s klientom in ga zaviti kot `ToolProvider`. Tako postanejo MCP strežniška orodja na voljo vašim agentom:
 
 ```java
 // Ustvari MCP odjemalca iz transporta
@@ -238,13 +245,13 @@ McpClient mcpClient = new DefaultMcpClient.Builder()
         .transport(stdioTransport)
         .build();
 
-// Ovij odjemalca kot ToolProvider — to povezuje MCP orodja v LangChain4j
+// Ovij odjemalca kot ToolProvider — s tem povežeš MCP orodja v LangChain4j
 ToolProvider mcpToolProvider = McpToolProvider.builder()
         .mcpClients(List.of(mcpClient))
         .build();
 ```
 
-Nato lahko `mcpToolProvider` vstavite v katerega koli agenta, ki potrebuje MCP orodja:
+Nato lahko `mcpToolProvider` vbrizgate v katerega koli agenta, ki potrebuje MCP orodja:
 
 ```java
 // Korak 1: FileAgent bere datoteke z uporabo orodij MCP
@@ -253,47 +260,66 @@ FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .toolProvider(mcpToolProvider)  // Ima orodja MCP za datotečne operacije
         .build();
 
-// Korak 2: ReportAgent ustvari strukturirana poročila
+// Korak 2: ReportAgent generira strukturirana poročila
 ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// Nadzornik usklajuje potek dela datoteka → poročilo
+// Supervisor usklajuje potek dela datoteka → poročilo
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
         .responseStrategy(SupervisorResponseStrategy.LAST)  // Vrni končno poročilo
         .build();
 
-// Nadzornik odloči, katere agente aktivirati glede na zahtevo
+// Supervisor odloči, katere agente poklicati glede na zahtevo
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
-#### Strategije odziva
+#### Kako FileAgent med izvajanjem odkrije MCP orodja
 
-Pri konfiguraciji `SupervisorAgent` določite, kako naj oblikuje svoj končni odgovor uporabniku po tem, ko podagentje opravijo svoje naloge. Spodnja shema prikazuje tri razpoložljive strategije — LAST vrne izhod zadnjega agenta neposredno, SUMMARY sintetizira vse izhode preko LLM, SCORED pa izbere tistega z višjo oceno glede na prvotno zahtevo:
+Morda se sprašujete: **kako `FileAgent` ve, kako uporabiti npm orodja datotečnega sistema?** Odgovor je, da ne ve — **LLM** to ugotovi med izvajanjem skozi sheme orodij.
 
-<img src="../../../translated_images/sl/response-strategies.3d0cea19d096bdf9.webp" alt="Strategije odziva" width="800"/>
+Vmesnik `FileAgent` je zgolj **definicija poziva**. Nima trdo kodiranega znanja o `read_file`, `list_directory` ali katerem koli drugem MCP orodju. Takole poteka celoten proces od začetka do konca:
+1. **Zagon strežnika:** `StdioMcpTransport` zažene npm paket `@modelcontextprotocol/server-filesystem` kot otroški proces  
+2. **Odkritje orodij:** `McpClient` pošlje strežniku JSON-RPC zahtevo `tools/list`, ki odgovori z imeni orodij, opisi in shemami parametrov (npr. `read_file` — *"Preberi celotno vsebino datoteke"* — `{ path: string }`)  
+3. **Vbrizg shem:** `McpToolProvider` ovije te odkrite sheme in jih naredi dostopne za LangChain4j  
+4. **Odločitev LLM:** Ko je poklican `FileAgent.readFile(path)`, LangChain4j pošlje sistemsko sporočilo, uporabniško sporočilo **in seznam shem orodij** LLM-ju. LLM prebere opise orodij in generira klic orodja (npr. `read_file(path="/some/file.txt")`)  
+5. **Izvedba:** LangChain4j prestreže klic orodja, ga usmeri skozi MCP klienta nazaj v Node.js podproces, pridobi rezultat in ga posreduje nazaj LLM-ju  
 
-*Tri strategije, kako nadzornik oblikuje končni odgovor — izberite glede na to, ali želite izhod zadnjega agenta, sintetiziran povzetek ali najbolj ocenjen odgovor.*
+To je isti mehanizem [Odkritje orodij](../../../05-mcp), kot je bilo opisano zgoraj, vendar se uporablja posebej za delovni potek agenta. Oznake `@SystemMessage` in `@UserMessage` usmerjajo vedenje LLM-ja, medtem ko vbrizgani `ToolProvider` zagotavlja **sposobnosti** — LLM ju poveže med izvajanjem.
+
+> **🤖 Preizkusi z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odpri [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) in vprašaj:  
+> - "Kako ta agent ve, katero MCP orodje poklicati?"  
+> - "Kaj bi se zgodilo, če odstranite ToolProvider iz agentovskega graditelja?"  
+> - "Kako se sheme orodij prenesejo do LLM-ja?"  
+
+#### Strategije odgovora
+
+Ko konfiguriraš `SupervisorAgent`, določiš, kako naj oblikuje svoj končni odgovor uporabniku po dokončanju podagentovih nalog. Diagram spodaj prikazuje tri razpoložljive strategije — LAST vrne izhod zadnjega agenta neposredno, SUMMARY sintetizira vse izhode z LLM-jem, SCORED pa izbere tistega z višjo oceno glede na izvirno zahtevo:  
+
+<img src="../../../translated_images/sl/response-strategies.3d0cea19d096bdf9.webp" alt="Strategije odgovorov" width="800"/>  
+
+*Tri strategije, kako Supervisor oblikuje svoj končni odgovor — izberi glede na to, ali želiš izhod zadnjega agenta, sintetiziran povzetek ali možnost z najboljšo oceno.*
 
 Razpoložljive strategije so:
 
 | Strategija | Opis |
 |------------|------|
-| **LAST** | Nadzornik vrne izhod zadnjega poklicanega podagenta ali orodja. To je uporabno, kadar je zadnji agent v delovnem toku posebej zasnovan za ustvarjanje popolnega, končnega odgovora (npr. "Agent za povzetke" v raziskovalnem cevovodu). |
-| **SUMMARY** | Nadzornik uporabi svoj notranji jezikovni model (LLM), da sintetizira povzetek celotne interakcije in vseh izhodov podagentov, nato vrne ta povzetek kot končni odgovor. To uporabniku zagotovi čist, združen odgovor. |
-| **SCORED** | Sistem uporabi notranji LLM, da oceni tako zadnji odgovor (LAST) kot povzetek (SUMMARY) glede na prvotno zahtevo uporabnika, in vrne tistega, ki dobi višjo oceno. |
-Oglejte si [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) za popolno implementacijo.
+| **LAST** | Supervisor vrne izhod zadnjega klica podagenta ali orodja. To je uporabno, kadar je zadnji agent v delovnem toku posebej zasnovan za pripravo popolnega, končnega odgovora (npr. "Summary Agent" v raziskovalnem poteku). |
+| **SUMMARY** | Supervisor uporabi svoj notranji jezikovni model (LLM), da sintetizira povzetek celotne interakcije in vseh izhodov podagentov ter nato vrne ta povzetek kot končni odgovor. To zagotavlja čist, združen odgovor uporabniku. |
+| **SCORED** | Sistem uporabi notranji LLM za ocenjevanje tako izhoda LAST kot SUMMARY glede na izvirno uporabniško zahtevo in vrne tistega z višjo oceno. |
 
-> **🤖 Preizkusite z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odprite [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) in vprašajte:
-> - "Kako Supervisor odloči, katere agente aktivirati?"
-> - "Kakšna je razlika med vzorci Supervisor in Sekvenčnega poteka dela?"
-> - "Kako lahko prilagodim načrtovalno vedenje Supervisorja?"
+Ogled implementacije je v [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java).
+
+> **🤖 Preizkusi z [GitHub Copilot](https://github.com/features/copilot) Chat:** Odpri [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) in vprašaj:  
+> - "Kako Supervisor odloča, katere agente poklicati?"  
+> - "Kakšna je razlika med vzorci Supervisor in Sequential workflow?"  
+> - "Kako prilagodim načrtovalno vedenje Supervisorja?"  
 
 #### Razumevanje izhoda
 
-Ko zaženete demo, boste videli strukturiran prikaz, kako Supervisor usklajuje več agentov. Tukaj je, kaj vsak del pomeni:
+Ko zaženeš demo, boš videl strukturiran potek, kako Supervisor usklajuje več agentov. Tukaj je, kaj pomenijo posamezni deli:  
 
 ```
 ======================================================================
@@ -303,8 +329,8 @@ Ko zaženete demo, boste videli strukturiran prikaz, kako Supervisor usklajuje v
 This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
-
-**Glava** predstavlja koncept poteka dela: osredotočen tok od branja datotek do generiranja poročila.
+  
+**Glava** predstavlja koncept delovnega toka: osredotočen potek od branja datotek do generiranja poročila.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -319,17 +345,17 @@ The Supervisor orchestrates the agents automatically based on the request.
   [FILE]   FileAgent   - Reads files via MCP → stores in 'fileContent'
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
-
-**Diagram poteka dela** prikazuje pretok podatkov med agenti. Vsak agent ima specifično vlogo:
-- **FileAgent** bere datoteke z orodji MCP in shrani surovo vsebino v `fileContent`
-- **ReportAgent** porabi to vsebino in ustvari strukturirano poročilo v `report`
+  
+**Diagram poteka** prikazuje pretok podatkov med agenti. Vsak agent ima specifično vlogo:  
+- **FileAgent** bere datoteke preko MCP orodij in hrani surovo vsebino v `fileContent`  
+- **ReportAgent** uporabi to vsebino in ustvari strukturirano poročilo v `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
-
-**Uporabniška zahteva** prikazuje nalogo. Supervisor to analizira in se odloči za aktivacijo FileAgent → ReportAgent.
+  
+**Uporabniška zahteva** prikazuje nalogo. Supervisor jo analizira in odloči, da pokliče FileAgent → ReportAgent.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -349,12 +375,12 @@ The Supervisor orchestrates the agents automatically based on the request.
   |   Result: Executive Summary...
   +-- [OK] ReportAgent (generating structured report) completed
 ```
+  
+**Usklajevanje Supervisorja** prikazuje dvofazni potek v akciji:  
+1. **FileAgent** prebere datoteko preko MCP in shrani vsebino  
+2. **ReportAgent** prejme vsebino in generira strukturirano poročilo  
 
-**Orkestracija Supervisorja** prikazuje 2-korakni potek dela v akciji:
-1. **FileAgent** prebere datoteko preko MCP in shrani vsebino
-2. **ReportAgent** prejme vsebino in generira strukturirano poročilo
-
-Supervisor je te odločitve sprejel **avtonomno** na podlagi zahtevka uporabnika.
+Supervisor je te odločitve sprejel **avtonomno** glede na uporabnikovo zahtevo.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -372,39 +398,39 @@ Recommendations
   * fileContent: LangChain4j is an open-source, provider-agnostic Java framework...
   * report: Executive Summary...
 ```
+  
+#### Pojasnilo lastnosti agentnega modula
 
-#### Razlaga funkcij Agentic modula
+Primer prikazuje več naprednih lastnosti agentnega modula. Poglejmo si podrobneje Agentic Scope in Agent Listenerje.
 
-Primer prikazuje več naprednih funkcij agentic modula. Podrobneje si poglejmo Agentic Scope in Agent Listeners.
+**Agentic Scope** prikazuje deljeno pomnilniško območje, kamor so agenti shranjevali svoje rezultate z uporabo `@Agent(outputKey="...")`. To omogoča:  
+- Kasnejšim agentom dostop do izhodov prej izvedenih agentov  
+- Supervisorju sintetizacijo končnega odgovora  
+- Tebe, da pregledaš, kaj je vsak agent ustvaril  
 
-**Agentic Scope** prikazuje deljeno pomnilniško območje, kjer so agenti shranjevali rezultate z `@Agent(outputKey="...")`. To omogoča:
-- Kasnejšim agentom dostop do izhodov predhodnih agentov
-- Supervisorju ustvarjanje končnega odgovora
-- Vam pregled nad tem, kaj je posamezen agent ustvaril
+Diagram spodaj prikazuje delovanje Agentic Scope kot deljenega pomnilnika v poteku od datoteke do poročila — FileAgent zapiše izhod pod ključ `fileContent`, ReportAgent ga prebere in zapiše svoj izhod pod `report`:  
 
-Spodnji diagram prikazuje, kako Agentic Scope deluje kot deljeni pomnilnik v poteku od datoteke do poročila — FileAgent zapiše svoj izhod pod ključem `fileContent`, ReportAgent ga prebere in zapiše svoj izhod pod `report`:
+<img src="../../../translated_images/sl/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope deljeni pomnilnik" width="800"/>  
 
-<img src="../../../translated_images/sl/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
-
-*Agentic Scope deluje kot deljeni pomnilnik — FileAgent piše `fileContent`, ReportAgent bere to in piše `report`, vaša koda pa bere končni rezultat.*
+*Agentic Scope deluje kot deljeni pomnilnik — FileAgent zapiše `fileContent`, ReportAgent ga prebere in zapiše `report`, tvoja koda pa lahko prebere končni rezultat.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
-String fileContent = scope.readState("fileContent");  // Surovi podatki datoteke iz FileAgent
-String report = scope.readState("report");            // Strukturirano poročilo iz ReportAgent
+String fileContent = scope.readState("fileContent");  // Surovi podatki datoteke iz FileAgenta
+String report = scope.readState("report");            // Strukturirano poročilo iz ReportAgenta
 ```
+  
+**Agent Listenerji** omogočajo spremljanje in odpravljanje napak izvajanja agentov. Korak za korakom izhod, ki ga vidiš v demu, prihaja iz AgentListenerja, ki se poveže na vsak klic agenta:  
+- **beforeAgentInvocation** - Klic ob izbiri agenta s strani Supervisorja, da vidiš izbranega agenta in razlog  
+- **afterAgentInvocation** - Klic po zaključku agenta, prikazuje njegov rezultat  
+- **inheritedBySubagents** - Če je true, poslušalec spremlja vse agente v hierarhiji  
 
-**Agent Listeners** omogočajo spremljanje in razhroščevanje izvoza agentov. Korak-po-korak izhod, ki ga vidite v demu, prihaja iz AgentListenerja, ki se poveže z vsako aktivacijo agenta:
-- **beforeAgentInvocation** - Pokliče se, ko Supervisor izbere agenta, kar vam pokaže, kateri agent je bil izbran in zakaj
-- **afterAgentInvocation** - Pokliče se, ko agent zaključi, prikazuje njegov rezultat
-- **inheritedBySubagents** - Če je true, poslušalec spremlja vse agente v hierarhiji
+Naslednji diagram prikazuje celoten življenjski cikel Agent Listenerja, vključno s tem, kako `onError` upravlja napake med izvajanjem agenta:  
 
-Naslednji diagram prikazuje celoten cikel življenjske dobe Agent Listenerja, vključno s tem, kako `onError` obravnava napake med izvajanjem agenta:
+<img src="../../../translated_images/sl/agent-listeners.784bfc403c80ea13.webp" alt="Življenjski cikel Agent Listenerjev" width="800"/>  
 
-<img src="../../../translated_images/sl/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
-
-*Agent Listeners se povezujejo z izvajanjem — spremljajo začetek, zaključek ali pojav napak pri agentih.*
+*Agent Listenerji se povežejo na življenjski cikel izvajanja — spremljaj začetek, zaključek ali napake agentov.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -423,73 +449,73 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Razširi na vse podagente
+        return true; // Razširi na vse podagentje
     }
 };
 ```
+  
+Poleg vzorca Supervisor modul `langchain4j-agentic` ponuja več zmogljivih delovnih vzorcev. Spodnji diagram prikazuje vseh pet — od preprostih zaporednih tokov do potekov odobritve z človekom v zanki:
 
-Poleg vzorca Supervisor modul `langchain4j-agentic` zagotavlja več močnih vzorcev potekov dela. Spodnji diagram prikazuje vseh pet — od preprostih sekvenčnih tokov do človeškega nadzora v procesu potrjevanja:
+<img src="../../../translated_images/sl/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Vzorci delovnih tokov agentov" width="800"/>  
 
-<img src="../../../translated_images/sl/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
-
-*Pet vzorcev potekov dela za usklajevanje agentov — od preprostih sekvenčnih tokov do potrjevalnih procesov s človeškim nadzorom.*
+*Pet vzorcev delovnih tokov za usklajevanje agentov — od preprostih zaporednih procesov do odobritvenih potekov s človekom v zanki.*
 
 | Vzorec | Opis | Uporaba |
 |---------|-------------|----------|
-| **Sekvenčno** | Izvajanje agentov po vrsti, izhod teče naprej | Pipelines: raziskava → analiza → poročilo |
-| **Vzporedno** | Sočasno izvajanje agentov | Neodvisne naloge: vreme + novice + borza |
-| **Zanka** | Ponavljanje, dokler ni izpolnjen pogoj | Ocena kakovosti: izboljševanje do ocene ≥ 0.8 |
-| **Pogojno** | Usmerjanje glede na pogoje | Klasifikacija → usmerjanje k specialistu |
-| **Človek v zanki** | Dodajanje človeških kontrolnih točk | Procesi odobritve, pregled vsebin |
+| **Sequential** | Izvajanje agentov v zaporedju, izhod teče v naslednjega | Pipeline: raziskava → analiza → poročilo |
+| **Parallel** | Sočasno izvajanje agentov | Neodvisne naloge: vreme + novice + delnice |
+| **Loop** | Ponavljanje dokler ni izpolnjen pogoj | Ocena kakovosti: izboljšaj dokler ocena ≥ 0.8 |
+| **Conditional** | Usmerjanje glede na pogoje | Klasifikacija → usmeritev k specializiranemu agentu |
+| **Human-in-the-Loop** | Dodajanje človeških kontrolnih točk | Odobritveni postopki, pregled vsebin |
 
-## Ključni koncepti
+## Ključni pojmi
 
-Zdaj, ko ste raziskali MCP in agentic modul v praksi, povzamimo, kdaj uporabiti kateri pristop.
+Ko si raziskal MCP in agentni modul v praksi, povzamimo, kdaj uporabiti kateri pristop.
 
-Ena največjih prednosti MCP je njena širša ekosistem. Spodnji diagram prikazuje, kako enoten univerzalni protokol povezuje vašo AI aplikacijo z različnimi MCP strežniki — od dostopa do datotečnih sistemov in baz do GitHub, e-pošte, spletnega strganja in še več:
+Ena največjih prednosti MCP je rastoči ekosistem. Diagram spodaj prikazuje, kako enotni univerzalni protokol povezuje tvoj AI sistem z različnimi MCP strežniki — od dostopa do datotečnega sistema in baz podatkov do GitHub, e-pošte, spletnega strganja in še več:
 
-<img src="../../../translated_images/sl/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
+<img src="../../../translated_images/sl/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP ekosistem" width="800"/>  
 
-*MCP ustvarja univerzalen ekosistem protokolov — vsak MCP združljiv strežnik deluje z vsakim MCP združljivim odjemalcem, kar omogoča delitev orodij med aplikacijami.*
+*MCP ustvarja univerzalni protokolarni ekosistem — vsak MCP-kompatibilen strežnik deluje s katerimkoli MCP-kompatibilnim odjemalcem, omogočajoč deljenje orodij med aplikacijami.*
 
-**MCP** je idealen, ko želite izkoristiti obstoječe ekosisteme orodij, graditi orodja, ki jih lahko delijo različne aplikacije, integrirati storitve tretjih oseb s standardnimi protokoli ali zamenjevati implementacije orodij brez spreminjanja kode.
+**MCP** je idealen, ko želiš izkoristiti obstoječe ekosisteme orodij, graditi orodja, ki jih lahko deli več aplikacij, vključevati tretje storitve s standardnimi protokoli ali zamenjati implementacije orodij brez spreminjanja kode.
 
-**Agentic modul** deluje najbolje, ko želite deklarativne definicije agentov z `@Agent` anotacijami, potrebujete orkestracijo potekov dela (sekvenčno, zanka, vzporedno), raje uporabljate zasnovo agentov na osnovi vmesnikov kot imperativno kodo ali kombinirate več agentov, ki delijo izhode prek `outputKey`.
+**Agentni modul** najbolje deluje, ko želiš deklarativne definicije agentov z oznakami `@Agent`, potrebuješ orkestracijo delovnih tokov (zaporedno, zanko, paralelno), raje oblikuješ agente prek vmesnika kot z imperativno kodo ali kombiniraš več agentov, ki delijo izhode prek `outputKey`.
 
-**Vzorec Supervisor Agent** izstopa, ko potek dela ni vnaprej predvidljiv in želite, da odloča LLM, ko imate več specializiranih agentov, ki potrebujejo dinamično orkestracijo, ko gradite pogovorne sisteme, ki usmerjajo k različnim sposobnostim, ali ko želite najbolj prilagodljivo, adaptivno vedenje agenta.
+**Vzorec Supervisor Agent** se izkaže, ko delovni tok ni vnaprej predvidljiv in želiš, da LLM odloča, ko imaš več specializiranih agentov, ki potrebujejo dinamično usklajevanje, ko ustvarjaš pogovorne sisteme z usmerjanjem na različne zmogljivosti ali ko želiš najbolj prilagodljivo in odzivno vedenje agenta.
 
-Da vam pomagamo izbrati med lastnimi `@Tool` metodami iz Modula 04 in MCP orodji iz tega modula, spodnja primerjava izpostavi ključne prednosti — lastna orodja vam nudijo tesno povezavo in popolno varnost tipov za logiko specifično za aplikacijo, medtem ko MCP orodja ponujajo standardizirane, večkrat uporabne integracije:
+Za pomoč pri odločitvi med prilagojenimi metodami `@Tool` iz Modula 04 in MCP orodji iz tega modula spodnja primerjava izpostavi glavne prednosti in slabosti — prilagojena orodja nudijo tesno povezavo in popolno varnost tipov za aplikacijsko logiko, MCP orodja pa standardizirane, ponovno uporabne integracije:
 
-<img src="../../../translated_images/sl/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
+<img src="../../../translated_images/sl/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Prilagojena orodja vs MCP orodja" width="800"/>  
 
-*Kdaj uporabiti lastne @Tool metode proti MCP orodjem — lastna orodja za specifično logiko aplikacije s popolno varnostjo tipa, MCP orodja za standardizirane integracije, ki delujejo med aplikacijami.*
+*Kdaj uporabiti prilagojene metode @Tool in kdaj MCP orodja — prilagojena za aplikacijsko logiko s popolno varnostjo tipov, MCP pa za standardizirane integracije med aplikacijami.*  
 
-## Čestitke!
+## Čestitamo!
 
-Uspešno ste zaključili vseh pet modulov tečaja LangChain4j za začetnike! Tukaj je pogled na celotno učno pot, ki ste jo opravili — od osnovnega klepeta do agentic sistemov, podprtih z MCP:
+Prebral si vseh pet modulov tečaja LangChain4j za začetnike! Tukaj je pregled celotne učne poti, ki si jo opravil — od osnovnega klepeta do agentnih sistemov na osnovi MCP:  
 
-<img src="../../../translated_images/sl/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
+<img src="../../../translated_images/sl/course-completion.48cd201f60ac7570.webp" alt="Zaključek tečaja" width="800"/>  
 
-*Vaša učna pot skozi vseh pet modulov — od osnovnega klepeta do agentic sistemov podprtih z MCP.*
+*Tvoja učna pot skozi vseh pet modulov — od osnovnega klepeta do agentnih sistemov s podporo MCP-ja.*
 
-Zaključili ste tečaj LangChain4j za začetnike. Naučili ste se:
+Zaključil si tečaj LangChain4j za začetnike. Naučil si se:
 
-- Kako graditi pogovorni AI s pomnilnikom (Modul 01)
-- Vzorci inženiringa pozivov za različna opravila (Modul 02)
-- Vezanje odgovorov na vaše dokumente z RAG (Modul 03)
-- Ustvarjanje osnovnih AI agentov (asistentov) z lastnimi orodji (Modul 04)
-- Integracija standardiziranih orodij z LangChain4j MCP in Agentic moduli (Modul 05)
+- Kako ustvariti pogovorni AI z zmožnostjo pomnjenja (Modul 01)  
+- Vzorci za oblikovanje pozivov za različne naloge (Modul 02)  
+- Povezava odgovorov s tvojimi dokumenti z RAG (Modul 03)  
+- Ustvarjanje osnovnih AI agentov (pomočnikov) z lastnimi orodji (Modul 04)  
+- Integracija standardiziranih orodij z moduloma LangChain4j MCP in Agentic (Modul 05)  
 
 ### Kaj sledi?
 
-Po zaključenih modulih raziščite [Vodnik za testiranje](../docs/TESTING.md), da vidite koncepte testiranja LangChain4j v praksi.
+Po zaključku modulov preglej [Vodnik za testiranje](../docs/TESTING.md), da si ogledaš koncepte testiranja LangChain4j v praksi.
 
-**Uradni viri:**
-- [Dokumentacija LangChain4j](https://docs.langchain4j.dev/) - Vseobsegajoči vodiči in API referenca
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Izvorna koda in primeri
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Korak-po-korak vodiči za različne primere uporabe
+**Uradni viri:**  
+- [Dokumentacija LangChain4j](https://docs.langchain4j.dev/) – Celoviti vodiči in API referenca  
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) – Izvorna koda in primeri  
+- [LangChain4j tutoriali](https://docs.langchain4j.dev/tutorials/) – Korak-po-korak vodiči za različne primere uporabe  
 
-Hvala, ker ste zaključili ta tečaj!
+Hvala, ker si zaključil ta tečaj!
 
 ---
 
@@ -498,6 +524,6 @@ Hvala, ker ste zaključili ta tečaj!
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Omejitev odgovornosti**:  
-Ta dokument je bil preveden z uporabo AI prevajalske storitve [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, upoštevajte, da avtomatizirani prevodi lahko vsebujejo napake ali netočnosti. Izvirni dokument v njegovem izvirnem jeziku je treba obravnavati kot avtoritativni vir. Za ključne informacije priporočamo strokovni človeški prevod. Ne odgovarjamo za morebitna nesporazume ali napačne interpretacije, ki izhajajo iz uporabe tega prevoda.
+**Omejitev odgovornosti**:
+Ta dokument je bil preveden z uporabo storitve za avtomatski prevod [Co-op Translator](https://github.com/Azure/co-op-translator). Čeprav si prizadevamo za natančnost, vas opozarjamo, da lahko avtomatizirani prevodi vsebujejo napake ali netočnosti. Izvirni dokument v maternem jeziku velja za avtoritativni vir. Za ključne informacije priporočamo strokovni človeški prevod. Ne odgovarjamo za morebitna nesporazume ali napačne razlage, ki izhajajo iz uporabe tega prevoda.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

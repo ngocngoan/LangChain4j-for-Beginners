@@ -1,77 +1,77 @@
-# Module 04: Wakala wa AI Wenye Vifaa
+# Moduli 04: Wakala wa AI Wenye Vifaa
 
-## Jedwali la Yaliyomo
+## Orodha ya Maudhui
 
 - [Utajifunza Nini](../../../04-tools)
 - [Mahitaji ya Awali](../../../04-tools)
 - [Kuelewa Wakala wa AI Wenye Vifaa](../../../04-tools)
-- [Jinsi Kufanya Simu kwa Vifaa Inavyofanya Kazi](../../../04-tools)
+- [Jinsi Kupigia Simu Vifaa Kunavyofanya Kazi](../../../04-tools)
   - [Ufafanuzi wa Vifaa](../../../04-tools)
-  - [Uamuzi](../../../04-tools)
+  - [Kufanya Maamuzi](../../../04-tools)
   - [Utekelezaji](../../../04-tools)
-  - [Uundaji wa Jibu](../../../04-tools)
-  - [Miundombinu: Uunganishaji wa Spring Boot Auto-Wiring](../../../04-tools)
-- [Kuhusisha Vifaa Mfululizo](../../../04-tools)
+  - [Uundaji wa Majibu](../../../04-tools)
+  - [Mwangalizi: Spring Boot Auto-Wiring](../../../04-tools)
+- [Kufuata Vifaa Mfululizo](../../../04-tools)
 - [Endesha Programu](../../../04-tools)
 - [Kutumia Programu](../../../04-tools)
-  - [Jaribu Matumizi Rahisi ya Vifaa](../../../04-tools)
-  - [Jaribu Kuhusisha Vifaa](../../../04-tools)
+  - [Jaribu Matumizi Rahisi ya Kifaa](../../../04-tools)
+  - [Jaribu Kufuata Vifaa Mfululizo](../../../04-tools)
   - [Tazama Mtiririko wa Mazungumzo](../../../04-tools)
-  - [Fanya Jaribio na Maombi Mbalimbali](../../../04-tools)
-- [Mafundisho Muhimu](../../../04-tools)
-  - [Mfumo wa ReAct (Kufikiria na Kutenda)](../../../04-tools)
+  - [Jaribu Maombi Tofauti](../../../04-tools)
+- [Mafunzo Muhimu](../../../04-tools)
+  - [Mhimili wa ReAct (Kufikiria na Kutenda)](../../../04-tools)
   - [Maelezo ya Vifaa ni Muhimu](../../../04-tools)
   - [Usimamizi wa Kikao](../../../04-tools)
-  - [Utambuzi wa Makosa](../../../04-tools)
+  - [Kushughulikia Makosa](../../../04-tools)
 - [Vifaa Vilivyopo](../../../04-tools)
-- [Wakati wa Kutumia Wakala Wenye Vifaa](../../../04-tools)
-- [Vifaa dhidi ya RAG](../../../04-tools)
-- [Hatua zinazofuata](../../../04-tools)
+- [Lini Kutumia Wakala Wenye Vifaa](../../../04-tools)
+- [Vifaa vs RAG](../../../04-tools)
+- [Hatua Zifuatazo](../../../04-tools)
 
-## Utajifunza Nini
+## What You'll Learn
 
-Hadi sasa, umejifunza jinsi ya kuendesha mazungumzo na AI, kupanga maelekezo kwa ufanisi, na kuweka majibu msingi katika nyaraka zako. Lakini bado kuna kikomo muhimu: mifano ya lugha inaweza kuzalisha maneno tu. Haiwezi kuangalia hali ya hewa, kufanya mahesabu, kuuliza hifadhidata, au kuingiliana na mifumo ya nje.
+Mpaka sasa, umejifunza jinsi ya kuendesha mazungumzo na AI, kuweka muundo mzuri wa maagizo, na kuweka majibu msingi katika nyaraka zako. Lakini bado kuna kizuizi cha msingi: mifano ya lugha inaweza tu kuzalisha maandishi. Haiwezi kuangalia hali ya hewa, kufanya mahesabu, kuuliza hifadhidata, au kuingiliana na mifumo ya nje.
 
-Vifaa hubadilisha hili. Kwa kumpa mfano fursa ya kupiga simu kwa kazi fulani, unamgeuza kutoka kizalishaji cha maneno kuwa wakala anayeweza kuchukua hatua. Mfano huamua lini anahitaji kifaa, kifaa gani cha kutumia, na ni vigezo gani vya kupitisha. Msimbo wako unatekeleza kazi na kurudisha matokeo. Mfano huhusisha matokeo hayo katika jibu lake.
+Vifaa hubadilisha hili. Kwa kumpa mfano ufikiaji wa kazi anazoweza kuitisha, unabadilisha kutoka kuwa mzalishaji wa maandishi kuwa wakala anayeweza kuchukua hatua. Mfano huamua ni lini anahitaji kifaa, kifaa gani cha kutumia, na ni vigezo gani atavitumie. Msimbo wako unatekeleza kazi na kurudisha matokeo. Mfano huingiza matokeo hayo katika jibu lake.
 
-## Mahitaji ya Awali
+## Prerequisites
 
-- Kumaliza [Module 01 - Utangulizi](../01-introduction/README.md) (Rasilimali za Azure OpenAI zimewekwa)
-- Kumaliza moduli zilizopita inapendekezwa (moduli hii inataja [dhana za RAG kutoka Module 03](../03-rag/README.md) katika kulinganisha Vifaa dhidi ya RAG)
-- Faili `.env` katika saraka kuu yenye ruhusa za Azure (iliyoanzishwa na `azd up` katika Module 01)
+- Umekamilisha [Moduli 01 - Utangulizi](../01-introduction/README.md) (Rasilimali za Azure OpenAI zimewekwa)
+- Moduli zilizopita zilizopendekezwa kukamilishwa (moduli hii inahusisha [madhumuni ya RAG kutoka Moduli 03](../03-rag/README.md) katika kulinganisha Vifaa vs RAG)
+- Faili `.env` katika mzizi wa saraka yenye nyaraka za Azure (imetengenezwa na `azd up` katika Moduli 01)
 
-> **Kumbuka:** Ikiwa hujakamilisha Module 01, fuata maagizo ya usambazaji huko kwanza.
+> **Kumbuka:** Kama bado hujakamilisha Moduli 01, fuata maelekezo ya uanzishaji huko kwanza.
 
-## Kuelewa Wakala wa AI Wenye Vifaa
+## Understanding AI Agents with Tools
 
-> **📝 Kumbuka:** Neno "wakala" katika moduli hii linamaanisha wasaidizi wa AI walioimarishwa kwa uwezo wa kupiga simu za kifaa. Hii ni tofauti na mifumo ya **Agentic AI** (wakala huru wenye mipango, kumbukumbu, na kufikiria hatua nyingi) ambayo tutajadili katika [Module 05: MCP](../05-mcp/README.md).
+> **📝 Kumbuka:** Neno "wakala" katika moduli hii linarejelea wasaidizi wa AI walioboresha kwa uwezo wa kuitisha vifaa. Hii ni tofauti na mifumo ya **Agentic AI** (wakala huru wenye upangaji, kumbukumbu, na kufikiria kwa hatua nyingi) ambayo tutaifunika katika [Moduli 05: MCP](../05-mcp/README.md).
 
-Bila vifaa, mfano wa lugha unaweza tu kuzalisha maandishi kutoka kwa data yake ya mafunzo. Uliza hali ya hewa ya sasa, basi huweza tu kubahatisha. Mpe vifaa, na anaweza kupiga API ya hali ya hewa, kufanya mahesabu, au kuuliza hifadhidata — kisha kuunganisha matokeo halisi hayo katika jibu lake.
+Bila vifaa, mfano wa lugha unaweza tu kuzalisha maandishi kutoka kwenye data ya mafunzo. Muulize hali ya hewa ya sasa, nao wanahitaji kubahatisha. Mpe vifaa, anaweza kuitisha API ya hali ya hewa, kufanya mahesabu, au kuuliza hifadhidata — kisha achanganye matokeo halisi hayo katika jibu lake.
 
-<img src="../../../translated_images/sw/what-are-tools.724e468fc4de64da.webp" alt="Bila Vifaa dhidi ya Kwa Vifaa" width="800"/>
+<img src="../../../translated_images/sw/what-are-tools.724e468fc4de64da.webp" alt="Bila Vifaa vs Kwa Vifaa" width="800"/>
 
-*Bila vifaa, mfano unaweza tu kubahatisha — kwa vifaa anaweza kupiga API, kuendesha mahesabu, na kutoa data ya wakati halisi.*
+*Bila vifaa mfano unaweza tu kubahatisha — kwa vifaa anaweza kuitisha APIs, kufanya mahesabu, na kurudisha data za wakati halisi.*
 
-Wakala wa AI mwenye vifaa hufuata mfumo wa **Reasoning and Acting (ReAct)**. Mfano haujibu tu — hujiuliza anahitaji nini, huchukua hatua kwa kupiga simu ya kifaa, huangalia matokeo, halafu huamua kama atafanya tena au kutoa jibu la mwisho:
+Wakala wa AI mwenye vifaa hufuata muundo wa **Kufikiria na Kutenda (ReAct)**. Mfano hautaji tu jibu — huangalia anachohitaji, huchukua hatua kwa kuitisha kifaa, hutazama matokeo, na kisha huamua kama ataendelea tena au kutoa jibu la mwisho:
 
-1. **Kufikiria** — Wakala anachambua swali la mtumiaji na kuamua taarifa anazohitaji
-2. **Kutenda** — Wakala huchagua kifaa sahihi, hutengeneza vigezo sahihi, na hupiga simu
-3. **Kuchunguza** — Wakala hupokea matokeo ya kifaa na kutathmini matokeo
-4. **Kurudia au Kujibu** — Ikiwa data zaidi zinahitajika, wakala anarudia; vinginevyo, huandika jibu la lugha ya asili
+1. **Fikiria** — Wakala huchambua swali la mtumiaji na kuamua taarifa anazohitaji
+2. **Tenda** — Wakala huchagua kifaa sahihi, huandika vigezo vinavyofaa, na kuitisha
+3. **Tazama** — Wakala hupokea matokeo ya kifaa na kuyapima
+4. **Rudia au Jibu** — Kama anahitaji data zaidi, hurudia; vinginevyo, huandika jibu la asili
 
-<img src="../../../translated_images/sw/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Mfumo wa ReAct" width="800"/>
+<img src="../../../translated_images/sw/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="Mhimili wa ReAct" width="800"/>
 
-*Mzunguko wa ReAct — wakala hufikiria atakachofanya, hutenda kwa kupiga simu ya kifaa, huchunguza matokeo, na kuendelea hadi aweze kutoa jibu la mwisho.*
+*Mzunguko wa ReAct — wakala hufikiria hatua ya kuchukua, hutenda kwa kuitisha kifaa, hutazama matokeo, na hurudia hadi aweze kutoa jibu la mwisho.*
 
-Hii hufanyika moja kwa moja. Unafafanua vifaa na maelezo yao. Mfano unashughulikia uamuzi wa lini na jinsi ya kuvitumia.
+Hii hufanyika moja kwa moja. Unafafanua vifaa na maelezo yao. Mfano huzishughulikia maamuzi ya lini na jinsi ya kuzitumia.
 
-## Jinsi Kufanya Simu kwa Vifaa Inavyofanya Kazi
+## How Tool Calling Works
 
-### Ufafanuzi wa Vifaa
+### Tool Definitions
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Unafafanua kazi zilizo na maelezo wazi na vipimo vya vigezo. Mfano unaona maelezo haya katika hali ya mfumo wake na kuelewa kile kila kifaa kinachofanya.
+Unafafanua kazi zilizo na maelezo wazi na sifa za vigezo. Mfano huona maelezo haya katika agizo la mfumo wake na kuelewa kila kifaa hufanya nini.
 
 ```java
 @Component
@@ -89,92 +89,104 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Msaidizi anaunganishwa kwa moja kwa moja na Spring Boot na:
-// - Kijasho cha ChatModel
+// Msaidizi anaunganishwa moja kwa moja na Spring Boot na:
+// - Kijani cha ChatModel
 // - Mbinu zote za @Tool kutoka kwa madarasa ya @Component
-// - Mtoa kumbukumbu wa ChatMemory kwa usimamizi wa kikao
+// - ChatMemoryProvider kwa usimamizi wa kikao
 ```
 
-Mchoro hapa chini unaelezea kila alama na unaonyesha jinsi kila kipengele kinavyosaidia AI kuelewa lini kupiga simu ya kifaa na hoja gani kupitisha:
+Mchoro hapa chini unavunja kila alama na kuonyesha jinsi kila kipengele kinavyosaidia AI kuelewa ni lini kuitisha kifaa na ni hoja gani za kupitisha:
 
-<img src="../../../translated_images/sw/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomia ya Ufafanuzi wa Vifaa" width="800"/>
+<img src="../../../translated_images/sw/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anuwai ya Ufafanuzi wa Vifaa" width="800"/>
 
-*Anatomia ya ufafanuzi wa kifaa — @Tool huambia AI lini kiitumiwe, @P huelezea kila kigezo, na @AiService huunganisha kila kitu pamoja wakati wa kuanzisha.*
+*Anuwai ya ufafanuzi wa kifaa — @Tool inamwambia AI ni lini kitumie, @P kinaelezea kila parameta, na @AiService hufunga kila kitu pamoja wakati wa kuanzisha.*
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) na uliza:
-> - "Ningejumuisha vipi API halisi ya hali ya hewa kama OpenWeatherMap badala ya data bandia?"
-> - "Nini kinachafanya maelezo ya kifaa kuwa mazuri kusaidia AI kutumia kwa usahihi?"
-> - "Ninashughulikiaje makosa ya API na mipaka ya kiwango katika utekelezaji wa vifaa?"
+> - "Ningejumuishaje API halisi ya hali ya hewa kama OpenWeatherMap badala ya data ya mfano?"
+> - "Nini hufanya maelezo ya kifaa kuwa mazuri ambayo husaidia AI kuvitumia kwa usahihi?"
+> - "Ningeshughulikiaje makosa ya API na mipaka ya kiwango katika utekelezaji wa vifaa?"
 
-### Uamuzi
+### Decision Making
 
-Mtu anapoomba "Hali ya hewa huko Seattle ikoje?", mfano haichague kifaa kwa bahati nasibu. Hulinganisha nia ya mtumiaji dhidi ya kila maelezo ya kifaa alichonacho, huweka alama kwa kila moja kulingana na umuhimu, na huchagua bora zaidi. Kisha hutengeneza simu ya kazi iliyopangwa kwa vigezo sahihi — hapa, kuweka `location` kuwa `"Seattle"`.
+Mtumiaji anapoomba "Hali ya hewa huko Seattle ikoje?", mfano hauchagui kifaa tu kiholela. Hulinganisha nia ya mtumiaji na kila maelezo ya kifaa alichonacho, hupima kila moja kwa uhusiano, kisha huchagua kilicho bora zaidi. Kisha hutengeneza wito wa kazi ulioratibiwa kwa vigezo sahihi — katika hili, kuweka `location` kwenye `"Seattle"`.
 
-Kama hakuna kifaa kinacholingana na ombi la mtumiaji, mfano hurudi kwa kujibu kwa maarifa yake mwenyewe. Ikiwa vifaa vingi vinalingana, huichagua ile iliyo maalum zaidi.
+Kama hakuna kifaa kinachofaa kwa ombi la mtumiaji, mfano hurudi kujibu kutoka kwenye maarifa yake. Ikiwa vifaa vingi vinaendana, huchagua kile mahususi zaidi.
 
-<img src="../../../translated_images/sw/decision-making.409cd562e5cecc49.webp" alt="Jinsi AI Huchagua Kifaa cha Kutumia" width="800"/>
+<img src="../../../translated_images/sw/decision-making.409cd562e5cecc49.webp" alt="Jinsi AI Huamua Kifaa Cha Kutumia" width="800"/>
 
-*Mfano hutathmini kila kifaa kinachopatikana dhidi ya nia ya mtumiaji na huchagua bora zaidi — ndiyo maana kuandika maelezo ya kifaa kwa uwazi na kwa usahihi ni muhimu.*
+*Mfano hupima kila kifaa kinachopatikana dhidi ya nia ya mtumiaji na huchagua bora zaidi — ndio maana uandishi wa maelezo ya kifaa kwa uwazi na udhibitisho ni muhimu.*
 
-### Utekelezaji
+### Execution
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot inaunganishwa moja kwa moja na kiolesura kinachoeleza `@AiService` na vifaa vyote vilivyojisajili, na LangChain4j hufanya simu za vifaa moja kwa moja. Ndani ya mfumo, simu ya kifaa hufanyika kupitia hatua sita — kutoka kwa swali la mtumiaji kwa lugha ya asili hadi jibu la lugha ya asili:
+Spring Boot huhusisha moja kwa moja interface ya kiufafanuzi ya `@AiService` na vifaa vyote vilizosajiliwa, na LangChain4j hufanya wito wa vifaa moja kwa moja. Nyuma ya matukio, wito kamili wa kifaa hupitia hatua sita — kutoka kwa swali la asili la lugha ya mtumiaji hadi jibu la asili:
 
-<img src="../../../translated_images/sw/tool-calling-flow.8601941b0ca041e6.webp" alt="Mtiririko wa Kupiga Simu za Vifaa" width="800"/>
+<img src="../../../translated_images/sw/tool-calling-flow.8601941b0ca041e6.webp" alt="Mtiririko wa Wito wa Kifaa" width="800"/>
 
-*Mtiririko wa mwisho hadi mwisho — mtumiaji anauliza swali, mfano huchagua kifaa, LangChain4j hufanya kazi, na mfano huhusisha matokeo katika jibu la asili.*
+*Mtiririko wa mwisho hadi mwisho — mtumiaji anauliza swali, mfano huchagua kifaa, LangChain4j hufanya kazi, na mfano huingiza matokeo katika jibu la asili.*
+
+Ulikuwa ukifanya demo ya [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) katika Moduli 00, tayari umeona muundo huu ukienda — vifaa vya `Calculator` vilijitishwa kwa njia ile ile. Mchoro wa mfululizo hapa chini unaonyesha kwa usahihi kilichotokea nyuma ya pazia wakati wa demo hiyo:
+
+<img src="../../../translated_images/sw/tool-calling-sequence.94802f406ca26278.webp" alt="Mchoro wa Mfululizo wa Wito wa Kifaa" width="800"/>
+
+*Mzunguko wa wito wa kifaa kutoka demo ya Quick Start — `AiServices` hutuma ujumbe wako na miundo ya kifaa kwa LLM, LLM hurudisha wito wa kazi kama `add(42, 58)`, LangChain4j hufanya njia ya `Calculator` kwa mtaa, na hurudisha matokeo kwa jibu la mwisho.*
 
 > **🤖 Jaribu na [GitHub Copilot](https://github.com/features/copilot) Chat:** Fungua [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) na uliza:
-> - "Mfumo wa ReAct unavyofanya kazi na kwa nini ni mzuri kwa wakala wa AI?"
-> - "Wakala huaamuaje kifaa gani kutumia na kwa mpangilio gani?"
-> - "Kitu kinatokeaje ikiwa utekelezaji wa kifaa unashindwa - ningeshughulikiaje makosa kwa uthabiti?"
+> - "Mhimili wa ReAct hufanya kazi vipi na kwa nini ni mzuri kwa wakala wa AI?"
+> - "Wakala huamuaje kifaa cha kutumia na kwa mpangilio gani?"
+> - "Nini hutokea ikiwa utekelezaji wa kifaa utakosa - nifanyeje kushughulikia makosa kwa usalama?"
 
-### Uundaji wa Jibu
+### Response Generation
 
 Mfano hupokea data ya hali ya hewa na kuibadilisha kuwa jibu la lugha ya asili kwa mtumiaji.
 
-### Miundombinu: Uunganishaji wa Spring Boot Auto-Wiring
+### Architecture: Spring Boot Auto-Wiring
 
-Moduli hii inatumia LangChain4j iliyounganishwa na Spring Boot kwa interface za `@AiService` zilizoelezwa. Wakati wa kuanzisha, Spring Boot hutambua kila `@Component` inayojumuisha njia za `@Tool`, kibin `ChatModel` chako, na `ChatMemoryProvider` — kisha huunganisha vyote kuwa kiolesura kimoja cha `Assistant` bila msongamano wowote wa mkono.
+Moduli hii hutumia LangChain4j kuunganishwa na Spring Boot kwa kutumia interfaces za kiufafanuzi za `@AiService`. Wakati wa kuanzisha, Spring Boot hutambua kila `@Component` yenye njia za `@Tool`, `ChatModel` yako, na `ChatMemoryProvider` — kisha huvifunga vyote pamoja ndani ya interface moja ya `Assistant` bila kutoa nakala ya ziada.
 
-<img src="../../../translated_images/sw/spring-boot-wiring.151321795988b04e.webp" alt="Miundombinu ya Spring Boot Auto-Wiring" width="800"/>
+<img src="../../../translated_images/sw/spring-boot-wiring.151321795988b04e.webp" alt="Mwangalizi wa Spring Boot Auto-Wiring" width="800"/>
 
-*Kiolesura cha @AiService kinaunda muungano wa ChatModel, vipengele vya kifaa, na mtoaji kumbukumbu — Spring Boot hushughulikia uunganishaji wote moja kwa moja.*
+*Interface ya @AiService inaunganisha ChatModel, vipengele vya kifaa, na mtoaji wa kumbukumbu — Spring Boot hushughulikia uunganishaji wote moja kwa moja.*
+
+Hapa ni mzunguko kamili wa maombi kama mchoro wa mfululizo — kutoka ombi la HTTP kupitia controller, huduma, na wakala aliyeunganishwa moja kwa moja, hadi utekelezaji wa kifaa na kurudi:
+
+<img src="../../../translated_images/sw/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Mchoro wa Mfululizo wa Wito wa Vifaa wa Spring Boot" width="800"/>
+
+*Mzunguko kamili wa maombi wa Spring Boot — ombi la HTTP huingia kupitia controller na huduma hadi kwa wakala aliyefungwa moja kwa moja, ambaye huendesha LLM na wito za kifaa moja kwa moja.*
 
 Faida kuu za njia hii:
 
-- **Uunganishaji wa moja kwa moja wa Spring Boot** — ChatModel na vifaa huingizwa moja kwa moja
-- **Mfumo wa @MemoryId** — Usimamizi wa kumbukumbu wa kikao wa moja kwa moja
-- **Toleo moja tu** — Msaidizi huundwa mara moja na kutumika tena ili kuboresha utendaji
-- **Utekelezaji salama kwa aina** — Njia za Java zinapigiwa simu moja kwa moja na uongofu wa aina
-- **Udhibiti wa mzunguko wa mazungumzo** — Hushughulikia mfuatano wa vifaa moja kwa moja
-- **Hakuna msongamano wa mkono** — Hakuna simu za mikono za `AiServices.builder()` au ramani za kumbukumbu
+- **Auto-wiring ya Spring Boot** — ChatModel na vifaa huingizwa moja kwa moja
+- **Mfumo wa @MemoryId** — Usimamizi wa kumbukumbu ya kikao moja kwa moja
+- **Mfano mmoja** — Msaidizi huundwa mara moja na kutumika tena kwa ufanisi zaidi
+- **Utekelezaji salama kwa aina** — Njia za Java huitwa moja kwa moja na uongofu wa aina
+- **Utawala wa mizunguko kadhaa** — Hushughulikia kufuata vifaa mfululizo kwa moja kwa moja
+- **Hakuna nakala ya ziada** — Hakuna wito wa mkono wa `AiServices.builder()` au ramani ya kumbukumbu ya HashMap
 
-Njia mbadala (manual `AiServices.builder()`) zinahitaji msimbo zaidi na hazina faida za uunganishaji wa Spring Boot.
+Njia mbadala (mkono `AiServices.builder()`) zinahitaji msimbo zaidi na hukosa faida za kuingizwa kwa Spring Boot.
 
-## Kuhusisha Vifaa Mfululizo
+## Tool Chaining
 
-**Kuhusisha Vifaa Mfululizo** — Nguvu halisi ya wakala anayetumia vifaa huonekana pale swali moja linapohitaji vifaa vingi. Uliza "Hali ya hewa huko Seattle kwa Fahrenheit?" na wakala huhuisha vifaa viwili: kwanza hupiga `getCurrentWeather` kupata joto kwa Celsius, halafu hutumia `celsiusToFahrenheit` kubadilisha — yote katika mzunguko mmoja wa mazungumzo.
+**Kufuata Vifaa Mfululizo** — Nguvu halisi ya wakala wa vifaa huonekana wakati swali moja linahitaji vifaa vingi. Uliza "Hali ya hewa huko Seattle kwa Fahrenheit?" na wakala huungana moja kwa moja na vifaa viwili: kwanza huuita `getCurrentWeather` kupata joto kwa Celsius, kisha hupitisha thamani hiyo kwa `celsiusToFahrenheit` kwa ajili ya uongofu — yote katika zunguko moja la mazungumzo.
 
-<img src="../../../translated_images/sw/tool-chaining-example.538203e73d09dd82.webp" alt="Mfano wa Kuhusisha Vifaa Mfululizo" width="800"/>
+<img src="../../../translated_images/sw/tool-chaining-example.538203e73d09dd82.webp" alt="Mfano wa Kufuata Vifaa Mfululizo" width="800"/>
 
-*Kuhusisha vifaa mfululizo katika vitendo — wakala hupiga simu ya `getCurrentWeather` kwanza, kisha huingiza matokeo ya Celsius kwenye `celsiusToFahrenheit`, na kutoa jibu la mchanganyiko.*
+*Kufuata vifaa mfululizo kwa vitendo — wakala huita getCurrentWeather kwanza, kisha hupeleka matokeo ya Celsius kwa celsiusToFahrenheit, na kutoa jibu lililochanganywa.*
 
-**Kushindwa kwa Hekima** — Uliza hali ya hewa katika jiji ambalo halipo kwenye data bandia. Kifaa hurudisha ujumbe wa kosa, na AI inaeleza hawezi kusaidia badala ya kuanguka. Vifaa hushindwa kwa usalama. Mchoro huu unaonyesha tofauti ya mbinu mbili — ambapo kushughulikia makosa kwa usahihi, wakala hugundua dhamana na kujibu kwa msaada, ilhali bila hilo programu yote huanguka:
+**Makosa Safi** — Uliza hali ya hewa katika mji usiopo kwenye data ya mfano. Kifaa hurudisha ujumbe wa kosa, na AI hueleza hawezi kusaidia badala ya kuanguka programu. Vifaa kushindwa kwa usalama. Mchoro hapa chini unaonyesha tofauti mbili — kwa usimamizi sahihi wa makosa, wakala huchukua kosa na kujibu kwa msaada, huku bila hivyo programu nzima ikidondoka:
 
 <img src="../../../translated_images/sw/error-handling-flow.9a330ffc8ee0475c.webp" alt="Mtiririko wa Kushughulikia Makosa" width="800"/>
 
-*Ikiwa kifaa kinashindwa, wakala hugundua kosa na kujibu kwa maelezo ya msaada badala ya kuanguka.*
+*Wakati kifaa kinakosa, wakala huchukua kosa na kujibu kwa maelezo ya msaada badala ya kuanguka.*
 
-Hii hufanyika katika mzunguko mmoja wa mazungumzo. Wakala huandaa simu nyingi za vifaa kwa uhuru.
+Hii hufanyika katika zunguko moja la mazungumzo. Wakala huandaa wito za vifaa vingi kwa uhuru.
 
-## Endesha Programu
+## Run the Application
 
-**Thibitisha usambazaji:**
+**Thibitisha utekelezaji:**
 
-Hakikisha faili `.env` ipo katika saraka kuu yenye ruhusa za Azure (iliundwa wakati wa Module 01). Endesha hili kutoka katika saraka ya moduli (`04-tools/`):
+Hakikisha faili `.env` ipo katika mzizi wa saraka na nyaraka za Azure (zimetengenezwa wakati wa Moduli 01). Endesha hii kutoka kwa saraka ya moduli (`04-tools/`):
 
 **Bash:**
 ```bash
@@ -188,25 +200,25 @@ Get-Content ..\.env  # Inapaswa kuonyesha AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOY
 
 **Anzisha programu:**
 
-> **Kumbuka:** Ikiwa tayari umeanza programu zote kwa kutumia `./start-all.sh` kutoka saraka kuu (kama ilivyoelezwa katika Module 01), moduli hii tayari inazingirwa na bandari 8084. Unaweza kuruka amri za kuanzisha hapa chini na kwenda moja kwa moja http://localhost:8084.
+> **Kumbuka:** Ikiwa tayari umeanzisha programu zote kwa kutumia `./start-all.sh` kutoka mzizi wa saraka (kama ilivyoelezwa katika Moduli 01), moduli hii tayari inaendesha kwenye bandari 8084. Unaweza kuruka amri za kuanzisha hapa chini na kwenda moja kwa moja http://localhost:8084.
 
 **Chaguo 1: Kutumia Spring Boot Dashboard (Inapendekezwa kwa watumiaji wa VS Code)**
 
-Kifaa cha maendelezo cha dev kina ugani wa Spring Boot Dashboard, unaotoa kiolesura cha kuona kwa usimamizi wa programu zote za Spring Boot. Unaweza kuipata kwenye Bara la Shughuli upande wa kushoto wa VS Code (tazama alama ya Spring Boot).
+Kifurushi cha dev kina nyongeza ya Spring Boot Dashboard, inayotoa muingiliano wa kuona kusimamia programu zote za Spring Boot. Unaweza kuipata katika Bar ya Shughuli upande wa kushoto wa VS Code (tafuta ikoni ya Spring Boot).
 
-Kutoka Spring Boot Dashboard, unaweza:
-- Kuona programu zote za Spring Boot kwenye kazi
-- Anzisha/acha programu kwa kubofya mara moja
+Kutoka kwenye Spring Boot Dashboard, unaweza:
+- Kuona programu zote za Spring Boot zilizopo kwenye eneo la kazi
+- Anzisha/zimia programu kwa bonyeza kitufe kimoja
 - Tazama kumbukumbu za programu kwa wakati halisi
-- Fuatilia hali ya programu
+- Simamia hali ya programu
 
-Bonyeza kitufe cha kucheza karibu na "tools" kuanzisha moduli hii, au anzisha moduli zote kwa pamoja.
+Bofya kitufe cha kucheza kando na "tools" kuanza moduli hii, au anzisha moduli zote kwa pamoja.
 
-Hili ndilo Spring Boot Dashboard linavyoonekana katika VS Code:
+Hivi ndivyo Spring Boot Dashboard inavyoonekana katika VS Code:
 
-<img src="../../../translated_images/sw/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
+<img src="../../../translated_images/sw/dashboard.9b519b1a1bc1b30a.webp" alt="Dashibodi ya Spring Boot" width="400"/>
 
-*Spring Boot Dashboard katika VS Code — anzisha, acha, na fuatilia moduli zote kutoka mahali pamoja*
+*Dashibodi ya Spring Boot katika VS Code — anzisha, zimia, na simamia moduli zote kutoka sehemu moja*
 
 **Chaguo 2: Kutumia skripti za shell**
 
@@ -214,17 +226,17 @@ Anzisha programu zote za wavuti (moduli 01-04):
 
 **Bash:**
 ```bash
-cd ..  # Kutoka katika saraka ya mizizi
+cd ..  # Kutoka kwenye saraka ya mizizi
 ./start-all.sh
 ```
 
 **PowerShell:**
 ```powershell
-cd ..  # Kutoka kwenye saraka ya mzizi
+cd ..  # Kutoka kwenye saraka kuu
 .\start-all.ps1
 ```
 
-Au anzisha moduli hii tu:
+Au anza tu moduli hii:
 
 **Bash:**
 ```bash
@@ -238,9 +250,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Skripti zote zinapakia moja kwa moja tofauti za mazingira kutoka faili `.env` ya saraka kuu na zitajenga JARs ikiwa hazipo.
+Mafaili yote mawili hujipakia kiotomatiki mabadiliko ya mazingira kutoka kwenye faili ya mizizi `.env` na yatajenga JARs ikiwa hayapo.
 
-> **Kumbuka:** Ikiwa unapendelea kujenga moduli zote kwa mkono kabla ya kuanza:
+> **Kumbuka:** Ikiwa ungependa kujenga moduli zote kwa mkono kabla ya kuanza:
 >
 > **Bash:**
 > ```bash
@@ -254,9 +266,9 @@ Skripti zote zinapakia moja kwa moja tofauti za mazingira kutoka faili `.env` ya
 > mvn clean package -DskipTests
 > ```
 
-Fungua http://localhost:8084 katika kivinjari chako.
+Fungua http://localhost:8084 kwenye kivinjari chako.
 
-**Kumaliza:**
+**Kusimamisha:**
 
 **Bash:**
 ```bash
@@ -267,102 +279,103 @@ cd .. && ./stop-all.sh  # Moduli zote
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Kivuli hiki pekee
+.\stop.ps1  # Moduli hii tu
 # Au
-cd ..; .\stop-all.ps1  # Vione vyote
+cd ..; .\stop-all.ps1  # Moduli zote
 ```
 
 ## Kutumia Programu
 
-Programu hutoa kiolesura cha mtandao ambacho unaweza kuingiliana nacho na wakala wa AI anaefikia vifaa vya hali ya hewa na ubadilishaji wa joto. Hili ndilo kiolesura kinavyoonekana — linajumuisha mifano ya kuanza haraka na paneli ya mazungumzo ya kutuma maombi:
-<a href="images/tools-homepage.png"><img src="../../../translated_images/sw/tools-homepage.4b4cd8b2717f9621.webp" alt="Kiolesura cha Zana za AI Agent" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Programu hutoa kiolesura cha wavuti ambapo unaweza kuingiliana na wakala wa AI ambaye ana ufikiaji wa zana za hali ya hewa na uongofu wa joto. Hivi ndivyo kiolesura kinavyoonekana — kinajumuisha mfano wa kuanza haraka na jopo la mazungumzo kwa ajili ya kutuma maombi:
 
-*Kiolesura cha Zana za AI Agent - mifano ya haraka na kiolesura cha mazungumzo kwa ajili ya kuingiliana na zana*
+<a href="images/tools-homepage.png"><img src="../../../translated_images/sw/tools-homepage.4b4cd8b2717f9621.webp" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+
+*Kiolesura cha Zana za Wakala wa AI - mifano ya kuanza haraka na kiolesura cha mazungumzo kwa ajili ya kuingiliana na zana*
 
 ### Jaribu Matumizi Rahisi ya Zana
 
-Anza na ombi rahisi: "Badilisha digrii 100 Fahrenheit kuwa Celsius". Wakala anatambua inahitaji zana ya uongofu wa joto, anaiita kwa vigezo sahihi, na kurejesha matokeo. Angalia jinsi inavyohisi asili - hukutaja ni zana gani ya kutumia au jinsi ya kuiita.
+Anza na ombi rahisi: "Geuza nyuzi 100 Fahrenheit kwenda Celsius". Wakala hutambua anahitaji zana ya uongofu joto, anhitishe na vigezo sahihi, na kurudisha matokeo. Tambua jinsi inavyoonekana ya asili sana - hukubainisha zana ya kutumia au jinsi ya kuitumia.
 
-### Jaribu Muunganisho wa Zana
+### Jaribu Mfuatano wa Zana
 
-Sasa jaribu kitu kigumu zaidi: "Hali ya hewa ikoje Seattle na ibadilishe kuwa Fahrenheit?" Tazama wakala akifanya kazi hii kwa hatua. Anapata kwanza hali ya hewa (ambayo hurudisha Celsius), anatambua inahitaji kubadilisha kuwa Fahrenheit, anaiita zana ya uongofu, na kuunganisha matokeo yote kuwa jibu moja.
+Sasa jaribu jambo changamano zaidi: "Je, hali ya hewa iko Seattle na geuza kwenda Fahrenheit?" Tazama wakala akiendesha hatua kwa hatua. Kwanza hupata hali ya hewa (ambayo hurudisha Celsius), hutambua anahitaji kugeuza kwenda Fahrenheit, anwita zana ya uongofu, na kuunganisha matokeo yote kuwa jibu moja.
 
 ### Tazama Mtiririko wa Mazungumzo
 
-Kiolesura cha mazungumzo kinahifadhi historia ya mazungumzo, kikiraidia unavyoendesha mazungumzo yenye mizunguko mingi. Unaweza kuona maswali na majibu yote ya awali, kufanya iwe rahisi kufuatilia mazungumzo na kuelewa jinsi wakala anavyojenga muktadha juu ya mabadilishano mengi.
+Kiolesura cha mazungumzo kinahifadhi historia ya mazungumzo, kukuwezesha kuwa na mwingiliano wa mizunguko mingi. Unaweza kuona maswali yote ya awali na majibu, kufanya iwe rahisi kufuatilia mazungumzo na kuelewa jinsi wakala anavyojenga muktadha kupitia mizunguko mingi.
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/sw/tools-conversation-demo.89f2ce9676080f59.webp" alt="Mazungumzo na Miito Mingi ya Zana" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/sw/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation with Multiple Tool Calls" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Mazungumzo yenye mizunguko mingi yanaonyesha uongofu rahisi, utafutaji wa hali ya hewa, na muunganisho wa zana*
+*Mizunguko mingi ya mazungumzo ikionyesha uongofu rahisi, upataji wa hali ya hewa, na mfuatano wa zana*
 
-### Jaribu Maombi Tofauti
+### Jaribu Maombi Mbalimbali
 
 Jaribu mchanganyiko mbalimbali:
-- Utafutaji wa hali ya hewa: "Hali ya hewa ikoje Tokyo?"
-- Uongofu wa joto: "25°C ni sawa na Kelvin ngapi?"
-- Maswali yaliyounganishwa: "Angalia hali ya hewa Paris na niambie kama iko juu ya 20°C"
+- Upataji wa hali ya hewa: "Je, hali ya hewa iko Tokyo?"
+- Uongofu wa joto: "25°C ni kiasi gani Kelvin?"
+- Maswali mchanganyiko: "Angalia hali ya hewa Paris na niambie kama iko juu ya 20°C"
 
-Angalia jinsi wakala anavyotafsiri lugha ya asili na kuihusisha na miito sahihi ya zana.
+Tambua jinsi wakala anavyotafsiri lugha ya kawaida na kuiunganisha na miito ya zana inayofaa.
 
-## Misingi Muhimu
+## Dhana Muhimu
 
-### Mchoro wa ReAct (Kutafakari na Kutenda)
+### Mfumuko wa ReAct (Kufikiria na Kutenda)
 
-Wakala anabadilisha kati ya kutafakari (kuamua cha kufanya) na kutenda (kutumia zana). Mchoro huu unamwezesha kutatua matatizo kwa kujitegemea badala ya kujibu maagizo tu.
+Wakala hubadilisha kati ya kufikiria (kuamua cha kufanya) na kutenda (kutumia zana). Mfumo huu unawawezesha kutatua matatizo kwa uhuru badala ya kujibu tu maagizo.
 
 ### Maelezo ya Zana ni Muhimu
 
-Ubora wa maelezo ya zana zako unavyoathiri jinsi wakala anazitumia vizuri. Maelezo wazi yanayolenga husaidia mfano kuelewa lini na jinsi ya kuitia zana moja baada ya nyingine.
+Ubora wa maelezo yako ya zana huathiri moja kwa moja jinsi wakala anavyotumia zana hizo. Maelezo wazi na maalum husaidia mfano kuelewa lini na jinsi ya kuitisha kila zana.
 
 ### Usimamizi wa Kikao
 
-Alama `@MemoryId` huruhusu usimamizi wa kumbukumbu wa kikao moja kwa moja. Kila kitambulisho cha kikao kinapata mfano wake wa `ChatMemory` unaosimamiwa na bean ya `ChatMemoryProvider`, hivyo watumiaji wengi wanaweza kuingiliana na wakala kwa wakati mmoja bila mazungumzo yao kuchanganyika. Mchoro ufuatao unaonyesha jinsi watumiaji wengi wanavyoelekezwa kwenda kumbukumbu za mazungumzo zilizo wazi kulingana na kitambulisho chao cha kikao:
+Maandishi ya `@MemoryId` huruhusu usimamizi wa kumbukumbu kiotomatiki wa kikao. Kila kitambulisho cha kikao kinapata mfano wake wa `ChatMemory` unaosimamiwa na `ChatMemoryProvider` bean, hivyo watumiaji wengi wanaweza kuingiliana na wakala kwa wakati mmoja bila mazungumzo yao kuchanganyika. Mchoro ufuatao unaonyesha jinsi watumiaji wengi wanavyopokelewa kwenye hifadhi za kumbukumbu zilizo kwenye panya tofauti kulingana na vitambulisho vya vikao:
 
-<img src="../../../translated_images/sw/session-management.91ad819c6c89c400.webp" alt="Usimamizi wa Kikao kwa @MemoryId" width="800"/>
+<img src="../../../translated_images/sw/session-management.91ad819c6c89c400.webp" alt="Session Management with @MemoryId" width="800"/>
 
-*Kila kitambulisho cha kikao kinaonyesha historia ya mazungumzo ya pekee — watumiaji hawawoni ujumbe wa wengine.*
+*Kila kitambulisho cha kikao kinaonyesha historia ya mazungumzo iliyotengwa — watumiaji hawawahi kuona ujumbe wa wengine.*
 
-### Usimamizi wa Makosa
+### Kushughulikia Makosa
 
-Zana zinaweza kushindikana — API hutaumika kwa wakati, vigezo vinaweza kuwa batili, huduma za nje huweza kushindwa. Wakala wa uzalishaji wanahitaji usimamizi wa makosa ili mfano uweze kueleza matatizo au kujaribu mbadala badala ya kusababisha programu yote kuanguka. Wakati zana inapotupa makosa, LangChain4j inaikamata na kurudisha ujumbe wa kosa kwa mfano, ambaye anaweza kueleza tatizo kwa lugha ya asili.
+Zana zinaweza kushindwa — API zinaweza kuchelewa, vigezo vinaweza kuwa batili, huduma za nje zinaweza kushindwa. Wakala wa uzalishaji wanahitaji kushughulikia makosa ili mfano uweze kueleza matatizo au jaribu mbadala badala ya kuanguka programu yote. Wakati zana inapotupa hitilafu, LangChain4j huzipokea na kujaribu kubaini ujumbe wa kosa na kuurudisha kwenye mfano, ambao unaweza kueleza tatizo kwa lugha ya asili.
 
 ## Zana Zinazopatikana
 
-Mchoro ufuatao unaonyesha mfumo mpana wa zana unazoweza kujenga. Moduli hii inaonyesha zana za hali ya hewa na joto, lakini mfano wa `@Tool` unafanya kazi kwa njia yoyote ya Java — kutoka kwa maswali ya hifadhidata hadi usindikaji wa malipo.
+Mchoro hapa chini unaonyesha mfumo mpana wa zana unazoweza kujenga. Moduli hii inaonesha zana za hali ya hewa na joto, lakini mfano huo wa `@Tool` unafanyia kazi yoyote ya Java — kutoka kwa maswali ya hifadhidata hadi usindikaji wa malipo.
 
-<img src="../../../translated_images/sw/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Mfumo wa Zana" width="800"/>
+<img src="../../../translated_images/sw/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Tool Ecosystem" width="800"/>
 
-*Njia yoyote ya Java iliyoandikwa na @Tool inakuwa inapatikana kwa AI — mfumo huu unajumuisha hifadhidata, API, barua pepe, operesheni za faili, na zaidi.*
+*Njia yoyote ya Java yenye alama ya @Tool inapatikana kwa AI — mfano huo unajumuisha hifadhidata, API, barua pepe, kazi za faili, na zaidi.*
 
-## Wakati wa Kutumia Maajenti Wenye Zana
+## Wakati wa Kutumia Wakala wa Zana
 
-Siyo kila ombi linahitaji zana. Uamuzi unategemea kama AI inahitaji kuingiliana na mifumo ya nje au inaweza kujibu kutoka kwa maarifa yake mwenyewe. Mwongozo ufuatao unasisitiza lini zana zinapoongeza thamani na lini hazihitajiki:
+Sio kila ombi linahitaji zana. Uamuzi hutegemea kama AI inahitaji kuwasiliana na mifumo ya nje au inaweza kujibu kutoka maarifa yake mwenyewe. Mwongozo ufuatao unahitimisha wakati zana zinatoa thamani na wakati hazihitajiki:
 
-<img src="../../../translated_images/sw/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Wakati wa Kutumia Zana" width="800"/>
+<img src="../../../translated_images/sw/when-to-use-tools.51d1592d9cbdae9c.webp" alt="When to Use Tools" width="800"/>
 
-*Mwongozo wa uamuzi wa haraka — zana ni kwa ajili ya data ya wakati halisi, mahesabu, na vitendo; maarifa ya jumla na kazi za ubunifu hazihitaji.*
+*Mwongozo wa haraka wa uamuzi — zana ni kwa data ya wakati halisi, hesabu, na vitendo; maarifa ya jumla na kazi za ubunifu hazizihitaji.*
 
-## Zana dhidi ya RAG
+## Zana vs RAG
 
-Moduli 03 na 04 zote zinaongeza kile AI inaweza kufanya, lakini kwa njia tofauti kabisa. RAG humruhusu mfano kupata **maarifa** kwa kuchukua nyaraka. Zana zinampa uwezo wa kufanya **matendo** kwa kuita kazi. Mchoro ufuatao unaonyesha mbinu hizi mbili kando kwa kando — kutoka jinsi kila mtiririko wa kazi unavyofanya kazi hadi ubaguzi kati yao:
+Moduli 03 na 04 zote zinaongeza kile AI kinaweza kufanya, lakini kwa njia tofauti kabisa. RAG huwapa mfano ufikiaji wa **maarifa** kwa kupata nyaraka. Zana huwapa mfano uwezo wa kuchukua **vitendo** kwa kuwaita kazi. Mchoro hapa chini unaonyesha kulinganisha mbinu hizi mbili upande kwa upande — kutoka jinsi kila mtiririko unavyofanya kazi hadi mapungufu kati yao:
 
-<img src="../../../translated_images/sw/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Mlinganyo wa Zana dhidi ya RAG" width="800"/>
+<img src="../../../translated_images/sw/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Tools vs RAG Comparison" width="800"/>
 
-*RAG huchukua taarifa kutoka kwa nyaraka za takatifu — Zana hufanya vitendo na kuchukua data ya wakati halisi, yenye mabadiliko. Mifumo mingi ya uzalishaji huunganisha zote mbili.*
+*RAG hupata taarifa kutoka kwa nyaraka za kudumu — Zana hufanya vitendo na kupata data za wakati halisi. Mifumo mingi ya uzalishaji huunganisha yote mawili.*
 
-Kwa vitendo, mifumo mingi ya uzalishaji huchanganya mbinu hizi mbili: RAG kwa kuimarisha majibu kwenye nyaraka zako, na Zana kwa kuchukua data hai au kufanya operesheni.
+Katika utendaji, mifumo mingi ya uzalishaji huunganisha mbinu zote mbili: RAG kwa kuimarisha majibu kwenye nyaraka zako, na Zana kwa kupata data za moja kwa moja au kutekeleza shughuli.
 
 ## Hatua Zifuatazo
 
-**Moduli Ifuatayo:** [05-mcp - Itifaki ya Muktadha wa Mfano (MCP)](../05-mcp/README.md)
+**Moduli Inayofuata:** [05-mcp - Model Context Protocol (MCP)](../05-mcp/README.md)
 
 ---
 
-**Uelekezaji:** [← Iliyotangulia: Moduli 03 - RAG](../03-rag/README.md) | [Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Moduli 05 - MCP →](../05-mcp/README.md)
+**Uvinjari:** [← Iliyotangulia: Moduli 03 - RAG](../03-rag/README.md) | [Rudi Kwenye Kuu](../README.md) | [Ifuatayo: Moduli 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Tangazo la Kukana**:
-Hati hii imetafsiriwa kwa kutumia huduma ya tafsiri ya AI [Co-op Translator](https://github.com/Azure/co-op-translator). Ingawa tunajitahidi kwa usahihi, tafadhali fahamu kwamba tafsiri za moja kwa moja zinaweza kuwa na makosa au ukosefu wa usahihi. Hati ya asili katika lugha yake halisi inapaswa kuzingatiwa kama chanzo cha mamlaka. Kwa taarifa muhimu, tafsiri ya mtaalamu wa binadamu inashauriwa. Hatubebii dhamana kwa kutoelewana au tafsiri potofu inayotokana na matumizi ya tafsiri hii.
+**Kiadhabu**:
+Nyaraka hii imetafsiriwa kwa kutumia huduma ya kutafsiri kwa AI [Co-op Translator](https://github.com/Azure/co-op-translator). Wakati tunajitahidi kuwa sahihi, tafadhali fahamu kuwa tafsiri za moja kwa moja zinaweza kuwa na makosa au kasoro. Nyaraka asilia katika lugha yake ya asili inapaswa kuzingatiwa kama chanzo cha mamlaka. Kwa habari muhimu, tafsiri ya kitaalamu ya binadamu inapendekezwa. Hatubeba wajibu wowote wa kutoelewana au tafsiri potofu zinazotokana na matumizi ya tafsiri hii.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

@@ -40,6 +40,18 @@ A course for building AI applications with LangChain4j and Azure OpenAI GPT-5.2,
 4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Build intelligent knowledge-based systems
 5. [Tools](04-tools/README.md) - Integrate external tools and simple assistants
 6. [MCP (Model Context Protocol)](05-mcp/README.md) - Work with the Model Context Protocol (MCP) and Agentic modules
+
+### Video Walkthroughs
+
+Each module has a companion live session where we walk through the concepts and code step by step.
+
+| Module | Video |
+|--------|-------|
+| 01 - Introduction | [Getting Started with LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
+| 02 - Prompt Engineering | [Prompt Engineering with LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
+| 03 - RAG | [RAG with LangChain4j](https://www.youtube.com/watch?v=_olq75ZH_eY) |
+| 04 - Tools & 05 - MCP | [AI Agents with Tools and MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
+
 ---
 
 ##  Learning Path
@@ -120,11 +132,11 @@ Want to learn more? Check out [Copilot for AI Paired Programming](https://aka.ms
 
 If you get stuck or have any questions about building AI apps, join:
 
-[![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
+[![Microsoft Foundry Discord](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
 If you have product feedback or errors while building visit:
 
-[![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## License
 

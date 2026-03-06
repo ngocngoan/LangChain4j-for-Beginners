@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](#video-walkthrough)
 - [What You'll Learn](#what-youll-learn)
 - [What is MCP?](#what-is-mcp)
 - [How MCP Works](#how-mcp-works)
@@ -20,6 +21,12 @@
 - [Key Concepts](#key-concepts)
 - [Congratulations!](#congratulations)
   - [What's Next?](#whats-next)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
