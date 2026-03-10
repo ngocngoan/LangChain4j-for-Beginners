@@ -2,62 +2,69 @@
 
 ## Turinys
 
+- [Vaizdo įrašo peržiūra](../../../05-mcp)
 - [Ko išmoksite](../../../05-mcp)
 - [Kas yra MCP?](../../../05-mcp)
 - [Kaip veikia MCP](../../../05-mcp)
 - [Agentinis modulis](../../../05-mcp)
 - [Pavyzdžių vykdymas](../../../05-mcp)
   - [Reikalavimai](../../../05-mcp)
-- [Greitas pradžia](../../../05-mcp)
+- [Greitas pradėjimas](../../../05-mcp)
   - [Failų operacijos (Stdio)](../../../05-mcp)
-  - [Priežiūros agentas](../../../05-mcp)
+  - [Prižiūrintis agentas](../../../05-mcp)
     - [Demo vykdymas](../../../05-mcp)
-    - [Kaip veikia priežiūra](../../../05-mcp)
-    - [Kaip FileAgent aptinka MCP įrankius paleidimo metu](../../../05-mcp)
-    - [Atsakymo strategijos](../../../05-mcp)
-    - [Rezultato supratimas](../../../05-mcp)
+    - [Kaip veikia prižiūrintis](../../../05-mcp)
+    - [Kaip FileAgent atranda MCP įrankius vykdymo metu](../../../05-mcp)
+    - [Atsakymų strategijos](../../../05-mcp)
+    - [Išvesties supratimas](../../../05-mcp)
     - [Agentinio modulio funkcijų paaiškinimas](../../../05-mcp)
 - [Pagrindinės sąvokos](../../../05-mcp)
 - [Sveikiname!](../../../05-mcp)
   - [Kas toliau?](../../../05-mcp)
 
+## Vaizdo įrašo peržiūra
+
+Peržiūrėkite šią tiesioginę sesiją, kurioje paaiškinama, kaip pradėti dirbti su šiuo moduliu:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
+
 ## Ko išmoksite
 
-Jūs jau sukūrėte pokalbių AI, įvaldėte užklausas, pagrindėte atsakymus dokumentuose ir sukūrėte agentus su įrankiais. Tačiau visi tie įrankiai buvo specialiai sukurti jūsų konkrečiai programai. O jei galėtumėte suteikti savo AI prieigą prie standartizuoto įrankių ekosistemos, kurią gali sukurti ir dalintis bet kas? Šiame modulyje išmoksite tai padaryti naudojant Modelio konteksto protokolą (MCP) ir LangChain4j agentinį modulį. Pirmiausia parodytas paprastas MCP failų skaitytuvas, o vėliau – kaip jis lengvai integruojamas į pažangias agento darbo eigas naudojant Priežiūros agento modelį.
+Jūs sukūrėte pokalbių AI, įvaldėte užklausas, pagrindėte atsakymus dokumentuose ir sukūrėte agentus su įrankiais. Tačiau visi šie įrankiai buvo pritaikyti konkrečiai jūsų programai. O kas, jei galėtumėte suteikti savo AI prieigą prie standartizuotos įrankių ekosistemos, kurią gali kurti ir dalintis bet kas? Šiame modulyje sužinosite, kaip tai padaryti naudojant Modelio konteksto protokolą (MCP) ir LangChain4j agentinį modulį. Pirmiausia pristatome paprastą MCP failų skaitytuvą, o vėliau parodome, kaip jis lengvai integruojamas į pažangias agentines darbo eigas naudojant Prižiūrinčio agento modelį.
 
 ## Kas yra MCP?
 
-Modelio konteksto protokolas (MCP) būtent tai ir suteikia – standartizuotą būdą AI programoms rasti ir naudoti išorinius įrankius. Vietoje to, kad rašytumėte specialias integracijas kiekvienam duomenų šaltiniui ar paslaugai, jūs prisijungiate prie MCP serverių, kurie savo galimybes atskleidžia nuoseklia forma. Jūsų AI agentas tada gali automatizuotai atrasti ir naudoti šiuos įrankius.
+Modelio konteksto protokolas (MCP) suteikia būtent tai – standartinį būdą AI programoms atrasti ir naudoti išorinius įrankius. Vietoj to, kad rašytumėte pritaikytas integracijas kiekvienam duomenų šaltiniui ar paslaugai, jūs prisijungiate prie MCP serverių, kurie savo galimybes pateikia nuoseklia forma. Jūsų AI agentas tada gali automatiškai atrasti ir naudoti šiuos įrankius.
 
-Žemiau pateiktame diagrama parodytas skirtumas – be MCP kiekviena integracija reikalauja unikalaus pojūčio ilgio sujungimo, tuo tarpu su MCP vienas protokolas jungia jūsų programą prie bet kurio įrankio:
+Žemiau pateiktas diagrama parodo skirtumą – be MCP kiekviena integracija reikalauja pritaikyto taško-taško sujungimo; su MCP vienas protokolas sujungia jūsų programą su bet kokiu įrankiu:
 
-<img src="../../../translated_images/lt/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP palyginimas" width="800"/>
+<img src="../../../translated_images/lt/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*Prieš MCP: sudėtingos taško į tašką integracijos. Po MCP: vienas protokolas, begalinės galimybės.*
+*Prieš MCP: Sudėtingos taško-taško integracijos. Po MCP: Vienas protokolas, beribės galimybės.*
 
-MCP sprendžia pagrindinę AI kūrimo problemą: kiekviena integracija yra specialiai sukurta. Norite pasiekti GitHub? Reikia specialaus kodo. Norite skaityti failus? Specialus kodas. Norite užklausti duomenų bazę? Vėl specialus kodas. Be to, jokios iš šių integracijų neveikia su kitomis AI programomis.
+MCP sprendžia esminę problemą AI kūrime: kiekviena integracija yra pritaikyta. Norite gauti prieigą prie GitHub? Reikia pritaikyto kodo. Norite skaityti failus? Pritaikytas kodas. Norite užduoti klausimą duomenų bazei? Pritaikytas kodas. Ir nė viena iš šių integracijų neveikia su kitomis AI programomis.
 
-MCP standartizuoja šį procesą. MCP serveris pateikia įrankius su aiškiais aprašymais ir schemomis. Bet kuris MCP klientas gali prisijungti, aptikti turimus įrankius ir juos naudoti. Sukurkite vieną kartą, naudokite visur.
+MCP tai standartizuoja. MCP serveris pateikia įrankius su aiškiomis aprašų ir schemų specifikacijomis. Bet kuris MCP klientas gali prisijungti, atrasti prieinamus įrankius ir juos naudoti. Sukurkite vieną kartą, naudokite visur.
 
-Žemiau pateiktoje diagramoje parodyta ši architektūra – vienas MCP klientas (jūsų AI programa) jungiasi prie kelių MCP serverių, kiekvienas atskleidžia savo įrankių rinkinį per standartizuotą protokolą:
+Žemiau pateikta diagrama iliustruoja šią architektūrą – vienas MCP klientas (jūsų AI programa) jungiasi prie kelių MCP serverių, kurie per standartinį protokolą atskleidžia savo įrankių rinkinį:
 
-<img src="../../../translated_images/lt/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP architektūra" width="800"/>
+<img src="../../../translated_images/lt/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*Modelio konteksto protokolo architektūra – standartizuotas įrankių aptikimas ir vykdymas*
+*Modelio konteksto protokolo architektūra – standartizuotas įrankių atradimas ir vykdymas*
 
 ## Kaip veikia MCP
 
-Viduje MCP naudoja sluoksniuotą architektūrą. Jūsų Java programa (MCP klientas) aptinka turimus įrankius, siunčia JSON-RPC užklausas per transporto sluoksnį (Stdio arba HTTP), o MCP serveris vykdo operacijas ir grąžina rezultatus. Žemiau pateikta diagrama iliustruoja kiekvieną šio protokolo sluoksnį:
+Viduje MCP naudoja sluoksniuotą architektūrą. Jūsų Java programa (MCP klientas) atranda prieinamus įrankius, siunčia JSON-RPC užklausas per transporto sluoksnį (Stdio arba HTTP), o MCP serveris vykdo operacijas ir grąžina rezultatus. Toliau pateikta diagrama suskaido kiekvieną šio protokolo sluoksnį:
 
-<img src="../../../translated_images/lt/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP protokolo detalė" width="800"/>
+<img src="../../../translated_images/lt/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
 
-*Kaip MCP veikia viduje – klientai aptinka įrankius, keičiasi JSON-RPC žinutėmis ir vykdo operacijas per transporto sluoksnį.*
+*Kaip MCP veikia viduje — klientai atranda įrankius, keičiasi JSON-RPC žinutėmis ir vykdo operacijas per transporto sluoksnį.*
 
-**Serverio-Kliento architektūra**
+**Serverio-kliento architektūra**
 
-MCP naudoja klientų-serverių modelį. Serveriai suteikia įrankius – failų skaitymui, duomenų bazių užklausoms, API kvietimams. Klientai (jūsų AI programa) jungiasi prie serverių ir naudoja jų įrankius.
+MCP naudoja klientų-serverių modelį. Serveriai teikia įrankius – skaito failus, užklausia duomenų bazių, kviečia API. Klientai (jūsų AI programa) jungiasi prie serverių ir naudoja jų įrankius.
 
-Norint naudoti MCP su LangChain4j, pridėkite šią Maven priklausomybę:
+Norėdami naudoti MCP su LangChain4j, pridėkite šią Maven priklausomybę:
 
 ```xml
 <dependency>
@@ -67,26 +74,25 @@ Norint naudoti MCP su LangChain4j, pridėkite šią Maven priklausomybę:
 </dependency>
 ```
 
+**Įrankių atradimas**
 
-**Įrankių aptikimas**
+Kai jūsų klientas jungiasi prie MCP serverio, jis klausia „Kokius įrankius turite?“ Serveris atsako su prieinamų įrankių sąrašu, kartu su aprašymais ir parametrų schemomis. Jūsų AI agentas tada gali nuspręsti, kuriuos įrankius naudoti pagal vartotojo užklausas. Žemiau pateikta diagrama rodo šį susitarimą – klientas siunčia `tools/list` užklausą, o serveris grąžina savo prieinamus įrankius su aprašymais ir parametrų schemomis:
 
-Kai klientas prisijungia prie MCP serverio, jis klausia „Kokius įrankius turite?“ Serveris atsako su sąrašu turimų įrankių, kiekvienas su aprašymais ir parametrų schemomis. Jūsų AI agentas tada gali nuspręsti, kuriuos įrankius naudoti pagal vartotojo užklausas. Žemiau pateikta diagrama rodo šią sandorą – klientas išsiunčia `tools/list` užklausą, o serveris grąžina galimus įrankius su aprašymais ir schemomis:
+<img src="../../../translated_images/lt/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-<img src="../../../translated_images/lt/tool-discovery.07760a8a301a7832.webp" alt="MCP įrankių aptikimas" width="800"/>
-
-*AI starto metu aptinka prieinamus įrankius – dabar žino, kokios galimybės yra ir gali nuspręsti, kuriuos naudoti.*
+*AI atranda prieinamus įrankius paleidimo metu — dabar žino, kokios galimybės yra, ir gali nuspręsti, kuriuos naudoti.*
 
 **Transporto mechanizmai**
 
-MCP palaiko skirtingus transporto mechanizmus. Yra du variantai: Stdio (vietiniams subprocessams) ir Streamable HTTP (nuotoliniams serveriams). Šiame modulyje demonstruojamas Stdio transportas:
+MCP palaiko skirtingus transporto mechanizmus. Dvi galimybės yra Stdio (lokalios subprocess komunikacijai) ir Streamable HTTP (nuotoliniams serveriams). Šis modulis demonstruoja Stdio transportą:
 
-<img src="../../../translated_images/lt/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transporto mechanizmai" width="800"/>
+<img src="../../../translated_images/lt/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
 *MCP transporto mechanizmai: HTTP nuotoliniams serveriams, Stdio vietiniams procesams*
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Skirta vietiniams procesams. Jūsų programa paleidžia serverį kaip subprocess ir bendrauja per standartinę įėjimą/išėjimą. Naudinga prieigai prie failų sistemos ar komandų eilutės įrankių.
+Skirta vietiniams procesams. Jūsų programa paleidžia serverį kaip subprocess ir komunikuoja per standartinį įvestį/išvestį. Naudinga prieigos prie failų sistemų ar komandų eilutės įrankiams atvejais.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -99,37 +105,36 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
-
-Serveris `@modelcontextprotocol/server-filesystem` atskleidžia šiuos įrankius, visi veikia apsaugoti ribotose katalogų srityse, kurias nurodote:
+`@modelcontextprotocol/server-filesystem` serveris pateikia šiuos įrankius, visi ribojami jūsų nurodytuose kataloguose:
 
 | Įrankis | Aprašymas |
 |------|-------------|
-| `read_file` | Skaityti vieno failo turinį |
-| `read_multiple_files` | Skaityti kelis failus vienu užklausimu |
-| `write_file` | Kurti arba perrašyti failą |
-| `edit_file` | Atliekami tikslingi atitikimo-ir-pakeitimo redagavimai |
-| `list_directory` | Išvardinti failus ir katalogus nurodytoje vietoje |
-| `search_files` | Rekursyviai ieškoti failų pagal šabloną |
-| `get_file_info` | Gauti failo metaduomenis (dydį, laiko žymes, leidimus) |
-| `create_directory` | Kurti katalogą (įskaitant tėvų katalogus) |
-| `move_file` | Perkelti arba pervadinti failą ar katalogą |
+| `read_file` | Nuskaito vieno failo turinį |
+| `read_multiple_files` | Nuskaito kelis failus per vieną kvietimą |
+| `write_file` | Sukuria arba perrašo failą |
+| `edit_file` | Atlieka tikslias paieškos ir pakeitimo operacijas |
+| `list_directory` | Išvardina failus ir katalogus nurodytame kelyje |
+| `search_files` | Rekursyviai ieško failų pagal šabloną |
+| `get_file_info` | Gaukite failo metaduomenis (dydis, laiko žymės, leidimai) |
+| `create_directory` | Sukuria katalogą (įskaitant tėvinius katalogus) |
+| `move_file` | Perkelia arba pervadina failą ar katalogą |
 
-Žemiau pateikta diagrama rodo, kaip veikia Stdio transportas veikimo metu – jūsų Java programa paleidžia MCP serverį kaip vaiko procesą ir jie bendrauja per stdin/stdout vamzdžius, be tinklo ar HTTP:
+Toliau pateikta diagrama rodo, kaip Stdio transportas veikia vykdymo metu – jūsų Java programa paleidžia MCP serverį kaip vaikų procesą ir jie komunikuoja per stdin/stdout vamzdžius, neprisijungiant prie tinklo ar HTTP:
 
-<img src="../../../translated_images/lt/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio transporto srautas" width="800"/>
+<img src="../../../translated_images/lt/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
 
-*Stdio transportas veikia – jūsų programa paleidžia MCP serverį kaip vaiko procesą ir bendrauja per stdin/stdout vamzdžius.*
+*Stdio transportas veikia — jūsų programa paleidžia MCP serverį kaip vaikų procesą ir komunikuoja per stdin/stdout vamzdžius.*
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Pokalbiu:** Atidarykite [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) ir paklauskite:
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) pokalbiu:** Atidarykite [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) ir klauskite:
 > - „Kaip veikia Stdio transportas ir kada jį naudoti vietoje HTTP?“
-> - „Kaip LangChain4j valdo MCP serverių procesų gyvavimo ciklą?“
-> - „Kokios yra saugumo pasekmės suteikiant AI prieigą prie failų sistemos?“
+> - „Kaip LangChain4j valdo paleistų MCP serverių procesų ciklą?“
+> - „Kokios saugumo pasekmės dalinant AI prieigą prie failų sistemos?“
 
 ## Agentinis modulis
 
-Nors MCP suteikia standartizuotus įrankius, LangChain4j **agentinis modulis** suteikia deklaratyvų būdą kurti agentus, kurie organizuoja šiuos įrankius. `@Agent` anotacija ir `AgenticServices` leidžia aprašyti agento elgesį per sąsajas, o ne imperatyvų kodą.
+Nors MCP suteikia standartizuotus įrankius, LangChain4j **agentinis modulis** suteikia deklaratyvų būdą kurti agentus, kurie valdo tuos įrankius. `@Agent` anotacija ir `AgenticServices` leidžia apibrėžti agentų elgesį per sąsajas vietoje imperatyvaus kodo.
 
-Šiame modulyje nagrinėsite **Priežiūros agento** modelį – pažangią agentinę AI metodiką, kur „priežiūros“ agentas dinamiškai sprendžia, kuriuos poagentus kvieti pagal vartotojo užklausą. Sujungsime abu konceptus – vienam iš poagentų suteiksime MCP pagrindu veikiančius failų prieigos gebėjimus.
+Šiame modulyje gilinsimės į **Prižiūrinčio agento** modelį – pažangų agentinį AI požiūrį, kai „prižiūrintis“ agentas dinamiškai sprendžia, kuriuos potipius iškviesti pagal vartotojo užklausas. Derinsime abu konceptus suteikdami vienam iš mūsų potipių MCP pagrindu veikiančias failų prieigos galimybes.
 
 Norėdami naudoti agentinį modulį, pridėkite šią Maven priklausomybę:
 
@@ -141,37 +146,36 @@ Norėdami naudoti agentinį modulį, pridėkite šią Maven priklausomybę:
 </dependency>
 ```
 
+> **Pastaba:** `langchain4j-agentic` modulis naudoja atskirą versijos savybę (`langchain4j.mcp.version`), nes jis išleidžiamas kitu grafiku nei pagrindinės LangChain4j bibliotekos.
 
-> **Pastaba:** `langchain4j-agentic` modulis naudoja atskirą versijos savybę (`langchain4j.mcp.version`), nes jis leidžiamas kitu grafiku nei pagrindinės LangChain4j bibliotekos.
-
-> **⚠️ Eksperimentinis:** `langchain4j-agentic` modulis yra **eksperimentinis** ir gali keistis. Stabilus būdas kurti AI asistentus išlieka `langchain4j-core` su individualiais įrankiais (4 modulis).
+> **⚠️ Eksperimentinis:** `langchain4j-agentic` modulis yra **eksperimentinis** ir gali keistis. Stabilus AI asistentų kūrimo būdas išlieka `langchain4j-core` su pritaikytais įrankiais (Modulis 04).
 
 ## Pavyzdžių vykdymas
 
 ### Reikalavimai
 
-- Užbaigtas [4 modulis - Įrankiai](../04-tools/README.md) (šis modulis statomas ant individualių įrankių koncepcijų ir juos lygina su MCP įrankiais)
-- `.env` failas šakniniame kataloge su Azure kredencialais (sukuriamas su `azd up` 1 modulyje)
+- Užbaigtas [Modulis 04 - Įrankiai](../04-tools/README.md) (šis modulis remiasi pritaikytų įrankių konceptais ir lygina juos su MCP įrankiais)
+- `.env` failas šakniniame kataloge su Azure paskyros duomenimis (sukurtas komandą `azd up` Modulyje 01)
 - Java 21+, Maven 3.9+
 - Node.js 16+ ir npm (MCP serveriams)
 
-> **Pastaba:** Jei dar nesate sukonfigūravę aplinkos kintamųjų, žiūrėkite [1 modulis - Įvadas](../01-introduction/README.md) dėl diegimo instrukcijų (`azd up` automatiškai sukuria `.env` failą), arba nukopijuokite `.env.example` į `.env` šakniniame kataloge ir užpildykite reikšmes.
+> **Pastaba:** Jei dar nesukonfigūravote aplinkos kintamųjų, žr. [Modulis 01 - Įvadas](../01-introduction/README.md) apie diegimo instrukcijas (`azd up` automatiškai sukuria `.env` failą), arba nukopijuokite `.env.example` į `.env` šakniniame kataloge ir užpildykite savo duomenis.
 
-## Greitas pradžia
+## Greitas pradėjimas
 
-**Naudojant VS Code:** Tiesiog dešiniuoju spustelėkite bet kurį demo failą Explorer lange ir pasirinkite **„Run Java“**, arba naudokite paleidimo konfigūracijas iš Run and Debug panelės (įsitikinkite, kad `.env` failas sukonfigūruotas su Azure kredencialais).
+**Naudojant VS Code:** Tiesiog dešiniuoju pelės mygtuku spustelėkite bet kurį demo failą Explorer lange ir pasirinkite **„Run Java“** arba naudokite paleidimo konfigūracijas Run and Debug skiltyje (įsitikinkite, kad jūsų `.env` failas su Azure duomenimis jau sukonfigūruotas).
 
-**Naudojant Maven:** Alternatyviai galite paleisti komandine eilute su žemiau pateiktais pavyzdžiais.
+**Naudojant Maven:** Alternatyviai, galite paleisti iš komandinės eilutės naudojant žemiau pateiktus pavyzdžius.
 
 ### Failų operacijos (Stdio)
 
 Tai demonstruoja vietinius subprocess pagrindu veikiančius įrankius.
 
-**✅ Nereikia išankstinių sąlygų** – MCP serveris paleidžiamas automatiškai.
+**✅ Nereikia jokių papildomų reikalavimų** – MCP serveris paleidžiamas automatiškai.
 
-**Naudojant starto skriptus (rekomenduojama):**
+**Naudojant paleidimo skriptus (rekomenduojama):**
 
-Starto skriptai automatiškai pakrauna aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo:
+Paleidimo skriptai automatiškai įkelia aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo:
 
 **Bash:**
 ```bash
@@ -186,45 +190,43 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
+**Naudojant VS Code:** Dešiniuoju pelės mygtuku spustelėkite `StdioTransportDemo.java` ir pasirinkite **„Run Java“** (įsitikinkite, kad `.env` failas sukonfigūruotas).
 
-**Naudojant VS Code:** Dešiniuoju spustelėkite `StdioTransportDemo.java` ir pasirinkite **„Run Java“** (įsitikinkite, kad `.env` failas sukonfigūruotas).
+Programa automatiškai paleidžia failų sistemos MCP serverį ir nuskaito vietinį failą. Atkreipkite dėmesį, kaip valdomas subprocesų valdymas.
 
-Programa automatiškai paleidžia failų sistemos MCP serverį ir perskaito vietinį failą. Pastebėkite, kaip valdomas subprocess procesas.
-
-**Laukiamas išvesties rezultatas:**
+**Tikėtina išvestis:**
 ```
 Assistant response: The file provides an overview of LangChain4j, an open-source Java library
 for integrating Large Language Models (LLMs) into Java applications...
 ```
 
+### Prižiūrintis agentas
 
-### Priežiūros agentas
+**Prižiūrinčio agento modelis** yra **lanksti** agentinio AI forma. Prižiūrintis naudoja LLM savarankiškai nuspręsti, kuriuos agentus iškviesti pagal vartotojo užklausą. Tolimesniame pavyzdyje deriname MCP pagrindu veikiančią failų prieigą su LLM agentu, kad sukurtume prižiūrimą failo skaitymo → ataskaitos kūrimo darbo eigą.
 
-**Priežiūros agento modelis** yra **lanksti** agentinės AI forma. Priežiūros agentas naudoja didelį kalbos modelį (LLM), kad savarankiškai nuspręstų, kuriuos agentus kvieti pagal vartotojo užklausą. Kitame pavyzdyje sujungiame MCP pagrindu veikiančią failų prieigą su LLM agentu, kad sukurtume priežiūrinį failo skaitymo → ataskaitos darbo eigą.
+Demonstruojant, `FileAgent` skaito failą naudodamas MCP failų sistemos įrankius, o `ReportAgent` generuoja struktūruotą ataskaitą su vykdomąja santrauka (1 sakinys), 3 pagrindiniais punktais ir rekomendacijomis. Prižiūrintis automatiškai organizuoja šią eigą:
 
-Demo metu `FileAgent` skaito failą naudodamas MCP failų sistemos įrankius, o `ReportAgent` generuoja struktūruotą ataskaitą su vykdomuoju santrauka (1 sakinys), 3 pagrindinėmis mintimis ir rekomendacijomis. Priežiūros agentas automatiškai organizuoja šią seką:
+<img src="../../../translated_images/lt/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-<img src="../../../translated_images/lt/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Priežiūros agento modelis" width="800"/>
+*Prižiūrintis naudoja savo LLM, kad nuspręstų, kuriuos agentus iškviesti ir kokia tvarka — nereikia jokių įkoduotų maršrutų.*
 
-*Priežiūros agentas naudoja savo LLM, kad nuspręstų, kuriuos agentus kviesti ir kokia tvarka – nėra reikalingas standartiškai koduotas maršrutas.*
+Štai kaip atrodo konkretus darbo eiga mūsų failo-į-ataskaitą pavyzdžiui:
 
-Štai kaip atrodo mūsų failo į ataskaitą darbo eigos konkretus procesas:
+<img src="../../../translated_images/lt/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
-<img src="../../../translated_images/lt/file-report-workflow.649bb7a896800de9.webp" alt="Darbo eiga nuo failo iki ataskaitos" width="800"/>
+*FileAgent skaito failą per MCP įrankius, o ReportAgent transformuoja žalią turinį į struktūruotą ataskaitą.*
 
-*FileAgent perskaito failą per MCP įrankius, tada ReportAgent paverčia žaliavos turinį į struktūruotą ataskaitą.*
+Toliau pateikta sekos diagrama seka visą Prižiūrinties agento koordinavimą – nuo MCP serverio paleidimo, per Prižiūrinties savarankišką agentų atranką, iki įrankių kvietimų per stdio ir galutinės ataskaitos:
 
-Toliau pateiktas sekos diagrama vaizduoja visą Priežiūros agento organizavimą – nuo MCP serverio paleidimo, per autonominį agentų pasirinkimą, iki įrankių kvietimų per stdio ir galutinės ataskaitos:
+<img src="../../../translated_images/lt/supervisor-agent-sequence.1aa389b3bef99956.webp" alt="Supervisor Agent Sequence Diagram" width="800"/>
 
-<img src="../../../translated_images/lt/supervisor-agent-sequence.1aa389b3bef99956.webp" alt="Priežiūros agento sekos diagrama" width="800"/>
+*Prižiūrintis savarankiškai iškviečia FileAgent (jis per MCP serverį perskaito failą naudodamas stdio), tada iškviečia ReportAgent generuoti struktūruotą ataskaitą — kiekvienas agentas saugo savo rezultatus bendrame Agentic Scope.*
 
-*Priežiūros agentas savarankiškai kviečia FileAgent (kuris per stdio kreipiasi į MCP serverį failo skaitymui), po to kviečia ReportAgent sugeneruoti struktūruotą ataskaitą – kiekvienas agentas išsaugo rezultatus bendroje Agentinėje Atmintyje.*
-
-Kiekvienas agentas saugo savo išvestį **Agentinėje atmintyje** (bendroje atmintyje), leisdamas sekančioms agentų dalims prieiti prie ankstesnių rezultatų. Tai demonstruoja, kaip MCP įrankiai sklandžiai įsilieja į agentinę darbo eigą – Priežiūros agentui nereikia žinoti *kaip* yra skaitomi failai, tik kad `FileAgent` gali tai atlikti.
+Kiekvienas agentas saugo savo išvestį **Agentic Scope** (bendroje atmintyje), leidžiant žemyn nuomonei agentams pasiekti ankstesnius rezultatus. Tai rodo, kaip MCP įrankiai sklandžiai integruojasi į agentines darbo eigas – Prižiūrintis neturi žinoti *kaip* failai skaitomi, tik kad `FileAgent` tai sugeba.
 
 #### Demo vykdymas
 
-Starto skriptai automatiškai pakrauna aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo:
+Paleidimo skriptai automatiškai įkelia aplinkos kintamuosius iš šakniniame kataloge esančio `.env` failo:
 
 **Bash:**
 ```bash
@@ -239,12 +241,11 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
+**Naudojant VS Code:** Dešiniuoju pelės mygtuku spustelėkite `SupervisorAgentDemo.java` ir pasirinkite **„Run Java“** (įsitikinkite, kad `.env` failas sukonfigūruotas).
 
-**Naudojant VS Code:** Dešiniuoju spustelėkite `SupervisorAgentDemo.java` ir pasirinkite **„Run Java“** (įsitikinkite, kad `.env` failas sukonfigūruotas).
+#### Kaip veikia prižiūrintis
 
-#### Kaip veikia priežiūra
-
-Prieš kuriant agentus, turite prijungti MCP transportą prie kliento ir apvynioti jį kaip `ToolProvider`. Šitaip MCP serverio įrankiai tampa prieinami jūsų agentams:
+Prieš kuriant agentus, turite prijungti MCP transportą prie kliento ir apvynioti jį kaip `ToolProvider`. Tai leidžia MCP serverio įrankiams tapti prieinamais jūsų agentams:
 
 ```java
 // Sukurkite MCP klientą iš transporto
@@ -258,8 +259,7 @@ ToolProvider mcpToolProvider = McpToolProvider.builder()
         .build();
 ```
 
-
-Dabar galite įterpti `mcpToolProvider` į bet kurį agentą, kuriam reikalingi MCP įrankiai:
+Dabar galite įšvirkšti `mcpToolProvider` į bet kurį agentą, kuriam reikia MCP įrankių:
 
 ```java
 // 1 žingsnis: FileAgent skaito failus naudodamas MCP įrankius
@@ -273,62 +273,61 @@ ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// Supervisor kuruoja failo → ataskaitos darbo eigą
+// Supervisor koordinuoja failo → ataskaitos darbo eigą
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
-        .responseStrategy(SupervisorResponseStrategy.LAST)  // Grąžina galutinę ataskaitą
+        .responseStrategy(SupervisorResponseStrategy.LAST)  // Grąžinti galutinę ataskaitą
         .build();
 
 // Supervisor nusprendžia, kuriuos agentus iškviesti pagal užklausą
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
+#### Kaip FileAgent atranda MCP įrankius vykdymo metu
 
-#### Kaip FileAgent aptinka MCP įrankius paleidimo metu
+Gal kyla klausimas: **kaip `FileAgent` žino, kaip naudoti npm failų sistemos įrankius?** Atsakymas – jis nežino tiesiogiai – **LLM** sužino tai vykdymo metu per įrankių schemas.
+`FileAgent` sąsaja yra tik **užklausos apibrėžimas**. Ji neturi jokios įkoduotos žinios apie `read_file`, `list_directory` ar bet kurį kitą MCP įrankį. Štai, kas nutinka nuo pradžios iki pabaigos:
 
-Gal susimąstote: **kaip `FileAgent` žino, kaip naudoti npm failų sistemos įrankius?** Atsakymas – jis nežino – **LLM** sužino tai vykdymo metu pagal įrankių schemas.
+1. **Serveris paleidžiamas:** `StdioMcpTransport` paleidžia `@modelcontextprotocol/server-filesystem` npm paketą kaip vaiko procesą
+2. **Įrankių aptikimas:** `McpClient` siunčia `tools/list` JSON-RPC užklausą serveriui, kuris atsako įrankių pavadinimais, aprašymais ir parametrų schemomis (pvz., `read_file` — *„Perskaityti visą failo turinį“* — `{ path: string }`)
+3. **Schemų injekcija:** `McpToolProvider` apvynioja šias rastas schemas ir suteikia jas LangChain4j
+4. **LLM sprendžia:** Kai kviečiamas `FileAgent.readFile(path)`, LangChain4j siunčia sistemos žinutę, vartotojo žinutę, **ir įrankių schemų sąrašą** LLM. LLM perskaito įrankių aprašymus ir generuoja įrankio kvietimą (pvz., `read_file(path="/some/file.txt")`)
+5. **Vykdymas:** LangChain4j nutraukia įrankio kvietimą, nukreipia jį per MCP klientą atgal į Node.js subprocessą, gauna rezultatą ir grąžina jį LLM
 
-`FileAgent` sąsaja yra tik **užklausos apibrėžimas**. Ji neturi iš anksto užkoduotos informacijos apie `read_file`, `list_directory` ar kitus MCP įrankius. Štai kas vyksta nuo pradžios iki galo:
-1. **Serverio paleidimas:** `StdioMcpTransport` paleidžia `@modelcontextprotocol/server-filesystem` npm paketą kaip išorinį procesą  
-2. **Įrankių aptikimas:** `McpClient` siunčia `tools/list` JSON-RPC užklausą serveriui, kuris atsako įrankių pavadinimais, aprašymais ir parametrų schemomis (pvz., `read_file` — *„Perskaityti visą failo turinį“* — `{ path: string }`)  
-3. **Schemų įterpimas:** `McpToolProvider` apgaubia šias aptiktas schemas ir padaro jas prieinamas LangChain4j  
-4. **LLM sprendžia:** Kai iškviečiamas `FileAgent.readFile(path)`, LangChain4j siunčia sisteminę žinutę, vartotojo žinutę **ir įrankių schemų sąrašą** LLM. LLM perskaito įrankių aprašymus ir sugeneruoja įrankio kvietimą (pvz., `read_file(path="/some/file.txt")`)  
-5. **Vykdymas:** LangChain4j perima įrankio kvietimą, nukreipia jį per MCP klientą atgal Node.js subprocessui, gauna rezultatą ir perduoda jį atgal LLM  
+Tai tas pats [Įrankių aptikimo](../../../05-mcp) mechanizmas, aprašytas aukščiau, bet pritaikytas tiesiogiai agentų darbo eigai. `@SystemMessage` ir `@UserMessage` anotacijos nukreipia LLM elgesį, tuo tarpu įinjektuotas `ToolProvider` suteikia **galimybes** — LLM runtime metu sujungia abu.
 
-Tai tas pats aukščiau aprašytas [Įrankių aptikimo](../../../05-mcp) mechanizmas, bet taikomas konkrečiai agentų darbo eigai. `@SystemMessage` ir `@UserMessage` anotacijos nurodo LLM elgseną, o įterptas `ToolProvider` suteikia jai **galimybes** — LLM runtime metu susieja abu.
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) ir užduokite:
+> - „Kaip šis agentas žino, kurį MCP įrankį iškviesti?“
+> - „Kas nutiktų, jei pašalinčiau ToolProvider iš agento kūrėjo?“
+> - „Kaip įrankių schemos perduodamos LLM?“
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) ir paklauskite:  
-> - „Kaip šis agentas žino, kurį MCP įrankį iškviesti?“  
-> - „Kas nutiktų, jei pašalinčiau ToolProvider iš agentų kūrėjo?“  
-> - „Kaip įrankių schemos perduodamos LLM?“  
+#### Atsako strategijos
 
-#### Atsakymo strategijos
-
-Konfigūruodami `SupervisorAgent` nurodote, kaip jis turėtų formuluoti galutinį atsakymą vartotojui po to, kai daliniai agentai užbaigs savo užduotis. Žemiau pateiktame diagramoje parodytos trys galimos strategijos — LAST grąžina paskutinio agento tiesioginį rezultatą, SUMMARY sintetina visus rezultatus per LLM, o SCORED pasirenka aukštesnį įvertintą variantą pagal originalų užklausą:
+Konfigūruodami `SupervisorAgent`, nurodote, kaip jis turėtų formuluoti galutinį atsakymą vartotojui, kai pagalbiniai agentai baigia savo užduotis. Žemiau pateiktame diagramos rodomos trys prieinamos strategijos — LAST tiesiog grąžina paskutinio agento išvestį, SUMMARY sintetina visus atsakymus per LLM, o SCORED pasirenka aukščiausią balą gavusį variantą pagal pradinį užklausimą:
 
 <img src="../../../translated_images/lt/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
 
-*Trys strategijos, kaip Supervisor formuluoja galutinį atsakymą — rinkitės pagal tai, ar norite paskutinio agento rezultato, suvestinio apibendrinimo ar rezultatu, kuris gauna aukštesnį įvertinimą.*
+*Trys strategijos, kaip Supervisor suformuluoja galutinį atsakymą — pasirinkite pagal tai, ar norite paskutinio agento išvesties, sintezuoto santraukos, ar geriausiai įvertinto varianto.*
 
-Galimos strategijos:
+Prieinamos strategijos:
 
 | Strategija | Aprašymas |
-|-----------|------------|
-| **LAST** | Supervisor grąžina paskutinio iškviesto dalinio agento arba įrankio rezultatą. Tai naudinga, kai darbo proceso paskutinis agentas yra specialiai sukurtas pateikti galutinį, pilną atsakymą (pvz., „Santraukos agentas“ tyrimų procese). |
-| **SUMMARY** | Supervisor naudoja savo integruotą Kalbos Modelį (LLM), kad suformuotų santrauką apie visą sąveiką ir visus dalinių agentų rezultatus, tada grąžina šią santrauką kaip galutinį atsakymą. Tai suteikia aiškų, apibendrintą atsakymą vartotojui. |
-| **SCORED** | Sistema naudoja integruotą LLM, kad įvertintų tiek LAST atsakymą, tiek SUMMARY santrauką pagal originalią vartotojo užklausą ir grąžina tą variantą, kuris gauna aukštesnį įvertinimą. |
+|----------|-------------|
+| **LAST** | Supervisor grąžina paskutinio pagalbinio agento arba įrankio išvestį. Tai naudinga, kai paskutinis darbo eigos agentas specialiai sukurtas pateikti galutinį, visapusišką atsakymą (pvz., „Santraukos agentas“ tyrimų grandinėje). |
+| **SUMMARY** | Supervisor naudoja savo vidinį kalbos modelį (LLM) apibendrinti visą sąveiką ir visų pagalbinių agentų iškvietimus, tuomet grąžina šią santrauką kaip galutinį atsakymą. Tai suteikia aiškų, apibendrintą atsakymą vartotojui. |
+| **SCORED** | Sistema naudoja vidinį LLM įvertinti tiek LAST atsakymą, tiek SUMMARY santrauką pagal pradinį vartotojo užklausimą ir grąžina tą, kurį LLM įvertina aukščiau. |
 
-Visą įgyvendinimą žr. [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java).
+Žr. [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) pilnai implementacijai.
 
-> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) ir paklauskite:  
-> - „Kaip Supervisor nusprendžia, kuriuos agentus iškviesti?“  
-> - „Kuo skiriasi Supervisor ir Sequential darbo eigos modeliai?“  
-> - „Kaip pritaikyti Supervisor planavimo elgseną?“  
+> **🤖 Išbandykite su [GitHub Copilot](https://github.com/features/copilot) Chat:** Atidarykite [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) ir paklauskite:
+> - „Kaip Supervisor nusprendžia, kuriuos agentus iškviesti?“
+> - „Kuo Supervisor skirtumas nuo Sekvencinio darbo eigos modelių?“
+> - „Kaip galiu pritaikyti Supervizoriaus planavimo elgseną?“ 
 
-#### Rezultato supratimas
+#### Išvesties supratimas
 
-Paleidus demonstraciją, matysite struktūrizuotą eigos apžvalgą, kaip Supervisor kuruoja kelis agentus. Štai ką reiškia kiekviena dalis:
+Paleidus demonstraciją, pamatysite struktūruotą apžvalgą, kaip Supervisor koordinuoja kelis agentus. Štai ką reiškia kiekviena dalis:
 
 ```
 ======================================================================
@@ -338,8 +337,8 @@ Paleidus demonstraciją, matysite struktūrizuotą eigos apžvalgą, kaip Superv
 This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
-  
-**Antraštė** pristato darbo eigos koncepciją: susikoncentruotą procesą nuo failo nuskaitymo iki ataskaitos generavimo.
+
+**Antraštė** pristato darbo eigos koncepciją: orientuotą grandinę nuo failų skaitymo iki ataskaitos generavimo.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -354,17 +353,17 @@ The Supervisor orchestrates the agents automatically based on the request.
   [FILE]   FileAgent   - Reads files via MCP → stores in 'fileContent'
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
-  
-**Darbo eigos diagrama** rodo duomenų srautą tarp agentų. Kiekvienas agentas atlieka konkrečią rolę:  
-- **FileAgent** daugiausiai skaito failus naudodamas MCP įrankius ir saugo pirminį turinį `fileContent`  
-- **ReportAgent** naudoja šį turinį ir generuoja struktūruotą ataskaitą `report`  
+
+**Darbo eigos diagrama** rodo duomenų srautą tarp agentų. Kiekvienas agentas turi specifinę reikšmę:
+- **FileAgent** skaito failus per MCP įrankius ir saugo neapdorotą turinį `fileContent`
+- **ReportAgent** naudoja tą turinį ir generuoja struktūrizuotą ataskaitą `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
-  
-**Vartotojo užklausa** rodo užduotį. Supervisor ją analizuoja ir nusprendžia iškviesti FileAgent → ReportAgent.
+
+**Vartotojo užklausa** rodo užduotį. Supervisor ją išanalizuoja ir nusprendžia iškviesti FileAgent → ReportAgent.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -384,12 +383,12 @@ The Supervisor orchestrates the agents automatically based on the request.
   |   Result: Executive Summary...
   +-- [OK] ReportAgent (generating structured report) completed
 ```
-  
-**Supervisor valdymas** parodo 2-žingsnių darbo eigą:  
-1. **FileAgent** per MCP perskaito failą ir išsaugo turinį  
-2. **ReportAgent** gauna turinį ir sugeneruoja struktūruotą ataskaitą  
 
-Supervisor priėmė šiuos sprendimus **autonomiškai**, remdamasis vartotojo užklausa.
+**Supervisor koordinavimas** rodo 2 žingsnių veikimą:
+1. **FileAgent** skaito failą per MCP ir saugo turinį
+2. **ReportAgent** gauna turinį ir sukuria struktūrizuotą ataskaitą
+
+Supervisor šiuos sprendimus priėmė **autonomiškai** pagal vartotojo užklausą.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -407,39 +406,39 @@ Recommendations
   * fileContent: LangChain4j is an open-source, provider-agnostic Java framework...
   * report: Executive Summary...
 ```
-  
-#### Agentinio modulio funkcijų paaiškinimas
 
-Šis pavyzdys demonstruoja kelias pažangias agentinio modulio funkcijas. Pažvelkime arčiau į Agentic Scope ir Agent Listeners.
+#### Agentų modulio funkcionalumo paaiškinimas
 
-**Agentic Scope** parodo bendrą atmintį, kurioje agentai saugojo savo rezultatus naudodami `@Agent(outputKey="...")`. Tai leidžia:  
-- Vėlesniems agentams pasiekti ankstesnių agentų rezultatus  
-- Supervisoriui sintetinti galutinį atsakymą  
-- Jums apžiūrėti, ką kiekvienas agentas pagamino  
+Pavyzdyje demonstruojama keletas pažangių agentų modulio funkcijų. Pažvelkime atidžiau į Agentic Scope ir Agent Listeners.
 
-Ši diagrama rodo, kaip Agentic Scope veikia kaip bendroji atmintis failo į ataskaitą darbo eigoje — FileAgent rašo savo rezultatą po raktu `fileContent`, ReportAgent jį skaito ir rašo savo rezultatą po raktu `report`:
+**Agentic Scope** rodo bendrą atmintį, kur agentai saugo savo rezultatus naudodami `@Agent(outputKey="...")`. Tai leidžia:
+- Vėlesniems agentams pasiekti ankstesnių agentų išvestis
+- Supervisor suvesti galutinį atsakymą
+- Jums peržiūrėti, ką kiekvienas agentas pagamino
+
+Žemiau diagrama rodo, kaip Agentic Scope veikia kaip bendra atmintis failo-į-ataskaitą darbo eigoje — FileAgent rašo savo išvestį raktu `fileContent`, ReportAgent skaito ją ir rašo savo išvestį po `report`:
 
 <img src="../../../translated_images/lt/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
 
-*Agentic Scope veikia kaip bendra atmintis — FileAgent rašo `fileContent`, ReportAgent jį skaito ir rašo `report`, o jūsų kodas skaito galutinį rezultatą.*
+*Agentic Scope veikia kaip bendra atmintis — FileAgent įrašo `fileContent`, ReportAgent ją skaito ir įrašo `report`, o jūsų kodas skaito galutinį rezultatą.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
 AgenticScope scope = result.agenticScope();
-String fileContent = scope.readState("fileContent");  // Neapdoroti failo duomenys iš FileAgent
+String fileContent = scope.readState("fileContent");  // Nepaliekti failo duomenys iš FileAgent
 String report = scope.readState("report");            // Struktūrizuota ataskaita iš ReportAgent
 ```
-  
-**Agent Listeners** leidžia stebėti ir derinti agentų vykdymą. Žingsnis po žingsnio išvestis demostruojama per AgentListener, kuris prisijungia prie kiekvieno agentų kvietimo:  
-- **beforeAgentInvocation** – iškviečiamas, kai Supervisor pasirenka agentą, leidžiantis matyti, kuris agentas buvo pasirinktas ir kodėl  
-- **afterAgentInvocation** – iškviečiamas, kai agentas baigia darbą, rodantis jo rezultatą  
-- **inheritedBySubagents** – kai true, stebi visus agentus hierarchijoje  
 
-Ši diagrama rodo visą Agent Listener gyvavimo ciklą, įskaitant kaip `onError` tvarko klaidas agento vykdymo metu:
+**Agentų klausytojai** leidžia stebėti ir derinti agentų vykdymą. Žingsnis po žingsnio išvestis, kurią matote demonstracijoje, ateina iš AgentListener, prijungto prie kiekvieno agento kvietimo:
+- **beforeAgentInvocation** - Kviečiamas, kai Supervisor pasirenka agentą, leidžiantis matyti, kuris agentas buvo pasirinktas ir kodėl
+- **afterAgentInvocation** - Kviečiamas, kai agentas baigia darbą, parodantis jo rezultatą
+- **inheritedBySubagents** - Kai tiesa, klausytojas stebi visus agentus hierarchijoje
+
+Žemiau esanti diagrama rodo visą Agent Listener gyvavimo ciklą, įskaitant kaip `onError` tvarko klaidas agentų vykdyme:
 
 <img src="../../../translated_images/lt/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
 
-*Agent Listeners prisijungia prie vykdymo ciklo — stebėkite agentų pradžią, pabaigą ar klaidų įvykį.*
+*Agent Listeners jungiasi prie vykdymo ciklo — stebi, kada agentai pradeda, baigia ar susiduria su klaidomis.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -458,81 +457,81 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Paskleiskite visiems subagentams
+        return true; // Paskleisti visiems subagentams
     }
 };
 ```
-  
-Be Supervisor modelio, `langchain4j-agentic` modulis suteikia kelis galingus darbo eigos modelius. Žemiau pateiktoje diagramoje parodyti visi penki — nuo paprastų sekvencinių procesų iki žmogaus įsikišimą reikalaujančių patvirtinimo procesų:
+
+Be Supervisor modelio, `langchain4j-agentic` modulis suteikia kelis galingus darbo eigos modelius. Žemiau diagrama rodo penkis visus — nuo paprastų sekvencinių grandinių iki žmogaus įtrauktų patvirtinimo darbo eigų:
 
 <img src="../../../translated_images/lt/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
 
-*Penki darbo eigos modeliai agentų valdymui — nuo paprastų sekvencinių iki žmogaus įsitraukimo patvirtinimo procesų.*
+*Penki darbo eigos modeliai agentų koordinavimui — nuo paprastų sekvencinių grandinių iki žmogaus įtraukimo patvirtinimo darbo eigų.*
 
-| Modelis | Aprašymas | Taikymas |
-|---------|-----------|----------|
-| **Sequential** | Vykdyti agentus paeiliui, rezultatas perduodamas kitam | Procesai: tyrimas → analizė → ataskaita |
+| Modelis | Aprašymas | Naudojimo atvejis |
+|---------|-------------|------------------|
+| **Sequential** | Vykdyti agentus viena po kitos, išvestis teka į sekantį | Grandinės: tyrimai → analizė → ataskaita |
 | **Parallel** | Vykdyti agentus vienu metu | Nepriklausomos užduotys: oras + naujienos + akcijos |
-| **Loop** | Kartoti, kol įvykdytos sąlygos | Kiekybinis vertinimas: tobulinti iki įvertinimo ≥ 0.8 |
-| **Conditional** | Nukreipti pagal sąlygas | Klasifikavimas → nukreipimas specialistui |
-| **Human-in-the-Loop** | Įtraukti žmogaus patvirtinimus | Patvirtinimo procesai, turinio peržiūra |
+| **Loop** | Kartoti, kol sąlyga įvykdyta | Kokybės įvertinimas: tobulinti kol balas ≥ 0.8 |
+| **Conditional** | Nuvesti pagal sąlygas | Klasifikuoti → nukreipti pas specialistą agentą |
+| **Human-in-the-Loop** | Įtraukti žmogaus patvirtinimus | Patvirtinimo darbo eigos, turinio peržiūra |
 
 ## Pagrindinės sąvokos
 
-Ištyrę MCP ir agentinį modulį praktiškai, apibendrinkime, kada naudoti kurią metodiką.
+Dabar, kai susipažinote su MCP ir agentų moduliu veikiant, apibendrinkime, kada naudoti kurią metodiką.
 
-Viena didžiausių MCP privalumų yra auganti ekosistema. Žemiau diagrama rodo, kaip vienas universalus protokolas jungia jūsų DI programą su daugybe MCP serverių — nuo failų sistemos ir duomenų bazių iki GitHub, el. pašto, tinklo nuskaitymo ir kt.:
+Viena iš didžiausių MCP privalumų — plėtojama ekosistema. Žemiau diagrama rodo, kaip vienas universalus protokolas jungia jūsų AI programą su įvairiais MCP serveriais — nuo failų sistemos ir duomenų bazių prieigos iki GitHub, el. pašto, svetainių skanavimo ir kt.:
 
 <img src="../../../translated_images/lt/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>
 
-*MCP kuria universalų protokolo ekosistemą — bet kuris MCP suderinamas serveris veikia su bet kuriuo MCP klientu, leidžiant dalytis įrankiais tarp programų.*
+*MCP sukuria universalų protokolo ekologinį tinklą — bet kuris MCP suderinamas serveris veikia su bet kuriuo MCP suderinamu klientu, leidžiant įrankių dalijimąsi tarp programų.*
 
-**MCP** puikiai tinka, kai norite panaudoti esamą įrankių ekosistemą, kurti įrankius, kuriais gali naudotis keli projektai, integruoti trečių šalių paslaugas standartinių protokolų pagalba arba keisti įrankių įgyvendinimus nekeisdami kodo.
+**MCP** ypač tinka, kai norite pasinaudoti egzistuojančiomis įrankių ekosistemomis, kurti įrankius, kuriuos gali naudoti kelios programos, integruoti trečiųjų šalių paslaugas pagal standartinius protokolus arba keisti įrankių įgyvendinimą nekeisdami kodo.
 
-**Agentinis modulis** geriausiai tinka, jei norite deklaratyvių agentų aprašymo `@Agent` anotacijomis, reikia darbo eigos valdymo (sekvencinis, cikliškas, lygiagretus), pirmenybę teikiate sąsajomis pagrįstam agentų dizainui vietoj imperatyvaus kodo, arba derinate kelis agentus, kurie dalijasi rezultatais naudodami `outputKey`.
+**Agentų modulis** tinkamiausias, kai norite deklaratyvių agentų apibrėžimų su `@Agent` anotacijomis, reikia darbo eigos koordinavimo (sekvencinė, ciklinė, paralelinė), preferuojate sąsajos pagrindu sukurtą agentų dizainą vietoje imperatyvaus kodo arba sujungiame kelis agentus, kurie dalijasi išvestimis per `outputKey`.
 
-**Supervisor Agent modelis** išsiskiria, kai darbo eiga nėra iš anksto prognozuojama ir norite, kad LLM spręstų, kai turite kelis specializuotus agentus, kuriems reikia dinaminės koordinacijos, kai statote pokalbių sistemas su skirtingomis galimybėmis, arba kai norite lankstaus, adaptuojamo agentų elgesio.
+**Supervisor Agent modelis** išsiskiria, kai darbo eiga nėra iš anksto nuspėjama ir norite, kad LLM spręstų, kai turite kelis specializuotus agentus dinamiškai koordinuoti, kuriate pokalbių sistemas, nukreipiančias skirtingoms galimybėms, arba kai norite lankstų, adaptuojamą agentų elgesį.
 
-Norėdami padėti nuspręsti tarp specialių `@Tool` metodų iš 4-ojo modulio ir MCP įrankių iš šio modulio, žemiau pateikiama svarbių kompromisų palyginimas — specialūs įrankiai suteikia glaudžią sąsają ir pilną tipų saugumą programai specifinei logikai, o MCP įrankiai siūlo standartizuotas, daugkartinio naudojimo integracijas:
+Kad padėtume nuspręsti tarp pasirinktinių `@Tool` metodų iš 04 modulio ir MCP įrankių iš šio modulio, žemiau pateikiamas svarbiausių skirtumų palyginimas — pasirinktiniai įrankiai suteikia glaudų sujungimą ir pilną tipiškumo saugumą programai specifinėje logikoje, o MCP įrankiai – standartizuotas, pakartotinai naudojamas integracijas:
 
 <img src="../../../translated_images/lt/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
 
-* Kada naudoti savo @Tool metodus prieš MCP įrankius — specialūs įrankiai programai specifinei logikai su pilnu tipų saugumu, MCP įrankiai standartizuotoms integracijoms, kurios veikia tarp programų.*
+*Kai naudoti pasirinktinius @Tool metodus prieš MCP įrankius — pasirinktiniams įrankiams programai specifinė logika su pilna tipiškumo kontrole, MCP įrankiams standartizuotos integracijos, veikiančios su visomis programomis.*
 
 ## Sveikiname!
 
-Jūs sėkmingai įveikėte visus penkis LangChain4j pradedančiųjų kurso modulius! Štai visos jūsų mokymosi kelionės apžvalga — nuo bazinio pokalbių variklio iki MCP varomų agentinių sistemų:
+Jūs praėjote per visus penkis LangChain4j pradedančiųjų kursų modulius! Štai pilnas jūsų įgytas mokymosi kelias — nuo pagrindinio pokalbio iki MCP įgalintų agentų sistemų:
 
 <img src="../../../translated_images/lt/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
 
-*Jūsų mokymosi kelionė per visus penkis modulius — nuo bazinio pokalbių variklio iki MCP varomų agentinių sistemų.*
+*Jūsų mokymosi kelias per visus penkis modulius — nuo pagrindinio pokalbio iki MCP įgalintų agentų sistemų.*
 
 Jūs baigėte LangChain4j pradedančiųjų kursą. Išmokote:
 
-- Kaip kurti pokalbių DI su atmintimi (1 modulis)  
-- Paragrafų konstravimo modelius skirtingoms užduotims (2 modulis)  
-- Atsakymų pagrindimą jūsų dokumentais su RAG (3 modulis)  
-- Kurti paprastus DI agentus (asistentus) su specialiais įrankiais (4 modulis)  
-- Integruoti standartizuotus įrankius su LangChain4j MCP ir Agentic moduliais (5 modulis)  
+- Kaip kurti pokalbių AI su atmintimi (1 modulis)
+- Užklausų inžinerijos šablonus skirtingoms užduotims (2 modulis)
+- Atsakymų pagrindimą savo dokumentuose naudojant RAG (3 modulis)
+- Pagrindinių AI agentų (asistentų) kūrimą su pasirinktinais įrankiais (4 modulis)
+- Standartizuotų įrankių integraciją su LangChain4j MCP ir agentų moduliais (5 modulis)
 
 ### Kas toliau?
 
-Baigę modulius, išbandykite [Testavimo vadovą](../docs/TESTING.md), kad pamatytumėte LangChain4j testavimo koncepcijas veikime.
+Baigus modulius, išnagrinėkite [Testavimo gidą](../docs/TESTING.md) ir pamatykite LangChain4j testavimo koncepcijas veikime.
 
-**Oficialūs ištekliai:**  
-- [LangChain4j dokumentacija](https://docs.langchain4j.dev/) – išsamūs vadovai ir API aprašymai  
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) – šaltinio kodas ir pavyzdžiai  
-- [LangChain4j pamokos](https://docs.langchain4j.dev/tutorials/) – nuoseklūs gidai įvairiems atvejams  
+**Oficialūs ištekliai:**
+- [LangChain4j dokumentacija](https://docs.langchain4j.dev/) – išsamios instrukcijos ir API aprašymai
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) – šaltinio kodas ir pavyzdžiai
+- [LangChain4j pamokos](https://docs.langchain4j.dev/tutorials/) – žingsnis po žingsnio pamokos įvairiems naudojimo atvejams
 
-Ačiū, kad baigėte šį kursą!
+Dėkojame, kad baigėte šį kursą!
 
 ---
 
-**Naršymas:** [← Ankstesnis: Modulis 04 - Įrankiai](../04-tools/README.md) | [Atgal į pradžią](../README.md)
+**Navigacija:** [← Ankstesnis: 04 modulis - Įrankiai](../04-tools/README.md) | [Atgal į pradžią](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Atsakomybės apribojimas**:
-Šis dokumentas buvo išverstas naudojant AI vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatiniai vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas jo gimtąja kalba turi būti laikomas autoritetingu šaltiniu. Svarbiai informacijai rekomenduojama naudoti profesionalų žmogaus atliktą vertimą. Mes neatsakome už bet kokius nesusipratimus ar neteisingus aiškinimus, atsiradusius dėl šio vertimo naudojimo.
+**Atsakomybės apribojimas**:  
+Šis dokumentas buvo išverstas naudojant dirbtinio intelekto vertimo paslaugą [Co-op Translator](https://github.com/Azure/co-op-translator). Nors stengiamės užtikrinti tikslumą, atkreipkite dėmesį, kad automatizuoti vertimai gali turėti klaidų ar netikslumų. Originalus dokumentas gimtąja kalba turėtų būti laikomas autoritetingu šaltiniu. Svarbiai informacijai rekomenduojamas profesionalus žmogaus vertimas. Mes neprisiimame atsakomybės už bet kokius nesusipratimus ar neteisingus aiškinimus, kylančius naudojantis šiuo vertimu.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
