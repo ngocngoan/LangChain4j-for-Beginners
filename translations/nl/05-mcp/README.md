@@ -2,62 +2,69 @@
 
 ## Inhoudsopgave
 
-- [Wat je zult leren](../../../05-mcp)
+- [Video Walkthrough](../../../05-mcp)
+- [Wat Je Zal Leren](../../../05-mcp)
 - [Wat is MCP?](../../../05-mcp)
-- [Hoe MCP werkt](../../../05-mcp)
-- [De Agentic Module](../../../05-mcp)
-- [De voorbeelden uitvoeren](../../../05-mcp)
+- [Hoe MCP Werkt](../../../05-mcp)
+- [De Agentische Module](../../../05-mcp)
+- [De Voorbeelden Uitvoeren](../../../05-mcp)
   - [Vereisten](../../../05-mcp)
-- [Snel aan de slag](../../../05-mcp)
-  - [Bestandsbewerkingen (Stdio)](../../../05-mcp)
+- [Snel Beginnen](../../../05-mcp)
+  - [Bestandsoperaties (Stdio)](../../../05-mcp)
   - [Supervisor Agent](../../../05-mcp)
-    - [De demo uitvoeren](../../../05-mcp)
-    - [Hoe de Supervisor werkt](../../../05-mcp)
-    - [Hoe FileAgent MCP-tools runtime ontdekt](../../../05-mcp)
-    - [Reactiestrategieën](../../../05-mcp)
-    - [De uitvoer begrijpen](../../../05-mcp)
-    - [Uitleg van Agentic Module functies](../../../05-mcp)
-- [Belangrijke concepten](../../../05-mcp)
+    - [Demo Uitvoeren](../../../05-mcp)
+    - [Hoe de Supervisor Werkt](../../../05-mcp)
+    - [Hoe FileAgent MCP Tools Runtime ontdekt](../../../05-mcp)
+    - [Responsstrategieën](../../../05-mcp)
+    - [Begrijpen van de Output](../../../05-mcp)
+    - [Uitleg van Agentische Module Functies](../../../05-mcp)
+- [Kernbegrippen](../../../05-mcp)
 - [Gefeliciteerd!](../../../05-mcp)
-  - [Wat is de volgende stap?](../../../05-mcp)
+  - [Wat Nu?](../../../05-mcp)
 
-## Wat je zult leren
+## Video Walkthrough
 
-Je hebt al gespreks-AI gebouwd, prompts onder de knie gekregen, reacties aan documenten gekoppeld en agenten gecreëerd met tools. Maar al die tools waren maatwerk voor jouw specifieke toepassing. Wat als je je AI toegang kon geven tot een gestandaardiseerd ecosysteem van tools die door iedereen gemaakt en gedeeld kunnen worden? In deze module leer je precies dat doen met het Model Context Protocol (MCP) en LangChain4j’s agentic module. We laten eerst een eenvoudige MCP-bestandlezer zien en tonen daarna hoe deze gemakkelijk integreert in geavanceerde agentic workflows met het Supervisor Agent-patroon.
+Bekijk deze live sessie die uitlegt hoe je met deze module aan de slag gaat:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
+
+## Wat Je Zal Leren
+
+Je hebt conversatie-AI gebouwd, prompts beheerst, reacties gebaseerd op documenten gemaakt en agenten met tools ontwikkeld. Maar al die tools waren op maat gemaakt voor jouw specifieke toepassing. Wat als je je AI toegang kon geven tot een gestandaardiseerd ecosysteem van tools die iedereen kan maken en delen? In deze module leer je precies dat met het Model Context Protocol (MCP) en LangChain4j's agentische module. We laten eerst een eenvoudige MCP-bestandslezer zien en daarna hoe deze gemakkelijk integreert in geavanceerde agentische workflows met het Supervisor Agent patroon.
 
 ## Wat is MCP?
 
-Het Model Context Protocol (MCP) biedt precies dat — een standaardmanier voor AI-toepassingen om externe tools te ontdekken en te gebruiken. In plaats van maatwerkintegraties voor elke gegevensbron of service te schrijven, verbind je met MCP-servers die hun mogelijkheden in een consistent formaat aanbieden. Je AI-agent kan die tools dan automatisch ontdekken en gebruiken.
+Het Model Context Protocol (MCP) biedt precies dat - een standaard manier voor AI-toepassingen om externe tools te ontdekken en te gebruiken. In plaats van op maat gemaakte integraties voor elke databron of dienst te schrijven, verbind je met MCP-servers die hun mogelijkheden in een consistent formaat beschikbaar stellen. Jouw AI-agent kan deze tools daarna automatisch ontdekken en gebruiken.
 
-Het onderstaande diagram toont het verschil — zonder MCP vereist elke integratie maatwerkaansluitingen; met MCP verbindt één protocol je app met elke tool:
+Het onderstaande diagram toont het verschil — zonder MCP vereist elke integratie een aangepaste punt-tot-punt verbinding; met MCP verbindt één protocol jouw app met elke tool:
 
 <img src="../../../translated_images/nl/mcp-comparison.9129a881ecf10ff5.webp" alt="MCP Comparison" width="800"/>
 
-*Voor MCP: Complexe punt-naar-punt integraties. Na MCP: Eén protocol, eindeloze mogelijkheden.*
+*Voor MCP: Complexe punt-tot-punt integraties. Na MCP: Eén protocol, eindeloze mogelijkheden.*
 
-MCP lost een fundamenteel probleem in AI-ontwikkeling op: elke integratie is maatwerk. Wil je GitHub benaderen? Maatwerkcode. Wil je bestanden lezen? Maatwerkcode. Wil je een database queryen? Maatwerkcode. En geen van deze integraties werkt met andere AI-applicaties.
+MCP lost een fundamenteel probleem op in AI-ontwikkeling: elke integratie is maatwerk. Wil je GitHub benaderen? Maatwerk code. Wil je bestanden lezen? Maatwerk code. Wil je een database bevragen? Maatwerk code. En geen van deze integraties werken met andere AI-toepassingen.
 
-MCP standaardiseert dit. Een MCP-server biedt tools aan met duidelijke beschrijvingen en schema’s. Elke MCP-client kan verbinden, beschikbare tools ontdekken en ze gebruiken. Een keer bouwen, overal gebruiken.
+MCP standaardiseert dit. Een MCP-server stelt tools beschikbaar met duidelijke beschrijvingen en schema’s. Elke MCP-client kan verbinding maken, beschikbare tools ontdekken en gebruiken. Een keer bouwen, overal gebruiken.
 
-Het onderstaande diagram illustreert deze architectuur — een enkele MCP-client (jouw AI-toepassing) maakt verbinding met meerdere MCP-servers, die elk hun eigen set tools aanbieden via het standaardprotocol:
+Het volgende diagram illustreert deze architectuur — een enkele MCP-client (jouw AI-toepassing) verbindt met meerdere MCP-servers, elk die hun eigen set tools via het standaard protocol beschikbaar stellen:
 
 <img src="../../../translated_images/nl/mcp-architecture.b3156d787a4ceac9.webp" alt="MCP Architecture" width="800"/>
 
-*Model Context Protocol architectuur – gestandaardiseerde toolontdekking en uitvoering*
+*Model Context Protocol architectuur - gestandaardiseerde toolontdekking en uitvoering*
 
-## Hoe MCP werkt
+## Hoe MCP Werkt
 
-Onder de motorkap gebruikt MCP een gelaagde architectuur. Je Java-applicatie (de MCP-client) ontdekt beschikbare tools, verzendt JSON-RPC-aanvragen via een transportlaag (Stdio of HTTP), en de MCP-server voert bewerkingen uit en retourneert resultaten. Het volgende diagram verdeelt elke laag van dit protocol:
+Onder de motorkap gebruikt MCP een gelaagde architectuur. Je Java-applicatie (de MCP-client) ontdekt beschikbare tools, verstuurt JSON-RPC verzoeken via een transportlaag (Stdio of HTTP), en de MCP-server voert operaties uit en geeft resultaten terug. Het volgende diagram verdeelt elke laag van dit protocol:
 
 <img src="../../../translated_images/nl/mcp-protocol-detail.01204e056f45308b.webp" alt="MCP Protocol Detail" width="800"/>
 
-*Hoe MCP onder de motorkap werkt — clients ontdekken tools, wisselen JSON-RPC-berichten uit, en voeren bewerkingen uit via een transportlaag.*
+*Hoe MCP onder de motorkap werkt — clients ontdekken tools, wisselen JSON-RPC-berichten uit en voeren operaties uit via een transportlaag.*
 
-**Server-client architectuur**
+**Server-Client Architectuur**
 
-MCP gebruikt een client-server model. Servers bieden tools aan — bestanden lezen, databases queryen, API’s aanroepen. Clients (jouw AI-toepassing) verbinden met servers en gebruiken hun tools.
+MCP gebruikt een client-server model. Servers leveren tools - bestanden lezen, databases bevragen, API’s aanroepen. Clients (jouw AI-toepassing) verbinden met servers en gebruiken hun tools.
 
-Om MCP met LangChain4j te gebruiken, voeg deze Maven-afhankelijkheid toe:
+Om MCP met LangChain4j te gebruiken, voeg je deze Maven-afhankelijkheid toe:
 
 ```xml
 <dependency>
@@ -67,17 +74,17 @@ Om MCP met LangChain4j te gebruiken, voeg deze Maven-afhankelijkheid toe:
 </dependency>
 ```
 
-**Toolontdekking**
+**Tool Ontdekking**
 
-Wanneer je client connect met een MCP-server, vraagt deze "Welke tools heb je?" De server reageert met een lijst van beschikbare tools, elk met beschrijvingen en parameterschema’s. Je AI-agent kan dan beslissen welke tools te gebruiken op basis van gebruikersverzoeken. Het onderstaande diagram toont deze handdruk — de client verstuurt een `tools/list`-verzoek en de server geeft zijn beschikbare tools terug met beschrijvingen en parameterschema’s:
+Wanneer jouw client verbinding maakt met een MCP-server, vraagt die: "Welke tools heb je?" De server antwoordt met een lijst van beschikbare tools, elk met beschrijvingen en parameterschema's. Je AI-agent kan dan bepalen welke tools hij gebruikt op basis van gebruikersverzoeken. Het diagram hieronder toont deze handdruk — de client stuurt een `tools/list` verzoek en de server stuurt zijn beschikbare tools terug met beschrijvingen en parameterschema's:
 
 <img src="../../../translated_images/nl/tool-discovery.07760a8a301a7832.webp" alt="MCP Tool Discovery" width="800"/>
 
-*De AI ontdekt beschikbare tools bij het opstarten — weet nu welke mogelijkheden er zijn en kan beslissen welke te gebruiken.*
+*De AI ontdekt beschikbare tools bij opstarten — het weet nu welke mogelijkheden er zijn en kan bepalen welke te gebruiken.*
 
-**Transportmechanismen**
+**Transport Mechanismen**
 
-MCP ondersteunt verschillende transportmechanismen. De twee opties zijn Stdio (voor lokale subprocess-communicatie) en Streamable HTTP (voor externe servers). Deze module demonstreert het Stdio-transport:
+MCP ondersteunt verschillende transportmechanismen. De twee opties zijn Stdio (voor lokale subprocesscommunicatie) en Streamable HTTP (voor externe servers). Deze module demonstreert de Stdio-transport:
 
 <img src="../../../translated_images/nl/transport-mechanisms.2791ba7ee93cf020.webp" alt="Transport Mechanisms" width="800"/>
 
@@ -85,7 +92,7 @@ MCP ondersteunt verschillende transportmechanismen. De twee opties zijn Stdio (v
 
 **Stdio** - [StdioTransportDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java)
 
-Voor lokale processen. Je applicatie start een server als subprocess en communiceert via standaardinvoer/-uitvoer. Handig voor toegang tot het bestandssysteem of commandoregeltools.
+Voor lokale processen. Je applicatie start een server als subprocess en communiceert via standaardinvoer/-uitvoer. Handig voor toegang tot het bestandssysteem of command-line tools.
 
 ```java
 McpTransport stdioTransport = new StdioMcpTransport.Builder()
@@ -98,38 +105,38 @@ McpTransport stdioTransport = new StdioMcpTransport.Builder()
     .build();
 ```
 
-De `@modelcontextprotocol/server-filesystem`-server biedt de volgende tools, allemaal gesandboxed op de door jou gespecificeerde mappen:
+De `@modelcontextprotocol/server-filesystem` server stelt de volgende tools beschikbaar, allemaal geïsoleerd tot de mappen die je opgeeft:
 
 | Tool | Beschrijving |
 |------|--------------|
-| `read_file` | Lees de inhoud van één enkel bestand |
+| `read_file` | Lees de inhoud van een enkel bestand |
 | `read_multiple_files` | Lees meerdere bestanden in één oproep |
-| `write_file` | Maak een bestand aan of overschrijf een bestand |
-| `edit_file` | Voer gerichte zoek-en-vervang-bewerkingen uit |
-| `list_directory` | Lijst bestanden en mappen op een pad |
-| `search_files` | Zoek recursief bestanden die aan een patroon voldoen |
-| `get_file_info` | Verkrijg bestandsmetadata (grootte, tijdstempels, permissies) |
-| `create_directory` | Maak een map aan (inclusief oudermappen) |
+| `write_file` | Maak of overschrijf een bestand |
+| `edit_file` | Voer gerichte zoek-en-vervang bewerkingen uit |
+| `list_directory` | Toon bestanden en mappen in een pad |
+| `search_files` | Recursief zoeken naar bestanden die voldoen aan een patroon |
+| `get_file_info` | Verkrijg metadata van bestanden (grootte, tijdstempels, permissies) |
+| `create_directory` | Maak een map aan (inclusief bovenliggende mappen) |
 | `move_file` | Verplaats of hernoem een bestand of map |
 
-Het volgende diagram toont hoe Stdio-transport werkt tijdens runtime — je Java-applicatie start de MCP-server als child-proces en communiceert via stdin/stdout-pijpen, zonder netwerk of HTTP:
+Het volgende diagram toont hoe Stdio-transport werkt tijdens runtime — je Java-applicatie start de MCP-server als een child proces en ze communiceren via stdin/stdout-pipes, zonder netwerk of HTTP:
 
 <img src="../../../translated_images/nl/stdio-transport-flow.45eaff4af2d81db4.webp" alt="Stdio Transport Flow" width="800"/>
 
-*Stdio-transport in actie — je applicatie start de MCP-server als child-proces en communiceert via stdin/stdout-pijpen.*
+*Stdio-transport in actie — je applicatie start de MCP-server als een child proces en communiceert via stdin/stdout-pipes.*
 
 > **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`StdioTransportDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/StdioTransportDemo.java) en vraag:
-> - "Hoe werkt Stdio-transport en wanneer moet ik het gebruiken in plaats van HTTP?"
-> - "Hoe beheert LangChain4j de levenscyclus van gegenereerde MCP-serverprocessen?"
-> - "Wat zijn de veiligheidsimplicaties van AI toegang geven tot het bestandssysteem?"
+> - "Hoe werkt Stdio-transport en wanneer moet ik het gebruiken versus HTTP?"
+> - "Hoe beheert LangChain4j de levenscyclus van opgestarte MCP-serverprocessen?"
+> - "Wat zijn de beveiligingsimplicaties van het geven van AI-toegang tot het bestandssysteem?"
 
-## De Agentic Module
+## De Agentische Module
 
-Hoewel MCP gestandaardiseerde tools biedt, biedt LangChain4j's **agentic module** een declaratieve manier om agenten te bouwen die deze tools orkestreren. De `@Agent`-annotatie en `AgenticServices` laten je agentgedrag definiëren via interfaces, in plaats van imperatieve code.
+Hoewel MCP gestandaardiseerde tools levert, biedt LangChain4j's **agentische module** een declaratieve manier om agenten te bouwen die deze tools orkestreren. De `@Agent` annotatie en `AgenticServices` laten je agentgedrag definiëren via interfaces in plaats van imperatieve code.
 
-In deze module verken je het **Supervisor Agent**-patroon — een geavanceerde agentic AI-benadering waarbij een “supervisor” agent dynamisch beslist welke subagenten worden uitgevoerd, gebaseerd op gebruikersverzoeken. We combineren beide concepten door één van onze subagenten MCP-gestuurde bestandsaccess-mogelijkheden te geven.
+In deze module verken je het **Supervisor Agent** patroon — een geavanceerde agentische AI-benadering waarbij een “supervisor” agent dynamisch beslist welke subagenten worden aangeroepen op basis van gebruikersverzoeken. We combineren beide concepten door één van onze subagenten MCP-gestuurde bestandsaccess te geven.
 
-Om de agentic module te gebruiken, voeg volgende Maven-afhankelijkheid toe:
+Om de agentische module te gebruiken, voeg je deze Maven-afhankelijkheid toe:
 
 ```xml
 <dependency>
@@ -138,36 +145,36 @@ Om de agentic module te gebruiken, voeg volgende Maven-afhankelijkheid toe:
     <version>${langchain4j.mcp.version}</version>
 </dependency>
 ```
-> **Opmerking:** De `langchain4j-agentic` module gebruikt een aparte versie-eigenschap (`langchain4j.mcp.version`) omdat die op een ander schema uitgebracht wordt dan de kernbibliotheken van LangChain4j.
+> **Opmerking:** De `langchain4j-agentic` module gebruikt een aparte versie-eigenschap (`langchain4j.mcp.version`) omdat deze op een ander schema wordt uitgegeven dan de kernbibliotheken van LangChain4j.
 
-> **⚠️ Experimenteel:** De `langchain4j-agentic` module is **experimenteel** en kan wijzigen. De stabiele manier om AI-assistenten te bouwen blijft `langchain4j-core` met aangepaste tools (Module 04).
+> **⚠️ Experimenteel:** De `langchain4j-agentic` module is **experimenteel** en kan veranderen. De stabiele manier om AI-assistenten te bouwen blijft `langchain4j-core` met maatwerk tools (Module 04).
 
-## De voorbeelden uitvoeren
+## De Voorbeelden Uitvoeren
 
 ### Vereisten
 
-- Module [Module 04 - Tools](../04-tools/README.md) afgerond (deze module bouwt voort op het concept van aangepaste tools en vergelijkt die met MCP-tools)
-- `.env`-bestand in de rootmap met Azure-gegevens (gemaakt door `azd up` in Module 01)
+- Voltooide [Module 04 - Tools](../04-tools/README.md) (deze module bouwt verder op maatwerk tool concepten en vergelijkt ze met MCP tools)
+- `.env` bestand in de hoofdmap met Azure-gegevens (gemaakt door `azd up` in Module 01)
 - Java 21+, Maven 3.9+
-- Node.js 16+ en npm (voor MCP-servers)
+- Node.js 16+ en npm (voor MCP servers)
 
-> **Opmerking:** Als je de omgevingsvariabelen nog niet hebt ingesteld, zie [Module 01 - Introductie](../01-introduction/README.md) voor deployinstructies (`azd up` maakt automatisch het `.env` bestand aan), of kopieer `.env.example` naar `.env` in de rootmap en vul je waarden in.
+> **Opmerking:** Als je je omgevingsvariabelen nog niet hebt ingesteld, zie [Module 01 - Introductie](../01-introduction/README.md) voor instructies voor deployment (`azd up` maakt het `.env` bestand automatisch aan), of kopieer `.env.example` naar `.env` in de hoofdmap en vul je waarden in.
 
-## Snel aan de slag
+## Snel Beginnen
 
-**Met VS Code:** Rechtsklik eenvoudig op een demo-bestand in de Explorer en selecteer **"Run Java"**, of gebruik de launch-configuraties in het Run and Debug-paneel (zorg eerst dat je `.env` bestand met Azure-gegevens is geconfigureerd).
+**Met VS Code:** Klik met de rechtermuisknop op een demo bestand in de Verkenner en selecteer **"Run Java"**, of gebruik de launch-configuraties in het 'Run and Debug' paneel (zorg dat je `.env` bestand met Azure-gegevens eerst is geconfigureerd).
 
-**Met Maven:** Je kunt ook vanuit de opdrachtregel draaien met onderstaande voorbeelden.
+**Met Maven:** Je kunt ook via de commandoregel draaien met de onderstaande voorbeelden.
 
-### Bestandsbewerkingen (Stdio)
+### Bestandsoperaties (Stdio)
 
-Dit demonstreert tools gebaseerd op lokale subprocesses.
+Dit demonstreert lokale subprocess-gebaseerde tools.
 
-**✅ Geen vereisten nodig** - de MCP-server wordt automatisch gestart.
+**✅ Geen vereisten nodig** - de MCP-server wordt automatisch opgestart.
 
-**Gebruik de start scripts (aanbevolen):**
+**Gebruik van de Startscripts (Aanbevolen):**
 
-De start scripts laden automatisch de omgevingsvariabelen uit het root `.env` bestand:
+De startscripts laden automatisch omgevingsvariabelen uit het hoofdbestand `.env`:
 
 **Bash:**
 ```bash
@@ -182,11 +189,11 @@ cd 05-mcp
 .\start-stdio.ps1
 ```
 
-**Met VS Code:** Rechtsklik op `StdioTransportDemo.java` en selecteer **"Run Java"** (zorg dat je `.env` bestand geconfigureerd is).
+**Met VS Code:** Klik met de rechtermuisknop op `StdioTransportDemo.java` en selecteer **"Run Java"** (zorg dat je `.env` bestand geconfigureerd is).
 
-De applicatie start automatisch een filesystem MCP-server en leest een lokaal bestand. Let op hoe het beheer van het subprocess voor je geregeld is.
+De applicatie start automatisch een MCP-bestandssysteemserver en leest een lokaal bestand. Merk op hoe subprocessbeheer voor je wordt afgehandeld.
 
-**Verwachte uitvoer:**
+**Verwachte output:**
 ```
 Assistant response: The file provides an overview of LangChain4j, an open-source Java library
 for integrating Large Language Models (LLMs) into Java applications...
@@ -194,31 +201,31 @@ for integrating Large Language Models (LLMs) into Java applications...
 
 ### Supervisor Agent
 
-Het **Supervisor Agent-patroon** is een **flexibele** vorm van agentic AI. Een Supervisor gebruikt een LLM om autonoom te beslissen welke agenten moeten worden aangestuurd op basis van de gebruikersaanvraag. In het volgende voorbeeld combineren we MCP-gestuurde bestandsaccess met een LLM-agent om een gecontroleerde workflow “bestand lezen → rapport maken” te creëren.
+Het **Supervisor Agent patroon** is een **flexibele** vorm van agentische AI. Een Supervisor gebruikt een LLM om autonoom te bepalen welke agenten worden aangeroepen op basis van het gebruikersverzoek. In het volgende voorbeeld combineren we MCP-gestuurde bestandsaccess met een LLM-agent om een gecontroleerde bestandslees → rapport workflow te creëren.
 
-In de demo leest `FileAgent` een bestand via MCP-bestandssysteemtools, en `ReportAgent` genereert een gestructureerd rapport met een executive summary (1 zin), 3 kernpunten en aanbevelingen. De Supervisor orkestreert deze flow automatisch:
+In de demo leest `FileAgent` een bestand met MCP-bestandssysteemtools, en genereert `ReportAgent` een gestructureerd rapport met een samenvatting (1 zin), 3 kernpunten, en aanbevelingen. De Supervisor orkestreert deze stroom automatisch:
 
 <img src="../../../translated_images/nl/supervisor-agent-pattern.06275a41ae006ac8.webp" alt="Supervisor Agent Pattern" width="800"/>
 
-*De Supervisor gebruikt zijn LLM om te bepalen welke agenten worden aangestuurd en in welke volgorde — geen hardcoded routing nodig.*
+*De Supervisor gebruikt zijn LLM om te bepalen welke agenten worden aangeroepen en in welke volgorde — geen hardcoded routing nodig.*
 
-Zo ziet de concrete workflow eruit in onze bestands-naar-rapport pijplijn:
+Dit is de concrete workflow voor onze bestand-naar-rapport pijplijn:
 
 <img src="../../../translated_images/nl/file-report-workflow.649bb7a896800de9.webp" alt="File to Report Workflow" width="800"/>
 
 *FileAgent leest het bestand via MCP-tools, daarna transformeert ReportAgent de ruwe inhoud naar een gestructureerd rapport.*
 
-Het volgende sequentiediagram volgt de volledige Supervisor-orkestratie — van het starten van de MCP-server, via de autonome agentselectie van de Supervisor, naar tool-aanroepen over stdio en het eindrapport:
+Het volgende sequentiediagram volgt de volledige Supervisor orkestratie — van het starten van de MCP-server, via de autonome agentkeuze van de Supervisor, tot aan de tool-aanroepen over stdio en het eindrapport:
 
 <img src="../../../translated_images/nl/supervisor-agent-sequence.1aa389b3bef99956.webp" alt="Supervisor Agent Sequence Diagram" width="800"/>
 
-*De Supervisor roept autonoom FileAgent aan (die MCP-server via stdio oproept om het bestand te lezen), daarna ReportAgent om een gestructureerd rapport te genereren — elke agent bewaart zijn output in de gedeelde Agentic Scope.*
+*De Supervisor roept autonoom FileAgent aan (die de MCP-server via stdio aanroept om het bestand te lezen), daarna roept hij ReportAgent aan om een gestructureerd rapport te genereren — elke agent slaat zijn output op in de gedeelde Agentic Scope.*
 
-Elke agent slaat zijn output op in de **Agentic Scope** (gedeeld geheugen), zodat downstream-agenten eerdere resultaten kunnen gebruiken. Dit toont hoe MCP-tools naadloos in agentic workflows integreren — de Supervisor hoeft niet te weten *hoe* bestanden worden gelezen, alleen dat `FileAgent` dat kan.
+Elke agent slaat zijn output op in de **Agentic Scope** (gedeeld geheugen), waardoor downstream agenten toegang hebben tot eerdere resultaten. Dit toont aan hoe MCP-tools naadloos integreren in agentische workflows — de Supervisor hoeft niet te weten *hoe* bestanden worden gelezen, alleen dat `FileAgent` dat kan.
 
-#### De demo uitvoeren
+#### Demo Uitvoeren
 
-De start scripts laden automatisch de omgevingsvariabelen uit het root `.env` bestand:
+De startscripts laden automatisch omgevingsvariabelen uit het hoofdbestand `.env`:
 
 **Bash:**
 ```bash
@@ -233,31 +240,31 @@ cd 05-mcp
 .\start-supervisor.ps1
 ```
 
-**Met VS Code:** Rechtsklik op `SupervisorAgentDemo.java` en selecteer **"Run Java"** (zorg dat je `.env` bestand geconfigureerd is).
+**Met VS Code:** Klik met de rechtermuisknop op `SupervisorAgentDemo.java` en selecteer **"Run Java"** (zorg dat je `.env` bestand is geconfigureerd).
 
-#### Hoe de Supervisor werkt
+#### Hoe de Supervisor Werkt
 
-Voordat je agenten bouwt, moet je de MCP-transport koppelen aan een client en deze wikkelen als een `ToolProvider`. Zo worden de MCP-servertools beschikbaar voor je agenten:
+Voor je agenten bouwt, moet je de MCP-transport verbinden met een client en het als een `ToolProvider` wikkelen. Zo worden de tools van de MCP-server beschikbaar voor je agenten:
 
 ```java
-// Maak een MCP-client van de transportlaag
+// Maak een MCP-client aan vanuit de transportlaag
 McpClient mcpClient = new DefaultMcpClient.Builder()
         .transport(stdioTransport)
         .build();
 
-// Wikkel de client in als een ToolProvider — dit verbindt MCP-tools met LangChain4j
+// Wikkel de client in als een ToolProvider — dit maakt MCP-tools bruikbaar in LangChain4j
 ToolProvider mcpToolProvider = McpToolProvider.builder()
         .mcpClients(List.of(mcpClient))
         .build();
 ```
 
-Nu kun je `mcpToolProvider` injecteren in elke agent die MCP-tools nodig heeft:
+Nu kan je `mcpToolProvider` injecteren in elke agent die MCP-tools nodig heeft:
 
 ```java
-// Stap 1: FileAgent leest bestanden met MCP-tools
+// Stap 1: FileAgent leest bestanden met behulp van MCP-tools
 FileAgent fileAgent = AgenticServices.agentBuilder(FileAgent.class)
         .chatModel(model)
-        .toolProvider(mcpToolProvider)  // Heeft MCP-tools voor bestandsbewerkingen
+        .toolProvider(mcpToolProvider)  // Heeft MCP-tools voor bestandbewerkingen
         .build();
 
 // Stap 2: ReportAgent genereert gestructureerde rapporten
@@ -265,61 +272,61 @@ ReportAgent reportAgent = AgenticServices.agentBuilder(ReportAgent.class)
         .chatModel(model)
         .build();
 
-// Supervisor coördineert de workflow van bestand → rapport
+// Supervisor orkestreert de workflow van bestand → rapport
 SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
         .chatModel(model)
         .subAgents(fileAgent, reportAgent)
         .responseStrategy(SupervisorResponseStrategy.LAST)  // Retourneer het definitieve rapport
         .build();
 
-// De Supervisor bepaalt welke agents worden aangeroepen op basis van het verzoek
+// De Supervisor beslist welke agenten worden aangeroepen op basis van het verzoek
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
-#### Hoe FileAgent MCP-tools runtime ontdekt
+#### Hoe FileAgent MCP Tools Runtime ontdekt
 
-Je vraagt je misschien af: **hoe weet `FileAgent` hoe het npm filesystemtools moet gebruiken?** Het antwoord is: dat doet hij niet — de **LLM** ontdekt dit tijdens runtime via toolschema’s.
+Je vraagt je misschien af: **hoe weet `FileAgent` hoe de npm filesystem tools te gebruiken?** Het antwoord is dat die dat niet weet — de **LLM** bepaalt dit tijdens runtime aan de hand van tool schema’s.
+De `FileAgent` interface is slechts een **promptdefinitie**. Het heeft geen ingebouwde kennis van `read_file`, `list_directory` of andere MCP-tools. Dit gebeurt er end-to-end:
 
-De interface van `FileAgent` is slechts een **promptdefinitie**. Het heeft geen harde kennis van `read_file`, `list_directory`, of andere MCP-tools. Zo verloopt het eind-tot-eind proces:
-1. **Server start:** `StdioMcpTransport` start het `@modelcontextprotocol/server-filesystem` npm-pakket als een kindproces  
-2. **Tooldetectie:** De `McpClient` stuurt een `tools/list` JSON-RPC-verzoek naar de server, die reageert met toolnamen, beschrijvingen en parameterschema's (bijv. `read_file` — *"Lees de volledige inhoud van een bestand"* — `{ path: string }`)  
-3. **Schema-injectie:** `McpToolProvider` wikkelt deze ontdekte schema's in en maakt ze beschikbaar voor LangChain4j  
-4. **LLM beslist:** Wanneer `FileAgent.readFile(path)` wordt aangeroepen, stuurt LangChain4j het systeembericht, gebruikersbericht, **en de lijst met toolschema's** naar de LLM. De LLM leest de toolbeschrijvingen en genereert een toolaanroep (bijv. `read_file(path="/some/file.txt")`)  
-5. **Uitvoering:** LangChain4j onderschept de toolaanroep, leidt deze via de MCP-client terug naar het Node.js-subproces, ontvangt het resultaat en geeft dit terug aan de LLM  
+1. **Server start op:** `StdioMcpTransport` start het `@modelcontextprotocol/server-filesystem` npm-pakket als een child process
+2. **Tool ontdekking:** De `McpClient` stuurt een `tools/list` JSON-RPC-verzoek naar de server, die reageert met toolnamen, beschrijvingen en parameterschema's (bijv. `read_file` — *"Lees de volledige inhoud van een bestand"* — `{ path: string }`)
+3. **Schema-injectie:** `McpToolProvider` wikkelt deze ontdekte schema's in en maakt ze beschikbaar voor LangChain4j
+4. **LLM besluit:** Wanneer `FileAgent.readFile(path)` wordt aangeroepen, stuurt LangChain4j het systeembericht, gebruikersbericht, **en de lijst met tool-schema's** naar de LLM. De LLM leest de toolbeschrijvingen en genereert een tool-aanroep (bijv. `read_file(path="/some/file.txt")`)
+5. **Uitvoering:** LangChain4j onderschept de tool-aanroep, routert deze via de MCP-client terug naar het Node.js subprocess, ontvangt het resultaat en voert het terug aan de LLM
 
-Dit is hetzelfde [Tool Discovery](../../../05-mcp) mechanisme dat hierboven is beschreven, maar dan toegepast op de agentworkflow. De `@SystemMessage` en `@UserMessage` annotaties sturen het gedrag van de LLM, terwijl de geïnjecteerde `ToolProvider` het **vermogen** geeft — de LLM brengt het tweetal realtime samen.  
+Dit is hetzelfde [Tool Discovery](../../../05-mcp) mechanisme dat hierboven is beschreven, maar dan specifiek toegepast op de agent workflow. De `@SystemMessage` en `@UserMessage` annotaties sturen het gedrag van de LLM, terwijl de geïnjecteerde `ToolProvider` de **mogelijkheden** biedt — de LLM slaat de brug tussen de twee tijdens runtime.
 
-> **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) en vraag:  
-> - "Hoe weet deze agent welke MCP-tool hij moet aanroepen?"  
-> - "Wat gebeurt er als ik de ToolProvider uit de agent builder verwijder?"  
-> - "Hoe worden toolschema's doorgegeven aan de LLM?"  
+> **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) en vraag:
+> - "Hoe weet deze agent welke MCP-tool aan te roepen?"
+> - "Wat zou er gebeuren als ik de ToolProvider uit de agent builder verwijder?"
+> - "Hoe worden tool-schema's aan de LLM doorgegeven?"
 
-#### Responsstrategieën  
+#### Response Strategieën
 
-Wanneer je een `SupervisorAgent` configureert, geef je op hoe deze het definitieve antwoord aan de gebruiker formuleert nadat de sub-agenten hun taken hebben voltooid. Het onderstaande diagram toont de drie beschikbare strategieën — LAST geeft direct de output terug van de laatste agent, SUMMARY synthetiseert alle outputs via een LLM, en SCORED kiest degene met de hoogste score ten opzichte van het oorspronkelijke verzoek:  
+Wanneer je een `SupervisorAgent` configureert, geef je aan hoe deze zijn uiteindelijke antwoord aan de gebruiker formuleert nadat de sub-agenten hun taken hebben voltooid. De onderstaande diagram toont de drie beschikbare strategieën — LAST geeft direct de output van de laatste agent terug, SUMMARY synthetiseert alle outputs via een LLM, en SCORED kiest degene met de hoogste score ten opzichte van het originele verzoek:
 
-<img src="../../../translated_images/nl/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>  
+<img src="../../../translated_images/nl/response-strategies.3d0cea19d096bdf9.webp" alt="Response Strategies" width="800"/>
 
-*Drie strategieën voor hoe de Supervisor zijn definitieve respons formuleert — kies op basis van of je output van de laatste agent, een samengevat antwoord, of de best scorende optie wilt.*  
+*Drie strategieën voor hoe de Supervisor zijn eindantwoord formuleert — kies op basis van of je de output van de laatste agent, een gesynthetiseerde samenvatting, of het best scorende resultaat wilt.*
 
-De beschikbare strategieën zijn:  
+De beschikbare strategieën zijn:
 
-| Strategie | Beschrijving |  
-|----------|-------------|  
-| **LAST** | De supervisor retourneert de output van de laatst aangeroepen sub-agent of tool. Dit is nuttig wanneer de laatste agent in de workflow specifiek is ontworpen om het volledige, definitieve antwoord te produceren (bijv. een "Summary Agent" in een onderzoeksworkflow). |  
-| **SUMMARY** | De supervisor gebruikt haar eigen interne Language Model (LLM) om een samenvatting te synthetiseren van de gehele interactie en alle output van sub-agenten, en retourneert deze samenvatting als het definitieve antwoord. Dit biedt een helder, geaggregeerd antwoord aan de gebruiker. |  
-| **SCORED** | Het systeem gebruikt een interne LLM om zowel de LAST-respons als de SUMMARY van de interactie te scoren tegenover het oorspronkelijke gebruikersverzoek, en retourneert de output met de hoogste score. |  
+| Strategie | Beschrijving |
+|----------|-------------|
+| **LAST** | De supervisor retourneert de output van de laatst aangeroepen sub-agent of tool. Dit is handig wanneer de laatste agent in de workflow specifiek is ontworpen om het volledige, definitieve antwoord te produceren (bijv. een "Summary Agent" in een onderzoeksproces). |
+| **SUMMARY** | De supervisor gebruikt zijn eigen interne Language Model (LLM) om een samenvatting te maken van de volledige interactie en alle sub-agent outputs, en retourneert die samenvatting als het uiteindelijke antwoord. Dit levert een helder, geaggregeerd antwoord aan de gebruiker. |
+| **SCORED** | Het systeem gebruikt een intern LLM om zowel de LAST-respons als de SUMMARY van de interactie te scoren tegen het oorspronkelijke gebruikersverzoek, daarbij terugkerend welke output de hoogste score krijgt. |
 
-Zie [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) voor de volledige implementatie.  
+Zie [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) voor de volledige implementatie.
 
-> **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) en vraag:  
-> - "Hoe bepaalt de Supervisor welke agenten worden aangeroepen?"  
-> - "Wat is het verschil tussen Supervisor en Sequential workflowpatronen?"  
-> - "Hoe kan ik het planningsgedrag van de Supervisor aanpassen?"  
+> **🤖 Probeer met [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) en vraag:
+> - "Hoe bepaalt de Supervisor welke agenten worden aangeroepen?"
+> - "Wat is het verschil tussen de Supervisor- en Sequential workflowpatronen?"
+> - "Hoe kan ik het planningsgedrag van de Supervisor aanpassen?"
 
-#### Het begrijpen van de output  
+#### Het Uitvoerbegrip
 
-Als je de demo uitvoert, zie je een gestructureerde walkthrough van hoe de Supervisor meerdere agenten orkestreert. Dit is wat elk onderdeel betekent:  
+Wanneer je de demo uitvoert, zie je een gestructureerde walkthrough van hoe de Supervisor meerdere agenten orkestreert. Dit betekent elke sectie:
 
 ```
 ======================================================================
@@ -329,8 +336,8 @@ Als je de demo uitvoert, zie je een gestructureerde walkthrough van hoe de Super
 This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
-  
-**De kop** introduceert het workflowconcept: een gefocuste pijplijn van het lezen van een bestand tot het genereren van een rapport.  
+
+**De kop** introduceert het workflowconcept: een gerichte pijplijn van bestandslezing naar rapportage.
 
 ```
 --- WORKFLOW ---------------------------------------------------------
@@ -345,17 +352,17 @@ The Supervisor orchestrates the agents automatically based on the request.
   [FILE]   FileAgent   - Reads files via MCP → stores in 'fileContent'
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
-  
-**Workflowdiagram** toont de gegevensstroom tussen agenten. Elke agent heeft een specifieke rol:  
-- **FileAgent** leest bestanden met MCP-tools en slaat de ruwe inhoud op in `fileContent`  
-- **ReportAgent** gebruikt die inhoud en maakt een gestructureerd rapport in `report`  
+
+**Workflowdiagram** toont de gegevensstroom tussen agents. Elke agent heeft een specifieke rol:
+- **FileAgent** leest bestanden met MCP-tools en slaat ruwe inhoud op in `fileContent`
+- **ReportAgent** gebruikt die inhoud en maakt een gestructureerd rapport in `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
-  
-**Gebruikersverzoek** toont de taak. De Supervisor analyseert dit en besluit FileAgent → ReportAgent aan te roepen.  
+
+**Gebruikersverzoek** toont de taak. De Supervisor analyseert dit en besluit FileAgent → ReportAgent aan te roepen.
 
 ```
 --- SUPERVISOR ORCHESTRATION -----------------------------------------
@@ -375,12 +382,12 @@ The Supervisor orchestrates the agents automatically based on the request.
   |   Result: Executive Summary...
   +-- [OK] ReportAgent (generating structured report) completed
 ```
-  
-**Supervisor Orkestratie** toont de 2-staps flow in actie:  
-1. **FileAgent** leest het bestand via MCP en slaat de inhoud op  
-2. **ReportAgent** ontvangt de inhoud en genereert een gestructureerd rapport  
 
-De Supervisor nam deze beslissingen **autonoom** op basis van het gebruikersverzoek.  
+**Supervisor Orkestratie** toont de 2-stapsstroom in actie:
+1. **FileAgent** leest het bestand via MCP en slaat de inhoud op
+2. **ReportAgent** ontvangt de inhoud en genereert een gestructureerd rapport
+
+De Supervisor nam deze beslissingen **autonoom** op basis van het gebruikersverzoek.
 
 ```
 --- FINAL RESPONSE ---------------------------------------------------
@@ -398,21 +405,21 @@ Recommendations
   * fileContent: LangChain4j is an open-source, provider-agnostic Java framework...
   * report: Executive Summary...
 ```
-  
-#### Toelichting op Agentic Module-functies  
 
-Het voorbeeld demonstreert diverse geavanceerde functies van de agentic module. Laten we Agentic Scope en Agent Listeners wat nader bekijken.  
+#### Uitleg van Agentic Module Kenmerken
 
-**Agentic Scope** toont het gedeelde geheugen waar agenten hun resultaten opslaan met `@Agent(outputKey="...")`. Dit maakt het mogelijk om:  
-- Latere agenten toegang te geven tot de output van eerdere agenten  
-- De Supervisor een eindantwoord te laten synthetiseren  
-- Voor jou om te inspecteren wat elke agent produceerde  
+Het voorbeeld toont verschillende geavanceerde functies van de agentic module. Laten we Agentic Scope en Agent Listeners nader bekijken.
 
-Het onderstaande diagram toont hoe Agentic Scope werkt als gedeeld geheugen in de file-to-report workflow — FileAgent schrijft zijn output onder de sleutel `fileContent`, ReportAgent leest die en schrijft zijn eigen output onder `report`:  
+**Agentic Scope** toont het gedeelde geheugen waar agents hun resultaten opslaan met `@Agent(outputKey="...")`. Dit maakt mogelijk:
+- Latere agents kunnen outputs van eerdere agents benaderen
+- De Supervisor kan een eindantwoord synthesizen
+- Jij kunt inspecteren wat elke agent heeft geproduceerd
 
-<img src="../../../translated_images/nl/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>  
+Het diagram hieronder toont hoe Agentic Scope werkt als gedeeld geheugen in de file-to-report workflow — FileAgent schrijft zijn output onder de sleutel `fileContent`, ReportAgent leest die en schrijft zijn eigen output onder `report`:
 
-*Agentic Scope werkt als gedeeld geheugen — FileAgent schrijft `fileContent`, ReportAgent leest het en schrijft `report`, en jouw code leest het eindresultaat.*  
+<img src="../../../translated_images/nl/agentic-scope.95ef488b6c1d02ef.webp" alt="Agentic Scope Shared Memory" width="800"/>
+
+*Agentic Scope fungeert als gedeeld geheugen — FileAgent schrijft `fileContent`, ReportAgent leest het en schrijft `report`, en jouw code leest het eindresultaat.*
 
 ```java
 ResultWithAgenticScope<String> result = supervisor.invokeWithAgenticScope(request);
@@ -420,17 +427,17 @@ AgenticScope scope = result.agenticScope();
 String fileContent = scope.readState("fileContent");  // Ruwe bestandsgegevens van FileAgent
 String report = scope.readState("report");            // Gestructureerd rapport van ReportAgent
 ```
-  
-**Agent Listeners** maken het mogelijk om agentuitvoering te monitoren en debuggen. De stapsgewijze output die je in de demo ziet, komt van een AgentListener die zich koppelt aan elke agentaanroep:  
-- **beforeAgentInvocation** — Wordt aangeroepen wanneer de Supervisor een agent selecteert, zodat je kunt zien welke agent is gekozen en waarom  
-- **afterAgentInvocation** — Wordt aangeroepen wanneer een agent klaar is en toont het resultaat  
-- **inheritedBySubagents** — Wanneer waar, monitort de listener alle agenten in de hiërarchie  
 
-Het volgende diagram toont de volledige levenscyclus van de Agent Listener, inclusief hoe `onError` fouten afhandelt tijdens agentuitvoering:  
+**Agent Listeners** maken monitoring en debugging van agentuitvoering mogelijk. De stapsgewijze output die je in de demo ziet komt van een AgentListener die op elke agent-oproep 'hookt':
+- **beforeAgentInvocation** - Wordt aangeroepen wanneer de Supervisor een agent selecteert, zodat je kunt zien welke agent is gekozen en waarom
+- **afterAgentInvocation** - Wordt aangeroepen wanneer een agent klaar is, toont het resultaat
+- **inheritedBySubagents** - Wanneer true, monitort de listener alle agenten in de hiërarchie
 
-<img src="../../../translated_images/nl/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>  
+De onderstaande diagram toont de volledige Agent Listener levenscyclus, inclusief hoe `onError` omgaat met fouten tijdens agentuitvoering:
 
-*Agent Listeners koppelen zich aan de uitvoeringslevenscyclus — monitor wanneer agenten starten, afronden of fouten tegenkomen.*  
+<img src="../../../translated_images/nl/agent-listeners.784bfc403c80ea13.webp" alt="Agent Listeners Lifecycle" width="800"/>
+
+*Agent Listeners verbinden zich met de uitvoeringslevenscyclus — monitor wanneer agents starten, klaar zijn of fouten tegenkomen.*
 
 ```java
 AgentListener monitor = new AgentListener() {
@@ -449,81 +456,81 @@ AgentListener monitor = new AgentListener() {
     
     @Override
     public boolean inheritedBySubagents() {
-        return true; // Propageren naar alle sub-agenten
+        return true; // Propageren naar alle subagenten
     }
 };
 ```
-  
-Naast het Supervisor-patroon biedt de `langchain4j-agentic` module verschillende krachtige workflowpatronen. Het onderstaande diagram toont ze allemaal — van eenvoudige sequentiële pijplijnen tot human-in-the-loop goedkeuringsworkflows:  
 
-<img src="../../../translated_images/nl/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>  
+Naast het Supervisor-patroon biedt de `langchain4j-agentic` module enkele krachtige workflowpatronen. De onderstaande diagram toont alle vijf — van eenvoudige sequentiële pijplijnen tot human-in-the-loop goedkeuringsworkflows:
 
-*Vijf workflowpatronen voor het orkestreren van agenten — van eenvoudige sequentiële pijplijnen tot human-in-the-loop goedkeuringsworkflows.*  
+<img src="../../../translated_images/nl/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
 
-| Patroon | Beschrijving | Gebruik |  
-|---------|-------------|---------|  
-| **Sequential** | Voer agenten achtereenvolgens uit, output stroomt door naar de volgende | Pijplijnen: onderzoek → analyse → rapport |  
-| **Parallel** | Voer agenten gelijktijdig uit | Onafhankelijke taken: weer + nieuws + aandelen |  
-| **Loop** | Itereer totdat een conditie is voldaan | Kwaliteitsscore: verfijnen totdat score ≥ 0,8 |  
-| **Conditional** | Routeer op basis van voorwaarden | Classificeer → routeer naar specialistagent |  
-| **Human-in-the-Loop** | Voeg menselijke checkpoints toe | Goedkeuringsworkflows, content review |  
+*Vijf workflowpatronen voor het orkestreren van agents — van eenvoudige sequentiële pijplijnen tot human-in-the-loop goedkeuringsworkflows.*
 
-## Kernconcepten  
+| Patroon | Beschrijving | Gebruik |
+|---------|-------------|---------|
+| **Sequential** | Voer agents op volgorde uit, output stroomt door naar de volgende | Pijplijnen: onderzoek → analyse → rapport |
+| **Parallel** | Voer agents gelijktijdig uit | Onafhankelijke taken: weer + nieuws + aandelen |
+| **Loop** | Herhaal totdat een voorwaarde is voldaan | Kwaliteitsscore: verfijn totdat score ≥ 0.8 |
+| **Conditional** | Routeer op basis van voorwaarden | Classificeer → routeer naar specialistische agent |
+| **Human-in-the-Loop** | Voeg menselijke controles toe | Goedkeuringsworkflows, inhoudsbeoordeling |
 
-Nu je MCP en de agentic module in actie hebt verkend, laten we samenvatten wanneer je welke aanpak het beste kunt gebruiken.  
+## Belangrijke Concepten
 
-Een groot voordeel van MCP is het groeiende ecosysteem. Het onderstaande diagram toont hoe een universeel protocol jouw AI-applicatie verbindt met een grote verscheidenheid aan MCP-servers — van bestandssysteem- en database-access tot GitHub, e-mail, webscraping en meer:  
+Nu je MCP en de agentic module in actie hebt verkend, vatten we samen wanneer je elke aanpak gebruikt.
 
-<img src="../../../translated_images/nl/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosystem" width="800"/>  
+Een van MCP's grootste voordelen is het groeiende ecosysteem. De onderstaande diagram toont hoe een universeel protocol je AI-applicatie verbindt met een breed scala aan MCP-servers — van bestandssysteem- en database-toegang tot GitHub, e-mail, web scraping en meer:
 
-*MCP creëert een universeel protocolecosysteem — elke MCP-compatibele server werkt met elke MCP-compatibele client, waardoor toolsharing tussen applicaties mogelijk wordt.*  
+<img src="../../../translated_images/nl/mcp-ecosystem.2783c9cc5cfa07d2.webp" alt="MCP Ecosysteem" width="800"/>
 
-**MCP** is ideaal wanneer je bestaande toolecosystemen wilt benutten, tools wilt bouwen die door meerdere applicaties gedeeld kunnen worden, derde-partijdiensten wilt integreren met standaardprotocollen, of toolimplementaties wil wisselen zonder code te wijzigen.  
+*MCP creëert een universeel protocolecosysteem — elke MCP-compatibele server werkt met elke MCP-compatibele client, waardoor tool delen tussen applicaties mogelijk is.*
 
-**De Agentic Module** werkt het best als je declaratieve agentdefinities wilt met `@Agent`-annotaties, workfloworkestratie nodig hebt (sequentieel, loop, parallel), de voorkeur geeft aan interface-gebaseerd agentontwerp boven imperatieve code, of meerdere agenten combineert die output delen via `outputKey`.  
+**MCP** is ideaal wanneer je bestaande toolecosystemen wilt benutten, tools wilt bouwen die door meerdere applicaties gedeeld kunnen worden, derdepartij-services wilt integreren via standaardprotocollen, of toolimplementaties wilt wisselen zonder code aan te passen.
 
-**Het Supervisor Agent-patroon** blinkt uit wanneer de workflow vooraf niet voorspelbaar is en je wilt dat de LLM beslist, wanneer je meerdere gespecialiseerde agenten hebt die dynamische orkestratie nodig hebben, bij het bouwen van conversatiesystemen die naar verschillende capaciteiten routeren, of wanneer je het meest flexibele, adaptieve agentgedrag wilt.  
+**De Agentic Module** werkt het beste wanneer je declaratieve agentdefinities wilt met `@Agent` annotaties, workfloworkestratie nodig hebt (sequentieel, loop, parallel), interface-gebaseerd agentontwerp prefereert boven imperatieve code, of meerdere agents wilt combineren die outputs delen via `outputKey`.
 
-Om je te helpen kiezen tussen de aangepaste `@Tool`-methoden uit Module 04 en MCP-tools uit deze module, benadrukt de volgende vergelijking de belangrijkste afwegingen — aangepaste tools bieden nauwe koppeling en volledige typesafety voor app-specifieke logica, terwijl MCP-tools gestandaardiseerde, herbruikbare integraties bieden:  
+**Het Supervisor Agent patroon** blinkt uit wanneer de workflow vooraf niet voorspelbaar is en je wilt dat de LLM beslist, wanneer je meerdere gespecialiseerde agents hebt die dynamische orkestratie vereisen, bij het bouwen van conversatiesystemen die naar verschillende capaciteiten routeren, of wanneer je het meest flexibele, adaptieve agentgedrag wilt.
 
-<img src="../../../translated_images/nl/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>  
+Om je te helpen kiezen tussen de custom `@Tool` methoden uit Module 04 en MCP-tools uit deze module, toont de volgende vergelijking de belangrijkste afwegingen — custom tools geven je strakke koppeling en volledige typesafety voor appspecifieke logica, terwijl MCP-tools gestandaardiseerde, herbruikbare integraties bieden:
 
-*Wanneer gebruik je aangepaste @Tool-methoden vs MCP-tools — aangepaste tools voor app-specifieke logica met volledige typesafety, MCP-tools voor gestandaardiseerde integraties die tussen applicaties werken.*  
+<img src="../../../translated_images/nl/custom-vs-mcp-tools.c4f9b6b1cb65d8a1.webp" alt="Custom Tools vs MCP Tools" width="800"/>
 
-## Gefeliciteerd!  
+*Wanneer gebruik je custom @Tool-methoden versus MCP-tools — custom tools voor appspecifieke logica met volledige typesafety, MCP-tools voor gestandaardiseerde integraties die over applicaties heen werken.*
 
-Je hebt alle vijf modules van de LangChain4j for Beginners cursus doorlopen! Hier zie je de volledige leerreis die je hebt afgelegd — van basischat tot MCP-aangedreven agentic systemen:  
+## Gefeliciteerd!
 
-<img src="../../../translated_images/nl/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>  
+Je bent door alle vijf modules van de LangChain4j for Beginners cursus heen! Hier is een overzicht van je volledige leertraject — van basis chat tot MCP-aangedreven agentische systemen:
 
-*Je leerreis door alle vijf modules — van basischat tot MCP-aangedreven agentic systemen.*  
+<img src="../../../translated_images/nl/course-completion.48cd201f60ac7570.webp" alt="Course Completion" width="800"/>
 
-Je hebt de LangChain4j for Beginners cursus afgerond. Je hebt geleerd:  
+*Je leertraject door alle vijf modules — van basis chat tot MCP-aangedreven agentische systemen.*
 
-- Hoe je conversatie-AI met geheugen opbouwt (Module 01)  
-- Prompt engineering patronen voor verschillende taken (Module 02)  
-- Hoe je antwoorden grondt in je documenten met RAG (Module 03)  
-- Het maken van basis AI-agenten (assistenten) met aangepaste tools (Module 04)  
-- Het integreren van gestandaardiseerde tools met de LangChain4j MCP en Agentic modules (Module 05)  
+Je hebt de LangChain4j for Beginners cursus afgerond. Je hebt geleerd:
 
-### Wat nu?  
+- Hoe je conversatie-AI bouwt met geheugen (Module 01)
+- Prompt engineering patronen voor verschillende taken (Module 02)
+- Antwoorden baseert op je documenten met RAG (Module 03)
+- Basis AI agents (assistenten) maakt met custom tools (Module 04)
+- Gestandaardiseerde tools integreert met de LangChain4j MCP en Agentic modules (Module 05)
 
-Na het doorlopen van de modules kun je de [Testing Guide](../docs/TESTING.md) verkennen om LangChain4j testconcepten in actie te zien.  
+### Wat nu?
 
-**Officiële bronnen:**  
-- [LangChain4j Documentatie](https://docs.langchain4j.dev/) - Uitgebreide gidsen en API-referentie  
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Broncode en voorbeelden  
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Stapsgewijze tutorials voor diverse use cases  
+Na het voltooien van de modules kun je de [Testing Guide](../docs/TESTING.md) bekijken om LangChain4j testconcepten in actie te zien.
 
-Bedankt voor het afronden van deze cursus!  
+**Officiële bronnen:**
+- [LangChain4j Documentatie](https://docs.langchain4j.dev/) - Uitgebreide handleidingen en API-referentie
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Broncode en voorbeelden
+- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Stapsgewijze tutorials voor diverse use cases
 
----  
+Bedankt voor het volgen van deze cursus!
+
+---
 
 **Navigatie:** [← Vorige: Module 04 - Tools](../04-tools/README.md) | [Terug naar Hoofdmenu](../README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:
-Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u zich ervan bewust te zijn dat geautomatiseerde vertalingen fouten of onnauwkeurigheden kunnen bevatten. Het originele document in de oorspronkelijke taal wordt beschouwd als de gezaghebbende bron. Voor cruciale informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor enige misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
+**Disclaimer**:  
+Dit document is vertaald met behulp van de AI-vertalingsdienst [Co-op Translator](https://github.com/Azure/co-op-translator). Hoewel we streven naar nauwkeurigheid, dient u er rekening mee te houden dat automatische vertalingen fouten of onjuistheden kunnen bevatten. Het originele document in de oorspronkelijke taal wordt als de gezaghebbende bron beschouwd. Voor belangrijke informatie wordt professionele menselijke vertaling aanbevolen. Wij zijn niet aansprakelijk voor eventuele misverstanden of verkeerde interpretaties die voortvloeien uit het gebruik van deze vertaling.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
