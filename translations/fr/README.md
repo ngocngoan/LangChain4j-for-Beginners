@@ -2,7 +2,7 @@
 
 # LangChain4j pour débutants
 
-Un cours pour créer des applications d'IA avec LangChain4j et Azure OpenAI GPT-5.2, du chat de base aux agents IA.
+Un cours pour construire des applications d'IA avec LangChain4j et Azure OpenAI GPT-5.2, du chat basique aux agents IA.
 
 ### 🌐 Support multilingue
 
@@ -13,7 +13,7 @@ Un cours pour créer des applications d'IA avec LangChain4j et Azure OpenAI GPT-
 
 > **Préférez cloner localement ?**
 >
-> Ce dépôt inclut plus de 50 traductions de langues ce qui augmente significativement la taille du téléchargement. Pour cloner sans traductions, utilisez un sparse checkout :
+> Ce dépôt inclut plus de 50 traductions de langues, ce qui augmente significativement la taille du téléchargement. Pour cloner sans les traductions, utilisez le sparse checkout :
 >
 > **Bash / macOS / Linux :**
 > ```bash
@@ -29,47 +29,59 @@ Un cours pour créer des applications d'IA avec LangChain4j et Azure OpenAI GPT-
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> Cela vous donne tout ce dont vous avez besoin pour suivre le cours avec un téléchargement beaucoup plus rapide.
+> Cela vous donne tout ce dont vous avez besoin pour compléter le cours avec un téléchargement beaucoup plus rapide.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## Table des matières
 
-1. [Démarrage rapide](00-quick-start/README.md) - Commencez avec LangChain4j
-2. [Introduction](01-introduction/README.md) - Apprenez les bases de LangChain4j
-3. [Ingénierie de prompt](02-prompt-engineering/README.md) - Maîtrisez la conception efficace des prompts
-4. [RAG (Génération augmentée par récupération)](03-rag/README.md) - Construisez des systèmes intelligents basés sur la connaissance
-5. [Outils](04-tools/README.md) - Intégrez des outils externes et assistants simples
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Travaillez avec le protocole contexte modèle (MCP) et les modules agentiques
+1. [Démarrage rapide](00-quick-start/README.md) - Commencer avec LangChain4j
+2. [Introduction](01-introduction/README.md) - Apprenez les fondamentaux de LangChain4j
+3. [Conception de prompt](02-prompt-engineering/README.md) - Maîtriser la conception efficace des prompts
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Construire des systèmes intelligents basés sur les connaissances
+5. [Outils](04-tools/README.md) - Intégrer des outils externes et assistants simples
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Travailler avec le Model Context Protocol (MCP) et les modules agentiques
+
+### Vidéos explicatives
+
+Chaque module dispose d’une session live d'accompagnement où nous parcourons les concepts et le code étape par étape.
+
+| Module | Vidéo |
+|--------|-------|
+| 01 - Introduction | [Premiers pas avec LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
+| 02 - Conception de prompt | [Conception de prompt avec LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
+| 03 - RAG | [RAG avec LangChain4j](https://www.youtube.com/watch?v=_olq75ZH_eY) |
+| 04 - Outils & 05 - MCP | [Agents IA avec Outils et MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
+
 ---
 
-## Parcours d'apprentissage
+## Parcours d’apprentissage
 
-**Nouveau sur LangChain4j ?** Consultez le [Glossaire](docs/GLOSSARY.md) pour les définitions des termes et concepts clés.
+**Nouveau avec LangChain4j ?** Consultez le [Glossaire](docs/GLOSSARY.md) pour les définitions des termes clés et concepts.
 
 > **Démarrage rapide**
 
 1. Forkez ce dépôt sur votre compte GitHub
 2. Cliquez sur **Code** → onglet **Codespaces** → **...** → **Nouveau avec options...**
-3. Utilisez les valeurs par défaut – cela sélectionnera le conteneur de développement créé pour ce cours
+3. Utilisez les paramètres par défaut – cela sélectionnera le conteneur de développement créé pour ce cours
 4. Cliquez sur **Créer un codespace**
-5. Attendez 5 à 10 minutes que l'environnement soit prêt
-6. Passez directement au [Démarrage rapide](./00-quick-start/README.md) pour commencer !
+5. Patientez de 5 à 10 minutes pour que l’environnement soit prêt
+6. Allez directement à [Démarrage rapide](./00-quick-start/README.md) pour commencer !
 
 Après avoir complété les modules, explorez le [Guide de test](docs/TESTING.md) pour voir les concepts de test LangChain4j en action.
 
-> **Note :** Cette formation utilise à la fois GitHub Models et Azure OpenAI. Le module [Démarrage rapide](00-quick-start/README.md) utilise GitHub Models (pas besoin d'abonnement Azure), tandis que les modules 1-5 utilisent Azure OpenAI. Commencez avec un [compte Azure GRATUIT](https://aka.ms/azure-free-account) si vous n'en avez pas.
+> **Note :** Cette formation utilise à la fois les GitHub Models et Azure OpenAI. Le module [Démarrage rapide](00-quick-start/README.md) utilise GitHub Models (aucun abonnement Azure requis), alors que les modules 1-5 utilisent Azure OpenAI. Commencez avec un [compte Azure GRATUIT](https://aka.ms/azure-free-account) si vous n’en avez pas.
 
 
 ## Apprentissage avec GitHub Copilot
 
 Pour commencer rapidement à coder, ouvrez ce projet dans un GitHub Codespace ou dans votre IDE local avec le devcontainer fourni. Le devcontainer utilisé dans ce cours est préconfiguré avec GitHub Copilot pour la programmation assistée par IA en binôme.
 
-Chaque exemple de code inclut des questions suggérées que vous pouvez poser à GitHub Copilot pour approfondir votre compréhension. Cherchez les invites 💡/🤖 dans :
+Chaque exemple de code inclut des questions suggérées que vous pouvez poser à GitHub Copilot pour approfondir votre compréhension. Recherchez les suggestions 💡/🤖 dans :
 
 - **En-têtes des fichiers Java** - Questions spécifiques à chaque exemple
-- **README des modules** - Invites d'exploration après les exemples de code
+- **README des modules** - Suggestions d’exploration après les exemples de code
 
-**Comment utiliser :** Ouvrez n'importe quel fichier de code et posez les questions suggérées à Copilot. Il a le contexte complet du code et peut expliquer, étendre et suggérer des alternatives.
+**Comment utiliser :** Ouvrez n’importe quel fichier de code et posez à Copilot les questions suggérées. Il a le contexte complet du code et peut expliquer, étendre et suggérer des alternatives.
 
 Vous voulez en savoir plus ? Consultez [Copilot pour la programmation assistée par IA](https://aka.ms/GitHubCopilotAI).
 
@@ -91,7 +103,7 @@ Vous voulez en savoir plus ? Consultez [Copilot pour la programmation assistée 
 
 ---
  
-### Série IA Générative
+### Série IA générative
 [![Generative AI for Beginners](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Generative AI (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
 [![Generative AI (Java)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
@@ -99,7 +111,7 @@ Vous voulez en savoir plus ? Consultez [Copilot pour la programmation assistée 
 
 ---
  
-### Apprentissage Fondamental
+### Apprentissage fondamental
 [![ML for Beginners](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Data Science for Beginners](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI for Beginners](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -109,7 +121,7 @@ Vous voulez en savoir plus ? Consultez [Copilot pour la programmation assistée 
 [![XR Development for Beginners](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
- 
+
 ### Série Copilot
 [![Copilot for AI Paired Programming](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
 [![Copilot for C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
@@ -118,13 +130,13 @@ Vous voulez en savoir plus ? Consultez [Copilot pour la programmation assistée 
 
 ## Obtenir de l’aide
 
-Si vous êtes bloqué ou avez des questions sur la création d’applications AI, rejoignez :
+Si vous êtes bloqué ou avez des questions sur la création d’applications IA, rejoignez :
 
-[![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
+[![Microsoft Foundry Discord](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Si vous avez des retours sur le produit ou des erreurs lors de la création, visitez :
+Si vous avez des retours sur le produit ou des erreurs lors du développement, visitez :
 
-[![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Licence
 
@@ -133,6 +145,6 @@ Licence MIT - Voir le fichier [LICENSE](../../LICENSE) pour plus de détails.
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Avertissement** :  
-Ce document a été traduit à l’aide du service de traduction par IA [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer l’exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des inexactitudes. Le document original dans sa langue d’origine doit être considéré comme la source faisant foi. Pour les informations critiques, il est recommandé de recourir à une traduction professionnelle humaine. Nous déclinons toute responsabilité en cas de malentendus ou de mauvaises interprétations résultant de l’utilisation de cette traduction.
+**Avis de non-responsabilité** :  
+Ce document a été traduit à l’aide du service de traduction automatique [Co-op Translator](https://github.com/Azure/co-op-translator). Bien que nous nous efforcions d’assurer l’exactitude, veuillez noter que les traductions automatiques peuvent contenir des erreurs ou des imprécisions. Le document original dans sa langue d’origine doit être considéré comme la source faisant foi. Pour les informations critiques, il est recommandé de recourir à une traduction professionnelle réalisée par un humain. Nous déclinons toute responsabilité en cas de malentendus ou d’interprétations erronées résultant de l’utilisation de cette traduction.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

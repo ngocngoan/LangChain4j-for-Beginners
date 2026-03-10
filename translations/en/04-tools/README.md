@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../04-tools)
 - [What You'll Learn](../../../04-tools)
 - [Prerequisites](../../../04-tools)
 - [Understanding AI Agents with Tools](../../../04-tools)
@@ -27,6 +28,12 @@
 - [When to Use Tool-Based Agents](../../../04-tools)
 - [Tools vs RAG](../../../04-tools)
 - [Next Steps](../../../04-tools)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
@@ -211,7 +218,6 @@ From the Spring Boot Dashboard, you can:
 - Start/stop applications with a single click
 - View application logs in real-time
 - Monitor application status
-
 Simply click the play button next to "tools" to start this module, or start all modules at once.
 
 Here's what the Spring Boot Dashboard looks like in VS Code:
@@ -377,5 +383,5 @@ In practice, many production systems combine both approaches: RAG for grounding 
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
+This document has been translated using AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
