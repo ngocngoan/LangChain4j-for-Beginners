@@ -1,69 +1,76 @@
-# Modül 04: Araçlarla AI Ajanları
+# Modül 04: Araçlara Sahip Yapay Zeka Ajanları
 
 ## İçindekiler
 
-- [Neler Öğreneceksiniz](../../../04-tools)
-- [Önkoşullar](../../../04-tools)
-- [Araçlarla AI Ajanlarını Anlamak](../../../04-tools)
+- [Video Rehberi](../../../04-tools)
+- [Öğrenecekleriniz](../../../04-tools)
+- [Ön Koşullar](../../../04-tools)
+- [Araçlara Sahip Yapay Zeka Ajanlarını Anlamak](../../../04-tools)
 - [Araç Çağrısı Nasıl Çalışır](../../../04-tools)
   - [Araç Tanımları](../../../04-tools)
   - [Karar Verme](../../../04-tools)
   - [Yürütme](../../../04-tools)
-  - [Yanıt Oluşturma](../../../04-tools)
+  - [Yanıt Üretimi](../../../04-tools)
   - [Mimari: Spring Boot Otomatik Bağlama](../../../04-tools)
-- [Araç Zincirleme](../../../04-tools)
+- [Araç Zinciri](../../../04-tools)
 - [Uygulamayı Çalıştırma](../../../04-tools)
 - [Uygulamayı Kullanma](../../../04-tools)
   - [Basit Araç Kullanımını Deneyin](../../../04-tools)
-  - [Araç Zincirlemeyi Test Edin](../../../04-tools)
+  - [Araç Zincirini Test Edin](../../../04-tools)
   - [Konuşma Akışını Görün](../../../04-tools)
-  - [Farklı İsteklerle Deneyin](../../../04-tools)
+  - [Farklı Taleplerle Deneyler Yapın](../../../04-tools)
 - [Temel Kavramlar](../../../04-tools)
-  - [ReAct Deseni (Akıl Yürütme ve Hareket)](../../../04-tools)
-  - [Araç Tanımları Önemlidir](../../../04-tools)
+  - [ReAct Deseni (Düşünme ve Hareket Etme)](../../../04-tools)
+  - [Araç Açıklamaları Önemlidir](../../../04-tools)
   - [Oturum Yönetimi](../../../04-tools)
   - [Hata Yönetimi](../../../04-tools)
 - [Mevcut Araçlar](../../../04-tools)
 - [Araç Tabanlı Ajanları Ne Zaman Kullanmalı](../../../04-tools)
-- [Araçlar ve RAG Arasındaki Farklar](../../../04-tools)
+- [Araçlar vs RAG](../../../04-tools)
 - [Sonraki Adımlar](../../../04-tools)
 
-## Neler Öğreneceksiniz
+## Video Rehberi
 
-Şu ana kadar AI ile nasıl konuşulacağını, istemleri etkili şekilde nasıl yapılandıracağınızı ve yanıtları belgelerinize nasıl dayandıracağınızı öğrendiniz. Ancak hala temel bir kısıtlama var: dil modelleri sadece metin üretebilir. Hava durumunu kontrol edemez, hesaplama yapamaz, veri tabanlarını sorgulayamaz veya harici sistemlerle etkileşime giremez.
+Bu modüle nasıl başlanacağını açıklayan canlı oturumu izleyin:
 
-Araçlar bunu değiştirir. Modele çağırabileceği işlevlere erişim vererek, onu sadece metin üreten bir modelden eylem alabilen bir ajan haline dönüştürürsünüz. Model, ne zaman araca ihtiyaç duyduğuna, hangi aracı kullanacağına ve hangi parametreleri ileteceğine karar verir. Kodunuz işlevi yürütür ve sonucu döner. Model bu sonucu yanıtına entegre eder.
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
-## Önkoşullar
+## Öğrenecekleriniz
 
-- [Modül 01 - Giriş](../01-introduction/README.md) tamamlanmış (Azure OpenAI kaynakları dağıtılmış)
-- Önceki modüllerin tamamlanması önerilir (bu modül [Modül 03'teki RAG kavramlarından](../03-rag/README.md) araçlar ve RAG karşılaştırmasında bahseder)
-- Kök dizinde Azure kimlik bilgilerini içeren `.env` dosyası (Modül 01'de `azd up` komutu ile oluşturulur)
+Şimdiye kadar AI ile nasıl sohbet edileceğini, yönlendirme (prompt) yapılarını etkin şekilde oluşturmayı ve yanıtları belgelerinizle ilişkilendirmeyi öğrendiniz. Ancak hâlâ temel bir sınırlama var: dil modelleri yalnızca metin oluşturabilir. Hava durumunu kontrol edemez, hesaplama yapamaz, veri tabanlarını sorgulayamaz veya dış sistemlerle etkileşime geçemez.
 
-> **Not:** Modül 01 tamamlanmadıysa, önce oradaki dağıtım talimatlarını takip edin.
+Araçlar bunu değiştirir. Modele çağırabileceği fonksiyonlara erişim vererek, onu metin üreticiden eylem alabilen bir ajana dönüştürürsünüz. Model ne zaman araca ihtiyacı olduğunu, hangi aracı kullanacağını ve hangi parametreleri geçeceğini belirler. Kodunuz fonksiyonu çalıştırır ve sonucu geri döner. Model bu sonucu yanıtına entegre eder.
 
-## Araçlarla AI Ajanlarını Anlamak
+## Ön Koşullar
 
-> **📝 Not:** Bu modüldeki "ajanlar" terimi, araç çağırma özellikleriyle geliştirilen AI asistanları anlamına gelir. Bu, [Modül 05: MCP](../05-mcp/README.md) içinde ele alacağımız, planlama, hafıza ve çok adımlı akıl yürütme içeren **Agentic AI** desenlerinden farklıdır.
+- [Modül 01 - Giriş](../01-introduction/README.md) tamamlandı (Azure OpenAI kaynakları dağıtıldı)
+- Önceki modüllerin tamamlanması önerilir (bu modül, Tools vs RAG karşılaştırmasında [Modül 03 RAG kavramlarına](../03-rag/README.md) referans verir)
+- `.env` dosyası kök dizinde Azure kimlik bilgileri ile mevcut (Modül 01'de `azd up` ile oluşturuldu)
 
-Araçlar olmadan dil modeli sadece eğitim verisinden metin üretir. Güncel havayı sorarsanız tahminde bulunur. Araçlar verilirse hava durumu API’sini çağırabilir, hesaplama yapabilir veya veri tabanı sorgulayabilir — sonra gerçek sonuçları yanıtına yedirebilir.
+> **Not:** Modül 01'i tamamlamadıysanız, öncelikle oradaki dağıtım talimatlarını izleyin.
 
-<img src="../../../translated_images/tr/what-are-tools.724e468fc4de64da.webp" alt="Araçlar Olmadan vs Araçlarla" width="800"/>
+## Araçlara Sahip Yapay Zeka Ajanlarını Anlamak
 
-*Araçlar olmadan model sadece tahminde bulunabilir — araçlarla API'leri çağırabilir, hesaplamalar yapabilir ve gerçek zamanlı veri dönebilir.*
+> **📝 Not:** Bu modüldeki "ajanlar" terimi, araç çağırma yetenekleri ile geliştirilmiş yapay zeka asistanlarını ifade eder. Bu, [Modül 05: MCP](../05-mcp/README.md) içinde ele alacağımız **Agentic AI** (planlama, hafıza ve çok adımlı muhakeme gibi özelliklere sahip otonom ajanlar) desenlerinden farklıdır.
 
-Araçlı AI ajanı, **Akıl Yürütme ve Hareket (ReAct)** desenini takip eder. Model sadece yanıt vermez — neye ihtiyacı olduğunu düşünür, araç çağırarak hareket eder, sonucu gözlemler ve tekrar hareket edip etmeyeceğine ya da nihai yanıtı vermeye karar verir:
+Araçlar olmadan, bir dil modeli sadece eğitim verilerinden metin oluşturabilir. Mevcut hava durumunu sorarsanız tahmin etmek zorundadır. Araç verin, hava durumu API'si çağırabilir, hesaplama yapabilir veya veri tabanını sorgulayabilir — sonra bu gerçek sonuçları yanıtına dahil eder.
 
-1. **Akıl Yürüt** — Ajan kullanıcının sorusunu analiz eder, hangi bilgiye ihtiyacı olduğunu belirler
-2. **Harekete Geç** — Ajan doğru aracı seçer, uygun parametreleri oluşturur ve çağırır
-3. **Gözlemle** — Ajan aracın çıktısını alır ve sonucu değerlendirir
-4. **Tekrar Et veya Yanıtla** — Daha fazla veri gerekiyorsa döngü devam eder, aksi halde doğal dil yanıtı oluşturur
+<img src="../../../translated_images/tr/what-are-tools.724e468fc4de64da.webp" alt="Araçlar Olmadan vs Araçlar ile" width="800"/>
+
+*Araç olmadan model sadece tahmin eder — araçlar sayesinde API çağırabilir, hesaplama yapabilir ve gerçek zamanlı veri dönebilir.*
+
+Araçlara sahip AI ajanları **Düşünme ve Hareket Etme (ReAct)** desenini takip eder. Model sadece yanıt vermekle kalmaz — neye ihtiyacı olduğunu düşünür, bir aracı çağırarak eyleme geçer, sonucu gözlemler ve sonra tekrar mı hareket edeceğine yoksa nihai cevabı mı vereceğine karar verir:
+
+1. **Düşün** — Ajan kullanıcının sorusunu analiz eder ve hangi bilgiye ihtiyaç duyduğunu belirler
+2. **Harekete Geç** — Doğru aracı seçer, doğru parametreleri üretir ve çağırır
+3. **Gözle** — Ajan aracın çıktısını alır ve sonucu değerlendirir
+4. **Tekrarla veya Yanıtla** — Daha fazla veri gerekirse döngüye girer, yoksa doğal dil yanıtı oluşturur
 
 <img src="../../../translated_images/tr/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct Deseni" width="800"/>
 
-*ReAct döngüsü — ajan ne yapacağını düşünür, araç çağırarak hareket eder, sonucu gözlemler ve nihai yanıtı verebilene kadar döngü devam eder.*
+*ReAct döngüsü — ajan ne yapacağına karar verir, aracı çağırır, sonucu gözlemler ve nihai cevabı verene kadar döngüye devam eder.*
 
-Bu süreç otomatik gerçekleşir. Siz araçları ve açıklamalarını tanımlarsınız. Model ne zaman, nasıl kullanılacağına karar verir.
+Bu süreç otomatik gerçekleşir. Siz araçları ve açıklamalarını tanımlarsınız. Model ne zaman ve nasıl kullanılacağına dair kararları kendisi verir.
 
 ## Araç Çağrısı Nasıl Çalışır
 
@@ -71,7 +78,7 @@ Bu süreç otomatik gerçekleşir. Siz araçları ve açıklamalarını tanımla
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Fonksiyonları net açıklamalar ve parametre spesifikasyonları ile tanımlarsınız. Model bu açıklamaları sistem isteminde görür ve her aracın ne yaptığını anlar.
+Fonksiyonları açık açıklamalar ve parametre tanımları ile belirlersiniz. Model bu açıklamaları sistem isteminde görür ve her aracın ne yaptığını anlar.
 
 ```java
 @Component
@@ -89,128 +96,139 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Asistan, Spring Boot tarafından otomatik olarak şu şekilde bağlanır:
-// - ChatModel bean'i
-// - @Component sınıflarından tüm @Tool yöntemleri
+// Asistan otomatik olarak Spring Boot tarafından şu şekilde bağlanır:
+// - ChatModel bileşeni
+// - @Component sınıflarından tüm @Tool metodları
 // - Oturum yönetimi için ChatMemoryProvider
 ```
-
-Aşağıdaki diyagram her açıklamayı parçalar ve AI’nın ne zaman aracı çağıracağını ve hangi argümanları ileteceğini nasıl anladığını gösterir:
+  
+Aşağıdaki diyagram her anotasyonu ayırır ve her parçanın yapay zekanın aracı ne zaman çağıracağını ve hangi argümanları geçeceğini anlamasına nasıl yardımcı olduğunu gösterir:
 
 <img src="../../../translated_images/tr/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Araç Tanımlarının Anatomisi" width="800"/>
 
-*Bir araç tanımının anatomisi — @Tool AI’ya ne zaman kullanılacağını söyler, @P her parametreyi açıklar ve @AiService her şeyi başlangıçta bağlar.*
+*Bir araç tanımının anatomisi — @Tool yapay zekaya ne zaman kullanacağını söyler, @P her parametreyi açıklar, ve @AiService her şeyi başlangıçta bağlar.*
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) dosyasını açın ve sorun:
-> - "Gerçek OpenWeatherMap gibi bir hava durumu API’sı nasıl entegre edilir?"
-> - "AI’nın doğru kullanmasını sağlayan iyi bir araç açıklaması nasıl olur?"
-> - "API hataları ve oran sınırlamalarını araç uygulamalarında nasıl yönetirim?"
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) dosyasını açın ve sorun:  
+> - "Gerçek bir hava durumu API'si kullanmak için OpenWeatherMap yerine mock veriler yerine nasıl entegre ederim?"  
+> - "Yapay zekanın doğru kullanmasını sağlayan iyi bir araç açıklaması nasıl olmalı?"  
+> - "Araç uygulamalarında API hatalarını ve oran limitlerini nasıl yönetirim?"
 
 ### Karar Verme
 
-Kullanıcı "Seattle'da hava nasıl?" diye sorduğunda, model rastgele araç seçmez. Kullanıcı niyetini eriştiği tüm araç açıklamalarıyla karşılaştırır, alaka düzeyine göre puanlar ve en uygun olanı seçer. Ardından, doğru parametrelerle yapılandırılmış bir işlev çağrısı oluşturur — bu örnekte `location` parametresi `"Seattle"` olarak ayarlanır.
+Kullanıcı "Seattle'da hava nasıl?" diye sorduğunda, model rasgele bir araç seçmez. Kullanıcının amacını sahip olduğu her araç açıklaması ile karşılaştırır, her birini alaka düzeyine göre puanlar ve en uygun olanını seçer. Ardından doğru parametrelerle yapılandırılmış bir fonksiyon çağrısı oluşturur — bu örnekte `location` parametresine `"Seattle"` değeri atanır.
 
-Eğer hiçbir araç kullanıcının isteğiyle eşleşmezse, model kendi bilgisinden yanıt verir. Birden fazla araç uygunsa, en özel olan seçilir.
+Eğer kullanıcının talebine uygun araç yoksa model bilgisiyle yanıt verir. Birden fazla uygun araç varsa en spesifik olanı seçer.
 
-<img src="../../../translated_images/tr/decision-making.409cd562e5cecc49.webp" alt="AI'nın Hangi Aracı Seçeceğine Karar Vermesi" width="800"/>
+<img src="../../../translated_images/tr/decision-making.409cd562e5cecc49.webp" alt="Yapay Zeka Hangi Aracı Seçeceğine Nasıl Karar Verir" width="800"/>
 
-*Model, kullanıcının niyetini her mevcut araca göre değerlendirir ve en iyisini seçer — bu yüzden net, spesifik araç açıklamaları yazmak önemlidir.*
+*Model, mevcut her aracı kullanıcının amacıyla değerlendirir ve en uygun olanı seçer — bu yüzden net ve spesifik araç açıklamaları önemlidir.*
 
 ### Yürütme
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot, deklaratif `@AiService` arayüzünü kayıtlı tüm araçlarla otomatik bağlar ve LangChain4j araç çağrılarını otomatik yürütür. Arka planda, eksiksiz bir araç çağrısı altı aşamadan geçer — kullanıcının doğal dil sorusundan doğal dil yanıta kadar:
+Spring Boot, bildirisel `@AiService` arayüzünü tüm kayıtlı araçlarla otomatik bağlar ve LangChain4j araç çağrılarını otomatik yürütür. Sahne arkası, kullanıcının doğal dil sorusundan doğal dil yanıta kadar tam bir araç çağrısı akışı altı aşamadan geçer:
 
 <img src="../../../translated_images/tr/tool-calling-flow.8601941b0ca041e6.webp" alt="Araç Çağrısı Akışı" width="800"/>
 
-*Uçtan uca akış — kullanıcı soru sorar, model araç seçer, LangChain4j yürütür ve model sonucu doğal yanıtına yedirir.*
+*Uçtan uca akış — kullanıcı soru sorar, model bir araç seçer, LangChain4j aracı çalıştırır ve model sonucu yanıt içine işler.*
 
-> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) dosyasını açın ve sorun:
-> - "ReAct deseni nasıl çalışır ve neden AI ajanları için etkilidir?"
-> - "Ajan hangi aracı kullanacağına ve sırasına nasıl karar verir?"
-> - "Bir araç yürütülmesi başarısız olursa ne olur - hataları sağlam nasıl yönetirim?"
+Eğer Modül 00’teki [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) çalıştırdıysanız bu desenin zaten nasıl işlediğini gördünüz — `Calculator` araçları benzer şekilde çağrıldı. Aşağıdaki dizin diyagramı demo sırasında tam olarak ne olduğunu gösterir:
 
-### Yanıt Oluşturma
+<img src="../../../translated_images/tr/tool-calling-sequence.94802f406ca26278.webp" alt="Araç Çağrısı Sıralama Diyagramı" width="800"/>
 
-Model, hava durumu verisini alır ve kullanıcıya doğal dil formatında yanıt oluşturur.
+*Quick Start demosundaki araç çağrısı döngüsü — `AiServices` mesajınızı ve araç şemalarını LLM'ye gönderir, LLM `add(42, 58)` gibi fonksiyon çağrısı ile yanıt verir, LangChain4j `Calculator` metodunu yerel olarak çalıştırır ve sonucu nihai yanıt için geri besler.*
+
+> **🤖 [GitHub Copilot](https://github.com/features/copilot) Chat ile deneyin:** [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) dosyasını açın ve sorun:  
+> - "ReAct deseni nasıl çalışır ve AI ajanları için neden etkilidir?"  
+> - "Ajan hangi aracı kullanacağına ve hangi sırayla karar veriyor?"  
+> - "Bir araç yürütmesi başarısız olursa ne olur — hataları sağlam şekilde nasıl yönetmeliyim?"
+
+### Yanıt Üretimi
+
+Model hava durumu verisini alır ve kullanıcı için doğal dil yanıtına dönüştürür.
 
 ### Mimari: Spring Boot Otomatik Bağlama
 
-Bu modül, LangChain4j’nın Spring Boot entegrasyonunu deklaratif `@AiService` arayüzleriyle kullanır. Başlangıçta Spring Boot, `@Tool` metodları içeren tüm `@Component`'leri, sizin `ChatModel` beaninizi ve `ChatMemoryProvider`’ı keşfeder — sonra hepsini tek bir `Assistant` arayüzünde sıfır kalıp kod ile bağlar.
+Bu modül, LangChain4j’nin Spring Boot entegrasyonunu bildirisel `@AiService` arayüzleri ile kullanır. Başlangıçta Spring Boot, `@Tool` metotları içeren her `@Component`’i, ChatModel bean’inizi ve ChatMemoryProvider’ı keşfeder — sonra hepsini tek bir `Assistant` arayüzünde sıfır kodla birbirine bağlar.
 
-<img src="../../../translated_images/tr/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Otomatik Bağlama Mimarisi" width="800"/>
+<img src="../../../translated_images/tr/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Otomatik Bağlama Mimaris" width="800"/>
 
-*@AiService arayüzü ChatModel, araç bileşenleri ve hafıza sağlayıcıyı bir araya getirir — Spring Boot tüm bağlantıyı otomatik yapar.*
+*@AiService arayüzü ChatModel, araç bileşenleri ve hafıza sağlayıcıyı bağlar — Spring Boot bağlantıları otomatik yönetir.*
 
-Bu yaklaşımın temel faydaları:
+İşte tam istek yaşam döngüsünün dizin diyagramı — HTTP isteğinden başlayarak controller, servis, otomatik bağlanan proxy, araç yürütme ve geri dönüşe kadar:
+
+<img src="../../../translated_images/tr/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Spring Boot Araç Çağrısı Sıralaması" width="800"/>
+
+*Tam Spring Boot istek yaşam döngüsü — HTTP isteği controller ve servis üzerinden otomatik bağlanan Asistan proxy’sine akar, bu da LLM ve araç çağrılarını otomatik koordine eder.*
+
+Bu yaklaşımın başlıca avantajları:
 
 - **Spring Boot otomatik bağlama** — ChatModel ve araçlar otomatik olarak enjekte edilir
-- **@MemoryId deseni** — Oturum bazlı hafıza yönetimi otomatik
-- **Tek örnek** — Assistant tek seferde oluşturulur ve performans için tekrar kullanılır
+- **@MemoryId deseni** — Otomatik oturum temelli hafıza yönetimi
+- **Tek örnek** — Asistan bir kez oluşturulur ve performans için tekrar kullanılır
 - **Tip güvenli yürütme** — Java metotları doğrudan tip dönüşümü ile çağrılır
-- **Çok adımlı orkestrasyon** — Araç zincirlemesini otomatik yönetir
-- **Sıfır kalıp kodu** — Elle `AiServices.builder()` çağrısı gerekmez ve hafıza için HashMap gerekmez
+- **Çoklu tur orkestrasyonu** — Araç zincirlemesini otomatik yönetir
+- **Sıfır kod tekrarları** — Manuel `AiServices.builder()` çağrısı veya hafıza için HashMap gerekmez
 
-Alternatif yöntemler (`AiServices.builder()`) daha fazla kod gerektirir ve Spring Boot entegrasyon avantajlarını kaçırır.
+Alternatif yaklaşımlar (manuel `AiServices.builder()`) daha fazla kod gerektirir ve Spring Boot entegrasyonunun faydalarını kaçırır.
 
-## Araç Zincirleme
+## Araç Zinciri
 
-**Araç Zincirleme** — Araç tabanlı ajanların gerçek gücü, tek bir sorunun birden fazla araç gerektirdiği durumlarda ortaya çıkar. "Seattle'da hava durumu Fahrenheit olarak ne?" diye sorarsanız, ajan otomatik olarak iki aracı zincirler: önce `getCurrentWeather`'ı çağırıp Celsius sıcaklığı alır, sonra bu değeri `celsiusToFahrenheit`'e vererek dönüştürür — hepsi tek bir konuşma dönüşünde.
+**Araç Zinciri** — Araç tabanlı ajanların gerçek gücü tek bir sorunun birden çok araç gerektirdiği durumlarda ortaya çıkar. "Seattle’da hava Fahrenheit cinsinden nasıl?" diye sorarsanız ajan otomatik olarak iki aracı zincirler: önce `getCurrentWeather`’i çağırır ve sıcaklığı Celcius cinsinden alır, sonra bu değeri `celsiusToFahrenheit` aracına geçirir — tümü tek bir konuşma turunda gerçekleşir.
 
-<img src="../../../translated_images/tr/tool-chaining-example.538203e73d09dd82.webp" alt="Araç Zincirleme Örneği" width="800"/>
+<img src="../../../translated_images/tr/tool-chaining-example.538203e73d09dd82.webp" alt="Araç Zinciri Örneği" width="800"/>
 
-*Araç zincirleme uygulamada — ajan önce getCurrentWeather’ı çağırır, sonra Celsius sonucu celsiusToFahrenheit’e gönderir ve birleşik yanıt verir.*
+*Araç zinciri örneği — ajan önce getCurrentWeather'i çağırır, sonra Celcius sonucunu celsiusToFahrenheit aracına aktarır ve birleşik bir yanıt verir.*
 
-**Kibar Hatalar** — Örnek veride olmayan bir şehir için hava durumu istendiğinde araç hata mesajı döner ve AI hatayı açıklayarak çökmez. Araçlar güvenli şekilde hata verir. Aşağıdaki diyagram iki yaklaşımı karşılaştırır — doğru hata yönetimi ile ajan istisnayı yakalar ve yardımcı yanıt verir, yoksa tüm uygulama çöker:
+**Kibar Hatalar** — Mock verilerde olmayan bir şehir için hava durumu isterseniz araç bir hata mesajı döner. Yapay zeka yardımcı olamayacağını açıklar, uygulama çökmez. Araçlar güvenli şekilde başarısız olur. Aşağıdaki diyagram iki yaklaşımı karşılaştırır — düzgün hata yönetimi ile ajan istisnayı yakalar ve açıklayıcı yanıt verir, olmadan tüm uygulama çöker:
 
 <img src="../../../translated_images/tr/error-handling-flow.9a330ffc8ee0475c.webp" alt="Hata Yönetimi Akışı" width="800"/>
 
-*Bir araç hata verdiğinde ajan hatayı yakalar ve çökme yerine açıklayıcı bir yanıt verir.*
+*Bir araç hata yaparsa ajan hatayı yakalar ve çökmek yerine yardımcı bir açıklama ile yanıt verir.*
 
-Bu tek bir konuşma turunda olur. Ajan birden fazla araç çağrısını otomatik orkestre eder.
+Bu tek bir konuşma turunda olur. Ajan çoklu araç çağrılarını otonom şekilde orkestre eder.
 
 ## Uygulamayı Çalıştırma
 
 **Dağıtımı doğrulayın:**
 
-`.env` dosyasının kök dizinde Azure kimlik bilgileri ile var olduğundan emin olun (Modül 01 sırasında oluşturulur). Modül dizininden (`04-tools/`) çalıştırın:
+Azure kimlik bilgileri ile `.env` dosyasının kök dizinde var olduğundan emin olun (Modül 01’de oluşturuldu). Modül dizininden (`04-tools/`) şu komutları çalıştırın:
 
-**Bash:**
+**Bash:**  
 ```bash
 cat ../.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
 Get-Content ..\.env  # AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT göstermeli
 ```
-
+  
 **Uygulamayı başlatın:**
 
-> **Not:** Kök dizinden `./start-all.sh` ile tüm uygulamaları zaten başlattıysanız (Modül 01'de anlatıldığı gibi), bu modül zaten 8084 portunda çalışıyor. Aşağıdaki başlatma komutlarını atlayıp doğrudan http://localhost:8084 adresine gidebilirsiniz.
+> **Not:** Eğer root dizinden `./start-all.sh` ile tüm uygulamaları zaten başlattıysanız (Modül 01’de anlatıldığı gibi), bu modül zaten 8084 portunda çalışıyor. Aşağıdaki başlatma komutlarını atlayabilir ve doğrudan http://localhost:8084 adresine gidebilirsiniz.
 
-**Seçenek 1: Spring Boot Dashboard kullanımı (VS Code kullanıcıları için önerilir)**
+**Seçenek 1: Spring Boot Dashboard kullanmak (VS Code kullanıcıları için önerilir)**
 
-Geliştirme konteynerinde Spring Boot Dashboard uzantısı vardır, bu uzantı tüm Spring Boot uygulamalarını yönetmek için görsel bir arayüz sağlar. VS Code sol yanındaki Aktivite Çubuğunda (Spring Boot simgesini arayın) bulabilirsiniz.
+Dev container, tüm Spring Boot uygulamalarını yönetmek için görsel arayüz sunan Spring Boot Dashboard uzantısını içerir. VS Code’un sol tarafındaki Aktivite Çubuğunda (Spring Boot simgesine bakın) bulabilirsiniz.
 
-Dashboard üzerinden:
-- Çalışma alanındaki tüm Spring Boot uygulamalarını görebilir
-- Uygulamaları tek tıkla başlat/durdurabilirsiniz
-- Gerçek zamanlı uygulama kayıtlarını görüntüleyebilirsiniz
-- Uygulama durumunu izleyebilirsiniz
+Spring Boot Dashboard’dan yapabilecekleriniz:  
+- Çalışma alanında tüm mevcut Spring Boot uygulamalarını görme  
+- Uygulamaları tek tıkla başlat/durdur  
+- Uygulama günlüklerini gerçek zamanlı görüntüleme  
+- Uygulama durumunu izleme
+"tools" yanındaki oynat düğmesine tıklayarak bu modülü başlatın veya tüm modülleri aynı anda başlatın.
 
-Yalnızca "tools" yanındaki oynatma düğmesine tıklayarak modülü başlatın ya da tüm modülleri aynı anda başlatın.
-
-VS Code’da Spring Boot Dashboard şöyle görünür:
+VS Code'daki Spring Boot Dashboard şöyle görünür:
 
 <img src="../../../translated_images/tr/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*VS Code'daki Spring Boot Dashboard — tüm modülleri tek yerden başlat, durdur ve izle*
+*VS Code'daki Spring Boot Dashboard — tüm modülleri tek bir yerden başlatın, durdurun ve izleyin*
 
 **Seçenek 2: Shell script kullanımı**
 
-Tüm web uygulamalarını (modüller 01-04) başlatın:
+Tüm web uygulamalarını (modüller 01-04) başlat:
 
 **Bash:**
 ```bash
@@ -224,7 +242,7 @@ cd ..  # Kök dizinden
 .\start-all.ps1
 ```
 
-Ya da sadece bu modülü başlatın:
+Ya da sadece bu modülü başlat:
 
 **Bash:**
 ```bash
@@ -238,9 +256,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Her iki script de kök `.env` dosyasından ortam değişkenlerini otomatik yükler ve JAR dosyaları yoksa inşa eder.
+Her iki script de root `.env` dosyasından ortam değişkenlerini otomatik olarak yükler ve JAR dosyaları yoksa derler.
 
-> **Not:** Başlatmadan önce tüm modülleri elle derlemeyi tercih ederseniz:
+> **Not:** Başlamadan önce tüm modülleri manuel olarak derlemeyi tercih ederseniz:
 >
 > **Bash:**
 > ```bash
@@ -260,7 +278,7 @@ Tarayıcınızda http://localhost:8084 adresini açın.
 
 **Bash:**
 ```bash
-./stop.sh  # Sadece bu modül
+./stop.sh  # Yalnızca bu modül
 # Veya
 cd .. && ./stop-all.sh  # Tüm modüller
 ```
@@ -272,85 +290,86 @@ cd .. && ./stop-all.sh  # Tüm modüller
 cd ..; .\stop-all.ps1  # Tüm modüller
 ```
 
-## Uygulamayı Kullanma
+## Uygulamanın Kullanımı
 
-Uygulama, hava durumu ve sıcaklık dönüşüm araçlarına erişimi olan bir AI ajanıyla etkileşime girebileceğiniz web arayüzü sağlar. Arayüz şu şekildedir — hızlı başlangıç örnekleri ve istek göndermek için sohbet paneli içerir:
-<a href="images/tools-homepage.png"><img src="../../../translated_images/tr/tools-homepage.4b4cd8b2717f9621.webp" alt="Yapay Zeka Ajan Araçları Arayüzü" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+Uygulama, hava durumu ve sıcaklık dönüştürme araçlarına erişimi olan bir AI ajanıyla etkileşim kurabileceğiniz bir web arayüzü sağlar. Arayüz şöyle görünür — hızlı başlangıç örnekleri ve istek göndermek için bir sohbet paneli içerir:
 
-*Yapay Zeka Ajan Araçları arayüzü - araçlarla etkileşim için hızlı örnekler ve sohbet arayüzü*
+<a href="images/tools-homepage.png"><img src="../../../translated_images/tr/tools-homepage.4b4cd8b2717f9621.webp" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+
+*AI Agent Tools arayüzü - araçlarla etkileşim için hızlı örnekler ve sohbet arayüzü*
 
 ### Basit Araç Kullanımını Deneyin
 
-Basit bir istekle başlayın: "100 derece Fahrenheit'i Celsius'a çevir". Ajan, sıcaklık dönüşüm aracına ihtiyacı olduğunu anlar, doğru parametrelerle çağırır ve sonucu döndürür. Bunun ne kadar doğal hissettirdiğine dikkat edin - hangi aracı kullanmanız gerektiğini veya nasıl çağrılacağını belirtmediniz.
+"100 derece Fahrenheit'ı Santigrata çevir" gibi basit bir istekle başlayın. Ajan, sıcaklık dönüştürme aracına ihtiyacı olduğunu anlar, doğru parametrelerle çağırır ve sonucu döner. Ne kadar doğal hissettirdiğine dikkat edin — hangi aracı kullanacağınızı ya da nasıl çağıracağınızı belirtmediniz.
 
-### Araç Zincirleme Testi
+### Araç Zincirlemeyi Test Edin
 
-Şimdi daha karmaşık bir şey deneyin: "Seattle'daki hava durumu nedir ve bunu Fahrenheit'e çevir?" Ajanın bunu adım adım nasıl çözdüğünü izleyin. İlk olarak hava durumunu alır (Celsius döner), ardından Fahrenheit'e çevirmesi gerektiğini anlar, dönüşüm aracını çağırır ve her iki sonucu tek bir yanıt halinde birleştirir.
+Şimdi daha karmaşık bir şey deneyin: "Seattle'daki hava durumu nedir ve bunu Fahrenheit'a çevir?" Ajanın adım adım nasıl çalıştığını gözlemleyin. Önce hava durumunu alır (Santigrat cinsinden döner), sonra Fahrenheit'a dönüştürmesi gerektiğini anlar, dönüşüm aracını çağırır ve her iki sonucu tek bir yanıtta birleştirir.
 
 ### Konuşma Akışını Görün
 
-Sohbet arayüzü, çoklu tur etkileşimlere izin veren konuşma geçmişini korur. Önceki tüm sorguları ve yanıtları görebilirsiniz, böylece konuşmayı takip etmek ve ajanın bağlamı birden çok tur boyunca nasıl oluşturduğunu anlamak kolaydır.
+Sohbet arayüzü konuşma geçmişini korur, çok turlu etkileşimler yapmanızı sağlar. Önceki tüm sorguları ve yanıtları görebilirsiniz; böylece konuşmayı takip etmek ve ajanın bağlamı nasıl oluşturduğunu anlamak kolaydır.
 
-<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/tr/tools-conversation-demo.89f2ce9676080f59.webp" alt="Birden Fazla Araç Çağrısı ile Konuşma" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
+<a href="images/tools-conversation-demo.png"><img src="../../../translated_images/tr/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation with Multiple Tool Calls" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Basit dönüşümler, hava durumu sorgulamaları ve araç zincirleme gösteren çok turlu konuşma*
+*Basit dönüşümler, hava durumu sorgulamaları ve araç zincirleme gösteren çok turlu sohbet*
 
 ### Farklı İsteklerle Deney Yapın
 
 Çeşitli kombinasyonları deneyin:
 - Hava durumu sorgulamaları: "Tokyo'daki hava durumu nedir?"
-- Sıcaklık dönüşümleri: "25°C kaç Kelvin eder?"
-- Birleşik sorgular: "Paris'teki hava durumunu kontrol et ve 20°C'nin üzerinde olup olmadığını söyle"
+- Sıcaklık dönüşümleri: "25°C kaç Kelvin?"
+- Kombine sorgular: "Paris'teki hava durumunu kontrol et ve 20°C'nin üzerinde mi söyle"
 
-Ajanın doğal dili nasıl yorumladığına ve uygun araç çağrılarına nasıl eşlediğine dikkat edin.
+Ajanın doğal dili nasıl yorumlayıp uygun araç çağrılarına dönüştürdüğüne dikkat edin.
 
 ## Temel Kavramlar
 
-### ReAct Modeli (Muhakeme ve Hareket)
+### ReAct Deseni (Muhakeme ve Eylem)
 
-Ajan, muhakeme (ne yapılacağını kararlaştırma) ve hareket (araçları kullanma) arasında geçiş yapar. Bu model, yalnızca talimatlara yanıt vermek yerine özerk problem çözme sağlar.
+Ajan, muhakeme (ne yapılacağına karar verme) ve eylem (araçları kullanma) arasında geçiş yapar. Bu desen, sadece yanıt vermek yerine otonom problem çözmeyi mümkün kılar.
 
-### Araç Açıklamaları Önemlidir
+### Araç Tanımları Önemlidir
 
-Araç açıklamalarınızın kalitesi, ajanın onları ne kadar iyi kullandığını doğrudan etkiler. Açık, spesifik açıklamalar modelin her aracı ne zaman ve nasıl çağıracağını anlamasına yardımcı olur.
+Araç tanımlarınızın kalitesi, ajanın onları ne kadar iyi kullandığını doğrudan etkiler. Açık, spesifik tanımlar modelin hangi aracı ne zaman ve nasıl çağıracağını anlamasına yardımcı olur.
 
 ### Oturum Yönetimi
 
-`@MemoryId` notasyonu, otomatik oturum tabanlı bellek yönetimini sağlar. Her oturum kimliği, `ChatMemoryProvider` bean'i tarafından yönetilen kendi `ChatMemory` örneğini alır; böylece çoklu kullanıcılar, konuşmaları karışmadan aynı anda ajanla etkileşim kurabilir. Aşağıdaki diyagram, çoklu kullanıcıların oturum kimliklerine göre izole edilmiş bellek depolarına nasıl yönlendirildiğini gösterir:
+`@MemoryId` notasyonu otomatik oturum bazlı bellek yönetimini sağlar. Her oturum ID'si, `ChatMemoryProvider` bean tarafından yönetilen kendi `ChatMemory` örneğini alır; böylece birden fazla kullanıcı ajana aynı anda, konuşmaları karışmadan erişebilir. Aşağıdaki diyagram, kullanıcıların oturum ID'lerine göre nasıl izole bellek depolarına yönlendirildiğini gösterir:
 
-<img src="../../../translated_images/tr/session-management.91ad819c6c89c400.webp" alt="@MemoryId ile Oturum Yönetimi" width="800"/>
+<img src="../../../translated_images/tr/session-management.91ad819c6c89c400.webp" alt="Session Management with @MemoryId" width="800"/>
 
-*Her oturum kimliği izole edilmiş bir konuşma geçmişine eşlenir — kullanıcılar birbirlerinin mesajlarını asla görmez.*
+*Her oturum ID'si yalıtılmış bir konuşma geçmişine karşılık gelir — kullanıcılar birbirlerinin mesajlarını görmez.*
 
 ### Hata Yönetimi
 
-Araçlar başarısız olabilir — API'ler zaman aşımına uğrayabilir, parametreler geçersiz olabilir, dış servisler kesilebilir. Üretim ajanları, modelin sorunları açıklayabilmesi veya alternatifler denemesi için hata yönetimine ihtiyaç duyar; aksi takdirde tüm uygulama çöker. Bir araç hata fırlattığında, LangChain4j bunu yakalar ve hata mesajını modele besler; model sorunu doğal dilde açıklayabilir.
+Araçlar başarısız olabilir — API'ler zaman aşımına uğrayabilir, parametreler geçersiz olabilir, dış servisler kapanabilir. Üretim ajanlarının, modeli çökertmek yerine problemleri açıklayabilmesi veya alternatifleri deneyebilmesi için hata yönetimi gerekir. Bir araç istisna attığında, LangChain4j bunu yakalar ve hata mesajını modele geri besler; model de problemi doğal dilde açıklar.
 
 ## Mevcut Araçlar
 
-Aşağıdaki diyagram, oluşturabileceğiniz geniş araç ekosistemini gösterir. Bu modül hava durumu ve sıcaklık araçlarını gösterir, ancak aynı `@Tool` modeli herhangi bir Java yöntemi için geçerlidir — veritabanı sorgularından ödeme işlemeye kadar.
+Aşağıdaki diyagram, oluşturabileceğiniz geniş araç ekosistemini gösterir. Bu modül hava durumu ve sıcaklık araçlarını gösterir, ancak aynı `@Tool` deseni her türlü Java yöntemi için çalışır — veritabanı sorgularından ödeme işlemlerine kadar.
 
-<img src="../../../translated_images/tr/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Araç Ekosistemi" width="800"/>
+<img src="../../../translated_images/tr/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Tool Ecosystem" width="800"/>
 
-`@Tool` ile açıklanmış herhangi bir Java yöntemi AI tarafından erişilebilir hale gelir — model veritabanları, API'ler, e-posta, dosya işlemleri ve daha fazlasını kapsayacak şekilde genişletilebilir.
+*@Tool ile işaretlenmiş herhangi bir Java yöntemi AI için kullanılabilir hale gelir — desen veritabanları, API'ler, e-posta, dosya işlemleri ve daha fazlasını kapsar.*
 
-## Araç Tabanlı Ajanlar Ne Zaman Kullanılır
+## Ne Zaman Araç Tabanlı Ajan Kullanılır
 
-Her istek araç gerektirmez. Karar, AI'nin dış sistemlerle etkileşimde bulunması mı yoksa kendi bilgisinden yanıt vermesi mi gerektiğine bağlıdır. Aşağıdaki rehber, araçların ne zaman değer kattığını ve ne zaman gereksiz olduğunu özetler:
+Her istek araç gerektirmez. Karar, AI'nın dış sistemlerle etkileşim kurup kurmaması ya da kendi bilgisiyle yanıt verebilmesine bağlıdır. Aşağıdaki rehber, araçların ne zaman değer kattığını ve ne zaman gereksiz olduğunu özetler:
 
-<img src="../../../translated_images/tr/when-to-use-tools.51d1592d9cbdae9c.webp" alt="Araçları Ne Zaman Kullanmalı" width="800"/>
+<img src="../../../translated_images/tr/when-to-use-tools.51d1592d9cbdae9c.webp" alt="When to Use Tools" width="800"/>
 
-*Hızlı bir karar rehberi — araçlar gerçek zamanlı veri, hesaplamalar ve işlemler için; genel bilgi ve yaratıcı görevler için gerekmez.*
+*Hızlı karar rehberi — araçlar gerçek zamanlı veri, hesaplama ve işlemler içindir; genel bilgi ve yaratıcı görevler için gerekmez.*
 
-## Araçlar ve RAG
+## Araçlar ve RAG Karşılaştırması
 
-Modüller 03 ve 04, AI'nin yapabileceklerini her ikisi de genişletir ama temel olarak farklı şekillerde. RAG modele belge getirerek **bilgi** sağlar. Araçlar ise fonksiyon çağırarak **eylem** yapma yeteneği verir. Aşağıdaki diyagram bu iki yaklaşımı yan yana karşılaştırır — her bir iş akışının nasıl çalıştığından aralarındaki takaslara kadar:
+Modüller 03 ve 04, AI'nın yapabileceklerini genişletir fakat temel olarak farklı şekillerde. RAG modele **bilgi** erişimi sağlar — dökümanları getirir. Araçlar modele **eylem** yapma kabiliyeti verir — fonksiyonları çağırır. Aşağıdaki diyagram, her iki yaklaşımı yan yana karşılaştırır — her iş akışının nasıl çalıştığını ve aralarındaki farkları:
 
-<img src="../../../translated_images/tr/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Araçlar ve RAG Karşılaştırması" width="800"/>
+<img src="../../../translated_images/tr/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Tools vs RAG Comparison" width="800"/>
 
-*RAG statik belgelerden bilgi getirir — Araçlar işlem yapar ve dinamik, gerçek zamanlı veri getirir. Birçok üretim sistemi her ikisini de birleştirir.*
+*RAG statik dökümanlardan bilgi getirir — Araçlar eylemler yapar ve dinamik, gerçek zamanlı veri alır. Pek çok üretim sistemi her iki yaklaşımı kombine eder.*
 
-Pratikte, birçok üretim sistemi her iki yaklaşımı birleştirir: RAG, cevapları belgelerle desteklemek için; Araçlar ise canlı veri çekmek veya işlem yapmak için.
+Pratikte, pek çok üretim sistemi her iki yaklaşımı birleştirir: RAG yanıtları belgelerde temellemek için, Araçlar ise canlı veri almak veya işlemler yapmak için.
 
 ## Sonraki Adımlar
 
@@ -363,6 +382,6 @@ Pratikte, birçok üretim sistemi her iki yaklaşımı birleştirir: RAG, cevapl
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Feragatname**:  
-Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstermemize rağmen, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayınız. Orijinal belge, kendi ana dilindeki haliyle yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucunda oluşabilecek yanlış anlama veya yorumlamalardan dolayı sorumluluk kabul edilmemektedir.
+**Feragatname**:
+Bu belge, AI çeviri hizmeti [Co-op Translator](https://github.com/Azure/co-op-translator) kullanılarak çevrilmiştir. Doğruluk için çaba göstermemize rağmen, otomatik çevirilerin hatalar veya yanlışlıklar içerebileceğini lütfen unutmayın. Orijinal belge, kendi dilinde yetkili kaynak olarak kabul edilmelidir. Kritik bilgiler için profesyonel insan çevirisi önerilir. Bu çevirinin kullanımı sonucu oluşabilecek herhangi bir yanlış anlama veya yorumlama için sorumluluk kabul edilmemektedir.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

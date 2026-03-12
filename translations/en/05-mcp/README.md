@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../05-mcp)
 - [What You'll Learn](../../../05-mcp)
 - [What is MCP?](../../../05-mcp)
 - [How MCP Works](../../../05-mcp)
@@ -13,12 +14,19 @@
   - [Supervisor Agent](../../../05-mcp)
     - [Running the Demo](../../../05-mcp)
     - [How the Supervisor Works](../../../05-mcp)
+    - [How FileAgent Discovers MCP Tools at Runtime](../../../05-mcp)
     - [Response Strategies](../../../05-mcp)
     - [Understanding the Output](../../../05-mcp)
     - [Explanation of Agentic Module Features](../../../05-mcp)
 - [Key Concepts](../../../05-mcp)
 - [Congratulations!](../../../05-mcp)
   - [What's Next?](../../../05-mcp)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
@@ -207,6 +215,12 @@ Here's what the concrete workflow looks like for our file-to-report pipeline:
 
 *FileAgent reads the file via MCP tools, then ReportAgent transforms the raw content into a structured report.*
 
+The following sequence diagram traces the full Supervisor orchestration — from spawning the MCP server, through the Supervisor's autonomous agent selection, to the tool calls over stdio and the final report:
+
+<img src="../../../translated_images/en/supervisor-agent-sequence.1aa389b3bef99956.webp" alt="Supervisor Agent Sequence Diagram" width="800"/>
+
+*The Supervisor autonomously invokes FileAgent (which calls the MCP server over stdio to read the file), then invokes ReportAgent to generate a structured report — each agent stores its output in the shared Agentic Scope.*
+
 Each agent stores its output in the **Agentic Scope** (shared memory), allowing downstream agents to access previous results. This demonstrates how MCP tools integrate seamlessly into agentic workflows — the Supervisor doesn't need to know *how* files are read, only that `FileAgent` can do it.
 
 #### Running the Demo
@@ -269,6 +283,24 @@ SupervisorAgent supervisor = AgenticServices.supervisorBuilder()
 String response = supervisor.invoke("Read the file at /path/file.txt and generate a report");
 ```
 
+#### How FileAgent Discovers MCP Tools at Runtime
+
+You may wonder: **how does `FileAgent` know how to use the npm filesystem tools?** The answer is that it doesn't — the **LLM** figures it out at runtime through tool schemas.
+The `FileAgent` interface is just a **prompt definition**. It has no hardcoded knowledge of `read_file`, `list_directory`, or any other MCP tool. Here's what happens end-to-end:
+
+1. **Server spawns:** `StdioMcpTransport` launches the `@modelcontextprotocol/server-filesystem` npm package as a child process
+2. **Tool discovery:** The `McpClient` sends a `tools/list` JSON-RPC request to the server, which responds with tool names, descriptions, and parameter schemas (e.g., `read_file` — *"Read the complete contents of a file"* — `{ path: string }`)
+3. **Schema injection:** `McpToolProvider` wraps these discovered schemas and makes them available to LangChain4j
+4. **LLM decides:** When `FileAgent.readFile(path)` is called, LangChain4j sends the system message, user message, **and the list of tool schemas** to the LLM. The LLM reads the tool descriptions and generates a tool call (e.g., `read_file(path="/some/file.txt")`)
+5. **Execution:** LangChain4j intercepts the tool call, routes it through the MCP client back to the Node.js subprocess, gets the result, and feeds it back to the LLM
+
+This is the same [Tool Discovery](../../../05-mcp) mechanism described above, but applied specifically to the agent workflow. The `@SystemMessage` and `@UserMessage` annotations guide the LLM's behavior, while the injected `ToolProvider` gives it the **capabilities** — the LLM bridges the two at runtime.
+
+> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) and ask:
+> - "How does this agent know which MCP tool to call?"
+> - "What would happen if I removed the ToolProvider from the agent builder?"
+> - "How do tool schemas get passed to the LLM?"
+
 #### Response Strategies
 
 When you configure a `SupervisorAgent`, you specify how it should formulate its final answer to the user after the sub-agents have completed their tasks. The diagram below shows the three available strategies — LAST returns the final agent's output directly, SUMMARY synthesizes all outputs through an LLM, and SCORED picks whichever scores higher against the original request:
@@ -284,6 +316,7 @@ The available strategies are:
 | **LAST** | The supervisor returns the output of the last sub-agent or tool called. This is useful when the final agent in the workflow is specifically designed to produce the complete, final answer (e.g., a "Summary Agent" in a research pipeline). |
 | **SUMMARY** | The supervisor uses its own internal Language Model (LLM) to synthesize a summary of the entire interaction and all sub-agent outputs, then returns that summary as the final response. This provides a clean, aggregated answer to the user. |
 | **SCORED** | The system uses an internal LLM to score both the LAST response and the SUMMARY of the interaction against the original user request, returning whichever output receives the higher score. |
+
 See [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) for the complete implementation.
 
 > **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) and ask:
@@ -499,5 +532,5 @@ Thank you for completing this course!
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
+This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please note that automated translations may contain errors or inaccuracies. The original document in its native language should be regarded as the authoritative source. For critical information, professional human translation is recommended. We are not responsible for any misunderstandings or misinterpretations resulting from the use of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
