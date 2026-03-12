@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Video Walkthrough](../../../05-mcp)
 - [What You'll Learn](../../../05-mcp)
 - [What is MCP?](../../../05-mcp)
 - [How MCP Works](../../../05-mcp)
@@ -20,6 +21,12 @@
 - [Key Concepts](../../../05-mcp)
 - [Congratulations!](../../../05-mcp)
   - [What's Next?](../../../05-mcp)
+
+## Video Walkthrough
+
+Watch this live session that explains how to get started with this module:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="AI Agents with Tools and MCP - Live Session" width="800"/></a>
 
 ## What You'll Learn
 
@@ -279,20 +286,20 @@ String response = supervisor.invoke("Read the file at /path/file.txt and generat
 #### How FileAgent Discovers MCP Tools at Runtime
 
 You may wonder: **how does `FileAgent` know how to use the npm filesystem tools?** The answer is that it doesn't — the **LLM** figures it out at runtime through tool schemas.
-
 The `FileAgent` interface is just a **prompt definition**. It has no hardcoded knowledge of `read_file`, `list_directory`, or any other MCP tool. Here's what happens end-to-end:
-1. **Server spawns:** `StdioMcpTransport` launches the `@modelcontextprotocol/server-filesystem` npm package as a child process  
-2. **Tool discovery:** The `McpClient` sends a `tools/list` JSON-RPC request to the server, which responds with tool names, descriptions, and parameter schemas (e.g., `read_file` — *"Read the complete contents of a file"* — `{ path: string }`)  
-3. **Schema injection:** `McpToolProvider` wraps these discovered schemas and makes them available to LangChain4j  
-4. **LLM decides:** When `FileAgent.readFile(path)` is called, LangChain4j sends the system message, user message, **and the list of tool schemas** to the LLM. The LLM reads the tool descriptions and generates a tool call (e.g., `read_file(path="/some/file.txt")`)  
-5. **Execution:** LangChain4j intercepts the tool call, routes it through the MCP client back to the Node.js subprocess, gets the result, and feeds it back to the LLM  
+
+1. **Server spawns:** `StdioMcpTransport` launches the `@modelcontextprotocol/server-filesystem` npm package as a child process
+2. **Tool discovery:** The `McpClient` sends a `tools/list` JSON-RPC request to the server, which responds with tool names, descriptions, and parameter schemas (e.g., `read_file` — *"Read the complete contents of a file"* — `{ path: string }`)
+3. **Schema injection:** `McpToolProvider` wraps these discovered schemas and makes them available to LangChain4j
+4. **LLM decides:** When `FileAgent.readFile(path)` is called, LangChain4j sends the system message, user message, **and the list of tool schemas** to the LLM. The LLM reads the tool descriptions and generates a tool call (e.g., `read_file(path="/some/file.txt")`)
+5. **Execution:** LangChain4j intercepts the tool call, routes it through the MCP client back to the Node.js subprocess, gets the result, and feeds it back to the LLM
 
 This is the same [Tool Discovery](../../../05-mcp) mechanism described above, but applied specifically to the agent workflow. The `@SystemMessage` and `@UserMessage` annotations guide the LLM's behavior, while the injected `ToolProvider` gives it the **capabilities** — the LLM bridges the two at runtime.
 
-> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) and ask:  
-> - "How does this agent know which MCP tool to call?"  
-> - "What would happen if I removed the ToolProvider from the agent builder?"  
-> - "How do tool schemas get passed to the LLM?"  
+> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`FileAgent.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/agents/FileAgent.java) and ask:
+> - "How does this agent know which MCP tool to call?"
+> - "What would happen if I removed the ToolProvider from the agent builder?"
+> - "How do tool schemas get passed to the LLM?"
 
 #### Response Strategies
 
@@ -312,10 +319,10 @@ The available strategies are:
 
 See [SupervisorAgentDemo.java](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) for the complete implementation.
 
-> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) and ask:  
-> - "How does the Supervisor decide which agents to invoke?"  
-> - "What's the difference between Supervisor and Sequential workflow patterns?"  
-> - "How can I customize the Supervisor's planning behavior?"  
+> **🤖 Try with [GitHub Copilot](https://github.com/features/copilot) Chat:** Open [`SupervisorAgentDemo.java`](../../../05-mcp/src/main/java/com/example/langchain4j/mcp/SupervisorAgentDemo.java) and ask:
+> - "How does the Supervisor decide which agents to invoke?"
+> - "What's the difference between Supervisor and Sequential workflow patterns?"
+> - "How can I customize the Supervisor's planning behavior?"
 
 #### Understanding the Output
 
@@ -329,7 +336,7 @@ When you run the demo, you'll see a structured walkthrough of how the Supervisor
 This demo shows a clear 2-step workflow: read a file, then generate a report.
 The Supervisor orchestrates the agents automatically based on the request.
 ```
-  
+
 **The header** introduces the workflow concept: a focused pipeline from file reading to report generation.
 
 ```
@@ -345,16 +352,16 @@ The Supervisor orchestrates the agents automatically based on the request.
   [FILE]   FileAgent   - Reads files via MCP → stores in 'fileContent'
   [REPORT] ReportAgent - Generates structured report → stores in 'report'
 ```
-  
-**Workflow Diagram** shows the data flow between agents. Each agent has a specific role:  
-- **FileAgent** reads files using MCP tools and stores raw content in `fileContent`  
-- **ReportAgent** consumes that content and produces a structured report in `report`  
+
+**Workflow Diagram** shows the data flow between agents. Each agent has a specific role:
+- **FileAgent** reads files using MCP tools and stores raw content in `fileContent`
+- **ReportAgent** consumes that content and produces a structured report in `report`
 
 ```
 --- USER REQUEST -----------------------------------------------------
   "Read the file at .../file.txt and generate a report on its contents"
 ```
-  
+
 **User Request** shows the task. The Supervisor parses this and decides to invoke FileAgent → ReportAgent.
 
 ```
@@ -375,10 +382,10 @@ The Supervisor orchestrates the agents automatically based on the request.
   |   Result: Executive Summary...
   +-- [OK] ReportAgent (generating structured report) completed
 ```
-  
-**Supervisor Orchestration** shows the 2-step flow in action:  
-1. **FileAgent** reads the file via MCP and stores the content  
-2. **ReportAgent** receives the content and generates a structured report  
+
+**Supervisor Orchestration** shows the 2-step flow in action:
+1. **FileAgent** reads the file via MCP and stores the content
+2. **ReportAgent** receives the content and generates a structured report
 
 The Supervisor made these decisions **autonomously** based on the user's request.
 
@@ -398,15 +405,15 @@ Recommendations
   * fileContent: LangChain4j is an open-source, provider-agnostic Java framework...
   * report: Executive Summary...
 ```
-  
+
 #### Explanation of Agentic Module Features
 
 The example demonstrates several advanced features of the agentic module. Let's have a closer look at Agentic Scope and Agent Listeners.
 
-**Agentic Scope** shows the shared memory where agents stored their results using `@Agent(outputKey="...")`. This allows:  
-- Later agents to access earlier agents' outputs  
-- The Supervisor to synthesize a final response  
-- You to inspect what each agent produced  
+**Agentic Scope** shows the shared memory where agents stored their results using `@Agent(outputKey="...")`. This allows:
+- Later agents to access earlier agents' outputs
+- The Supervisor to synthesize a final response
+- You to inspect what each agent produced
 
 The diagram below shows how Agentic Scope works as shared memory in the file-to-report workflow — FileAgent writes its output under the key `fileContent`, ReportAgent reads that and writes its own output under `report`:
 
@@ -420,11 +427,11 @@ AgenticScope scope = result.agenticScope();
 String fileContent = scope.readState("fileContent");  // Raw file data from FileAgent
 String report = scope.readState("report");            // Structured report from ReportAgent
 ```
-  
-**Agent Listeners** enable monitoring and debugging of agent execution. The step-by-step output you see in the demo comes from an AgentListener that hooks into each agent invocation:  
-- **beforeAgentInvocation** - Called when the Supervisor selects an agent, letting you see which agent was chosen and why  
-- **afterAgentInvocation** - Called when an agent completes, showing its result  
-- **inheritedBySubagents** - When true, the listener monitors all agents in the hierarchy  
+
+**Agent Listeners** enable monitoring and debugging of agent execution. The step-by-step output you see in the demo comes from an AgentListener that hooks into each agent invocation:
+- **beforeAgentInvocation** - Called when the Supervisor selects an agent, letting you see which agent was chosen and why
+- **afterAgentInvocation** - Called when an agent completes, showing its result
+- **inheritedBySubagents** - When true, the listener monitors all agents in the hierarchy
 
 The following diagram shows the full Agent Listener lifecycle, including how `onError` handles failures during agent execution:
 
@@ -453,7 +460,7 @@ AgentListener monitor = new AgentListener() {
     }
 };
 ```
-  
+
 Beyond the Supervisor pattern, the `langchain4j-agentic` module provides several powerful workflow patterns. The diagram below shows all five — from simple sequential pipelines to human-in-the-loop approval workflows:
 
 <img src="../../../translated_images/en/workflow-patterns.82b2cc5b0c5edb22.webp" alt="Agent Workflow Patterns" width="800"/>
@@ -498,22 +505,22 @@ You've made it through all five modules of the LangChain4j for Beginners course!
 
 *Your learning journey through all five modules — from basic chat to MCP-powered agentic systems.*
 
-You've completed the LangChain4j for Beginners course. You've learned:  
+You've completed the LangChain4j for Beginners course. You've learned:
 
-- How to build conversational AI with memory (Module 01)  
-- Prompt engineering patterns for different tasks (Module 02)  
-- Grounding responses in your documents with RAG (Module 03)  
-- Creating basic AI agents (assistants) with custom tools (Module 04)  
-- Integrating standardized tools with the LangChain4j MCP and Agentic modules (Module 05)  
+- How to build conversational AI with memory (Module 01)
+- Prompt engineering patterns for different tasks (Module 02)
+- Grounding responses in your documents with RAG (Module 03)
+- Creating basic AI agents (assistants) with custom tools (Module 04)
+- Integrating standardized tools with the LangChain4j MCP and Agentic modules (Module 05)
 
 ### What's Next?
 
 After completing the modules, explore the [Testing Guide](../docs/TESTING.md) to see LangChain4j testing concepts in action.
 
-**Official Resources:**  
-- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Comprehensive guides and API reference  
-- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples  
-- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for various use cases  
+**Official Resources:**
+- [LangChain4j Documentation](https://docs.langchain4j.dev/) - Comprehensive guides and API reference
+- [LangChain4j GitHub](https://github.com/langchain4j/langchain4j) - Source code and examples
+- [LangChain4j Tutorials](https://docs.langchain4j.dev/tutorials/) - Step-by-step tutorials for various use cases
 
 Thank you for completing this course!
 
@@ -525,5 +532,5 @@ Thank you for completing this course!
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Disclaimer**:
-This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please be aware that automated translations may contain errors or inaccuracies. The original document in its native language should be considered the authoritative source. For critical information, professional human translation is recommended. We are not liable for any misunderstandings or misinterpretations arising from the use of this translation.
+This document has been translated using the AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). While we strive for accuracy, please note that automated translations may contain errors or inaccuracies. The original document in its native language should be regarded as the authoritative source. For critical information, professional human translation is recommended. We are not responsible for any misunderstandings or misinterpretations resulting from the use of this translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

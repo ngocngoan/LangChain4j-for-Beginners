@@ -1,77 +1,84 @@
-# Modul 04: KI-Agenten mit Werkzeugen
+# Modul 04: KI-Agenten mit Tools
 
 ## Inhaltsverzeichnis
 
+- [Video-Durchgang](../../../04-tools)
 - [Was Sie lernen werden](../../../04-tools)
 - [Voraussetzungen](../../../04-tools)
-- [Verstehen von KI-Agenten mit Werkzeugen](../../../04-tools)
-- [Wie Werkzeugaufrufe funktionieren](../../../04-tools)
-  - [Werkzeugdefinitionen](../../../04-tools)
+- [KI-Agenten mit Tools verstehen](../../../04-tools)
+- [Wie Tool-Aufrufe funktionieren](../../../04-tools)
+  - [Tool-Definitionen](../../../04-tools)
   - [Entscheidungsfindung](../../../04-tools)
   - [Ausführung](../../../04-tools)
   - [Antwortgenerierung](../../../04-tools)
   - [Architektur: Spring Boot Auto-Wiring](../../../04-tools)
-- [Werkzeugverkettung](../../../04-tools)
+- [Tool-Verkettung](../../../04-tools)
 - [Anwendung ausführen](../../../04-tools)
 - [Anwendung verwenden](../../../04-tools)
-  - [Einfache Werkzeugnutzung ausprobieren](../../../04-tools)
-  - [Werkzeugverkettung testen](../../../04-tools)
-  - [Konversationsfluss ansehen](../../../04-tools)
+  - [Einfache Tool-Nutzung ausprobieren](../../../04-tools)
+  - [Tool-Verkettung testen](../../../04-tools)
+  - [Gesprächsverlauf ansehen](../../../04-tools)
   - [Mit verschiedenen Anfragen experimentieren](../../../04-tools)
-- [Schlüsselkonzepte](../../../04-tools)
+- [Wichtige Konzepte](../../../04-tools)
   - [ReAct-Muster (Reasoning and Acting)](../../../04-tools)
-  - [Werkzeugbeschreibungen sind wichtig](../../../04-tools)
+  - [Tool-Beschreibungen sind wichtig](../../../04-tools)
   - [Sitzungsverwaltung](../../../04-tools)
   - [Fehlerbehandlung](../../../04-tools)
-- [Verfügbare Werkzeuge](../../../04-tools)
-- [Wann Werkzeug-basierte Agenten einsetzen](../../../04-tools)
-- [Werkzeuge vs RAG](../../../04-tools)
+- [Verfügbare Tools](../../../04-tools)
+- [Wann man tool-basierte Agenten verwendet](../../../04-tools)
+- [Tools vs RAG](../../../04-tools)
 - [Nächste Schritte](../../../04-tools)
+
+## Video-Durchgang
+
+Sehen Sie sich diese Live-Session an, die erklärt, wie Sie mit diesem Modul starten:
+
+<a href="https://www.youtube.com/watch?v=O_J30kZc0rw"><img src="https://img.youtube.com/vi/O_J30kZc0rw/maxresdefault.jpg" alt="KI-Agenten mit Tools und MCP – Live-Session" width="800"/></a>
 
 ## Was Sie lernen werden
 
-Bis jetzt haben Sie gelernt, wie man Gespräche mit KI führt, Eingabeaufforderungen effektiv strukturieren und Antworten anhand Ihrer Dokumente fundieren kann. Aber es gibt eine grundlegende Einschränkung: Sprachmodelle können nur Text generieren. Sie können das Wetter nicht prüfen, keine Berechnungen durchführen, keine Datenbanken abfragen und nicht mit externen Systemen interagieren.
+Bis jetzt haben Sie gelernt, wie man Gespräche mit KI führt, Eingabeaufforderungen effektiv strukturiert und Antworten in Ihren Dokumenten verankert. Aber es gibt immer noch eine grundlegende Einschränkung: Sprachmodelle können nur Text generieren. Sie können nicht das Wetter prüfen, Berechnungen durchführen, Datenbanken abfragen oder mit externen Systemen interagieren.
 
-Werkzeuge verändern das. Indem man dem Modell Zugriff auf Funktionen gibt, die es aufrufen kann, verwandelt man es von einem reinen Textgenerator in einen Agenten, der handeln kann. Das Modell entscheidet, wann es ein Werkzeug benötigt, welches Werkzeug es benutzt und welche Parameter es übergibt. Ihr Code führt die Funktion aus und liefert das Ergebnis zurück. Das Modell integriert dieses Ergebnis in seine Antwort.
+Tools verändern das. Indem Sie dem Modell Zugriff auf Funktionen geben, die es aufrufen kann, verwandeln Sie es von einem Textgenerator in einen Agenten, der handeln kann. Das Modell entscheidet, wann es ein Tool benötigt, welches Tool es nutzt und welche Parameter es übergibt. Ihr Code führt die Funktion aus und liefert das Ergebnis zurück. Das Modell integriert dieses Ergebnis in seine Antwort.
 
 ## Voraussetzungen
 
-- Abgeschlossenes [Modul 01 - Einführung](../01-introduction/README.md) (Azure OpenAI Ressourcen bereitgestellt)
-- Empfehlenswert: Abgeschlossene vorherige Module (in diesem Modul wird auf [RAG-Konzepte aus Modul 03](../03-rag/README.md) im Vergleich Werkzeuge vs RAG verwiesen)
-- `.env`-Datei im Stammverzeichnis mit Azure-Zugangsdaten (erstellt durch `azd up` in Modul 01)
+- Abgeschlossenes [Modul 01 – Einführung](../01-introduction/README.md) (Azure OpenAI Ressourcen bereitgestellt)
+- Empfohlen, vorherige Module abgeschlossen zu haben (dieses Modul verweist auf [RAG-Konzepte aus Modul 03](../03-rag/README.md) im Vergleich Tools vs. RAG)
+- `.env`-Datei im Stammverzeichnis mit Azure-Anmeldedaten (erstellt durch `azd up` in Modul 01)
 
-> **Hinweis:** Falls Sie Modul 01 noch nicht abgeschlossen haben, folgen Sie zuerst dort den Bereitstellungsanweisungen.
+> **Hinweis:** Wenn Sie Modul 01 noch nicht abgeschlossen haben, folgen Sie zuerst den dortigen Bereitstellungsanweisungen.
 
-## Verstehen von KI-Agenten mit Werkzeugen
+## KI-Agenten mit Tools verstehen
 
-> **📝 Hinweis:** Der Begriff „Agenten“ in diesem Modul bezieht sich auf KI-Assistenten mit erweiterten Werkzeug-Aufruf-Fähigkeiten. Dies unterscheidet sich von den **Agentic AI**-Mustern (autonome Agenten mit Planung, Gedächtnis und mehrstufigem Schlussfolgern), die wir in [Modul 05: MCP](../05-mcp/README.md) behandeln werden.
+> **📝 Hinweis:** Der Begriff „Agenten“ in diesem Modul bezieht sich auf KI-Assistenten mit Tool-Aufruf-Fähigkeiten. Dies unterscheidet sich von den **Agentic AI** Mustern (autonome Agenten mit Planung, Gedächtnis und mehrstufigem Schlussfolgern), die wir in [Modul 05: MCP](../05-mcp/README.md) behandeln.
 
-Ohne Werkzeuge kann ein Sprachmodell nur Text aus seinen Trainingsdaten generieren. Fragen Sie es nach dem aktuellen Wetter, muss es raten. Geben Sie ihm Werkzeuge, kann es eine Wetter-API aufrufen, Berechnungen durchführen oder eine Datenbank abfragen – und diese realen Ergebnisse in seine Antwort einfließen lassen.
+Ohne Tools kann ein Sprachmodell nur Text aus seinen Trainingsdaten generieren. Fragen Sie es nach dem aktuellen Wetter, muss es raten. Geben Sie ihm Tools, kann es eine Wetter-API aufrufen, Berechnungen durchführen oder eine Datenbank abfragen – und diese echten Ergebnisse in seine Antwort einfließen lassen.
 
-<img src="../../../translated_images/de/what-are-tools.724e468fc4de64da.webp" alt="Ohne Werkzeuge vs Mit Werkzeugen" width="800"/>
+<img src="../../../translated_images/de/what-are-tools.724e468fc4de64da.webp" alt="Ohne Tools vs Mit Tools" width="800"/>
 
-*Ohne Werkzeuge kann das Modell nur raten — mit Werkzeugen kann es APIs aufrufen, Berechnungen ausführen und Echtzeitdaten liefern.*
+*Ohne Tools kann das Modell nur raten – mit Tools kann es APIs aufrufen, Berechnungen durchführen und Echtzeitdaten liefern.*
 
-Ein KI-Agent mit Werkzeugen folgt einem **Reasoning and Acting (ReAct)**-Muster. Das Modell reagiert nicht nur — es überlegt, was es braucht, handelt, indem es ein Werkzeug aufruft, beobachtet das Ergebnis und entscheidet dann, ob es erneut handeln oder die finale Antwort geben soll:
+Ein KI-Agent mit Tools folgt dem **Reasoning and Acting (ReAct)** Muster. Das Modell antwortet nicht einfach – es denkt darüber nach, was es braucht, handelt durch Tool-Aufrufe, beobachtet das Ergebnis und entscheidet dann, ob es erneut handeln oder die finale Antwort liefern soll:
 
-1. **Überlegen** — Der Agent analysiert die Frage des Nutzers und ermittelt, welche Informationen er benötigt  
-2. **Handeln** — Der Agent wählt das passende Werkzeug aus, erzeugt die korrekten Parameter und ruft es auf  
-3. **Beobachten** — Der Agent erhält die Ausgabe des Werkzeugs und bewertet das Ergebnis  
-4. **Wiederholen oder Antworten** — Wenn weitere Daten nötig sind, wird der Zyklus wiederholt; andernfalls wird eine Antwort in natürlicher Sprache formuliert  
+1. **Nachdenken** — Der Agent analysiert die Frage des Nutzers und bestimmt, welche Informationen er benötigt
+2. **Handeln** — Der Agent wählt das richtige Tool aus, erzeugt die passenden Parameter und ruft es auf
+3. **Beobachten** — Der Agent empfängt die Ausgabe des Tools und bewertet das Ergebnis
+4. **Wiederholen oder Antworten** — Wenn weitere Daten nötig sind, wiederholt der Agent den Zyklus; sonst formuliert er eine natürliche Antwort
 
-<img src="../../../translated_images/de/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct-Muster" width="800"/>
+<img src="../../../translated_images/de/react-pattern-detail.96a5efeeb6dd2f61.webp" alt="ReAct Muster" width="800"/>
 
-*Der ReAct-Zyklus — der Agent überlegt, was zu tun ist, handelt durch Werkzeugaufruf, beobachtet das Ergebnis und wiederholt, bis er die finale Antwort geben kann.*
+*Der ReAct-Zyklus – der Agent denkt darüber nach, was zu tun ist, handelt durch Tool-Aufrufe, beobachtet das Ergebnis und wiederholt dies, bis eine Endantwort vorliegt.*
 
-Dies geschieht automatisch. Sie definieren die Werkzeuge und deren Beschreibungen. Das Modell übernimmt die Entscheidungsfindung, wann und wie sie verwendet werden.
+Dies geschieht automatisch. Sie definieren die Tools und deren Beschreibungen. Das Modell übernimmt die Entscheidungsfindung, wann und wie sie genutzt werden.
 
-## Wie Werkzeugaufrufe funktionieren
+## Wie Tool-Aufrufe funktionieren
 
-### Werkzeugdefinitionen
+### Tool-Definitionen
 
 [WeatherTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) | [TemperatureTool.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/TemperatureTool.java)
 
-Sie definieren Funktionen mit klaren Beschreibungen und Parameterspezifikationen. Das Modell sieht diese Beschreibungen in seinem Systemprompt und versteht, was jedes Werkzeug tut.
+Sie definieren Funktionen mit klaren Beschreibungen und Parameterspezifikationen. Das Modell sieht diese Beschreibungen in seinem System-Prompt und versteht, was jedes Tool macht.
 
 ```java
 @Component
@@ -79,7 +86,7 @@ public class WeatherTool {
     
     @Tool("Get the current weather for a location")
     public String getCurrentWeather(@P("Location name") String location) {
-        // Ihre Wettersuchlogik
+        // Ihre Wetterabfrage-Logik
         return "Weather in " + location + ": 22°C, cloudy";
     }
 }
@@ -89,136 +96,135 @@ public interface Assistant {
     String chat(@MemoryId String sessionId, @UserMessage String message);
 }
 
-// Der Assistent wird automatisch von Spring Boot verbunden mit:
-// - ChatModel Bean
+// Assistant wird automatisch von Spring Boot verbunden mit:
+// - ChatModel-Bean
 // - Alle @Tool-Methoden aus @Component-Klassen
-// - ChatMemoryProvider für das Sitzungsmanagement
+// - ChatMemoryProvider für Sitzungsverwaltung
 ```
+  
+Das folgende Diagramm zerlegt jede Annotation und zeigt, wie jedes Element der KI hilft zu verstehen, wann das Tool aufzurufen ist und welche Argumente übergeben werden sollen:
 
-Das untenstehende Diagramm erklärt jede Annotation und zeigt, wie jede einzelne Komponente der KI hilft zu verstehen, wann das Werkzeug aufzurufen ist und welche Argumente übergeben werden:
+<img src="../../../translated_images/de/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomie von Tool-Definitionen" width="800"/>
 
-<img src="../../../translated_images/de/tool-definitions-anatomy.f6468546037cf28b.webp" alt="Anatomie von Werkzeugdefinitionen" width="800"/>
+*Anatomie einer Tool-Definition – @Tool sagt der KI, wann sie verwendet wird, @P beschreibt jeden Parameter und @AiService verknüpft alles beim Start.*
 
-*Anatomie einer Werkzeugdefinition — @Tool sagt der KI, wann sie es verwenden soll, @P beschreibt jeden Parameter und @AiService verbindet alles beim Start.*
-
-> **🤖 Probieren Sie den [GitHub Copilot](https://github.com/features/copilot) Chat:** Öffnen Sie [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) und fragen Sie:
-> - „Wie würde ich eine echte Wetter-API wie OpenWeatherMap statt Mock-Daten integrieren?“
-> - „Was macht eine gute Werkzeugbeschreibung aus, die der KI hilft, es korrekt zu nutzen?“
-> - „Wie behandle ich API-Fehler und Rate Limits in der Werkzeugimplementierung?“
+> **🤖 Probieren Sie es mit [GitHub Copilot](https://github.com/features/copilot) Chat:** Öffnen Sie [`WeatherTool.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/tools/WeatherTool.java) und fragen Sie:
+> - „Wie integriere ich eine echte Wetter-API wie OpenWeatherMap anstelle von Mock-Daten?“
+> - „Was macht eine gute Tool-Beschreibung aus, die der KI hilft, sie korrekt zu verwenden?“
+> - „Wie handle ich API-Fehler und Rate Limits in Tool-Implementierungen?“
 
 ### Entscheidungsfindung
 
-Wenn ein Nutzer fragt: „Wie ist das Wetter in Seattle?“, wählt das Modell nicht zufällig ein Werkzeug aus. Es vergleicht die Absicht des Nutzers mit jeder verfügbaren Werkzeugbeschreibung, bewertet jede auf Relevanz und wählt die passendste aus. Anschließend generiert es einen strukturierten Funktionsaufruf mit den richtigen Parametern — in diesem Fall wird `location` auf `"Seattle"` gesetzt.
+Wenn ein Nutzer fragt „Wie ist das Wetter in Seattle?“, wählt das Modell nicht zufällig ein Tool aus. Es vergleicht die Absicht des Nutzers mit jeder verfügbaren Tool-Beschreibung, bewertet deren Relevanz und wählt die beste Übereinstimmung aus. Dann generiert es einen strukturierten Funktionsaufruf mit den richtigen Parametern – hier `location` auf `"Seattle"` gesetzt.
 
-Wenn kein Werkzeug zur Anfrage passt, beantwortet das Modell die Frage aus seinem eigenen Wissen. Wenn mehrere Werkzeuge passen, wählt es das spezifischste.
+Wenn kein Tool zur Benutzeranfrage passt, fällt das Modell auf Antworten aus seinem eigenen Wissen zurück. Bei mehreren passenden Tools wählt es das speziellste.
 
-<img src="../../../translated_images/de/decision-making.409cd562e5cecc49.webp" alt="Wie die KI entscheidet, welches Werkzeug verwendet wird" width="800"/>
+<img src="../../../translated_images/de/decision-making.409cd562e5cecc49.webp" alt="Wie die KI entscheidet, welches Tool verwendet wird" width="800"/>
 
-*Das Modell bewertet jedes verfügbare Werkzeug anhand der Nutzerabsicht und wählt die beste Übereinstimmung — deshalb sind klare, spezifische Werkzeugbeschreibungen wichtig.*
+*Das Modell bewertet jedes verfügbare Tool im Hinblick auf die Nutzerabsicht und wählt das beste – deswegen sind klare, spezifische Tool-Beschreibungen wichtig.*
 
 ### Ausführung
 
 [AgentService.java](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java)
 
-Spring Boot verdrahtet automatisch die deklarative `@AiService`-Schnittstelle mit allen registrierten Werkzeugen, und LangChain4j führt Werkzeugaufrufe automatisch aus. Im Hintergrund durchläuft ein kompletter Werkzeugaufruf sechs Stufen — von der natürlichen Spracheingabe des Nutzers bis zurück zu einer Antwort in natürlicher Sprache:
+Spring Boot verdrahtet die deklarative `@AiService` Schnittstelle mit allen registrierten Tools automatisch, und LangChain4j führt Tool-Aufrufe selbstständig aus. Im Hintergrund durchläuft ein Tool-Aufruf sechs Stufen – von der nativen Nutzerspracheingabe bis zur natürlichen Antwort:
 
-<img src="../../../translated_images/de/tool-calling-flow.8601941b0ca041e6.webp" alt="Ablauf eines Werkzeugaufrufs" width="800"/>
+<img src="../../../translated_images/de/tool-calling-flow.8601941b0ca041e6.webp" alt="Tool-Aufruf Ablauf" width="800"/>
 
-*Der End-to-End-Ablauf — der Nutzer stellt eine Frage, das Modell wählt ein Werkzeug aus, LangChain4j führt es aus, und das Modell integriert das Ergebnis in eine natürliche Antwort.*
+*End-to-End Ablauf – der Nutzer stellt eine Frage, das Modell wählt ein Tool aus, LangChain4j führt es aus, und das Modell integriert das Ergebnis in die natürliche Antwort.*
 
-Wenn Sie das [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) aus Modul 00 ausgeführt haben, kennen Sie dieses Muster bereits — die `Calculator`-Werkzeuge wurden genauso aufgerufen. Das untenstehende Sequenzdiagramm zeigt genau, was hinter den Kulissen bei dieser Demo passierte:
+Wenn Sie die [ToolIntegrationDemo](../../../00-quick-start/src/main/java/com/example/langchain4j/quickstart/ToolIntegrationDemo.java) aus Modul 00 ausgeführt haben, haben Sie dieses Muster schon gesehen – die `Calculator`-Tools wurden genauso aufgerufen. Das folgende Sequenzdiagramm zeigt genau, was während dieser Demo unter der Haube geschah:
 
-<img src="../../../translated_images/de/tool-calling-sequence.94802f406ca26278.webp" alt="Sequenzdiagramm zum Werkzeugaufruf" width="800"/>
+<img src="../../../translated_images/de/tool-calling-sequence.94802f406ca26278.webp" alt="Sequenzdiagramm Tool-Aufruf" width="800"/>
 
-*Die Werkzeugaufruf-Schleife aus dem Quick Start-Demo — `AiServices` sendet Ihre Nachricht und Werkzeug-Schemata an das LLM, das LLM antwortet mit einem Funktionsaufruf wie `add(42, 58)`, LangChain4j führt die `Calculator`-Methode lokal aus und liefert das Ergebnis für die finale Antwort zurück.*
+*Die Tool-Aufruf-Schleife aus der Quick Start Demo – `AiServices` schickt Ihre Nachricht und Tool-Schemata an das LLM, das LLM antwortet mit einem Funktionsaufruf wie `add(42, 58)`, LangChain4j führt die `Calculator` Methode lokal aus und gibt das Ergebnis für die finale Antwort zurück.*
 
-> **🤖 Probieren Sie den [GitHub Copilot](https://github.com/features/copilot) Chat:** Öffnen Sie [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) und fragen Sie:
+> **🤖 Probieren Sie es mit [GitHub Copilot](https://github.com/features/copilot) Chat:** Öffnen Sie [`AgentService.java`](../../../04-tools/src/main/java/com/example/langchain4j/agents/service/AgentService.java) und fragen Sie:
 > - „Wie funktioniert das ReAct-Muster und warum ist es für KI-Agenten effektiv?“
-> - „Wie entscheidet der Agent, welches Werkzeug zu verwenden ist und in welcher Reihenfolge?“
-> - „Was passiert, wenn ein Werkzeugsaufruf fehlschlägt – wie sollte ich Fehler robust behandeln?“
+> - „Wie entscheidet der Agent, welches Tool er wann nutzt?“
+> - „Was passiert, wenn die Ausführung eines Tools fehlschlägt – wie behandle ich Fehler robust?“
 
 ### Antwortgenerierung
 
-Das Modell erhält die Wetterdaten und formatiert sie in eine Antwort in natürlicher Sprache für den Nutzer.
+Das Modell erhält die Wetterdaten und formatiert sie als eine natürliche Antwort für den Nutzer.
 
 ### Architektur: Spring Boot Auto-Wiring
 
-Dieses Modul verwendet die Spring Boot-Integration von LangChain4j mit deklarativen `@AiService`-Schnittstellen. Beim Start entdeckt Spring Boot jede `@Component`, die `@Tool`-Methoden enthält, Ihre `ChatModel`-Bean und den `ChatMemoryProvider` – und verdrahtet alles zu einer einzigen `Assistant`-Schnittstelle ohne Boilerplate.
+Dieses Modul verwendet LangChain4j’s Spring Boot Integration mit deklarativen `@AiService` Schnittstellen. Beim Start entdeckt Spring Boot jede `@Component`, die `@Tool` Methoden enthält, ihre `ChatModel` Bean und den `ChatMemoryProvider` – und verdrahtet sie alle in eine einzige `Assistant` Schnittstelle ohne Boilerplate.
 
 <img src="../../../translated_images/de/spring-boot-wiring.151321795988b04e.webp" alt="Spring Boot Auto-Wiring Architektur" width="800"/>
 
-*Die @AiService-Schnittstelle verbindet ChatModel, Werkzeug-Komponenten und Memory Provider — Spring Boot übernimmt das gesamte Verdrahten automatisch.*
+*Die @AiService Schnittstelle verbindet ChatModel, Tool-Komponenten und Memory Provider – Spring Boot übernimmt die komplette Verkabelung automatisch.*
 
-Hier der vollständige Anfrage-Lebenszyklus als Sequenzdiagramm — von der HTTP-Anfrage über Controller, Service und auto-verdrahteten Proxy bis zum Werkzeugaufruf und zurück:
+Hier sehen Sie den kompletten Anforderungslebenszyklus als Sequenzdiagramm – von der HTTP-Anfrage über Controller, Service und verdrahteten Proxy bis zur Tool-Ausführung und zurück:
 
-<img src="../../../translated_images/de/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Spring Boot Werkzeugaufruf-Sequenz" width="800"/>
+<img src="../../../translated_images/de/spring-boot-sequence.f83e3d485aa4a3c6.webp" alt="Spring Boot Tool-Aufruf Sequenz" width="800"/>
 
-*Der komplette Spring Boot-Anfragelebenszyklus — HTTP-Anfrage fließt durch Controller und Service zum auto-verdrahteten Assistant-Proxy, der LLM- und Werkzeugaufrufe automatisch orchestriert.*
+*Der vollständige Spring Boot Anforderungszyklus – HTTP-Anfrage fließt durch Controller und Service zum verdrahteten Assistant Proxy, der LLM und Tool-Aufrufe automatisch orchestriert.*
 
 Wichtige Vorteile dieses Ansatzes:
 
-- **Spring Boot Auto-Wiring** — ChatModel und Werkzeuge werden automatisch injiziert  
-- **@MemoryId-Muster** — Automatisches sessionsbasiertes Speichermanagement  
-- **Einzelne Instanz** — Assistant wird einmal erstellt und für bessere Performance wiederverwendet  
-- **Typensichere Ausführung** — Java-Methoden werden direkt mit Typkonvertierung aufgerufen  
-- **Mehrstufige Orchestrierung** — Handhabt Werkzeugverkettung automatisch  
-- **Kein Boilerplate** — Keine manuellen `AiServices.builder()`-Aufrufe oder speicherbasierte HashMaps  
+- **Spring Boot Auto-Wiring** – ChatModel und Tools werden automatisch injiziert
+- **@MemoryId Muster** – Automatisches memory-basiertes Sitzungsmanagement
+- **Einzelne Instanz** – Assistant wird einmalig erstellt und für bessere Performance wiederverwendet
+- **Typsichere Ausführung** – Java-Methoden werden direkt mit Typumwandlung aufgerufen
+- **Multi-Turn Orchestrierung** – Unterstützt automatische Tool-Verkettung
+- **Zero Boilerplate** – Keine manuellen `AiServices.builder()` Aufrufe oder Memory HashMap
 
-Alternative Ansätze (manuelle `AiServices.builder()`-Aufrufe) erfordern mehr Code und verzichten auf die Integrationsvorteile von Spring Boot.
+Alternative Ansätze (manuelles `AiServices.builder()`) erfordern mehr Code und verzichten auf Spring Boot Integrationsvorteile.
 
-## Werkzeugverkettung
+## Tool-Verkettung
 
-**Werkzeugverkettung** — Die wahre Stärke von Werkzeug-basierten Agenten zeigt sich, wenn eine einzelne Frage mehrere Werkzeuge erfordert. Fragen Sie: „Wie ist das Wetter in Seattle in Fahrenheit?“ und der Agent verkettet automatisch zwei Werkzeuge: zuerst ruft er `getCurrentWeather` auf, um die Temperatur in Celsius zu erhalten, dann übergibt er diesen Wert an `celsiusToFahrenheit` zur Umrechnung — alles in einer einzigen Gesprächsrunde.
+**Tool-Verkettung** – Die tatsächliche Stärke von tool-basierten Agenten zeigt sich, wenn eine einzelne Frage mehrere Tools erfordert. Fragen Sie „Wie ist das Wetter in Seattle in Fahrenheit?“ und der Agent verknüpft automatisch zwei Tools: zuerst ruft er `getCurrentWeather` auf, um die Temperatur in Celsius zu erhalten, dann übergibt er diesen Wert an `celsiusToFahrenheit` für die Umrechnung – alles in einem einzigen Gesprächsturn.
 
-<img src="../../../translated_images/de/tool-chaining-example.538203e73d09dd82.webp" alt="Beispiel Werkzeugverkettung" width="800"/>
+<img src="../../../translated_images/de/tool-chaining-example.538203e73d09dd82.webp" alt="Tool-Verkettungsbeispiel" width="800"/>
 
-*Werkzeugverkettung in Aktion — der Agent ruft zuerst getCurrentWeather auf, leitet das Celsius-Ergebnis an celsiusToFahrenheit weiter und liefert eine kombinierte Antwort.*
+*Tool-Verkettung in Aktion – der Agent ruft zuerst getCurrentWeather auf, leitet das Celsius-Ergebnis an celsiusToFahrenheit weiter und liefert eine kombinierte Antwort.*
 
-**Fehlerfreundlichkeit** — Fragen Sie nach dem Wetter in einer Stadt, die nicht in den Mock-Daten enthalten ist. Das Werkzeug liefert eine Fehlermeldung, und die KI erklärt, dass sie nicht helfen kann, anstatt abzustürzen. Werkzeuge scheitern sicher. Das Diagramm unten vergleicht die beiden Ansätze — mit ordentlicher Fehlerbehandlung fängt der Agent die Ausnahme ab und reagiert hilfreich, ohne sie führt ein Fehler zum Absturz der gesamten Anwendung:
+**Abschwächung von Fehlern** – Fragen Sie nach dem Wetter in einer Stadt, die nicht in den Mock-Daten ist. Das Tool gibt eine Fehlermeldung zurück, und die KI erklärt, dass sie nicht helfen kann, anstatt abzustürzen. Tools fallen sicher aus. Das folgende Diagramm zeigt den Unterschied zwischen den beiden Ansätzen – mit ordentlicher Fehlerbehandlung fängt der Agent die Ausnahme auf und antwortet hilfreich, ohne sie stürzt die gesamte Anwendung ab:
 
 <img src="../../../translated_images/de/error-handling-flow.9a330ffc8ee0475c.webp" alt="Fehlerbehandlungsablauf" width="800"/>
 
-*Wenn ein Werkzeug fehlschlägt, fängt der Agent den Fehler ab und antwortet mit einer hilfreichen Erklärung anstatt abzustürzen.*
+*Wenn ein Tool fehlschlägt, fängt der Agent den Fehler ab und antwortet mit einer hilfreichen Erklärung, statt dass es zum Absturz kommt.*
 
-Dies geschieht in einer einzelnen Gesprächsrunde. Der Agent orchestriert mehrere Werkzeugaufrufe autonom.
+Dies geschieht in einem einzigen Gesprächsschritt. Der Agent orchestriert mehrere Tool-Aufrufe autonom.
 
 ## Anwendung ausführen
 
 **Bereitstellung überprüfen:**
 
-Stellen Sie sicher, dass die `.env`-Datei im Stammverzeichnis mit Azure-Zugangsdaten existiert (erstellt während Modul 01). Führen Sie dies aus dem Modulverzeichnis (`04-tools/`) aus:
+Stellen Sie sicher, dass die `.env`-Datei im Stammverzeichnis mit Azure-Zugangsdaten vorhanden ist (erstellt während Modul 01). Führen Sie dies im Modulsverzeichnis (`04-tools/`) aus:
 
-**Bash:**
+**Bash:**  
 ```bash
 cat ../.env  # Sollte AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT anzeigen
 ```
-
-**PowerShell:**
+  
+**PowerShell:**  
 ```powershell
-Get-Content ..\.env  # Soll AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT anzeigen
+Get-Content ..\.env  # Sollte AZURE_OPENAI_ENDPOINT, API_KEY, DEPLOYMENT anzeigen
 ```
-
+  
 **Starten der Anwendung:**
 
-> **Hinweis:** Falls Sie alle Anwendungen bereits mit `./start-all.sh` aus dem Stammverzeichnis gestartet haben (wie in Modul 01 beschrieben), läuft dieses Modul bereits auf Port 8084. Sie können die Startbefehle unten überspringen und direkt zu http://localhost:8084 gehen.
+> **Hinweis:** Falls Sie bereits alle Anwendungen mit `./start-all.sh` aus dem Stammverzeichnis gestartet haben (wie in Modul 01 beschrieben), läuft dieses Modul bereits auf Port 8084. Sie können die Startbefehle unten überspringen und direkt http://localhost:8084 aufrufen.
 
-**Option 1: Verwendung des Spring Boot Dashboards (empfohlen für VS Code Benutzer)**
+**Option 1: Verwendung des Spring Boot Dashboards (Empfohlen für VS Code Nutzer)**
 
-Der Dev-Container enthält die Spring Boot Dashboard-Erweiterung, die eine visuelle Schnittstelle bereitstellt, um alle Spring Boot-Anwendungen zu verwalten. Sie finden es in der Aktivitätsleiste links in VS Code (suchen Sie das Spring Boot-Symbol).
+Der Dev Container enthält die Erweiterung Spring Boot Dashboard, welche eine visuelle Oberfläche zur Verwaltung aller Spring Boot Anwendungen bereitstellt. Sie finden sie in der Aktivitätsleiste links in VS Code (suchen Sie das Spring Boot Symbol).
 
-Über das Spring Boot Dashboard können Sie:
-- Alle verfügbaren Spring Boot-Anwendungen im Workspace sehen  
+Im Spring Boot Dashboard können Sie:  
+- Alle verfügbaren Spring Boot Anwendungen im Workspace sehen  
 - Anwendungen mit einem Klick starten/stoppen  
-- Anwendungsprotokolle in Echtzeit ansehen  
-- Den Anwendungsstatus überwachen  
-
-Klicken Sie einfach auf den Play-Button neben „tools“, um dieses Modul zu starten, oder starten Sie alle Module gleichzeitig.
+- Echtzeit-Protokolle anzeigen  
+- Den Anwendungsstatus überwachen
+Klicken Sie einfach auf die Wiedergabetaste neben „tools“, um dieses Modul zu starten, oder starten Sie alle Module auf einmal.
 
 So sieht das Spring Boot Dashboard in VS Code aus:
 
 <img src="../../../translated_images/de/dashboard.9b519b1a1bc1b30a.webp" alt="Spring Boot Dashboard" width="400"/>
 
-*Das Spring Boot Dashboard in VS Code — starten, stoppen und überwachen Sie alle Module an einem Ort*
+*Das Spring Boot Dashboard in VS Code — alle Module von einem Ort aus starten, stoppen und überwachen*
 
 **Option 2: Verwendung von Shell-Skripten**
 
@@ -236,7 +242,7 @@ cd ..  # Vom Stammverzeichnis
 .\start-all.ps1
 ```
 
-Oder starte nur dieses Modul:
+Oder starten Sie nur dieses Modul:
 
 **Bash:**
 ```bash
@@ -250,9 +256,9 @@ cd 04-tools
 .\start.ps1
 ```
 
-Beide Skripte laden automatisch Umgebungsvariablen aus der root `.env` Datei und bauen die JARs, falls diese noch nicht existieren.
+Beide Skripte laden automatisch Umgebungsvariablen aus der Root-`.env`-Datei und bauen die JARs, falls sie noch nicht existieren.
 
-> **Hinweis:** Wenn du alle Module lieber manuell bauen möchtest, bevor du startest:
+> **Hinweis:** Wenn Sie alle Module manuell vor dem Start bauen möchten:
 >
 > **Bash:**
 > ```bash
@@ -266,9 +272,9 @@ Beide Skripte laden automatisch Umgebungsvariablen aus der root `.env` Datei und
 > mvn clean package -DskipTests
 > ```
 
-Öffne http://localhost:8084 in deinem Browser.
+Öffnen Sie http://localhost:8084 in Ihrem Browser.
 
-**Um zu stoppen:**
+**Zum Stoppen:**
 
 **Bash:**
 ```bash
@@ -279,91 +285,91 @@ cd .. && ./stop-all.sh  # Alle Module
 
 **PowerShell:**
 ```powershell
-.\stop.ps1  # Dieses Modul nur
+.\stop.ps1  # Nur dieses Modul
 # Oder
 cd ..; .\stop-all.ps1  # Alle Module
 ```
 
 ## Verwendung der Anwendung
 
-Die Anwendung bietet eine Weboberfläche, über die du mit einem KI-Agenten interagieren kannst, der Zugriff auf Wetter- und Temperaturumrechnungstools hat. So sieht die Oberfläche aus — sie enthält Schnellstartbeispiele und ein Chat-Panel für das Senden von Anfragen:
+Die Anwendung bietet eine Weboberfläche, über die Sie mit einem KI-Agenten interagieren können, der Zugriff auf Wetter- und Temperaturumrechner-Tools hat. So sieht die Oberfläche aus — sie enthält Schnellstart-Beispiele und ein Chatfenster zum Senden von Anfragen:
 
 <a href="images/tools-homepage.png"><img src="../../../translated_images/de/tools-homepage.4b4cd8b2717f9621.webp" alt="AI Agent Tools Interface" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Die AI Agent Tools Schnittstelle – Schnellstartbeispiele und Chatoberfläche zur Interaktion mit Tools*
+*Die AI Agent Tools-Oberfläche – Schnellbeispiele und Chat-Interface zur Interaktion mit Tools*
 
 ### Einfachen Tool-Einsatz ausprobieren
 
-Beginne mit einer einfachen Anfrage: „Konvertiere 100 Grad Fahrenheit in Celsius“. Der Agent erkennt, dass er das Temperaturumrechnungstool benötigt, ruft es mit den passenden Parametern auf und liefert das Ergebnis zurück. Beachte, wie natürlich das wirkt – du hast nicht angegeben, welches Tool verwendet oder wie es aufgerufen werden soll.
+Starten Sie mit einer einfachen Anfrage: „Convert 100 degrees Fahrenheit to Celsius“. Der Agent erkennt, dass er das Temperaturumrechnungstool benötigt, ruft es mit den richtigen Parametern auf und liefert das Ergebnis zurück. Beachten Sie, wie natürlich sich das anfühlt – Sie haben nicht angegeben, welches Tool zu verwenden ist oder wie es aufgerufen wird.
 
 ### Tool-Verkettung testen
 
-Versuche nun etwas Komplexeres: „Wie ist das Wetter in Seattle und konvertiere es in Fahrenheit?“ Beobachte, wie der Agent dies schrittweise verarbeitet. Er holt zuerst die Wetterdaten (die in Celsius zurückgegeben werden), erkennt, dass er in Fahrenheit umrechnen muss, ruft das Umrechnungstool auf und kombiniert beide Ergebnisse zu einer Antwort.
+Versuchen Sie nun etwas Komplexeres: „What’s the weather in Seattle and convert it to Fahrenheit?“ Sehen Sie, wie der Agent dies in Schritten abarbeitet. Zuerst holt er die Wetterdaten (die in Celsius zurückgegeben werden), erkennt, dass eine Umrechnung zu Fahrenheit nötig ist, ruft das Umrechnungstool auf und kombiniert beide Ergebnisse zu einer Antwort.
 
 ### Gesprächsverlauf ansehen
 
-Die Chatoberfläche speichert den Gesprächsverlauf, sodass du mehrstufige Interaktionen führen kannst. Du kannst alle vorherigen Anfragen und Antworten sehen, was es einfach macht, den Verlauf nachzuvollziehen und zu verstehen, wie der Agent im Laufe mehrerer Schritte Kontext aufbaut.
+Die Chat-Oberfläche speichert den Gesprächsverlauf, sodass Sie mehrstufige Interaktionen führen können. Sie können alle vorherigen Anfragen und Antworten sehen, was es einfach macht, das Gespräch nachzuvollziehen und zu verstehen, wie der Agent Kontext über mehrere Austausche aufbaut.
 
 <a href="images/tools-conversation-demo.png"><img src="../../../translated_images/de/tools-conversation-demo.89f2ce9676080f59.webp" alt="Conversation with Multiple Tool Calls" width="800" style="border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/></a>
 
-*Mehrstufiges Gespräch mit einfachen Umrechnungen, Wetterabfragen und Tool-Verkettungen*
+*Mehrstufiges Gespräch mit einfachen Umrechnungen, Wetterabfragen und Tool-Verkettung*
 
-### Mit verschiedenen Anfragen experimentieren
+### Verschiedene Anfragen ausprobieren
 
-Probiere verschiedene Kombinationen aus:
-- Wetterabfragen: „Wie ist das Wetter in Tokio?“
-- Temperaturumrechnungen: „Wie viel sind 25°C in Kelvin?“
-- Kombinierte Anfragen: „Überprüfe das Wetter in Paris und sage mir, ob es über 20°C liegt“
+Testen Sie verschiedene Kombinationen:
+- Wetterabfragen: „What’s the weather in Tokyo?“
+- Temperaturumrechnungen: „What is 25°C in Kelvin?“
+- Kombinierte Anfragen: „Check the weather in Paris and tell me if it’s above 20°C“
 
-Beachte, wie der Agent natürliche Sprache interpretiert und entsprechend passende Tool-Aufrufe erstellt.
+Beachten Sie, wie der Agent natürliche Sprache interpretiert und in passende Tool-Aufrufe übersetzt.
 
 ## Wichtige Konzepte
 
-### ReAct-Muster (Schlussfolgern und Handeln)
+### ReAct-Muster (Reasoning and Acting)
 
-Der Agent wechselt zwischen dem Schlussfolgern (Entscheiden, was zu tun ist) und dem Handeln (Tools verwenden). Dieses Muster ermöglicht autonome Problemlösung anstelle bloßer Ausführung von Anweisungen.
+Der Agent wechselt zwischen Überlegung (was zu tun ist) und Ausführung (Einsatz von Tools). Dieses Muster ermöglicht eigenständige Problemlösung anstatt nur auf Anweisungen zu reagieren.
 
-### Tool-Beschreibungen sind wichtig
+### Tool-Beschreibungen sind entscheidend
 
-Die Qualität der Tool-Beschreibungen beeinflusst direkt, wie gut der Agent sie nutzt. Klare, spezifische Beschreibungen helfen dem Modell zu verstehen, wann und wie jedes Tool aufgerufen werden soll.
+Die Qualität Ihrer Tool-Beschreibungen beeinflusst direkt, wie gut der Agent sie nutzt. Klare, spezifische Beschreibungen helfen dem Modell zu verstehen, wann und wie jedes Tool aufgerufen wird.
 
 ### Sitzungsverwaltung
 
-Die `@MemoryId`-Annotation ermöglicht automatische sitzungsbasierte Speicherverwaltung. Jede Sitzungs-ID bekommt eine eigene `ChatMemory`-Instanz, verwaltet vom `ChatMemoryProvider`-Bean, sodass mehrere Nutzer gleichzeitig mit dem Agenten interagieren können, ohne dass sich ihre Gespräche vermischen. Das folgende Diagramm zeigt, wie mehrere Nutzer basierend auf ihren Sitzungs-IDs zu isolierten Speicherbereichen geleitet werden:
+Die `@MemoryId`-Annotation ermöglicht automatische sessionsbasierte Speicherverwaltung. Jede Sitzungs-ID erhält eine eigene `ChatMemory`-Instanz, die vom `ChatMemoryProvider`-Bean verwaltet wird, sodass mehrere Benutzer gleichzeitig mit dem Agenten interagieren können, ohne dass sich ihre Gespräche vermischen. Das folgende Diagramm zeigt, wie mehrere Benutzer anhand ihrer Sitzungs-IDs zu isolierten Speicherbereichen geleitet werden:
 
 <img src="../../../translated_images/de/session-management.91ad819c6c89c400.webp" alt="Session Management with @MemoryId" width="800"/>
 
-*Jede Sitzungs-ID führt zu einem isolierten Gesprächsverlauf – Nutzer sehen niemals die Nachrichten der anderen.*
+*Jede Sitzungs-ID führt zu einem isolierten Gesprächsverlauf – Benutzer sehen niemals die Nachrichten anderer.*
 
 ### Fehlerbehandlung
 
-Tools können ausfallen – APIs können Zeitüberschreitungen haben, Parameter ungültig sein, externe Dienste ausfallen. Produktionsagenten benötigen Fehlerbehandlung, damit das Modell Probleme erklären oder Alternativen versuchen kann, anstatt die ganze Anwendung abstürzen zu lassen. Wenn ein Tool eine Ausnahme wirft, fängt LangChain4j diese ab und gibt die Fehlermeldung an das Modell zurück, das dann das Problem in natürlicher Sprache erläutert.
+Tools können fehlschlagen – APIs laufen zeitüberschreitend ab, Parameter können ungültig sein, externe Dienste ausfallen. Produktionsagenten benötigen Fehlerbehandlung, damit das Modell Probleme erklären oder Alternativen versuchen kann statt die gesamte Anwendung abstürzen zu lassen. Wenn ein Tool eine Ausnahme wirft, fängt LangChain4j diese ab und gibt die Fehlermeldung an das Modell zurück, das dann das Problem in natürlicher Sprache erklären kann.
 
 ## Verfügbare Tools
 
-Das folgende Diagramm zeigt das breite Ökosystem von Tools, die du bauen kannst. Dieses Modul demonstriert Wetter- und Temperaturtools, aber das gleiche `@Tool`-Muster funktioniert für jede Java-Methode — von Datenbankabfragen bis zur Zahlungsabwicklung.
+Das folgende Diagramm zeigt das breite Ökosystem an Tools, die Sie bauen können. Dieses Modul zeigt Wetter- und Temperatur-Tools, aber dasselbe `@Tool`-Muster funktioniert für jede Java-Methode — von Datenbankabfragen bis hin zur Zahlungsabwicklung.
 
 <img src="../../../translated_images/de/tool-ecosystem.aad3d74eaa14a44f.webp" alt="Tool Ecosystem" width="800"/>
 
-*Jede mit @Tool annotierte Java-Methode wird für die KI verfügbar — das Muster erstreckt sich auf Datenbanken, APIs, E-Mail, Dateioperationen und mehr.*
+*Jede mit @Tool annotierte Java-Methode steht der KI zur Verfügung — das Muster lässt sich auf Datenbanken, APIs, E-Mail, Dateioperationen und mehr erweitern.*
 
-## Wann Tool-basierte Agenten verwenden
+## Wann man toolbasierte Agenten einsetzt
 
-Nicht jede Anfrage benötigt Tools. Die Entscheidung hängt davon ab, ob die KI mit externen Systemen interagieren muss oder aus ihrem eigenen Wissen antworten kann. Die folgende Übersicht zeigt, wann Tools Mehrwert bieten und wann sie unnötig sind:
+Nicht jede Anfrage benötigt Tools. Die Entscheidung hängt davon ab, ob die KI mit externen Systemen interagieren muss oder aus eigenem Wissen antworten kann. Der folgende Leitfaden fasst zusammen, wann Tools sinnvoll sind und wann nicht:
 
 <img src="../../../translated_images/de/when-to-use-tools.51d1592d9cbdae9c.webp" alt="When to Use Tools" width="800"/>
 
-*Eine schnelle Entscheidungsübersicht – Tools sind für Echtzeitdaten, Berechnungen und Aktionen; allgemeines Wissen und kreative Aufgaben benötigen sie nicht.*
+*Kurzer Entscheidungsleitfaden – Tools sind für Echtzeitdaten, Berechnungen und Aktionen; allgemeines Wissen und kreative Aufgaben benötigen sie nicht.*
 
 ## Tools vs RAG
 
-Module 03 und 04 erweitern beide die Fähigkeiten der KI, aber auf grundlegend unterschiedliche Weise. RAG gibt dem Modell Zugang zu **Wissen** durch Abruf von Dokumenten. Tools geben dem Modell die Fähigkeit, **Aktionen** durch Funktionsaufrufe auszuführen. Das folgende Diagramm vergleicht diese beiden Ansätze nebeneinander – vom Ablauf der Workflows bis zu deren Vor- und Nachteilen:
+Die Module 03 und 04 erweitern beide die Fähigkeiten der KI, aber auf grundlegend unterschiedliche Weise. RAG gibt dem Modell Zugriff auf **Wissen** durch das Abrufen von Dokumenten. Tools geben dem Modell die Möglichkeit, **Aktionen** durch Funktionsaufrufe auszuführen. Das folgende Diagramm vergleicht diese beiden Ansätze nebeneinander – vom jeweiligen Ablauf bis zu den Kompromissen zwischen ihnen:
 
 <img src="../../../translated_images/de/tools-vs-rag.ad55ce10d7e4da87.webp" alt="Tools vs RAG Comparison" width="800"/>
 
-*RAG ruft Informationen aus statischen Dokumenten ab – Tools führen Aktionen aus und holen dynamische, Echtzeitdaten. Viele Produktionssysteme kombinieren beides.*
+*RAG ruft Informationen aus statischen Dokumenten ab – Tools führen Aktionen aus und holen dynamische, Echtzeit-Daten. Viele produktive Systeme kombinieren beide.*
 
-In der Praxis kombinieren viele Produktionssysteme beide Ansätze: RAG, um Antworten in deiner Dokumentation zu verankern, und Tools, um Live-Daten zu holen oder Operationen durchzuführen.
+In der Praxis kombinieren viele produktive Systeme beide Ansätze: RAG, um Antworten auf Basis Ihrer Dokumentation zu verankern, und Tools, um Live-Daten abzurufen oder Operationen durchzuführen.
 
 ## Nächste Schritte
 
@@ -371,11 +377,11 @@ In der Praxis kombinieren viele Produktionssysteme beide Ansätze: RAG, um Antwo
 
 ---
 
-**Navigation:** [← Vorheriges: Modul 03 - RAG](../03-rag/README.md) | [Zurück zur Übersicht](../README.md) | [Nächstes: Modul 05 - MCP →](../05-mcp/README.md)
+**Navigation:** [← Zurück: Modul 03 - RAG](../03-rag/README.md) | [Zurück zum Hauptmenü](../README.md) | [Weiter: Modul 05 - MCP →](../05-mcp/README.md)
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
 **Haftungsausschluss**:  
-Dieses Dokument wurde mithilfe des KI-Übersetzungsdienstes [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir auf Genauigkeit achten, beachten Sie bitte, dass automatisierte Übersetzungen Fehler oder Ungenauigkeiten enthalten können. Das Originaldokument in seiner Ursprungssprache gilt als maßgebliche Quelle. Für wichtige Informationen wird eine professionelle menschliche Übersetzung empfohlen. Wir übernehmen keine Haftung für Missverständnisse oder Fehlinterpretationen, die durch die Nutzung dieser Übersetzung entstehen.
+Dieses Dokument wurde mit dem KI-Übersetzungsdienst [Co-op Translator](https://github.com/Azure/co-op-translator) übersetzt. Obwohl wir auf Genauigkeit achten, können automatisierte Übersetzungen Fehler oder Ungenauigkeiten enthalten. Das Originaldokument in seiner Ursprungssprache ist als maßgebliche Quelle zu betrachten. Für kritische Informationen wird eine professionelle menschliche Übersetzung empfohlen. Wir übernehmen keine Haftung für Missverständnisse oder Fehlinterpretationen, die aus der Nutzung dieser Übersetzung entstehen.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->

@@ -2,7 +2,7 @@
 
 # LangChain4j for Beginners
 
-Na kɔs wey go help you build AI app dem wit LangChain4j an Azure OpenAI GPT-5.2, from basic chat go AI agents.
+One course wey go help you build AI applications wit LangChain4j and Azure OpenAI GPT-5.2, from basic chat reach AI agents.
 
 ### 🌐 Multi-Language Support
 
@@ -11,9 +11,9 @@ Na kɔs wey go help you build AI app dem wit LangChain4j an Azure OpenAI GPT-5.2
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
 [Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](./README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
-> **Wetin you go like Clone locally?**
+> **You want Clone am for your local?**
 >
-> Dis repository get 50+ language translations wey go make di download size plenty well well. If you want clone without di translations, make you use sparse checkout:
+> This repository get more than 50 language translations wey go make the download size big well well. To clone without translations, use sparse checkout:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -29,49 +29,61 @@ Na kɔs wey go help you build AI app dem wit LangChain4j an Azure OpenAI GPT-5.2
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> Dis one go give you everything wey you need to finish di kɔs wit beta download speed.
+> This one go give you everything wey you need to finish the course with better download speed.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## Table of Contents
 
-1. [Quick Start](00-quick-start/README.md) - Begin wit LangChain4j
-2. [Introduction](01-introduction/README.md) - Learn di fundamentals of LangChain4j
-3. [Prompt Engineering](02-prompt-engineering/README.md) - Master how to design prompt wey work well
-4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Build smart knowledge-based system dem
-5. [Tools](04-tools/README.md) - Join external tools an simple assistants
-6. [MCP (Model Context Protocol)](05-mcp/README.md) - Work wit Model Context Protocol (MCP) an Agentic modules
+1. [Quick Start](00-quick-start/README.md) - How to start wit LangChain4j
+2. [Introduction](01-introduction/README.md) - Learn di basic tins about LangChain4j
+3. [Prompt Engineering](02-prompt-engineering/README.md) - How to sabi create correct prompt
+4. [RAG (Retrieval-Augmented Generation)](03-rag/README.md) - Build correct knowledge based intelligent system
+5. [Tools](04-tools/README.md) - Connect external tools and simple assistants
+6. [MCP (Model Context Protocol)](05-mcp/README.md) - Work with Model Context Protocol (MCP) and Agentic modules
+
+### Video Walkthroughs
+
+Every module get live session wey we go dey run through the concepts and code step by step.
+
+| Module | Video |
+|--------|-------|
+| 01 - Introduction | [Getting Started with LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
+| 02 - Prompt Engineering | [Prompt Engineering with LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
+| 03 - RAG | [RAG with LangChain4j](https://www.youtube.com/watch?v=_olq75ZH_eY) |
+| 04 - Tools & 05 - MCP | [AI Agents with Tools and MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
+
 ---
 
 ##  Learning Path
 
-**You be new to LangChain4j?** Check di [Glossary](docs/GLOSSARY.md) for wetin key terms and concepts mean.
+**New for LangChain4j?** Check di [Glossary](docs/GLOSSARY.md) for wetin mean key terms and concepts.
 
 > **Quick Start**
 
-1. Fork dis repository go your GitHub account
+1. Fork this repository to your GitHub account
 2. Click **Code** → **Codespaces** tab → **...** → **New with options...**
-3. Use di defaults – dis one go select di Development container wey dem create for dis kɔs
+3. Use di default settings – dis one go choose the Development container wey dem create for this course
 4. Click **Create codespace**
-5. Wait 5-10 minutes make di environment ready
-6. Jump straight go [Quick Start](./00-quick-start/README.md) to begin!
+5. Wait 5-10 minutes make environment dey ready
+6. Jump straight to [Quick Start](./00-quick-start/README.md) and start!
 
-After you finish all di modules, waka go see di [Testing Guide](docs/TESTING.md) make you understand how LangChain4j testing concepts dey work.
+After you finish di modules, check [Testing Guide](docs/TESTING.md) to see how dem dey test LangChain4j concepts for real.
 
-> **Note:** Dis training dey use both GitHub Models and Azure OpenAI. Di [Quick Start](00-quick-start/README.md) module dey use GitHub Models (no Azure subscription required), but modules 1-5 dey use Azure OpenAI. Start wit a [FREE Azure account](https://aka.ms/azure-free-account) if you never get one.
+> **Note:** This training dey use GitHub Models and Azure OpenAI. The [Quick Start](00-quick-start/README.md) module dey use GitHub Models (no need Azure subscription), while modules 1-5 dey use Azure OpenAI. Try get yourself [FREE Azure account](https://aka.ms/azure-free-account) if you never get.
 
 
 ## Learning with GitHub Copilot
 
-If you want start coding fast, open dis project for GitHub Codespace or your local IDE wit di devcontainer wey dem provide. Di devcontainer wey dis kɔs use don already set up wit GitHub Copilot for AI paired programming.
+To start coding quick, open this project for GitHub Codespace or your local IDE wit the provided devcontainer. The devcontainer wey dem use for this course don already get GitHub Copilot for AI paired programming.
 
-Every code example get questions wey you fit ask GitHub Copilot to help you sabi better. Look out for di 💡/🤖 prompts for:
+Every code example get questions wey you fit ask GitHub Copilot to help you understand am well well. Look out for di 💡/🤖 sign for:
 
 - **Java file headers** - Questions wey relate to each example
-- **Module READMEs** - Exploration prompts after code examples
+- **Module READMEs** - Exploration questions after code examples
 
-**How you go take use am:** Open any code file ask Copilot di questions wey dem suggest. E get full knowledge of di codebase and fit explain, extend, and suggest other ways to do am.
+**How to take use am:** Open any code file and ask Copilot di questions. E get full knowledge of di codebase and fit explain, add tins and suggest better ways.
 
-Wanna sabi more? Check [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
+You want learn more? Check [Copilot for AI Paired Programming](https://aka.ms/GitHubCopilotAI).
 
 
 ## Additional Resources
@@ -118,21 +130,21 @@ Wanna sabi more? Check [Copilot for AI Paired Programming](https://aka.ms/GitHub
 
 ## Getting Help
 
-If you get stuck or get any question about building AI apps, join:
+If you get stuck or get any questions about dey build AI apps, join:
 
-[![Azure AI Foundry Discord](https://img.shields.io/badge/Discord-Azure_AI_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
+[![Microsoft Foundry Discord](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-If you get product feedback or errors while you dey build, visit:
+If you get product feedback or errors while dey build, visit:
 
-[![Azure AI Foundry Developer Forum](https://img.shields.io/badge/GitHub-Azure_AI_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## License
 
-MIT License - See [LICENSE](../../LICENSE) file for details.
+MIT License - Check [LICENSE](../../LICENSE) file for details.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Disclaimer**:
-Dis dokument don translate wit AI translation service [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we dey try make am correct, abeg sabi say automated translations fit get some mistakes or wrong tins. The original dokument for im own language na the correct one you suppose trust. For important mata dem, e better make human pro translate am. We no go responsible for any wahala or wrong understandwey wey fit show from dis translation.
+**Warning**:  
+Dis document na AI translation service dem translate am, im name na [Co-op Translator](https://github.com/Azure/co-op-translator). Even though we try make the translation correct, make you sabi say machine fit make mistake or fit no translate well well. The original document wey dem write for di ogbonge language be di correct one. If na serious matter, better make human translator check am well. We no go take any blame if person no understand or catch correct meaning becos of dis translation.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
