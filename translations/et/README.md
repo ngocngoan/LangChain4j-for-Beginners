@@ -1,19 +1,19 @@
 <img src="../../translated_images/et/LangChain4j.90e1d693fcc71b50.webp" alt="LangChain4j" width="800"/>
 
-# LangChain4j alustajatele
+# LangChain4j algajatele
 
-Kursus AI-rakenduste loomiseks LangChain4j ja Azure OpenAI GPT-5.2 abil, alates lihtsast vestlusest kuni AI-agentideni.
+Kursus AI rakenduste loomiseks LangChain4j ja Azure OpenAI GPT-5.2 abil, alates lihtsast vestlusest kuni AI agentideni.
 
 ### 🌐 Mitmekeelne tugi
 
 #### Toetatud GitHub Actioni kaudu (automatiseeritud ja alati ajakohane)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Arabia](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgaaria](../bg/README.md) | [Birma (Myanmar)](../my/README.md) | [Hiina (lihtsustatud)](../zh-CN/README.md) | [Hiina (traditsiooniline, Hongkong)](../zh-HK/README.md) | [Hiina (traditsiooniline, Macau)](../zh-MO/README.md) | [Hiina (traditsiooniline, Taiwan)](../zh-TW/README.md) | [Horvaadi](../hr/README.md) | [Tšehhi](../cs/README.md) | [Taani](../da/README.md) | [Hollandi](../nl/README.md) | [Eesti](./README.md) | [Soome](../fi/README.md) | [Prantsuse](../fr/README.md) | [Saksa](../de/README.md) | [Kreeka](../el/README.md) | [Heebrea](../he/README.md) | [Hindi](../hi/README.md) | [Ungari](../hu/README.md) | [Indoneesia](../id/README.md) | [Itaalia](../it/README.md) | [Jaapani](../ja/README.md) | [Kannada](../kn/README.md) | [Korea](../ko/README.md) | [Leedu](../lt/README.md) | [Malai](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigeeria pidžin](../pcm/README.md) | [Norra](../no/README.md) | [Pärsia (Farsi)](../fa/README.md) | [Poola](../pl/README.md) | [Portugali (Brasiilia)](../pt-BR/README.md) | [Portugali (Portugal)](../pt-PT/README.md) | [Pandžabi (Gurmukhi)](../pa/README.md) | [Rumeenia](../ro/README.md) | [Vene](../ru/README.md) | [Serbia (kirillitsa)](../sr/README.md) | [Slovaki](../sk/README.md) | [Sloveeni](../sl/README.md) | [Hispaania](../es/README.md) | [Suaheli](../sw/README.md) | [Rootsi](../sv/README.md) | [Tagalogi (Filipiinid)](../tl/README.md) | [Tamili](../ta/README.md) | [Telugu](../te/README.md) | [Tai](../th/README.md) | [Türgi](../tr/README.md) | [Ukraina](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnam](../vi/README.md)
+[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](./README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Khmer](../km/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
 
-> **Eelistad kloonimist lokaalselt?**
+> **Eelistate kloonida kohapeal?**
 >
-> See hoidla sisaldab 50+ keeles tõlkeid, mis suurendavad oluliselt allalaadimise mahtu. Tõlgeteta kloonimiseks kasuta harva esineva allalaadimise valikut (sparse checkout):
+> See hoidla sisaldab üle 50 keele tõlkeid, mis suurendab allalaadimise mahtu märkimisväärselt. Kui soovite kloonida ilma tõlgeteta, kasutage hõredat checkouti:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -29,26 +29,26 @@ Kursus AI-rakenduste loomiseks LangChain4j ja Azure OpenAI GPT-5.2 abil, alates 
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> See annab sulle kõik vajaliku kursuse läbimiseks palju kiirema allalaadimisega.
+> See annab teile kõik vajaliku kursuse lõpetamiseks märksa kiirema allalaadimisega.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## Sisukord
 
-1. [Kiire algus](00-quick-start/README.md) - Alusta LangChain4j-ga
-2. [Sissejuhatus](01-introduction/README.md) - Õpi LangChain4j põhialuseid
-3. [Promptide loomine](02-prompt-engineering/README.md) - Valmista ette tõhusaid päringuid
-4. [RAG (Kogutud info põhjal genereerimine)](03-rag/README.md) - Ehita targad teadmistepõhised süsteemid
-5. [Tööriistad](04-tools/README.md) - Integreeri välised tööriistad ja lihtsad assistendid
-6. [MCP (Mudeli konteksti protokoll)](05-mcp/README.md) - Töötle Model Context Protocoli (MCP) ja agentide mooduleid
+1. [Kiire alustamine](00-quick-start/README.md) - LangChain4j-ga alustamine
+2. [Sissejuhatus](01-introduction/README.md) - Õppige LangChain4j põhialuseid
+3. [Päästiku inseneriteadus](02-prompt-engineering/README.md) - Saavutage tulemuslik päästiku kujundamine
+4. [RAG (otsingupõhine genereerimine)](03-rag/README.md) - Looge nutikaid teadmistepõhiseid süsteeme
+5. [Tööriistad](04-tools/README.md) - Integreerige väliseid tööriistu ja lihtsaid assistente
+6. [MCP (mudelikonteksti protokoll)](05-mcp/README.md) - Töötage MCP ja agentidel põhinevate moodulitega
 
 ### Video juhendid
 
-Igal moodulil on kaasas otseülekande sessioon, kus käime samm-sammult üle kontseptsioonid ja koodi.
+Igal moodulil on kaasas otseülekande sessioon, kus käsitleme kontsepte ja koodi samm-sammult.
 
 | Moodul | Video |
 |--------|-------|
-| 01 - Sissejuhatus | [LangChain4j-ga alustamine](https://www.youtube.com/live/nl_troDm8rQ) |
-| 02 - Promptide loomine | [Promptide loomine LangChain4j-ga](https://www.youtube.com/live/PJ6aBaE6bog) |
+| 01 - Sissejuhatus | [Alustamine LangChain4j-ga](https://www.youtube.com/live/nl_troDm8rQ) |
+| 02 - Päästiku inseneriteadus | [Päästiku inseneriteadus LangChain4j-ga](https://www.youtube.com/live/PJ6aBaE6bog) |
 | 03 - RAG | [RAG LangChain4j-ga](https://www.youtube.com/watch?v=_olq75ZH_eY) |
 | 04 - Tööriistad & 05 - MCP | [AI agentide loomine tööriistade ja MCP-ga](https://www.youtube.com/watch?v=O_J30kZc0rw) |
 
@@ -56,62 +56,62 @@ Igal moodulil on kaasas otseülekande sessioon, kus käime samm-sammult üle kon
 
 ## Õppeteekond
 
-**Oled uus LangChain4j-s?** Vaata [Glossary’t](docs/GLOSSARY.md) võtmetähtsusega terminite ja mõistete seletuste jaoks.
+**Oled LangChain4j-s uus?** Tutvu [Sõnastikuga](docs/GLOSSARY.md), et mõista võtmetermineid ja kontseptsioone.
 
-> **Kiire algus**
+> **Kiire alustamine**
 
-1. Tee selle hoidla fork oma GitHub kontole
-2. Kliki **Code** → **Codespaces** sakk → **...** → **New with options...**
-3. Kasuta vaikeseadeid – see valib kursuse jaoks loodud arendus-kontaineri
-4. Kliki **Create codespace**
-5. Oota 5–10 minutit, kuni keskkond valmis saab
-6. Hüppa otse [Kiire alguse](./00-quick-start/README.md) lehele, et alustada!
+1. Tehke failide koopia (fork) sellest hoidlast oma GitHub kontole
+2. Klõpsake **Code** → **Codespaces** vahekaart → **...** → **New with options...**
+3. Kasutage vaikeväärtusi – see valib selle kursuse jaoks loodud arenduskonteineri
+4. Klõpsake **Create codespace**
+5. Oodake 5-10 minutit, kuni keskkond on valmis
+6. Hüppa otse [Kiire alustamise](./00-quick-start/README.md) juurde, et alustada!
 
-Moodulite läbimise järel vaata [Testimise juhendit](docs/TESTING.md), et näha LangChain4j testimise mõisteid praktiliselt.
+Moodulite läbimisel uurige ka [Testimisjuhendit](docs/TESTING.md), et näha LangChain4j testimise kontseptsioone praktikas.
 
-> **Märkus:** See koolitus kasutab nii GitHubi mudeleid kui ka Azure OpenAI-d. [Kiire alguse](00-quick-start/README.md) moodul kasutab GitHubi mudeleid (pole vaja Azure tellimust), samas kui moodulid 1–5 kasutavad Azure OpenAI-d. Kui sul pole veel, alusta [TASUTA Azure kontoga](https://aka.ms/azure-free-account).
+> **Märkus:** See koolitus kasutab nii GitHubi mudeleid kui ka Azure OpenAI-d. [Kiire alustamise](00-quick-start/README.md) moodul kasutab GitHubi mudeleid (Azure tellimust pole vaja), samas kui moodulid 1–5 kasutavad Azure OpenAI-d. Kui teil veel pole, alustage [TASUTA Azure kontoga](https://aka.ms/azure-free-account).
 
 
 ## Õppimine GitHub Copilotiga
 
-Kui tahad kiiresti kodeerima hakata, ava see projekt GitHub Codespaces'is või oma kohaliku IDE-s pakutud devcontaineri abil. Selle kursuse devcontainer sisaldab eel-konfigureeritud GitHub Copilotit AI paar-programmeerimiseks.
+Kiireks kodeerimiseks avage see projekt GitHub Codespaces või oma kohaliku IDE-s antud devcontaineriga. Kursuses kasutatav devcontainer on eelkonfigureeritud GitHub Copilotiga AI paarprogrammeerimiseks.
 
-Iga koodinäide sisaldab soovitatud küsimusi, mida võid Copilotile esitada, et oma arusaamist süvendada. Otsi 💡/🤖 märke:
+Iga koodinäite juures on soovitatavad küsimused, mida võite GitHub Copilotile esitada, et oma arusaamist süvendada. Otsige 💡/🤖 viiteid:
 
-- **Java failide päistes** – iga näite konkreetseid küsimusi
-- **Mooduli READMEs** – uurimus-päringuid pärast koodinäiteid
+- **Java failide päistes** – näidete spetsiifilised küsimused
+- **Mooduli README-d** – uurimisküsimused pärast koodinäiteid
 
-**Kuidas kasutada:** Ava suvaline koodifail ja esita Copilotile soovitatud küsimusi. Tal on täielik ülevaade koodibaasist ning ta saab seletada, laiendada ja pakkuda alternatiive.
+**Kuidas kasutada:** Avage ükskõik milline koodifail ja küsige Copilotilt soovitatud küsimusi. Tal on kogu koodibaasi kontekst ja ta suudab selgitada, laiendada ja pakkuda alternatiive.
 
-Tahad rohkem teada? Vaata [Copilot AI paar-programmeerimise jaoks](https://aka.ms/GitHubCopilotAI).
+Tahate rohkem teada? Vaadake [Copilot AI paarprogrammeerimiseks](https://aka.ms/GitHubCopilotAI).
 
 
-## Täiendavad ressursid
+## Lisamaterjalid
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
-[![LangChain4j alustajatele](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
-[![LangChain.js alustajatele](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
-[![LangChain alustajatele](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
+[![LangChain4j algajatele](https://img.shields.io/badge/LangChain4j%20for%20Beginners-22C55E?style=for-the-badge&&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchain4j-for-beginners)
+[![LangChain.js algajatele](https://img.shields.io/badge/LangChain.js%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://aka.ms/langchainjs-for-beginners?WT.mc_id=m365-94501-dwahlin)
+[![LangChain algajatele](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
-### Azure / Edge / MCP / Agendid
-[![AZD alustajatele](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![Edge AI alustajatele](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![MCP alustajatele](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![AI agentid alustajatele](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
+### Azure / Edge / MCP / Agentid
+[![AZD algajatele](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![Edge AI algajatele](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![MCP algajatele](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![AI agentid algajatele](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
 ### Generatiivne AI sari
-[![Generative AI alustajatele](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![Generatiivne AI algajatele](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Generatiivne AI (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
 [![Generatiivne AI (Java)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
 [![Generatiivne AI (JavaScript)](https://img.shields.io/badge/Generative%20AI%20(JavaScript)-E879F9?style=for-the-badge&labelColor=E5E7EB&color=E879F9)](https://github.com/microsoft/generative-ai-with-javascript?WT.mc_id=academic-105485-koreyst)
 
 ---
  
-### Tuumikõpe
+### Põhioskused
 [![ML algajatele](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![Andmeteadus algajatele](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![AI algajatele](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -130,21 +130,21 @@ Tahad rohkem teada? Vaata [Copilot AI paar-programmeerimise jaoks](https://aka.m
 
 ## Abi saamine
 
-Kui takerdud või sul on küsimusi AI-rakenduste loomise kohta, liitu:
+Kui takerdu või sul on küsimusi tehisintellekti rakenduste loomisel, liitu:
 
 [![Microsoft Foundry Discord](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-Kui sul on toote tagasisidet või ehitamisel esinevad vead, külasta:
+Kui sul on toodet puudutav tagasiside või ehitamise ajal ilmnevad vead, külasta:
 
-[![Microsoft Foundry arendajate foorum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![Microsoft Foundry Developer Forum](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## Litsents
 
-MIT litsents - vt [LICENSE](../../LICENSE) faili üksikasju.
+MIT litsents - täpsemate üksikasjade jaoks vt [LICENSE](../../LICENSE) faili.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**Vastuolu**:
-See dokument on tõlgitud AI-tõlketeenuse [Co-op Translator](https://github.com/Azure/co-op-translator) abil. Kuigi me püüame täpsust, palun arvestage, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles tuleks pidada autoriteetseks allikaks. Kriitilise teabe puhul soovitatakse professionaalset inimtõlget. Me ei vastuta selle tõlkega seotud arusaamatuste või valesti mõistmiste eest.
+**Vastutusest loobumine**:  
+See dokument on tõlgitud kasutades tehisintellekti tõlketeenust [Co-op Translator](https://github.com/Azure/co-op-translator). Kuigi püüame täpsust, palun arvestage, et automaatsed tõlked võivad sisaldada vigu või ebatäpsusi. Originaaldokument selle emakeeles tuleks pidada autoriteetseks allikaks. Olulise info puhul soovitatakse kasutada professionaalset inimtõlget. Me ei vastuta tõlke kasutamisest tingitud arusaamatuste või väärtõlgenduste eest.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
