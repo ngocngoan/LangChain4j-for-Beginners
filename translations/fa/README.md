@@ -2,18 +2,18 @@
 
 # LangChain4j برای مبتدیان
 
-یک دوره برای ساخت برنامه‌های هوش مصنوعی با LangChain4j و Azure OpenAI GPT-5.2، از گفتگوی ساده تا عوامل هوش مصنوعی.
+یک دوره برای ساخت برنامه‌های هوش مصنوعی با LangChain4j و Azure OpenAI GPT-5.2، از چت پایه تا عامل‌های هوش مصنوعی.
 
 ### 🌐 پشتیبانی چندزبانه
 
-#### پشتیبانی از طریق GitHub Action (خودکار و همیشه به‌روز)
+#### پشتیبانی شده از طریق GitHub Action (خودکار و همیشه به‌روز)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Arabic](../ar/README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](./README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
+[عربی](../ar/README.md) | [بنگالی](../bn/README.md) | [بلغاری](../bg/README.md) | [برمه‌ای (میانمار)](../my/README.md) | [چینی (ساده‌شده)](../zh-CN/README.md) | [چینی (سنتی، هنگ‌کنگ)](../zh-HK/README.md) | [چینی (سنتی، ماکائو)](../zh-MO/README.md) | [چینی (سنتی، تایوان)](../zh-TW/README.md) | [کرواسی](../hr/README.md) | [چک](../cs/README.md) | [دانمارکی](../da/README.md) | [هلندی](../nl/README.md) | [استونیایی](../et/README.md) | [فنلاندی](../fi/README.md) | [فرانسوی](../fr/README.md) | [آلمانی](../de/README.md) | [یونانی](../el/README.md) | [عبری](../he/README.md) | [هندی](../hi/README.md) | [مجارستانی](../hu/README.md) | [اندونزیایی](../id/README.md) | [ایتالیایی](../it/README.md) | [ژاپنی](../ja/README.md) | [کاننادا](../kn/README.md) | [خمر](../km/README.md) | [کره‌ای](../ko/README.md) | [لیتوانیایی](../lt/README.md) | [مالایی](../ms/README.md) | [مالایالام](../ml/README.md) | [مراتی](../mr/README.md) | [نپالی](../ne/README.md) | [پیجین نیجریه‌ای](../pcm/README.md) | [نروژی](../no/README.md) | [فارسی (Farsi)](./README.md) | [لهستانی](../pl/README.md) | [پرتغالی (برزیل)](../pt-BR/README.md) | [پرتغالی (پرتغال)](../pt-PT/README.md) | [پنجابی (Gurmukhi)](../pa/README.md) | [رومانیایی](../ro/README.md) | [روسی](../ru/README.md) | [صربی (سیریلیک)](../sr/README.md) | [اسلواکی](../sk/README.md) | [اسلوونی](../sl/README.md) | [اسپانیایی](../es/README.md) | [سواهدی](../sw/README.md) | [سوئدی](../sv/README.md) | [تاگالوگ (فیلیپینی)](../tl/README.md) | [تامیل](../ta/README.md) | [تلوگو](../te/README.md) | [تایلندی](../th/README.md) | [ترکی](../tr/README.md) | [اوکراینی](../uk/README.md) | [اردو](../ur/README.md) | [ویتنامی](../vi/README.md)
 
-> **ترجیح می‌دهید به صورت محلی کلون کنید؟**
+> **ترجیح می‌دهید محلی کلون کنید؟**
 >
-> این مخزن شامل ترجمه‌هایی به بیش از ۵۰ زبان است که باعث افزایش قابل توجه حجم دانلود می‌شود. برای کلون کردن بدون ترجمه‌ها، از sparse checkout استفاده کنید:
+> این مخزن بیش از ۵۰ ترجمه زبان را شامل می‌شود که اندازه دانلود را به طور قابل توجهی افزایش می‌دهد. برای کلون کردن بدون ترجمه‌ها، از sparse checkout استفاده کنید:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -29,62 +29,64 @@
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> این به شما همه چیز لازم برای تکمیل دوره را با دانلود بسیار سریع‌تر می‌دهد.
+> این به شما همه چیز لازم برای تکمیل دوره را با سرعت دانلود بسیار بالاتر می‌دهد.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## فهرست مطالب
 
-1. [شروع سریع](00-quick-start/README.md) - شروع به کار با LangChain4j
-2. [معرفی](01-introduction/README.md) - یادگیری اصول پایه LangChain4j
-3. [مهندسی پرامپت](02-prompt-engineering/README.md) - تسلط بر طراحی موثر پرامپت
-4. [RAG (تولید با بازیابی تقویت‌شده)](03-rag/README.md) - ساخت سیستم‌های دانش‌بنیان هوشمند
-5. [ابزارها](04-tools/README.md) - ادغام ابزارهای خارجی و دستیارهای ساده
+1. [شروع سریع](00-quick-start/README.md) - شروع کار با LangChain4j
+2. [مقدمه](01-introduction/README.md) - یادگیری اصول اولیه LangChain4j
+3. [مهندسی پرامپت](02-prompt-engineering/README.md) - تسلط بر طراحی مؤثر پرامپت
+4. [RAG (تولید تقویت‌شده با بازیابی)](03-rag/README.md) - ساخت سیستم‌های هوشمند مبتنی بر دانش
+5. [ابزارها](04-tools/README.md) - یکپارچه‌سازی ابزارهای خارجی و دستیارهای ساده
 6. [MCP (پروتکل زمینه مدل)](05-mcp/README.md) - کار با پروتکل زمینه مدل (MCP) و ماژول‌های عاملی
 
-### راهنمای ویدیویی
+### مرورهای ویدیویی
 
-هر ماژول یک جلسه زنده همراه دارد که مفاهیم و کدها را مرحله به مرحله مرور می‌کنیم.
+هر ماژول یک جلسه زنده همراه دارد که در آن مفاهیم و کد را گام به گام مرور می‌کنیم.
 
-| ماژول | ویدیو |
+| ماژول | ویدئو |
 |--------|-------|
-| ۰۱ - معرفی | [شروع با LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
+| ۰۱ - مقدمه | [شروع با LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
 | ۰۲ - مهندسی پرامپت | [مهندسی پرامپت با LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
 | ۰۳ - RAG | [RAG با LangChain4j](https://www.youtube.com/watch?v=_olq75ZH_eY) |
-| ۰۴ - ابزارها و ۰۵ - MCP | [عوامل هوش مصنوعی با ابزارها و MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
+| ۰۴ - ابزارها و ۰۵ - MCP | [عامل‌های AI با ابزارها و MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
 
 ---
 
 ## مسیر یادگیری
 
-**نوپا در LangChain4j؟** برای تعریف اصطلاحات و مفاهیم کلیدی، به [واژه‌نامه](docs/GLOSSARY.md) مراجعه کنید.
+**جدید در LangChain4j؟** برای تعریف اصطلاحات و مفاهیم کلیدی به [واژه‌نامه](docs/GLOSSARY.md) مراجعه کنید.
 
 > **شروع سریع**
 
-1. این مخزن را فورک کنید به حساب GitHub خود
-2. روی **Code** کلیک کنید → تب **Codespaces** → **...** → **New with options...**
-3. از تنظیمات پیش‌فرض استفاده کنید – این کانتینر توسعه ایجاد شده برای این دوره را انتخاب می‌کند
+1. این مخزن را به حساب گیت‌هاب خود فورک کنید
+2. روی **Code** → تب **Codespaces** → روی **...** کلیک کنید → **New with options...**
+3. پیش‌فرض‌ها را انتخاب کنید – این کانتینر توسعه ساخته شده برای این دوره را انتخاب می‌کند
 4. روی **Create codespace** کلیک کنید
-5. منتظر بمانید ۵ تا ۱۰ دقیقه تا محیط آماده شود
-6. مستقیم به [شروع سریع](./00-quick-start/README.md) بروید و شروع کنید!
+5. ۵-۱۰ دقیقه صبر کنید تا محیط آماده شود
+6. مستقیماً به [شروع سریع](./00-quick-start/README.md) بروید تا شروع کنید!
 
-پس از اتمام ماژول‌ها، راهنمای [تست](docs/TESTING.md) را بررسی کنید تا مفاهیم تست LangChain4j را به صورت عملی ببینید.
+پس از تکمیل ماژول‌ها، راهنمای [تست](docs/TESTING.md) را بررسی کنید تا مفاهیم تست LangChain4j را در عمل ببینید.
 
-> **توجه:** این آموزش از مدل‌های GitHub و Azure OpenAI استفاده می‌کند. ماژول [شروع سریع](00-quick-start/README.md) از مدل‌های GitHub استفاده می‌کند (نیاز به اشتراک Azure ندارد)، در حالی که ماژول‌های ۱ تا ۵ از Azure OpenAI بهره می‌برند. اگر حساب Azure ندارید، با یک [حساب رایگان Azure](https://aka.ms/azure-free-account) شروع کنید.
+> **توجه:** این آموزش هم از GitHub Models و هم Azure OpenAI استفاده می‌کند. ماژول [شروع سریع](00-quick-start/README.md) از GitHub Models استفاده می‌کند (نیازی به اشتراک Azure ندارد)، در حالی که ماژول‌های ۱ تا ۵ از Azure OpenAI بهره می‌برند. اگر حساب Azure ندارید، با [یک حساب رایگان Azure](https://aka.ms/azure-free-account) شروع کنید.
+
 
 ## یادگیری با GitHub Copilot
 
-برای شروع سریع کدنویسی، این پروژه را در یک GitHub Codespace یا IDE محلی خود با devcontainer ارائه شده باز کنید. devcontainer استفاده شده در این دوره از پیش با GitHub Copilot برای برنامه‌نویسی جفتی هوش مصنوعی پیکربندی شده است.
+برای شروع سریع کدنویسی، این پروژه را در GitHub Codespace یا IDE محلی خود با devcontainer ارائه شده باز کنید. devcontainer استفاده شده در این دوره به صورت پیش‌فرض با GitHub Copilot برای برنامه‌نویسی جفت هوش مصنوعی پیکربندی شده است.
 
-هر مثال کد شامل سوالات پیشنهادی است که می‌توانید از GitHub Copilot بپرسید تا درک خود را عمیق‌تر کنید. به دنبال علائم 💡/🤖 در:
+هر نمونه کد شامل سؤالات پیشنهادی است که می‌توانید از GitHub Copilot بپرسید تا درک خود را عمیق‌تر کنید. به دنبال نشانه‌های 💡/🤖 در:
 
-- **هدر فایل‌های جاوا** - سوالات خاص هر مثال
-- **README ماژول‌ها** - سوالات کاوشگری پس از مثال‌های کد
+- **سرفصل فایل‌های جاوا** - سؤال‌های خاص هر نمونه
+- **README ماژول‌ها** - پیشنهادهای کاوش پس از نمونه‌های کد
 
-**چگونه استفاده کنیم:** هر فایل کد را باز کنید و سوالات پیشنهادی را از Copilot بپرسید. Copilot کل زمینه کد را دارد و می‌تواند توضیح دهد، گسترش دهد و گزینه‌های جایگزین پیشنهاد دهد.
+**نحوه استفاده:** هر فایل کد را باز کرده و سؤال‌های پیشنهادی را از Copilot بپرسید. او کاملاً از کد اطلاع دارد و می‌تواند توضیح دهد، گسترش دهد و جایگزین‌ها را پیشنهاد کند.
 
-می‌خواهید بیشتر یاد بگیرید؟ به [Copilot برای برنامه‌نویسی جفتی هوش مصنوعی](https://aka.ms/GitHubCopilotAI) مراجعه کنید.
+می‌خواهید بیشتر یاد بگیرید؟ به [Copilot برای برنامه‌نویسی جفت هوش مصنوعی](https://aka.ms/GitHubCopilotAI) مراجعه کنید.
 
-## منابع اضافی
+
+## منابع بیشتر
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
@@ -93,23 +95,23 @@
 [![LangChain برای مبتدیان](https://img.shields.io/badge/LangChain%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=0553D6)](https://github.com/microsoft/langchain-for-beginners?WT.mc_id=m365-94501-dwahlin)
 ---
 
-### Azure / Edge / MCP / Agents
+### Azure / Edge / MCP / عامل‌ها
 [![AZD برای مبتدیان](https://img.shields.io/badge/AZD%20for%20Beginners-0078D4?style=for-the-badge&labelColor=E5E7EB&color=0078D4)](https://github.com/microsoft/AZD-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![Edge AI برای مبتدیان](https://img.shields.io/badge/Edge%20AI%20for%20Beginners-00B8E4?style=for-the-badge&labelColor=E5E7EB&color=00B8E4)](https://github.com/microsoft/edgeai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![MCP برای مبتدیان](https://img.shields.io/badge/MCP%20for%20Beginners-009688?style=for-the-badge&labelColor=E5E7EB&color=009688)](https://github.com/microsoft/mcp-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![AI Agents برای مبتدیان](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![عامل‌های AI برای مبتدیان](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
  
-### سری هوش مصنوعی مولد
-[![هوش مصنوعی مولد برای مبتدیان](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
-[![هوش مصنوعی مولد (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
-[![هوش مصنوعی مولد (جاوا)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
-[![هوش مصنوعی مولد (جاوااسکریپت)](https://img.shields.io/badge/Generative%20AI%20(JavaScript)-E879F9?style=for-the-badge&labelColor=E5E7EB&color=E879F9)](https://github.com/microsoft/generative-ai-with-javascript?WT.mc_id=academic-105485-koreyst)
+### سری هوش تولیدی
+[![هوش تولیدی برای مبتدیان](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
+[![هوش تولیدی (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
+[![هوش تولیدی (جاوا)](https://img.shields.io/badge/Generative%20AI%20(Java)-C084FC?style=for-the-badge&labelColor=E5E7EB&color=C084FC)](https://github.com/microsoft/generative-ai-for-beginners-java?WT.mc_id=academic-105485-koreyst)
+[![هوش تولیدی (جاوااسکریپت)](https://img.shields.io/badge/Generative%20AI%20(JavaScript)-E879F9?style=for-the-badge&labelColor=E5E7EB&color=E879F9)](https://github.com/microsoft/generative-ai-with-javascript?WT.mc_id=academic-105485-koreyst)
 
 ---
  
-### آموزش‌های اصلی
+### یادگیری پایه
 [![یادگیری ماشین برای مبتدیان](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![علم داده برای مبتدیان](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![هوش مصنوعی برای مبتدیان](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
@@ -121,28 +123,28 @@
 ---
  
 ### سری کوپایلوت
-[![کوپایلوت برای برنامه‌نویسی جفتی با هوش مصنوعی](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
+[![کوپایلوت برای برنامه‌نویسی جفتی هوش مصنوعی](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
 [![کوپایلوت برای C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
 [![ماجراجویی کوپایلوت](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
 <!-- CO-OP TRANSLATOR OTHER COURSES END -->
 
 ## دریافت کمک
 
-اگر گیر کردید یا سوالی درباره ساخت برنامه‌های هوش مصنوعی داشتید، بپیوندید به:
+اگر گیر افتادید یا سوالی درباره ساخت برنامه‌های هوش مصنوعی داشتید، بپیوندید به:
 
-[![دیسکورد انجمن Microsoft Foundry](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
+[![دیسکورد Microsoft Foundry](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-اگر بازخورد محصول یا خطا هنگام ساخت دارید به اینجا مراجعه کنید:
+اگر بازخورد یا خطایی در حین ساخت محصول داشتید، مراجعه کنید به:
 
-[![انجمن توسعه‌دهندگان Microsoft Foundry در GitHub](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![فروم توسعه‌دهندگان Microsoft Foundry](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## مجوز
 
-مجوز MIT - برای جزئیات فایل [LICENSE](../../LICENSE) را ببینید.
+مجوز MIT - برای جزئیات به فایل [LICENSE](../../LICENSE) مراجعه کنید.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**سلب مسؤولیت**:  
-این سند با استفاده از سرویس ترجمه هوش مصنوعی [Co-op Translator](https://github.com/Azure/co-op-translator) ترجمه شده است. اگرچه ما در تلاش برای دقت هستیم، لطفاً توجه داشته باشید که ترجمه‌های خودکار ممکن است شامل خطاها یا نادرستی‌هایی باشد. سند اصلی به زبان بومی خود باید به عنوان منبع معتبر در نظر گرفته شود. برای اطلاعات حیاتی، توصیه می‌شود از ترجمه حرفه‌ای انسانی استفاده شود. ما مسئول هیچگونه سوءتفاهم یا تفسیر نادرستی که ناشی از استفاده از این ترجمه باشد، نیستیم.
+**سلب مسئولیت**:  
+این سند با استفاده از سرویس ترجمه هوش مصنوعی [Co-op Translator](https://github.com/Azure/co-op-translator) ترجمه شده است. در حالی که ما به دقت تلاش می‌کنیم، لطفاً آگاه باشید که ترجمه‌های خودکار ممکن است شامل خطاها یا نادرستی‌هایی باشند. نسخه اصلی سند به زبان مادری آن باید به عنوان منبع معتبر در نظر گرفته شود. برای اطلاعات حیاتی، ترجمه حرفه‌ای انسانی توصیه می‌شود. ما مسئول هیچ گونه سوءتفاهم یا برداشت نادرستی که از استفاده این ترجمه ناشی شود، نیستیم.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
