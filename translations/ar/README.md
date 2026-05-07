@@ -2,18 +2,18 @@
 
 # LangChain4j للمبتدئين
 
-دورة لبناء تطبيقات الذكاء الاصطناعي باستخدام LangChain4j و Azure OpenAI GPT-5.2، من الدردشة الأساسية إلى الوكلاء الذكيين.
+دورة لبناء تطبيقات الذكاء الاصطناعي باستخدام LangChain4j و Azure OpenAI GPT-5.2، من المحادثة الأساسية حتى الوكلاء الذكيين.
 
 ### 🌐 دعم متعدد اللغات
 
-#### مدعوم عبر GitHub Action (مؤتمت ودائم التحديث)
+#### مدعوم عبر GitHub Action (آلي ودائم التحديث)
 
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE START -->
-[Arabic](./README.md) | [Bengali](../bn/README.md) | [Bulgarian](../bg/README.md) | [Burmese (Myanmar)](../my/README.md) | [Chinese (Simplified)](../zh-CN/README.md) | [Chinese (Traditional, Hong Kong)](../zh-HK/README.md) | [Chinese (Traditional, Macau)](../zh-MO/README.md) | [Chinese (Traditional, Taiwan)](../zh-TW/README.md) | [Croatian](../hr/README.md) | [Czech](../cs/README.md) | [Danish](../da/README.md) | [Dutch](../nl/README.md) | [Estonian](../et/README.md) | [Finnish](../fi/README.md) | [French](../fr/README.md) | [German](../de/README.md) | [Greek](../el/README.md) | [Hebrew](../he/README.md) | [Hindi](../hi/README.md) | [Hungarian](../hu/README.md) | [Indonesian](../id/README.md) | [Italian](../it/README.md) | [Japanese](../ja/README.md) | [Kannada](../kn/README.md) | [Korean](../ko/README.md) | [Lithuanian](../lt/README.md) | [Malay](../ms/README.md) | [Malayalam](../ml/README.md) | [Marathi](../mr/README.md) | [Nepali](../ne/README.md) | [Nigerian Pidgin](../pcm/README.md) | [Norwegian](../no/README.md) | [Persian (Farsi)](../fa/README.md) | [Polish](../pl/README.md) | [Portuguese (Brazil)](../pt-BR/README.md) | [Portuguese (Portugal)](../pt-PT/README.md) | [Punjabi (Gurmukhi)](../pa/README.md) | [Romanian](../ro/README.md) | [Russian](../ru/README.md) | [Serbian (Cyrillic)](../sr/README.md) | [Slovak](../sk/README.md) | [Slovenian](../sl/README.md) | [Spanish](../es/README.md) | [Swahili](../sw/README.md) | [Swedish](../sv/README.md) | [Tagalog (Filipino)](../tl/README.md) | [Tamil](../ta/README.md) | [Telugu](../te/README.md) | [Thai](../th/README.md) | [Turkish](../tr/README.md) | [Ukrainian](../uk/README.md) | [Urdu](../ur/README.md) | [Vietnamese](../vi/README.md)
+[العربية](./README.md) | [البنغالية](../bn/README.md) | [البلغارية](../bg/README.md) | [البورمية (ميانمار)](../my/README.md) | [الصينية (المبسطة)](../zh-CN/README.md) | [الصينية (التقليدية، هونغ كونغ)](../zh-HK/README.md) | [الصينية (التقليدية، ماكاو)](../zh-MO/README.md) | [الصينية (التقليدية، تايوان)](../zh-TW/README.md) | [الكرواتية](../hr/README.md) | [التشيكية](../cs/README.md) | [الدانماركية](../da/README.md) | [الهولندية](../nl/README.md) | [الإستونية](../et/README.md) | [الفنلندية](../fi/README.md) | [الفرنسية](../fr/README.md) | [الألمانية](../de/README.md) | [اليونانية](../el/README.md) | [العبرية](../he/README.md) | [الهندية](../hi/README.md) | [الهنغارية](../hu/README.md) | [الإندونيسية](../id/README.md) | [الإيطالية](../it/README.md) | [اليابانية](../ja/README.md) | [الكانادا](../kn/README.md) | [الخميرية](../km/README.md) | [الكورية](../ko/README.md) | [الليتوانية](../lt/README.md) | [الماليزية](../ms/README.md) | [المالايالامية](../ml/README.md) | [الماراثي](../mr/README.md) | [النيبالية](../ne/README.md) | [البيجنيه النيجيرية](../pcm/README.md) | [النرويجية](../no/README.md) | [الفارسية (اللغة الفارسية)](../fa/README.md) | [البولندية](../pl/README.md) | [البرتغالية (البرازيل)](../pt-BR/README.md) | [البرتغالية (البرتغال)](../pt-PT/README.md) | [البنجابية (جرمخي)](../pa/README.md) | [الرومانية](../ro/README.md) | [الروسية](../ru/README.md) | [الصربية (السيريلية)](../sr/README.md) | [السلوفاكية](../sk/README.md) | [السلوفينية](../sl/README.md) | [الإسبانية](../es/README.md) | [السواحيلية](../sw/README.md) | [السويدية](../sv/README.md) | [التاغالوغية (الفلبينية)](../tl/README.md) | [التاميل](../ta/README.md) | [التيلجو](../te/README.md) | [التايلاندية](../th/README.md) | [التركية](../tr/README.md) | [الأوكرانية](../uk/README.md) | [الأردية](../ur/README.md) | [الفيتنامية](../vi/README.md)
 
-> **تفضل الاستنساخ محليًا؟**
+> **هل تفضل النسخ محليًا؟**
 >
-> يحتوي هذا المستودع على أكثر من 50 ترجمة للغات مختلفة مما يزيد بشكل كبير من حجم التنزيل. لاستنساخ بدون الترجمات، استخدم تقنية sparse checkout:
+> يتضمن هذا المستودع أكثر من 50 ترجمة للغات تزيد بشكل كبير من حجم التنزيل. للنسخ بدون الترجمات، استخدم السحب الانتقائي:
 >
 > **Bash / macOS / Linux:**
 > ```bash
@@ -22,69 +22,71 @@
 > git sparse-checkout set --no-cone '/*' '!translations' '!translated_images'
 > ```
 >
-> **CMD (Windows):**
+> **CMD (ويندوز):**
 > ```cmd
 > git clone --filter=blob:none --sparse https://github.com/microsoft/LangChain4j-for-Beginners.git
 > cd LangChain4j-for-Beginners
 > git sparse-checkout set --no-cone "/*" "!translations" "!translated_images"
 > ```
 >
-> هذا يتيح لك كل ما تحتاجه لإكمال الدورة مع تنزيل أسرع بكثير.
+> هذا يوفر لك كل ما تحتاجه لإكمال الدورة مع تنزيل أسرع بكثير.
 <!-- CO-OP TRANSLATOR LANGUAGES TABLE END -->
 
 ## جدول المحتويات
 
 1. [البدء السريع](00-quick-start/README.md) - ابدأ مع LangChain4j
-2. [مقدمة](01-introduction/README.md) - تعلّم أساسيات LangChain4j
-3. [تصميم المطالبات](02-prompt-engineering/README.md) - إتقان تصميم المطالبات الفعالة
-4. [RAG (التوليد المعزز بالاسترجاع)](03-rag/README.md) - بناء أنظمة معرفية ذكية
+2. [مقدمة](01-introduction/README.md) - تعلم أساسيات LangChain4j
+3. [هندسة الموجهات](02-prompt-engineering/README.md) - إتقان تصميم الموجهات الفعالة
+4. [RAG (التوليد المعزز بالاسترجاع)](03-rag/README.md) - بناء أنظمة ذكية مبنية على المعرفة
 5. [الأدوات](04-tools/README.md) - دمج الأدوات الخارجية والمساعدين البسيطين
 6. [MCP (بروتوكول سياق النموذج)](05-mcp/README.md) - العمل مع بروتوكول سياق النموذج (MCP) والوحدات الوكلائية
 
-### دروس فيديو تفاعلية
+### جولات الفيديو التوضيحية
 
-كل وحدة تحتوي على جلسة حية مرفقة نشرح فيها المفاهيم والرمز خطوة بخطوة.
+لكل وحدة جلسة مباشرة مصاحبة حيث نشرح المفاهيم والكود خطوة بخطوة.
 
 | الوحدة | الفيديو |
 |--------|-------|
-| 01 - مقدمة | [البدء مع LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
-| 02 - تصميم المطالبات | [تصميم المطالبات مع LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
+| 01 - مقدمة | [البداية مع LangChain4j](https://www.youtube.com/live/nl_troDm8rQ) |
+| 02 - هندسة الموجهات | [هندسة الموجهات مع LangChain4j](https://www.youtube.com/live/PJ6aBaE6bog) |
 | 03 - RAG | [RAG مع LangChain4j](https://www.youtube.com/watch?v=_olq75ZH_eY) |
-| 04 - الأدوات و 05 - MCP | [وكلاء الذكاء الاصطناعي مع الأدوات و MCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
+| 04 - الأدوات & 05 - MCP | [وكلاء الذكاء الاصطناعي مع الأدوات وMCP](https://www.youtube.com/watch?v=O_J30kZc0rw) |
 
 ---
 
 ## مسار التعلم
 
-**جديد على LangChain4j؟** تفقد [معجم المصطلحات](docs/GLOSSARY.md) لتعريفات المصطلحات والمفاهيم الأساسية.
+**جديد في LangChain4j؟** اطلع على [مسرد المصطلحات](docs/GLOSSARY.md) لتعريفات المصطلحات والمفاهيم الأساسية.
 
 > **البدء السريع**
 
-1. قم بتفريع هذا المستودع إلى حساب GitHub الخاص بك
-2. انقر على **Code** → تبويب **Codespaces** → **...** → **New with options...**
-3. استخدم الإعدادات الافتراضية – هذا سيختار حاوية التطوير التي تم إعدادها لهذه الدورة
-4. انقر على **Create codespace**
-5. انتظر من 5 إلى 10 دقائق حتى يكون البيئة جاهزة
-6. ابدأ مباشرة بـ [البدء السريع](./00-quick-start/README.md) لتبدأ!
+1. قم بتفرع هذا المستودع إلى حسابك على GitHub
+2. اضغط على **الكود** → تبويب **مساحات الشيفرة** → **...** → **جديد مع خيارات...**
+3. استخدم الإعدادات الافتراضية – سيختار هذا حاوية التطوير التي تم إنشاؤها لهذه الدورة
+4. اضغط **إنشاء مساحة الشيفرة**
+5. انتظر من 5 إلى 10 دقائق حتى يصبح البيئة جاهزة
+6. انتقل مباشرة إلى [البدء السريع](./00-quick-start/README.md) للبدء!
 
-بعد إكمال الوحدات، استكشف [دليل الاختبار](docs/TESTING.md) لرؤية مفاهيم اختبار LangChain4j قيد التطبيق.
+بعد إكمال الوحدات، استكشف [دليل الاختبار](docs/TESTING.md) لمشاهدة مفاهيم اختبارات LangChain4j قيد العمل.
 
-> **ملاحظة:** يستخدم هذا التدريب كل من نماذج GitHub و Azure OpenAI. وحدة [البدء السريع](00-quick-start/README.md) تستخدم نماذج GitHub (لا حاجة لاشتراك Azure)، بينما الوحدات 1-5 تستخدم Azure OpenAI. ابدأ بحساب [Azure مجاني](https://aka.ms/azure-free-account) إذا لم يكن لديك واحد.
+> **ملاحظة:** يستخدم هذا التدريب نماذج GitHub ونماذج Azure OpenAI. يستخدم وحدة [البدء السريع](00-quick-start/README.md) نماذج GitHub (لا تحتاج إلى اشتراك Azure)، بينما تستخدم الوحدات 1-5 Azure OpenAI. ابدأ باستخدام [حساب Azure مجاني](https://aka.ms/azure-free-account) إذا لم يكن لديك واحد.
+
 
 ## التعلم مع GitHub Copilot
 
-لبدء البرمجة بسرعة، افتح هذا المشروع في GitHub Codespace أو في بيئة التطوير المحلية لديك باستخدام devcontainer المقدم. devcontainer المستخدم في هذه الدورة تم تهيئته مسبقًا مع GitHub Copilot لبرمجة الذكاء الاصطناعي المساعدة.
+للبدء السريع في الكتابة، افتح هذا المشروع في مساحة شيفرة على GitHub أو في بيئة التطوير المحلية لديك مع devcontainer المقدم. تأتي الحاوية المطورة المستخدمة في هذه الدورة معدة مسبقًا مع GitHub Copilot للبرمجة المزدوجة بالذكاء الاصطناعي.
 
-كل مثال رمزي يحتوي على أسئلة مقترحة يمكنك طرحها على GitHub Copilot لتعميق فهمك. ابحث عن التعليمات 💡/🤖 في:
+كل مثال كود يتضمن أسئلة مقترحة يمكنك طرحها على GitHub Copilot لتعميق فهمك. ابحث عن رموز 💡/🤖 في:
 
 - **رؤوس ملفات جافا** - أسئلة محددة لكل مثال
-- **ملفات README للوحدات** - تعليمات استكشافية بعد أمثلة الشيفرة
+- **ملفات README للوحدات** - تلميحات استكشافية بعد أمثلة الكود
 
-**كيفية الاستخدام:** افتح أي ملف كود واطرح على Copilot الأسئلة المقترحة. لديه سياق كامل لقاعدة الشيفرة ويمكنه الشرح، التوسيع، واقتراح بدائل.
+**كيفية الاستخدام:** افتح أي ملف كود واطرح على Copilot الأسئلة المقترحة. لديه السياق الكامل لقاعدة الشيفرة ويمكنه الشرح، التوسيع، واقتراح البدائل.
 
-هل تريد تعلم المزيد؟ اطلع على [Copilot لبرمجة الذكاء الاصطناعي المساعدة](https://aka.ms/GitHubCopilotAI).
+هل تريد معرفة المزيد؟ اطلع على [Copilot للبرمجة المزدوجة بالذكاء الاصطناعي](https://aka.ms/GitHubCopilotAI).
 
-## مصادر إضافية
+
+## موارد إضافية
 
 <!-- CO-OP TRANSLATOR OTHER COURSES START -->
 ### LangChain
@@ -100,7 +102,7 @@
 [![وكلاء الذكاء الاصطناعي للمبتدئين](https://img.shields.io/badge/AI%20Agents%20for%20Beginners-00C49A?style=for-the-badge&labelColor=E5E7EB&color=00C49A)](https://github.com/microsoft/ai-agents-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
-
+ 
 ### سلسلة الذكاء الاصطناعي التوليدي
 [![الذكاء الاصطناعي التوليدي للمبتدئين](https://img.shields.io/badge/Generative%20AI%20for%20Beginners-8B5CF6?style=for-the-badge&labelColor=E5E7EB&color=8B5CF6)](https://github.com/microsoft/generative-ai-for-beginners?WT.mc_id=academic-105485-koreyst)
 [![الذكاء الاصطناعي التوليدي (.NET)](https://img.shields.io/badge/Generative%20AI%20(.NET)-9333EA?style=for-the-badge&labelColor=E5E7EB&color=9333EA)](https://github.com/microsoft/Generative-AI-for-beginners-dotnet?WT.mc_id=academic-105485-koreyst)
@@ -108,9 +110,9 @@
 [![الذكاء الاصطناعي التوليدي (جافا سكريبت)](https://img.shields.io/badge/Generative%20AI%20(JavaScript)-E879F9?style=for-the-badge&labelColor=E5E7EB&color=E879F9)](https://github.com/microsoft/generative-ai-with-javascript?WT.mc_id=academic-105485-koreyst)
 
 ---
-
-### التعلم الأساسي
-[![التعلم الآلي للمبتدئين](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
+ 
+### التعليم الأساسي
+[![تعلم الآلة للمبتدئين](https://img.shields.io/badge/ML%20for%20Beginners-22C55E?style=for-the-badge&labelColor=E5E7EB&color=22C55E)](https://aka.ms/ml-beginners?WT.mc_id=academic-105485-koreyst)
 [![علوم البيانات للمبتدئين](https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16)](https://aka.ms/datascience-beginners?WT.mc_id=academic-105485-koreyst)
 [![الذكاء الاصطناعي للمبتدئين](https://img.shields.io/badge/AI%20for%20Beginners-A3E635?style=for-the-badge&labelColor=E5E7EB&color=A3E635)](https://aka.ms/ai-beginners?WT.mc_id=academic-105485-koreyst)
 [![الأمن السيبراني للمبتدئين](https://img.shields.io/badge/Cybersecurity%20for%20Beginners-F97316?style=for-the-badge&labelColor=E5E7EB&color=F97316)](https://github.com/microsoft/Security-101?WT.mc_id=academic-96948-sayoung)
@@ -119,30 +121,30 @@
 [![تطوير XR للمبتدئين](https://img.shields.io/badge/XR%20Development%20for%20Beginners-38BDF8?style=for-the-badge&labelColor=E5E7EB&color=38BDF8)](https://github.com/microsoft/xr-development-for-beginners?WT.mc_id=academic-105485-koreyst)
 
 ---
-
-### سلسلة كوبايلوت
-[![كوبايلوت للبرمجة المزدوجة بالذكاء الاصطناعي](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
-[![كوبايلوت لـ C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
-[![مغامرة كوبايلوت](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
+ 
+### سلسلة Copilot
+[![Copilot للبرمجة التعاونية بالذكاء الاصطناعي](https://img.shields.io/badge/Copilot%20for%20AI%20Paired%20Programming-FACC15?style=for-the-badge&labelColor=E5E7EB&color=FACC15)](https://aka.ms/GitHubCopilotAI?WT.mc_id=academic-105485-koreyst)
+[![Copilot لـ C#/.NET](https://img.shields.io/badge/Copilot%20for%20C%23/.NET-FBBF24?style=for-the-badge&labelColor=E5E7EB&color=FBBF24)](https://github.com/microsoft/mastering-github-copilot-for-dotnet-csharp-developers?WT.mc_id=academic-105485-koreyst)
+[![مغامرة Copilot](https://img.shields.io/badge/Copilot%20Adventure-FDE68A?style=for-the-badge&labelColor=E5E7EB&color=FDE68A)](https://github.com/microsoft/CopilotAdventures?WT.mc_id=academic-105485-koreyst)
 <!-- CO-OP TRANSLATOR OTHER COURSES END -->
 
 ## الحصول على المساعدة
 
-إذا علقت أو كان لديك أي أسئلة حول بناء تطبيقات الذكاء الاصطناعي، انضم إلى:
+إذا واجهت صعوبة أو كان لديك أي أسئلة حول بناء تطبيقات الذكاء الاصطناعي، انضم إلى:
 
-[![ديسكورد مجتمع مايكروسوفت فاوندري](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
+[![مجتمع Microsoft Foundry في ديسكورد](https://img.shields.io/badge/Discord-Microsoft_Foundry_Community_Discord-blue?style=for-the-badge&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-إذا كان لديك ملاحظات على المنتج أو أخطاء أثناء البناء، زور:
+إذا كان لديك ملاحظات على المنتج أو أخطاء أثناء البناء، قم بزيارة:
 
-[![منتدى مطوري مايكروسوفت فاوندري على GitHub](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
+[![منتدى مطوري Microsoft Foundry على GitHub](https://img.shields.io/badge/GitHub-Microsoft_Foundry_Developer_Forum-blue?style=for-the-badge&logo=github&color=000000&logoColor=fff)](https://aka.ms/foundry/forum)
 
 ## الترخيص
 
-رخصة MIT - راجع ملف [LICENSE](../../LICENSE) للتفاصيل.
+ترخيص MIT - انظر ملف [LICENSE](../../LICENSE) للتفاصيل.
 
 ---
 
 <!-- CO-OP TRANSLATOR DISCLAIMER START -->
-**إخلاء مسؤولية**:
-تم ترجمة هذا المستند باستخدام خدمة الترجمة الآلية [Co-op Translator](https://github.com/Azure/co-op-translator). بينما نسعى لتحقيق الدقة، يرجى العلم أن الترجمات الآلية قد تحتوي على أخطاء أو عدم دقة. يجب اعتبار المستند الأصلي بلغته الأصلية المصدر الموثوق والمعتمد. بالنسبة للمعلومات الهامة، يُوصى بالاستعانة بترجمة بشرية محترفة. نحن غير مسؤولين عن أي سوء فهم أو تفسيرات خاطئة ناتجة عن استخدام هذه الترجمة.
+**تنويه**:  
+تمت ترجمة هذا المستند باستخدام خدمة الترجمة الآلية [Co-op Translator](https://github.com/Azure/co-op-translator). بينما نسعى للدقة، يرجى العلم بأن الترجمات الآلية قد تحتوي على أخطاء أو عدم دقة. يجب اعتبار المستند الأصلي بلغته الأصلية المصدر المعتمد. بالنسبة للمعلومات الحساسة، يُنصح بالترجمة المهنية البشرية. نحن غير مسؤولين عن أي سوء فهم أو تفسيرات خاطئة ناتجة عن استخدام هذه الترجمة.
 <!-- CO-OP TRANSLATOR DISCLAIMER END -->
